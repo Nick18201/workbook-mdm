@@ -1,12 +1,15 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.utils import simpleSplit
+import logging
 from .config import PDFStyle
 from .components import (
     draw_page_background, draw_side_panel, draw_title,
     draw_page_decorations, draw_card
 )
 from .forms import create_input_field
+
+logger = logging.getLogger(__name__)
 
 class PageLayout:
     """
@@ -53,15 +56,18 @@ class PageLayout:
     def add_text(self, text, style_choice='body', font_size=11, color=PDFStyle.COLOR_TEXT_MAIN, spacing_after=0.5*cm, align='left'):
         """Adds a paragraph of text, automatically wrapping and moving the cursor."""
         if style_choice == 'body':
-            self.c.setFont(PDFStyle.FONT_BODY, font_size)
+            font_name = PDFStyle.FONT_BODY
         elif style_choice == 'italic':
-            self.c.setFont(PDFStyle.FONT_ITALIC, font_size)
+            font_name = PDFStyle.FONT_ITALIC
         elif style_choice == 'subtitle':
-            self.c.setFont(PDFStyle.FONT_SUBTITLE, font_size)
+            font_name = PDFStyle.FONT_SUBTITLE
+        else:
+            font_name = PDFStyle.FONT_BODY
 
+        self.c.setFont(font_name, font_size)
         self.c.setFillColor(color)
 
-        lines = simpleSplit(text, self.c._fontname, self.c._fontsize, self.target_width)
+        lines = simpleSplit(text, font_name, font_size, self.target_width)
         for line in lines:
             if align == 'center':
                 self.c.drawCentredString(self.text_x + self.target_width/2, self.y_cursor, line)
@@ -69,7 +75,7 @@ class PageLayout:
                 self.c.drawRightString(self.text_x + self.target_width, self.y_cursor, line)
             else:
                 self.c.drawString(self.text_x, self.y_cursor, line)
-            self.y_cursor -= (font_size / 28.34) * cm + 0.1 * cm # Roughly line height
+            self.y_cursor -= font_size + 0.1 * cm # Roughly line height
 
         self.y_cursor -= spacing_after
         return self.y_cursor
@@ -90,7 +96,7 @@ class PageLayout:
 
         # Check if we need to paginate (basic protection)
         if self.y_cursor - box_height < 3 * cm:
-            print(f"Warning: Form field '{form_field_id}' might overflow bottom margin.")
+            logger.warning(f"Form field '{form_field_id}' might overflow bottom margin.")
 
         create_input_field(
             self.form, form_field_id,
