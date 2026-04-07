@@ -41,8 +41,8 @@ class PageLayout:
         # Draw Title
         if title:
             self.title_y = self.height - 4.0 * cm
-            draw_title(self.c, self.title, self.text_x, self.title_y)
-            self.y_cursor = self.title_y - 0.8 * cm
+            new_y = draw_title(self.c, self.title, self.text_x, self.title_y, available_width=self.target_width)
+            self.y_cursor = new_y - (24 * 0.5)
         else:
             self.title_y = self.height - 2.0 * cm
             self.y_cursor = self.title_y

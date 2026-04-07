@@ -24,13 +24,13 @@ def create_psycho_edu_pages(c):
     # Side Panel (Full Height)
     card_margin = 2*cm
     draw_side_panel(c, card_margin, width, height)
-    draw_title(c, "Comprendre ses Racines", card_margin + 0.5*cm, height - 2.5*cm)
+    new_y = draw_title(c, "Comprendre ses Racines", card_margin + 0.5*cm, height - 2.5*cm)
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(card_margin + 0.5*cm, height - 3.2*cm, "Pour choisir son avenir")
+    c.drawString(card_margin + 0.5*cm, new_y - 0.2*cm, "Pour choisir son avenir")
 
     text_x = card_margin + 0.5*cm
-    text_y = height - 4.5*cm
+    text_y = new_y - 1.5*cm
     line_height = 14 # Slightly tighter
     
     def draw_paragraph_block(canvas, title, lines, y_start, color_title=PDFStyle.COLOR_ACCENT_RED):
@@ -94,8 +94,8 @@ def create_psycho_edu_pages(c):
     # --- PAGE 2: CONTRAT & SOUFFRANCE ---
     draw_page_background(c, width, height)
     draw_side_panel(c, card_margin, width, height)
-    draw_title(c, "Comprendre ses Racines (suite)", text_x, height - 2.5*cm)
-    text_y = height - 4.5*cm
+    new_y = draw_title(c, "Comprendre ses Racines (suite)", text_x, height - 2.5*cm)
+    text_y = new_y - 1.5*cm
 
     contrat_lines = [
         "Chaque famille possède un « Grand Livre de Comptes » invisible. On y inscrit ce que l'on doit",
@@ -131,8 +131,8 @@ def create_psycho_edu_pages(c):
     # --- PAGE 3: PISTES ET OUTILS ---
     draw_page_background(c, width, height)
     draw_side_panel(c, card_margin, width, height)
-    draw_title(c, "Les Outils pour Avancer", text_x, height - 2.5*cm)
-    text_y = height - 4.5*cm
+    new_y = draw_title(c, "Les Outils pour Avancer", text_x, height - 2.5*cm)
+    text_y = new_y - 1.5*cm
 
     pistes_lines = [
         "Voici trois pistes pour débloquer votre situation et transformer votre héritage :",

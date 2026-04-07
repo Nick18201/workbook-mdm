@@ -50,9 +50,9 @@ def create_intro_page(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 5.0*cm
     
-    draw_title(c, "Mode d'Emploi de Moi-Même", text_x, text_top)
+    new_y = draw_title(c, "Mode d'Emploi de Moi-Même", text_x, text_top)
     
-    text_y = text_top - 1.5*cm
+    text_y = new_y - 0.2*cm
     c.setFont(PDFStyle.FONT_BODY, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     
