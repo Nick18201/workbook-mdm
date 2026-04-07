@@ -10,9 +10,9 @@ from ..components import (
     draw_page_background, draw_dot_grid, draw_card, draw_side_panel, 
     draw_leaf, draw_title, draw_branding_logo, create_standard_cover,
     draw_circular_stamp, draw_pause_badge, draw_page_decorations,
-    create_standard_engagement_page, create_standard_summary_page, 
-    ExercisePageLayout
+    create_standard_engagement_page, create_standard_summary_page
 )
+from ..templates import PageLayout
 from ..forms import create_input_field, create_checkbox
 
 def create_chap1_cover(c):
@@ -297,14 +297,14 @@ def create_sac_a_dos_page(c):
     Page 6: Le Sac à Dos.
     Specific prompts from Markdown.
     """
-    layout = ExercisePageLayout(c, "Ce que je dépose aujourd'hui", part_title="1. Récapitulatif de la séance précédente")
-    layout.add_intro_text("Allégeons le sac à dos. Je décide de déposer :")
+    layout = PageLayout(c, "Ce que je dépose aujourd'hui", part_title="1. Récapitulatif de la séance précédente")
+    layout.add_text("Allégeons le sac à dos. Je décide de déposer :", spacing_after=0.3*cm)
     
     layout.add_question_block("Je lâche cette croyance :", "sac_croyance", box_height=2.5*cm)
     layout.add_question_block("Je ne veux plus subir :", "sac_subir", box_height=2.5*cm)
     layout.add_question_block("Ma plus grande peur est :", "sac_peur", box_height=2.5*cm)
     
-    layout.add_intro_text("...et je décide de la regarder en face.", style_choice="italic")
+    layout.add_text("...et je décide de la regarder en face.", style_choice="italic")
 
     layout.render()
 
@@ -313,8 +313,8 @@ def create_heritage_page(c):
     Page: Mon Héritage (3FVS - Genogramme Simplifié).
     Focus: Transmissions, Loyautés, Mandats.
     """
-    layout = ExercisePageLayout(c, "Mon Héritage (Matrice 3FVS)", part_title="2. Mes héritages")
-    layout.add_intro_text("Identifiez ce que vous avez reçu pour décider de ce que vous en faites.")
+    layout = PageLayout(c, "Mon Héritage (Matrice 3FVS)", part_title="2. Mes héritages")
+    layout.add_text("Identifiez ce que vous avez reçu pour décider de ce que vous en faites.", spacing_after=0.3*cm)
     
     layout.add_question_block("1. FORCES (Ce que je garde / Résilience)", "heritage_forces", 
                               subtitle="Quelles qualités, valeurs ou savoir-faire de ma famille sont des atouts ?", 
@@ -416,7 +416,7 @@ def create_mentors_page(c):
     """
     Page: Mentors & Anti-Modèles.
     """
-    layout = ExercisePageLayout(c, "Mentors & Anti-Modèles", part_title="2. Mes héritages")
+    layout = PageLayout(c, "Mentors & Anti-Modèles", part_title="2. Mes héritages")
     layout.add_question_block("Mes Mentors (Inspirations)", "mentors_positif", 
                               subtitle="Qui est votre héros professionnel (réel ou fictif) et pourquoi ? (J'admire X pour...)", 
                               box_height=6.0*cm)

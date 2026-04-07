@@ -11,8 +11,9 @@ from ..components import (
     draw_page_background, draw_dot_grid, draw_card, draw_side_panel, 
     draw_leaf, draw_title, draw_branding_logo, create_standard_cover,
     draw_circular_stamp, draw_pause_badge, draw_page_decorations,
-    draw_page_footer, create_standard_summary_page, ExercisePageLayout
+    draw_page_footer, create_standard_summary_page
 )
+from ..templates import PageLayout
 from ..forms import create_input_field
 
 def create_cover_page(c):
@@ -380,10 +381,10 @@ def create_faire_le_point_pages(c):
     parts = [(questions_part1, "1/2"), (questions_part2, "2/2")]
     
     for idx_part, (questions, part_label) in enumerate(parts):
-        layout = ExercisePageLayout(c, f"Faire le Point : Ma Situation ({part_label})", part_title="1. FAIRE LE POINT")
+        layout = PageLayout(c, f"Faire le Point : Ma Situation ({part_label})", part_title="1. FAIRE LE POINT")
         
         if idx_part == 0:
-            layout.add_intro_text("Le début d’un bilan, c’est le bon moment pour enclencher le bouton PAUSE.", style_choice="italic")
+            layout.add_text("Le début d’un bilan, c’est le bon moment pour enclencher le bouton PAUSE.", style_choice="italic", spacing_after=0.3*cm)
             
         for question, key in questions:
             layout.add_question_block(question, f's1_point_{key}', box_height=3.5*cm)
@@ -465,11 +466,11 @@ def create_domaines_de_vie_page(c):
         dot_end = x_pos + 6.3*cm
         
         if dot_end > dot_start:
+            c.saveState()
             c.setDash(1, 2)
-            c.setStrokeColor(colors.lightgrey)
+            c.setStrokeColor(PDFStyle.COLOR_LINE, alpha=0.3)
             c.line(dot_start, y_pos + 0.1*cm, dot_end, y_pos + 0.1*cm)
-            c.setDash()
-            c.setStrokeColor(colors.black)
+            c.restoreState()
         
         # Rating Box
         create_input_field(form, f's1_domaine_note_{i+1}',
@@ -520,7 +521,7 @@ def create_entourage_page(c):
     Mon Entourage.
     Soutiens vs Freins split.
     """
-    layout = ExercisePageLayout(c, "Mon Entourage", part_title="1. FAIRE LE POINT")
+    layout = PageLayout(c, "Mon Entourage", part_title="1. FAIRE LE POINT")
     
     intro_txt = (
         "Le projet que vous menez ne se fait pas en vase clos. Votre entourage, "
@@ -528,7 +529,7 @@ def create_entourage_page(c):
         "cheminement. Identifier vos alliés et les sources de tensions possibles "
         "est une étape importante pour sécuriser votre parcours."
     )
-    layout.add_intro_text(intro_txt)
+    layout.add_text(intro_txt, spacing_after=0.3*cm)
     
     # Needs two big areas: Soutiens (Blue) and Freins (Red)
     # The layout.add_question_block handles the alternate colors internally!
