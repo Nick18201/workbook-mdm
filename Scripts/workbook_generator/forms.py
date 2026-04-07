@@ -21,7 +21,7 @@ def create_input_field(form, name, pos, size, tooltip='', multiline=False, value
     form.textfield(
         name=name,
         tooltip=tooltip,
-        value=value, pos=(x, y), size=(width, height),
+        value=value, x=x, y=y, width=width, height=height,
         borderStyle='solid',
         borderColor=border_color,
         borderWidth=0.5,
