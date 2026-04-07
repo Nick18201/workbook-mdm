@@ -52,14 +52,3 @@
     *   "Quelle est sa plus grande force selon vous ?"
     *   "Dans quel environnement le/la verriez-vous s'épanouir ?"
 
----
-
-## 4. Instructions Techniques & IA
-
-*   **Synthèse 360° (IA)** :
-    *   L'IA reçoit les réponses brutes de 5 personnes.
-    *   Prompt : *"Extrais les 10 adjectifs les plus fréquents et identifie une qualité surprenante ou récurrente."*
-    *   Output : Liste pour le Nuage de Mots + 1 phrase de synthèse.
-*   **Rendu MBTI** :
-    *   Avoir une base de données (JSON/CSV) avec les textes pour chaque profil (16 profils).
-    *   L'automation va chercher le texte correspondant aux 4 lettres saisies.
