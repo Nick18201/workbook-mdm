@@ -1,6 +1,7 @@
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
+from reportlab.lib.utils import simpleSplit
 from .config import PDFStyle
 
 import math
@@ -160,14 +161,11 @@ def draw_leaf(c, x, y, size=50, color=PDFStyle.COLOR_ACCENT_BLUE, angle=0, alpha
     c.drawPath(p, fill=1, stroke=0)
     c.restoreState()
 
-def draw_title(c, text, x, y, size=24, color=PDFStyle.COLOR_ACCENT_BLUE):
+def draw_title(c, text, x, y, size=24, color=PDFStyle.COLOR_ACCENT_BLUE, available_width=None):
     """Refactored: Standard H1 title. Returns the Y position after the title."""
-    from reportlab.lib.pagesizes import A4
-    from reportlab.lib.utils import simpleSplit
-    width, _ = A4
-
-    # Calculate available width assuming a 2cm right margin
-    available_width = width - x - 2 * cm
+    if available_width is None:
+        width, _ = A4
+        available_width = width - x - 2 * cm
 
     c.saveState()
     c.setFont(PDFStyle.FONT_TITLE, size)
@@ -178,7 +176,7 @@ def draw_title(c, text, x, y, size=24, color=PDFStyle.COLOR_ACCENT_BLUE):
 
     for line in lines:
         c.drawString(x, current_y, line)
-        current_y -= (size + 5) # Rough line height based on size
+        current_y -= (size * 1.2)
 
     c.restoreState()
 

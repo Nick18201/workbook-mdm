@@ -63,7 +63,7 @@ def create_editorial_page_card(c):
     inner_w  = card_w  - 2.0*cm
     title_y  = card_y + card_h - 1.5*cm
 
-    new_y = draw_title(c, "Le mot d'accueil", inner_x, title_y, size=22)
+    new_y = draw_title(c, "Le mot d'accueil", inner_x, title_y, size=22, available_width=inner_w)
 
     if os.path.exists(PDFStyle.PATH_GUILLEMETS):
         c.drawImage(
@@ -176,7 +176,7 @@ def create_intro_sense_page(c):
     c.drawString(text_x, text_top + 1.2*cm, "INTRODUCTION")
     
     PURPLE_TITLE = colors.HexColor("#6C5CE7")
-    new_y = draw_title(c, "Mettre du sens", text_x, text_top, size=28, color=PURPLE_TITLE)
+    new_y = draw_title(c, "Mettre du sens", text_x, text_top, size=28, color=PURPLE_TITLE, available_width=content_width)
     
     if os.path.exists(PDFStyle.PATH_STAMP):
         stamp_size = 4*cm
