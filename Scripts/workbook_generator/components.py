@@ -143,8 +143,14 @@ def draw_side_panel(c, x, page_width, page_height):
     c.rect(x, 0, page_width - x, page_height, fill=1, stroke=0)
     c.restoreState()
 
-def draw_leaf(c, x, y, size=50, color=PDFStyle.COLOR_ACCENT_BLUE, angle=0, alpha=1.0):
+def draw_leaf(c, pos, **kwargs):
     """Leaf decoration."""
+    x, y = pos
+    size = kwargs.get('size', 50)
+    color = kwargs.get('color', PDFStyle.COLOR_ACCENT_BLUE)
+    angle = kwargs.get('angle', 0)
+    alpha = kwargs.get('alpha', 1.0)
+
     c.saveState()
     c.translate(x, y)
     c.rotate(angle)
@@ -161,8 +167,12 @@ def draw_leaf(c, x, y, size=50, color=PDFStyle.COLOR_ACCENT_BLUE, angle=0, alpha
     c.drawPath(p, fill=1, stroke=0)
     c.restoreState()
 
-def draw_title(c, text, x, y, size=24, color=PDFStyle.COLOR_ACCENT_BLUE, available_width=None):
+def draw_title(c, text, pos, available_width=None, **kwargs):
     """Refactored: Standard H1 title. Returns the Y position after the title."""
+    x, y = pos
+    size = kwargs.get('size', 24)
+    color = kwargs.get('color', PDFStyle.COLOR_ACCENT_BLUE)
+
     if available_width is None:
         width, _ = A4
         available_width = width - x - 2 * cm
@@ -480,7 +490,7 @@ def create_standard_engagement_page(c, part_title, custom_lines=None):
     text_x = card_margin + 1.0*cm
     text_top = height - 5.0*cm
     
-    new_y = draw_title(c, "Mon Engagement", text_x, text_top)
+    new_y = draw_title(c, "Mon Engagement", pos=(text_x, text_top))
     
     text_y = new_y - 1.0*cm
     c.setFont(PDFStyle.FONT_BODY, 11)
@@ -504,8 +514,7 @@ def create_standard_engagement_page(c, part_title, custom_lines=None):
     c.drawString(text_x, sig_y + 2*cm, "Date et Signature :")
     
     form = c.acroForm
-    create_input_field(form, 'signature_engagement',
-                       x=text_x, y=sig_y, width=10*cm, height=1.5*cm,
+    create_input_field(form, 'signature_engagement', pos=(text_x, sig_y), size=(10*cm, 1.5*cm),
                        tooltip='Votre Signature')
                        
     draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
@@ -524,7 +533,7 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
     text_x = card_margin + 1.0*cm
     target_width = width - card_margin - 2.0*cm
 
-    new_y = draw_title(c, "Récapitulatif de la séance précédente", text_x, height - 4.0*cm)
+    new_y = draw_title(c, "Récapitulatif de la séance précédente", pos=(text_x, height - 4.0*cm))
 
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -563,7 +572,7 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
         
         y_cursor -= len(lines) * 0.5 * cm + 0.3 * cm
         
-        create_input_field(form, f'recap_q{i+1}', x=text_x, y=y_cursor - box_height, width=target_width, height=box_height, multiline=True)
+        create_input_field(form, f'recap_q{i+1}', pos=(text_x, y_cursor - box_height), size=(target_width, box_height), multiline=True)
         
         y_cursor -= box_height + 0.8 * cm # Using 0.8cm strict gap between elements
 

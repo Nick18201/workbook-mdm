@@ -13,7 +13,7 @@ from ..components import (
     draw_circular_stamp, draw_pause_badge, draw_page_decorations,
     draw_page_footer, create_standard_summary_page
 )
-from ..templates import PageLayout
+from ..templates import PageLayout, LayoutConfig, QuestionConfig, TextConfig
 from ..forms import create_input_field
 
 def create_cover_page(c):
@@ -63,7 +63,7 @@ def create_editorial_page_card(c):
     inner_w  = card_w  - 2.0*cm
     title_y  = card_y + card_h - 1.5*cm
 
-    new_y = draw_title(c, "Le mot d'accueil", inner_x, title_y, size=22, available_width=inner_w)
+    new_y = draw_title(c, "Le mot d'accueil", pos=(inner_x, title_y), size=22, available_width=inner_w)
 
     if os.path.exists(PDFStyle.PATH_GUILLEMETS):
         c.drawImage(
@@ -176,7 +176,7 @@ def create_intro_sense_page(c):
     c.drawString(text_x, text_top + 1.2*cm, "INTRODUCTION")
     
     PURPLE_TITLE = colors.HexColor("#6C5CE7")
-    new_y = draw_title(c, "Mettre du sens", text_x, text_top, size=28, color=PURPLE_TITLE, available_width=content_width)
+    new_y = draw_title(c, "Mettre du sens", pos=(text_x, text_top), size=28, color=PURPLE_TITLE, available_width=content_width)
     
     if os.path.exists(PDFStyle.PATH_STAMP):
         stamp_size = 4*cm
@@ -235,7 +235,7 @@ def create_form_page_card(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
     
-    new_y = draw_title(c, "Mon Engagement", text_x, text_top)
+    new_y = draw_title(c, "Mon Engagement", pos=(text_x, text_top))
 
     form = c.acroForm
     start_y = new_y - 0.5*cm
@@ -244,15 +244,13 @@ def create_form_page_card(c):
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(text_x, start_y, "Moi, ")
     
-    create_input_field(form, 'nom_complet', 
-                       x=text_x + 1.5*cm, y=start_y-5, width=8*cm, height=20, 
+    create_input_field(form, 'nom_complet', pos=(text_x + 1.5*cm, start_y-5), size=(8*cm, 20),
                        tooltip='Prénom Nom')
     
     start_y -= 2*cm
     c.drawString(text_x, start_y, "décide d'investir")
     
-    create_input_field(form, 'engagement_hebdo',
-                       x=text_x + 3.5*cm, y=start_y-5, width=1.5*cm, height=20,
+    create_input_field(form, 'engagement_hebdo', pos=(text_x + 3.5*cm, start_y-5), size=(1.5*cm, 20),
                        tooltip='Nb')
                        
     c.drawString(text_x + 5.5*cm, start_y, "heures par semaine.")
@@ -261,16 +259,14 @@ def create_form_page_card(c):
     c.drawString(text_x, start_y, "Mon objectif principal :")
     start_y -= 0.5*cm
     
-    create_input_field(form, 'objectif_3_mois',
-                       x=text_x, y=start_y - 2*cm, width=width - text_x - 1*cm, height=2*cm,
+    create_input_field(form, 'objectif_3_mois', pos=(text_x, start_y - 2*cm), size=(width - text_x - 1*cm, 2*cm),
                        tooltip='Objectif', multiline=True)
                        
     start_y -= 3*cm 
     c.drawString(text_x, start_y, "Je m'autorise à :")
     start_y -= 0.5*cm
     
-    create_input_field(form, 'permission_personnelle',
-                       x=text_x, y=start_y - 2*cm, width=width - text_x - 1*cm, height=2*cm,
+    create_input_field(form, 'permission_personnelle', pos=(text_x, start_y - 2*cm), size=(width - text_x - 1*cm, 2*cm),
                        tooltip='Permission', multiline=True)
     
     # Hidden Fields
@@ -381,13 +377,13 @@ def create_faire_le_point_pages(c):
     parts = [(questions_part1, "1/2"), (questions_part2, "2/2")]
     
     for idx_part, (questions, part_label) in enumerate(parts):
-        layout = PageLayout(c, f"Faire le Point : Ma Situation ({part_label})", part_title="1. FAIRE LE POINT")
+        layout = PageLayout(c, f"Faire le Point : Ma Situation ({part_label})", config=LayoutConfig(part_title="1. FAIRE LE POINT"))
         
         if idx_part == 0:
-            layout.add_text("Le début d’un bilan, c’est le bon moment pour enclencher le bouton PAUSE.", style_choice="italic", spacing_after=0.3*cm)
+            layout.add_text("Le début d’un bilan, c’est le bon moment pour enclencher le bouton PAUSE.", config=TextConfig(style_choice="italic", spacing_after=0.3*cm))
             
         for question, key in questions:
-            layout.add_question_block(question, f's1_point_{key}', box_height=3.5*cm)
+            layout.add_question_block(question, f's1_point_{key}', config=QuestionConfig(box_height=3.5*cm))
 
         layout.render()
 
@@ -407,7 +403,7 @@ def create_domaines_de_vie_page(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
     
-    new_y = draw_title(c, "Les Domaines de Vie", text_x, text_top, size=22)
+    new_y = draw_title(c, "Les Domaines de Vie", pos=(text_x, text_top), size=22)
     
     # Intro Text (Psycho-education)
     style_intro = ParagraphStyle(
@@ -473,9 +469,7 @@ def create_domaines_de_vie_page(c):
             c.restoreState()
         
         # Rating Box
-        create_input_field(form, f's1_domaine_note_{i+1}',
-                           x=x_pos + 6.5*cm, y=y_pos - 0.1*cm,
-                           width=1.5*cm, height=0.6*cm,
+        create_input_field(form, f's1_domaine_note_{i+1}', pos=(x_pos + 6.5*cm, y_pos - 0.1*cm), size=(1.5*cm, 0.6*cm),
                            tooltip='Note /10')
 
     # Reflection Section
@@ -508,9 +502,7 @@ def create_domaines_de_vie_page(c):
     
     if area_height < 3*cm: area_height = 3*cm
     
-    create_input_field(form, 's1_domaine_reflexion',
-                       x=text_x, y=area_bottom,
-                       width=width - text_x - 1*cm, height=area_height,
+    create_input_field(form, 's1_domaine_reflexion', pos=(text_x, area_bottom), size=(width - text_x - 1*cm, area_height),
                        tooltip='Votre réflexion', multiline=True)
 
     draw_page_decorations(c, width, height, part_title="1. FAIRE LE POINT", x_offset=card_margin)
@@ -521,7 +513,7 @@ def create_entourage_page(c):
     Mon Entourage.
     Soutiens vs Freins split.
     """
-    layout = PageLayout(c, "Mon Entourage", part_title="1. FAIRE LE POINT")
+    layout = PageLayout(c, "Mon Entourage", config=LayoutConfig(part_title="1. FAIRE LE POINT"))
     
     intro_txt = (
         "Le projet que vous menez ne se fait pas en vase clos. Votre entourage, "
@@ -529,17 +521,15 @@ def create_entourage_page(c):
         "cheminement. Identifier vos alliés et les sources de tensions possibles "
         "est une étape importante pour sécuriser votre parcours."
     )
-    layout.add_text(intro_txt, spacing_after=0.3*cm)
+    layout.add_text(intro_txt, config=TextConfig(spacing_after=0.3*cm))
     
     # Needs two big areas: Soutiens (Blue) and Freins (Red)
     # The layout.add_question_block handles the alternate colors internally!
     
     layout.add_question_block("Soutien, conseil en positif", "s1_entourage_soutiens", 
-                              subtitle="Qui peut vous soutenir ou vous conseiller utilement dans cette démarche ?", 
-                              box_height=7.5*cm)
+                              config=QuestionConfig(box_height=7.5*cm, subtitle="Qui peut vous soutenir ou vous conseiller utilement dans cette démarche ?"))
                               
     layout.add_question_block("Regard négatif ou anxiété des proches", "s1_entourage_freins", 
-                              subtitle="Qui pourrait exprimer des doutes, des craintes ou un regard critique ?", 
-                              box_height=7.5*cm)
+                              config=QuestionConfig(box_height=7.5*cm, subtitle="Qui pourrait exprimer des doutes, des craintes ou un regard critique ?"))
 
     layout.render()
