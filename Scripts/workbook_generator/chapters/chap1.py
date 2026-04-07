@@ -61,11 +61,11 @@ def create_meteo_page(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
     
-    draw_title(c, "Mon État d'Esprit Actuel", text_x, text_top)
+    new_y = draw_title(c, "Mon État d'Esprit Actuel", text_x, text_top)
     
     form = c.acroForm
     
-    y_opts = text_top - 2*cm
+    y_opts = new_y - 0.5*cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(text_x, y_opts, "Aujourd'hui, je me sens :")
@@ -139,12 +139,12 @@ def create_vision_page(c):
     # Title
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    draw_title(c, "Ma Vision 360°", text_x, text_top)
+    new_y = draw_title(c, "Ma Vision 360°", text_x, text_top)
     
     # Instruction
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, text_top - 0.7*cm, "Instruction : Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.")
+    c.drawString(text_x, new_y - 0.2*cm, "Instruction : Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.")
 
     # Center (Relative to panel)
     center_x = card_margin + (width - card_margin) / 2
@@ -246,23 +246,23 @@ def create_boussole_page(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
     
-    draw_title(c, "Mon Objectif Boussole", text_x, text_top)
+    new_y = draw_title(c, "Mon Objectif Boussole", text_x, text_top)
     
     form = c.acroForm
     
     # Visual Compass (Placeholder Circle)
     c.setStrokeColor(PDFStyle.COLOR_ACCENT_RED)
     c.setLineWidth(3)
-    c.circle(width/2, text_top - 2.5*cm, 1.5*cm, fill=0, stroke=1)
+    c.circle(width/2, new_y - 1.5*cm, 1.5*cm, fill=0, stroke=1)
     # North mark
     c.setFont(PDFStyle.FONT_BRANDING, 20)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawCentredString(width/2, text_top - 2.5*cm + 0.8*cm, "N")
+    c.drawCentredString(width/2, new_y - 1.5*cm + 0.8*cm, "N")
 
     # Main Goal Structure
     # "D'ici 3 mois, je veux avoir clarifié [Enjeu principal] pour pouvoir [Bénéfice concret]."
     
-    y_goal = text_top - 5.5*cm
+    y_goal = new_y - 4.5*cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 13)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(text_x, y_goal, "D'ici 3 mois, je veux avoir clarifié :")
@@ -346,10 +346,10 @@ def create_work_image_page(c):
     draw_side_panel(c, card_margin, width, height)
     
     text_x = card_margin + 1.0*cm
-    draw_title(c, "Image du Monde du Travail", text_x, height - 4.0*cm)
+    new_y = draw_title(c, "Image du Monde du Travail", text_x, height - 4.0*cm)
 
     form = c.acroForm
-    y_cursor = height - 5.5*cm
+    y_cursor = new_y - 0.5*cm
 
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)

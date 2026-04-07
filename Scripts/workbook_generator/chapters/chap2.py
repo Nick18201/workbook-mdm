@@ -64,13 +64,13 @@ def create_timeline_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    draw_title(c, "Ma Ligne de Vie (Les Montagnes Russes)", text_x, text_top)
+    new_y = draw_title(c, "Ma Ligne de Vie (Les Montagnes Russes)", text_x, text_top)
 
     c.setFont(PDFStyle.FONT_BODY, 10)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     desc_text = "Tracez la courbe de votre vie (pro/perso). Identifiez les moments forts (les sommets) et difficiles (les vallées). L'objectif est de comprendre ce qui vous ressource et vos apprentissages lors d'épreuves."
     from reportlab.lib.utils import simpleSplit
-    text_y = text_top - 0.8*cm
+    text_y = new_y - 0.2*cm
     for line in simpleSplit(desc_text, PDFStyle.FONT_BODY, 10, width - text_x - 1.0*cm):
         c.drawString(text_x, text_y, line)
         text_y -= 0.4*cm
@@ -154,11 +154,11 @@ def create_skills_transfer_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    draw_title(c, "Mes Compétences de Vie", text_x, text_top)
+    new_y = draw_title(c, "Mes Compétences de Vie", text_x, text_top)
 
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, text_top - 0.8*cm, "Transformons votre vécu en capital. Je ne pars pas de zéro, je pars de mon expérience.")
+    c.drawString(text_x, new_y - 0.2*cm, "Transformons votre vécu en capital. Je ne pars pas de zéro, je pars de mon expérience.")
     
     # Explications supplémentaires
     c.setFont(PDFStyle.FONT_BODY, 9)
@@ -169,7 +169,7 @@ def create_skills_transfer_page(c):
         "Une expérience vécue (ex: organiser un événement familial) cache souvent des talents (ex: planification, gestion du stress).",
         "Ne sous-estimez aucune expérience. Même la gestion du quotidien développe des compétences clés."
     ]
-    y_desc = text_top - 1.5*cm
+    y_desc = new_y - 0.8*cm
     from reportlab.lib.utils import simpleSplit
     target_width = width - text_x - 1.0*cm
     for line in desc_lines:
@@ -257,20 +257,20 @@ def create_analysis_parcours_pages(c):
         
         text_x = card_margin + 1.0*cm
         text_top = height - 4.0*cm
-        draw_title(c, "Analyse du Parcours", text_x, text_top)
+        new_y = draw_title(c, "Analyse du Parcours", text_x, text_top)
         
         c.setFont(PDFStyle.FONT_BODY, 10)
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
         if page_num == 0:
             intro_txt = "Détaillez chaque expérience significative (emploi, stage, bénévolat). Cet inventaire vous servira de socle pour repérer vos réussites et analyser ce que vous souhaitez retrouver ou éviter à l'avenir."
-            text_y = text_top - 0.8*cm
+            text_y = new_y - 0.2*cm
             from reportlab.lib.utils import simpleSplit
             for line in simpleSplit(intro_txt, PDFStyle.FONT_BODY, 10, width - text_x - 1.0*cm):
                 c.drawString(text_x, text_y, line)
                 text_y -= 0.4*cm
             y_cursor = text_y - 0.5*cm
         else:
-            y_cursor = text_top - 1.5*cm
+            y_cursor = new_y - 0.5*cm
         
         for block_idx in range(2):
             global_exp_idx = page_num * 2 + block_idx + 1
@@ -326,10 +326,10 @@ def create_analysis_parcours_pages(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    draw_title(c, "Analyse Transversale & Moteurs", text_x, text_top)
+    new_y = draw_title(c, "Analyse Transversale & Moteurs", text_x, text_top)
 
     # Introduction Text to the Approach
-    text_y = text_top - 0.8*cm
+    text_y = new_y - 0.2*cm
     c.setFont(PDFStyle.FONT_BODY, 10)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     
@@ -409,10 +409,10 @@ def create_tree_of_life_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    draw_title(c, "Mon Arbre de Vie", text_x, text_top)
+    new_y = draw_title(c, "Mon Arbre de Vie", text_x, text_top)
 
     # --- 1. INTRO & OBJECTIF ---
-    y_cursor = text_top - 1.0*cm
+    y_cursor = new_y - 0.2*cm
     
     # Objectif styling
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
@@ -607,14 +607,14 @@ def create_interview_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    draw_title(c, "Interview avec une personne passionnée", text_x, text_top)
+    new_y = draw_title(c, "Interview avec une personne passionnée", text_x, text_top)
 
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, text_top - 1.0*cm, "Rencontrez quelqu'un qui a un métier ou une vie qui vous inspire.")
+    c.drawString(text_x, new_y - 0.2*cm, "Rencontrez quelqu'un qui a un métier ou une vie qui vous inspire.")
     
     form = c.acroForm
-    y_cursor = text_top - 2.5*cm
+    y_cursor = new_y - 1.2*cm
     
     col1_x = text_x
     col2_x = text_x + 8.0*cm

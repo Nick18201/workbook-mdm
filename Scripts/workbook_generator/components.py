@@ -161,12 +161,29 @@ def draw_leaf(c, x, y, size=50, color=PDFStyle.COLOR_ACCENT_BLUE, angle=0, alpha
     c.restoreState()
 
 def draw_title(c, text, x, y, size=24, color=PDFStyle.COLOR_ACCENT_BLUE):
-    """Refactored: Standard H1 title."""
+    """Refactored: Standard H1 title. Returns the Y position after the title."""
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.utils import simpleSplit
+    width, _ = A4
+
+    # Calculate available width assuming a 2cm right margin
+    available_width = width - x - 2 * cm
+
     c.saveState()
     c.setFont(PDFStyle.FONT_TITLE, size)
     c.setFillColor(color)
-    c.drawString(x, y, text)
+
+    lines = simpleSplit(text, PDFStyle.FONT_TITLE, size, available_width)
+    current_y = y
+
+    for line in lines:
+        c.drawString(x, current_y, line)
+        current_y -= (size + 5) # Rough line height based on size
+
     c.restoreState()
+
+    # Return the position after the last line
+    return current_y
 
 def draw_branding_logo(c, x, y, size=40, align='left'):
     """
@@ -346,13 +363,28 @@ def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT
         c.restoreState()
 
     # 3. Titres
+    from reportlab.lib.utils import simpleSplit
+
+    max_text_width = width - band_width - 40 - 1*cm
+
     c.setFont(PDFStyle.FONT_BODY, 14)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawRightString(width - 40, height - 210, title) 
+    title_lines = simpleSplit(title, PDFStyle.FONT_BODY, 14, max_text_width)
+
+    y_text = height - 210
+    for line in title_lines:
+        c.drawRightString(width - 40, y_text, line)
+        y_text -= 16
+
+    y_text -= 14 # Extra space between title and subtitle
     
     c.setFont(PDFStyle.FONT_TITLE, 18)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawRightString(width - 40, height - 240, subtitle)
+    subtitle_lines = simpleSplit(subtitle, PDFStyle.FONT_TITLE, 18, max_text_width)
+
+    for line in subtitle_lines:
+        c.drawRightString(width - 40, y_text, line)
+        y_text -= 20
     
     c.showPage()
 
@@ -386,9 +418,14 @@ def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, 
     start_y = height - 10*cm
     c.setFont(PDFStyle.FONT_BRANDING, 32)
     c.setFillColor(PDFStyle.COLOR_WHITE)
-    c.drawString(2.5*cm, start_y, chapter_title)
     
-    text_y = start_y - 2*cm
+    title_lines = simpleSplit(chapter_title, PDFStyle.FONT_BRANDING, 32, width - 5*cm)
+    current_y = start_y
+    for line in title_lines:
+        c.drawString(2.5*cm, current_y, line)
+        current_y -= 40
+
+    text_y = current_y - 1*cm # Add space after the title
     
     if intro_text:
         style_body = ParagraphStyle(
@@ -445,9 +482,9 @@ def create_standard_engagement_page(c, part_title, custom_lines=None):
     text_x = card_margin + 1.0*cm
     text_top = height - 5.0*cm
     
-    draw_title(c, "Mon Engagement", text_x, text_top)
+    new_y = draw_title(c, "Mon Engagement", text_x, text_top)
     
-    text_y = text_top - 2*cm
+    text_y = new_y - 1.0*cm
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     
@@ -489,11 +526,11 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
     text_x = card_margin + 1.0*cm
     target_width = width - card_margin - 2.0*cm
 
-    draw_title(c, "Récapitulatif de la séance précédente", text_x, height - 4.0*cm)
+    new_y = draw_title(c, "Récapitulatif de la séance précédente", text_x, height - 4.0*cm)
 
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    text_y = height - 4.8*cm
+    text_y = new_y - 0.5*cm
     for line in simpleSplit(intro_txt, PDFStyle.FONT_BODY, 11, target_width):
         c.drawString(text_x, text_y, line)
         text_y -= 0.5*cm

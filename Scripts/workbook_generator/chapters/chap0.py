@@ -63,7 +63,7 @@ def create_editorial_page_card(c):
     inner_w  = card_w  - 2.0*cm
     title_y  = card_y + card_h - 1.5*cm
 
-    draw_title(c, "Le mot d'accueil", inner_x, title_y, size=22)
+    new_y = draw_title(c, "Le mot d'accueil", inner_x, title_y, size=22)
 
     if os.path.exists(PDFStyle.PATH_GUILLEMETS):
         c.drawImage(
@@ -79,7 +79,7 @@ def create_editorial_page_card(c):
         c.drawRightString(card_x + card_w - 1.0*cm, title_y + 0.2*cm, '\u201c\u201c')
         c.restoreState()
 
-    text_y = title_y - 1.6*cm
+    text_y = new_y - 0.5*cm
 
     style = ParagraphStyle(
         'EditoBody',
@@ -176,7 +176,7 @@ def create_intro_sense_page(c):
     c.drawString(text_x, text_top + 1.2*cm, "INTRODUCTION")
     
     PURPLE_TITLE = colors.HexColor("#6C5CE7")
-    draw_title(c, "Mettre du sens", text_x, text_top, size=28, color=PURPLE_TITLE)
+    new_y = draw_title(c, "Mettre du sens", text_x, text_top, size=28, color=PURPLE_TITLE)
     
     if os.path.exists(PDFStyle.PATH_STAMP):
         stamp_size = 4*cm
@@ -191,7 +191,7 @@ def create_intro_sense_page(c):
         )
         c.restoreState()
     
-    text_y = text_top - 1.5*cm
+    text_y = new_y - 0.2*cm
     
     paragraphs = [
         "La question du sens est centrale dans nos vies : savoir pour quelles raisons nous faisons les choses, c’est reprendre notre pouvoir d’agir en conscience.",
@@ -235,10 +235,10 @@ def create_form_page_card(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
     
-    draw_title(c, "Mon Engagement", text_x, text_top)
+    new_y = draw_title(c, "Mon Engagement", text_x, text_top)
 
     form = c.acroForm
-    start_y = text_top - 1.5*cm
+    start_y = new_y - 0.5*cm
     
     c.setFont(PDFStyle.FONT_BODY, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -407,7 +407,7 @@ def create_domaines_de_vie_page(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
     
-    draw_title(c, "Les Domaines de Vie", text_x, text_top, size=22)
+    new_y = draw_title(c, "Les Domaines de Vie", text_x, text_top, size=22)
     
     # Intro Text (Psycho-education)
     style_intro = ParagraphStyle(
@@ -429,7 +429,7 @@ def create_domaines_de_vie_page(c):
     
     p_intro = Paragraph(intro_txt, style_intro)
     w_i, h_i = p_intro.wrap(width - text_x - 1*cm, height)
-    p_intro.drawOn(c, text_x, text_top - 1.2*cm - h_i)
+    p_intro.drawOn(c, text_x, new_y - 0.2*cm - h_i)
     
     # 8 Domains
     domains = [
@@ -444,7 +444,7 @@ def create_domaines_de_vie_page(c):
     ]
     
     form = c.acroForm
-    start_y = text_top - 1.5*cm - h_i - 2*cm
+    start_y = new_y - 0.2*cm - h_i - 1.5*cm
     panel_width = width - card_margin
     col_width = (panel_width - 2*cm) / 2
     
