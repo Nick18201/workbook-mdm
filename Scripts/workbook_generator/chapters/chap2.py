@@ -11,8 +11,9 @@ from ..components import (
     draw_page_background, draw_dot_grid, draw_card, draw_side_panel, 
     draw_leaf, draw_title, draw_branding_logo, draw_section_separator,
     create_standard_cover, draw_circular_stamp, draw_pause_badge, draw_page_decorations,
-    create_standard_summary_page, create_standard_recap_page, ExercisePageLayout
+    create_standard_summary_page, create_standard_recap_page
 )
+from ..templates import PageLayout
 from ..forms import create_input_field
 
 def create_chap2_cover(c):

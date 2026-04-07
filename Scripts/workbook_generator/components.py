@@ -123,7 +123,7 @@ def draw_card(c, x, y, width, height):
     """Draws a creme rounded card with shadow."""
     c.saveState()
     # Soft Shadow
-    c.setFillColor(colors.black, alpha=0.03)
+    c.setFillColor(PDFStyle.COLOR_SHADOW, alpha=0.03)
     c.roundRect(x+3, y-3, width, height, PDFStyle.CARD_RADIUS, fill=1, stroke=0)
     # Card
     c.setFillColor(PDFStyle.COLOR_CARD_CREME)
@@ -134,7 +134,7 @@ def draw_side_panel(c, x, page_width, page_height):
     """Draws a creme panel extending to Top, Bottom, Right."""
     c.saveState() 
     # Shadow (Left side only)
-    c.setFillColor(colors.black, alpha=0.05)
+    c.setFillColor(PDFStyle.COLOR_SHADOW, alpha=0.05)
     c.rect(x-3, 0, page_width - x + 3, page_height, fill=1, stroke=0)
     
     # Main Creme Panel
@@ -536,85 +536,5 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
     c.showPage()
 
 
-class ExercisePageLayout:
-    """
-    Helper class to maintain consistent layout across all Exercise pages.
-    Usage:
-        layout = ExercisePageLayout(c, "Titre de l'exo", "1. MOTEURS")
-        layout.add_intro_text("Consigne ou explication")
-        layout.add_question_block("Question 1 ?", "form_q1")
-        layout.render()
-    """
-    def __init__(self, c, title, part_title=""):
-        self.c = c
-        self.title = title
-        self.part_title = part_title
-        
-        self.width, self.height = A4
-        self.card_margin = 2*cm
-        self.text_x = self.card_margin + 1.0*cm
-        self.target_width = self.width - self.card_margin - 2.0*cm
-        
-        # Start drawing base
-        draw_page_background(self.c, self.width, self.height)
-        draw_side_panel(self.c, self.card_margin, self.width, self.height)
-        
-        # Draw Title
-        self.title_y = self.height - 4.0*cm
-        draw_title(self.c, self.title, self.text_x, self.title_y)
-        
-        self.y_cursor = self.title_y - 0.8*cm
-        self.question_index = 0
-
-    def add_intro_text(self, text, style_choice='body'):
-        """Adds a paragraph of text and moves cursor appropriately."""
-        if style_choice == 'body':
-            self.c.setFont(PDFStyle.FONT_BODY, 11)
-            self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        else:
-            self.c.setFont(PDFStyle.FONT_ITALIC, 11)
-            self.c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-            
-        for line in simpleSplit(text, self.c._fontname, self.c._fontsize, self.target_width):
-            self.c.drawString(self.text_x, self.y_cursor, line)
-            self.y_cursor -= 0.5*cm
-            
-        self.y_cursor -= 0.3*cm
-
-    def add_question_block(self, question, form_field_id, box_height=3.0*cm, subtitle=None):
-        """Adds a standard question block (alternating color) and its AcroForm input."""
-        color = PDFStyle.COLOR_ACCENT_BLUE if self.question_index % 2 == 0 else PDFStyle.COLOR_ACCENT_RED
-        
-        text_obj = self.c.beginText(self.text_x, self.y_cursor)
-        text_obj.setFont(PDFStyle.FONT_SUBTITLE, 11)
-        text_obj.setFillColor(color)
-        
-        lines = simpleSplit(question, PDFStyle.FONT_SUBTITLE, 11, self.target_width)
-        for line in lines:
-            text_obj.textLine(line)
-        self.c.drawText(text_obj)
-        self.y_cursor -= len(lines) * 0.5 * cm + 0.1 * cm
-        
-        if subtitle:
-            self.c.setFont(PDFStyle.FONT_BODY, 10)
-            self.c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-            for s_line in simpleSplit(subtitle, PDFStyle.FONT_BODY, 10, self.target_width):
-                self.c.drawString(self.text_x, self.y_cursor, s_line)
-                self.y_cursor -= 0.4*cm
-            self.y_cursor -= 0.1*cm
-            
-        self.y_cursor -= 0.2*cm # small gap before input area
-            
-        form = self.c.acroForm
-        create_input_field(form, form_field_id, x=self.text_x, y=self.y_cursor - box_height, 
-                           width=self.target_width, height=box_height, multiline=True)
-                           
-        self.y_cursor -= box_height + 0.8 * cm # 0.8cm absolute gap between blocks
-        self.question_index += 1
-
-    def render(self):
-        """Finalizes the page with decorations."""
-        draw_page_decorations(self.c, self.width, self.height, part_title=self.part_title, x_offset=self.card_margin)
-        self.c.showPage()
 
 

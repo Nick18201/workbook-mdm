@@ -16,6 +16,10 @@ class PDFStyle:
     COLOR_CARD_CREME = colors.HexColor("#FFF8F2")    # Couleur Crème pour les cartes/blocs
     COLOR_BG_BLOB = colors.HexColor("#FADADD")       # Zones roses plus prononcées
 
+    # Derivations from Indigo to ensure Zero Black rule
+    COLOR_SHADOW = colors.HexColor("#2F2EFA")        # Used with low alpha for shadows
+    COLOR_LINE = colors.HexColor("#2F2EFA")          # Used with low alpha for lines
+
     # B. Typography
     FONT_TITLE = "Montserrat-Black"
     FONT_SUBTITLE = "Montserrat-Bold"

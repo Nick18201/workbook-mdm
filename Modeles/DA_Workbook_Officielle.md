@@ -14,8 +14,8 @@ Toutes les couleurs sombres sont des déclinaisons de bleu profond ou de gris co
 | Rôle | Nom | Hex | Usage |
 | :--- | :--- | :--- | :--- |
 | **Fond Dominant** | **Nude / Blush** | `#FFF0E6` | Arrière-plan de toutes les pages de contenu et couverture. |
-| **Couleur Principale** | **Indigo Électrique** | `#3434C2` | Titres principaux (H1), pages intercalaires (fonds pleins), feuilles graphiques, grille (transparence). |
-| **Texte (Faux Noir)** | **Gunmetal** | `#2A2A35` | Corps de texte, paragraphes, lignes fines de tableaux. |
+| **Couleur Principale** | **Indigo Électrique** | `#2F2EFA` | Titres principaux (H1), pages intercalaires (fonds pleins), feuilles graphiques, grille (transparence). |
+| **Texte (Faux Noir)** | **Gunmetal** | `#2F2EFA` | Corps de texte, paragraphes, lignes fines de tableaux. (Aligné sur l'Indigo dans l'implémentation actuelle) |
 | **Accent Vif** | **Rouge Vif** | `#FF4D4D` | Puces, sous-titres H2, formes géométriques d'ancrage. |
 | **Lumière** | **Jaune Soleil** | `#FFEB3B` | Touches de lumière très ponctuelles. |
 | **Neutre** | **Blanc Pur** | `#FFFFFF` | Textes sur fond bleu, cercles de respiration sur fond nude. |
@@ -36,7 +36,7 @@ Toutes les couleurs sombres sont des déclinaisons de bleu profond ou de gris co
 
 ## 4. Univers Graphique
 *   **La Trame de Fond (Dot Grid)** :
-    *   Indigo (`#3434C2`) à **20-30%** d'opacité (Plus visible).
+    *   Indigo (`#2F2EFA`) à **20-30%** d'opacité (Plus visible).
 *   **Formes Organiques (Feuilles)** :
     *   Flat design, sans contours.
     *   Compositions florales (Branches courbes).
@@ -47,5 +47,5 @@ Toutes les couleurs sombres sont des déclinaisons de bleu profond ou de gris co
 
 ## 5. Structure des Pages Types
 *   **Page de Couverture** : Fond Nude + Dot Grid. Cercle blanc, Feuilles, Carré rouge.
-*   **Page Sommaire / "Au Programme"** : **Fond Indigo Plein (#3434C2)**. Texte Blanc. Puces vectorielles.
+*   **Page Sommaire / "Au Programme"** : **Fond Indigo Plein (#2F2EFA)**. Texte Blanc. Puces vectorielles.
 *   **Pages de Contenu (Mot d'accueil, etc.)** : Fond Nude + Dot Grid + **Carte Blanche** centrale contenant le texte.

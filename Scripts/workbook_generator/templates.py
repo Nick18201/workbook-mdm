@@ -1,0 +1,113 @@
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import cm
+from reportlab.lib.utils import simpleSplit
+from .config import PDFStyle
+from .components import (
+    draw_page_background, draw_side_panel, draw_title,
+    draw_page_decorations, draw_card
+)
+from .forms import create_input_field
+
+class PageLayout:
+    """
+    Base Layout Engine for the Workbook.
+    Automatically handles the boilerplate for:
+    - Page dimensions, Backgrounds, Side Panels, Decorations.
+    - Cursor tracking to prevent overlapping elements.
+    - Simplified methods to add text and question blocks.
+    """
+    def __init__(self, c, title, part_title="", use_side_panel=True, use_blobs=False, y_start=None):
+        self.c = c
+        self.title = title
+        self.part_title = part_title
+
+        self.width, self.height = A4
+        self.card_margin = 2 * cm
+
+        # Draw background elements
+        draw_page_background(self.c, self.width, self.height, use_blobs=use_blobs)
+
+        if use_side_panel:
+            draw_side_panel(self.c, self.card_margin, self.width, self.height)
+            self.text_x = self.card_margin + 1.0 * cm
+            self.target_width = self.width - self.card_margin - 2.0 * cm
+        else:
+            self.text_x = 2.0 * cm
+            self.target_width = self.width - 4.0 * cm
+
+        # Draw Title
+        if title:
+            self.title_y = self.height - 4.0 * cm
+            draw_title(self.c, self.title, self.text_x, self.title_y)
+            self.y_cursor = self.title_y - 0.8 * cm
+        else:
+            self.title_y = self.height - 2.0 * cm
+            self.y_cursor = self.title_y
+
+        if y_start is not None:
+            self.y_cursor = y_start
+
+        self.question_index = 0
+        self.form = self.c.acroForm
+
+    def add_text(self, text, style_choice='body', font_size=11, color=PDFStyle.COLOR_TEXT_MAIN, spacing_after=0.5*cm, align='left'):
+        """Adds a paragraph of text, automatically wrapping and moving the cursor."""
+        if style_choice == 'body':
+            self.c.setFont(PDFStyle.FONT_BODY, font_size)
+        elif style_choice == 'italic':
+            self.c.setFont(PDFStyle.FONT_ITALIC, font_size)
+        elif style_choice == 'subtitle':
+            self.c.setFont(PDFStyle.FONT_SUBTITLE, font_size)
+
+        self.c.setFillColor(color)
+
+        lines = simpleSplit(text, self.c._fontname, self.c._fontsize, self.target_width)
+        for line in lines:
+            if align == 'center':
+                self.c.drawCentredString(self.text_x + self.target_width/2, self.y_cursor, line)
+            elif align == 'right':
+                self.c.drawRightString(self.text_x + self.target_width, self.y_cursor, line)
+            else:
+                self.c.drawString(self.text_x, self.y_cursor, line)
+            self.y_cursor -= (font_size / 28.34) * cm + 0.1 * cm # Roughly line height
+
+        self.y_cursor -= spacing_after
+        return self.y_cursor
+
+    def add_question_block(self, question, form_field_id, box_height=3.0*cm, subtitle=None, color_alternation=True):
+        """Adds a standard question block and its AcroForm input."""
+        if color_alternation:
+            color = PDFStyle.COLOR_ACCENT_BLUE if self.question_index % 2 == 0 else PDFStyle.COLOR_ACCENT_RED
+        else:
+            color = PDFStyle.COLOR_ACCENT_BLUE
+
+        self.add_text(question, style_choice='subtitle', font_size=11, color=color, spacing_after=0.1*cm)
+
+        if subtitle:
+            self.add_text(subtitle, style_choice='body', font_size=10, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.1*cm)
+
+        self.y_cursor -= 0.2 * cm # Gap before input
+
+        # Check if we need to paginate (basic protection)
+        if self.y_cursor - box_height < 3 * cm:
+            print(f"Warning: Form field '{form_field_id}' might overflow bottom margin.")
+
+        create_input_field(
+            self.form, form_field_id,
+            x=self.text_x, y=self.y_cursor - box_height,
+            width=self.target_width, height=box_height,
+            multiline=True
+        )
+
+        self.y_cursor -= (box_height + 0.8 * cm)
+        self.question_index += 1
+        return self.y_cursor
+
+    def add_space(self, height):
+        self.y_cursor -= height
+        return self.y_cursor
+
+    def render(self):
+        """Finalizes the page with decorations."""
+        draw_page_decorations(self.c, self.width, self.height, part_title=self.part_title, x_offset=self.card_margin)
+        self.c.showPage()
