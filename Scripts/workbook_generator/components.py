@@ -2,6 +2,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.utils import simpleSplit
+from dataclasses import dataclass
 from .config import PDFStyle
 
 import math
@@ -143,40 +144,62 @@ def draw_side_panel(c, x, page_width, page_height):
     c.rect(x, 0, page_width - x, page_height, fill=1, stroke=0)
     c.restoreState()
 
-def draw_leaf(c, x, y, size=50, color=PDFStyle.COLOR_ACCENT_BLUE, angle=0, alpha=1.0):
+@dataclass
+class LeafStyle:
+    size: float = 50
+    color: str = PDFStyle.COLOR_ACCENT_BLUE
+    angle: float = 0
+    alpha: float = 1.0
+
+def draw_leaf(c, pos, style: LeafStyle = None):
     """Leaf decoration."""
+    if style is None:
+        style = LeafStyle()
+
+    x, y = pos
+
     c.saveState()
     c.translate(x, y)
-    c.rotate(angle)
-    c.scale(size/100.0, size/100.0)
+    c.rotate(style.angle)
+    c.scale(style.size/100.0, style.size/100.0)
     p = c.beginPath()
     p.moveTo(0, 0)
     p.curveTo(30, 20, 50, 60, 0, 100)
     p.curveTo(-50, 60, -30, 20, 0, 0)
-    if isinstance(color, colors.Color):
-        r, g, b = color.red, color.green, color.blue
-        c.setFillColorRGB(r, g, b, alpha)
+    if isinstance(style.color, colors.Color):
+        r, g, b = style.color.red, style.color.green, style.color.blue
+        c.setFillColorRGB(r, g, b, style.alpha)
     else:
-         c.setFillColor(color)
+         c.setFillColor(style.color)
     c.drawPath(p, fill=1, stroke=0)
     c.restoreState()
 
-def draw_title(c, text, x, y, size=24, color=PDFStyle.COLOR_ACCENT_BLUE, available_width=None):
+@dataclass
+class TitleStyle:
+    size: float = 24
+    color: str = PDFStyle.COLOR_ACCENT_BLUE
+
+def draw_title(c, text, pos, available_width=None, style: TitleStyle = None):
     """Refactored: Standard H1 title. Returns the Y position after the title."""
+    if style is None:
+        style = TitleStyle()
+
+    x, y = pos
+
     if available_width is None:
         width, _ = A4
         available_width = width - x - 2 * cm
 
     c.saveState()
-    c.setFont(PDFStyle.FONT_TITLE, size)
-    c.setFillColor(color)
+    c.setFont(PDFStyle.FONT_TITLE, style.size)
+    c.setFillColor(style.color)
 
-    lines = simpleSplit(text, PDFStyle.FONT_TITLE, size, available_width)
+    lines = simpleSplit(text, PDFStyle.FONT_TITLE, style.size, available_width)
     current_y = y
 
     for line in lines:
         c.drawString(x, current_y, line)
-        current_y -= (size * 1.2)
+        current_y -= (style.size * 1.2)
 
     c.restoreState()
 
@@ -480,7 +503,7 @@ def create_standard_engagement_page(c, part_title, custom_lines=None):
     text_x = card_margin + 1.0*cm
     text_top = height - 5.0*cm
     
-    new_y = draw_title(c, "Mon Engagement", text_x, text_top)
+    new_y = draw_title(c, "Mon Engagement", pos=(text_x, text_top))
     
     text_y = new_y - 1.0*cm
     c.setFont(PDFStyle.FONT_BODY, 11)
@@ -504,8 +527,7 @@ def create_standard_engagement_page(c, part_title, custom_lines=None):
     c.drawString(text_x, sig_y + 2*cm, "Date et Signature :")
     
     form = c.acroForm
-    create_input_field(form, 'signature_engagement',
-                       x=text_x, y=sig_y, width=10*cm, height=1.5*cm,
+    create_input_field(form, 'signature_engagement', pos=(text_x, sig_y), size=(10*cm, 1.5*cm),
                        tooltip='Votre Signature')
                        
     draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
@@ -524,7 +546,7 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
     text_x = card_margin + 1.0*cm
     target_width = width - card_margin - 2.0*cm
 
-    new_y = draw_title(c, "Récapitulatif de la séance précédente", text_x, height - 4.0*cm)
+    new_y = draw_title(c, "Récapitulatif de la séance précédente", pos=(text_x, height - 4.0*cm))
 
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -563,7 +585,7 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
         
         y_cursor -= len(lines) * 0.5 * cm + 0.3 * cm
         
-        create_input_field(form, f'recap_q{i+1}', x=text_x, y=y_cursor - box_height, width=target_width, height=box_height, multiline=True)
+        create_input_field(form, f'recap_q{i+1}', pos=(text_x, y_cursor - box_height), size=(target_width, box_height), multiline=True)
         
         y_cursor -= box_height + 0.8 * cm # Using 0.8cm strict gap between elements
 

@@ -9,7 +9,8 @@ from workbook_generator.components import (
     draw_side_panel,
     draw_title,
     draw_page_decorations,
-    create_standard_cover
+    create_standard_cover,
+    TitleStyle
 )
 from workbook_generator.forms import create_input_field
 
@@ -40,12 +41,12 @@ def _draw_instruction_text(c, text, x, y, max_width):
 
 
 def _draw_form_section(c, form, current_y, title, text, input_name, input_height, content_x, content_w):
-    current_y = draw_title(c, title, content_x, current_y, size=16, color=PDFStyle.COLOR_ACCENT_RED)
+    current_y = draw_title(c, title, pos=(content_x, current_y), style=TitleStyle(size=16, color=PDFStyle.COLOR_ACCENT_RED))
     current_y = _draw_instruction_text(c, text, content_x, current_y - 0.3 * cm, content_w)
     
     current_y -= 0.5 * cm # Espacement avant la case
     
-    create_input_field(form, input_name, x=content_x, y=current_y - input_height, width=content_w, height=input_height, multiline=True)
+    create_input_field(form, input_name, pos=(content_x, current_y - input_height), size=(content_w, input_height), multiline=True)
     
     # On renvoie la position Y sous la box, avec une marge pour la section suivante
     return current_y - input_height - 1.2 * cm
@@ -64,7 +65,7 @@ def create_profil_page(c):
     content_w = width - content_x - 1.5 * cm
     current_y = height - 4.0 * cm
     
-    current_y = draw_title(c, "P1 : PROFIL (Qui je suis)", content_x, current_y, size=22)
+    current_y = draw_title(c, "P1 : PROFIL (Qui je suis)", pos=(content_x, current_y), style=TitleStyle(size=22))
     current_y = _draw_instruction_text(c, "Cartographie de votre identité professionnelle, au-delà de l'intitulé de poste.", content_x, current_y - 0.5 * cm, content_w)
     
     current_y -= 1.0 * cm
@@ -99,7 +100,7 @@ def create_parcours_page(c):
     content_w = width - content_x - 1.5 * cm
     current_y = height - 4.0 * cm
     
-    current_y = draw_title(c, "P2 : PARCOURS (D'où je viens)", content_x, current_y, size=22)
+    current_y = draw_title(c, "P2 : PARCOURS (D'où je viens)", pos=(content_x, current_y), style=TitleStyle(size=22))
     current_y = _draw_instruction_text(c, "Lecture narrative et analytique de votre expérience.", content_x, current_y - 0.5 * cm, content_w)
     
     current_y -= 1.0 * cm
@@ -130,7 +131,7 @@ def create_preuves_page(c):
     content_w = width - content_x - 1.5 * cm
     current_y = height - 4.0 * cm
     
-    current_y = draw_title(c, "P3 : PREUVES (Réalisations)", content_x, current_y, size=22)
+    current_y = draw_title(c, "P3 : PREUVES (Réalisations)", pos=(content_x, current_y), style=TitleStyle(size=22))
     current_y = _draw_instruction_text(c, "Sélection de Chef-d'œuvres et Faits Marquants illustrant l'approche STAR.", content_x, current_y - 0.5 * cm, content_w)
     
     current_y -= 1.0 * cm
@@ -161,7 +162,7 @@ def create_potentiel_page(c):
     content_w = width - content_x - 1.5 * cm
     current_y = height - 4.0 * cm
     
-    current_y = draw_title(c, "P4 : POTENTIEL (Où je vais)", content_x, current_y, size=22)
+    current_y = draw_title(c, "P4 : POTENTIEL (Où je vais)", pos=(content_x, current_y), style=TitleStyle(size=22))
     current_y = _draw_instruction_text(c, "Projection vers l'avenir : adaptabilité et apprentissage (Learning Agility).", content_x, current_y - 0.5 * cm, content_w)
     
     current_y -= 1.0 * cm

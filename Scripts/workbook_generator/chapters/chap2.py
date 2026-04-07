@@ -13,7 +13,7 @@ from ..components import (
     create_standard_cover, draw_circular_stamp, draw_pause_badge, draw_page_decorations,
     create_standard_summary_page, create_standard_recap_page
 )
-from ..templates import PageLayout
+from ..templates import PageLayout, QuestionConfig
 from ..forms import create_input_field
 
 def create_chap2_cover(c):
@@ -64,7 +64,7 @@ def create_timeline_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    new_y = draw_title(c, "Ma Ligne de Vie (Les Montagnes Russes)", text_x, text_top)
+    new_y = draw_title(c, "Ma Ligne de Vie (Les Montagnes Russes)", pos=(text_x, text_top))
 
     c.setFont(PDFStyle.FONT_BODY, 10)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -131,14 +131,10 @@ def create_timeline_page(c):
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
         c.drawString(x_box, y_pos + 1.2*cm, f"{label} (Date + Quoi) :")
         
-        create_input_field(form, f'timeline_{label.replace(" ", "_")}_titre', 
-                           x=x_box, y=y_pos + 0.6*cm, 
-                           width=7*cm, height=0.5*cm)
+        create_input_field(form, f'timeline_{label.replace(" ", "_")}_titre', pos=(x_box, y_pos + 0.6*cm), size=(7*cm, 0.5*cm))
 
         c.drawString(x_box, y_pos + 0.2*cm, "Ce que j'en retiens :" if "Vallée" in label else "Ce que j'ai aimé :")
-        create_input_field(form, f'timeline_{label.replace(" ", "_")}_desc', 
-                           x=x_box, y=y_pos - 1.5*cm, 
-                           width=7*cm, height=1.6*cm, multiline=True)
+        create_input_field(form, f'timeline_{label.replace(" ", "_")}_desc', pos=(x_box, y_pos - 1.5*cm), size=(7*cm, 1.6*cm), multiline=True)
 
     draw_page_decorations(c, width, height, part_title="2. MON PARCOURS", x_offset=card_margin)
     c.showPage()
@@ -154,7 +150,7 @@ def create_skills_transfer_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    new_y = draw_title(c, "Mes Compétences de Vie", text_x, text_top)
+    new_y = draw_title(c, "Mes Compétences de Vie", pos=(text_x, text_top))
 
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -223,15 +219,11 @@ def create_skills_transfer_page(c):
         c.line(cx_arrow + 0.4*cm, arrow_y, cx_arrow + 0.1*cm, arrow_y - 0.1*cm)
         
         # Left Input
-        create_input_field(form, f'skill_exp_{i+1}', 
-                           x=col1_x, y=y_row, 
-                           width=col_width, height=row_height - 0.9*cm, 
+        create_input_field(form, f'skill_exp_{i+1}', pos=(col1_x, y_row), size=(col_width, row_height - 0.9*cm),
                            multiline=True, tooltip=theme)
         
         # Right Input
-        create_input_field(form, f'skill_talent_{i+1}', 
-                           x=col2_x, y=y_row, 
-                           width=col_width, height=row_height - 0.9*cm, 
+        create_input_field(form, f'skill_talent_{i+1}', pos=(col2_x, y_row), size=(col_width, row_height - 0.9*cm),
                            multiline=True, tooltip=f"Talent {i+1}")
 
         y_row -= row_height
@@ -257,7 +249,7 @@ def create_analysis_parcours_pages(c):
         
         text_x = card_margin + 1.0*cm
         text_top = height - 4.0*cm
-        new_y = draw_title(c, "Analyse du Parcours", text_x, text_top)
+        new_y = draw_title(c, "Analyse du Parcours", pos=(text_x, text_top))
         
         c.setFont(PDFStyle.FONT_BODY, 10)
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -292,10 +284,10 @@ def create_analysis_parcours_pages(c):
             c.setFont(PDFStyle.FONT_BODY, 9)
             c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
             c.drawString(box_x + 0.5*cm, y_cursor - 0.8*cm, "Titre de poste et entreprise (ou Sujet d'étude) :")
-            create_input_field(form, f'exp_{global_exp_idx}_titre', x=box_x + 0.5*cm, y=y_cursor - 1.7*cm, width=10*cm, height=0.7*cm)
+            create_input_field(form, f'exp_{global_exp_idx}_titre', pos=(box_x + 0.5*cm, y_cursor - 1.7*cm), size=(10*cm, 0.7*cm))
             
             c.drawString(box_x + 11*cm, y_cursor - 0.8*cm, "Année(s) :")
-            create_input_field(form, f'exp_{global_exp_idx}_annee', x=box_x + 11*cm, y=y_cursor - 1.7*cm, width=box_w - 11.5*cm, height=0.7*cm)
+            create_input_field(form, f'exp_{global_exp_idx}_annee', pos=(box_x + 11*cm, y_cursor - 1.7*cm), size=(box_w - 11.5*cm, 0.7*cm))
             
             # Ligne 2: Missions & Compétences (2 columns)
             col_w = (box_w - 1.5*cm) / 2
@@ -303,17 +295,17 @@ def create_analysis_parcours_pages(c):
             col2_x = box_x + 1*cm + col_w
             
             c.drawString(col1_x, y_cursor - 2.5*cm, "Fiche de poste / Missions principales :")
-            create_input_field(form, f'exp_{global_exp_idx}_missions', x=col1_x, y=y_cursor - 4.8*cm, width=col_w, height=2.1*cm, multiline=True)
+            create_input_field(form, f'exp_{global_exp_idx}_missions', pos=(col1_x, y_cursor - 4.8*cm), size=(col_w, 2.1*cm), multiline=True)
             
             c.drawString(col2_x, y_cursor - 2.5*cm, "Compétences développées (Tech / Softskills) :")
-            create_input_field(form, f'exp_{global_exp_idx}_competences', x=col2_x, y=y_cursor - 4.8*cm, width=col_w, height=2.1*cm, multiline=True)
+            create_input_field(form, f'exp_{global_exp_idx}_competences', pos=(col2_x, y_cursor - 4.8*cm), size=(col_w, 2.1*cm), multiline=True)
             
             # Ligne 3: Aimé / Pas Aimé (2 columns)
             c.drawString(col1_x, y_cursor - 5.6*cm, "Ce que j'ai aimé :")
-            create_input_field(form, f'exp_{global_exp_idx}_aime', x=col1_x, y=y_cursor - 7.9*cm, width=col_w, height=2.1*cm, multiline=True)
+            create_input_field(form, f'exp_{global_exp_idx}_aime', pos=(col1_x, y_cursor - 7.9*cm), size=(col_w, 2.1*cm), multiline=True)
             
             c.drawString(col2_x, y_cursor - 5.6*cm, "Ce que je n'ai pas aimé :")
-            create_input_field(form, f'exp_{global_exp_idx}_paime', x=col2_x, y=y_cursor - 7.9*cm, width=col_w, height=2.1*cm, multiline=True)
+            create_input_field(form, f'exp_{global_exp_idx}_paime', pos=(col2_x, y_cursor - 7.9*cm), size=(col_w, 2.1*cm), multiline=True)
             
             y_cursor -= 10.5*cm
 
@@ -326,7 +318,7 @@ def create_analysis_parcours_pages(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    new_y = draw_title(c, "Analyse Transversale & Moteurs", text_x, text_top)
+    new_y = draw_title(c, "Analyse Transversale & Moteurs", pos=(text_x, text_top))
 
     # Introduction Text to the Approach
     text_y = new_y - 0.2*cm
@@ -368,7 +360,7 @@ def create_analysis_parcours_pages(c):
         y_cursor -= 0.4*cm
     
     y_cursor -= 3.7*cm
-    create_input_field(form, 'bilan_schemas', x=text_x, y=y_cursor, width=target_width, height=3.5*cm, multiline=True)
+    create_input_field(form, 'bilan_schemas', pos=(text_x, y_cursor), size=(target_width, 3.5*cm), multiline=True)
 
     y_cursor -= 1.5*cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
@@ -388,7 +380,7 @@ def create_analysis_parcours_pages(c):
     y_cursor -= 1.2*cm
     for i in range(1, 6):
         c.drawString(text_x, y_cursor + 0.2*cm, f"{i}.")
-        create_input_field(form, f'moteur_{i}', x=text_x + 0.6*cm, y=y_cursor, width=target_width - 0.6*cm, height=0.7*cm)
+        create_input_field(form, f'moteur_{i}', pos=(text_x + 0.6*cm, y_cursor), size=(target_width - 0.6*cm, 0.7*cm))
         y_cursor -= 1.0*cm
 
     draw_page_decorations(c, width, height, part_title="2. MON PARCOURS", x_offset=card_margin)
@@ -409,7 +401,7 @@ def create_tree_of_life_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    new_y = draw_title(c, "Mon Arbre de Vie", text_x, text_top)
+    new_y = draw_title(c, "Mon Arbre de Vie", pos=(text_x, text_top))
 
     # --- 1. INTRO & OBJECTIF ---
     y_cursor = new_y - 0.2*cm
@@ -559,7 +551,7 @@ def create_tree_of_life_page(c):
             c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
             c.drawString(sx, sy, subtitle)
             
-        create_input_field(form, f'arbre_{title.split()[1].lower()}', x=x, y=y, width=w, height=h, multiline=True)
+        create_input_field(form, f'arbre_{title.split()[1].lower()}', pos=(x, y), size=(w, h), multiline=True)
     
     # Position: y=1.0cm to y=3.3cm
     draw_zone("1. RACINES", "Mon histoire, mes origines...", 
@@ -579,7 +571,7 @@ def create_tree_of_life_page(c):
     c.drawCentredString(cx, 10.2*cm, "Compétences & Valeurs")
     
     # Field overlaps the trunk drawing significantly, but that's okay, it's the "content" of the trunk.
-    create_input_field(form, 'arbre_tronc', x=cx - 2.2*cm, y=6.0*cm, width=4.4*cm, height=4*cm, multiline=True)
+    create_input_field(form, 'arbre_tronc', pos=(cx - 2.2*cm, 6.0*cm), size=(4.4*cm, 4*cm), multiline=True)
 
     # Position: y=13.5cm approx.
     draw_zone("5. FEUILLES", "Club de Vie (Soutiens)", 
@@ -607,7 +599,7 @@ def create_interview_page(c):
     
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
-    new_y = draw_title(c, "Interview avec une personne passionnée", text_x, text_top)
+    new_y = draw_title(c, "Interview avec une personne passionnée", pos=(text_x, text_top))
 
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -622,10 +614,10 @@ def create_interview_page(c):
     c.setFont(PDFStyle.FONT_SUBTITLE, 10)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.drawString(col1_x, y_cursor, "Personne interviewée :")
-    create_input_field(form, 'interview_nom', x=col1_x, y=y_cursor - 0.8*cm, width=7.0*cm, height=0.6*cm)
+    create_input_field(form, 'interview_nom', pos=(col1_x, y_cursor - 0.8*cm), size=(7.0*cm, 0.6*cm))
     
     c.drawString(col2_x, y_cursor, "Son métier / Activité :")
-    create_input_field(form, 'interview_metier', x=col2_x, y=y_cursor - 0.8*cm, width=width - col2_x - 1.5*cm, height=0.6*cm)
+    create_input_field(form, 'interview_metier', pos=(col2_x, y_cursor - 0.8*cm), size=(width - col2_x - 1.5*cm, 0.6*cm))
     
     y_cursor -= 2*cm
     
@@ -641,7 +633,7 @@ def create_interview_page(c):
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
         c.drawString(text_x, y_cursor, q_text)
         y_cursor -= q_height + 0.4*cm
-        create_input_field(form, q_id, x=text_x, y=y_cursor, width=width - text_x - 1.5*cm, height=q_height, multiline=True)
+        create_input_field(form, q_id, pos=(text_x, y_cursor), size=(width - text_x - 1.5*cm, q_height), multiline=True)
         y_cursor -= 0.6*cm
 
     draw_page_decorations(c, width, height, part_title="BONUS", x_offset=card_margin)
