@@ -11,7 +11,7 @@ from ..components import (
     draw_page_background, draw_dot_grid, draw_card, draw_side_panel, 
     draw_leaf, draw_title, draw_branding_logo, create_standard_cover,
     draw_circular_stamp, draw_pause_badge, draw_page_decorations,
-    draw_page_footer, create_standard_summary_page
+    draw_page_footer, create_standard_summary_page, TitleStyle
 )
 from ..templates import PageLayout, LayoutConfig, QuestionConfig, TextConfig
 from ..forms import create_input_field
@@ -63,7 +63,7 @@ def create_editorial_page_card(c):
     inner_w  = card_w  - 2.0*cm
     title_y  = card_y + card_h - 1.5*cm
 
-    new_y = draw_title(c, "Le mot d'accueil", pos=(inner_x, title_y), size=22, available_width=inner_w)
+    new_y = draw_title(c, "Le mot d'accueil", pos=(inner_x, title_y), available_width=inner_w, style=TitleStyle(size=22))
 
     if os.path.exists(PDFStyle.PATH_GUILLEMETS):
         c.drawImage(
@@ -176,7 +176,7 @@ def create_intro_sense_page(c):
     c.drawString(text_x, text_top + 1.2*cm, "INTRODUCTION")
     
     PURPLE_TITLE = colors.HexColor("#6C5CE7")
-    new_y = draw_title(c, "Mettre du sens", pos=(text_x, text_top), size=28, color=PURPLE_TITLE, available_width=content_width)
+    new_y = draw_title(c, "Mettre du sens", pos=(text_x, text_top), available_width=content_width, style=TitleStyle(size=28, color=PURPLE_TITLE))
     
     if os.path.exists(PDFStyle.PATH_STAMP):
         stamp_size = 4*cm
@@ -403,7 +403,7 @@ def create_domaines_de_vie_page(c):
     text_x = card_margin + 1.0*cm
     text_top = height - 4.0*cm
     
-    new_y = draw_title(c, "Les Domaines de Vie", pos=(text_x, text_top), size=22)
+    new_y = draw_title(c, "Les Domaines de Vie", pos=(text_x, text_top), style=TitleStyle(size=22))
     
     # Intro Text (Psycho-education)
     style_intro = ParagraphStyle(

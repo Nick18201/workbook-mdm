@@ -2,6 +2,7 @@ from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.utils import simpleSplit
+from dataclasses import dataclass
 from .config import PDFStyle
 
 import math
@@ -143,50 +144,62 @@ def draw_side_panel(c, x, page_width, page_height):
     c.rect(x, 0, page_width - x, page_height, fill=1, stroke=0)
     c.restoreState()
 
-def draw_leaf(c, pos, **kwargs):
+@dataclass
+class LeafStyle:
+    size: float = 50
+    color: str = PDFStyle.COLOR_ACCENT_BLUE
+    angle: float = 0
+    alpha: float = 1.0
+
+def draw_leaf(c, pos, style: LeafStyle = None):
     """Leaf decoration."""
+    if style is None:
+        style = LeafStyle()
+
     x, y = pos
-    size = kwargs.get('size', 50)
-    color = kwargs.get('color', PDFStyle.COLOR_ACCENT_BLUE)
-    angle = kwargs.get('angle', 0)
-    alpha = kwargs.get('alpha', 1.0)
 
     c.saveState()
     c.translate(x, y)
-    c.rotate(angle)
-    c.scale(size/100.0, size/100.0)
+    c.rotate(style.angle)
+    c.scale(style.size/100.0, style.size/100.0)
     p = c.beginPath()
     p.moveTo(0, 0)
     p.curveTo(30, 20, 50, 60, 0, 100)
     p.curveTo(-50, 60, -30, 20, 0, 0)
-    if isinstance(color, colors.Color):
-        r, g, b = color.red, color.green, color.blue
-        c.setFillColorRGB(r, g, b, alpha)
+    if isinstance(style.color, colors.Color):
+        r, g, b = style.color.red, style.color.green, style.color.blue
+        c.setFillColorRGB(r, g, b, style.alpha)
     else:
-         c.setFillColor(color)
+         c.setFillColor(style.color)
     c.drawPath(p, fill=1, stroke=0)
     c.restoreState()
 
-def draw_title(c, text, pos, available_width=None, **kwargs):
+@dataclass
+class TitleStyle:
+    size: float = 24
+    color: str = PDFStyle.COLOR_ACCENT_BLUE
+
+def draw_title(c, text, pos, available_width=None, style: TitleStyle = None):
     """Refactored: Standard H1 title. Returns the Y position after the title."""
+    if style is None:
+        style = TitleStyle()
+
     x, y = pos
-    size = kwargs.get('size', 24)
-    color = kwargs.get('color', PDFStyle.COLOR_ACCENT_BLUE)
 
     if available_width is None:
         width, _ = A4
         available_width = width - x - 2 * cm
 
     c.saveState()
-    c.setFont(PDFStyle.FONT_TITLE, size)
-    c.setFillColor(color)
+    c.setFont(PDFStyle.FONT_TITLE, style.size)
+    c.setFillColor(style.color)
 
-    lines = simpleSplit(text, PDFStyle.FONT_TITLE, size, available_width)
+    lines = simpleSplit(text, PDFStyle.FONT_TITLE, style.size, available_width)
     current_y = y
 
     for line in lines:
         c.drawString(x, current_y, line)
-        current_y -= (size * 1.2)
+        current_y -= (style.size * 1.2)
 
     c.restoreState()
 
