@@ -529,8 +529,9 @@ def create_tree_of_life_page(c):
 
     # --- 4. INPUT ZONES & LABELS ---
     
-    def draw_zone(title, subtitle, x, y, w, h, align='left', color_title=PDFStyle.COLOR_TEXT_MAIN):
+    def draw_zone(title, subtitle, rect, align='left', color_title=PDFStyle.COLOR_TEXT_MAIN):
         # Draw background for better readability over lines? No, looks cleaner transparent if placed well.
+        x, y, w, h = rect
         
         # Title
         c.setFont(PDFStyle.FONT_SUBTITLE, 10)
@@ -563,35 +564,28 @@ def create_tree_of_life_page(c):
     
     # Position: y=1.0cm to y=3.3cm
     draw_zone("1. RACINES", "Mon histoire, mes origines...", 
-              cx - 4.5*cm, 1.0*cm, 9*cm, 2.3*cm, align='center', color_title=PDFStyle.COLOR_ACCENT_RED)
+              (cx - 4.5*cm, 1.0*cm, 9*cm, 2.3*cm), align='center', color_title=PDFStyle.COLOR_ACCENT_RED)
 
     # Position: y=3.5cm to y=6.0cm, Left side.
     draw_zone("2. SOL", "Mes besoins actuels", 
-              cx - 8.5*cm, 3.5*cm, 5*cm, 2.5*cm, align='left')
+              (cx - 8.5*cm, 3.5*cm, 5*cm, 2.5*cm), align='left')
 
     # Position: y=6cm to y=10.0cm centered on trunk.
     # Widen box slightly to fit trunk width approx
-    c.setFont(PDFStyle.FONT_SUBTITLE, 10)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawCentredString(cx, 10.6*cm, "3. TRONC")
-    c.setFont(PDFStyle.FONT_ITALIC, 9)
-    c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-    c.drawCentredString(cx, 10.2*cm, "Compétences & Valeurs")
-    
-    # Field overlaps the trunk drawing significantly, but that's okay, it's the "content" of the trunk.
-    create_input_field(form, 'arbre_tronc', x=cx - 2.2*cm, y=6.0*cm, width=4.4*cm, height=4*cm, multiline=True)
+    draw_zone("3. TRONC", "Compétences & Valeurs",
+              (cx - 2.2*cm, 6.0*cm, 4.4*cm, 4*cm), align='center')
 
     # Position: y=13.5cm approx.
     draw_zone("5. FEUILLES", "Club de Vie (Soutiens)", 
-              cx - 8.5*cm, trunk_top_y + 1.5*cm, 5.5*cm, 3*cm, align='left')
+              (cx - 8.5*cm, trunk_top_y + 1.5*cm, 5.5*cm, 3*cm), align='left')
 
     # Position: y=13.5cm approx
     draw_zone("6. FRUITS", "Cadeaux & Réussites", 
-              cx + 3.0*cm, trunk_top_y + 1.5*cm, 5.5*cm, 3*cm, align='right')
+              (cx + 3.0*cm, trunk_top_y + 1.5*cm, 5.5*cm, 3*cm), align='right')
 
     # Position: y=18cm approx.
     draw_zone("4. BRANCHES", "Projets & Rêves", 
-              cx - 4.5*cm, trunk_top_y + 6.0*cm, 9*cm, 2.5*cm, align='center', color_title=PDFStyle.COLOR_ACCENT_BLUE)
+              (cx - 4.5*cm, trunk_top_y + 6.0*cm, 9*cm, 2.5*cm), align='center', color_title=PDFStyle.COLOR_ACCENT_BLUE)
 
     draw_page_decorations(c, width, height, part_title="BONUS", x_offset=card_margin)
     c.showPage()
