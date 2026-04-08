@@ -1,5 +1,6 @@
 import os
 import sys
+import argparse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 
@@ -11,8 +12,9 @@ from workbook_generator.chapters import chap3
 from workbook_generator.utils import register_fonts
 from workbook_generator.components import create_closing_page
 
-def generate_workbook_chap3():
-    output_filename = "Workbook_Chapitre_3.pdf"
+def generate_workbook_chap3(output_filename="Workbook_Chapitre_3.pdf", theme="earth"):
+    # Set the theme
+    PDFStyle.set_theme(theme)
     
     if os.path.exists(output_filename):
         try:
@@ -63,4 +65,9 @@ def generate_workbook_chap3():
     print(f"PDF generated successfully: {output_filename}")
 
 if __name__ == "__main__":
-    generate_workbook_chap3()
+    parser = argparse.ArgumentParser(description="Générer le chapitre 3 PDF.")
+    parser.add_argument("--theme", choices=PDFStyle.THEMES, default="earth", help="Le thème de couleurs à utiliser.")
+    parser.add_argument("--output", type=str, default="Workbook_Chapitre_3.pdf", help="Le nom du fichier PDF généré.")
+    args = parser.parse_args()
+
+    generate_workbook_chap3(output_filename=args.output, theme=args.theme)

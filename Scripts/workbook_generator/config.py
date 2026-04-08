@@ -3,22 +3,62 @@ from reportlab.lib import colors
 from reportlab.lib.units import cm
 
 class PDFStyle:
-    # A. Palette de Couleurs
-    COLOR_BG_NUDE = colors.HexColor("#FFF0E6")       # Fond Papier
-    COLOR_ACCENT_BLUE = colors.HexColor("#2F2EFA")   # Indigo Électrique (Primary)
-    COLOR_ACCENT_RED = colors.HexColor("#FF4D4D")    # Rouge Vif (Secondary)
-    COLOR_ACCENT_YELLOW = colors.HexColor("#FFEB3B") # Jaune Soleil (Tertiary)
-    COLOR_WHITE = colors.HexColor("#FFFFFF")         # Blanc Pur
-    COLOR_TEXT_MAIN = colors.HexColor("#2F2EFA")     # Indigo Électrique (Formerly Gunmetal)
-    COLOR_TEXT_SECONDARY = colors.HexColor("#2F2EFA") # Gris Souris
-    COLOR_SUCCESS = colors.HexColor("#2E7D32")       # Vert Succès
-    COLOR_FIELD_BG = colors.HexColor("#F0F4FF")      # Fond Bleu Clair pour champs de texte
-    COLOR_CARD_CREME = colors.HexColor("#FFF8F2")    # Couleur Crème pour les cartes/blocs
-    COLOR_BG_BLOB = colors.HexColor("#FADADD")       # Zones roses plus prononcées
+    THEMES = ["earth", "indigo"]
 
-    # Derivations from Indigo to ensure Zero Black rule
-    COLOR_SHADOW = colors.HexColor("#2F2EFA")        # Used with low alpha for shadows
-    COLOR_LINE = colors.HexColor("#2F2EFA")          # Used with low alpha for lines
+    # Initialisation des variables de couleurs pour le type hinting ou l'accès avant set_theme (optionnel mais plus sûr)
+    COLOR_BG_NUDE = colors.HexColor("#FFFCE8")
+    COLOR_ACCENT_BLUE = colors.HexColor("#D19B8D")
+    COLOR_ACCENT_RED = colors.HexColor("#8D6257")
+    COLOR_ACCENT_YELLOW = colors.HexColor("#BFAF94")
+    COLOR_WHITE = colors.HexColor("#FFFFFF")
+    COLOR_TEXT_MAIN = colors.HexColor("#8D6257")
+    COLOR_TEXT_SECONDARY = colors.HexColor("#A27164")
+    COLOR_SUCCESS = colors.HexColor("#6F926D")
+    COLOR_FIELD_BG = colors.HexColor("#F2F7F1")
+    COLOR_CARD_CREME = colors.HexColor("#FAF7F2")
+    COLOR_BG_BLOB = colors.HexColor("#FDE8DB")
+    COLOR_SHADOW = colors.HexColor("#79544A")
+    COLOR_LINE = colors.HexColor("#D19B8D")
+
+    @classmethod
+    def set_theme(cls, theme_name="earth"):
+        """Sets the active color palette."""
+        palettes = {
+            "indigo": {
+                "COLOR_BG_NUDE": "#FFF0E6",
+                "COLOR_ACCENT_BLUE": "#2F2EFA",
+                "COLOR_ACCENT_RED": "#FF4D4D",
+                "COLOR_ACCENT_YELLOW": "#FFEB3B",
+                "COLOR_WHITE": "#FFFFFF",
+                "COLOR_TEXT_MAIN": "#2F2EFA",
+                "COLOR_TEXT_SECONDARY": "#2F2EFA",
+                "COLOR_SUCCESS": "#2E7D32",
+                "COLOR_FIELD_BG": "#F0F4FF",
+                "COLOR_CARD_CREME": "#FFF8F2",
+                "COLOR_BG_BLOB": "#FADADD",
+                "COLOR_SHADOW": "#2F2EFA",
+                "COLOR_LINE": "#2F2EFA",
+            },
+            "earth": {
+                "COLOR_BG_NUDE": "#FFFCE8",
+                "COLOR_ACCENT_BLUE": "#D19B8D",
+                "COLOR_ACCENT_RED": "#8D6257",
+                "COLOR_ACCENT_YELLOW": "#BFAF94",
+                "COLOR_WHITE": "#FFFFFF",
+                "COLOR_TEXT_MAIN": "#8D6257",
+                "COLOR_TEXT_SECONDARY": "#A27164",
+                "COLOR_SUCCESS": "#6F926D",
+                "COLOR_FIELD_BG": "#F2F7F1",
+                "COLOR_CARD_CREME": "#FAF7F2",
+                "COLOR_BG_BLOB": "#FDE8DB",
+                "COLOR_SHADOW": "#79544A",
+                "COLOR_LINE": "#D19B8D",
+            }
+        }
+
+        palette = palettes.get(theme_name, palettes["earth"])
+        for attr, hex_val in palette.items():
+            setattr(cls, attr, colors.HexColor(hex_val))
 
     # B. Typography
     FONT_TITLE = "Montserrat-Black"
