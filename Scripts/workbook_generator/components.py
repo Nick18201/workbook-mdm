@@ -1,11 +1,17 @@
+import os
+import math
+from dataclasses import dataclass
+
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.lib.utils import simpleSplit
-from dataclasses import dataclass
-from .config import PDFStyle
+from reportlab.platypus import Paragraph
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.enums import TA_JUSTIFY
 
-import math
+from .config import PDFStyle
+from .forms import create_input_field
 
 
 def draw_page_background(c, width, height, use_blobs=False):
@@ -61,8 +67,6 @@ def draw_background_blobs(c, width, height):
     # Bottom Blob - spans full width, starts higher, ends lower
     # We'll use a large ellipse for the bottom one
     # Moved center a bit higher (~15% of height) and made it very wide
-    ellipse_w = width * 1.4
-    ellipse_h = height * 0.4
     c.ellipse(-width * 0.2, -height * 0.1, width * 1.2, height * 0.35, fill=1, stroke=0)
 
     # Alternatively, use multiple circles to create a "wavy" fill at the bottom
@@ -112,15 +116,17 @@ def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.
     Draws the signature Dot Grid using Form XObjects to dramatically improve performance
     and reduce output PDF size by caching the grid.
     """
+    # Initialize cache dictionary on canvas object if it doesn't exist
+    if not hasattr(c, "_dot_grid_cache"):
+        c._dot_grid_cache = {}
+
     # Create a unique cache key based on dimensions, color, and opacity
     color_val = getattr(color, "hexval", color)
-    form_name = f"DotGrid_{width}_{height}_{color_val}_{opacity}"
+    cache_key = (width, height, color_val, opacity)
 
-    # Initialize cache on canvas object if it doesn't exist
-    if not hasattr(c, "_dot_grid_cache"):
-        c._dot_grid_cache = set()
-
-    if form_name not in c._dot_grid_cache:
+    if cache_key not in c._dot_grid_cache:
+        # Use a simple, safe name for the XObject to avoid escaping issues
+        form_name = f"DotGrid_{len(c._dot_grid_cache)}"
         c.beginForm(form_name)
         step = 20
         c.setFillColor(color, alpha=opacity)
@@ -131,10 +137,10 @@ def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.
                 p.circle(x, y, 0.6)
         c.drawPath(p, fill=1, stroke=0)
         c.endForm()
-        c._dot_grid_cache.add(form_name)
+        c._dot_grid_cache[cache_key] = form_name
 
     c.saveState()
-    c.doForm(form_name)
+    c.doForm(c._dot_grid_cache[cache_key])
     c.restoreState()
 
 
@@ -323,9 +329,6 @@ def draw_section_separator(c, x, y, width, color=PDFStyle.COLOR_ACCENT_BLUE):
     c.restoreState()
 
 
-import os
-
-
 def draw_circular_stamp(c, x, y, text, radius=1.8 * cm):
     """Draws text curved around a central point, simulating a stamp."""
     c.saveState()
@@ -443,8 +446,6 @@ def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT
         c.restoreState()
 
     # 3. Titres
-    from reportlab.lib.utils import simpleSplit
-
     max_text_width = width - band_width - 40 - 1 * cm
 
     c.setFont(PDFStyle.FONT_BODY, 14)
@@ -470,10 +471,6 @@ def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT
 
 
 # --- STANDARD HARMONIZED COMPONENTS ---
-from reportlab.platypus import Paragraph
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import TA_JUSTIFY
-from .forms import create_input_field
 
 
 def create_standard_summary_page(
