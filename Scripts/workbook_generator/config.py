@@ -3,22 +3,56 @@ from reportlab.lib import colors
 from reportlab.lib.units import cm
 
 class PDFStyle:
-    # A. Palette de Couleurs
-    COLOR_BG_NUDE = colors.HexColor("#FFF0E6")       # Fond Papier
-    COLOR_ACCENT_BLUE = colors.HexColor("#2F2EFA")   # Indigo Électrique (Primary)
-    COLOR_ACCENT_RED = colors.HexColor("#FF4D4D")    # Rouge Vif (Secondary)
-    COLOR_ACCENT_YELLOW = colors.HexColor("#FFEB3B") # Jaune Soleil (Tertiary)
-    COLOR_WHITE = colors.HexColor("#FFFFFF")         # Blanc Pur
-    COLOR_TEXT_MAIN = colors.HexColor("#2F2EFA")     # Indigo Électrique (Formerly Gunmetal)
-    COLOR_TEXT_SECONDARY = colors.HexColor("#2F2EFA") # Gris Souris
-    COLOR_SUCCESS = colors.HexColor("#2E7D32")       # Vert Succès
-    COLOR_FIELD_BG = colors.HexColor("#F0F4FF")      # Fond Bleu Clair pour champs de texte
-    COLOR_CARD_CREME = colors.HexColor("#FFF8F2")    # Couleur Crème pour les cartes/blocs
-    COLOR_BG_BLOB = colors.HexColor("#FADADD")       # Zones roses plus prononcées
+    # A. Palette de Couleurs (Default is Earth Theme)
+    COLOR_BG_NUDE = colors.HexColor("#FFFCE8")       # --color-bg (Cream)
+    COLOR_ACCENT_BLUE = colors.HexColor("#D19B8D")   # --color-primary (Rose Muted)
+    COLOR_ACCENT_RED = colors.HexColor("#8D6257")    # --color-secondary (Rose Brown)
+    COLOR_ACCENT_YELLOW = colors.HexColor("#BFAF94") # --color-sand-400
+    COLOR_WHITE = colors.HexColor("#FFFFFF")         # --color-white
+    COLOR_TEXT_MAIN = colors.HexColor("#8D6257")     # --color-text (Rose Brown)
+    COLOR_TEXT_SECONDARY = colors.HexColor("#A27164")# --color-earth-400
+    COLOR_SUCCESS = colors.HexColor("#6F926D")       # --color-sage-500
+    COLOR_FIELD_BG = colors.HexColor("#F2F7F1")      # --color-sage-bg
+    COLOR_CARD_CREME = colors.HexColor("#FAF7F2")    # --color-sand-bg
+    COLOR_BG_BLOB = colors.HexColor("#FDE8DB")       # --color-soft-peach
 
-    # Derivations from Indigo to ensure Zero Black rule
-    COLOR_SHADOW = colors.HexColor("#2F2EFA")        # Used with low alpha for shadows
-    COLOR_LINE = colors.HexColor("#2F2EFA")          # Used with low alpha for lines
+    # Derivations to ensure Zero Black rule
+    COLOR_SHADOW = colors.HexColor("#79544A")        # --color-earth-600
+    COLOR_LINE = colors.HexColor("#D19B8D")          # --color-earth-200 (Rose Muted)
+
+    @classmethod
+    def set_theme(cls, theme_name="earth"):
+        """Sets the active color palette."""
+        if theme_name == "indigo":
+            # Legacy Theme
+            cls.COLOR_BG_NUDE = colors.HexColor("#FFF0E6")
+            cls.COLOR_ACCENT_BLUE = colors.HexColor("#2F2EFA")
+            cls.COLOR_ACCENT_RED = colors.HexColor("#FF4D4D")
+            cls.COLOR_ACCENT_YELLOW = colors.HexColor("#FFEB3B")
+            cls.COLOR_WHITE = colors.HexColor("#FFFFFF")
+            cls.COLOR_TEXT_MAIN = colors.HexColor("#2F2EFA")
+            cls.COLOR_TEXT_SECONDARY = colors.HexColor("#2F2EFA")
+            cls.COLOR_SUCCESS = colors.HexColor("#2E7D32")
+            cls.COLOR_FIELD_BG = colors.HexColor("#F0F4FF")
+            cls.COLOR_CARD_CREME = colors.HexColor("#FFF8F2")
+            cls.COLOR_BG_BLOB = colors.HexColor("#FADADD")
+            cls.COLOR_SHADOW = colors.HexColor("#2F2EFA")
+            cls.COLOR_LINE = colors.HexColor("#2F2EFA")
+        else:
+            # Default Earth Theme
+            cls.COLOR_BG_NUDE = colors.HexColor("#FFFCE8")
+            cls.COLOR_ACCENT_BLUE = colors.HexColor("#D19B8D")
+            cls.COLOR_ACCENT_RED = colors.HexColor("#8D6257")
+            cls.COLOR_ACCENT_YELLOW = colors.HexColor("#BFAF94")
+            cls.COLOR_WHITE = colors.HexColor("#FFFFFF")
+            cls.COLOR_TEXT_MAIN = colors.HexColor("#8D6257")
+            cls.COLOR_TEXT_SECONDARY = colors.HexColor("#A27164")
+            cls.COLOR_SUCCESS = colors.HexColor("#6F926D")
+            cls.COLOR_FIELD_BG = colors.HexColor("#F2F7F1")
+            cls.COLOR_CARD_CREME = colors.HexColor("#FAF7F2")
+            cls.COLOR_BG_BLOB = colors.HexColor("#FDE8DB")
+            cls.COLOR_SHADOW = colors.HexColor("#79544A")
+            cls.COLOR_LINE = colors.HexColor("#D19B8D")
 
     # B. Typography
     FONT_TITLE = "Montserrat-Black"

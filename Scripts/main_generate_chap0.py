@@ -1,6 +1,8 @@
+import argparse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from workbook_generator.utils import register_fonts
+from workbook_generator.config import PDFStyle
 from workbook_generator.chapters.chap0 import (
     create_cover_page, create_summary_page, create_editorial_page_card,
     create_intro_sense_page, create_form_page_card, create_premiere_etape_page,
@@ -8,7 +10,9 @@ from workbook_generator.chapters.chap0 import (
 )
 from workbook_generator.components import create_closing_page
 
-def build_complete_pdf_v4(output_filename):
+def build_complete_pdf_v4(output_filename, theme="earth"):
+    # Set the theme
+    PDFStyle.set_theme(theme)
     # Register fonts first
     register_fonts()
     
@@ -30,5 +34,9 @@ def build_complete_pdf_v4(output_filename):
     print(f"PDF 'DA V4' Generated: {output_filename}")
 
 if __name__ == "__main__":
-    final_output = "chapitre 0 _ Le prélude.pdf"
-    build_complete_pdf_v4(final_output)
+    parser = argparse.ArgumentParser(description="Générer le chapitre 0 PDF.")
+    parser.add_argument("--theme", choices=["earth", "indigo"], default="earth", help="Le thème de couleurs à utiliser.")
+    parser.add_argument("--output", type=str, default="chapitre 0 _ Le prélude.pdf", help="Le nom du fichier PDF généré.")
+    args = parser.parse_args()
+
+    build_complete_pdf_v4(args.output, theme=args.theme)
