@@ -53,7 +53,7 @@ def build_livret_competences(output_filename, theme="earth"):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Générer le Livret de Compétences PDF.")
-    parser.add_argument("--theme", choices=["earth", "indigo"], default="earth", help="Le thème de couleurs à utiliser.")
+    parser.add_argument("--theme", choices=PDFStyle.THEMES, default="earth", help="Le thème de couleurs à utiliser.")
     parser.add_argument("--output", type=str, default="Livret_Competences.pdf", help="Le nom du fichier PDF généré.")
     args = parser.parse_args()
 

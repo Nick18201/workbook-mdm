@@ -57,7 +57,7 @@ def build_wb_chap1_pdf(output_filename, theme="earth"):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Générer le chapitre 1 PDF.")
-    parser.add_argument("--theme", choices=["earth", "indigo"], default="earth", help="Le thème de couleurs à utiliser.")
+    parser.add_argument("--theme", choices=PDFStyle.THEMES, default="earth", help="Le thème de couleurs à utiliser.")
     parser.add_argument("--output", type=str, default="Workbook_Chapitre_1.pdf", help="Le nom du fichier PDF généré.")
     args = parser.parse_args()
 

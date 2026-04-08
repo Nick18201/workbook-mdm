@@ -1,22 +1,29 @@
 import sys
+import os
 from unittest.mock import MagicMock
 
-# Create a mock that acts like a package
-class MockPackage(MagicMock):
+# Add Scripts directory to path so workbook_generator can be found by the imported modules
+sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts"))
+
+# We mock all required submodules to satisfy the imports without having reportlab installed
+class MockModule(MagicMock):
     __path__ = []
 
-sys.modules['reportlab'] = MockPackage()
-sys.modules['reportlab.pdfgen'] = MagicMock()
-sys.modules['reportlab.lib'] = MockPackage()
-sys.modules['reportlab.lib.pagesizes'] = MagicMock()
-sys.modules['reportlab.lib.colors'] = MagicMock()
-sys.modules['reportlab.lib.units'] = MagicMock()
-sys.modules['reportlab.lib.utils'] = MagicMock()
-sys.modules['reportlab.pdfbase'] = MockPackage()
-sys.modules['reportlab.pdfbase.pdfmetrics'] = MagicMock()
-sys.modules['reportlab.pdfbase.ttfonts'] = MagicMock()
-sys.modules['reportlab.platypus'] = MagicMock()
+sys.modules['reportlab'] = MockModule()
+sys.modules['reportlab.pdfgen'] = MockModule()
+sys.modules['reportlab.lib'] = MockModule()
+sys.modules['reportlab.lib.pagesizes'] = MockModule()
+sys.modules['reportlab.lib.colors'] = MockModule()
+sys.modules['reportlab.lib.units'] = MockModule()
+sys.modules['reportlab.lib.utils'] = MockModule()
+sys.modules['reportlab.lib.styles'] = MockModule()
+sys.modules['reportlab.lib.enums'] = MockModule()
+sys.modules['reportlab.pdfbase'] = MockModule()
+sys.modules['reportlab.pdfbase.pdfmetrics'] = MockModule()
+sys.modules['reportlab.pdfbase.ttfonts'] = MockModule()
+sys.modules['reportlab.platypus'] = MockModule()
 
+# Import the actual scripts to ensure syntax and structure is correct
 import Scripts.main_generate_chap0
 import Scripts.main_generate_chap1
 import Scripts.main_generate_chap2
