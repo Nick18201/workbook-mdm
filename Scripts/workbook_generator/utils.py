@@ -13,8 +13,8 @@ reportlab.rl_config.useA85 = 0
 # Cache the simpleSplit function to avoid redundant text wrapping calculations
 # which are heavily used across chapters.
 @functools.lru_cache(maxsize=2048)
-def cached_simpleSplit(*args, **kwargs):
-    return simpleSplit(*args, **kwargs)
+def cached_simpleSplit(text, fontName, fontSize, maxWidth):
+    return simpleSplit(text, fontName, fontSize, maxWidth)
 
 
 def register_fonts():
