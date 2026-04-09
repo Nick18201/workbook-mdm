@@ -123,7 +123,6 @@ def create_timeline_page(c):
         c.circle(center_x, y_pos, 0.15 * cm, fill=1, stroke=1)
 
         # Connector
-        # Connector
         c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
         c.setDash([2, 2])
         if side == "left":
