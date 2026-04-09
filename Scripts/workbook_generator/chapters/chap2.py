@@ -12,6 +12,7 @@ from ..components import (
     create_standard_recap_page,
 )
 from ..forms import create_input_field
+from ..utils import cached_simpleSplit as simpleSplit
 
 
 def create_chap2_cover(c):
