@@ -1,16 +1,19 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
-from reportlab.lib.utils import simpleSplit
+from .utils import cached_simpleSplit as simpleSplit
 import logging
 from dataclasses import dataclass
 from .config import PDFStyle
 from .components import (
-    draw_page_background, draw_side_panel, draw_title,
-    draw_page_decorations, draw_card
+    draw_page_background,
+    draw_side_panel,
+    draw_title,
+    draw_page_decorations,
 )
 from .forms import create_input_field
 
 logger = logging.getLogger(__name__)
+
 
 @dataclass
 class LayoutConfig:
@@ -19,19 +22,22 @@ class LayoutConfig:
     use_blobs: bool = False
     y_start: float = None
 
+
 @dataclass
 class QuestionConfig:
     box_height: float = 3.0 * cm
     subtitle: str = None
     color_alternation: bool = True
 
+
 @dataclass
 class TextConfig:
-    style_choice: str = 'body'
+    style_choice: str = "body"
     font_size: int = 11
     color: str = PDFStyle.COLOR_TEXT_MAIN
     spacing_after: float = 0.5 * cm
-    align: str = 'left'
+    align: str = "left"
+
 
 class PageLayout:
     """
@@ -41,6 +47,7 @@ class PageLayout:
     - Cursor tracking to prevent overlapping elements.
     - Simplified methods to add text and question blocks.
     """
+
     def __init__(self, c, title, config: LayoutConfig = None):
         self.c = c
         self.title = title
@@ -54,7 +61,9 @@ class PageLayout:
         self.card_margin = 2 * cm
 
         # Draw background elements
-        draw_page_background(self.c, self.width, self.height, use_blobs=config.use_blobs)
+        draw_page_background(
+            self.c, self.width, self.height, use_blobs=config.use_blobs
+        )
 
         if config.use_side_panel:
             draw_side_panel(self.c, self.card_margin, self.width, self.height)
@@ -67,7 +76,12 @@ class PageLayout:
         # Draw Title
         if title:
             self.title_y = self.height - 4.0 * cm
-            new_y = draw_title(self.c, self.title, pos=(self.text_x, self.title_y), available_width=self.target_width)
+            new_y = draw_title(
+                self.c,
+                self.title,
+                pos=(self.text_x, self.title_y),
+                available_width=self.target_width,
+            )
             self.y_cursor = new_y - (24 * 0.5)
         else:
             self.title_y = self.height - 2.0 * cm
@@ -84,11 +98,11 @@ class PageLayout:
         if config is None:
             config = TextConfig()
 
-        if config.style_choice == 'body':
+        if config.style_choice == "body":
             font_name = PDFStyle.FONT_BODY
-        elif config.style_choice == 'italic':
+        elif config.style_choice == "italic":
             font_name = PDFStyle.FONT_ITALIC
-        elif config.style_choice == 'subtitle':
+        elif config.style_choice == "subtitle":
             font_name = PDFStyle.FONT_SUBTITLE
         else:
             font_name = PDFStyle.FONT_BODY
@@ -98,43 +112,75 @@ class PageLayout:
 
         lines = simpleSplit(text, font_name, config.font_size, self.target_width)
         for line in lines:
-            if config.align == 'center':
-                self.c.drawCentredString(self.text_x + self.target_width/2, self.y_cursor, line)
-            elif config.align == 'right':
-                self.c.drawRightString(self.text_x + self.target_width, self.y_cursor, line)
+            if config.align == "center":
+                self.c.drawCentredString(
+                    self.text_x + self.target_width / 2, self.y_cursor, line
+                )
+            elif config.align == "right":
+                self.c.drawRightString(
+                    self.text_x + self.target_width, self.y_cursor, line
+                )
             else:
                 self.c.drawString(self.text_x, self.y_cursor, line)
-            self.y_cursor -= config.font_size + 0.1 * cm # Roughly line height
+            self.y_cursor -= config.font_size + 0.1 * cm  # Roughly line height
 
         self.y_cursor -= config.spacing_after
         return self.y_cursor
 
-    def add_question_block(self, question, form_field_id, config: QuestionConfig = None):
+    def add_question_block(
+        self, question, form_field_id, config: QuestionConfig = None
+    ):
         """Adds a standard question block and its AcroForm input."""
         if config is None:
             config = QuestionConfig()
 
         if config.color_alternation:
-            color = PDFStyle.COLOR_ACCENT_BLUE if self.question_index % 2 == 0 else PDFStyle.COLOR_ACCENT_RED
+            color = (
+                PDFStyle.COLOR_ACCENT_BLUE
+                if self.question_index % 2 == 0
+                else PDFStyle.COLOR_ACCENT_RED
+            )
         else:
             color = PDFStyle.COLOR_ACCENT_BLUE
 
-        self.add_text(question, config=TextConfig(style_choice='subtitle', font_size=11, color=color, spacing_after=0.1*cm))
+        self.add_text(
+            question,
+            config=TextConfig(
+                style_choice="subtitle",
+                font_size=11,
+                color=color,
+                spacing_after=0.1 * cm,
+            ),
+        )
 
         if config.subtitle:
-            self.add_text(config.subtitle, config=TextConfig(style_choice='body', font_size=10, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.1*cm))
+            self.add_text(
+                config.subtitle,
+                config=TextConfig(
+                    style_choice="body",
+                    font_size=10,
+                    color=PDFStyle.COLOR_TEXT_SECONDARY,
+                    spacing_after=0.1 * cm,
+                ),
+            )
 
-        self.y_cursor -= 0.2 * cm # Gap before input
+        self.y_cursor -= 0.2 * cm  # Gap before input
 
         # Check if we need to paginate (basic protection)
         if self.y_cursor - config.box_height < 3 * cm:
-            logger.warning(f"Form field '{form_field_id}' might overflow bottom margin.")
+            logger.warning(
+                f"Form field '{form_field_id}' might overflow bottom margin."
+            )
 
-        create_input_field(self.form, form_field_id, pos=(self.text_x, self.y_cursor - config.box_height), size=(self.target_width, config.box_height),
-            multiline=True
+        create_input_field(
+            self.form,
+            form_field_id,
+            pos=(self.text_x, self.y_cursor - config.box_height),
+            size=(self.target_width, config.box_height),
+            multiline=True,
         )
 
-        self.y_cursor -= (config.box_height + 0.8 * cm)
+        self.y_cursor -= config.box_height + 0.8 * cm
         self.question_index += 1
         return self.y_cursor
 
@@ -144,5 +190,11 @@ class PageLayout:
 
     def render(self):
         """Finalizes the page with decorations."""
-        draw_page_decorations(self.c, self.width, self.height, part_title=self.part_title, x_offset=self.card_margin)
+        draw_page_decorations(
+            self.c,
+            self.width,
+            self.height,
+            part_title=self.part_title,
+            x_offset=self.card_margin,
+        )
         self.c.showPage()
