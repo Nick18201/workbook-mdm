@@ -73,7 +73,7 @@ def draw_background_blobs(c, width, height):
     if not hasattr(c, "_blobs_cache"):
         c._blobs_cache = {}
 
-    cache_key = (width, height)
+    cache_key = (width, height, PDFStyle.COLOR_BG_BLOB)
 
     if cache_key not in c._blobs_cache:
         form_name = f"BlobsBg_{len(c._blobs_cache)}"
