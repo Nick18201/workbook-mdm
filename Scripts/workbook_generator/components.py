@@ -36,50 +36,80 @@ def draw_page_decorations(c, width, height, part_title=None, x_offset=0):
 
 
 def draw_wavy_background(c, width, height):
-    """Draws subtle organic wave shapes in the background."""
+    """Draws subtle organic wave shapes in the background using XObjects for caching."""
+    if not hasattr(c, "_wavy_cache"):
+        c._wavy_cache = {}
+
+    cache_key = (width, height)
+
+    if cache_key not in c._wavy_cache:
+        form_name = f"WavyBg_{len(c._wavy_cache)}"
+        c.beginForm(form_name)
+
+        c.setFillColor(colors.HexColor("#F8E8DA"), alpha=0.4)  # Subtle darker nude
+
+        # Top Left Wave
+        p1 = c.beginPath()
+        p1.moveTo(0, height)
+        p1.curveTo(width * 0.3, height, width * 0.5, height * 0.85, 0, height * 0.65)
+        c.drawPath(p1, fill=1, stroke=0)
+
+        # Bottom Right Wave
+        p2 = c.beginPath()
+        p2.moveTo(width, 0)
+        p2.curveTo(width * 0.7, 0, width * 0.5, height * 0.15, width, height * 0.35)
+        c.drawPath(p2, fill=1, stroke=0)
+
+        c.endForm()
+        c._wavy_cache[cache_key] = form_name
+
     c.saveState()
-    c.setFillColor(colors.HexColor("#F8E8DA"), alpha=0.4)  # Subtle darker nude
-
-    # Top Left Wave
-    p1 = c.beginPath()
-    p1.moveTo(0, height)
-    p1.curveTo(width * 0.3, height, width * 0.5, height * 0.85, 0, height * 0.65)
-    c.drawPath(p1, fill=1, stroke=0)
-
-    # Bottom Right Wave
-    p2 = c.beginPath()
-    p2.moveTo(width, 0)
-    p2.curveTo(width * 0.7, 0, width * 0.5, height * 0.15, width, height * 0.35)
-    c.drawPath(p2, fill=1, stroke=0)
-
+    c.doForm(c._wavy_cache[cache_key])
     c.restoreState()
 
 
 def draw_background_blobs(c, width, height):
-    """Draws large soft organic blobs (circles/ellipses) at Top-Right and Bottom-Left."""
+    """Draws large soft organic blobs at Top-Right and Bottom-Left using XObjects for caching."""
+    if not hasattr(c, "_blobs_cache"):
+        c._blobs_cache = {}
+
+    cache_key = (width, height)
+
+    if cache_key not in c._blobs_cache:
+        form_name = f"BlobsBg_{len(c._blobs_cache)}"
+        c.beginForm(form_name)
+
+        # Use the specifically defined pink blob color
+        c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
+
+        # Top Right Blob - slightly larger
+        c.circle(width * 0.95, height * 0.92, 140, fill=1, stroke=0)
+
+        # Bottom Blob - spans full width, starts higher, ends lower
+        # We'll use a large ellipse for the bottom one
+        # Moved center a bit higher (~15% of height) and made it very wide
+        c.ellipse(
+            -width * 0.2, -height * 0.1, width * 1.2, height * 0.35, fill=1, stroke=0
+        )
+
+        # Alternatively, use multiple circles to create a "wavy" fill at the bottom
+        # but based on "traverser toute la largeur", a large horizontal ellipse or rect-to-curve is better.
+        # Let's use a path for organic feel
+        p = c.beginPath()
+        p.moveTo(0, height * 0.25)  # Starts higher
+        p.curveTo(
+            width * 0.3, height * 0.3, width * 0.7, height * 0.1, width, height * 0.2
+        )
+        p.lineTo(width, 0)
+        p.lineTo(0, 0)
+        p.close()
+        c.drawPath(p, fill=1, stroke=0)
+
+        c.endForm()
+        c._blobs_cache[cache_key] = form_name
+
     c.saveState()
-    # Use the specifically defined pink blob color
-    c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
-
-    # Top Right Blob - slightly larger
-    c.circle(width * 0.95, height * 0.92, 140, fill=1, stroke=0)
-
-    # Bottom Blob - spans full width, starts higher, ends lower
-    # We'll use a large ellipse for the bottom one
-    # Moved center a bit higher (~15% of height) and made it very wide
-    c.ellipse(-width * 0.2, -height * 0.1, width * 1.2, height * 0.35, fill=1, stroke=0)
-
-    # Alternatively, use multiple circles to create a "wavy" fill at the bottom
-    # but based on "traverser toute la largeur", a large horizontal ellipse or rect-to-curve is better.
-    # Let's use a path for organic feel
-    p = c.beginPath()
-    p.moveTo(0, height * 0.25)  # Starts higher
-    p.curveTo(width * 0.3, height * 0.3, width * 0.7, height * 0.1, width, height * 0.2)
-    p.lineTo(width, 0)
-    p.lineTo(0, 0)
-    p.close()
-    c.drawPath(p, fill=1, stroke=0)
-
+    c.doForm(c._blobs_cache[cache_key])
     c.restoreState()
 
 
