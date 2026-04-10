@@ -44,7 +44,7 @@ def draw_wavy_background(c, width, height):
 
     if cache_key not in c._wavy_cache:
         form_name = f"WavyBg_{len(c._wavy_cache)}"
-        c.beginForm(form_name)
+        c.beginForm(form_name, width=width, height=height)
 
         c.setFillColor(colors.HexColor("#F8E8DA"), alpha=0.4)  # Subtle darker nude
 
