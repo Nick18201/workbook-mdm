@@ -77,7 +77,7 @@ def draw_background_blobs(c, width, height):
 
     if cache_key not in c._blobs_cache:
         form_name = f"BlobsBg_{len(c._blobs_cache)}"
-        c.beginForm(form_name)
+        c.beginForm(form_name, width=width, height=height)
 
         # Use the specifically defined pink blob color
         c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
