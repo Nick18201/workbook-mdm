@@ -44,7 +44,7 @@ def draw_wavy_background(c, width, height):
 
     if cache_key not in c._wavy_cache:
         form_name = f"WavyBg_{len(c._wavy_cache)}"
-        c.beginForm(form_name, width=width, height=height)
+        c.beginForm(form_name)
 
         c.setFillColor(colors.HexColor("#F8E8DA"), alpha=0.4)  # Subtle darker nude
 
@@ -77,7 +77,7 @@ def draw_background_blobs(c, width, height):
 
     if cache_key not in c._blobs_cache:
         form_name = f"BlobsBg_{len(c._blobs_cache)}"
-        c.beginForm(form_name, width=width, height=height)
+        c.beginForm(form_name)
 
         # Use the specifically defined pink blob color
         c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
