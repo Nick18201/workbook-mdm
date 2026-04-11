@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
-from reportlab.lib.utils import simpleSplit
+from .utils import cached_simpleSplit as simpleSplit
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY

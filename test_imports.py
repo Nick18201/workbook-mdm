@@ -22,6 +22,7 @@ sys.modules['reportlab.pdfbase'] = MockModule()
 sys.modules['reportlab.pdfbase.pdfmetrics'] = MockModule()
 sys.modules['reportlab.pdfbase.ttfonts'] = MockModule()
 sys.modules['reportlab.platypus'] = MockModule()
+sys.modules['reportlab.rl_config'] = MockModule()
 
 # Import the actual scripts to ensure syntax and structure is correct
 import Scripts.main_generate_chap0
