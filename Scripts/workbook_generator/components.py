@@ -12,6 +12,7 @@ from reportlab.lib.enums import TA_JUSTIFY
 
 from .config import PDFStyle
 from .forms import create_input_field
+from .utils import cached_ImageReader
 
 
 def draw_page_background(c, width, height, use_blobs=False):
@@ -44,7 +45,7 @@ def draw_wavy_background(c, width, height):
 
     if cache_key not in c._wavy_cache:
         form_name = f"WavyBg_{len(c._wavy_cache)}"
-        c.beginForm(form_name, width=width, height=height)
+        c.beginForm(form_name)
 
         c.setFillColor(colors.HexColor("#F8E8DA"), alpha=0.4)  # Subtle darker nude
 
@@ -77,7 +78,7 @@ def draw_background_blobs(c, width, height):
 
     if cache_key not in c._blobs_cache:
         form_name = f"BlobsBg_{len(c._blobs_cache)}"
-        c.beginForm(form_name, width=width, height=height)
+        c.beginForm(form_name)
 
         # Use the specifically defined pink blob color
         c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
@@ -439,7 +440,7 @@ def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT
         center_x = band_width + (content_width - img_width) / 2
 
         c.drawImage(
-            PDFStyle.PATH_ILLU_COVER,
+            cached_ImageReader(PDFStyle.PATH_ILLU_COVER),
             center_x,
             height * 0.10,
             width=img_width,
@@ -464,7 +465,7 @@ def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT
         c.translate(width - 4 * cm, 4 * cm)
         c.rotate(-15)
         c.drawImage(
-            PDFStyle.PATH_STAMP,
+            cached_ImageReader(PDFStyle.PATH_STAMP),
             -2 * cm,
             -2 * cm,
             width=4 * cm,
@@ -573,7 +574,7 @@ def create_standard_summary_page(
         c.translate(width - 1 * cm, height - 3 * cm)
         c.rotate(30)
         c.drawImage(
-            PDFStyle.PATH_PLUME_TEXTURE,
+            cached_ImageReader(PDFStyle.PATH_PLUME_TEXTURE),
             0,
             0,
             width=5 * cm,

@@ -9,3 +9,7 @@
 ## 2024-04-10 - [Optimization: Using Form XObjects for Background Elements]
 **Learning:** Extending the XObject optimization (originally just for the dot grid) to cache the background wavy elements and background blobs yielded significant improvements. While generating `test_backgrounds`, repetitive drawing (such as drawing organic path blobs which contain many curve points) on every page causes the number of drawing operators in the PDF stream to stack up quickly. Even complex singular path objects benefit heavily from being cached globally across the document using `c.beginForm()` and `c.doForm()`.
 **Action:** When a document uses a common background that has complex paths, waves, or blobs across many pages, encapsulate them in Form XObjects individually or collectively to reduce overhead, generation time, and output PDF size.
+
+## 2024-04-10 - Image Parsing Overhead in ReportLab
+**Learning:** ReportLab's `canvas.drawImage()` accepts file paths directly, but re-parses and re-hashes the image file from disk every single time it is called, even if the image is identical (like logos, textures, or cover illustrations). This causes significant I/O and CPU overhead during PDF generation.
+**Action:** Wrap identical image file paths in an `@lru_cache`ed `reportlab.lib.utils.ImageReader` instantiation before passing them to `drawImage`. This ensures the image is read, decoded, and hashed exactly once, significantly reducing execution time (especially noticeable when multiple pages or PDFs are generated).
