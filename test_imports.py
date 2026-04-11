@@ -7,8 +7,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "Scripts"))
 
 # We mock all required submodules to satisfy the imports without having reportlab installed
 class MockModule(MagicMock):
-    __path__ = []
-    __spec__ = MagicMock()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__path__ = []
+        self.__spec__ = MagicMock()
 
 sys.modules['reportlab'] = MockModule()
 sys.modules['reportlab.rl_config'] = MockModule()
