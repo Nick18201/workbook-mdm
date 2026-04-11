@@ -10,11 +10,20 @@ from .config import PDFStyle
 reportlab.rl_config.useA85 = 0
 
 
+# Save original simpleSplit
+_original_simpleSplit = simpleSplit
+
+
 # Cache the simpleSplit function to avoid redundant text wrapping calculations
 # which are heavily used across chapters.
 @functools.lru_cache(maxsize=2048)
 def cached_simpleSplit(text, fontName, fontSize, maxWidth):
-    return simpleSplit(text, fontName, fontSize, maxWidth)
+    return _original_simpleSplit(text, fontName, fontSize, maxWidth)
+
+
+# Monkey-patch the global simpleSplit to ensure Paragraph objects benefit
+# (using the already imported reportlab module)
+reportlab.lib.utils.simpleSplit = cached_simpleSplit
 
 
 def register_fonts():
