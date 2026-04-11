@@ -73,7 +73,6 @@ def create_timeline_page(c):
     c.setFont(PDFStyle.FONT_BODY, 10)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     desc_text = "Tracez la courbe de votre vie (pro/perso). Identifiez les moments forts (les sommets) et difficiles (les vallées). L'objectif est de comprendre ce qui vous ressource et vos apprentissages lors d'épreuves."
-    from ..utils import cached_simpleSplit as simpleSplit
 
     text_y = new_y - 0.2 * cm
     for line in simpleSplit(
@@ -196,7 +195,6 @@ def create_skills_transfer_page(c):
         "Ne sous-estimez aucune expérience. Même la gestion du quotidien développe des compétences clés.",
     ]
     y_desc = new_y - 0.8 * cm
-    from ..utils import cached_simpleSplit as simpleSplit
 
     target_width = width - text_x - 1.0 * cm
     for line in desc_lines:
@@ -301,7 +299,6 @@ def create_analysis_parcours_pages(c):
         if page_num == 0:
             intro_txt = "Détaillez chaque expérience significative (emploi, stage, bénévolat). Cet inventaire vous servira de socle pour repérer vos réussites et analyser ce que vous souhaitez retrouver ou éviter à l'avenir."
             text_y = new_y - 0.2 * cm
-            from ..utils import cached_simpleSplit as simpleSplit
 
             for line in simpleSplit(
                 intro_txt, PDFStyle.FONT_BODY, 10, width - text_x - 1.0 * cm
@@ -453,7 +450,6 @@ def create_analysis_parcours_pages(c):
     schema_ex = "(Ex: Choisir souvent sous la pression, rechercher l'expertise, aller au clash au bout d'un an, etc.)"
 
     # We use simpleSplit to respect borders
-    from ..utils import cached_simpleSplit as simpleSplit
 
     for s in simpleSplit(schema_question, PDFStyle.FONT_BODY, 10, target_width):
         c.drawString(text_x, y_cursor, s)
@@ -542,7 +538,6 @@ def create_tree_of_life_page(c):
     text_obj = c.beginText(text_obj_x, y_cursor)
     text_obj.setFont(PDFStyle.FONT_BODY, 10)
     text_obj.setTextOrigin(text_obj_x, y_cursor)
-    from ..utils import cached_simpleSplit as simpleSplit
 
     # Constrain width to avoid hitting right margin
     target_width = width - text_obj_x - 1.0 * cm
