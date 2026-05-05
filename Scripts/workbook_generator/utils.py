@@ -66,5 +66,5 @@ def register_fonts():
 # This saves I/O and CPU time when the same image (like logos or repeated illustrations)
 # is placed on multiple pages.
 @functools.lru_cache(maxsize=128)
-def cached_image_reader(filepath):
+def cached_ImageReader(filepath):
     return ImageReader(filepath)
