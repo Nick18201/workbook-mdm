@@ -66,5 +66,54 @@ def register_fonts():
 # This saves I/O and CPU time when the same image (like logos or repeated illustrations)
 # is placed on multiple pages.
 @functools.lru_cache(maxsize=128)
-def cached_image_reader(filepath):
+def cached_ImageReader(filepath):
     return ImageReader(filepath)
+
+
+def draw_image_with_form(
+    c,
+    image_path,
+    x,
+    y,
+    width=None,
+    height=None,
+    anchor="sw",
+    mask=None,
+    preserveAspectRatio=False,
+):
+    """
+    Draws an image using Form XObjects to cache it at a specific size.
+    This prevents ReportLab from re-embedding the image and re-emitting drawing
+    operators for identical images (like repeated backgrounds or logos).
+    """
+    if not hasattr(c, "_image_form_cache"):
+        c._image_form_cache = {}
+
+    # Key includes all arguments that affect the generated XObject content
+    # Note: anchor does not affect the XObject content (it's drawn at 0,0 inside),
+    # but rather how it's positioned, EXCEPT drawImage handles anchor internally
+    # by shifting the image inside the bounding box. So anchor must be in the key.
+    cache_key = (image_path, width, height, anchor, mask, preserveAspectRatio)
+
+    if cache_key not in c._image_form_cache:
+        form_name = f"ImgForm_{len(c._image_form_cache)}"
+        c.beginForm(form_name)
+        img = cached_ImageReader(image_path)
+        # We always draw at (0, 0) inside the form's local coordinate system
+        c.drawImage(
+            img,
+            0,
+            0,
+            width=width,
+            height=height,
+            mask=mask,
+            preserveAspectRatio=preserveAspectRatio,
+            anchor=anchor,
+        )
+        c.endForm()
+        c._image_form_cache[cache_key] = form_name
+
+    c.saveState()
+    c.translate(x, y)
+    c.doForm(c._image_form_cache[cache_key])
+    c.restoreState()
