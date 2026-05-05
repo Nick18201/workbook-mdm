@@ -24,6 +24,17 @@ from workbook_generator.chapters.livret_competences import (
 def build_livret_competences(output_filename, theme="earth"):
     # Set the theme
     PDFStyle.set_theme(theme)
+
+    # Check if we can write to the file
+    if os.path.exists(output_filename):
+        try:
+            os.remove(output_filename)
+        except PermissionError:
+            print(
+                f"Error: Cannot overwrite {output_filename}. Please close the PDF if it is open."
+            )
+            return
+
     # Register fonts first
     register_fonts()
 

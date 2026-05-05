@@ -68,3 +68,7 @@ def register_fonts():
 @functools.lru_cache(maxsize=128)
 def cached_image_reader(filepath):
     return ImageReader(filepath)
+
+
+# Alias for backward compatibility or existing usage in the codebase
+cached_ImageReader = cached_image_reader

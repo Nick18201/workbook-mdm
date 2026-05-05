@@ -1,3 +1,4 @@
+import os
 import argparse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -24,6 +25,17 @@ def create_chap1_main_cover(c):
 def build_wb_chap1_pdf(output_filename, theme="earth"):
     # Set the theme
     PDFStyle.set_theme(theme)
+
+    # Check if we can write to the file
+    if os.path.exists(output_filename):
+        try:
+            os.remove(output_filename)
+        except PermissionError:
+            print(
+                f"Error: Cannot overwrite {output_filename}. Please close the PDF if it is open."
+            )
+            return
+
     # Register fonts first
     register_fonts()
 
