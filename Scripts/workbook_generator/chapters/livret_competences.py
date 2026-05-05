@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.platypus import Paragraph
@@ -13,6 +14,14 @@ from workbook_generator.components import (
     TitleStyle,
 )
 from workbook_generator.forms import create_input_field
+
+
+@dataclass
+class FormSectionConfig:
+    title: str
+    text: str
+    input_name: str
+    input_height: float
 
 
 def create_livret_cover(c):
@@ -45,31 +54,32 @@ def _draw_instruction_text(c, text, x, y, max_width):
     return y - h
 
 
-def _draw_form_section(
-    c, form, current_y, title, text, input_name, input_height, content_x, content_w
-):
+def _draw_form_section(c, form, config: FormSectionConfig, pos, width):
+    content_x, current_y = pos
+    content_w = width
+
     current_y = draw_title(
         c,
-        title,
+        config.title,
         pos=(content_x, current_y),
         style=TitleStyle(size=16, color=PDFStyle.COLOR_ACCENT_RED),
     )
     current_y = _draw_instruction_text(
-        c, text, content_x, current_y - 0.3 * cm, content_w
+        c, config.text, content_x, current_y - 0.3 * cm, content_w
     )
 
     current_y -= 0.5 * cm  # Espacement avant la case
 
     create_input_field(
         form,
-        input_name,
-        pos=(content_x, current_y - input_height),
-        size=(content_w, input_height),
+        config.input_name,
+        pos=(content_x, current_y - config.input_height),
+        size=(content_w, config.input_height),
         multiline=True,
     )
 
     # On renvoie la position Y sous la box, avec une marge pour la section suivante
-    return current_y - input_height - 1.2 * cm
+    return current_y - config.input_height - 1.2 * cm
 
 
 def create_profil_page(c):
@@ -105,36 +115,39 @@ def create_profil_page(c):
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "ADN : Valeurs & Moteurs",
-        "Quelles sont vos valeurs phares et ce qui vous donne de l'énergie ?",
-        "profil_adn",
-        3.5 * cm,
-        content_x,
+        FormSectionConfig(
+            "ADN : Valeurs & Moteurs",
+            "Quelles sont vos valeurs phares et ce qui vous donne de l'énergie ?",
+            "profil_adn",
+            3.5 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Style : Mode de collaboration",
-        "Décrivez votre type de personnalité (ex: MBTI) et vos conditions idéales de collaboration.",
-        "profil_style",
-        3.5 * cm,
-        content_x,
+        FormSectionConfig(
+            "Style : Mode de collaboration",
+            "Décrivez votre type de personnalité (ex: MBTI) et vos conditions idéales de collaboration.",
+            "profil_style",
+            3.5 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Boussole : Vision à 3-5 ans",
-        "Vers quoi souhaitez-vous tendre professionnellement à moyen terme ?",
-        "profil_boussole",
-        3.5 * cm,
-        content_x,
+        FormSectionConfig(
+            "Boussole : Vision à 3-5 ans",
+            "Vers quoi souhaitez-vous tendre professionnellement à moyen terme ?",
+            "profil_boussole",
+            3.5 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
@@ -177,24 +190,26 @@ def create_parcours_page(c):
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Fil Rouge & Génogramme Pro",
-        "Quel est le narratif qui relie vos expériences ? Quels héritages ont influencé vos choix ?",
-        "parcours_fil",
-        6.0 * cm,
-        content_x,
+        FormSectionConfig(
+            "Fil Rouge & Génogramme Pro",
+            "Quel est le narratif qui relie vos expériences ? Quels héritages ont influencé vos choix ?",
+            "parcours_fil",
+            6.0 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Carte aux Trésors : Top Compétences",
-        "Listez vos compétences clés (Hard & Soft) par niveau de maîtrise.",
-        "parcours_competences",
-        8.0 * cm,
-        content_x,
+        FormSectionConfig(
+            "Carte aux Trésors : Top Compétences",
+            "Listez vos compétences clés (Hard & Soft) par niveau de maîtrise.",
+            "parcours_competences",
+            8.0 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
@@ -237,24 +252,26 @@ def create_preuves_page(c):
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Situation - Tâche - Action - Résultat (STAR)",
-        "Détaillez ici 1 à 2 réalisations majeures qui démontrent votre valeur.",
-        "preuves_star",
-        8.0 * cm,
-        content_x,
+        FormSectionConfig(
+            "Situation - Tâche - Action - Résultat (STAR)",
+            "Détaillez ici 1 à 2 réalisations majeures qui démontrent votre valeur.",
+            "preuves_star",
+            8.0 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Témoignages & Verbatim",
-        "Citations de collègues, managers ou clients (issus d'un 360° par exemple).",
-        "preuves_temoignages",
-        6.0 * cm,
-        content_x,
+        FormSectionConfig(
+            "Témoignages & Verbatim",
+            "Citations de collègues, managers ou clients (issus d'un 360° par exemple).",
+            "preuves_temoignages",
+            6.0 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
@@ -297,24 +314,26 @@ def create_potentiel_page(c):
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Projet Cible & Transférabilité",
-        "Quel est l'environnement, la mission et la culture recherchés ? En quoi vos compétences y répondent ?",
-        "potentiel_projet",
-        6.0 * cm,
-        content_x,
+        FormSectionConfig(
+            "Projet Cible & Transférabilité",
+            "Quel est l'environnement, la mission et la culture recherchés ? En quoi vos compétences y répondent ?",
+            "potentiel_projet",
+            6.0 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
     current_y = _draw_form_section(
         c,
         form,
-        current_y,
-        "Plan de Développement",
-        "Quelles compétences sont en cours d'acquisition ou prévues ?",
-        "potentiel_dev",
-        6.0 * cm,
-        content_x,
+        FormSectionConfig(
+            "Plan de Développement",
+            "Quelles compétences sont en cours d'acquisition ou prévues ?",
+            "potentiel_dev",
+            6.0 * cm,
+        ),
+        (content_x, current_y),
         content_w,
     )
 
