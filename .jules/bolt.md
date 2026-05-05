@@ -13,3 +13,7 @@
 ## 2024-04-10 - Image Parsing Overhead in ReportLab
 **Learning:** ReportLab's `canvas.drawImage()` accepts file paths directly, but re-parses and re-hashes the image file from disk every single time it is called, even if the image is identical (like logos, textures, or cover illustrations). This causes significant I/O and CPU overhead during PDF generation.
 **Action:** Wrap identical image file paths in an `@lru_cache`ed `reportlab.lib.utils.ImageReader` instantiation before passing them to `drawImage`. This ensures the image is read, decoded, and hashed exactly once, significantly reducing execution time (especially noticeable when multiple pages or PDFs are generated).
+
+## 2024-04-14 - [Optimization: Using Form XObjects for Image Caching]
+**Learning:** Even when `reportlab.lib.utils.ImageReader` is wrapped with `@functools.lru_cache`, calling `canvas.drawImage` repeatedly with the same image across a document still incurs significant overhead. This is because ReportLab internally parses the mask, generates an MD5 hash of the RGB data `_digester(rawdata+mdata)`, and processes image operators every single time it's called.
+**Action:** Wrap identical image drawing operations in PDF Form XObjects (`c.beginForm()` and `c.doForm()`). By caching the image at the PDF structural level, ReportLab completely skips the python-level digest, RGB generation, and parsing logic on subsequent calls. This reduces execution time substantially when images like logos, background textures, or stamps are used multiple times per document.
