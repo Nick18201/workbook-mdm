@@ -1,4 +1,3 @@
-import os
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.platypus import Paragraph
@@ -6,7 +5,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.units import cm
 
-from ..utils import cached_ImageReader
+from ..utils import cached_ImageReader, cached_path_exists
 from ..config import PDFStyle
 from ..components import (
     draw_page_background,
@@ -89,7 +88,7 @@ def create_editorial_page_card(c):
         style=TitleStyle(size=22),
     )
 
-    if os.path.exists(PDFStyle.PATH_GUILLEMETS):
+    if cached_path_exists(PDFStyle.PATH_GUILLEMETS):
         c.drawImage(
             cached_ImageReader(PDFStyle.PATH_GUILLEMETS),
             card_x + card_w - 4.5 * cm,
@@ -133,11 +132,11 @@ def create_editorial_page_card(c):
             p.drawOn(c, inner_x, text_y - ph)
         text_y -= ph + 0.5 * cm
 
-    if os.path.exists(PDFStyle.PATH_PLANTE_BLEUE):
+    if cached_path_exists(PDFStyle.PATH_PLANTE_BLEUE):
         plant_w = 10 * cm
         plant_h = 12 * cm
 
-        if os.path.exists(PDFStyle.PATH_PLANTE_ROSE_OMBRE):
+        if cached_path_exists(PDFStyle.PATH_PLANTE_ROSE_OMBRE):
             c.drawImage(
                 cached_ImageReader(PDFStyle.PATH_PLANTE_ROSE_OMBRE),
                 width - plant_w + 6.5 * cm + 0.3 * cm,
@@ -163,7 +162,7 @@ def create_editorial_page_card(c):
         corner_x = -5.5 * cm
         corner_y = -plant_h * 0.3
 
-        if os.path.exists(PDFStyle.PATH_PLANTE_ROSE_OMBRE):
+        if cached_path_exists(PDFStyle.PATH_PLANTE_ROSE_OMBRE):
             c.drawImage(
                 cached_ImageReader(PDFStyle.PATH_PLANTE_ROSE_OMBRE),
                 corner_x + 0.3 * cm,
@@ -223,7 +222,7 @@ def create_intro_sense_page(c):
         style=TitleStyle(size=28, color=PURPLE_TITLE),
     )
 
-    if os.path.exists(PDFStyle.PATH_STAMP):
+    if cached_path_exists(PDFStyle.PATH_STAMP):
         stamp_size = 4 * cm
         c.saveState()
         c.translate(width - stamp_size / 2 - 3 * cm, height - stamp_size / 2 - 1.5 * cm)
@@ -414,7 +413,7 @@ def create_premiere_etape_page(c):
         text_y -= h + 0.8 * cm
 
     # Replaced brindilles with plume texture, scaled down
-    if os.path.exists(PDFStyle.PATH_PLUME_TEXTURE):
+    if cached_path_exists(PDFStyle.PATH_PLUME_TEXTURE):
         # Top Right
         c.saveState()
         c.translate(width - 1 * cm, height - 3 * cm)
