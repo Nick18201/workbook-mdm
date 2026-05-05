@@ -68,3 +68,31 @@ def register_fonts():
 @functools.lru_cache(maxsize=128)
 def cached_image_reader(filepath):
     return ImageReader(filepath)
+
+
+def cached_draw_image(c, image_path, x, y, width=None, height=None, **kwargs):
+    """
+    Draws an image using Form XObjects to cache it at the PDF level.
+    This avoids redundant disk reads, hashing overhead, and `drawImage` processing
+    when the same image is drawn multiple times across the document.
+    """
+    if not hasattr(c, "_image_form_cache"):
+        c._image_form_cache = {}
+
+    # Create a unique cache key based on image path, dimensions, and kwargs
+    cache_key = (image_path, width, height, str(kwargs))
+
+    if cache_key not in c._image_form_cache:
+        form_name = f"ImageForm_{len(c._image_form_cache)}"
+        c.beginForm(form_name)
+        # Draw image at 0, 0 inside the form.
+        c.drawImage(
+            cached_image_reader(image_path), 0, 0, width=width, height=height, **kwargs
+        )
+        c.endForm()
+        c._image_form_cache[cache_key] = form_name
+
+    c.saveState()
+    c.translate(x, y)
+    c.doForm(c._image_form_cache[cache_key])
+    c.restoreState()
