@@ -75,11 +75,11 @@ def draw_image_with_form(
     image_path,
     x,
     y,
-    width,
-    height,
-    anchor="c",
-    mask="auto",
-    preserveAspectRatio=True,
+    width=None,
+    height=None,
+    anchor="sw",
+    mask=None,
+    preserveAspectRatio=False,
 ):
     """
     Draws an image using Form XObjects to cache it at a specific size.
