@@ -1,4 +1,3 @@
-import os
 import math
 from dataclasses import dataclass
 
@@ -12,7 +11,7 @@ from reportlab.lib.enums import TA_JUSTIFY
 
 from .config import PDFStyle
 from .forms import create_input_field
-from .utils import cached_ImageReader
+from .utils import cached_ImageReader, cached_path_exists
 
 
 def draw_page_background(c, width, height, use_blobs=False):
@@ -434,7 +433,7 @@ def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT
     c.rect(0, 0, band_width, height, fill=1, stroke=0)
 
     # A. Illustration Principale (Cover)
-    if os.path.exists(PDFStyle.PATH_ILLU_COVER):
+    if cached_path_exists(PDFStyle.PATH_ILLU_COVER):
         content_width = width - band_width
         img_width = content_width * 0.75
         center_x = band_width + (content_width - img_width) / 2
@@ -460,7 +459,7 @@ def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT
     draw_branding_logo(c, logo_x, logo_y, size=40)
 
     # 2c. Stamp Rouge
-    if os.path.exists(PDFStyle.PATH_STAMP):
+    if cached_path_exists(PDFStyle.PATH_STAMP):
         c.saveState()
         c.translate(width - 4 * cm, 4 * cm)
         c.rotate(-15)
@@ -569,7 +568,7 @@ def create_standard_summary_page(
         text_y -= 1.0 * cm
 
     # Decor (Plume)
-    if os.path.exists(PDFStyle.PATH_PLUME_TEXTURE):
+    if cached_path_exists(PDFStyle.PATH_PLUME_TEXTURE):
         c.saveState()
         c.translate(width - 1 * cm, height - 3 * cm)
         c.rotate(30)
