@@ -192,7 +192,9 @@ def _draw_skills_intro(c, text_x, start_y, target_width):
     return y_desc
 
 
-def _draw_skills_table_headers(c, col1_x, col2_x, y_start):
+def _draw_skills_table_headers(c, text_x, target_width, y_start):
+    col1_x = text_x
+    col2_x = text_x + target_width / 2.0 + 0.5 * cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.drawString(col1_x, y_start, "L'Expérience Vécue")
