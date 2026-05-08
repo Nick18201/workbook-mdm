@@ -243,7 +243,7 @@ def _draw_quadrant(c, form, title, dx, dy, center_x, center_y):
     # Input Field: Centré dans le quadrant
     create_input_field(
         form,
-        f"vision_{main_title.strip()}",
+        f"vision_{main_title}",
         pos=(f_x, f_y),
         size=(field_width, field_height),
         tooltip="Phrase de synthèse",
