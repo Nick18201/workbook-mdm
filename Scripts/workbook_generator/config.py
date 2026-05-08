@@ -2,6 +2,7 @@ import os
 from reportlab.lib import colors
 from reportlab.lib.units import cm
 
+
 class PDFStyle:
     THEMES = ["earth", "indigo"]
 
@@ -53,7 +54,7 @@ class PDFStyle:
                 "COLOR_BG_BLOB": "#FDE8DB",
                 "COLOR_SHADOW": "#79544A",
                 "COLOR_LINE": "#D19B8D",
-            }
+            },
         }
 
         palette = palettes.get(theme_name, palettes["earth"])
@@ -67,39 +68,43 @@ class PDFStyle:
     FONT_ITALIC = "Montserrat-Italic"
     FONT_HAND = "Caveat-Regular"
     FONT_BRANDING = "Montserrat-Black"
-    
+
     # Fallback Fonts
     FONT_TITLE_FALLBACK = "Helvetica-Bold"
     FONT_BODY_FALLBACK = "Helvetica"
     FONT_ITALIC_FALLBACK = "Helvetica-Oblique"
-    
+
     # Dimensions
     MARGIN_MAIN = 2.0 * cm
     CARD_RADIUS = 10
-    
+
     # Paths
     # Assuming this file is in 00_Gestion_Projet/Scripts/workbook_generator/config.py
     # Assets are in 00_Gestion_Projet/assets (Up 2 levels)
     # Original script was in 00_Gestion_Projet/Scripts, so assets were "../assets"
-    
+
     # Current structure:
     # .../Scripts/workbook_generator/config.py
     # .../assets
-    
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))) # .../MDM programme/
-    
+
+    BASE_DIR = os.path.dirname(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    )  # .../MDM programme/
+
     # Correcting path to match user file structure from previous context
     # User listed: c:\Users\nblum\LLM_LAB\PROJETS\MDM programme\00_Gestion_Projet\Scripts
-    # So assets should be in 00_Gestion_Projet/assets? 
+    # So assets should be in 00_Gestion_Projet/assets?
     # Original script: os.path.join(os.path.dirname(__file__), "..", "assets", "fonts")
     # Means assets is at 00_Gestion_Projet/assets
-    
-    SCRIPTS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # .../Scripts
-    PROJECT_DIR = os.path.dirname(SCRIPTS_DIR) # .../00_Gestion_Projet
+
+    SCRIPTS_DIR = os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    )  # .../Scripts
+    PROJECT_DIR = os.path.dirname(SCRIPTS_DIR)  # .../00_Gestion_Projet
 
     FONTS_DIR = os.path.join(PROJECT_DIR, "assets", "fonts")
     ILLUS_DIR = os.path.join(PROJECT_DIR, "assets", "illustrations")
-    
+
     # Illustration Paths
     PATH_ILLU_COVER = os.path.join(ILLUS_DIR, "01a_ILLU.png")
     PATH_GUILLEMETS = os.path.join(ILLUS_DIR, "guillemets.png")

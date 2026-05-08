@@ -1,7 +1,7 @@
 import os
 import functools
 import reportlab.rl_config
-from reportlab.lib.utils import simpleSplit
+from reportlab.lib.utils import simpleSplit, ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from .config import PDFStyle
@@ -60,3 +60,11 @@ def register_fonts():
                     PDFStyle.FONT_SUBTITLE = font_name
             except Exception as e:
                 print(f"Warning: Could not register font {font_name}: {e}")
+
+
+# Cache ImageReader to avoid reloading and re-parsing identical images multiple times.
+# This saves I/O and CPU time when the same image (like logos or repeated illustrations)
+# is placed on multiple pages.
+@functools.lru_cache(maxsize=128)
+def cached_image_reader(filepath):
+    return ImageReader(filepath)
