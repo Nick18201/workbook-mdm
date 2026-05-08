@@ -155,6 +155,104 @@ def create_meteo_page(c):
     c.showPage()
 
 
+def _draw_radar_background(c, center_x, center_y):
+    """Draws the radar chart background (circles and dashed axes)."""
+    # Draw Axes
+    c.setLineWidth(1)
+    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
+
+    # Draw a circle to contain the axes visually (Radar chart style)
+    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.setFillColor(PDFStyle.COLOR_BG_BLOB)
+    c.circle(center_x, center_y, 7 * cm, stroke=1, fill=1)
+
+    c.setLineWidth(0.5)
+    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
+    c.circle(center_x, center_y, 3.5 * cm, stroke=1, fill=1)  # Inner circle
+
+    c.saveState()
+    c.setDash(4, 4)
+    c.line(center_x, center_y - 7 * cm, center_x, center_y + 7 * cm)  # Vertical
+    c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)  # Horizontal
+    c.restoreState()
+
+
+def _draw_quadrant(c, form, title, dx, dy, center_x, center_y):
+    """Draws a single quadrant including labels, backgrounds, and input fields."""
+    # Determine specific area center
+    q_center_x = center_x + (dx * (3.5 * cm))
+    q_center_y = center_y + (dy * (3.5 * cm))
+
+    words = title.split("(")
+    main_title = words[0].strip()
+    sub_title = "(" + words[1] if len(words) > 1 else ""
+
+    # Dimensions de la zone de saisie
+    field_width = 5.8 * cm
+    field_height = 1.8 * cm
+
+    # Placement dynamique symétrique pour éviter les chevauchements
+    if dy == 1:  # Haut
+        text_y = center_y + 5.2 * cm
+        f_y = center_y + 1.5 * cm
+    else:  # Bas
+        text_y = center_y - 5.0 * cm
+        f_y = center_y - 3.3 * cm
+
+    f_x = q_center_x - (field_width / 2)
+
+    # Draw Text Background (Forme de 'pill' ou de badge arrondi)
+    text_width = c.stringWidth(main_title, PDFStyle.FONT_BRANDING, 14)
+    c.saveState()
+    c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
+    c.setStrokeColor(PDFStyle.COLOR_WHITE, alpha=0)
+    c.roundRect(
+        q_center_x - text_width / 2 - 10,
+        text_y - 5,
+        text_width + 20,
+        20,
+        radius=10,
+        fill=1,
+        stroke=0,
+    )
+    c.restoreState()
+
+    c.setFont(PDFStyle.FONT_BRANDING, 14)
+    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.drawCentredString(q_center_x, text_y, main_title)
+
+    if sub_title:
+        sub_width = c.stringWidth(sub_title, PDFStyle.FONT_BODY, 10)
+        c.saveState()
+        c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
+        c.setStrokeColor(PDFStyle.COLOR_WHITE, alpha=0)
+        c.roundRect(
+            q_center_x - sub_width / 2 - 6,
+            text_y - 0.5 * cm - 4,
+            sub_width + 12,
+            14,
+            radius=7,
+            fill=1,
+            stroke=0,
+        )
+        c.restoreState()
+
+        c.setFont(PDFStyle.FONT_BODY, 10)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.drawCentredString(q_center_x, text_y - 0.5 * cm, sub_title)
+
+    # Input Field: Centré dans le quadrant
+    create_input_field(
+        form,
+        f"vision_{main_title.strip()}",
+        pos=(f_x, f_y),
+        size=(field_width, field_height),
+        tooltip="Phrase de synthèse",
+        multiline=True,
+        fill_color=PDFStyle.COLOR_CARD_CREME,
+    )
+
+
 def create_vision_page(c):
     """
     Page 4: Ma Vision 'Boule à Facettes'.
@@ -183,24 +281,7 @@ def create_vision_page(c):
     center_x = card_margin + (width - card_margin) / 2
     center_y = height / 2 - 2.5 * cm
 
-    # Draw Axes
-    c.setLineWidth(1)
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
-
-    # Draw a circle to contain the axes visually (Radar chart style)
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.setFillColor(PDFStyle.COLOR_BG_BLOB)
-    c.circle(center_x, center_y, 7 * cm, stroke=1, fill=1)
-
-    c.setLineWidth(0.5)
-    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
-    c.circle(center_x, center_y, 3.5 * cm, stroke=1, fill=1)  # Inner circle
-
-    c.saveState()
-    c.setDash(4, 4)
-    c.line(center_x, center_y - 7 * cm, center_x, center_y + 7 * cm)  # Vertical
-    c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)  # Horizontal
-    c.restoreState()
+    _draw_radar_background(c, center_x, center_y)
 
     # Quadrants Labels & Inputs
     # Strict labels from Markdown
@@ -214,78 +295,7 @@ def create_vision_page(c):
     form = c.acroForm
 
     for title, dx, dy in axes:
-        # Determine specific area center
-        q_center_x = center_x + (dx * (3.5 * cm))
-        q_center_y = center_y + (dy * (3.5 * cm))
-
-        words = title.split("(")
-        main_title = words[0].strip()
-        sub_title = "(" + words[1] if len(words) > 1 else ""
-
-        # Dimensions de la zone de saisie
-        field_width = 5.8 * cm
-        field_height = 1.8 * cm
-
-        # Placement dynamique symétrique pour éviter les chevauchements
-        if dy == 1:  # Haut
-            text_y = center_y + 5.2 * cm
-            f_y = center_y + 1.5 * cm
-        else:  # Bas
-            text_y = center_y - 5.0 * cm
-            f_y = center_y - 3.3 * cm
-
-        f_x = q_center_x - (field_width / 2)
-
-        # Draw Text Background (Forme de 'pill' ou de badge arrondi)
-        text_width = c.stringWidth(main_title, PDFStyle.FONT_BRANDING, 14)
-        c.saveState()
-        c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
-        c.setStrokeColor(PDFStyle.COLOR_WHITE, alpha=0)
-        c.roundRect(
-            q_center_x - text_width / 2 - 10,
-            text_y - 5,
-            text_width + 20,
-            20,
-            radius=10,
-            fill=1,
-            stroke=0,
-        )
-        c.restoreState()
-
-        c.setFont(PDFStyle.FONT_BRANDING, 14)
-        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-        c.drawCentredString(q_center_x, text_y, main_title)
-
-        if sub_title:
-            sub_width = c.stringWidth(sub_title, PDFStyle.FONT_BODY, 10)
-            c.saveState()
-            c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
-            c.setStrokeColor(PDFStyle.COLOR_WHITE, alpha=0)
-            c.roundRect(
-                q_center_x - sub_width / 2 - 6,
-                text_y - 0.5 * cm - 4,
-                sub_width + 12,
-                14,
-                radius=7,
-                fill=1,
-                stroke=0,
-            )
-            c.restoreState()
-
-            c.setFont(PDFStyle.FONT_BODY, 10)
-            c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-            c.drawCentredString(q_center_x, text_y - 0.5 * cm, sub_title)
-
-        # Input Field: Centré dans le quadrant
-        create_input_field(
-            form,
-            f"vision_{main_title.strip()}",
-            pos=(f_x, f_y),
-            size=(field_width, field_height),
-            tooltip="Phrase de synthèse",
-            multiline=True,
-            fill_color=PDFStyle.COLOR_CARD_CREME,
-        )
+        _draw_quadrant(c, form, title, dx, dy, center_x, center_y)
 
     draw_page_decorations(
         c,
