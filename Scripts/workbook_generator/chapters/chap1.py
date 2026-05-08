@@ -162,7 +162,6 @@ def _draw_radar_background(c, center_x, center_y):
     c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
 
     # Draw a circle to contain the axes visually (Radar chart style)
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.setFillColor(PDFStyle.COLOR_BG_BLOB)
     c.circle(center_x, center_y, 7 * cm, stroke=1, fill=1)
 
