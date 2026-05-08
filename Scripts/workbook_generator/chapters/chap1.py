@@ -584,6 +584,7 @@ def _draw_changing_perspective(c, text_x, width, form, y_pos):
         multiline=True,
     )
 
+    y_pos -= 2.5 * cm
     return y_pos
 
 
