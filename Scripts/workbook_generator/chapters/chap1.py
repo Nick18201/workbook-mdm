@@ -51,24 +51,8 @@ def create_concept_page(c):
     create_standard_summary_page(c, "1", "CONCEPT", "", points)
 
 
-def create_meteo_page(c):
-    """
-    Page 3: Ma Météo Intérieure.
-    """
-    width, height = A4
-    draw_page_background(c, width, height)
-
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-
-    new_y = draw_title(c, "Mon État d'Esprit Actuel", pos=(text_x, text_top))
-
-    form = c.acroForm
-
-    y_opts = new_y - 0.5 * cm
+def _draw_emotion_section(c, form, text_x, y_pos):
+    y_opts = y_pos - 0.5 * cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(text_x, y_opts, "Aujourd'hui, je me sens :")
@@ -97,7 +81,11 @@ def create_meteo_page(c):
         c.drawString(opt_x + 1 * cm, opt_y + 0.15 * cm, opt)
         opt_x += 4 * cm
 
-    y_energy = opt_y - 3 * cm
+    return opt_y - 3 * cm
+
+
+def _draw_energy_scale(c, form, text_x, y_pos):
+    y_energy = y_pos
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(text_x, y_energy, "Mon niveau d'énergie :")
@@ -132,7 +120,11 @@ def create_meteo_page(c):
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
         c.drawCentredString(x_mark, y_energy - 2.6 * cm, str(i))
 
-    y_thought = y_energy - 4 * cm
+    return y_energy - 4 * cm
+
+
+def _draw_thought_input(c, form, text_x, y_pos, width):
+    y_thought = y_pos
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.drawString(text_x, y_thought, "Ce qui prend le plus de place dans ma tête :")
 
@@ -144,6 +136,30 @@ def create_meteo_page(c):
         tooltip="Pensée envahissante",
         multiline=True,
     )
+
+    return y_thought - 3 * cm
+
+
+def create_meteo_page(c):
+    """
+    Page 3: Ma Météo Intérieure.
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+
+    y_pos = draw_title(c, "Mon État d'Esprit Actuel", pos=(text_x, text_top))
+
+    form = c.acroForm
+
+    y_pos = _draw_emotion_section(c, form, text_x, y_pos)
+    y_pos = _draw_energy_scale(c, form, text_x, y_pos)
+    y_pos = _draw_thought_input(c, form, text_x, y_pos, width)
 
     draw_page_decorations(
         c,
