@@ -54,6 +54,95 @@ def create_recap_seance_page(c):
     create_standard_recap_page(c, "1. RÉCAPITULATIF", intro_txt, questions)
 
 
+def _draw_timeline_axis(c, center_x, margin_top, margin_bottom):
+    """
+    Draw the main vertical line and arrow head for the timeline.
+    """
+    c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
+    c.setLineWidth(2)
+    c.line(center_x, margin_top, center_x, margin_bottom)
+
+    # Arrow head at top
+    c.line(center_x, margin_top, center_x - 0.2 * cm, margin_top - 0.5 * cm)
+    c.line(center_x, margin_top, center_x + 0.2 * cm, margin_top - 0.5 * cm)
+
+
+def _draw_timeline_headers(c, center_x, margin_top):
+    """
+    Draw the top headers for the timeline.
+    """
+    header_offset = 8 * cm
+    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
+    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.drawString(
+        center_x - header_offset, margin_top + 0.5 * cm, "Les Sommets (Positifs)"
+    )
+
+    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
+    c.drawRightString(
+        center_x + header_offset, margin_top + 0.5 * cm, "Les Vallées (Apprentissages)"
+    )
+
+
+def _draw_timeline_nodes(c, form, center_x, margin_top):
+    """
+    Render the alternating nodes (circles, connectors, input fields).
+    """
+    positions = [
+        ("Sommet 1", "left", margin_top - 2.5 * cm),
+        ("Vallée 1", "right", margin_top - 6.0 * cm),
+        ("Sommet 2", "left", margin_top - 9.5 * cm),
+        ("Vallée 2", "right", margin_top - 13.0 * cm),
+        ("Sommet 3", "left", margin_top - 16.5 * cm),
+    ]
+
+    BOX_WIDTH = 7 * cm
+    GAP = 1 * cm
+
+    for i, (label, side, y_pos) in enumerate(positions, start=1):
+        # Dot on line
+        c.setFillColor(PDFStyle.COLOR_WHITE)
+        c.setStrokeColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.circle(center_x, y_pos, 0.15 * cm, fill=1, stroke=1)
+
+        # Connector
+        c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
+        c.setDash([2, 2])
+        if side == "left":
+            x_box = center_x - GAP - BOX_WIDTH
+            c.line(center_x, y_pos, x_box + BOX_WIDTH, y_pos)
+        else:
+            x_box = center_x + GAP
+            c.line(center_x, y_pos, x_box, y_pos)
+        c.setDash([])
+
+        # Input Box
+        # Title placeholder
+        c.setFont(PDFStyle.FONT_BODY, 10)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.drawString(x_box, y_pos + 1.2 * cm, f"{label} (Date + Quoi) :")
+
+        create_input_field(
+            form,
+            f"timeline_node_{i}_titre",
+            pos=(x_box, y_pos + 0.6 * cm),
+            size=(BOX_WIDTH, 0.5 * cm),
+        )
+
+        c.drawString(
+            x_box,
+            y_pos + 0.2 * cm,
+            "Ce que j'en retiens :" if "Vallée" in label else "Ce que j'ai aimé :",
+        )
+        create_input_field(
+            form,
+            f"timeline_node_{i}_desc",
+            pos=(x_box, y_pos - 1.5 * cm),
+            size=(BOX_WIDTH, 1.6 * cm),
+            multiline=True,
+        )
+
+
 def create_timeline_page(c):
     """
     Page: Ma Ligne de Vie.
@@ -81,82 +170,15 @@ def create_timeline_page(c):
         c.drawString(text_x, text_y, line)
         text_y -= 0.4 * cm
 
-    # Main vertical line
     center_x = card_margin + (width - card_margin) / 2.0
     margin_top = text_y - 0.5 * cm
     margin_bottom = 3 * cm
-    c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
-    c.setLineWidth(2)
-    c.line(center_x, margin_top, center_x, margin_bottom)
 
-    # Arrow head at top
-    c.line(center_x, margin_top, center_x - 0.2 * cm, margin_top - 0.5 * cm)
-    c.line(center_x, margin_top, center_x + 0.2 * cm, margin_top - 0.5 * cm)
-
-    # Nodes (Alternating)
-    # 3 Sommets (Left), 2 Vallées (Right)
+    _draw_timeline_axis(c, center_x, margin_top, margin_bottom)
+    _draw_timeline_headers(c, center_x, margin_top)
 
     form = c.acroForm
-
-    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x, margin_top + 0.5 * cm, "Les Sommets (Positifs)")
-
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawRightString(
-        width - 1.5 * cm, margin_top + 0.5 * cm, "Les Vallées (Apprentissages)"
-    )
-
-    positions = [
-        ("Sommet 1", "left", margin_top - 2.5 * cm),
-        ("Vallée 1", "right", margin_top - 6.0 * cm),
-        ("Sommet 2", "left", margin_top - 9.5 * cm),
-        ("Vallée 2", "right", margin_top - 13.0 * cm),
-        ("Sommet 3", "left", margin_top - 16.5 * cm),
-    ]
-
-    for label, side, y_pos in positions:
-        # Dot on line
-        c.setFillColor(PDFStyle.COLOR_WHITE)
-        c.setStrokeColor(PDFStyle.COLOR_TEXT_MAIN)
-        c.circle(center_x, y_pos, 0.15 * cm, fill=1, stroke=1)
-
-        # Connector
-        c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
-        c.setDash([2, 2])
-        if side == "left":
-            x_box = text_x
-            c.line(center_x, y_pos, x_box + 7 * cm, y_pos)
-        else:
-            x_box = center_x + 1 * cm
-            c.line(center_x, y_pos, x_box, y_pos)
-        c.setDash([])
-
-        # Input Box
-        # Title placeholder
-        c.setFont(PDFStyle.FONT_BODY, 10)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        c.drawString(x_box, y_pos + 1.2 * cm, f"{label} (Date + Quoi) :")
-
-        create_input_field(
-            form,
-            f'timeline_{label.replace(" ", "_")}_titre',
-            pos=(x_box, y_pos + 0.6 * cm),
-            size=(7 * cm, 0.5 * cm),
-        )
-
-        c.drawString(
-            x_box,
-            y_pos + 0.2 * cm,
-            "Ce que j'en retiens :" if "Vallée" in label else "Ce que j'ai aimé :",
-        )
-        create_input_field(
-            form,
-            f'timeline_{label.replace(" ", "_")}_desc',
-            pos=(x_box, y_pos - 1.5 * cm),
-            size=(7 * cm, 1.6 * cm),
-            multiline=True,
-        )
+    _draw_timeline_nodes(c, form, center_x, margin_top)
 
     draw_page_decorations(
         c, width, height, part_title="2. MON PARCOURS", x_offset=card_margin
