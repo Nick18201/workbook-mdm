@@ -493,55 +493,46 @@ def create_heritage_page(c):
     layout.render()
 
 
-def create_work_image_page(c):
-    """
-    Page: Image du Monde du Travail.
-    Based on Exercice_Image_Travail.md
-    """
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    new_y = draw_title(c, "Image du Monde du Travail", pos=(text_x, height - 4.0 * cm))
-
-    form = c.acroForm
-    y_cursor = new_y - 0.5 * cm
-
+def _draw_sensorial_exploration(c, text_x, width, form, y_pos):
+    """Draws the sensorial exploration section."""
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x, y_cursor, "1. Exploration Sensorielle & Emotionnelle")
+    c.drawString(text_x, y_pos, "1. Exploration Sensorielle & Emotionnelle")
 
-    y_cursor -= 0.8 * cm
+    y_pos -= 0.8 * cm
     c.setFont(PDFStyle.FONT_BODY, 10)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(
         text_x,
-        y_cursor,
+        y_pos,
         "Fermez les yeux. Visualisez le lieu de travail de vos parents (ou figures parentales).",
     )
-    y_cursor -= 0.5 * cm
+    y_pos -= 0.5 * cm
     c.drawString(
         text_x,
-        y_cursor,
+        y_pos,
         "Quelles sont les odeurs ? Les bruits ? La lumière ? L'ambiance générale ?",
     )
 
-    y_cursor -= 2.6 * cm
+    y_pos -= 2.6 * cm
     create_input_field(
         form,
         "image_sensorielle",
-        pos=(text_x, y_cursor),
+        pos=(text_x, y_pos),
         size=(width - text_x - 1.5 * cm, 2.2 * cm),
         multiline=True,
         tooltip="Décrivez l'ambiance sensorielle du travail de vos parents...",
     )
 
-    y_cursor -= 1.2 * cm
+    return y_pos
+
+
+def _draw_family_heritage(c, text_x, width, form, y_pos):
+    """Draws the family heritage section."""
+    y_pos -= 1.2 * cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawString(text_x, y_cursor, "2. L'Héritage Familial")
+    c.drawString(text_x, y_pos, "2. L'Héritage Familial")
 
     questions = [
         (
@@ -566,37 +557,42 @@ def create_work_image_page(c):
         ),
     ]
 
-    y_cursor -= 0.8 * cm
+    y_pos -= 0.8 * cm
     for q_text, q_id, q_height in questions:
         c.setFont(PDFStyle.FONT_BODY, 10)
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        c.drawString(text_x, y_cursor, q_text)
-        y_cursor -= q_height + 0.2 * cm
+        c.drawString(text_x, y_pos, q_text)
+        y_pos -= q_height + 0.2 * cm
         create_input_field(
             form,
             q_id,
-            pos=(text_x, y_cursor),
+            pos=(text_x, y_pos),
             size=(width - text_x - 1.5 * cm, q_height),
             multiline=True,
         )
-        y_cursor -= 0.6 * cm
+        y_pos -= 0.6 * cm
 
+    return y_pos
+
+
+def _draw_changing_perspective(c, text_x, width, form, y_pos):
+    """Draws the changing perspective section."""
     # Split into 2 columns
-    y_cursor -= 0.8 * cm
+    y_pos -= 0.8 * cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x, y_cursor + 0.5 * cm, "3. Changer de Regard")
+    c.drawString(text_x, y_pos + 0.5 * cm, "3. Changer de Regard")
 
     col_width = (width - text_x - 1.5 * cm) / 2 - 0.5 * cm
 
     # Col 1: Avant
     c.setFont(PDFStyle.FONT_ITALIC, 10)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x, y_cursor, "5 Mots associés au travail (Héritage) :")
+    c.drawString(text_x, y_pos, "5 Mots associés au travail (Héritage) :")
     create_input_field(
         form,
         "image_mots_heritage",
-        pos=(text_x, y_cursor - 2.5 * cm),
+        pos=(text_x, y_pos - 2.5 * cm),
         size=(col_width, 2.2 * cm),
         multiline=True,
     )
@@ -604,14 +600,38 @@ def create_work_image_page(c):
     # Col 2: Futur
     right_col_x = text_x + col_width + 1 * cm
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)  # alternating visual!
-    c.drawString(right_col_x, y_cursor, "5 Mots pour mon futur travail (Désir) :")
+    c.drawString(right_col_x, y_pos, "5 Mots pour mon futur travail (Désir) :")
     create_input_field(
         form,
         "image_mots_futur",
-        pos=(right_col_x, y_cursor - 2.5 * cm),
+        pos=(right_col_x, y_pos - 2.5 * cm),
         size=(col_width, 2.2 * cm),
         multiline=True,
     )
+
+    y_pos -= 2.5 * cm
+    return y_pos
+
+
+def create_work_image_page(c):
+    """
+    Page: Image du Monde du Travail.
+    Based on Exercice_Image_Travail.md
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    new_y = draw_title(c, "Image du Monde du Travail", pos=(text_x, height - 4.0 * cm))
+
+    form = c.acroForm
+    y_pos = new_y - 0.5 * cm
+
+    y_pos = _draw_sensorial_exploration(c, text_x, width, form, y_pos)
+    y_pos = _draw_family_heritage(c, text_x, width, form, y_pos)
+    y_pos = _draw_changing_perspective(c, text_x, width, form, y_pos)
 
     draw_page_decorations(
         c, width, height, part_title="2. Mes héritages", x_offset=card_margin
