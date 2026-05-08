@@ -205,10 +205,10 @@ def _draw_skills_table_headers(c, text_x, target_width, y_start):
     c.drawString(col2_x, y_start - 0.5 * cm, "(Ex: Négociation, Logistique...)")
 
 
-def _draw_skills_table_rows(c, form, col1_x, col2_x, center_x, col_width, y_start):
-    y_row = y_start - 3.8 * cm
-    row_height = 3.2 * cm
-
+def _draw_skills_table_rows(c, text_x, target_width, y_start):
+    center_x, col_width = text_x + target_width / 2.0, (target_width / 2.0) - 1.0 * cm
+    col1_x, col2_x, form = text_x, center_x + 0.5 * cm, c.acroForm
+    y_row, row_height = y_start - 3.8 * cm, 3.2 * cm
     themes = [
         "1. Vie familiale & personnelle (Ex: organisation, aidant, parents...)",
         "2. Défis & épreuves (Ex: santé, reconversion, chômage...)",
