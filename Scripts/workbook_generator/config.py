@@ -7,22 +7,22 @@ class PDFStyle:
     THEMES = ["earth", "indigo"]
 
     # Initialisation des variables de couleurs pour le type hinting ou l'accès avant set_theme (optionnel mais plus sûr)
-    COLOR_BG_NUDE = colors.HexColor("#FFFCE8")
-    COLOR_ACCENT_BLUE = colors.HexColor("#D19B8D")
-    COLOR_ACCENT_RED = colors.HexColor("#8D6257")
-    COLOR_ACCENT_YELLOW = colors.HexColor("#BFAF94")
+    COLOR_BG_NUDE = colors.HexColor("#FFF0E6")
+    COLOR_ACCENT_BLUE = colors.HexColor("#2F2EFA")
+    COLOR_ACCENT_RED = colors.HexColor("#FF4D4D")
+    COLOR_ACCENT_YELLOW = colors.HexColor("#FFEB3B")
     COLOR_WHITE = colors.HexColor("#FFFFFF")
-    COLOR_TEXT_MAIN = colors.HexColor("#8D6257")
-    COLOR_TEXT_SECONDARY = colors.HexColor("#A27164")
-    COLOR_SUCCESS = colors.HexColor("#6F926D")
-    COLOR_FIELD_BG = colors.HexColor("#F2F7F1")
-    COLOR_CARD_CREME = colors.HexColor("#FAF7F2")
-    COLOR_BG_BLOB = colors.HexColor("#FDE8DB")
-    COLOR_SHADOW = colors.HexColor("#79544A")
-    COLOR_LINE = colors.HexColor("#D19B8D")
+    COLOR_TEXT_MAIN = colors.HexColor("#2F2EFA")
+    COLOR_TEXT_SECONDARY = colors.HexColor("#2F2EFA")
+    COLOR_SUCCESS = colors.HexColor("#2E7D32")
+    COLOR_FIELD_BG = colors.HexColor("#F0F4FF")
+    COLOR_CARD_CREME = colors.HexColor("#FFF8F2")
+    COLOR_BG_BLOB = colors.HexColor("#FADADD")
+    COLOR_SHADOW = colors.HexColor("#2F2EFA")
+    COLOR_LINE = colors.HexColor("#2F2EFA")
 
     @classmethod
-    def set_theme(cls, theme_name="earth"):
+    def set_theme(cls, theme_name="indigo"):
         """Sets the active color palette."""
         palettes = {
             "indigo": {
@@ -57,7 +57,7 @@ class PDFStyle:
             },
         }
 
-        palette = palettes.get(theme_name, palettes["earth"])
+        palette = palettes.get(theme_name, palettes["indigo"])
         for attr, hex_val in palette.items():
             setattr(cls, attr, colors.HexColor(hex_val))
 

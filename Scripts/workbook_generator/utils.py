@@ -68,3 +68,6 @@ def register_fonts():
 @functools.lru_cache(maxsize=128)
 def cached_ImageReader(filepath):
     return ImageReader(filepath)
+
+# Snake-case alias used by chapter and component modules
+cached_image_reader = cached_ImageReader

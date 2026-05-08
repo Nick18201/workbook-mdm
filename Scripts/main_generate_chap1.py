@@ -21,7 +21,7 @@ def create_chap1_main_cover(c):
     create_standard_cover(c, "Chapitre 1 : Mes héritages")
 
 
-def build_wb_chap1_pdf(output_filename, theme="earth"):
+def build_wb_chap1_pdf(output_filename, theme="indigo"):
     # Set the theme
     PDFStyle.set_theme(theme)
     # Register fonts first
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--theme",
         choices=PDFStyle.THEMES,
-        default="earth",
+        default="indigo",
         help="Le thème de couleurs à utiliser.",
     )
     parser.add_argument(

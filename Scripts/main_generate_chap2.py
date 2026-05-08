@@ -14,7 +14,7 @@ from workbook_generator.utils import register_fonts
 from workbook_generator.components import create_closing_page
 
 
-def generate_workbook_chap2(output_filename="Workbook_Chapitre_2.pdf", theme="earth"):
+def generate_workbook_chap2(output_filename="Workbook_Chapitre_2.pdf", theme="indigo"):
     # Set the theme
     PDFStyle.set_theme(theme)
 
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--theme",
         choices=PDFStyle.THEMES,
-        default="earth",
+        default="indigo",
         help="Le thème de couleurs à utiliser.",
     )
     parser.add_argument(

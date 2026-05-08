@@ -21,7 +21,7 @@ from workbook_generator.chapters.livret_competences import (
 )
 
 
-def build_livret_competences(output_filename, theme="earth"):
+def build_livret_competences(output_filename, theme="indigo"):
     # Set the theme
     PDFStyle.set_theme(theme)
     # Register fonts first
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--theme",
         choices=PDFStyle.THEMES,
-        default="earth",
+        default="indigo",
         help="Le thème de couleurs à utiliser.",
     )
     parser.add_argument(
