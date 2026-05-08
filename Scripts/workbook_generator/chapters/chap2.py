@@ -54,37 +54,10 @@ def create_recap_seance_page(c):
     create_standard_recap_page(c, "1. RÉCAPITULATIF", intro_txt, questions)
 
 
-def create_timeline_page(c):
+def _draw_timeline_axis(c, center_x, margin_top, margin_bottom):
     """
-    Page: Ma Ligne de Vie.
-    Vertical Layout.
+    Draw the main vertical line and arrow head for the timeline.
     """
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(
-        c, "Ma Ligne de Vie (Les Montagnes Russes)", pos=(text_x, text_top)
-    )
-
-    c.setFont(PDFStyle.FONT_BODY, 10)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    desc_text = "Tracez la courbe de votre vie (pro/perso). Identifiez les moments forts (les sommets) et difficiles (les vallées). L'objectif est de comprendre ce qui vous ressource et vos apprentissages lors d'épreuves."
-
-    text_y = new_y - 0.2 * cm
-    for line in simpleSplit(
-        desc_text, PDFStyle.FONT_BODY, 10, width - text_x - 1.0 * cm
-    ):
-        c.drawString(text_x, text_y, line)
-        text_y -= 0.4 * cm
-
-    # Main vertical line
-    center_x = card_margin + (width - card_margin) / 2.0
-    margin_top = text_y - 0.5 * cm
-    margin_bottom = 3 * cm
     c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
     c.setLineWidth(2)
     c.line(center_x, margin_top, center_x, margin_bottom)
@@ -93,11 +66,11 @@ def create_timeline_page(c):
     c.line(center_x, margin_top, center_x - 0.2 * cm, margin_top - 0.5 * cm)
     c.line(center_x, margin_top, center_x + 0.2 * cm, margin_top - 0.5 * cm)
 
-    # Nodes (Alternating)
-    # 3 Sommets (Left), 2 Vallées (Right)
 
-    form = c.acroForm
-
+def _draw_timeline_headers(c, text_x, width, margin_top):
+    """
+    Draw the top headers for the timeline.
+    """
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.drawString(text_x, margin_top + 0.5 * cm, "Les Sommets (Positifs)")
@@ -107,6 +80,11 @@ def create_timeline_page(c):
         width - 1.5 * cm, margin_top + 0.5 * cm, "Les Vallées (Apprentissages)"
     )
 
+
+def _draw_timeline_nodes(c, form, text_x, center_x, margin_top):
+    """
+    Render the alternating nodes (circles, connectors, input fields).
+    """
     positions = [
         ("Sommet 1", "left", margin_top - 2.5 * cm),
         ("Vallée 1", "right", margin_top - 6.0 * cm),
@@ -157,6 +135,44 @@ def create_timeline_page(c):
             size=(7 * cm, 1.6 * cm),
             multiline=True,
         )
+
+
+def create_timeline_page(c):
+    """
+    Page: Ma Ligne de Vie.
+    Vertical Layout.
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+    new_y = draw_title(
+        c, "Ma Ligne de Vie (Les Montagnes Russes)", pos=(text_x, text_top)
+    )
+
+    c.setFont(PDFStyle.FONT_BODY, 10)
+    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    desc_text = "Tracez la courbe de votre vie (pro/perso). Identifiez les moments forts (les sommets) et difficiles (les vallées). L'objectif est de comprendre ce qui vous ressource et vos apprentissages lors d'épreuves."
+
+    text_y = new_y - 0.2 * cm
+    for line in simpleSplit(
+        desc_text, PDFStyle.FONT_BODY, 10, width - text_x - 1.0 * cm
+    ):
+        c.drawString(text_x, text_y, line)
+        text_y -= 0.4 * cm
+
+    center_x = card_margin + (width - card_margin) / 2.0
+    margin_top = text_y - 0.5 * cm
+    margin_bottom = 3 * cm
+
+    _draw_timeline_axis(c, center_x, margin_top, margin_bottom)
+    _draw_timeline_headers(c, text_x, width, margin_top)
+
+    form = c.acroForm
+    _draw_timeline_nodes(c, form, text_x, center_x, margin_top)
 
     draw_page_decorations(
         c, width, height, part_title="2. MON PARCOURS", x_offset=card_margin
