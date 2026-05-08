@@ -6,7 +6,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.units import cm
 
-from ..utils import cached_ImageReader
+from ..utils import cached_image_reader
 from ..config import PDFStyle
 from ..components import (
     draw_page_background,
@@ -91,7 +91,7 @@ def create_editorial_page_card(c):
 
     if os.path.exists(PDFStyle.PATH_GUILLEMETS):
         c.drawImage(
-            cached_ImageReader(PDFStyle.PATH_GUILLEMETS),
+            cached_image_reader(PDFStyle.PATH_GUILLEMETS),
             card_x + card_w - 4.5 * cm,
             title_y - 0.5 * cm,
             width=2.8 * cm,
@@ -139,7 +139,7 @@ def create_editorial_page_card(c):
 
         if os.path.exists(PDFStyle.PATH_PLANTE_ROSE_OMBRE):
             c.drawImage(
-                cached_ImageReader(PDFStyle.PATH_PLANTE_ROSE_OMBRE),
+                cached_image_reader(PDFStyle.PATH_PLANTE_ROSE_OMBRE),
                 width - plant_w + 6.5 * cm + 0.3 * cm,
                 height - plant_h + 3 * cm - 0.2 * cm,
                 width=plant_w,
@@ -149,7 +149,7 @@ def create_editorial_page_card(c):
             )
 
         c.drawImage(
-            cached_ImageReader(PDFStyle.PATH_PLANTE_BLEUE),
+            cached_image_reader(PDFStyle.PATH_PLANTE_BLEUE),
             width - plant_w + 6.5 * cm,
             height - plant_h + 3 * cm,
             width=plant_w,
@@ -165,7 +165,7 @@ def create_editorial_page_card(c):
 
         if os.path.exists(PDFStyle.PATH_PLANTE_ROSE_OMBRE):
             c.drawImage(
-                cached_ImageReader(PDFStyle.PATH_PLANTE_ROSE_OMBRE),
+                cached_image_reader(PDFStyle.PATH_PLANTE_ROSE_OMBRE),
                 corner_x + 0.3 * cm,
                 corner_y - 0.2 * cm,
                 width=plant_w,
@@ -175,7 +175,7 @@ def create_editorial_page_card(c):
             )
 
         c.drawImage(
-            cached_ImageReader(PDFStyle.PATH_PLANTE_BLEUE),
+            cached_image_reader(PDFStyle.PATH_PLANTE_BLEUE),
             corner_x,
             corner_y,
             width=plant_w,
@@ -229,7 +229,7 @@ def create_intro_sense_page(c):
         c.translate(width - stamp_size / 2 - 3 * cm, height - stamp_size / 2 - 1.5 * cm)
         c.rotate(-10)
         c.drawImage(
-            cached_ImageReader(PDFStyle.PATH_STAMP),
+            cached_image_reader(PDFStyle.PATH_STAMP),
             -stamp_size / 2,
             -stamp_size / 2,
             width=stamp_size,
@@ -421,7 +421,7 @@ def create_premiere_etape_page(c):
         c.rotate(75)  # Rotated 45 degrees more to the left (30 + 45)
         # Smaller size: 5x5 cm approx
         c.drawImage(
-            cached_ImageReader(PDFStyle.PATH_PLUME_TEXTURE),
+            cached_image_reader(PDFStyle.PATH_PLUME_TEXTURE),
             0,
             0,
             width=5 * cm,
@@ -438,7 +438,7 @@ def create_premiere_etape_page(c):
         c.rotate(10)
         # Smaller size: 7x7 cm
         c.drawImage(
-            cached_ImageReader(PDFStyle.PATH_PLUME_TEXTURE),
+            cached_image_reader(PDFStyle.PATH_PLUME_TEXTURE),
             -2 * cm,
             -1 * cm,
             width=7 * cm,

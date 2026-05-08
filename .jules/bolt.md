@@ -13,3 +13,8 @@
 ## 2024-04-10 - Image Parsing Overhead in ReportLab
 **Learning:** ReportLab's `canvas.drawImage()` accepts file paths directly, but re-parses and re-hashes the image file from disk every single time it is called, even if the image is identical (like logos, textures, or cover illustrations). This causes significant I/O and CPU overhead during PDF generation.
 **Action:** Wrap identical image file paths in an `@lru_cache`ed `reportlab.lib.utils.ImageReader` instantiation before passing them to `drawImage`. This ensures the image is read, decoded, and hashed exactly once, significantly reducing execution time (especially noticeable when multiple pages or PDFs are generated).
+## 2025-02-12 - Fixing image reader caching import
+
+**Learning:** `cached_ImageReader` was incorrectly imported across multiple files (`components.py`, `chap0.py`), which led to an `ImportError`. The correct utility from `utils.py` is `cached_image_reader` (snake_case). Testing the cache mock proved significant time saving (1.025s vs 0.0008s with simulating 100 reads of 0.01s IO each).
+
+**Action:** Before changing an existing import name globally, always make sure to update its usage everywhere. When checking performance caching, use standalone dummy benchmarks that mock IO times correctly.
