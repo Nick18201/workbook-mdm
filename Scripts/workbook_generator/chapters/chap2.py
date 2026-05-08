@@ -67,21 +67,24 @@ def _draw_timeline_axis(c, center_x, margin_top, margin_bottom):
     c.line(center_x, margin_top, center_x + 0.2 * cm, margin_top - 0.5 * cm)
 
 
-def _draw_timeline_headers(c, text_x, width, margin_top):
+def _draw_timeline_headers(c, center_x, margin_top):
     """
     Draw the top headers for the timeline.
     """
+    header_offset = 8 * cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x, margin_top + 0.5 * cm, "Les Sommets (Positifs)")
+    c.drawString(
+        center_x - header_offset, margin_top + 0.5 * cm, "Les Sommets (Positifs)"
+    )
 
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
     c.drawRightString(
-        width - 1.5 * cm, margin_top + 0.5 * cm, "Les Vallées (Apprentissages)"
+        center_x + header_offset, margin_top + 0.5 * cm, "Les Vallées (Apprentissages)"
     )
 
 
-def _draw_timeline_nodes(c, form, text_x, center_x, margin_top):
+def _draw_timeline_nodes(c, form, center_x, margin_top):
     """
     Render the alternating nodes (circles, connectors, input fields).
     """
@@ -93,7 +96,10 @@ def _draw_timeline_nodes(c, form, text_x, center_x, margin_top):
         ("Sommet 3", "left", margin_top - 16.5 * cm),
     ]
 
-    for label, side, y_pos in positions:
+    BOX_WIDTH = 7 * cm
+    GAP = 1 * cm
+
+    for i, (label, side, y_pos) in enumerate(positions, start=1):
         # Dot on line
         c.setFillColor(PDFStyle.COLOR_WHITE)
         c.setStrokeColor(PDFStyle.COLOR_TEXT_MAIN)
@@ -103,10 +109,10 @@ def _draw_timeline_nodes(c, form, text_x, center_x, margin_top):
         c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
         c.setDash([2, 2])
         if side == "left":
-            x_box = text_x
-            c.line(center_x, y_pos, x_box + 7 * cm, y_pos)
+            x_box = center_x - GAP - BOX_WIDTH
+            c.line(center_x, y_pos, x_box + BOX_WIDTH, y_pos)
         else:
-            x_box = center_x + 1 * cm
+            x_box = center_x + GAP
             c.line(center_x, y_pos, x_box, y_pos)
         c.setDash([])
 
@@ -118,9 +124,9 @@ def _draw_timeline_nodes(c, form, text_x, center_x, margin_top):
 
         create_input_field(
             form,
-            f'timeline_{label.replace(" ", "_")}_titre',
+            f"timeline_node_{i}_titre",
             pos=(x_box, y_pos + 0.6 * cm),
-            size=(7 * cm, 0.5 * cm),
+            size=(BOX_WIDTH, 0.5 * cm),
         )
 
         c.drawString(
@@ -130,9 +136,9 @@ def _draw_timeline_nodes(c, form, text_x, center_x, margin_top):
         )
         create_input_field(
             form,
-            f'timeline_{label.replace(" ", "_")}_desc',
+            f"timeline_node_{i}_desc",
             pos=(x_box, y_pos - 1.5 * cm),
-            size=(7 * cm, 1.6 * cm),
+            size=(BOX_WIDTH, 1.6 * cm),
             multiline=True,
         )
 
@@ -169,10 +175,10 @@ def create_timeline_page(c):
     margin_bottom = 3 * cm
 
     _draw_timeline_axis(c, center_x, margin_top, margin_bottom)
-    _draw_timeline_headers(c, text_x, width, margin_top)
+    _draw_timeline_headers(c, center_x, margin_top)
 
     form = c.acroForm
-    _draw_timeline_nodes(c, form, text_x, center_x, margin_top)
+    _draw_timeline_nodes(c, form, center_x, margin_top)
 
     draw_page_decorations(
         c, width, height, part_title="2. MON PARCOURS", x_offset=card_margin
