@@ -164,24 +164,12 @@ def create_timeline_page(c):
     c.showPage()
 
 
-def create_skills_transfer_page(c):
-    """
-    Page: Mes Compétences de Vie.
-    """
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(c, "Mes Compétences de Vie", pos=(text_x, text_top))
-
+def _draw_skills_intro(c, text_x, start_y, target_width):
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(
         text_x,
-        new_y - 0.2 * cm,
+        start_y - 0.2 * cm,
         "Transformons votre vécu en capital. Je ne pars pas de zéro, je pars de mon expérience.",
     )
 
@@ -194,21 +182,17 @@ def create_skills_transfer_page(c):
         "Une expérience vécue (ex: organiser un événement familial) cache souvent des talents (ex: planification, gestion du stress).",
         "Ne sous-estimez aucune expérience. Même la gestion du quotidien développe des compétences clés.",
     ]
-    y_desc = new_y - 0.8 * cm
+    y_desc = start_y - 0.8 * cm
 
-    target_width = width - text_x - 1.0 * cm
     for line in desc_lines:
         for s in simpleSplit(line, PDFStyle.FONT_BODY, 9, target_width):
             c.drawString(text_x, y_desc, s)
             y_desc -= 0.4 * cm
 
-    # Table Headers
-    y_start = y_desc - 0.6 * cm
-    center_x = text_x + target_width / 2.0
-    col_width = (target_width / 2.0) - 1.0 * cm
-    col1_x = text_x
-    col2_x = center_x + 0.5 * cm
+    return y_desc
 
+
+def _draw_skills_table_headers(c, col1_x, col2_x, y_start):
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.drawString(col1_x, y_start, "L'Expérience Vécue")
@@ -218,9 +202,8 @@ def create_skills_transfer_page(c):
     c.drawString(col2_x, y_start, "Le Talent Caché / Compétence")
     c.drawString(col2_x, y_start - 0.5 * cm, "(Ex: Négociation, Logistique...)")
 
-    form = c.acroForm
 
-    # Rows
+def _draw_skills_table_rows(c, form, col1_x, col2_x, center_x, col_width, y_start):
     y_row = y_start - 3.8 * cm
     row_height = 3.2 * cm
 
@@ -268,6 +251,36 @@ def create_skills_transfer_page(c):
         )
 
         y_row -= row_height
+
+
+def create_skills_transfer_page(c):
+    """
+    Page: Mes Compétences de Vie.
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+    new_y = draw_title(c, "Mes Compétences de Vie", pos=(text_x, text_top))
+
+    target_width = width - text_x - 1.0 * cm
+    y_desc = _draw_skills_intro(c, text_x, new_y, target_width)
+
+    # Table Headers
+    y_start = y_desc - 0.6 * cm
+    center_x = text_x + target_width / 2.0
+    col_width = (target_width / 2.0) - 1.0 * cm
+    col1_x = text_x
+    col2_x = center_x + 0.5 * cm
+
+    _draw_skills_table_headers(c, col1_x, col2_x, y_start)
+
+    form = c.acroForm
+
+    _draw_skills_table_rows(c, form, col1_x, col2_x, center_x, col_width, y_start)
 
     draw_page_decorations(
         c, width, height, part_title="2. MON PARCOURS", x_offset=card_margin
