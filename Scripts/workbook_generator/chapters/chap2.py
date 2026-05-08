@@ -271,16 +271,9 @@ def create_skills_transfer_page(c):
 
     # Table Headers
     y_start = y_desc - 0.6 * cm
-    center_x = text_x + target_width / 2.0
-    col_width = (target_width / 2.0) - 1.0 * cm
-    col1_x = text_x
-    col2_x = center_x + 0.5 * cm
+    _draw_skills_table_headers(c, text_x, target_width, y_start)
 
-    _draw_skills_table_headers(c, col1_x, col2_x, y_start)
-
-    form = c.acroForm
-
-    _draw_skills_table_rows(c, form, col1_x, col2_x, center_x, col_width, y_start)
+    _draw_skills_table_rows(c, text_x, target_width, y_start)
 
     draw_page_decorations(
         c, width, height, part_title="2. MON PARCOURS", x_offset=card_margin
