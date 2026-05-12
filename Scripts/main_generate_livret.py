@@ -1,6 +1,5 @@
 import sys
 import os
-import argparse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 
@@ -9,7 +8,7 @@ from reportlab.lib.pagesizes import A4
 # Since we might be running this from standard dirs:
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from workbook_generator.utils import register_fonts
+from workbook_generator.utils import register_fonts, create_cli
 from workbook_generator.config import PDFStyle
 from workbook_generator.components import create_closing_page
 from workbook_generator.chapters.livret_competences import (
@@ -53,22 +52,10 @@ def build_livret_competences(output_filename, theme="indigo"):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Générer le Livret de Compétences PDF."
+    args = create_cli(
+        description="Générer le Livret de Compétences PDF.",
+        default_output="Livret_Competences.pdf",
     )
-    parser.add_argument(
-        "--theme",
-        choices=PDFStyle.THEMES,
-        default="indigo",
-        help="Le thème de couleurs à utiliser.",
-    )
-    parser.add_argument(
-        "--output",
-        type=str,
-        default="Livret_Competences.pdf",
-        help="Le nom du fichier PDF généré.",
-    )
-    args = parser.parse_args()
 
     # Always run from the root directory so assets path resolves correctly.
     # We cd into the root automatically or rely on the user running it from the root.

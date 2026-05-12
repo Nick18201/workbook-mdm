@@ -1,7 +1,6 @@
-import argparse
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from workbook_generator.utils import register_fonts
+from workbook_generator.utils import register_fonts, create_cli
 from workbook_generator.config import PDFStyle
 from workbook_generator.chapters.chap0 import (
     create_cover_page,
@@ -42,19 +41,9 @@ def build_complete_pdf_v4(output_filename, theme="indigo"):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Générer le chapitre 0 PDF.")
-    parser.add_argument(
-        "--theme",
-        choices=PDFStyle.THEMES,
-        default="indigo",
-        help="Le thème de couleurs à utiliser.",
+    args = create_cli(
+        description="Générer le chapitre 0 PDF.",
+        default_output="chapitre 0 _ Le prélude.pdf",
     )
-    parser.add_argument(
-        "--output",
-        type=str,
-        default="chapitre 0 _ Le prélude.pdf",
-        help="Le nom du fichier PDF généré.",
-    )
-    args = parser.parse_args()
 
     build_complete_pdf_v4(args.output, theme=args.theme)
