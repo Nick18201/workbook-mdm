@@ -27,6 +27,7 @@ class LayoutConfig:
 class QuestionConfig:
     box_height: float = 3.0 * cm
     subtitle: str = None
+    example: str = None
     color_alternation: bool = True
 
 
@@ -163,6 +164,27 @@ class PageLayout:
                     spacing_after=0.1 * cm,
                 ),
             )
+
+        if config.example:
+            box_padding = 0.2 * cm
+            font_size = 9
+            font_name = PDFStyle.FONT_ITALIC
+            
+            lines = simpleSplit(f"Exemple : {config.example}", font_name, font_size, self.target_width - 2 * box_padding)
+            box_height = len(lines) * (font_size + 2) + 2 * box_padding
+            
+            self.y_cursor -= box_height
+            self.c.setFillColorRGB(0.95, 0.95, 0.95)
+            self.c.rect(self.text_x, self.y_cursor, self.target_width, box_height, fill=1, stroke=0)
+            
+            self.c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
+            self.c.setFont(font_name, font_size)
+            text_y = self.y_cursor + box_height - box_padding - font_size
+            for line in lines:
+                self.c.drawString(self.text_x + box_padding, text_y, line)
+                text_y -= (font_size + 2)
+                
+            self.y_cursor -= 0.2 * cm
 
         self.y_cursor -= 0.2 * cm  # Gap before input
 
