@@ -276,9 +276,9 @@ def create_kmsi_pages(c):
     )
     
     layout2.add_question_block(
-        "Reformulation (Méthode HMW) :",
+        "Reformulation (Méthode Comment pourrions-nous ?) :",
         "kmsi_hmw",
-        config=QuestionConfig(box_height=3.5*cm, subtitle="Comment pourrais-je reformuler la croyance la plus limitante ?")
+        config=QuestionConfig(box_height=3.0*cm, subtitle="Comment pourrais-je reformuler la croyance la plus limitante ?")
     )
     layout2.render()
 
@@ -365,7 +365,7 @@ def create_biographie_page(c):
         "1. Le Premier Souvenir (souvent vers 5-7 ans)",
         "bio_premier_souvenir",
         config=QuestionConfig(
-            box_height=5.5*cm, 
+            box_height=3.0*cm, 
             subtitle="Quel âge aviez-vous ? Qui était là ? Quelle était la situation ? Quelle émotion avez-vous ressentie (Joie, Honte, Peur...) ?",
             example="Souvenir : Père critiquant mère pour une dépense 'inutile'. Croyance formée : 'Dépenser pour soi est égoïste et dangereux'. Impact : Difficulté à investir dans sa propre formation ou reconversion."
         )
@@ -375,7 +375,7 @@ def create_biographie_page(c):
         "2. L'Adolescence",
         "bio_adolescence",
         config=QuestionConfig(
-            box_height=3.5*cm, 
+            box_height=3.0*cm, 
             subtitle="Premier argent gagné vs Argent de poche. Sentiment dominant : Autonomie ou Dépendance ? Comparaison sociale ?",
             example="Souvenir : Recevoir de l'argent pour de bonnes notes. Croyance formée : 'Je ne vaux quelque chose que si je suis performant'. Impact : Burnout, incapacité à refuser du travail supplémentaire non payé."
         )
@@ -385,7 +385,7 @@ def create_biographie_page(c):
         "3. Analyse & Lien avec le Projet Pro",
         "bio_analyse",
         config=QuestionConfig(
-            box_height=4.0*cm, 
+            box_height=3.0*cm, 
             subtitle="Pour chaque souvenir marquant : Quelle croyance ai-je formée ce jour-là qui est encore active aujourd'hui ?"
         )
     )

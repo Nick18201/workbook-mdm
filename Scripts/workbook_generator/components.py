@@ -142,7 +142,7 @@ def draw_page_footer(c, width, height, x_offset=0):
     c.restoreState()
 
 
-def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.08):
+def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.02):
     """
     Draws the signature Dot Grid using Form XObjects to dramatically improve performance
     and reduce output PDF size by caching the grid.
