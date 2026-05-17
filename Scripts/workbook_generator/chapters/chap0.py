@@ -581,7 +581,8 @@ def create_domaines_de_vie_page(c):
             tooltip="Note /10",
         )
 
-    layout.y_cursor = start_y - (4 * 1.5 * cm) - 1.0 * cm
+    num_rows = (len(domains) + 1) // 2
+    layout.y_cursor = start_y - (num_rows * 1.5 * cm) - 1.0 * cm
 
     # Reflection Section
     style_refl = ParagraphStyle(
