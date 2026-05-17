@@ -504,22 +504,11 @@ def create_domaines_de_vie_page(c):
     Les Domaines de Vie.
     Ratings + Reflection.
     """
-    width, height = A4
-
-    draw_page_background(c, width, height)
-
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    # Content
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-
-    new_y = draw_title(
-        c, "Les Domaines de Vie", pos=(text_x, text_top), style=TitleStyle(size=22)
+    layout = PageLayout(
+        c, "Les Domaines de Vie", config=LayoutConfig(part_title="1. FAIRE LE POINT")
     )
 
-    # Intro Text (Psycho-education)
+    # We still need Paragraph for the intro text to handle the bolding nicely
     style_intro = ParagraphStyle(
         "DomainIntro",
         fontName=PDFStyle.FONT_BODY,
@@ -538,8 +527,10 @@ def create_domaines_de_vie_page(c):
     )
 
     p_intro = Paragraph(intro_txt, style_intro)
-    w_i, h_i = p_intro.wrap(width - text_x - 1 * cm, height)
-    p_intro.drawOn(c, text_x, new_y - 0.2 * cm - h_i)
+    w_i, h_i = p_intro.wrap(layout.target_width, layout.height)
+    p_intro.drawOn(c, layout.text_x, layout.y_cursor - h_i)
+
+    layout.y_cursor -= h_i + 1.5 * cm
 
     # 8 Domains
     domains = [
@@ -553,17 +544,16 @@ def create_domaines_de_vie_page(c):
         "8. Travail / Carrière",
     ]
 
-    form = c.acroForm
-    start_y = new_y - 0.2 * cm - h_i - 1.5 * cm
-    panel_width = width - card_margin
-    col_width = (panel_width - 2 * cm) / 2
+    form = layout.form
+    start_y = layout.y_cursor
+    col_width = layout.target_width / 2
 
     # Grid layout for domains (2 columns)
     for i, domain in enumerate(domains):
         col = i % 2
         row = i // 2
 
-        x_pos = text_x + (col * col_width)
+        x_pos = layout.text_x + (col * col_width)
         y_pos = start_y - (row * 1.5 * cm)
 
         c.setFont(PDFStyle.FONT_BODY, 11)
@@ -591,9 +581,9 @@ def create_domaines_de_vie_page(c):
             tooltip="Note /10",
         )
 
-    # Reflection Section
-    reflection_y = start_y - (4 * 1.5 * cm) - 1 * cm
+    layout.y_cursor = start_y - (4 * 1.5 * cm) - 1.0 * cm
 
+    # Reflection Section
     style_refl = ParagraphStyle(
         "ReflBody",
         fontName=PDFStyle.FONT_BODY,
@@ -611,11 +601,11 @@ def create_domaines_de_vie_page(c):
     )
 
     p_refl = Paragraph(refl_intro, style_refl)
-    w_r, h_r = p_refl.wrap(width - text_x - 1 * cm, height)
-    p_refl.drawOn(c, text_x, reflection_y - h_r)
+    w_r, h_r = p_refl.wrap(layout.target_width, layout.height)
+    p_refl.drawOn(c, layout.text_x, layout.y_cursor - h_r)
 
     # Large Text Area for Reflection
-    area_top = reflection_y - h_r - 0.5 * cm
+    area_top = layout.y_cursor - h_r - 0.5 * cm
     area_bottom = 2.5 * cm  # Margin from bottom
     area_height = area_top - area_bottom
 
@@ -625,16 +615,13 @@ def create_domaines_de_vie_page(c):
     create_input_field(
         form,
         "s1_domaine_reflexion",
-        pos=(text_x, area_bottom),
-        size=(width - text_x - 1 * cm, area_height),
+        pos=(layout.text_x, area_bottom),
+        size=(layout.target_width, area_height),
         tooltip="Votre réflexion",
         multiline=True,
     )
 
-    draw_page_decorations(
-        c, width, height, part_title="1. FAIRE LE POINT", x_offset=card_margin
-    )
-    c.showPage()
+    layout.render()
 
 
 def create_entourage_page(c):
