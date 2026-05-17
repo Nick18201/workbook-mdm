@@ -1,4 +1,5 @@
 import os
+import argparse
 import functools
 import reportlab.rl_config
 from reportlab.lib.utils import simpleSplit, ImageReader
@@ -71,3 +72,30 @@ def cached_ImageReader(filepath):
 
 # Snake-case alias used by chapter and component modules
 cached_image_reader = cached_ImageReader
+
+
+def create_cli(description, default_output):
+    """
+    Sets up a standard command-line argument parser for generating PDFs.
+
+    Args:
+        description (str): Description of the script for the help message.
+        default_output (str): The default output filename for the PDF.
+
+    Returns:
+        argparse.Namespace: The parsed command-line arguments.
+    """
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument(
+        "--theme",
+        choices=PDFStyle.THEMES,
+        default="indigo",
+        help="Le thème de couleurs à utiliser.",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default=default_output,
+        help="Le nom du fichier PDF généré.",
+    )
+    return parser.parse_args()
