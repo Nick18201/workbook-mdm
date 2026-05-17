@@ -1,8 +1,8 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 
-from ..config import PDFStyle
-from ..components import (
+from ...config import PDFStyle
+from ...components import (
     draw_page_background,
     draw_card,
     draw_side_panel,
