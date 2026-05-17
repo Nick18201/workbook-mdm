@@ -9,7 +9,6 @@ sys.path.append(current_dir)
 
 from workbook_generator.config import PDFStyle
 from workbook_generator.chapters import chap4
-from workbook_generator.chapters import schwartz_pvq
 from workbook_generator.utils import register_fonts
 from workbook_generator.components import create_closing_page
 
@@ -37,24 +36,6 @@ def generate_workbook_chap4(output_filename="Workbook_Chapitre_4.pdf", theme="in
 
     print("Generating Récapitulatif MBTI...")
     chap4.create_recap_seance_page(c)
-
-    print("Generating Référence Valeurs de Schwartz...")
-    schwartz_pvq.create_schwartz_reference_page(c)
-
-    print("Generating PVQ-21 (Questionnaire de Schwartz)...")
-    schwartz_pvq.create_pvq21_pages(c)
-
-    print("Generating Questions de Validation...")
-    schwartz_pvq.create_validation_pages(c)
-
-    print("Generating Traits de Personnalité Pro...")
-    schwartz_pvq.create_personality_pages(c)
-
-    print("Generating Valeurs — Exercice Réflexif...")
-    chap4.create_valeurs_page(c)
-
-    print("Generating Verbes d'Action...")
-    chap4.create_verbes_page(c)
 
     print("Generating Psycho-Éducation Financière...")
     chap4.create_psycho_edu_page(c)

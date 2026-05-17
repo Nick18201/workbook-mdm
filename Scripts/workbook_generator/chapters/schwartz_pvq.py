@@ -189,7 +189,7 @@ def create_schwartz_reference_page(c):
     layout = PageLayout(
         c,
         "Les 10 Valeurs Universelles de Schwartz",
-        config=LayoutConfig(part_title="2. VALEURS DE SCHWARTZ"),
+        config=LayoutConfig(part_title="1. VALEURS DE SCHWARTZ"),
     )
 
     layout.add_text(
@@ -258,7 +258,7 @@ def create_pvq21_pages(c):
     layout = PageLayout(
         c,
         "Le Questionnaire PVQ-21",
-        config=LayoutConfig(part_title="2. VALEURS DE SCHWARTZ"),
+        config=LayoutConfig(part_title="1. VALEURS DE SCHWARTZ"),
     )
 
     # Consigne
@@ -310,7 +310,7 @@ def create_validation_pages(c):
     layout = PageLayout(
         c,
         "Questions de Validation",
-        config=LayoutConfig(part_title="2. VALEURS DE SCHWARTZ"),
+        config=LayoutConfig(part_title="1. VALEURS DE SCHWARTZ"),
     )
 
     layout.add_text(
@@ -383,7 +383,7 @@ def create_personality_pages(c):
     layout = PageLayout(
         c,
         "Traits de Personnalité Professionnels",
-        config=LayoutConfig(part_title="2. VALEURS DE SCHWARTZ"),
+        config=LayoutConfig(part_title="1. VALEURS DE SCHWARTZ"),
     )
 
     layout.add_text(
@@ -402,7 +402,7 @@ def create_personality_pages(c):
             layout = PageLayout(
                 c,
                 "Traits de Personnalité (suite)",
-                config=LayoutConfig(part_title="2. VALEURS DE SCHWARTZ"),
+                config=LayoutConfig(part_title="1. VALEURS DE SCHWARTZ"),
             )
 
         # Dimension header

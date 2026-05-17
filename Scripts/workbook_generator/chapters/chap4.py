@@ -23,16 +23,12 @@ def create_concept_page(c):
     points = [
         ("Sommaire :", ""),
         ("1.", "Récapitulatif (Mon Profil MBTI)"),
-        ("2.", "Les 10 Valeurs de Schwartz (Référence)"),
-        ("3.", "Le Questionnaire PVQ-21"),
-        ("4.", "Questions de Validation & Personnalité Pro"),
-        ("5.", "Mes Moteurs Profonds (Valeurs & Actions)"),
-        ("6.", "Mon Profil Financier (Money Script)"),
-        ("7.", "Ma Biographie Financière (Les Racines)"),
-        ("8.", "La Lettre à l'Argent (Acte Symbolique)"),
-        ("9.", "Mon Archétype Sacré & Mindset de Surplus"),
-        ("10.", "Ma Cartographie Personnelle (Synthèse S1 à S4)"),
-        ("11.", "Travail Inter-Session S4/S5 (Exploration)"),
+        ("2.", "Mon Profil Financier (Money Script)"),
+        ("3.", "Ma Biographie Financière (Les Racines)"),
+        ("4.", "La Lettre à l'Argent (Acte Symbolique)"),
+        ("5.", "Mon Archétype Sacré & Mindset de Surplus"),
+        ("6.", "Ma Cartographie Personnelle (Synthèse S1 à S4)"),
+        ("7.", "Travail Inter-Session S4/S5 (Exploration)"),
     ]
     create_standard_summary_page(c, "4", "CONCEPT", "", points)
 
@@ -47,97 +43,13 @@ def create_recap_seance_page(c):
     create_standard_recap_page(c, "1. RÉCAPITULATIF (MON PROFIL MBTI)", intro_txt, questions)
 
 
-def create_valeurs_page(c):
-    layout = PageLayout(
-        c,
-        "Mes Moteurs Profonds (Valeurs)",
-        config=LayoutConfig(part_title="2A. MES MOTEURS PROFONDS")
-    )
-    layout.add_text(
-        "⏱ ~15 min | 🎯 Identifier vos valeurs fondamentales pour mieux comprendre vos choix",
-        config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3*cm)
-    )
-    layout.add_text(
-        "Vivre en accord avec ses valeurs nourrit l'Estime de Soi. Vivre en désaccord la détruit. À partir de la liste de valeurs de Schwarz, identifiez celles qui sont fondamentales pour vous.",
-        config=TextConfig(spacing_after=0.3 * cm),
-    )
-
-    layout.add_question_block(
-        "1. Identification : Illustrez vos 3 valeurs principales par un exemple de votre vie :",
-        "valeurs_q1",
-        config=QuestionConfig(box_height=3.0 * cm),
-    )
-    layout.add_question_block(
-        "2. Héritage : De qui avez-vous reçu ces valeurs ?",
-        "valeurs_q2",
-        config=QuestionConfig(box_height=3.0 * cm),
-    )
-    layout.add_question_block(
-        "3. Conflits de Valeurs : Identifiez un moment de conflit intérieur. Quelles étaient les valeurs en présence et comment ce conflit s'est-il résolu ?",
-        "valeurs_q3",
-        config=QuestionConfig(box_height=3.0 * cm),
-    )
-    layout.add_question_block(
-        "Bilan : Ce que cet exercice m'apprend sur mes moteurs profonds et ce que ces conflits disent de positif sur moi :",
-        "valeurs_q4",
-        config=QuestionConfig(box_height=3.0 * cm),
-    )
-
-    layout.render()
-
-
-def create_verbes_page(c):
-    layout = PageLayout(
-        c,
-        "Mes Moteurs Profonds (Verbes d'Action)",
-        config=LayoutConfig(part_title="2B. MES MOTEURS PROFONDS")
-    )
-    layout.add_text(
-        "⏱ ~10 min | 🎯 Repérer les actions qui vous donnent de l'énergie au quotidien",
-        config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3*cm)
-    )
-    layout.add_text(
-        "Quels sont les verbes qui vous mettent en mouvement ? Voici quelques exemples par catégorie :",
-        config=TextConfig(spacing_after=0.3 * cm),
-    )
-    
-    categories = [
-        "• Organiser : Planifier, gérer, coordonner, structurer...",
-        "• Communiquer : Transmettre, écouter, interviewer, rédiger...",
-        "• Créer : Concevoir, imaginer, innover, adapter...",
-        "• Aider : Conseiller, soigner, guider, éclairer...",
-        "• Analyser : Rechercher, étudier, observer, évaluer...",
-        "• Diriger : Décider, manager, piloter, entreprendre..."
-    ]
-    for cat in categories:
-        layout.add_text(cat, config=TextConfig(font_size=10, style_choice="italic", color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.1 * cm))
-    layout.y_cursor -= 0.2 * cm
-
-    layout.add_question_block(
-        "1. Les verbes que je préfère (Ceux que j'aime conjuguer au quotidien) :",
-        "verbes_q1",
-        config=QuestionConfig(box_height=3.0 * cm),
-    )
-    layout.add_question_block(
-        "2. Les verbes que j'aime le moins (Ceux qui m'épuisent) :",
-        "verbes_q2",
-        config=QuestionConfig(box_height=3.0 * cm),
-    )
-    layout.add_question_block(
-        "Analyse : Quel lien faites-vous avec vos expériences passées et votre profil MBTI ?",
-        "verbes_q3",
-        config=QuestionConfig(box_height=3.0 * cm),
-    )
-
-    layout.render()
-
 
 def create_psycho_edu_page(c):
     """Page d'introduction à la psychologie économique — refactorisée sur PageLayout."""
     layout = PageLayout(
         c,
         "Introduction à la Psychologie Économique",
-        config=LayoutConfig(part_title="3. PSYCHOLOGIE ÉCONOMIQUE"),
+        config=LayoutConfig(part_title="2. PSYCHOLOGIE ÉCONOMIQUE"),
     )
 
     layout.add_text(
@@ -225,7 +137,7 @@ def _draw_kmsi_sections(layout, sections):
 
 def create_kmsi_pages(c):
     # Page 1: Sections A & B
-    layout = PageLayout(c, "Mon Profil Financier (KMSI)", config=LayoutConfig(part_title="3. PSYCHOLOGIE ÉCONOMIQUE"))
+    layout = PageLayout(c, "Mon Profil Financier (KMSI)", config=LayoutConfig(part_title="2. PSYCHOLOGIE ÉCONOMIQUE"))
     layout.add_text("⏱ ~10 min | 🎯 Diagnostiquer votre scénario monétaire dominant", config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3*cm))
     layout.add_text("Évaluez les affirmations suivantes de 1 (Pas du tout d'accord) à 6 (Tout à fait d'accord).", config=TextConfig(spacing_after=0.5*cm))
     
@@ -246,7 +158,7 @@ def create_kmsi_pages(c):
     layout.render()
     
     # Page 2: Sections C & D + Restitution
-    layout2 = PageLayout(c, "Mon Profil Financier (KMSI) - Suite", config=LayoutConfig(part_title="3. PSYCHOLOGIE ÉCONOMIQUE"))
+    layout2 = PageLayout(c, "Mon Profil Financier (KMSI) - Suite", config=LayoutConfig(part_title="2. PSYCHOLOGIE ÉCONOMIQUE"))
     sections_p2 = [
         ("C. Statut de l'Argent (Money Status)", "Croyance : Ma valeur nette est égale à ma valeur personnelle.", [
             "Je n'achète que les meilleures marques.",
@@ -288,7 +200,7 @@ def create_kmsi_impact_page(c):
     layout = PageLayout(
         c,
         "Impact de mon Money Script sur mon Projet Pro",
-        config=LayoutConfig(part_title="3. PSYCHOLOGIE ÉCONOMIQUE"),
+        config=LayoutConfig(part_title="2. PSYCHOLOGIE ÉCONOMIQUE"),
     )
 
     layout.add_text(
@@ -350,7 +262,7 @@ def create_kmsi_impact_page(c):
 
 
 def create_biographie_page(c):
-    layout = PageLayout(c, "Ma Biographie Financière", config=LayoutConfig(part_title="4. LES RACINES"))
+    layout = PageLayout(c, "Ma Biographie Financière", config=LayoutConfig(part_title="3. LES RACINES"))
     layout.add_text(
         "Transition : Votre score KMSI révèle une tendance. Remontons à sa source...",
         config=TextConfig(style_choice="italic", font_size=11, color=PDFStyle.COLOR_ACCENT_BLUE, spacing_after=0.5 * cm),
@@ -393,7 +305,7 @@ def create_biographie_page(c):
     layout.render()
 
 def create_dialogue_page(c):
-    layout = PageLayout(c, "La Lettre à l'Argent", config=LayoutConfig(part_title="5. ACTE SYMBOLIQUE"))
+    layout = PageLayout(c, "La Lettre à l'Argent", config=LayoutConfig(part_title="4. ACTE SYMBOLIQUE"))
     layout.add_text(
         "⏱ ~20 min | 🎯 Révéler vos projections affectives sur l'argent | 💡 Laissez parler vos émotions sans filtre",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3*cm)
@@ -422,7 +334,7 @@ def create_dialogue_page(c):
 
 def create_archetypes_page(c):
     # --- Page 1 : Les 8 Archétypes ---
-    layout1 = PageLayout(c, "Mon Archétype Sacré (1/2)", config=LayoutConfig(part_title="6. MINDSET & ARCHÉTYPES"))
+    layout1 = PageLayout(c, "Mon Archétype Sacré (1/2)", config=LayoutConfig(part_title="5. MINDSET & ARCHÉTYPES"))
     layout1.add_text(
         "Transition : Vous avez dialogué avec l'argent. Découvrons maintenant votre style naturel de gestion...",
         config=TextConfig(style_choice="italic", font_size=11, color=PDFStyle.COLOR_ACCENT_BLUE, spacing_after=0.5 * cm),
@@ -452,7 +364,7 @@ def create_archetypes_page(c):
     layout1.render()
 
     # --- Page 2 : Plan d'Action ---
-    layout2 = PageLayout(c, "Mon Archétype Sacré (2/2)", config=LayoutConfig(part_title="6. MINDSET & ARCHÉTYPES"))
+    layout2 = PageLayout(c, "Mon Archétype Sacré (2/2)", config=LayoutConfig(part_title="5. MINDSET & ARCHÉTYPES"))
     
     layout2.add_question_block(
         "Mon Top 3 des Archétypes :",
@@ -488,7 +400,7 @@ def create_mindset_surplus_page(c):
     layout = PageLayout(
         c,
         "Mindset de Surplus (Diagnostic)",
-        config=LayoutConfig(part_title="6. MINDSET & ARCHÉTYPES"),
+        config=LayoutConfig(part_title="5. MINDSET & ARCHÉTYPES"),
     )
     layout.add_text(
         "⏱ ~15 min | 🎯 Diagnostiquer vos zones de manque et initier une dynamique d'abondance",
@@ -567,7 +479,7 @@ def create_mindset_surplus_page(c):
     layout2 = PageLayout(
         c,
         "Générosité Stratégique",
-        config=LayoutConfig(part_title="6. MINDSET & ARCHÉTYPES"),
+        config=LayoutConfig(part_title="5. MINDSET & ARCHÉTYPES"),
     )
     layout2.add_text(
         "Pour basculer vers le Surplus, il faut agir comme si le surplus existait déjà. Définissez 3 actions concrètes :",
@@ -614,7 +526,7 @@ def create_synthese_psycho_page(c):
     layout = PageLayout(
         c,
         "Synthèse : Mon Rapport à l'Argent",
-        config=LayoutConfig(part_title="6. MINDSET & ARCHÉTYPES")
+        config=LayoutConfig(part_title="5. MINDSET & ARCHÉTYPES")
     )
     
     layout.add_text(
@@ -656,7 +568,7 @@ def create_synthese_psycho_page(c):
     layout.render()
 
 def create_cartographie_page(c):
-    layout = PageLayout(c, "Ma Cartographie Personnelle", config=LayoutConfig(part_title="7. SYNTHÈSE INTROSPECTIVE"))
+    layout = PageLayout(c, "Ma Cartographie Personnelle", config=LayoutConfig(part_title="6. SYNTHÈSE INTROSPECTIVE"))
     layout.add_text("Cette cartographie synthétise l'ensemble de votre travail d'introspection des séances 1 à 4. Elle servira de boussole pour la phase d'exploration.", config=TextConfig(spacing_after=0.3*cm))
     
     layout.add_question_block(
@@ -686,7 +598,7 @@ def create_cartographie_page(c):
     layout.render()
 
 def create_exploration_page(c):
-    layout = PageLayout(c, "Travail Inter-Session (S4/S5)", config=LayoutConfig(part_title="8. EXPLORATION"))
+    layout = PageLayout(c, "Travail Inter-Session (S4/S5)", config=LayoutConfig(part_title="7. EXPLORATION"))
     layout.add_text("Il est temps d'ouvrir le champ des possibles ! Identifiez 2 à 3 pistes de métiers ou projets que vous aimeriez explorer.", config=TextConfig(spacing_after=0.3*cm))
     
     layout.add_text("Méthodes de recherche suggérées :", config=TextConfig(style_choice="subtitle", font_size=10, color=PDFStyle.COLOR_ACCENT_BLUE, spacing_after=0.1*cm))

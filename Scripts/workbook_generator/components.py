@@ -142,7 +142,7 @@ def draw_page_footer(c, width, height, x_offset=0):
     c.restoreState()
 
 
-def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.02):
+def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.015):
     """
     Draws the signature Dot Grid using Form XObjects to dramatically improve performance
     and reduce output PDF size by caching the grid.
@@ -159,13 +159,13 @@ def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.
         # Use a simple, safe name for the XObject to avoid escaping issues
         form_name = f"DotGrid_{len(c._dot_grid_cache)}"
         c.beginForm(form_name)
-        step = 20
+        step = 25
         c.setFillColor(color, alpha=opacity)
         # Using a single path is faster than emitting individual circle operators
         p = c.beginPath()
         for x in range(0, int(width), step):
             for y in range(0, int(height), step):
-                p.circle(x, y, 0.6)
+                p.circle(x, y, 0.4)
         c.drawPath(p, fill=1, stroke=0)
         c.endForm()
         c._dot_grid_cache[cache_key] = form_name
