@@ -1,7 +1,7 @@
 from workbook_generator.utils import create_cli
 from workbook_generator.document_builder import DocumentBuilder
-from workbook_generator.chapters import valeurs
-from workbook_generator.chapters import schwartz_pvq
+from workbook_generator.chapters.valeurs import engine as valeurs
+from workbook_generator.chapters.valeurs import schwartz_pvq
 from workbook_generator.components import create_closing_page
 
 

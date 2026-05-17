@@ -1,13 +1,13 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 
-from ..config import PDFStyle
-from ..components import (
+from workbook_generator.config import PDFStyle
+from workbook_generator.components import (
     create_standard_cover,
     create_standard_summary_page,
 )
-from ..templates import PageLayout, QuestionConfig, LayoutConfig, TextConfig
-from ..forms import create_checkbox
+from workbook_generator.templates import PageLayout, QuestionConfig, LayoutConfig, TextConfig
+from workbook_generator.forms import create_checkbox
 
 def create_valeurs_cover(c):
     create_standard_cover(c, "WORKBOOK : MES VALEURS ET MOTEURS PROFONDS")
