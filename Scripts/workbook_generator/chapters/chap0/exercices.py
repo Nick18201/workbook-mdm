@@ -7,14 +7,16 @@ from reportlab.lib.styles import ParagraphStyle
 
 from workbook_generator.config import PDFStyle
 from workbook_generator.forms import create_input_field
-from workbook_generator.components import draw_pause_badge, draw_dot_grid, create_input_field
-from workbook_generator.utils import cached_image_reader
-from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
+from workbook_generator.components import draw_pause_badge, draw_dot_grid
 
+from workbook_generator.utils import cached_ImageReader
+from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
 
 def create_premiere_etape_page(c):
     """
     New Cover Page: Première étape : Faire le point.
+    Blue background, large numbers, white text.
+    Refined UI: 'Plume Texture', separate '1.'
     """
     width, height = A4
 
@@ -24,12 +26,14 @@ def create_premiere_etape_page(c):
     # Faint Grid
     draw_dot_grid(c, width, height, color=PDFStyle.COLOR_WHITE, opacity=0.1)
 
+    # Moved higher and to the left to avoid overlap, and made smaller/more transparent
     c.saveState()
     c.setFont(PDFStyle.FONT_BRANDING, 160)
-    c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.12)
+    c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.12)  # Slightly more transparent
     c.drawString(1.5 * cm, height - 9 * cm, "1.")
     c.restoreState()
 
+    # Shifted down slightly to be distinct from the watermarked number
     start_y = height - 10 * cm
     c.setFont(PDFStyle.FONT_BRANDING, 32)
     c.setFillColor(PDFStyle.COLOR_WHITE)
@@ -63,16 +67,19 @@ def create_premiere_etape_page(c):
 
     for block in text_content:
         p = Paragraph(block, style_white)
-        w, h = p.wrap(width - 5 * cm, height)
-        p.drawOn(c, 2.5 * cm, text_y - h)
+        w, h = p.wrap(width - 5 * cm, height)  # Slightly narrower for better reading
+        p.drawOn(c, 2.5 * cm, text_y - h)  # Aligned with title
         text_y -= h + 0.8 * cm
 
+    # Replaced brindilles with plume texture, scaled down
     if os.path.exists(PDFStyle.PATH_PLUME_TEXTURE):
+        # Top Right
         c.saveState()
         c.translate(width - 1 * cm, height - 3 * cm)
-        c.rotate(75)
+        c.rotate(75)  # Rotated 45 degrees more to the left (30 + 45)
+        # Smaller size: 5x5 cm approx
         c.drawImage(
-            cached_image_reader(PDFStyle.PATH_PLUME_TEXTURE),
+            cached_ImageReader(PDFStyle.PATH_PLUME_TEXTURE),
             0,
             0,
             width=5 * cm,
@@ -83,11 +90,13 @@ def create_premiere_etape_page(c):
         )
         c.restoreState()
 
+        # Bottom Left
         c.saveState()
         c.translate(0, 0)
         c.rotate(10)
+        # Smaller size: 7x7 cm
         c.drawImage(
-            cached_image_reader(PDFStyle.PATH_PLUME_TEXTURE),
+            cached_ImageReader(PDFStyle.PATH_PLUME_TEXTURE),
             -2 * cm,
             -1 * cm,
             width=7 * cm,
@@ -100,9 +109,12 @@ def create_premiere_etape_page(c):
     c.showPage()
 
 
+
+
 def create_faire_le_point_pages(c):
     """
     Faire le Point : Ma Situation Actuelle.
+    Split into 2 pages (4 questions each).
     """
     questions_part1 = [
         ("Comment je me sens actuellement ?", "feeling"),
@@ -147,14 +159,18 @@ def create_faire_le_point_pages(c):
         layout.render()
 
 
+
+
 def create_domaines_de_vie_page(c):
     """
     Les Domaines de Vie.
+    Ratings + Reflection.
     """
     layout = PageLayout(
         c, "Les Domaines de Vie", config=LayoutConfig(part_title="1. FAIRE LE POINT")
     )
 
+    # We still need Paragraph for the intro text to handle the bolding nicely
     style_intro = ParagraphStyle(
         "DomainIntro",
         fontName=PDFStyle.FONT_BODY,
@@ -178,6 +194,7 @@ def create_domaines_de_vie_page(c):
 
     layout.y_cursor -= h_i + 1.5 * cm
 
+    # 8 Domains
     domains = [
         "1. Argent / Finances",
         "2. Impact / Sens",
@@ -193,6 +210,7 @@ def create_domaines_de_vie_page(c):
     start_y = layout.y_cursor
     col_width = layout.target_width / 2
 
+    # Grid layout for domains (2 columns)
     for i, domain in enumerate(domains):
         col = i % 2
         row = i // 2
@@ -204,6 +222,7 @@ def create_domaines_de_vie_page(c):
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
         c.drawString(x_pos, y_pos, domain)
 
+        # Dotted lines for alignment
         text_w = c.stringWidth(domain, PDFStyle.FONT_BODY, 11)
         dot_start = x_pos + text_w + 0.2 * cm
         dot_end = x_pos + 6.3 * cm
@@ -215,6 +234,7 @@ def create_domaines_de_vie_page(c):
             c.line(dot_start, y_pos + 0.1 * cm, dot_end, y_pos + 0.1 * cm)
             c.restoreState()
 
+        # Rating Box
         create_input_field(
             form,
             f"s1_domaine_note_{i+1}",
@@ -225,6 +245,7 @@ def create_domaines_de_vie_page(c):
 
     layout.y_cursor = start_y - (4 * 1.5 * cm) - 1.0 * cm
 
+    # Reflection Section
     style_refl = ParagraphStyle(
         "ReflBody",
         fontName=PDFStyle.FONT_BODY,
@@ -245,8 +266,9 @@ def create_domaines_de_vie_page(c):
     w_r, h_r = p_refl.wrap(layout.target_width, layout.height)
     p_refl.drawOn(c, layout.text_x, layout.y_cursor - h_r)
 
+    # Large Text Area for Reflection
     area_top = layout.y_cursor - h_r - 0.5 * cm
-    area_bottom = 2.5 * cm
+    area_bottom = 2.5 * cm  # Margin from bottom
     area_height = area_top - area_bottom
 
     if area_height < 3 * cm:
@@ -264,9 +286,12 @@ def create_domaines_de_vie_page(c):
     layout.render()
 
 
+
+
 def create_entourage_page(c):
     """
     Mon Entourage.
+    Soutiens vs Freins split.
     """
     layout = PageLayout(
         c, "Mon Entourage", config=LayoutConfig(part_title="1. FAIRE LE POINT")
@@ -279,6 +304,9 @@ def create_entourage_page(c):
         "est une étape importante pour sécuriser votre parcours."
     )
     layout.add_text(intro_txt, config=TextConfig(spacing_after=0.3 * cm))
+
+    # Needs two big areas: Soutiens (Blue) and Freins (Red)
+    # The layout.add_question_block handles the alternate colors internally!
 
     layout.add_question_block(
         "Soutien, conseil en positif",

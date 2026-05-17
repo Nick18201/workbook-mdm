@@ -1,3 +1,4 @@
+import os
 import math
 from reportlab.lib.units import cm
 from reportlab.lib.pagesizes import A4
@@ -6,78 +7,109 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 
 from workbook_generator.config import PDFStyle
-from workbook_generator.forms import create_input_field
-from workbook_generator.forms import create_checkbox
+from workbook_generator.forms import create_input_field, create_checkbox
 from workbook_generator.components import (
     draw_title,
     draw_page_decorations,
     draw_side_panel,
-
-    draw_dot_grid,
+    draw_page_background,
 )
-from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
 
+from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
 
 def _draw_emotion_section(c, form, text_x, y_pos):
     y_opts = y_pos - 0.5 * cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, y_pos, "A. Mon Émotion Dominante")
+    c.drawString(text_x, y_opts, "Aujourd'hui, je me sens :")
 
-    emotions = ["Joie", "Colère", "Peur", "Tristesse", "Surprise", "Dégoût"]
-    col_width = 3.0 * cm
-    for i, emo in enumerate(emotions):
-        x_emo = text_x + (i % 3) * col_width
-        y_emo = y_opts - (i // 3) * 0.8 * cm
+    # Text input for "Émotion dominante" (Un mot pour décrire l'instant)
+    create_input_field(
+        form,
+        "meteo_emotion_word",
+        pos=(text_x + 5.5 * cm, y_opts - 5),
+        size=(8 * cm, 20),
+        tooltip="Un mot pour décrire l'instant",
+    )
+
+    options = ["Soleil ☀️", "Nuageux ☁️", "Pluvieux 🌧️", "Orageux ⛈️"]
+    opt_x = text_x
+    opt_y = y_opts - 1.5 * cm
+
+    for opt in options:
         create_checkbox(
             form,
-            f"meteo_emo_{emo}",
-            pos=(x_emo, y_emo - 0.2 * cm),
-
-
+            f"meteo_{opt.split()[0]}",
+            pos=(opt_x, opt_y),
+            size=0.6 * cm,
+            tooltip=opt,
         )
-        c.setFont(PDFStyle.FONT_BODY, 10)
-        c.drawString(x_emo + 0.6 * cm, y_emo, emo)
-    return y_opts - 1.6 * cm
+        c.drawString(opt_x + 1 * cm, opt_y + 0.15 * cm, opt)
+        opt_x += 4 * cm
+
+    return opt_y - 3 * cm
+
+
 
 
 def _draw_energy_scale(c, form, text_x, y_pos):
     y_energy = y_pos
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
-    c.drawString(text_x, y_energy, "B. Mon Niveau d'Énergie (0-10)")
+    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    c.drawString(text_x, y_energy, "Mon niveau d'énergie :")
 
-    # Ligne d'échelle
-    y_line = y_energy - 1.0 * cm
-    c.setStrokeColor(PDFStyle.COLOR_LINE)
-    c.line(text_x + 1 * cm, y_line, text_x + 11 * cm, y_line)
+    # Labels
+    c.setFont(PDFStyle.FONT_ITALIC, 9)
+    c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
+    c.drawString(text_x, y_energy - 0.5 * cm, "Épuisé (0)")
+    c.drawRightString(text_x + 14 * cm, y_energy - 0.5 * cm, "Plein de vitalité (10)")
+
+    # Draw a scale 0-10
+    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.setLineWidth(1)
+    c.line(text_x, y_energy - 1.5 * cm, text_x + 14 * cm, y_energy - 1.5 * cm)
 
     for i in range(11):
-        x_tick = text_x + 1 * cm + i * 1 * cm
-        c.circle(x_tick, y_line, 0.15 * cm, fill=1, stroke=0)
-        c.setFont(PDFStyle.FONT_BODY, 8)
-        c.drawCentredString(x_tick, y_line - 0.5 * cm, str(i))
+        x_mark = text_x + i * 1.4 * cm
+        # Draw a small mark
+        c.setLineWidth(0.5)
+        c.line(x_mark, y_energy - 1.6 * cm, x_mark, y_energy - 1.4 * cm)
+
+        # Draw the checkbox on the mark
         create_checkbox(
             form,
-            f"meteo_energie_{i}",
-            pos=(x_tick - 0.15 * cm, y_line - 0.15 * cm),
-
-
+            f"meteo_energy_{i}",
+            pos=(x_mark - 0.22 * cm, y_energy - 2.1 * cm),
+            size=0.45 * cm,
+            tooltip=f"Niveau {i}",
         )
-    return y_line - 1.0 * cm
+
+        c.setFont(PDFStyle.FONT_BODY, 8)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.drawCentredString(x_mark, y_energy - 2.6 * cm, str(i))
+
+    return y_energy - 4 * cm
+
+
 
 
 def _draw_thought_input(c, form, text_x, y_pos, width):
     y_thought = y_pos
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
-    c.drawString(text_x, y_thought, "C. Ma Pensée Polluante du moment")
+    c.drawString(text_x, y_thought, "Ce qui prend le plus de place dans ma tête :")
+
     create_input_field(
         form,
         "meteo_pensee",
-        pos=(text_x, y_thought - 2.5 * cm),
-        size=(width - 2 * text_x, 2.0 * cm),
+        pos=(text_x, y_thought - 3 * cm),
+        size=(width - text_x - 1 * cm, 2.5 * cm),
+        tooltip="Pensée envahissante",
         multiline=True,
     )
-    return y_thought - 3.5 * cm
+
+    return y_thought - 3 * cm
+
+
 
 
 def create_meteo_page(c):
@@ -85,24 +117,20 @@ def create_meteo_page(c):
     Page 3: Ma Météo Intérieure.
     """
     width, height = A4
+    draw_page_background(c, width, height)
+
     card_margin = 2 * cm
     draw_side_panel(c, card_margin, width, height)
 
     text_x = card_margin + 1.0 * cm
     text_top = height - 4.0 * cm
-    new_y = draw_title(c, "Ma Météo Intérieure", pos=(text_x, text_top))
 
-    c.setFont(PDFStyle.FONT_BODY, 11)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, new_y - 0.2 * cm, "Comment je me sens ici et maintenant ?")
+    y_pos = draw_title(c, "Mon État d'Esprit Actuel", pos=(text_x, text_top))
 
     form = c.acroForm
-    y_pos = new_y - 1.5 * cm
 
     y_pos = _draw_emotion_section(c, form, text_x, y_pos)
-    y_pos -= 0.5 * cm
     y_pos = _draw_energy_scale(c, form, text_x, y_pos)
-    y_pos -= 0.5 * cm
     y_pos = _draw_thought_input(c, form, text_x, y_pos, width)
 
     draw_page_decorations(
@@ -115,61 +143,96 @@ def create_meteo_page(c):
     c.showPage()
 
 
+
+
 def _draw_radar_background(c, center_x, center_y):
     """Draws the radar chart background (circles and dashed axes)."""
-    c.setStrokeColor(PDFStyle.COLOR_LINE)
-    c.setFillColor(PDFStyle.COLOR_LINE)
-    for r in [2 * cm, 4 * cm, 6 * cm]:
-        c.setDash()
-        c.circle(center_x, center_y, r, stroke=1, fill=0)
+    # Draw Axes
+    c.setLineWidth(1)
+    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
 
-    # Diagonal Axes
-    c.setDash(2, 2)
-    c.line(
-        center_x - 6 * cm * math.cos(math.pi / 4),
-        center_y - 6 * cm * math.sin(math.pi / 4),
-        center_x + 6 * cm * math.cos(math.pi / 4),
-        center_y + 6 * cm * math.sin(math.pi / 4),
-    )
-    c.line(
-        center_x - 6 * cm * math.cos(math.pi / 4),
-        center_y + 6 * cm * math.sin(math.pi / 4),
-        center_x + 6 * cm * math.cos(math.pi / 4),
-        center_y - 6 * cm * math.sin(math.pi / 4),
-    )
-    c.setDash()
+    # Draw a circle to contain the axes visually (Radar chart style)
+    c.setFillColor(PDFStyle.COLOR_BG_BLOB)
+    c.circle(center_x, center_y, 7 * cm, stroke=1, fill=1)
+
+    c.setLineWidth(0.5)
+    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
+    c.circle(center_x, center_y, 3.5 * cm, stroke=1, fill=1)  # Inner circle
+
+    c.saveState()
+    c.setDash(4, 4)
+    c.line(center_x, center_y - 7 * cm, center_x, center_y + 7 * cm)  # Vertical
+    c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)  # Horizontal
+    c.restoreState()
+
+
 
 
 def _draw_quadrant(c, form, title, dx, dy, center_x, center_y):
     """Draws a single quadrant including labels, backgrounds, and input fields."""
-    q_center_x = center_x + dx * 4.5 * cm
-    q_center_y = center_y + dy * 4.5 * cm
+    # Determine specific area center
+    q_center_x = center_x + (dx * (3.5 * cm))
+    q_center_y = center_y + (dy * (3.5 * cm))
 
-    field_width = 7.0 * cm
-    field_height = 2.0 * cm
+    words = title.split("(")
+    main_title = words[0].strip()
+    sub_title = "(" + words[1] if len(words) > 1 else ""
 
-    f_x = q_center_x - field_width / 2
-    f_y = q_center_y - field_height / 2
+    # Dimensions de la zone de saisie
+    field_width = 5.8 * cm
+    field_height = 1.8 * cm
 
-    # Draw colored background box
-    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
-    c.setStrokeColor(PDFStyle.COLOR_LINE)
-    c.roundRect(f_x, f_y, field_width, field_height, 4, fill=1, stroke=1)
+    # Placement dynamique symétrique pour éviter les chevauchements
+    if dy == 1:  # Haut
+        text_y = center_y + 5.2 * cm
+        f_y = center_y + 1.5 * cm
+    else:  # Bas
+        text_y = center_y - 5.0 * cm
+        f_y = center_y - 3.3 * cm
 
-    main_title = title.split(" (")[0]
-    sub_title = title.split(" (")[1].replace(")", "") if "(" in title else ""
+    f_x = q_center_x - (field_width / 2)
 
-    text_y = f_y + field_height + 0.8 * cm
+    # Draw Text Background (Forme de 'pill' ou de badge arrondi)
+    text_width = c.stringWidth(main_title, PDFStyle.FONT_BRANDING, 14)
+    c.saveState()
+    c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
+    c.setStrokeColor(PDFStyle.COLOR_WHITE, alpha=0)
+    c.roundRect(
+        q_center_x - text_width / 2 - 10,
+        text_y - 5,
+        text_width + 20,
+        20,
+        radius=10,
+        fill=1,
+        stroke=0,
+    )
+    c.restoreState()
 
-    c.setFont(PDFStyle.FONT_SUBTITLE, 11)
+    c.setFont(PDFStyle.FONT_BRANDING, 14)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.drawCentredString(q_center_x, text_y, main_title)
 
     if sub_title:
-        c.setFont(PDFStyle.FONT_BODY, 8)
+        sub_width = c.stringWidth(sub_title, PDFStyle.FONT_BODY, 10)
+        c.saveState()
+        c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
+        c.setStrokeColor(PDFStyle.COLOR_WHITE, alpha=0)
+        c.roundRect(
+            q_center_x - sub_width / 2 - 6,
+            text_y - 0.5 * cm - 4,
+            sub_width + 12,
+            14,
+            radius=7,
+            fill=1,
+            stroke=0,
+        )
+        c.restoreState()
+
+        c.setFont(PDFStyle.FONT_BODY, 10)
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
         c.drawCentredString(q_center_x, text_y - 0.5 * cm, sub_title)
 
+    # Input Field: Centré dans le quadrant
     create_input_field(
         form,
         f"vision_{main_title}",
@@ -181,18 +244,24 @@ def _draw_quadrant(c, form, title, dx, dy, center_x, center_y):
     )
 
 
+
+
 def create_vision_page(c):
     """
     Page 4: Ma Vision 'Boule à Facettes'.
+    4 Quadrants.
     """
     width, height = A4
+    # Side Panel (Full Height)
     card_margin = 2 * cm
     draw_side_panel(c, card_margin, width, height)
 
+    # Title
     text_x = card_margin + 1.0 * cm
     text_top = height - 4.0 * cm
     new_y = draw_title(c, "Ma Vision 360°", pos=(text_x, text_top))
 
+    # Instruction
     c.setFont(PDFStyle.FONT_BODY, 11)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawString(
@@ -201,16 +270,19 @@ def create_vision_page(c):
         "Instruction : Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.",
     )
 
+    # Center (Relative to panel)
     center_x = card_margin + (width - card_margin) / 2
     center_y = height / 2 - 2.5 * cm
 
     _draw_radar_background(c, center_x, center_y)
 
+    # Quadrants Labels & Inputs
+    # Strict labels from Markdown
     axes = [
-        ("Professionnel (Sens, Mission, Salaire)", -1, 1),
-        ("Personnel (Temps pour soi, Santé)", 1, 1),
-        ("Social/Familial (Relations, Équilibre)", -1, -1),
-        ("Hiérarchie/Structure (Besoin de cadre vs Liberté)", 1, -1),
+        ("Professionnel (Sens, Mission, Salaire)", -1, 1),  # Top Left
+        ("Personnel (Temps pour soi, Santé)", 1, 1),  # Top Right
+        ("Social/Familial (Relations, Équilibre)", -1, -1),  # Bottom Left
+        ("Hiérarchie/Structure (Besoin de cadre vs Liberté)", 1, -1),  # Bottom Right
     ]
 
     form = c.acroForm
@@ -228,6 +300,8 @@ def create_vision_page(c):
     c.showPage()
 
 
+
+
 def create_boussole_page(c):
     """
     Page 5: Mon Objectif Boussole.
@@ -238,16 +312,19 @@ def create_boussole_page(c):
         config=LayoutConfig(part_title="1. Récapitulatif de la séance précédente"),
     )
 
+    # Visual Compass (Placeholder Circle)
     center_x = layout.text_x + layout.target_width / 2
     c.setStrokeColor(PDFStyle.COLOR_ACCENT_RED)
     c.setLineWidth(3)
     c.circle(center_x, layout.y_cursor - 1.5 * cm, 1.5 * cm, fill=0, stroke=1)
+    # North mark
     c.setFont(PDFStyle.FONT_BRANDING, 20)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
     c.drawCentredString(center_x, layout.y_cursor - 1.5 * cm + 0.8 * cm, "N")
 
     layout.y_cursor -= 4.0 * cm
 
+    # Main Goal Structure
     layout.add_question_block(
         "D'ici 3 mois, je veux avoir clarifié :",
         "boussole_enjeu",
@@ -266,6 +343,7 @@ def create_boussole_page(c):
         ),
     )
 
+    # Success Indicator
     layout.add_question_block(
         "Je saurai que j'ai réussi quand :",
         "boussole_succes_preuve",
@@ -278,9 +356,12 @@ def create_boussole_page(c):
     layout.render()
 
 
+
+
 def create_sac_a_dos_page(c):
     """
     Page 6: Le Sac à Dos.
+    Specific prompts from Markdown.
     """
     layout = PageLayout(
         c,
@@ -316,9 +397,12 @@ def create_sac_a_dos_page(c):
     layout.render()
 
 
+
+
 def create_heritage_page(c):
     """
     Page: Mon Héritage (3FVS - Genogramme Simplifié).
+    Focus: Transmissions, Loyautés, Mandats.
     """
     layout = PageLayout(
         c,
@@ -357,6 +441,7 @@ def create_heritage_page(c):
         ),
     )
 
+    # Note bas de page
     c.setFont(PDFStyle.FONT_ITALIC, 10)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     c.drawCentredString(
@@ -368,9 +453,12 @@ def create_heritage_page(c):
     layout.render()
 
 
+
+
 def create_work_image_page(c):
     """
     Page: Image du Monde du Travail.
+    Based on Exercice_Image_Travail.md
     """
     layout = PageLayout(
         c,
@@ -378,16 +466,19 @@ def create_work_image_page(c):
         config=LayoutConfig(part_title="2. Mes héritages"),
     )
 
+    # 1. Exploration Sensorielle & Emotionnelle
     layout.add_question_block(
         "1. Exploration Sensorielle & Emotionnelle",
         "image_sensorielle",
         config=QuestionConfig(
             box_height=2.2 * cm,
             subtitle="Fermez les yeux. Visualisez le lieu de travail de vos parents (ou figures parentales). Quelles sont les odeurs ? Les bruits ? La lumière ? L'ambiance générale ?",
-            color_alternation=False,
+            color_alternation=False,  # Use first color (blue)
         ),
     )
 
+    # 2. L'Héritage Familial
+    # Using layout.add_text to handle subtitle and spacing
     layout.add_text(
         "2. L'Héritage Familial",
         config=TextConfig(
@@ -425,6 +516,7 @@ def create_work_image_page(c):
             ),
         )
 
+    # 3. Changer de Regard
     layout.add_text(
         "3. Changer de Regard",
         config=TextConfig(
@@ -437,6 +529,7 @@ def create_work_image_page(c):
 
     col_width = (layout.target_width - 1.0 * cm) / 2
 
+    # Col 1: Avant
     c.setFont(PDFStyle.FONT_ITALIC, 10)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.drawString(
@@ -450,6 +543,7 @@ def create_work_image_page(c):
         multiline=True,
     )
 
+    # Col 2: Futur
     right_col_x = layout.text_x + col_width + 1 * cm
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
     c.drawString(
@@ -466,6 +560,8 @@ def create_work_image_page(c):
     layout.y_cursor -= 2.5 * cm
 
     layout.render()
+
+
 
 
 def create_mentors_page(c):
