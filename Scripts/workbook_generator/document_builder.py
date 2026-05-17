@@ -56,4 +56,4 @@ class DocumentBuilder:
     def save(self):
         """Saves the PDF document to disk and prints a success message."""
         self.canvas.save()
-        print(f"PDF generated successfully: {self.output_path}")
+        print(f"PDF généré avec succès : {self.output_path}")
