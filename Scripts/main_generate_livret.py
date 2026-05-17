@@ -1,11 +1,3 @@
-import sys
-import os
-
-# Add logic to make sure `workbook_generator` is found if run from root or Scripts directly.
-# This prevents ModuleNotFoundError.
-# Since we might be running this from standard dirs:
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from workbook_generator.utils import create_cli
 from workbook_generator.document_builder import DocumentBuilder
 from workbook_generator.components import create_closing_page

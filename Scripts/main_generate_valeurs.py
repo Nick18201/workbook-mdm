@@ -1,9 +1,3 @@
-import os
-import sys
-
-current_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_dir)
-
 from workbook_generator.utils import create_cli
 from workbook_generator.document_builder import DocumentBuilder
 from workbook_generator.chapters import valeurs

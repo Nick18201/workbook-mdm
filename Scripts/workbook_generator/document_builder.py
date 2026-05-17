@@ -21,14 +21,12 @@ class DocumentBuilder:
         register_fonts()
 
         # Fail-fast on permission errors (e.g., file open in another program)
-        if os.path.isfile(self.output_path):
+        if os.path.exists(self.output_path):
             try:
-                # Attempt to open in append mode to check for locks without truncating
-                with open(self.output_path, 'ab'):
-                    pass
+                os.remove(self.output_path)
             except PermissionError:
-            except PermissionError:
-                raise PermissionError(f"Impossible de modifier '{self.output_path}'. Veuillez fermer le PDF s'il est ouvert dans un autre programme.") from None
+                print(f"Error: Cannot overwrite '{self.output_path}'. Please close the PDF if it is open in another program.")
+                sys.exit(1)
 
         # Instantiate the canvas
         self.canvas = canvas.Canvas(self.output_path, pagesize=A4)
@@ -56,4 +54,4 @@ class DocumentBuilder:
     def save(self):
         """Saves the PDF document to disk and prints a success message."""
         self.canvas.save()
-        print(f"PDF généré avec succès : {self.output_path}")
+        print(f"PDF generated successfully: {self.output_path}")
