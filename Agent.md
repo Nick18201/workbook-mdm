@@ -5,12 +5,13 @@ Ce document sert de référence technique pour tout agent IA (ou développeur) i
 ## 🏗️ Architecture Actuelle
 Le projet génère des livrets pédagogiques au format PDF ("workbooks") dynamiquement via Python et la librairie `reportlab`. L'architecture est modulaire, isolant les contenus de la structure visuelle.
 
-- **`Scripts/main_generate_chapX.py`** : Les scripts d'entrée orchestrant la création d'un PDF. Ils instancient le document et appellent l'ordre de création de chaque page dans le chapitre.
+- **`Scripts/main_generate_chapX.py`** : Les scripts d'entrée orchestrant la création d'un PDF. Ils parsènt les arguments en ligne de commande et orchestrent l'ordre de création de chaque page dans le chapitre en utilisant exclusivement `DocumentBuilder`.
 - **`Scripts/workbook_generator/`** : Le cœur graphique et applicatif :
+  - `document_builder.py` : Contient la classe `DocumentBuilder` qui est le standard exclusif pour l'orchestration des documents (instanciation du canvas, gestion des accès fichiers, application du thème et enregistrement des polices).
   - `components.py` : Fonctions générant des éléments réutilisables (titres, couvertures, bas de page).
   - `config.py` : Constantes globales, charte graphique (couleurs, polices, marges).
   - `templates.py` & `forms.py` : Gabarits visuels plus complexes et réutilisables.
-  - `utils.py` : Utilitaires (notamment `register_fonts` pour charger les polices).
+  - `utils.py` : Utilitaires (notamment `create_cli` pour parser les arguments CLI).
   - `chapters/` (ex: `chap1.py`) : Sous-modules dédiés contenant la logique de positionnement pour chaque page / exercice d'un chapitre spécifique.
 - **`assets/`** : Contient les `fonts/` (polices TrueType/OpenType) et `illustrations/` (images, schémas).
 - **Fichiers racines** : Entrées PDF statiques (ex: `Workbook_Chapitre_1.pdf`) ou temporaires.

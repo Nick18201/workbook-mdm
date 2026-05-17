@@ -1,8 +1,5 @@
-import argparse
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
-from workbook_generator.utils import register_fonts
-from workbook_generator.config import PDFStyle
+from workbook_generator.utils import create_cli
+from workbook_generator.document_builder import DocumentBuilder
 from workbook_generator.components import create_standard_cover, create_closing_page
 from workbook_generator.chapters.chap1 import (
     create_engagement_page,
@@ -22,55 +19,38 @@ def create_chap1_main_cover(c):
 
 
 def build_wb_chap1_pdf(output_filename, theme="indigo"):
-    # Set the theme
-    PDFStyle.set_theme(theme)
-    # Register fonts first
-    register_fonts()
-
-    c = canvas.Canvas(output_filename, pagesize=A4)
-    c.setTitle("Marge de Manœuvre - Chapitre 1")
+    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+    builder.set_title("Marge de Manœuvre - Chapitre 1")
 
     # --- PAGE 1: COVER ---
-    create_chap1_main_cover(c)
+    builder.add_page(create_chap1_main_cover)
 
     # --- PAGE 2: CONCEPT ---
-    create_concept_page(c)
+    builder.add_page(create_concept_page)
 
     # --- PAGES 3-10: CHAPITRE 1 EXERCICES ---
-    create_engagement_page(c)
-    create_meteo_page(c)
-    create_vision_page(c)
-    create_boussole_page(c)
-    create_sac_a_dos_page(c)
+    builder.add_page(create_engagement_page)
+    builder.add_page(create_meteo_page)
+    builder.add_page(create_vision_page)
+    builder.add_page(create_boussole_page)
+    builder.add_page(create_sac_a_dos_page)
 
     # From old Chapitre 2
-    create_heritage_page(c)
-    create_work_image_page(c)
-    create_mentors_page(c)
+    builder.add_page(create_heritage_page)
+    builder.add_page(create_work_image_page)
+    builder.add_page(create_mentors_page)
 
     # --- PAGE 11: CLOSING PAGE ---
-    create_closing_page(c)
+    builder.add_page(create_closing_page)
 
     # Total pages: 1 + 1 (concept) + 8 + 1 (closing) = 11 pages exactly
 
-    c.save()
-    print(f"PDF 'Workbook Chapitre 1' Generated: {output_filename}")
+    builder.save()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Générer le chapitre 1 PDF.")
-    parser.add_argument(
-        "--theme",
-        choices=PDFStyle.THEMES,
-        default="indigo",
-        help="Le thème de couleurs à utiliser.",
+    args = create_cli(
+        description="Générer le chapitre 1 PDF.",
+        default_output="Workbook_Chapitre_1.pdf"
     )
-    parser.add_argument(
-        "--output",
-        type=str,
-        default="Workbook_Chapitre_1.pdf",
-        help="Le nom du fichier PDF généré.",
-    )
-    args = parser.parse_args()
-
     build_wb_chap1_pdf(args.output, theme=args.theme)
