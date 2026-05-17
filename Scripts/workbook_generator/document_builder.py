@@ -28,8 +28,7 @@ class DocumentBuilder:
                     pass
             except PermissionError:
             except PermissionError:
-                print(f"Error: Cannot overwrite '{self.output_path}'. Please close the PDF if it is open in another program.")
-                sys.exit(1)
+                raise PermissionError(f"Impossible de modifier '{self.output_path}'. Veuillez fermer le PDF s'il est ouvert dans un autre programme.") from None
 
         # Instantiate the canvas
         self.canvas = canvas.Canvas(self.output_path, pagesize=A4)
