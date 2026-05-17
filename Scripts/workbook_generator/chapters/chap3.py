@@ -45,43 +45,29 @@ def create_recap_seance_page(c):
 
 def create_intro_page(c):
     """Page d'introduction sans bloc signature."""
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 5.0 * cm
-
-    new_y = draw_title(c, "Mode d'Emploi de Moi-Même", pos=(text_x, text_top))
-
-    text_y = new_y - 0.2 * cm
-    c.setFont(PDFStyle.FONT_BODY, 12)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-
-    lines = [
-        "Considérez ce document comme un journal intime. Il n'y a pas de",
-        "bonnes ou de mauvaises réponses, ni de questions pièges.",
-        "",
-        "Ce qui nous intéresse, ce n'est pas ce que vous savez faire",
-        "(vos compétences), mais ce qui se passe dans votre tête et dans",
-        "votre corps (votre énergie).",
-        "",
-        "Prenez le temps de détailler vos pensées. Racontez-nous",
-        "le 'pourquoi' et le 'comment'. N'hésitez pas à utiliser des",
-        "exemples de votre vie personnelle (famille, loisirs) autant que",
-        "professionnelle.",
-    ]
-
-    for line in lines:
-        for s in simpleSplit(line, PDFStyle.FONT_BODY, 12, width - text_x - 1 * cm):
-            c.drawString(text_x, text_y, s)
-            text_y -= 0.6 * cm
-
-    draw_page_decorations(
-        c, width, height, part_title="2. INTRODUCTION", x_offset=card_margin
+    layout = PageLayout(
+        c,
+        "Mode d'Emploi de Moi-Même",
+        config=LayoutConfig(part_title="2. INTRODUCTION"),
     )
-    c.showPage()
+
+    text_content = (
+        "Considérez ce document comme un journal intime. Il n'y a pas de "
+        "bonnes ou de mauvaises réponses, ni de questions pièges.\n\n"
+        "Ce qui nous intéresse, ce n'est pas ce que vous savez faire "
+        "(vos compétences), mais ce qui se passe dans votre tête et dans "
+        "votre corps (votre énergie).\n\n"
+        "Prenez le temps de détailler vos pensées. Racontez-nous "
+        "le 'pourquoi' et le 'comment'. N'hésitez pas à utiliser des "
+        "exemples de votre vie personnelle (famille, loisirs) autant que "
+        "professionnelle."
+    )
+
+    layout.add_text(
+        text_content, config=TextConfig(font_size=12, spacing_after=0.6 * cm)
+    )
+
+    layout.render()
 
 
 def create_chap1_energie(c):
