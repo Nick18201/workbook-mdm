@@ -333,13 +333,14 @@ def create_boussole_page(c):
     )
 
     # Visual Compass (Placeholder Circle)
+    center_x = layout.text_x + layout.target_width / 2
     c.setStrokeColor(PDFStyle.COLOR_ACCENT_RED)
     c.setLineWidth(3)
-    c.circle(layout.width / 2, layout.y_cursor - 1.5 * cm, 1.5 * cm, fill=0, stroke=1)
+    c.circle(center_x, layout.y_cursor - 1.5 * cm, 1.5 * cm, fill=0, stroke=1)
     # North mark
     c.setFont(PDFStyle.FONT_BRANDING, 20)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawCentredString(layout.width / 2, layout.y_cursor - 1.5 * cm + 0.8 * cm, "N")
+    c.drawCentredString(center_x, layout.y_cursor - 1.5 * cm + 0.8 * cm, "N")
 
     layout.y_cursor -= 4.0 * cm
 
@@ -519,21 +520,15 @@ def create_work_image_page(c):
     ]
 
     for q_text, q_id in questions:
-        # We handle this manually inside the layout since it's a tight list without alternating colors
-        layout.add_text(
+        layout.add_question_block(
             q_text,
-            config=TextConfig(
-                style_choice="body", font_size=10, spacing_after=0.1 * cm
+            q_id,
+            config=QuestionConfig(
+                box_height=1.2 * cm,
+                color_alternation=False,
+                color=PDFStyle.COLOR_TEXT_MAIN,
             ),
         )
-        create_input_field(
-            layout.form,
-            q_id,
-            pos=(layout.text_x, layout.y_cursor - 1.2 * cm),
-            size=(layout.target_width, 1.2 * cm),
-            multiline=True,
-        )
-        layout.y_cursor -= 1.8 * cm
 
     # 3. Changer de Regard
     layout.add_text(
