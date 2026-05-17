@@ -1,9 +1,9 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
-from ..utils import cached_simpleSplit as simpleSplit
+from workbook_generator.utils import cached_simpleSplit as simpleSplit
 
-from ..config import PDFStyle
-from ..components import (
+from workbook_generator.config import PDFStyle
+from workbook_generator.components import (
     draw_page_background,
     draw_side_panel,
     draw_title,
@@ -12,7 +12,7 @@ from ..components import (
     create_standard_summary_page,
     create_standard_recap_page,
 )
-from ..templates import PageLayout, QuestionConfig, LayoutConfig, TextConfig
+from workbook_generator.templates import PageLayout, QuestionConfig, LayoutConfig, TextConfig
 
 
 def create_chap3_cover(c):

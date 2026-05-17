@@ -1,7 +1,7 @@
 from workbook_generator.utils import create_cli
 from workbook_generator.document_builder import DocumentBuilder
 from workbook_generator.components import create_closing_page
-from workbook_generator.chapters.livret_competences import (
+from workbook_generator.chapters.livret import (
     create_livret_cover,
     create_profil_page,
     create_parcours_page,
