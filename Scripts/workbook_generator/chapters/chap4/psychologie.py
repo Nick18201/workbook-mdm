@@ -5,6 +5,9 @@ from ...templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
 
 
 def create_situation_actuelle_page(c):
+    """
+    Page: Votre situation actuelle.
+    """
     layout = PageLayout(
         c,
         "Votre situation actuelle",
@@ -36,6 +39,9 @@ def create_situation_actuelle_page(c):
 
 
 def create_histoire_argent_page(c):
+    """
+    Page: Votre histoire avec l'argent.
+    """
     layout = PageLayout(
         c,
         "Votre histoire avec l'argent",
@@ -93,6 +99,9 @@ def create_histoire_argent_page(c):
 
 
 def create_premieres_experiences_page(c):
+    """
+    Page: Vos premières expériences financières.
+    """
     layout = PageLayout(
         c,
         "Vos premières expériences financières",

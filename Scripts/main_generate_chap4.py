@@ -26,6 +26,6 @@ def generate_workbook_chap4(output_filename="Workbook_Chapitre_4_v2.pdf", theme=
 if __name__ == "__main__":
     args = create_cli(
         description="Générer le chapitre 4 v2 PDF.",
-        default_output="Workbook_Chapitre_4.pdf"
+        default_output="Workbook_Chapitre_4_v2.pdf"
     )
     generate_workbook_chap4(output_filename=args.output, theme=args.theme)
