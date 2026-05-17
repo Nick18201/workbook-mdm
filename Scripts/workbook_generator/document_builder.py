@@ -21,9 +21,12 @@ class DocumentBuilder:
         register_fonts()
 
         # Fail-fast on permission errors (e.g., file open in another program)
-        if os.path.exists(self.output_path):
+        if os.path.isfile(self.output_path):
             try:
-                os.remove(self.output_path)
+                # Attempt to open in append mode to check for locks without truncating
+                with open(self.output_path, 'ab'):
+                    pass
+            except PermissionError:
             except PermissionError:
                 print(f"Error: Cannot overwrite '{self.output_path}'. Please close the PDF if it is open in another program.")
                 sys.exit(1)
