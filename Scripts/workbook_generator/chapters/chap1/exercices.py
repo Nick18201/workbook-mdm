@@ -1,55 +1,21 @@
-from reportlab.lib.pagesizes import A4
+import os
+import math
 from reportlab.lib.units import cm
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_JUSTIFY
+from reportlab.platypus import Paragraph
+from reportlab.lib.styles import ParagraphStyle
 
-from ..config import PDFStyle
-from ..components import (
-    draw_page_background,
-    draw_side_panel,
+from workbook_generator.config import PDFStyle
+from workbook_generator.forms import create_input_field, create_checkbox
+from workbook_generator.components import (
     draw_title,
-    create_standard_cover,
     draw_page_decorations,
-    create_standard_engagement_page,
-    create_standard_summary_page,
+    draw_side_panel,
+    draw_page_background,
 )
-from ..templates import PageLayout, QuestionConfig, LayoutConfig, TextConfig
-from ..forms import create_input_field, create_checkbox
 
-
-def create_chap1_cover(c):
-    """
-    Cover Page for Chapter 1: L'État des Lieux.
-    """
-    create_standard_cover(c, "CHAPITRE 1 : L'ÉTAT DES LIEUX")
-
-
-def create_engagement_page(c):
-    """
-    Page 1: Mon Engagement.
-    Text heavy page with signature.
-    """
-    create_standard_engagement_page(c, "1. MON ENGAGEMENT")
-
-
-def create_concept_page(c):
-    """
-    Page 2: Chapter Cover - 1. Concept
-    Blue background, large watermark.
-    """
-    # Points
-    points = [
-        ("Sommaire :", ""),
-        ("1.", "Mon Engagement"),
-        ("2.", "Ma Météo Intérieure"),
-        ("3.", "Ma Vision 360°"),
-        ("4.", "Mon Objectif Boussole"),
-        ("5.", "Le Sac à Dos"),
-        ("6.", "Mon Héritage"),
-        ("7.", "Image du Monde du Travail"),
-        ("8.", "Mentors & Anti-Modèles"),
-    ]
-
-    create_standard_summary_page(c, "1", "CONCEPT", "", points)
-
+from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
 
 def _draw_emotion_section(c, form, text_x, y_pos):
     y_opts = y_pos - 0.5 * cm
@@ -82,6 +48,8 @@ def _draw_emotion_section(c, form, text_x, y_pos):
         opt_x += 4 * cm
 
     return opt_y - 3 * cm
+
+
 
 
 def _draw_energy_scale(c, form, text_x, y_pos):
@@ -123,6 +91,8 @@ def _draw_energy_scale(c, form, text_x, y_pos):
     return y_energy - 4 * cm
 
 
+
+
 def _draw_thought_input(c, form, text_x, y_pos, width):
     y_thought = y_pos
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
@@ -138,6 +108,8 @@ def _draw_thought_input(c, form, text_x, y_pos, width):
     )
 
     return y_thought - 3 * cm
+
+
 
 
 def create_meteo_page(c):
@@ -171,6 +143,8 @@ def create_meteo_page(c):
     c.showPage()
 
 
+
+
 def _draw_radar_background(c, center_x, center_y):
     """Draws the radar chart background (circles and dashed axes)."""
     # Draw Axes
@@ -190,6 +164,8 @@ def _draw_radar_background(c, center_x, center_y):
     c.line(center_x, center_y - 7 * cm, center_x, center_y + 7 * cm)  # Vertical
     c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)  # Horizontal
     c.restoreState()
+
+
 
 
 def _draw_quadrant(c, form, title, dx, dy, center_x, center_y):
@@ -268,6 +244,8 @@ def _draw_quadrant(c, form, title, dx, dy, center_x, center_y):
     )
 
 
+
+
 def create_vision_page(c):
     """
     Page 4: Ma Vision 'Boule à Facettes'.
@@ -320,6 +298,8 @@ def create_vision_page(c):
         x_offset=card_margin,
     )
     c.showPage()
+
+
 
 
 def create_boussole_page(c):
@@ -376,6 +356,8 @@ def create_boussole_page(c):
     layout.render()
 
 
+
+
 def create_sac_a_dos_page(c):
     """
     Page 6: Le Sac à Dos.
@@ -413,6 +395,8 @@ def create_sac_a_dos_page(c):
     )
 
     layout.render()
+
+
 
 
 def create_heritage_page(c):
@@ -467,6 +451,8 @@ def create_heritage_page(c):
     )
 
     layout.render()
+
+
 
 
 def create_work_image_page(c):
@@ -574,6 +560,8 @@ def create_work_image_page(c):
     layout.y_cursor -= 2.5 * cm
 
     layout.render()
+
+
 
 
 def create_mentors_page(c):

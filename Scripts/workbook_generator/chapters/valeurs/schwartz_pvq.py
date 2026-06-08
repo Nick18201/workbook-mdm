@@ -10,9 +10,9 @@ Ce module implémente :
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
-from ..config import PDFStyle
-from ..templates import PageLayout, QuestionConfig, LayoutConfig, TextConfig
-from ..forms import create_checkbox
+from workbook_generator.config import PDFStyle
+from workbook_generator.templates import PageLayout, QuestionConfig, LayoutConfig, TextConfig
+from workbook_generator.forms import create_checkbox
 
 
 # =============================================================================
@@ -227,7 +227,7 @@ def create_schwartz_reference_page(c):
         c.setFont(PDFStyle.FONT_BODY, 9)
         c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
         # Wrap description within column width
-        from ..utils import cached_simpleSplit as simpleSplit
+        from workbook_generator.utils import cached_simpleSplit as simpleSplit
         desc_lines = simpleSplit(desc, PDFStyle.FONT_BODY, 9, col_width - 0.5 * cm)
         desc_y = y - line_height_name
         for dl in desc_lines:
