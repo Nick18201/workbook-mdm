@@ -5,14 +5,16 @@ from dataclasses import dataclass
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
-from reportlab.lib.utils import simpleSplit
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 
 from .config import PDFStyle
 from .forms import create_input_field
-from .utils import cached_image_reader
+from .utils import (
+    cached_image_reader,
+    cached_simpleSplit as simpleSplit,
+)
 
 
 def draw_page_background(c, width, height, use_blobs=False):
