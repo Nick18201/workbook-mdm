@@ -1,71 +1,79 @@
-# Workbook - Chapitre 6 : La Feuille de Route 🗺️
+# Workbook - Chapitre 6 : Phase d'exploration 🧭
 
-*Ce chapitre transforme la décision en action concrète et mesurable.*
+*Ce chapitre réunit et structure vos pistes de réflexion professionnelle à travers votre cartographie et une première sélection de métiers à explorer.*
 
 ---
 
 ## 1. Concept
-*   **Moment** : Généré suite à la **Séance 7** (Synthèse & Plan d'Action).
-*   **Objectif** : Avoir un plan de bataille clair pour les 6 prochains mois.
-*   **Mots-clés** : Action, Précision, Engagement.
+*   **Moment** : Généré suite à la **Séance 5** (Phase d'exploration).
+*   **Objectif** : Synthétiser vos acquis (MBTI, valeurs, moteurs), ouvrir le champ des possibles avec 10 pistes de métiers (5 "no limit" et 5 "réalistes"), et initier une enquête auprès de vos proches.
+*   **Mots-clés** : Exploration, Cartographie, Ouverture, Écoute.
 
 ---
 
 ## 2. Structure du PDF (Rendu Final)
 
-### Page 1 : La Vision à 6 Mois (Le Cap)
-*   **Visuel** : Une carte postale ou une photo inspirante (liée au projet).
-*   **Titre** : "Rendez-vous le `[Date + 6 mois]`."
-*   **Affirmation** :
-    *   "À cette date, je serai : `[Identité/Poste visé]`."
-    *   "J'aurai accompli : `[Résultat clé]`."
-    *   "Je ressentirai : `[Émotion visée]`."
+### Page 1 : Couverture
+*   **Titre** : "CHAPITRE 6 : PHASE D'EXPLORATION"
+*   **Sous-titre** : "Les premières pistes métiers et cartographie"
 
-### Page 2 : Le Plan d'Action (Les Marches)
-*   **Visuel** : Une Roadmap type "Chemin de montagne" ou "Métro" avec des étapes.
-*   **Les Jalons** :
-    1.  **Mois 1 (L'Impulsion)** : "Ma priorité est de `[Action 1]`."
-    2.  **Mois 2-3 (La Construction)** : "Je dois valider `[Jalon A]` et `[Jalon B]`."
-    3.  **Mois 4-6 (La Concrétisation)** : "Je finalise `[Livrable final]`."
+### Page 2 : Concept / Sommaire
+*   **Contenu** : Présentation des objectifs du chapitre et structure des pages (Récapitulatif, Cartographie, Retours des proches, Fiches métiers, Ressources).
 
-### Page 3 : Le Pas de Côté (Le "Not-to-do list")
-*   **Concept** : Pour avancer, il faut arrêter de reculer.
+### Page 3 : Récapitulatif
+*   **Titre** : "1. RÉCAPITULATIF (MES VALEURS)"
+*   **Contenu** : Questions d'introspection sur la séance précédente (Valeurs) :
+    *   Les 3 valeurs non négociables identifiées.
+    *   Les conditions de travail concrètes nécessaires pour les respecter.
+    *   Les tensions de valeurs qui influencent la transition.
+
+### Page 4 : Votre Cartographie Personnelle
+*   **Visuel** : Une petite carte pleine largeur en haut (MBTI), suivie de six cartes organisées en deux colonnes de trois lignes.
 *   **Contenu** :
-    *   "J'arrête officiellement de : `[Habitude toxique/Tâche inutile]`."
-    *   "Je délègue ou repousse : `[Tâche secondaire]`."
+    *   `Cartographie de : [Prénom]`
+    *   `TYPE MBTI : [Profil]`
+    *   `CE QUE J'AIME FAIRE DANS LA VIE : [Activités/Loisirs/Intérêts]`
+    *   `MES ENVIES ET OBJECTIFS : [Objectifs pro/perso]`
+    *   `MES POINTS FORTS : [Talents/Forces]`
+    *   `MES VALEURS : [Moteurs/Principes]`
+    *   `MES BESOINS : [Conditions de réussite]`
+    *   `MES SOURCES DE STRESS : [Limites/Frustrations]`
 
-### Page 4 : Le Pacte Final (Signature)
-*   **Texte Solennel** :
-    > "Moi, `[Prénom]`, je valide cette feuille de route.
-    > Je sais que le chemin ne sera pas linéaire, mais je connais ma destination.
-    > Je m'engage à faire le premier pas dès demain."
-*   **Signature** : `[Signature Manuscrite ou Numérique]`
+### Page 5 : Le Retour des Proches
+*   **Visuel** : Trois blocs distincts de saisie de texte.
+*   **Contenu** :
+    *   "Propositions de secteurs et métiers suggérés par mes proches (3 personnes minimum) :"
+    *   "Qu'est-ce que je pense de ces propositions ?"
+    *   "Comment j'ai vécu cet exercice ?"
+
+### Page 6 : Les Premières Pistes de Métiers
+*   **Titre** : "2. LES PREMIÈRES PISTES DE MÉTIERS"
+*   **Contenu** : Mode d'emploi sur la distinction entre :
+    *   **5 métiers "no limit"** : sans contraintes (diplôme, âge, salaire, etc.) pour capter vos moteurs profonds.
+    *   **5 métiers "réalistes"** : concrètement envisageables (compétences, marché, contraintes).
+
+### Pages 7-8 : Fiches Métiers - 5 Métiers "No Limit"
+*   **Mise en page** : Pistes 1 à 3 sur la Page 7, Pistes 4 à 5 sur la Page 8.
+*   **Contenu par piste** :
+    *   Intitulé du métier.
+    *   Pourquoi ce métier m'attire.
+    *   Missions principales.
+    *   Compétences et qualités personnelles utiles.
+
+### Pages 9-10 : Fiches Métiers - 5 Métiers "Réalistes"
+*   **Mise en page** : Pistes 1 à 3 sur la Page 9, Pistes 4 à 5 sur la Page 10.
+*   **Contenu par piste** :
+    *   Intitulé du métier.
+    *   Pourquoi ce métier m'attire.
+    *   Missions principales.
+    *   Compétences et qualités personnelles utiles.
+
+### Page 11 : Ressources utiles pour vos recherches
+*   **Contenu** : Liste des ressources recommandées avec descriptions :
+    *   *Into the job* (podcast)
+    *   *Maintenant j'aime le lundi* (chaîne YouTube)
+    *   Fiches métiers : *APEC*, *Cadremploi*, *ONISEP*, *CIDJ*, *MétierScope (Pôle emploi)*
+    *   Site Notion "Vos ressources" : `https://www.notion.so/Vos-ressources-aca96b6474d04acd9eaafa92523df7a6`
 
 ---
 
-## 3. Formulaire de Collecte (Source de données)
-
-*Généralement rempli en séance avec le coach pour s'assurer que les objectifs sont SMART.*
-
-**Partie 1 : La Vision**
-*   "Quelle est la date exacte de la fin de votre plan (M+6) ?"
-*   "Décrivez votre situation idéale à cette date en 3 points (Être, Faire, Ressentir)."
-
-**Partie 2 : Les Grandes Marches (Jalons)**
-*   "Quelle est la TOUTE première action (le petit pas) à faire demain ?"
-*   "Quel est l'objectif principal du Mois 1 ?"
-*   "Quel est l'objectif principal du Trimestre ?"
-
-**Partie 3 : Le Délestage**
-*   "Qu'est-ce qui pourrait vous empêcher de réussir ?" (Saboteur)
-*   "Quelle action décidez-vous de supprimer de votre agenda actuel pour faire de la place ?"
-
----
-
-## 4. Instructions Techniques
-
-*   **Roadmap Visuelle** :
-    *   Utiliser un SVG dynamique simple (Ligne de temps verticale) où les textes viennent se placer.
-    *   Alternative No-Code : Un tableau propre "Calendrier" avec 3 colonnes (Mois 1, Mois 2-3, Mois 4-6).
-*   **Date Dynamique** :
-    *   Calculer automatiquement la date "Aujourd'hui + 6 mois" dans l'automation pour l'afficher sur la Page 1.

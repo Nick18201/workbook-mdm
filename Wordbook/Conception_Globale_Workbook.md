@@ -63,9 +63,31 @@ Le Workbook final sera l'assemblage de ces composants :
     *   Mise en page type "Manuscrit" pour la lettre.
     *   Fiche "Mon Archétype" avec ses forces et ses défis.
 
-### 5. Chapitre : Le Champ des Possibles (S5 - S6)
-*   **Thème** : "Où je vais".
+### 5. Chapitre : Mes Valeurs (S4 - S5)
+*   **Thème** : "Mes Moteurs Profonds".
+*   **Inputs (Formulaires)** :
+    *   Expériences d'alignement et de désalignement.
+    *   Choix difficiles et hiérarchisation des valeurs.
+    *   Traduction en conditions de travail et tensions de valeurs.
+*   **Rendu Visuel** :
+    *   Liste hiérarchisée des valeurs.
+    *   Cartes des "3 valeurs non négociables".
+    *   Tableau des conditions de travail et tensions.
+
+### 6. Chapitre : Phase d'exploration (S5)
+*   **Thème** : "Mes Pistes Métiers & Cartographie".
 *   **Inputs** :
+    *   Cartographie personnelle (MBTI, Ce que j'aime, Envies).
+    *   Le retour des proches (Secteurs/métiers, avis, vécu).
+    *   10 fiches métiers (5 "no limit", 5 "réalistes").
+*   **Rendu Visuel** :
+    *   Cartographie sous forme de cartes (MBTI, Activités, Envies).
+    *   Blocs retours de l'entourage.
+    *   Fiches métiers structurées.
+
+### 7. Chapitre : Le Champ des Possibles (S5 - S6)
+*   **Thème** : "Où je vais".
+*   **Inputs (Formulaires)** :
     *   Les pistes explorées (Plan A, Plan B).
     *   Retour des Enquêtes Métier (Ce que j'ai appris).
     *   Matrice de Faisabilité (Feu rouge/orange/vert).
@@ -73,7 +95,7 @@ Le Workbook final sera l'assemblage de ces composants :
     *   Tableau comparatif des pistes.
     *   Checklist de faisabilité.
 
-### 6. Chapitre : La Feuille de Route (S7)
+### 8. Chapitre : La Feuille de Route (S7)
 *   **Thème** : "Comment j'y vais".
 *   **Inputs** :
     *   Le Plan d'Action (Les grandes étapes à 6 mois).

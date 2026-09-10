@@ -115,3 +115,5 @@ class PDFStyle:
     PATH_PLUME_TEXTURE = os.path.join(ILLUS_DIR, "plume texture.png")
     PATH_PLANTE_BLEUE = os.path.join(ILLUS_DIR, "plante bleue copy.png")
     PATH_PLANTE_ROSE_OMBRE = os.path.join(ILLUS_DIR, "plante rose ombre copy.png")
+    PATH_PLAN_ACCES = os.path.join(ILLUS_DIR, "plan_acces_carte.png")
+    PATH_PARKING_PMR = os.path.join(ILLUS_DIR, "parking_pmr_aerien.png")
