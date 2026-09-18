@@ -4,9 +4,9 @@ from workbook_generator.chapters import chap4
 from workbook_generator.components import create_closing_page
 
 
-def generate_workbook_chap4(output_filename="Workbook_Chapitre_4_v2.pdf", theme="indigo"):
+def generate_workbook_chap4(output_filename="Workbook_Chapitre_4.pdf", theme="indigo"):
     builder = DocumentBuilder(output_path=output_filename, theme=theme)
-    builder.set_title("MDM - Workbook Chapitre 4 (v2)")
+    builder.set_title("MDM - Workbook Chapitre 4")
 
     builder.add_page(chap4.create_chap4_v2_cover)
     builder.add_page(chap4.create_concept_page)
@@ -25,7 +25,7 @@ def generate_workbook_chap4(output_filename="Workbook_Chapitre_4_v2.pdf", theme=
 
 if __name__ == "__main__":
     args = create_cli(
-        description="Générer le chapitre 4 v2 PDF.",
-        default_output="Workbook_Chapitre_4_v2.pdf"
+        description="Générer le chapitre 4 PDF.",
+        default_output="Workbook_Chapitre_4.pdf"
     )
     generate_workbook_chap4(output_filename=args.output, theme=args.theme)
