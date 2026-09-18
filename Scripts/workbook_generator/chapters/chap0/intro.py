@@ -320,28 +320,29 @@ def create_form_page_card(c):
 
     c.drawString(text_x + 5.5 * cm, start_y, "heures par semaine.")
 
-    start_y -= 2 * cm
+    start_y -= 1.8 * cm
     c.drawString(text_x, start_y, "Mon objectif principal :")
-    start_y -= 0.5 * cm
+    start_y -= 0.6 * cm
 
+    box_h = 3.5 * cm
     create_input_field(
         form,
         "objectif_3_mois",
-        pos=(text_x, start_y - 2 * cm),
-        size=(width - text_x - 1 * cm, 2 * cm),
+        pos=(text_x, start_y - box_h),
+        size=(width - text_x - 1 * cm, box_h),
         tooltip="Objectif",
         multiline=True,
     )
 
-    start_y -= 3 * cm
+    start_y -= box_h + 1.0 * cm
     c.drawString(text_x, start_y, "Je m'autorise à :")
-    start_y -= 0.5 * cm
+    start_y -= 0.6 * cm
 
     create_input_field(
         form,
         "permission_personnelle",
-        pos=(text_x, start_y - 2 * cm),
-        size=(width - text_x - 1 * cm, 2 * cm),
+        pos=(text_x, start_y - box_h),
+        size=(width - text_x - 1 * cm, box_h),
         tooltip="Permission",
         multiline=True,
     )

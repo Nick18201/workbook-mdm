@@ -21,19 +21,19 @@ def create_situation_actuelle_page(c):
     layout.add_question_block(
         "Aujourd'hui, vous sentez-vous plutôt en sécurité, en tension ou en vigilance financière ?",
         "v2_sit_1",
-        config=QuestionConfig(box_height=4 * cm),
+        config=QuestionConfig(box_height=4.6 * cm),
     )
 
     layout.add_question_block(
         "Votre situation économique vous laisse-t-elle une marge de manœuvre pour évoluer professionnellement, ou vous donne-t-elle le sentiment d'être contraint ?",
         "v2_sit_2",
-        config=QuestionConfig(box_height=4 * cm),
+        config=QuestionConfig(box_height=4.6 * cm),
     )
 
     layout.add_question_block(
         "Quel niveau de sécurité financière vous semble nécessaire pour envisager un changement ?",
         "v2_sit_3",
-        config=QuestionConfig(box_height=4 * cm),
+        config=QuestionConfig(box_height=4.6 * cm),
     )
     layout.render()
 
@@ -115,22 +115,22 @@ def create_premieres_experiences_page(c):
     layout.add_question_block(
         "Avez-vous reçu de l'argent de poche ? Si oui, comment l'utilisiez-vous ? Était-ce de l'argent donné librement ou fallait-il le mériter ?",
         "v2_exp_1",
-        config=QuestionConfig(box_height=2.5 * cm),
+        config=QuestionConfig(box_height=2.8 * cm),
     )
     layout.add_question_block(
         "Quand avez-vous commencé à gagner de l'argent par vous-même ? Que représentait ce premier argent gagné : liberté, fierté, sécurité, nécessité, obligation ?",
         "v2_exp_2",
-        config=QuestionConfig(box_height=2.5 * cm),
+        config=QuestionConfig(box_height=2.8 * cm),
     )
     layout.add_question_block(
         "Aviez-vous plutôt tendance à dépenser, économiser, partager, cacher ou offrir ?",
         "v2_exp_3",
-        config=QuestionConfig(box_height=2.5 * cm),
+        config=QuestionConfig(box_height=2.8 * cm),
     )
     layout.add_question_block(
         "Avez-vous un souvenir marquant lié à l'argent : manque, réussite, comparaison, conflit, honte, dépendance, fierté ?",
         "v2_exp_4",
-        config=QuestionConfig(box_height=2.5 * cm),
+        config=QuestionConfig(box_height=2.8 * cm),
     )
 
     layout.add_text(

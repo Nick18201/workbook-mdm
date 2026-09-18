@@ -495,22 +495,22 @@ def _create_incarner_valeur_page(c, num):
     layout.add_question_block(
         "1. Comment cette valeur se manifeste-t-elle concrètement dans mon travail ?",
         f"incarner_val_{num}_q1",
-        config=QuestionConfig(box_height=2.2 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
+        config=QuestionConfig(box_height=2.5 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
     )
     layout.add_question_block(
         "2. Dans quelles situations passées ai-je déjà vécu cette valeur ?",
         f"incarner_val_{num}_q2",
-        config=QuestionConfig(box_height=2.2 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
+        config=QuestionConfig(box_height=2.5 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
     )
     layout.add_question_block(
         "3. Qu'est-ce que je ressens quand cette valeur est respectée / absente ?",
         f"incarner_val_{num}_q3",
-        config=QuestionConfig(box_height=2.2 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
+        config=QuestionConfig(box_height=2.5 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
     )
     layout.add_question_block(
         "4. De quoi ai-je besoin concrètement pour que cette valeur existe dans mon futur travail ?",
         f"incarner_val_{num}_q4",
-        config=QuestionConfig(box_height=2.2 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
+        config=QuestionConfig(box_height=2.5 * cm, color_alternation=False, color=PDFStyle.COLOR_ACCENT_BLUE),
     )
 
     layout.render()
@@ -543,7 +543,7 @@ def create_conditions_travail_page(c):
         "1. Pour respecter mes valeurs, j'ai besoin d'un environnement où...",
         "conditions_positives",
         config=QuestionConfig(
-            box_height=4.0 * cm,
+            box_height=5.2 * cm,
             example="je peux organiser mon travail avec autonomie ; les relations sont respectueuses ; les objectifs sont clairs ; je peux apprendre régulièrement ; je me sens utile ; le rythme est soutenable."
         ),
     )
@@ -551,7 +551,7 @@ def create_conditions_travail_page(c):
         "2. Pour respecter mes valeurs, j'ai besoin d'éviter les environnements où...",
         "conditions_negatives",
         config=QuestionConfig(
-            box_height=4.0 * cm,
+            box_height=5.2 * cm,
             example="tout est contrôlé ; les priorités changent sans cesse ; il y a peu de reconnaissance ; les relations sont froides ou compétitives ; la pression est permanente ; il n'y a pas d'évolution."
         ),
     )
@@ -629,17 +629,17 @@ def create_tensions_page1(c):
     layout.add_question_block(
         "Tension 1 - Quelles sont les deux valeurs en tension ? Dans quelles situations cela apparaît-il ?",
         "tension1_situations",
-        config=QuestionConfig(box_height=2.2 * cm),
+        config=QuestionConfig(box_height=2.7 * cm),
     )
     layout.add_question_block(
         "Arbitrage - Quelle valeur avez-vous tendance à privilégier ? Laquelle sacrifiez-vous ?",
         "tension1_arbitrage",
-        config=QuestionConfig(box_height=2.2 * cm),
+        config=QuestionConfig(box_height=2.7 * cm),
     )
     layout.add_question_block(
         "Équilibre - Quel meilleur équilibre ou compromis constructif pourriez-vous rechercher ?",
         "tension1_equilibre",
-        config=QuestionConfig(box_height=2.2 * cm),
+        config=QuestionConfig(box_height=2.7 * cm),
     )
 
     layout.render()

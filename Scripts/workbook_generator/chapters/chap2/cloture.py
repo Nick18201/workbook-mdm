@@ -61,18 +61,18 @@ def create_interview_page(c):
     y_cursor -= 2 * cm
 
     questions = [
-        ("Qu'aimez-vous le plus dans ce que vous faites ?", "interview_q1", 2.5 * cm),
+        ("Qu'aimez-vous le plus dans ce que vous faites ?", "interview_q1", 2.8 * cm),
         (
             "Quelles sont les difficultés ou contraintes cachées ?",
             "interview_q2",
-            2.5 * cm,
+            2.8 * cm,
         ),
         (
             "Quel conseil donneriez-vous à quelqu'un qui veut se lancer ?",
             "interview_q3",
-            2.5 * cm,
+            2.8 * cm,
         ),
-        ("Ce que j'en retiens pour moi (Mon ressenti) :", "interview_q4", 3.5 * cm),
+        ("Ce que j'en retiens pour moi (Mon ressenti) :", "interview_q4", 4.0 * cm),
     ]
 
     for q_text, q_id, q_height in questions:

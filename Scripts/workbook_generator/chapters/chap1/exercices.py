@@ -98,16 +98,17 @@ def _draw_thought_input(c, form, text_x, y_pos, width):
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.drawString(text_x, y_thought, "Ce qui prend le plus de place dans ma tête :")
 
+    box_h = 5.0 * cm
     create_input_field(
         form,
         "meteo_pensee",
-        pos=(text_x, y_thought - 3 * cm),
-        size=(width - text_x - 1 * cm, 2.5 * cm),
+        pos=(text_x, y_thought - box_h - 0.5 * cm),
+        size=(width - text_x - 1 * cm, box_h),
         tooltip="Pensée envahissante",
         multiline=True,
     )
 
-    return y_thought - 3 * cm
+    return y_thought - box_h - 0.5 * cm
 
 
 
@@ -329,7 +330,7 @@ def create_boussole_page(c):
         "D'ici 3 mois, je veux avoir clarifié :",
         "boussole_enjeu",
         config=QuestionConfig(
-            box_height=1.5 * cm,
+            box_height=2.3 * cm,
             color_alternation=False,
         ),
     )
@@ -338,7 +339,7 @@ def create_boussole_page(c):
         "Pour pouvoir :",
         "boussole_benefice",
         config=QuestionConfig(
-            box_height=1.5 * cm,
+            box_height=2.3 * cm,
             color_alternation=False,
         ),
     )
@@ -348,7 +349,7 @@ def create_boussole_page(c):
         "Je saurai que j'ai réussi quand :",
         "boussole_succes_preuve",
         config=QuestionConfig(
-            box_height=2.0 * cm,
+            box_height=3.2 * cm,
             color_alternation=False,
         ),
     )
@@ -376,17 +377,17 @@ def create_sac_a_dos_page(c):
     layout.add_question_block(
         "Je lâche cette croyance :",
         "sac_croyance",
-        config=QuestionConfig(box_height=2.5 * cm),
+        config=QuestionConfig(box_height=3.5 * cm),
     )
     layout.add_question_block(
         "Je ne veux plus subir :",
         "sac_subir",
-        config=QuestionConfig(box_height=2.5 * cm),
+        config=QuestionConfig(box_height=3.5 * cm),
     )
     layout.add_question_block(
         "Ma plus grande peur est :",
         "sac_peur",
-        config=QuestionConfig(box_height=2.5 * cm),
+        config=QuestionConfig(box_height=3.5 * cm),
     )
 
     layout.add_text(
@@ -418,7 +419,7 @@ def create_heritage_page(c):
         "1. FORCES (Ce que je garde / Résilience)",
         "heritage_forces",
         config=QuestionConfig(
-            box_height=3.5 * cm,
+            box_height=3.8 * cm,
             subtitle="Quelles qualités, valeurs ou savoir-faire de ma famille sont des atouts ?",
         ),
     )
@@ -427,7 +428,7 @@ def create_heritage_page(c):
         "2. VIGILANCES (Ce que je laisse / Schémas)",
         "heritage_vigilances",
         config=QuestionConfig(
-            box_height=3.5 * cm,
+            box_height=3.8 * cm,
             subtitle="Quels comportements ou croyances limitantes je décide de ne pas reproduire ?",
         ),
     )
@@ -436,7 +437,7 @@ def create_heritage_page(c):
         "3. SOUHAITS & COMPTES (Mandats Familiaux)",
         "heritage_souhaits",
         config=QuestionConfig(
-            box_height=3.5 * cm,
+            box_height=3.8 * cm,
             subtitle="Qu'est-ce qu'on voulait pour moi ? A qui ai-je l'impression de devoir quelque chose ?",
         ),
     )

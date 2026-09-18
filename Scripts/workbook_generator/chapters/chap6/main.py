@@ -223,17 +223,17 @@ def create_retours_proches_page(c):
     layout.add_question_block(
         "Propositions de secteurs et métiers suggérés par mes proches :",
         "proches_suggestions",
-        config=QuestionConfig(box_height=4.2 * cm),
+        config=QuestionConfig(box_height=4.8 * cm),
     )
     layout.add_question_block(
         "Qu'est-ce que je pense de ces différentes propositions ?",
         "proches_avis",
-        config=QuestionConfig(box_height=3.2 * cm),
+        config=QuestionConfig(box_height=3.6 * cm),
     )
     layout.add_question_block(
         "Comment j'ai vécu cet exercice ?",
         "proches_vecu",
-        config=QuestionConfig(box_height=3.2 * cm),
+        config=QuestionConfig(box_height=3.6 * cm),
     )
     layout.render()
 

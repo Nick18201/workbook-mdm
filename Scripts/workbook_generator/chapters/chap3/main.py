@@ -85,19 +85,19 @@ def create_chap1_energie(c):
     layout.add_question_block(
         "1. Le vendredi soir : La semaine a été intense, remplie d'imprévus et d'interactions. Votre 'batterie sociale' est à plat. Décrivez la soirée ou le week-end idéal qui vous permettra d'être à 100% lundi matin. ",
         "mbti_q1",
-        config=QuestionConfig(box_height=3.5 * cm),
+        config=QuestionConfig(box_height=4.2 * cm),
     )
 
     layout.add_question_block(
         "2. L'interruption : Vous êtes plongé(e) dans une tâche qui demande de la concentration. Quelqu'un entre pour vous poser une question anodine. Décrivez votre réaction intérieure (agacement, soulagement, rupture du fil de pensée ?) et comment vous gérez la situation à l'extérieur.",
         "mbti_q2",
-        config=QuestionConfig(box_height=3.5 * cm),
+        config=QuestionConfig(box_height=4.2 * cm),
     )
 
     layout.add_question_block(
         "3. Le processus de pensée : Face à un problème complexe et nouveau, avez-vous instinctivement besoin d'en parler à voix haute avec quelqu'un pour que vos idées se mettent en place, ou avez-vous un besoin vital de vous isoler dans le silence pour structurer votre pensée avant d'en discuter ? Racontez une fois où vous avez dû faire l'inverse.",
         "mbti_q3",
-        config=QuestionConfig(box_height=3.5 * cm),
+        config=QuestionConfig(box_height=4.2 * cm),
     )
 
     layout.render()

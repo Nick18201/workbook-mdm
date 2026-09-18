@@ -42,12 +42,12 @@ def create_argent_projet_pro_page(c):
     layout2.add_question_block(
         "Votre besoin de sécurité est-il parfois en tension avec votre besoin de sens, de liberté ou d'évolution ?",
         "v2_pro_4",
-        config=QuestionConfig(box_height=5.0 * cm),
+        config=QuestionConfig(box_height=6.0 * cm),
     )
     layout2.add_question_block(
         "Votre genre, votre éducation ou votre histoire familiale influencent-ils votre manière de demander, négocier, gagner ou assumer votre ambition financière ? Qu'est-ce que vous n'osez pas demander, viser ou négocier aujourd'hui ?",
         "v2_pro_5",
-        config=QuestionConfig(box_height=5.0 * cm),
+        config=QuestionConfig(box_height=6.0 * cm),
     )
     layout2.render()
 

@@ -3,23 +3,41 @@ from .config import PDFStyle
 
 
 def create_input_field(
-    form, name, pos, size, tooltip="", multiline=False, value="", fill_color=None
+    form,
+    name,
+    pos,
+    size,
+    tooltip="",
+    multiline=False,
+    value="",
+    fill_color=None,
+    font_size=None,
+    do_not_scroll=True,
 ):
-    """Helper to create consistent input fields."""
+    """Helper to create consistent input fields with auto-scaling font size."""
     bg_color = fill_color if fill_color else PDFStyle.COLOR_FIELD_BG
     border_color = PDFStyle.COLOR_FIELD_BG
 
     x, y = pos
     width, height = size
 
-    # Flags: 'multiline' allows multiple lines.
-    # 'doNotScroll' is NOT set, so it should scroll if text exceeds area.
-    flags = "multiline" if multiline else ""
+    flag_parts = []
+    if multiline:
+        flag_parts.append("multiline")
+    if do_not_scroll:
+        flag_parts.append("doNotScroll")
+    flags = " ".join(flag_parts)
 
-    # Font Size: Use a fixed size to ensure it doesn't auto-scale to huge if empty,
-    # but small enough to fit lines.
-    # For multiline, 10 or 11 is good.
-    font_size = 11
+    # Font Size:
+    # If font_size is None, use 0 (Auto/Fit) for multiline fields.
+    # In the PDF standard, fontSize=0 instructs the PDF viewer to scale down
+    # text dynamically to fit the bounding box without triggering scrollbars.
+    # For single-line fields, use 0 if standard height (<= 28 pt), or 11 pt if tall.
+    if font_size is None:
+        if multiline:
+            font_size = 0
+        else:
+            font_size = 0 if height <= 28 else 11
 
     form.textfield(
         name=name,

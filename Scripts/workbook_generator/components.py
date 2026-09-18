@@ -669,18 +669,18 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
 
     # Calculate uniform box height depending on the number of questions.
     max_y_cursor = y_cursor
-    min_y_cursor = 4 * cm  # Avoid overlap with footer
+    min_y_cursor = 3.2 * cm  # Avoid overlap with footer decorations (~2.0 cm)
     available_space = max_y_cursor - min_y_cursor
 
-    # Estimated space per question: title (max 2 lines) -> ~1.5cm, margin -> 0.6cm.
-    # Total fixed taken per question ~ 2.1cm.
+    # Estimated space per question: title (max 2 lines) -> ~1.2cm, margin -> 0.4cm.
+    # Total fixed taken per question ~ 1.8cm.
     if len(questions) > 0:
         box_height = max(
-            (available_space - (len(questions) * 2.1 * cm)) / len(questions), 2.5 * cm
+            (available_space - (len(questions) * 1.8 * cm)) / len(questions), 2.8 * cm
         )
-        box_height = min(box_height, 3.5 * cm)  # cap max height
+        box_height = min(box_height, 4.6 * cm)  # Generous cap for open reflection
     else:
-        box_height = 3.2 * cm
+        box_height = 4.2 * cm
 
     for i, question in enumerate(questions):
         # Color alternation for rhythm
