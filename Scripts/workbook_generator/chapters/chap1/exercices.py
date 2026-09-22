@@ -13,6 +13,8 @@ from workbook_generator.components import (
     draw_page_decorations,
     draw_side_panel,
     draw_page_background,
+    create_standard_meteo_page,
+    create_standard_quadrants_page,
 )
 
 from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
@@ -117,31 +119,12 @@ def create_meteo_page(c):
     """
     Page 3: Ma Météo Intérieure.
     """
-    width, height = A4
-    draw_page_background(c, width, height)
-
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-
-    y_pos = draw_title(c, "Mon État d'Esprit Actuel", pos=(text_x, text_top))
-
-    form = c.acroForm
-
-    y_pos = _draw_emotion_section(c, form, text_x, y_pos)
-    y_pos = _draw_energy_scale(c, form, text_x, y_pos)
-    y_pos = _draw_thought_input(c, form, text_x, y_pos, width)
-
-    draw_page_decorations(
+    create_standard_meteo_page(
         c,
-        width,
-        height,
+        title="Mon État d'Esprit Actuel",
         part_title="1. Récapitulatif de la séance précédente",
-        x_offset=card_margin,
+        field_prefix="meteo",
     )
-    c.showPage()
 
 
 
@@ -252,53 +235,19 @@ def create_vision_page(c):
     Page 4: Ma Vision 'Boule à Facettes'.
     4 Quadrants.
     """
-    width, height = A4
-    # Side Panel (Full Height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    # Title
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(c, "Ma Vision 360°", pos=(text_x, text_top))
-
-    # Instruction
-    c.setFont(PDFStyle.FONT_BODY, 11)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(
-        text_x,
-        new_y - 0.2 * cm,
-        "Instruction : Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.",
-    )
-
-    # Center (Relative to panel)
-    center_x = card_margin + (width - card_margin) / 2
-    center_y = height / 2 - 2.5 * cm
-
-    _draw_radar_background(c, center_x, center_y)
-
-    # Quadrants Labels & Inputs
-    # Strict labels from Markdown
-    axes = [
-        ("Professionnel (Sens, Mission, Salaire)", -1, 1),  # Top Left
-        ("Personnel (Temps pour soi, Santé)", 1, 1),  # Top Right
-        ("Social/Familial (Relations, Équilibre)", -1, -1),  # Bottom Left
-        ("Hiérarchie/Structure (Besoin de cadre vs Liberté)", 1, -1),  # Bottom Right
-    ]
-
-    form = c.acroForm
-
-    for title, dx, dy in axes:
-        _draw_quadrant(c, form, title, dx, dy, center_x, center_y)
-
-    draw_page_decorations(
+    create_standard_quadrants_page(
         c,
-        width,
-        height,
+        title="Ma Vision 360°",
         part_title="1. Récapitulatif de la séance précédente",
-        x_offset=card_margin,
+        instruction="Instruction : Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.",
+        quadrants_data=[
+            ("Professionnel", "Sens, Mission, Salaire", "pro"),
+            ("Personnel", "Temps pour soi, Santé", "perso"),
+            ("Social/Familial", "Relations, Équilibre", "social"),
+            ("Hiérarchie/Structure", "Besoin de cadre vs Liberté", "cadre"),
+        ],
+        field_prefix="vision",
     )
-    c.showPage()
 
 
 

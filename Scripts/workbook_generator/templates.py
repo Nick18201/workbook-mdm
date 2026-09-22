@@ -33,6 +33,17 @@ class QuestionConfig:
 
 
 @dataclass
+class QuestionItem:
+    question: str
+    form_field_id: str
+    subtitle: str = None
+    example: str = None
+    color: str = None
+    box_height: float = None  # None for auto-fit
+
+
+
+@dataclass
 class TextConfig:
     style_choice: str = "body"
     font_size: int = 11
@@ -217,6 +228,121 @@ class PageLayout:
 
         self.y_cursor -= config.box_height + 0.8 * cm
         self.question_index += 1
+        return self.y_cursor
+
+    def add_questions_group(
+        self,
+        questions,
+        min_box_height: float = 2.2 * cm,
+        max_box_height: float = 7.5 * cm,
+        safe_bottom_margin: float = 2.8 * cm,
+    ):
+        """
+        Adds a group of questions dynamically auto-fitting available vertical space
+        so that boxes scale proportionally and never overflow the bottom margin.
+
+        Args:
+            questions (list): List of QuestionItem instances, dicts, or tuples.
+            min_box_height (float): Minimum height for each text area (default 2.2 cm).
+            max_box_height (float): Maximum height for each text area (default 7.5 cm).
+            safe_bottom_margin (float): Safe distance to bottom edge to protect footers (default 2.8 cm).
+        """
+        if not questions:
+            return self.y_cursor
+
+        norm_questions = []
+        for q in questions:
+            if isinstance(q, QuestionItem):
+                norm_questions.append(q)
+            elif isinstance(q, dict):
+                norm_questions.append(
+                    QuestionItem(
+                        question=q.get("question", ""),
+                        form_field_id=q.get("form_field_id")
+                        or q.get("field_id", f"q_{self.question_index}_{len(norm_questions)}"),
+                        subtitle=q.get("subtitle"),
+                        example=q.get("example"),
+                        color=q.get("color"),
+                        box_height=q.get("box_height"),
+                    )
+                )
+            elif isinstance(q, (tuple, list)):
+                q_text = q[0]
+                q_id = (
+                    q[1]
+                    if len(q) > 1
+                    else f"q_{self.question_index}_{len(norm_questions)}"
+                )
+                q_sub = q[2] if len(q) > 2 else None
+                norm_questions.append(
+                    QuestionItem(
+                        question=q_text, form_field_id=q_id, subtitle=q_sub
+                    )
+                )
+            else:
+                norm_questions.append(
+                    QuestionItem(
+                        question=str(q),
+                        form_field_id=f"q_{self.question_index}_{len(norm_questions)}",
+                    )
+                )
+
+        total_text_overhead = 0
+        n_auto = 0
+        fixed_height_sum = 0
+
+        for q in norm_questions:
+            lines = simpleSplit(
+                q.question, PDFStyle.FONT_SUBTITLE, 11, self.target_width
+            )
+            t_h = len(lines) * (11 + 0.1 * cm) + 0.1 * cm
+
+            s_h = 0
+            if q.subtitle:
+                sub_lines = simpleSplit(
+                    q.subtitle, PDFStyle.FONT_BODY, 10, self.target_width
+                )
+                s_h = len(sub_lines) * (10 + 0.1 * cm) + 0.1 * cm
+
+            ex_h = 0
+            if q.example:
+                box_padding = 0.2 * cm
+                ex_lines = simpleSplit(
+                    f"Exemple : {q.example}",
+                    PDFStyle.FONT_ITALIC,
+                    9,
+                    self.target_width - 2 * box_padding,
+                )
+                ex_h = len(ex_lines) * (9 + 2) + 2 * box_padding + 0.4 * cm
+
+            gap_overhead = 0.2 * cm + 0.8 * cm
+            total_text_overhead += t_h + s_h + ex_h + gap_overhead
+
+            if q.box_height is not None:
+                fixed_height_sum += q.box_height
+            else:
+                n_auto += 1
+
+        available_space = self.y_cursor - safe_bottom_margin
+        remaining_for_boxes = available_space - total_text_overhead - fixed_height_sum
+
+        if n_auto > 0:
+            auto_box_h = remaining_for_boxes / n_auto
+            auto_box_h = max(min_box_height, min(max_box_height, auto_box_h))
+        else:
+            auto_box_h = min_box_height
+
+        for q in norm_questions:
+            target_h = q.box_height if q.box_height is not None else auto_box_h
+            cfg = QuestionConfig(
+                box_height=target_h,
+                subtitle=q.subtitle,
+                example=q.example,
+                color_alternation=(q.color is None),
+                color=q.color,
+            )
+            self.add_question_block(q.question, q.form_field_id, config=cfg)
+
         return self.y_cursor
 
     def add_space(self, height):

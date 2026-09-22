@@ -11,7 +11,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 
 from .config import PDFStyle
-from .forms import create_input_field
+from .forms import create_input_field, create_checkbox
 from .utils import cached_image_reader
 
 
@@ -588,7 +588,13 @@ def create_standard_summary_page(
     c.showPage()
 
 
-def create_standard_engagement_page(c, part_title, custom_lines=None):
+def create_standard_engagement_page(
+    c,
+    part_title,
+    custom_lines=None,
+    title="Mon Engagement",
+    signature_label="Date et Signature :",
+):
     """
     Standard Engagement Page: Leaves card_margin untouched, adds generic motivation block with Signature field.
     """
@@ -601,7 +607,7 @@ def create_standard_engagement_page(c, part_title, custom_lines=None):
     text_x = card_margin + 1.0 * cm
     text_top = height - 5.0 * cm
 
-    new_y = draw_title(c, "Mon Engagement", pos=(text_x, text_top))
+    new_y = draw_title(c, title, pos=(text_x, text_top))
 
     text_y = new_y - 1.0 * cm
     c.setFont(PDFStyle.FONT_BODY, 11)
@@ -626,7 +632,7 @@ def create_standard_engagement_page(c, part_title, custom_lines=None):
 
     # Signature Area
     sig_y = text_y - 4 * cm
-    c.drawString(text_x, sig_y + 2 * cm, "Date et Signature :")
+    c.drawString(text_x, sig_y + 2 * cm, signature_label)
 
     form = c.acroForm
     create_input_field(
@@ -708,3 +714,389 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
 
     draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
     c.showPage()
+
+
+def create_standard_meteo_page(
+    c,
+    title="Mon État d'Esprit Actuel",
+    part_title=None,
+    emotion_prompt="Aujourd'hui, je me sens :",
+    energy_prompt="Mon niveau d'énergie :",
+    thought_prompt="Ce qui prend le plus de place dans ma tête :",
+    field_prefix="meteo",
+):
+    """
+    Standard Ice-Breaker / Inner Weather Page.
+    Includes:
+    - Emotion prompt with word field & 4 checkboxes (Soleil, Nuageux, Pluvieux, Orageux)
+    - Energy slider 0 to 10
+    - Large reflection multiline textfield
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+
+    y_pos = draw_title(c, title, pos=(text_x, text_top))
+    form = c.acroForm
+
+    # 1. Emotion section
+    y_opts = y_pos - 0.5 * cm
+    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
+    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    c.drawString(text_x, y_opts, emotion_prompt)
+
+    prompt_width = c.stringWidth(emotion_prompt, PDFStyle.FONT_SUBTITLE, 12)
+    create_input_field(
+        form,
+        f"{field_prefix}_emotion_word",
+        pos=(text_x + prompt_width + 0.5 * cm, y_opts - 5),
+        size=(width - (text_x + prompt_width + 2.0 * cm), 20),
+        tooltip="Un mot pour décrire l'instant",
+    )
+
+    options = ["Soleil ☀️", "Nuageux ☁️", "Pluvieux 🌧️", "Orageux ⛈️"]
+    opt_x = text_x
+    opt_y = y_opts - 1.5 * cm
+
+    for opt in options:
+        opt_key = opt.split()[0]
+        create_checkbox(
+            form,
+            f"{field_prefix}_{opt_key}",
+            pos=(opt_x, opt_y),
+            size=0.6 * cm,
+            tooltip=opt,
+        )
+        c.drawString(opt_x + 1 * cm, opt_y + 0.15 * cm, opt)
+        opt_x += 3.8 * cm
+
+    y_pos = opt_y - 2.0 * cm
+
+    # 2. Energy scale
+    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
+    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    c.drawString(text_x, y_pos, energy_prompt)
+
+    c.setFont(PDFStyle.FONT_ITALIC, 9)
+    c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
+    c.drawString(text_x, y_pos - 0.5 * cm, "Épuisé (0)")
+    c.drawRightString(text_x + 14 * cm, y_pos - 0.5 * cm, "Plein de vitalité (10)")
+
+    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.setLineWidth(1)
+    c.line(text_x, y_pos - 1.5 * cm, text_x + 14 * cm, y_pos - 1.5 * cm)
+
+    for i in range(11):
+        x_mark = text_x + i * 1.4 * cm
+        c.setLineWidth(0.5)
+        c.line(x_mark, y_pos - 1.6 * cm, x_mark, y_pos - 1.4 * cm)
+
+        create_checkbox(
+            form,
+            f"{field_prefix}_energy_{i}",
+            pos=(x_mark - 0.22 * cm, y_pos - 2.1 * cm),
+            size=0.45 * cm,
+            tooltip=f"Niveau {i}",
+        )
+
+        c.setFont(PDFStyle.FONT_BODY, 8)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.drawCentredString(x_mark, y_pos - 2.6 * cm, str(i))
+
+    y_pos = y_pos - 4.0 * cm
+
+    # 3. Thought reflection
+    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
+    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    c.drawString(text_x, y_pos, thought_prompt)
+
+    box_h = 5.0 * cm
+    create_input_field(
+        form,
+        f"{field_prefix}_pensee",
+        pos=(text_x, y_pos - box_h - 0.5 * cm),
+        size=(width - text_x - 1.5 * cm, box_h),
+        tooltip="Pensée envahissante ou intention",
+        multiline=True,
+    )
+
+    draw_page_decorations(
+        c, width, height, part_title=part_title, x_offset=card_margin
+    )
+    c.showPage()
+
+
+def create_standard_quadrants_page(
+    c,
+    title="Ma Vision 360°",
+    part_title=None,
+    instruction="Instruction : Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.",
+    quadrants_data=None,
+    field_prefix="vision",
+):
+    """
+    Standard 4-Quadrant / Matrix Page.
+    quadrants_data is a list of 4 tuples or dicts:
+    [
+        ("Professionnel", "Sens, Mission, Salaire", "pro"),
+        ("Personnel", "Temps pour soi, Santé", "perso"),
+        ("Social / Relationnel", "Relations, Équilibre", "social"),
+        ("Cadre & Autonomie", "Besoin de liberté", "cadre")
+    ]
+    """
+    width, height = A4
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+    new_y = draw_title(c, title, pos=(text_x, text_top))
+
+    if instruction:
+        c.setFont(PDFStyle.FONT_BODY, 11)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.drawString(text_x, new_y - 0.2 * cm, instruction)
+
+    center_x = card_margin + (width - card_margin) / 2
+    center_y = height / 2 - 2.5 * cm
+
+    # Draw Radar Background
+    c.setLineWidth(1)
+    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.setFillColor(PDFStyle.COLOR_BG_BLOB)
+    c.circle(center_x, center_y, 7 * cm, stroke=1, fill=1)
+
+    c.setLineWidth(0.5)
+    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
+    c.circle(center_x, center_y, 3.5 * cm, stroke=1, fill=1)
+
+    c.saveState()
+    c.setDash(4, 4)
+    c.line(center_x, center_y - 7 * cm, center_x, center_y + 7 * cm)
+    c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)
+    c.restoreState()
+
+    if quadrants_data is None:
+        quadrants_data = [
+            ("Professionnel", "Sens, Mission, Salaire", "pro"),
+            ("Personnel", "Temps pour soi, Santé", "perso"),
+            ("Social/Familial", "Relations, Équilibre", "social"),
+            ("Hiérarchie/Structure", "Besoin de cadre vs Liberté", "cadre"),
+        ]
+
+    # Grid positions: (dx, dy)
+    positions = [(-1, 1), (1, 1), (-1, -1), (1, -1)]
+    form = c.acroForm
+
+    for item, (dx, dy) in zip(quadrants_data, positions):
+        if isinstance(item, (tuple, list)):
+            main_title = item[0]
+            sub_title = f"({item[1]})" if len(item) > 1 and item[1] else ""
+            fid = item[2] if len(item) > 2 else f"{field_prefix}_{main_title}"
+        elif isinstance(item, dict):
+            main_title = item.get("title", "")
+            sub = item.get("subtitle", "")
+            sub_title = f"({sub})" if sub else ""
+            fid = item.get("field_id", f"{field_prefix}_{main_title}")
+        else:
+            main_title = str(item)
+            sub_title = ""
+            fid = f"{field_prefix}_{main_title}"
+
+        q_center_x = center_x + (dx * (3.5 * cm))
+        field_width = 5.8 * cm
+        field_height = 1.8 * cm
+
+        if dy == 1:
+            text_y = center_y + 5.2 * cm
+            f_y = center_y + 1.5 * cm
+        else:
+            text_y = center_y - 5.0 * cm
+            f_y = center_y - 3.3 * cm
+
+        f_x = q_center_x - (field_width / 2)
+
+        # Title pill badge
+        text_width = c.stringWidth(main_title, PDFStyle.FONT_BRANDING, 14)
+        c.saveState()
+        c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
+        c.roundRect(
+            q_center_x - text_width / 2 - 10,
+            text_y - 5,
+            text_width + 20,
+            20,
+            radius=10,
+            fill=1,
+            stroke=0,
+        )
+        c.restoreState()
+
+        c.setFont(PDFStyle.FONT_BRANDING, 14)
+        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+        c.drawCentredString(q_center_x, text_y, main_title)
+
+        if sub_title:
+            sub_width = c.stringWidth(sub_title, PDFStyle.FONT_BODY, 9)
+            c.saveState()
+            c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
+            c.roundRect(
+                q_center_x - sub_width / 2 - 6,
+                text_y - 0.5 * cm - 4,
+                sub_width + 12,
+                14,
+                radius=7,
+                fill=1,
+                stroke=0,
+            )
+            c.restoreState()
+
+            c.setFont(PDFStyle.FONT_BODY, 9)
+            c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+            c.drawCentredString(q_center_x, text_y - 0.5 * cm, sub_title)
+
+        create_input_field(
+            form,
+            fid,
+            pos=(f_x, f_y),
+            size=(field_width, field_height),
+            tooltip=f"Synthèse {main_title}",
+            multiline=True,
+            fill_color=PDFStyle.COLOR_CARD_CREME,
+        )
+
+    draw_page_decorations(
+        c, width, height, part_title=part_title, x_offset=card_margin
+    )
+    c.showPage()
+
+
+def create_standard_two_columns_page(
+    c,
+    title,
+    part_title=None,
+    intro_text=None,
+    col1_header="Situation / Expérience",
+    col2_header="Enseignement / Compétence",
+    rows_data=None,
+    field_prefix="twocol",
+):
+    """
+    Standard Two-Column Comparative Page (Mirror Table).
+    rows_data is a list of labels or tuples:
+    [
+        "1. Vie personnelle & familiale",
+        "2. Épreuves & défis surmontés",
+        "3. Engagements & loisirs",
+        "4. Réussites marquantes",
+    ]
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+    new_y = draw_title(c, title, pos=(text_x, text_top))
+
+    target_width = width - text_x - 1.0 * cm
+
+    if intro_text:
+        c.setFont(PDFStyle.FONT_BODY, 10)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        text_y = new_y - 0.3 * cm
+        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
+            c.drawString(text_x, text_y, line)
+            text_y -= 0.45 * cm
+        y_start = text_y - 0.5 * cm
+    else:
+        y_start = new_y - 0.8 * cm
+
+    # Headers
+    col1_x = text_x
+    col2_x = text_x + target_width / 2.0 + 0.5 * cm
+    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
+    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.drawString(col1_x, y_start, col1_header)
+
+    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
+    c.drawString(col2_x, y_start, col2_header)
+
+    if rows_data is None:
+        rows_data = [
+            "1. Première situation marquante",
+            "2. Deuxième situation marquante",
+            "3. Troisième situation marquante",
+            "4. Autre élément clé",
+        ]
+
+    n_rows = len(rows_data)
+    center_x = text_x + target_width / 2.0
+    col_width = (target_width / 2.0) - 1.0 * cm
+    form = c.acroForm
+
+    min_safe_y = 2.8 * cm
+    available_h = (y_start - 0.8 * cm) - min_safe_y
+    row_height = max(min(available_h / n_rows, 3.5 * cm), 2.4 * cm)
+
+    y_row = y_start - 0.8 * cm - row_height
+
+    for i, item in enumerate(rows_data):
+        row_label = item if isinstance(item, str) else item[0]
+        left_tip = (
+            item[1]
+            if isinstance(item, (tuple, list)) and len(item) > 1
+            else row_label
+        )
+        right_tip = (
+            item[2]
+            if isinstance(item, (tuple, list)) and len(item) > 2
+            else f"Enseignement {i+1}"
+        )
+
+        # Row label
+        c.setFont(PDFStyle.FONT_BODY, 9)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.drawString(col1_x, y_row + row_height - 0.4 * cm, row_label)
+
+        # Arrow between columns
+        cx_arrow = center_x
+        c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
+        c.setLineWidth(1)
+        arrow_y = y_row + (row_height - 0.8 * cm) / 2
+        c.line(cx_arrow - 0.35 * cm, arrow_y, cx_arrow + 0.35 * cm, arrow_y)
+        c.line(cx_arrow + 0.35 * cm, arrow_y, cx_arrow + 0.1 * cm, arrow_y + 0.1 * cm)
+        c.line(cx_arrow + 0.35 * cm, arrow_y, cx_arrow + 0.1 * cm, arrow_y - 0.1 * cm)
+
+        # Left Input
+        create_input_field(
+            form,
+            f"{field_prefix}_col1_{i+1}",
+            pos=(col1_x, y_row),
+            size=(col_width, row_height - 0.8 * cm),
+            multiline=True,
+            tooltip=left_tip,
+        )
+
+        # Right Input
+        create_input_field(
+            form,
+            f"{field_prefix}_col2_{i+1}",
+            pos=(col2_x, y_row),
+            size=(col_width, row_height - 0.8 * cm),
+            multiline=True,
+            tooltip=right_tip,
+        )
+
+        y_row -= row_height
+
+    draw_page_decorations(
+        c, width, height, part_title=part_title, x_offset=card_margin
+    )
+    c.showPage()
+
