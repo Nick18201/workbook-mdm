@@ -1,0 +1,13 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pdf
+.gemini
+.jules
+Wordbook/*.pdf
+Test_*.pdf
+*.log

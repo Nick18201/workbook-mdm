@@ -1,3 +1,21 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+env/
+venv/
+.env
+.env.*
+
+# Generated PDFs and test artifacts
 *.pdf
+**/*.pdf
+
+# IDE and OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

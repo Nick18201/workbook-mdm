@@ -1100,3 +1100,362 @@ def create_standard_two_columns_page(
     )
     c.showPage()
 
+
+def create_standard_enquete_page(
+    c,
+    title="Fiche Enquête Réseau & Métier",
+    part_title="EXPLORATION DU TERRAIN",
+    intro_text="Interrogez un professionnel ou un pair pour confronter vos hypothèses à la réalité de terrain sans chercher à vendre.",
+    questions=None,
+    field_prefix="enquete",
+):
+    """
+    Gabarit standard d'enquête terrain / Customer Discovery.
+    1. Carte d'identité de l'échange (Nom, Fonction, Entreprise, Date)
+    2. 3 blocs d'analyse qualitative avec boîtes interactives généreuses.
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+    new_y = draw_title(c, title, pos=(text_x, text_top))
+    target_width = width - text_x - 1.0 * cm
+    form = c.acroForm
+
+    if intro_text:
+        c.setFont(PDFStyle.FONT_BODY, 10)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        text_y = new_y - 0.25 * cm
+        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
+            c.drawString(text_x, text_y, line)
+            text_y -= 0.42 * cm
+        y_cursor = text_y - 0.35 * cm
+    else:
+        y_cursor = new_y - 0.6 * cm
+
+    # 1. Contact Info Card (2.2 cm height)
+    contact_card_h = 2.2 * cm
+    draw_card(c, text_x, y_cursor - contact_card_h, target_width, contact_card_h)
+
+    col_w = (target_width - 0.8 * cm) / 2.0
+    half1_x = text_x + 0.3 * cm
+    half2_x = text_x + 0.3 * cm + col_w + 0.2 * cm
+
+    # Labels and fields row 1
+    c.setFont(PDFStyle.FONT_SUBTITLE, 8.5)
+    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.drawString(half1_x, y_cursor - 0.45 * cm, "INTERLOCUTEUR (NOM, PRÉNOM) :")
+    c.drawString(half2_x, y_cursor - 0.45 * cm, "FONCTION / RÔLE :")
+
+    create_input_field(
+        form,
+        f"{field_prefix}_contact_nom",
+        pos=(half1_x, y_cursor - 1.05 * cm),
+        size=(col_w, 0.55 * cm),
+        fill_color=colors.white,
+    )
+    create_input_field(
+        form,
+        f"{field_prefix}_contact_role",
+        pos=(half2_x, y_cursor - 1.05 * cm),
+        size=(col_w, 0.55 * cm),
+        fill_color=colors.white,
+    )
+
+    # Labels and fields row 2
+    c.drawString(half1_x, y_cursor - 1.35 * cm, "ENTREPRISE / SECTEUR :")
+    c.drawString(half2_x, y_cursor - 1.35 * cm, "DATE & CONTEXTE DE L'ÉCHANGE :")
+
+    create_input_field(
+        form,
+        f"{field_prefix}_contact_ent",
+        pos=(half1_x, y_cursor - 1.95 * cm),
+        size=(col_w, 0.55 * cm),
+        fill_color=colors.white,
+    )
+    create_input_field(
+        form,
+        f"{field_prefix}_contact_date",
+        pos=(half2_x, y_cursor - 1.95 * cm),
+        size=(col_w, 0.55 * cm),
+        fill_color=colors.white,
+    )
+
+    y_cursor -= (contact_card_h + 0.4 * cm)
+
+    # 2. Three Analytical Question Cards
+    if questions is None:
+        questions = [
+            (
+                "1. Besoins & Douleurs réelles",
+                "Quelles difficultés majeures ou irritants cette personne rencontre-t-elle au quotidien ?",
+            ),
+            (
+                "2. Solutions actuelles & Limites",
+                "Que fait-elle aujourd'hui pour y répondre ? Quels sont ses freins ou manques ?",
+            ),
+            (
+                "3. Pépites & Recommandations",
+                "Quels conseils clés, avis sur votre idée ou autres contacts vous a-t-elle recommandés ?",
+            ),
+        ]
+
+    min_safe_y = 2.8 * cm
+    gap = 0.35 * cm
+    available_h = (y_cursor - min_safe_y) - (len(questions) - 1) * gap
+    card_h = max(available_h / len(questions), 4.0 * cm)
+
+    for i, q in enumerate(questions):
+        q_title = q[0] if isinstance(q, (tuple, list)) else f"Question {i+1}"
+        q_sub = q[1] if isinstance(q, (tuple, list)) and len(q) > 1 else ""
+        if isinstance(q, dict):
+            q_title = q.get("title", f"Question {i+1}")
+            q_sub = q.get("subtitle", "")
+
+        draw_card(c, text_x, y_cursor - card_h, target_width, card_h)
+
+        # Header bar in card
+        c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
+        c.setFillColor(PDFStyle.COLOR_ACCENT_RED if i == 0 else PDFStyle.COLOR_ACCENT_BLUE)
+        c.drawString(text_x + 0.35 * cm, y_cursor - 0.5 * cm, q_title.upper())
+
+        if q_sub:
+            c.setFont(PDFStyle.FONT_ITALIC, 8.5)
+            c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
+            c.drawString(text_x + 0.35 * cm, y_cursor - 0.85 * cm, q_sub)
+            input_y = y_cursor - card_h + 0.25 * cm
+            input_h = card_h - 1.25 * cm
+        else:
+            input_y = y_cursor - card_h + 0.25 * cm
+            input_h = card_h - 0.9 * cm
+
+        create_input_field(
+            form,
+            f"{field_prefix}_q_{i+1}",
+            pos=(text_x + 0.35 * cm, input_y),
+            size=(target_width - 0.7 * cm, input_h),
+            multiline=True,
+            fill_color=colors.white,
+        )
+
+        y_cursor -= (card_h + gap)
+
+    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
+    c.showPage()
+
+
+def create_standard_roadmap_page(
+    c,
+    title="Feuille de Route 30 · 60 · 90 Jours",
+    part_title="PLAN D'ACTION OPÉRATIONNEL",
+    intro_text="Découpez votre mise en action en trois jalons progressifs pour ancrer des victoires rapides et structurer votre lancement.",
+    stages_data=None,
+    field_prefix="roadmap",
+):
+    """
+    Gabarit standard Feuille de Route / Timeline d'action (3 Paliers).
+    Chaque palier comprend :
+    - En-tête avec Pill Badge de couleur (Palier) + Thème de cap
+    - Filet séparateur interne
+    - Colonne Gauche (42%) : Cap & Objectif clé + Livrable / KPI
+    - Colonne Droite (58%) : 3 Actions prioritaires avec cases à cocher parfaitement aérées
+    """
+    width, height = A4
+    draw_page_background(c, width, height)
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+    new_y = draw_title(c, title, pos=(text_x, text_top))
+    target_width = width - text_x - 1.0 * cm
+    form = c.acroForm
+
+    if intro_text:
+        c.setFont(PDFStyle.FONT_BODY, 10)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        text_y = new_y - 0.25 * cm
+        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
+            c.drawString(text_x, text_y, line)
+            text_y -= 0.42 * cm
+        y_cursor = text_y - 0.35 * cm
+    else:
+        y_cursor = new_y - 0.6 * cm
+
+    if stages_data is None:
+        stages_data = [
+            {
+                "period": "PALIER 1 · 0 À 30 JOURS",
+                "theme": "CONSOLIDER & TESTER",
+                "default_obj": "Valider l'intérêt du marché et tester l'offre pilote auprès de 5 pairs.",
+                "actions": [
+                    "Mener 5 entretiens d'enquête terrain ciblés",
+                    "Formaliser la proposition de valeur sur 1 page",
+                    "Identifier et contacter 2 premiers prospects cibles",
+                ],
+                "default_kpi": "5 entretiens qualifiés menés et 1 retour d'intérêt concret",
+            },
+            {
+                "period": "PALIER 2 · 30 À 60 JOURS",
+                "theme": "STRUCTURER & SÉCURISER",
+                "default_obj": "Poser le cadre juridique, formaliser les tarifs et préparer le lancement.",
+                "actions": [
+                    "Valider le statut juridique et les aides de transition (ARE/ARCE)",
+                    "Fixer la grille tarifaire et créer le modèle de proposition/devis",
+                    "Activer son réseau relationnel (e-mail d'annonce de lancement)",
+                ],
+                "default_kpi": "Cadre juridique validé et 3 devis/propositions envoyés",
+            },
+            {
+                "period": "PALIER 3 · 60 À 90 JOURS",
+                "theme": "LANCER & DÉVELOPPER",
+                "default_obj": "Signer les premières missions, recueillir des retours et caler son rythme.",
+                "actions": [
+                    "Signer et délivrer la première mission pilote avec succès",
+                    "Recueillir un témoignage ou une recommandation client",
+                    "Faire le bilan d'étape et ajuster ses priorités pour le trimestre",
+                ],
+                "default_kpi": "Premier chiffre d'affaires encaissé et premier avis client obtenu",
+            },
+        ]
+
+    min_safe_y = 2.8 * cm
+    n_stages = len(stages_data)
+    gap = 0.4 * cm
+    available_h = (y_cursor - min_safe_y) - (n_stages - 1) * gap
+    stage_h = min(max(available_h / n_stages, 5.0 * cm), 5.3 * cm)
+
+    colors_header = [
+        PDFStyle.COLOR_ACCENT_BLUE,
+        PDFStyle.COLOR_ACCENT_RED,
+        PDFStyle.COLOR_SUCCESS,
+    ]
+
+    for i, stage in enumerate(stages_data):
+        period = stage.get("period", f"PALIER {i+1}")
+        st_theme = stage.get("theme", "")
+        def_obj = stage.get("default_obj", "")
+        actions = stage.get("actions", ["Action 1", "Action 2", "Action 3"])
+        def_kpi = stage.get("default_kpi", "")
+        h_color = colors_header[i % len(colors_header)]
+
+        # 1. Main White Card Container with subtle border
+        c.saveState()
+        c.setFillColor(PDFStyle.COLOR_WHITE)
+        c.setStrokeColor(PDFStyle.COLOR_LINE)
+        c.setLineWidth(0.6)
+        c.roundRect(text_x, y_cursor - stage_h, target_width, stage_h, 6, fill=1, stroke=1)
+        c.restoreState()
+
+        # 2. Top Header inside Card:
+        # A. Pill Badge on the left
+        pill_w = 4.8 * cm
+        pill_h = 0.55 * cm
+        pill_x = text_x + 0.35 * cm
+        pill_y = y_cursor - 0.72 * cm
+
+        c.saveState()
+        c.setFillColor(h_color)
+        c.roundRect(pill_x, pill_y, pill_w, pill_h, radius=pill_h / 2.0, fill=1, stroke=0)
+        c.setFont(PDFStyle.FONT_BRANDING, 8.5)
+        c.setFillColor(PDFStyle.COLOR_WHITE)
+        c.drawCentredString(pill_x + pill_w / 2.0, pill_y + 0.16 * cm, period.upper())
+        c.restoreState()
+
+        # B. Focus Theme text next to the pill
+        if st_theme:
+            c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
+            c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+            c.drawString(pill_x + pill_w + 0.4 * cm, pill_y + 0.16 * cm, st_theme.upper())
+
+        # C. Thin horizontal divider line
+        line_y = y_cursor - 0.9 * cm
+        c.saveState()
+        c.setStrokeColor(PDFStyle.COLOR_LINE)
+        c.setLineWidth(0.4)
+        c.line(text_x + 0.35 * cm, line_y, text_x + target_width - 0.35 * cm, line_y)
+        c.restoreState()
+
+        # 3. Two-Column Layout below divider line
+        # Left column (Objectif & KPI): 42% width (~6.8 cm)
+        # Right column (3 Actions): 58% width (~9.2 cm)
+        sep_x = text_x + 7.2 * cm
+        c.saveState()
+        c.setStrokeColor(PDFStyle.COLOR_LINE)
+        c.setLineWidth(0.4)
+        c.setDash(2, 2)
+        c.line(sep_x, line_y - 0.15 * cm, sep_x, y_cursor - stage_h + 0.25 * cm)
+        c.restoreState()
+
+        left_x = text_x + 0.35 * cm
+        left_w = sep_x - left_x - 0.35 * cm
+
+        right_x = sep_x + 0.35 * cm
+        right_w = text_x + target_width - right_x - 0.35 * cm
+
+        # --- LEFT COLUMN ---
+        # Objectif Clé
+        c.setFont(PDFStyle.FONT_SUBTITLE, 7.5)
+        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+        c.drawString(left_x, line_y - 0.35 * cm, "🎯 CAP & OBJECTIF DU PALIER :")
+
+        create_input_field(
+            form,
+            f"{field_prefix}_s{i+1}_obj",
+            pos=(left_x, line_y - 1.85 * cm),
+            size=(left_w, 1.35 * cm),
+            multiline=True,
+            tooltip=def_obj,
+            fill_color=PDFStyle.COLOR_CARD_CREME,
+        )
+
+        # Indicateur de succès (KPI)
+        c.drawString(left_x, line_y - 2.25 * cm, "🏁 RÉSULTAT OBSERVABLE (KPI) :")
+
+        create_input_field(
+            form,
+            f"{field_prefix}_s{i+1}_kpi",
+            pos=(left_x, line_y - 3.85 * cm),
+            size=(left_w, 1.45 * cm),
+            multiline=True,
+            tooltip=def_kpi,
+            fill_color=PDFStyle.COLOR_CARD_CREME,
+        )
+
+        # --- RIGHT COLUMN ---
+        c.setFont(PDFStyle.FONT_SUBTITLE, 7.5)
+        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+        c.drawString(right_x, line_y - 0.35 * cm, "✅ 3 ACTIONS PRIORITAIRES :")
+
+        chk_size = 11
+        for a_idx, act_label in enumerate(actions[:3]):
+            box_h = 0.85 * cm
+            box_y = line_y - (1.40 * cm + a_idx * 1.10 * cm)
+
+            create_checkbox(
+                form,
+                f"{field_prefix}_s{i+1}_chk_{a_idx+1}",
+                pos=(right_x, box_y + 0.15 * cm),
+                size=chk_size,
+                tooltip=f"Cocher action {a_idx+1}",
+            )
+
+            create_input_field(
+                form,
+                f"{field_prefix}_s{i+1}_act_{a_idx+1}",
+                pos=(right_x + 0.55 * cm, box_y),
+                size=(right_w - 0.55 * cm, box_h),
+                multiline=True,
+                tooltip=act_label,
+                fill_color=PDFStyle.COLOR_CARD_CREME,
+            )
+
+        y_cursor -= (stage_h + gap)
+
+    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
+    c.showPage()
+
+

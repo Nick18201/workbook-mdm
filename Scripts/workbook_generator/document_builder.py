@@ -21,7 +21,7 @@ class DocumentBuilder:
         register_fonts()
 
         # Fail-fast on permission errors (e.g., file open in another program)
-        if os.path.exists(self.output_path):
+        if isinstance(self.output_path, (str, bytes, os.PathLike)) and os.path.exists(self.output_path):
             try:
                 os.remove(self.output_path)
             except PermissionError:

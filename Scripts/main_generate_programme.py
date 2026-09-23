@@ -75,6 +75,10 @@ def build_programme_pdf(
     builder.save()
 
 
+# Standardized naming alias
+generate_workbook_programme = build_programme_pdf
+
+
 if __name__ == "__main__":
     args = create_cli(
         description="Générer le Programme du Bilan de Compétences PDF conforme aux Workbooks.",

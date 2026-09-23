@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marge de Manœuvre · Générateur de Workbooks</title>
+  <!-- Google Fonts: Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mdm: {
+              nude: '#FFF0E6',
+              card: '#FFF8F2',
+              blue: '#2F2EFA',
+              red: '#FF4D4D',
+              earth: '#8D6257',
+              earthBg: '#FFFCE8',
+            }
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FFF0E6;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.03);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(47,46,250,0.2);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white/80 backdrop-blur border-b border-indigo-100 py-4 px-6 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div>
+          <div class="text-xl font-black tracking-tight text-mdm-red uppercase leading-none">
+            marge
+          </div>
+          <div class="text-xl font-black tracking-tight text-mdm-red uppercase leading-none">
+            de manœuvre
+          </div>
+          <div class="h-0.5 w-16 bg-mdm-red mt-1"></div>
+        </div>
+        <div class="h-8 w-px bg-slate-200 mx-2"></div>
+        <div class="text-xs uppercase font-bold text-mdm-blue tracking-widest">
+          Générateur de Workbooks · IA Studio
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 text-xs">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-mdm-blue border border-indigo-100">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+          8 Gabarits One-Shot
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- LEFT COLUMN: Saisie & Contrôles -->
+    <div class="lg:col-span-5 bg-white/90 rounded-3xl p-6 sm:p-7 shadow-xl shadow-indigo-900/5 border border-indigo-50 flex flex-col space-y-6">
+      
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 flex items-center">
+          <svg class="w-5 h-5 text-mdm-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+          Notes de Séance
+        </h2>
+        <p class="text-xs text-slate-500 mt-1">
+          Collez vos notes brutes, bullet points ou débriefs informels.
+        </p>
+      </div>
+
+      <!-- Form Inputs -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Chapitre N°</label>
+          <input type="number" id="chapter_num" value="1" min="0" max="20" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Palette Couleur</label>
+          <select id="theme" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+            <option value="indigo" selected>Indigo Moderne 🔵</option>
+            <option value="earth">Earth Terracotta 🟠</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom du Bénéficiaire (Optionnel)</label>
+        <input type="text" id="beneficiary_name" placeholder="Ex: Thomas, Sarah..." class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Titre Suggeré (Optionnel)</label>
+        <input type="text" id="chapter_title" placeholder="Ex: Clarifier mes Valeurs & Poser mes Limites" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+      </div>
+
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <label class="block text-xs font-semibold text-slate-600">Vos Notes Brutes</label>
+          <button type="button" onclick="loadSampleNotes()" class="text-xs text-mdm-blue hover:underline font-medium">Charger un exemple</button>
+        </div>
+        <textarea id="raw_notes" rows="9" placeholder="Ex :
+- Bilan séance 3 : prise de conscience forte sur la charge mentale
+- Exercice météo : énergie à 4/10, beaucoup d'urgence
+- 4 axes de vie : pro, perso, famille, temps pour soi
+- Questionner les 3 situations où dire oui coûte trop cher
+- Ancrer 1 engagement simple pour les 15 prochains jours..." class="w-full p-3.5 border border-slate-200 rounded-2xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
+      </div>
+
+      <!-- Advanced: API Key toggle -->
+      <details class="text-xs text-slate-500">
+        <summary class="cursor-pointer font-medium hover:text-slate-700">Clé API Gemini (Optionnel si préconfigurée)</summary>
+        <div class="mt-2">
+          <input type="password" id="api_key" placeholder="AIzaSy..." class="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-xs">
+          <p class="text-[10px] text-slate-400 mt-1">Si laissée vide, le serveur utilise la clé par défaut ou le mode pédagogique.</p>
+        </div>
+      </details>
+
+      <!-- Action Buttons -->
+      <div class="space-y-2 pt-2">
+        <button id="btn_parse" onclick="parseNotes()" class="w-full py-3.5 px-4 bg-mdm-blue hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span>1. Analyser & Structurer (Gemini Flash)</span>
+        </button>
+
+        <button id="btn_quick" onclick="quickGenerate()" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-2xl text-xs flex items-center justify-center space-x-2 transition cursor-pointer">
+          <span>🚀 Génération directe 1-Click (PDF immédiat)</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Maquette & Téléchargement -->
+    <div class="lg:col-span-7 flex flex-col space-y-4">
+      
+      <!-- Top Action bar when spec ready -->
+      <div id="ready_bar" class="hidden bg-white/95 rounded-2xl p-4 border border-indigo-100 shadow-md flex items-center justify-between">
+        <div>
+          <span id="page_count_badge" class="px-2.5 py-1 bg-blue-50 text-mdm-blue text-xs font-bold rounded-lg border border-blue-100">
+            6 Pages calibrées
+          </span>
+          <span class="text-xs text-slate-500 ml-2">Vous pouvez ajuster les textes avant l'impression</span>
+        </div>
+        <button onclick="compileCurrentSpec()" class="py-2.5 px-5 bg-mdm-red hover:bg-red-600 text-white font-bold rounded-xl text-xs shadow-md shadow-red-500/20 flex items-center space-x-2 cursor-pointer transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          <span>Télécharger le Livret PDF</span>
+        </button>
+      </div>
+
+      <!-- State: Empty / Waiting -->
+      <div id="state_empty" class="bg-white/60 border-2 border-dashed border-indigo-100 rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[450px]">
+        <div class="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-mdm-blue mb-4">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-base font-bold text-slate-700">Aucune maquette active</h3>
+        <p class="text-xs text-slate-500 max-w-sm mt-1">
+          Collez vos notes dans le panneau de gauche et lancez l'analyse. Gemini Flash construira la maquette page par page en quelques secondes.
+        </p>
+      </div>
+
+      <!-- State: Loading -->
+      <div id="state_loading" class="hidden bg-white rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[450px] shadow-sm">
+        <div class="w-12 h-12 border-4 border-mdm-blue border-t-transparent rounded-full animate-spin mb-4"></div>
+        <h3 class="text-base font-bold text-slate-800" id="loading_text">Analyse sémantique en cours...</h3>
+        <p class="text-xs text-slate-500 max-w-xs mt-1">
+          Gemini Flash calibre les textes et sélectionne les meilleurs gabarits graphiques.
+        </p>
+      </div>
+
+      <!-- State: Interactive Pages Preview -->
+      <div id="state_preview" class="hidden space-y-4 custom-scrollbar max-h-[750px] overflow-y-auto pr-1">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-4 text-center text-xs text-slate-400 border-t border-indigo-50 mt-auto">
+    Marge de Manœuvre · Système Déterministe ReportLab & Gemini Flash 3.7
+  </footer>
+
+  <script>
+    let currentWorkbookSpec = null;
+
+    function loadSampleNotes() {
+      document.getElementById('chapter_num').value = 4;
+      document.getElementById('chapter_title').value = "Clarifier mes Valeurs & Poser mes Limites";
+      document.getElementById('beneficiary_name').value = "Julien";
+      document.getElementById('theme').value = "indigo";
+      document.getElementById('raw_notes').value = 
+`Thème : Chapitre 4 - Les Valeurs & Limites professionnelles.
+Bénéficiaire : Julien, manager en transition.
+
+Notes de la séance :
+- Intro : Julien ressent un épuisement lié à son incapacité à dire non aux demandes urgentes.
+- Exercice 1 : Météo de départ. Julien arrive à 4/10 d'énergie, dispersé et sous pression.
+- Exercice 2 : Les 4 Piliers de Vie. Travailler sur les 4 quadrants :
+  1. Professionnel (Sens et clarté des objectifs)
+  2. Personnel (Sommeil et sport abandonnés depuis 6 mois)
+  3. Relations (Famille mise de côté)
+  4. Cadre & Autonomie (Besoin vital de fixer des règles claires)
+- Exercice 3 : Passerelle Freins vers Leviers (2 colonnes) :
+  1. "Si je dis non, je passe pour un mauvais manager" -> "Dire non protège la qualité du travail de mon équipe"
+  2. "Traiter les urgences prouve mon efficacité" -> "Prioriser le fond m'évite de m'épuiser"
+  3. "Tout accepter m'évite les conflits" -> "Poser des limites claires prévient les frustrations"
+- Exercice 4 : 2 Questions de recul :
+  Q1 : Quelle est la prochaine demande non urgente que vous allez refuser ou différer ?
+  Q2 : Quel rituel de déconnexion mettez-vous en place dès ce vendredi soir ?
+- Clôture : Pacte d'engagement sur 15 jours + signature.`;
+    }
+
+    async function parseNotes() {
+      const rawNotes = document.getElementById('raw_notes').value.trim();
+      if (!rawNotes) {
+        alert("Veuillez saisir des notes de séance.");
+        return;
+      }
+
+      setLoading(true, "Analyse par Gemini Flash...");
+
+      const payload = {
+        raw_notes: rawNotes,
+        chapter_num: parseInt(document.getElementById('chapter_num').value) || 1,
+        chapter_title: document.getElementById('chapter_title').value.trim() || null,
+        theme: document.getElementById('theme').value,
+        beneficiary_name: document.getElementById('beneficiary_name').value.trim() || null,
+        api_key: document.getElementById('api_key').value.trim() || null
+      };
+
+      try {
+        const res = await fetch('/api/parse', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.detail || "Erreur serveur");
+        }
+
+        currentWorkbookSpec = await res.json();
+        renderPreview(currentWorkbookSpec);
+      } catch (err) {
+        alert("Erreur : " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function quickGenerate() {
+      const rawNotes = document.getElementById('raw_notes').value.trim();
+      if (!rawNotes) {
+        alert("Veuillez saisir des notes de séance.");
+        return;
+      }
+
+      setLoading(true, "Génération directe du PDF en 1-Click...");
+
+      const payload = {
+        raw_notes: rawNotes,
+        chapter_num: parseInt(document.getElementById('chapter_num').value) || 1,
+        chapter_title: document.getElementById('chapter_title').value.trim() || null,
+        theme: document.getElementById('theme').value,
+        beneficiary_name: document.getElementById('beneficiary_name').value.trim() || null,
+        api_key: document.getElementById('api_key').value.trim() || null
+      };
+
+      try {
+        const res = await fetch('/api/quick-generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error("Erreur de génération PDF");
+
+        const blob = await res.blob();
+        downloadBlob(blob, `Workbook_Chapitre_${payload.chapter_num}.pdf`);
+      } catch (err) {
+        alert("Erreur : " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function compileCurrentSpec() {
+      if (!currentWorkbookSpec) return;
+
+      setLoading(true, "Compilation du PDF en cours...");
+
+      try {
+        const res = await fetch('/api/compile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(currentWorkbookSpec)
+        });
+
+        if (!res.ok) throw new Error("Erreur lors de la compilation");
+
+        const blob = await res.blob();
+        downloadBlob(blob, `Workbook_Chapitre_${currentWorkbookSpec.chapter_num}.pdf`);
+      } catch (err) {
+        alert("Erreur : " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    }
+
+    function renderPreview(spec) {
+      const container = document.getElementById('state_preview');
+      container.innerHTML = '';
+
+      document.getElementById('ready_bar').classList.remove('hidden');
+      document.getElementById('page_count_badge').innerText = `${spec.pages.length} Pages calibrées`;
+
+      spec.pages.forEach((page, idx) => {
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3";
+
+        let badgeColor = "bg-blue-50 text-mdm-blue";
+        if (page.template === 'meteo') badgeColor = "bg-amber-50 text-amber-600";
+        if (page.template === 'quadrants') badgeColor = "bg-purple-50 text-purple-600";
+        if (page.template === 'two_columns') badgeColor = "bg-emerald-50 text-emerald-600";
+        if (page.template === 'engagement') badgeColor = "bg-rose-50 text-rose-600";
+        if (page.template === 'enquete') badgeColor = "bg-cyan-50 text-cyan-600";
+        if (page.template === 'roadmap') badgeColor = "bg-indigo-50 text-indigo-600";
+        if (page.template === 'composite') badgeColor = "bg-teal-50 text-teal-700";
+
+        let contentSnippet = "";
+        if (page.template === 'questions' && page.params.questions) {
+          contentSnippet = `<div class="text-xs text-slate-600 space-y-1.5 pl-2 border-l-2 border-slate-200">
+            ${page.params.questions.map(q => `<div><strong>·</strong> ${escapeHtml(q.question)}</div>`).join('')}
+          </div>`;
+        } else if (page.template === 'quadrants' && page.params.quadrants) {
+          contentSnippet = `<div class="grid grid-cols-2 gap-2 text-xs text-slate-600">
+            ${page.params.quadrants.map(q => `<div class="bg-slate-50 p-2 rounded-lg font-medium">${escapeHtml(Array.isArray(q) ? q[0] : (q.title || ''))}</div>`).join('')}
+          </div>`;
+        } else if (page.template === 'two_columns' && page.params.rows) {
+          contentSnippet = `<div class="text-xs text-slate-600 space-y-1">
+            ${page.params.rows.map(r => `<div>⮀ ${escapeHtml(Array.isArray(r) ? r[0] : (r.label || ''))}</div>`).join('')}
+          </div>`;
+        } else if (page.template === 'enquete') {
+          contentSnippet = `<div class="text-xs text-slate-500 italic bg-slate-50 p-2 rounded-lg">Fiche contact + 3 axes d'investigation terrain</div>`;
+        } else if (page.template === 'roadmap') {
+          contentSnippet = `<div class="text-xs text-slate-500 italic bg-slate-50 p-2 rounded-lg">3 Paliers (30 · 60 · 90 jours) avec objectifs, actions et KPI</div>`;
+        } else if (page.template === 'composite') {
+          const blocks = page.blocks || (page.params && page.params.blocks) || [];
+          contentSnippet = `<div class="space-y-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-teal-700">Composants assemblés (${blocks.length}) :</div>
+            <div class="flex flex-wrap gap-1.5">
+              ${blocks.map(b => `<span class="px-2 py-0.5 bg-white border border-slate-200 rounded-md text-[10px] font-medium text-slate-700">🧩 ${escapeHtml(b.type)}${b.title ? ' : ' + escapeHtml(b.title) : ''}</span>`).join('')}
+            </div>
+          </div>`;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400">Page ${idx + 1}</span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold uppercase ${badgeColor}">
+              ${escapeHtml(page.template)}
+            </span>
+          </div>
+          <div>
+            <input type="text" value="${escapeHtml(page.title)}" onchange="updatePageTitle(${idx}, this.value)" class="font-bold text-slate-900 text-sm w-full border-b border-transparent hover:border-slate-300 focus:border-mdm-blue focus:outline-hidden py-0.5">
+            ${page.part_title ? `<div class="text-[10px] text-slate-400 uppercase font-semibold mt-0.5">${escapeHtml(page.part_title)}</div>` : ''}
+          </div>
+          ${contentSnippet}
+        `;
+
+        container.appendChild(card);
+      });
+
+      document.getElementById('state_empty').classList.add('hidden');
+      document.getElementById('state_preview').classList.remove('hidden');
+    }
+
+    function updatePageTitle(idx, val) {
+      if (currentWorkbookSpec && currentWorkbookSpec.pages[idx]) {
+        currentWorkbookSpec.pages[idx].title = val;
+      }
+    }
+
+    function setLoading(isLoading, text = "") {
+      const empty = document.getElementById('state_empty');
+      const loader = document.getElementById('state_loading');
+      const preview = document.getElementById('state_preview');
+      const parseBtn = document.getElementById('btn_parse');
+
+      if (isLoading) {
+        empty.classList.add('hidden');
+        preview.classList.add('hidden');
+        loader.classList.remove('hidden');
+        document.getElementById('loading_text').innerText = text;
+        parseBtn.disabled = true;
+        parseBtn.classList.add('opacity-60');
+      } else {
+        loader.classList.add('hidden');
+        parseBtn.disabled = false;
+        parseBtn.classList.remove('opacity-60');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>

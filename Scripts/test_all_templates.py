@@ -24,6 +24,8 @@ from workbook_generator import (
     create_standard_meteo_page,
     create_standard_quadrants_page,
     create_standard_two_columns_page,
+    create_standard_enquete_page,
+    create_standard_roadmap_page,
     create_closing_page,
 )
 
@@ -41,20 +43,21 @@ def page_2_summary(c):
         ("Sommaire des Gabarits :", ""),
         ("1.", "Gabarit Couverture (Brand & Illustration)"),
         ("2.", "Gabarit Sommaire & Intentions (Fond Indigo & Filigrane)"),
-        ("3.", "Gabarit Questions Auto-Fit (2 Questions équilibrées)"),
-        ("4.", "Gabarit Questions Auto-Fit (3 Questions + Exemples ombrés)"),
-        ("5.", "Gabarit Météo Intérieure & Jauge Énergie (0-10 + Émotions)"),
-        ("6.", "Gabarit Matrice & 4 Quadrants (Vision 360°)"),
-        ("7.", "Gabarit 2 Colonnes Miroir (Comparatif & Passerelle)"),
-        ("8.", "Gabarit Engagement Moral & Signature"),
-        ("9.", "Gabarit Clôture & Ancrage"),
+        ("3.", "Gabarit Questions Auto-Fit (2Q / 3Q équilibrées)"),
+        ("4.", "Gabarit Météo Intérieure & Jauge Énergie (0-10 + Émotions)"),
+        ("5.", "Gabarit Matrice & 4 Quadrants (Vision 360°)"),
+        ("6.", "Gabarit 2 Colonnes Miroir (Comparatif & Passerelle)"),
+        ("7.", "Gabarit Enquête Réseau & Métier (Customer Discovery)"),
+        ("8.", "Gabarit Feuille de Route 30·60·90 Jours (Action Roadmap)"),
+        ("9.", "Gabarit Engagement Moral & Signature"),
+        ("10.", "Gabarit Clôture & Ancrage"),
     ]
     create_standard_summary_page(
         c,
         chapter_num_str="DS",
         chapter_title="DESIGN SYSTEM",
         intro_text=(
-            "Ce document valide l'auto-calibrage et l'étanchéité visuelle des 8 gabarits "
+            "Ce document valide l'auto-calibrage et l'étanchéité visuelle des 10 gabarits "
             "universels. Chaque composant s'adapte automatiquement à son contenu sans "
             "jamais déborder sur les marges inférieures ou les décorations de pied de page."
         ),
@@ -189,10 +192,30 @@ def page_7_two_columns(c):
     )
 
 
-def page_8_engagement(c):
+def page_8_enquete(c):
+    create_standard_enquete_page(
+        c,
+        title="Fiche Enquête Réseau & Métier",
+        part_title="8. EXPLORATION TERRAIN",
+        intro_text="Ce gabarit permet de documenter un échange qualitatif (nom, fonction, entreprise, date) et d'en extraire 3 enseignements stratégiques.",
+        field_prefix="demo_enquete",
+    )
+
+
+def page_9_roadmap(c):
+    create_standard_roadmap_page(
+        c,
+        title="Feuille de Route 30 · 60 · 90 Jours",
+        part_title="9. PLAN D'ACTION OPÉRATIONNEL",
+        intro_text="Ce gabarit découpe la mise en action en trois paliers temporels avec objectifs, cases à cocher prioritaires et indicateurs de succès (KPI).",
+        field_prefix="demo_roadmap",
+    )
+
+
+def page_10_engagement(c):
     create_standard_engagement_page(
         c,
-        part_title="8. MON ENGAGEMENT",
+        part_title="10. MON ENGAGEMENT",
         title="Mon Pacte avec Moi-Même",
         custom_lines=[
             "Je m'engage à accorder à cette démarche toute l'attention qu'elle mérite.",
@@ -205,15 +228,15 @@ def page_8_engagement(c):
     )
 
 
-def page_9_closing(c):
+def page_11_closing(c):
     create_closing_page(c)
 
 
 def build_test_suite_pdf(output_filename="Test_All_Templates.pdf", theme="indigo"):
     builder = DocumentBuilder(output_path=output_filename, theme=theme)
-    builder.set_title("Test Suite - 8 Universal Templates")
+    builder.set_title("Test Suite - 10 Universal Templates")
 
-    # Add all 9 pages
+    # Add all 11 pages
     builder.add_page(page_1_cover)
     builder.add_page(page_2_summary)
     builder.add_page(page_3_two_questions_autofit)
@@ -221,8 +244,10 @@ def build_test_suite_pdf(output_filename="Test_All_Templates.pdf", theme="indigo
     builder.add_page(page_5_meteo)
     builder.add_page(page_6_quadrants)
     builder.add_page(page_7_two_columns)
-    builder.add_page(page_8_engagement)
-    builder.add_page(page_9_closing)
+    builder.add_page(page_8_enquete)
+    builder.add_page(page_9_roadmap)
+    builder.add_page(page_10_engagement)
+    builder.add_page(page_11_closing)
 
     builder.save()
 

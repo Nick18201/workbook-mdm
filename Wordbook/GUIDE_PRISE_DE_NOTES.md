@@ -13,9 +13,9 @@ Un livret d'accompagnement ou de bilan de compétences ne se lit pas comme un ro
 
 ---
 
-## 2. Le Catalogue des 8 Gabarits Disponibles
+## 2. Le Catalogue des 10 Gabarits Disponibles
 
-L'agent IA dispose de 8 gabarits universels testés et incassables :
+L'agent IA dispose de 10 gabarits universels testés et incassables :
 
 | N° | Gabarit | Rôle Pédagogique | Éléments Visuels |
 |:---|:---|:---|:---|
@@ -25,8 +25,30 @@ L'agent IA dispose de 8 gabarits universels testés et incassables :
 | **4** | **Météo Intérieure** | Ice-breaker / Climat de séance | Choix météo (Soleil, Nuage, Pluie, Orage), curseur d'énergie 0 à 10, champ de réflexion libre |
 | **5** | **4 Quadrants / Matrice** | Vision 360°, SWOT, Piliers | Radar vectoriel central, 4 quadrants symétriques avec badges "pill" et champs de synthèse |
 | **6** | **2 Colonnes Miroir** | Comparatif, Frein $\rightarrow$ Levier | Table comparative à double colonne avec flèches relationnelles au centre (Avant/Après, Épreuve/Talent) |
-| **7** | **Engagement & Signature** | Contrat moral / Bilan | Puces d'engagement personnalisées, date et champ de signature interactive |
-| **8** | **Clôture** | Ancrage & Félicitations | Logo centré, phrases d'encouragement et invitation à la prochaine étape |
+| **7** | **Enquête Réseau & Métier** | Customer Discovery, Interview terrain | Carte de contact (nom, rôle, entreprise, date) + 3 axes d'investigation qualitative (Besoins, Solutions actuelles, Pépites) |
+| **8** | **Feuille de Route 30·60·90** | Plan d'action chronologique & Paliers | 3 Paliers d'action empilés avec objectifs prioritaires, cases à cocher et indicateurs de succès (KPI) |
+| **9** | **Engagement & Signature** | Contrat moral / Bilan | Puces d'engagement personnalisées, date et champ de signature interactive |
+| **10** | **Clôture** | Ancrage & Félicitations | Logo centré, phrases d'encouragement et invitation à la prochaine étape |
+
+---
+
+## 2. bis. Le Système de Composition Libre (Atomic Design)
+
+En plus des 10 gabarits prédéfinis, vous pouvez créer des **pages sur-mesure (`composite`)** en assemblant librement des briques atomiques modulaires :
+
+| Composant Atomique | Rôle & Usage | Paramètres Clés |
+|:---|:---|:---|
+| **`callout`** | Encadré citation, repère ou conseil clé | `text`, `title`, `variant` ('info' bleu, 'tip' rouge, 'quote' vert) |
+| **`cards_grid`** | Grille de 2 ou 3 cartes d'analyse avec AcroForm | `cards` (titre, sous-titre, placeholder), `columns` (2 ou 3), `card_height_cm` |
+| **`scale`** | Jauge / curseur d'évaluation 0 à 10 | `label`, `min_val`, `max_val`, `min_label`, `max_label` |
+| **`checklist`** | Liste de critères ou tâches à cocher | `items` (libellés), `title`, `columns` (1 ou 2) |
+| **`table`** | Tableau structuré de suivi d'actions | `headers`, `rows` (cellules de texte ou inputs de saisie) |
+| **`stat_boxes`** | Rangée de 2 à 4 chiffres ou KPI phares | `stats` (`stat` en grand chiffre + `label` en sous-titre) |
+| **`question`** | Question ouverte avec zone de réponse | `question`, `subtitle`, `example`, `box_height_cm` |
+
+> [!IMPORTANT]
+> **Règle d'or de respiration visuelle : 2 à 3 composants maximum par page.**  
+> Pour préserver l'élégance épurée et zen de Marge de Manœuvre, ne cherchez jamais à entasser 4 ou 5 composants sur une même feuille A4. Une page aérée avec de l'espace blanc et de grandes boîtes d'écriture est infiniment plus engageante et percutante pour le bénéficiaire.
 
 ---
 

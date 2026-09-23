@@ -74,6 +74,10 @@ def build_livret_competences(output_filename="Livret_Competences.pdf", theme="in
     builder.save()
 
 
+# Standardized naming alias
+generate_workbook_livret = build_livret_competences
+
+
 if __name__ == "__main__":
     args = create_cli(
         description="Générer le Livret de Compétences Augmenté PDF (Version Aérée & Pédagogique).",
