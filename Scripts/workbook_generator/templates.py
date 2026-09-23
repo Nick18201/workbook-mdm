@@ -1,8 +1,12 @@
+import logging
+from xml.sax.saxutils import escape
+from dataclasses import dataclass
+from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
+from reportlab.platypus import Paragraph
+from reportlab.lib.styles import ParagraphStyle
 from .utils import cached_simpleSplit as simpleSplit
-import logging
-from dataclasses import dataclass
 from .config import PDFStyle
 from .components import (
     draw_page_background,
@@ -179,12 +183,22 @@ class PageLayout:
             )
 
         if config.example:
-            box_padding = 0.2 * cm
+            box_padding = 0.25 * cm
             font_size = 9
             font_name = PDFStyle.FONT_ITALIC
 
+            ex_clean = config.example.strip()
+            if ex_clean.lower().startswith("exemple :"):
+                ex_display = ex_clean
+            elif ex_clean.lower().startswith("ex :"):
+                ex_display = "Exemple :" + ex_clean[4:]
+            elif ex_clean.lower().startswith("ex:"):
+                ex_display = "Exemple :" + ex_clean[3:]
+            else:
+                ex_display = f"Exemple : {ex_clean}"
+
             lines = simpleSplit(
-                f"Exemple : {config.example}",
+                ex_display,
                 font_name,
                 font_size,
                 self.target_width - 2 * box_padding,
@@ -192,12 +206,13 @@ class PageLayout:
             box_height = len(lines) * (font_size + 2) + 2 * box_padding
 
             self.y_cursor -= box_height
-            self.c.setFillColorRGB(0.95, 0.95, 0.95)
-            self.c.rect(
+            self.c.setFillColorRGB(0.96, 0.96, 0.98)
+            self.c.roundRect(
                 self.text_x,
                 self.y_cursor,
                 self.target_width,
                 box_height,
+                3,
                 fill=1,
                 stroke=0,
             )
@@ -209,25 +224,38 @@ class PageLayout:
                 self.c.drawString(self.text_x + box_padding, text_y, line)
                 text_y -= font_size + 2
 
-            self.y_cursor -= 0.2 * cm
+            self.y_cursor -= 0.25 * cm
 
-        self.y_cursor -= 0.2 * cm  # Gap before input
+        self.y_cursor -= 0.15 * cm  # Gap before input
 
-        # Check if we need to paginate (basic protection)
-        if self.y_cursor - config.box_height < 3 * cm:
-            logger.warning(
-                f"Form field '{form_field_id}' might overflow bottom margin."
-            )
+        box_h = config.box_height if config.box_height is not None else 3.0 * cm
+
+        # Always draw visible background on canvas so the writing zone is NEVER blank
+        self.c.saveState()
+        self.c.setFillColor(PDFStyle.COLOR_FIELD_BG)
+        self.c.setStrokeColor(PDFStyle.COLOR_LINE)
+        self.c.setLineWidth(0.5)
+        self.c.roundRect(
+            self.text_x,
+            self.y_cursor - box_h,
+            self.target_width,
+            box_h,
+            4,
+            fill=1,
+            stroke=1,
+        )
+        self.c.restoreState()
 
         create_input_field(
             self.form,
             form_field_id,
-            pos=(self.text_x, self.y_cursor - config.box_height),
-            size=(self.target_width, config.box_height),
+            pos=(self.text_x, self.y_cursor - box_h),
+            size=(self.target_width, box_h),
             multiline=True,
+            fill_color=PDFStyle.COLOR_FIELD_BG,
         )
 
-        self.y_cursor -= config.box_height + 0.8 * cm
+        self.y_cursor -= box_h + 0.65 * cm
         self.question_index += 1
         return self.y_cursor
 
@@ -307,16 +335,26 @@ class PageLayout:
 
             ex_h = 0
             if q.example:
-                box_padding = 0.2 * cm
+                box_padding = 0.25 * cm
+                ex_clean = q.example.strip()
+                if ex_clean.lower().startswith("exemple :"):
+                    ex_display = ex_clean
+                elif ex_clean.lower().startswith("ex :"):
+                    ex_display = "Exemple :" + ex_clean[4:]
+                elif ex_clean.lower().startswith("ex:"):
+                    ex_display = "Exemple :" + ex_clean[3:]
+                else:
+                    ex_display = f"Exemple : {ex_clean}"
+
                 ex_lines = simpleSplit(
-                    f"Exemple : {q.example}",
+                    ex_display,
                     PDFStyle.FONT_ITALIC,
                     9,
                     self.target_width - 2 * box_padding,
                 )
-                ex_h = len(ex_lines) * (9 + 2) + 2 * box_padding + 0.4 * cm
+                ex_h = len(ex_lines) * (9 + 2) + 2 * box_padding + 0.35 * cm
 
-            gap_overhead = 0.2 * cm + 0.8 * cm
+            gap_overhead = 0.15 * cm + 0.65 * cm
             total_text_overhead += t_h + s_h + ex_h + gap_overhead
 
             if q.box_height is not None:
@@ -329,7 +367,7 @@ class PageLayout:
 
         if n_auto > 0:
             auto_box_h = remaining_for_boxes / n_auto
-            auto_box_h = max(min_box_height, min(max_box_height, auto_box_h))
+            auto_box_h = max(1.5 * cm, min(max_box_height, auto_box_h))
         else:
             auto_box_h = min_box_height
 
@@ -464,9 +502,22 @@ class PageLayout:
                     sub_h = 0.4 * cm
                 self.c.restoreState()
 
-                # Text Input inside Card
+                # Text Input & Writing Guides inside Card
                 input_y = row_y + 0.3 * cm
                 input_h = h - 0.85 * cm - sub_h
+
+                # Subtle dotted writing guide lines
+                self.c.saveState()
+                self.c.setStrokeColor(PDFStyle.COLOR_LINE)
+                self.c.setLineWidth(0.5)
+                self.c.setDash([2, 3], 0)
+                guide_gap = 0.65 * cm
+                curr_gy = input_y + input_h - guide_gap
+                while curr_gy > input_y + 0.2 * cm:
+                    self.c.line(card_x + 0.4 * cm, curr_gy, card_x + col_w - 0.4 * cm, curr_gy)
+                    curr_gy -= guide_gap
+                self.c.restoreState()
+
                 create_input_field(
                     self.form,
                     c_fid,
@@ -474,7 +525,7 @@ class PageLayout:
                     size=(col_w - 0.7 * cm, input_h),
                     multiline=True,
                     tooltip=c_placeholder,
-                    fill_color=PDFStyle.COLOR_CARD_CREME,
+                    fill_color=None,
                 )
 
             self.y_cursor -= (h + gap)
@@ -484,61 +535,75 @@ class PageLayout:
 
     def add_scale_gauge(self, label, min_val=0, max_val=10, min_label="", max_label="", field_id=None):
         """
-        Renders an interactive rating / evaluation scale with checkboxes and min/max labels with airy vertical rhythm.
+        Renders a high-end interactive rating / evaluation scale inside an elegant card.
         """
         fid_base = field_id or f"scale_{self.question_index}"
         self.question_index += 1
 
-        # Label
+        card_h = 2.8 * cm if (min_label or max_label) else 2.3 * cm
+        card_y = self.y_cursor - card_h
+
+        # Card container
+        draw_card(self.c, self.text_x, card_y, self.target_width, card_h)
+
+        # 1. Label at top of card
         self.c.saveState()
         self.c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
         self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        self.c.drawString(self.text_x, self.y_cursor - 0.35 * cm, label)
-
-        # Track line
-        track_y = self.y_cursor - 1.0 * cm
-        self.c.setStrokeColor(PDFStyle.COLOR_LINE)
-        self.c.setLineWidth(1)
-        self.c.line(self.text_x, track_y, self.text_x + self.target_width, track_y)
+        self.c.drawString(self.text_x + 0.4 * cm, card_y + card_h - 0.55 * cm, label)
         self.c.restoreState()
 
-        # Checkbox points
+        # 2. Track & Steps
+        track_margin_x = 0.8 * cm
+        track_w = self.target_width - 2 * track_margin_x
+        track_y = card_y + (1.2 * cm if (min_label or max_label) else 0.8 * cm)
+
+        # Background track line
+        self.c.saveState()
+        self.c.setStrokeColor(PDFStyle.COLOR_LINE)
+        self.c.setLineWidth(1.5)
+        self.c.line(self.text_x + track_margin_x, track_y, self.text_x + track_margin_x + track_w, track_y)
+        self.c.restoreState()
+
         steps = list(range(min_val, max_val + 1))
         n_steps = len(steps)
-        step_w = self.target_width / max(1, n_steps - 1)
+        step_w = track_w / max(1, n_steps - 1)
 
         for i, val in enumerate(steps):
-            pt_x = self.text_x + i * step_w
-            # Number label above
+            pt_x = self.text_x + track_margin_x + i * step_w
+
+            # Step node dot
             self.c.saveState()
-            self.c.setFont(PDFStyle.FONT_BODY, 8.5)
+            self.c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE if val in (min_val, max_val, (min_val + max_val) // 2) else PDFStyle.COLOR_LINE)
+            self.c.circle(pt_x, track_y, 2, fill=1, stroke=0)
+
+            # Number label above
+            self.c.setFont(PDFStyle.FONT_SUBTITLE, 8.5)
             self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
             self.c.drawCentredString(pt_x, track_y + 0.22 * cm, str(val))
             self.c.restoreState()
 
-            # Checkbox below track (10pt height = ~0.35 cm)
+            # Checkbox below track
             create_checkbox(
                 self.form,
                 f"{fid_base}_{val}",
-                pos=(pt_x - 5, track_y - 0.52 * cm),
+                pos=(pt_x - 5, track_y - 0.45 * cm),
                 size=10,
                 tooltip=f"{label} : {val}",
             )
 
-        # Min / Max labels at ends (generously spaced below checkboxes)
-        has_sublabels = bool(min_label or max_label)
-        if has_sublabels:
+        # 3. Min / Max labels at bottom
+        if min_label or max_label:
             self.c.saveState()
             self.c.setFont(PDFStyle.FONT_ITALIC, 7.5)
             self.c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
             if min_label:
-                self.c.drawString(self.text_x, track_y - 0.95 * cm, min_label)
+                self.c.drawString(self.text_x + 0.4 * cm, card_y + 0.28 * cm, f"◀ {min_label}")
             if max_label:
-                self.c.drawRightString(self.text_x + self.target_width, track_y - 0.95 * cm, max_label)
+                self.c.drawRightString(self.text_x + self.target_width - 0.4 * cm, card_y + 0.28 * cm, f"{max_label} ▶")
             self.c.restoreState()
 
-        h_total = 2.4 * cm if has_sublabels else 1.9 * cm
-        self.y_cursor -= (h_total + 0.5 * cm)
+        self.y_cursor -= (card_h + 0.5 * cm)
         return self.y_cursor
 
     def add_checklist(self, items, title=None, columns=1, field_prefix="chk"):
@@ -604,23 +669,61 @@ class PageLayout:
 
     def add_table(self, headers, rows, col_widths=None, field_prefix="tbl"):
         """
-        Renders a clean multi-column table with headers and data cells (labels or inputs).
+        Renders a clean multi-column table with headers and data cells (auto-wrapped labels or inputs).
         """
         n_cols = len(headers)
         if n_cols == 0:
             return self.y_cursor
 
+        # Smart column width distribution if not explicitly specified
         if col_widths is None:
-            col_w = self.target_width / n_cols
-            widths = [col_w] * n_cols
+            if n_cols == 3:
+                # Optimized for: [Critère/Pilier (30%), Évaluation/Risque (22%), Plan/Action (48%)]
+                widths = [
+                    0.30 * self.target_width,
+                    0.22 * self.target_width,
+                    0.48 * self.target_width,
+                ]
+            elif n_cols == 2:
+                widths = [0.40 * self.target_width, 0.60 * self.target_width]
+            elif n_cols == 4:
+                widths = [0.25 * self.target_width] * 4
+            else:
+                col_w = self.target_width / n_cols
+                widths = [col_w] * n_cols
         else:
             widths = col_widths
 
-        header_h = 0.7 * cm
-        row_h = 0.95 * cm
+        style_th = ParagraphStyle(
+            "TableTH",
+            fontName=PDFStyle.FONT_SUBTITLE,
+            fontSize=7.5,
+            leading=9.5,
+            textColor=PDFStyle.COLOR_ACCENT_BLUE,
+        )
 
-        # Draw Header row
+        style_cell = ParagraphStyle(
+            "TableCell",
+            fontName=PDFStyle.FONT_BODY,
+            fontSize=8,
+            leading=10.5,
+            textColor=PDFStyle.COLOR_TEXT_MAIN,
+        )
+
+        # 1. Compute Header Height & wrap header paragraphs
+        th_paragraphs = []
+        max_th_h = 0
+        for i, h_text in enumerate(headers):
+            cell_w = widths[i] - 0.3 * cm
+            p_th = Paragraph(f"<b>{escape(str(h_text)).upper()}</b>", style_th)
+            _, ph = p_th.wrap(cell_w, 200)
+            th_paragraphs.append((p_th, ph))
+            max_th_h = max(max_th_h, ph)
+
+        header_h = max(0.65 * cm, max_th_h + 0.3 * cm)
         h_y = self.y_cursor - header_h
+
+        # Draw Header row background
         self.c.saveState()
         self.c.setFillColor(PDFStyle.COLOR_CARD_CREME)
         self.c.setStrokeColor(PDFStyle.COLOR_LINE)
@@ -628,24 +731,56 @@ class PageLayout:
         self.c.roundRect(self.text_x, h_y, self.target_width, header_h, 3, fill=1, stroke=1)
 
         curr_x = self.text_x
-        for i, h_text in enumerate(headers):
-            self.c.setFont(PDFStyle.FONT_SUBTITLE, 8)
-            self.c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-            self.c.drawString(curr_x + 0.25 * cm, h_y + 0.22 * cm, str(h_text).upper())
+        for i, (p_th, ph) in enumerate(th_paragraphs):
+            p_th.drawOn(self.c, curr_x + 0.15 * cm, h_y + (header_h - ph) / 2)
             curr_x += widths[i]
         self.c.restoreState()
 
-        self.y_cursor -= (header_h + 0.15 * cm)
+        self.y_cursor -= (header_h + 0.1 * cm)
 
-        # Draw Rows
+        # 2. Draw Rows with dynamic auto-wrap
         for r_idx, row in enumerate(rows):
-            r_y = self.y_cursor - row_h
-            curr_x = self.text_x
-            for c_idx, cell in enumerate(row[:n_cols]):
+            # Pre-wrap all cells in this row to determine required row height
+            cell_items = []
+            max_row_h = 0.85 * cm
+
+            for c_idx in range(n_cols):
                 w = widths[c_idx]
+                cell = row[c_idx] if c_idx < len(row) else ""
+
                 if isinstance(cell, dict):
-                    fid = cell.get("field_id", f"{field_prefix}_r{r_idx+1}_c{c_idx+1}")
-                    placeholder = cell.get("placeholder", "")
+                    cell_items.append(("input", cell, 0.7 * cm))
+                else:
+                    c_str = str(cell).strip()
+                    if not c_str:
+                        # Empty cell: treat as interactive rating / tick box or input zone
+                        cell_items.append(("empty", "", 0.65 * cm))
+                    else:
+                        p_cell = Paragraph(escape(c_str), style_cell)
+                        _, ch = p_cell.wrap(w - 0.3 * cm, 300)
+                        cell_items.append(("text", p_cell, ch))
+                        max_row_h = max(max_row_h, ch + 0.3 * cm)
+
+            row_h = max_row_h
+            r_y = self.y_cursor - row_h
+
+            # Draw row background
+            self.c.saveState()
+            row_bg = PDFStyle.COLOR_WHITE if r_idx % 2 == 0 else PDFStyle.COLOR_CARD_CREME
+            self.c.setFillColor(row_bg)
+            self.c.setStrokeColor(PDFStyle.COLOR_LINE)
+            self.c.setLineWidth(0.5)
+            self.c.roundRect(self.text_x, r_y, self.target_width, row_h, 2, fill=1, stroke=1)
+
+            curr_x = self.text_x
+            for c_idx, item in enumerate(cell_items):
+                w = widths[c_idx]
+                kind = item[0]
+
+                if kind == "input":
+                    cell_dict = item[1]
+                    fid = cell_dict.get("field_id", f"{field_prefix}_r{r_idx+1}_c{c_idx+1}")
+                    placeholder = cell_dict.get("placeholder", "")
                     create_input_field(
                         self.form,
                         fid,
@@ -655,16 +790,29 @@ class PageLayout:
                         tooltip=placeholder,
                         fill_color=PDFStyle.COLOR_WHITE,
                     )
+                elif kind == "empty":
+                    # For empty middle/rating columns, provide 3 evaluation score checkboxes
+                    fid = f"{field_prefix}_r{r_idx+1}_c{c_idx+1}"
+                    # Draw 3 miniature status indicators
+                    dot_y = r_y + (row_h - 10) / 2
+                    col_center_x = curr_x + w / 2
+                    create_checkbox(
+                        self.form,
+                        f"{fid}_chk",
+                        pos=(col_center_x - 5, dot_y),
+                        size=10,
+                        tooltip="Cocher le niveau",
+                    )
                 else:
-                    self.c.saveState()
-                    self.c.setFont(PDFStyle.FONT_BODY, 8.5)
-                    self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-                    self.c.drawString(curr_x + 0.25 * cm, r_y + 0.3 * cm, str(cell))
-                    self.c.restoreState()
-                curr_x += w
-            self.y_cursor -= row_h
+                    p_cell, ch = item[1], item[2]
+                    p_cell.drawOn(self.c, curr_x + 0.15 * cm, r_y + (row_h - ch) / 2)
 
-        self.y_cursor -= 0.6 * cm
+                curr_x += w
+
+            self.c.restoreState()
+            self.y_cursor -= (row_h + 0.08 * cm)
+
+        self.y_cursor -= 0.4 * cm
         return self.y_cursor
 
     def add_stat_boxes(self, stats):

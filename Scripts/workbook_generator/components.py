@@ -1,5 +1,6 @@
 import os
 import math
+from xml.sax.saxutils import escape
 from dataclasses import dataclass
 
 from reportlab.lib import colors
@@ -26,7 +27,6 @@ def draw_page_background(c, width, height, use_blobs=False):
         draw_wavy_background(c, width, height)
 
     draw_dot_grid(c, width, height)
-    draw_marginal_signature(c, height)
 
 
 def draw_page_decorations(c, width, height, part_title=None, x_offset=0):
@@ -310,7 +310,7 @@ def draw_branding_logo(c, x, y, size=40, align="left"):
     c.restoreState()
 
 
-def create_closing_page(c):
+def create_closing_page(c, messages=None):
     """
     Standard Closing Page.
     """
@@ -319,26 +319,41 @@ def create_closing_page(c):
 
     # 1. Logo Centered
     logo_x = width / 2
-    logo_y = height / 2 + 2 * cm
+    logo_y = height / 2 + 2.5 * cm
 
     draw_branding_logo(c, logo_x, logo_y, size=40, align="center")
 
-    # 2. Encouraging Text
-    text_y = logo_y - 4 * cm
-    c.setFont(PDFStyle.FONT_TITLE, 14)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    # 2. Encouraging Text (Auto-wrapped so long inspirational sentences never overflow)
+    text_y = logo_y - 3.8 * cm
+    wrap_w = width - 4.5 * cm
 
-    messages = [
-        "Félicitations pour ce temps pris pour vous.",
-        "Laissez infuser ces réflexions.",
-        "À très vite pour la suite de votre exploration.",
-    ]
+    if not messages:
+        messages = [
+            "Félicitations pour ce temps pris pour vous.",
+            "Laissez infuser ces réflexions.",
+            "À très vite pour la suite de votre exploration.",
+        ]
+
+    style_closing = ParagraphStyle(
+        "ClosingText",
+        fontName=PDFStyle.FONT_TITLE,
+        fontSize=12,
+        leading=18,
+        textColor=PDFStyle.COLOR_TEXT_MAIN,
+        alignment=1,  # Centered
+    )
 
     for msg in messages:
-        c.drawCentredString(width / 2, text_y, msg)
-        text_y -= 1.0 * cm
+        msg_str = (msg.get("text") or str(msg)) if isinstance(msg, dict) else str(msg)
+        if not msg_str.strip():
+            continue
+        p = Paragraph(escape(msg_str), style_closing)
+        w, h = p.wrap(wrap_w, height)
+        p.drawOn(c, (width - wrap_w) / 2, text_y - h)
+        text_y -= h + 0.6 * cm
 
     c.showPage()
+
 
 
 def draw_section_separator(c, x, y, width, color=PDFStyle.COLOR_ACCENT_BLUE):
@@ -551,22 +566,27 @@ def create_standard_summary_page(
         p_intro.drawOn(c, 2.5 * cm, text_y - h)
         text_y -= h + 1 * cm
 
-    c.setFont(PDFStyle.FONT_BODY, 14)
+    wrap_w = width - 5.5 * cm
+    style_point = ParagraphStyle(
+        "SummaryPoint",
+        fontName=PDFStyle.FONT_BODY,
+        fontSize=11.5,
+        leading=16,
+        textColor=colors.white,
+    )
 
-    # Render points
+    # Render points with auto-wrapping so they never bleed off the right edge
     for point in points_list:
-        # point is a tuple (label, desc) or just string
-        if isinstance(point, tuple):
-            label, desc = point
-            c.setFont(PDFStyle.FONT_TITLE, 14)
-            c.drawString(2.5 * cm, text_y, label)
-            c.setFont(PDFStyle.FONT_BODY, 14)
-            label_width = c.stringWidth(label, PDFStyle.FONT_TITLE, 14)
-            c.drawString(2.5 * cm + label_width + 10, text_y, desc)
+        if isinstance(point, (tuple, list)):
+            label = str(point[0]) if len(point) > 0 else ""
+            desc = str(point[1]) if len(point) > 1 else ""
+            p_text = f'<b><font name="{PDFStyle.FONT_TITLE}">{escape(label)}</font></b>&nbsp;&nbsp;{escape(desc)}'
         else:
-            c.setFont(PDFStyle.FONT_TITLE, 14)
-            c.drawString(2.5 * cm, text_y, point)
-        text_y -= 1.0 * cm
+            p_text = f'<b><font name="{PDFStyle.FONT_TITLE}">{escape(str(point))}</font></b>'
+        p_pt = Paragraph(p_text, style_point)
+        w, h = p_pt.wrap(wrap_w, height)
+        p_pt.drawOn(c, 2.5 * cm, text_y - h)
+        text_y -= h + 0.65 * cm
 
     # Decor (Plume)
     if os.path.exists(PDFStyle.PATH_PLUME_TEXTURE):
@@ -592,11 +612,11 @@ def create_standard_engagement_page(
     c,
     part_title,
     custom_lines=None,
-    title="Mon Engagement",
+    title="Pacte d'Action & d'Engagement",
     signature_label="Date et Signature :",
 ):
     """
-    Standard Engagement Page: Leaves card_margin untouched, adds generic motivation block with Signature field.
+    Standard Engagement Page: Balanced commitment card with checkmarks and an anchored signature card.
     """
     width, height = A4
     draw_page_background(c, width, height)
@@ -605,42 +625,103 @@ def create_standard_engagement_page(
     draw_side_panel(c, card_margin, width, height)
 
     text_x = card_margin + 1.0 * cm
-    text_top = height - 5.0 * cm
+    content_w = width - text_x - 1.8 * cm
+    text_top = height - 4.2 * cm
 
-    new_y = draw_title(c, title, pos=(text_x, text_top))
-
-    text_y = new_y - 1.0 * cm
-    c.setFont(PDFStyle.FONT_BODY, 11)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    new_y = draw_title(c, title, pos=(text_x, text_top), available_width=content_w)
 
     lines = (
         custom_lines
         if custom_lines
         else [
-            "Je m'engage aujourd'hui à prendre ce temps pour moi.",
+            "Je m'engage aujourd'hui à prendre ce temps pour moi avec sincérité.",
             "À regarder ma situation avec honnêteté et bienveillance.",
             "À accepter de ne pas avoir toutes les réponses tout de suite.",
-            "À explorer, tester, et avancer pas à pas.",
-            "",
+            "À explorer, tester concrètement et avancer pas à pas.",
             "Ce travail est pour moi, et je décide de m'y investir pleinement.",
         ]
     )
 
+    clean_lines = []
     for line in lines:
-        c.drawString(text_x, text_y, line)
-        text_y -= 18
+        l_str = (
+            (line.get("text") or line.get("line") or str(line))
+            if isinstance(line, dict)
+            else str(line)
+        ).strip()
+        if l_str:
+            clean_lines.append(l_str)
 
-    # Signature Area
-    sig_y = text_y - 4 * cm
-    c.drawString(text_x, sig_y + 2 * cm, signature_label)
+    # 1. Commitment Card in upper-mid section
+    card_y_top = new_y - 0.8 * cm
+    style_item = ParagraphStyle(
+        "EngageItem",
+        fontName=PDFStyle.FONT_BODY,
+        fontSize=10.5,
+        leading=15,
+        textColor=PDFStyle.COLOR_TEXT_MAIN,
+    )
 
+    # Calculate total height of items
+    item_paragraphs = []
+    total_items_h = 0
+    item_wrap_w = content_w - 1.6 * cm
+    for l_text in clean_lines:
+        p = Paragraph(f'<font color="{PDFStyle.COLOR_ACCENT_BLUE}" name="{PDFStyle.FONT_TITLE}">✓</font>&nbsp;&nbsp;{escape(l_text)}', style_item)
+        _, h = p.wrap(item_wrap_w, height)
+        item_paragraphs.append((p, h))
+        total_items_h += h + 0.35 * cm
+
+    card_pad = 0.6 * cm
+    card_h = total_items_h + 2 * card_pad + 0.4 * cm
+    card_y = card_y_top - card_h
+
+    draw_card(c, text_x, card_y, content_w, card_h)
+
+    # Render items inside card
+    curr_item_y = card_y_top - card_pad
+    for p, h in item_paragraphs:
+        p.drawOn(c, text_x + 0.8 * cm, curr_item_y - h)
+        curr_item_y -= (h + 0.35 * cm)
+
+    # 2. Anchored Signature Block at bottom
+    sig_block_y = 3.6 * cm
+    sig_block_h = 3.2 * cm
+    draw_card(c, text_x, sig_block_y, content_w, sig_block_h)
+
+    # Left: Date & Lieu
+    c.saveState()
+    c.setFont(PDFStyle.FONT_SUBTITLE, 9)
+    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.drawString(text_x + 0.6 * cm, sig_block_y + sig_block_h - 0.7 * cm, "DATE & LIEU :")
+    c.restoreState()
+
+    half_w = (content_w - 1.6 * cm) / 2
     form = c.acroForm
     create_input_field(
         form,
+        "date_lieu_engagement",
+        pos=(text_x + 0.6 * cm, sig_block_y + 0.5 * cm),
+        size=(half_w, 1.3 * cm),
+        tooltip="Fait à ..., le ...",
+        fill_color=PDFStyle.COLOR_WHITE,
+    )
+
+    # Right: Signature
+    sig_x = text_x + 0.6 * cm + half_w + 0.4 * cm
+    c.saveState()
+    c.setFont(PDFStyle.FONT_SUBTITLE, 9)
+    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
+    c.drawString(sig_x, sig_block_y + sig_block_h - 0.7 * cm, "SIGNATURE DU BÉNÉFICIAIRE :")
+    c.restoreState()
+
+    create_input_field(
+        form,
         "signature_engagement",
-        pos=(text_x, sig_y),
-        size=(10 * cm, 1.5 * cm),
+        pos=(sig_x, sig_y := sig_block_y + 0.5 * cm),
+        size=(half_w, 1.3 * cm),
         tooltip="Votre Signature",
+        fill_color=PDFStyle.COLOR_WHITE,
     )
 
     draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
@@ -881,7 +962,7 @@ def create_standard_quadrants_page(
     c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)
     c.restoreState()
 
-    if quadrants_data is None:
+    if not quadrants_data:
         quadrants_data = [
             ("Professionnel", "Sens, Mission, Salaire", "pro"),
             ("Personnel", "Temps pour soi, Santé", "perso"),
@@ -1027,7 +1108,7 @@ def create_standard_two_columns_page(
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
     c.drawString(col2_x, y_start, col2_header)
 
-    if rows_data is None:
+    if not rows_data:
         rows_data = [
             "1. Première situation marquante",
             "2. Deuxième situation marquante",
@@ -1035,7 +1116,7 @@ def create_standard_two_columns_page(
             "4. Autre élément clé",
         ]
 
-    n_rows = len(rows_data)
+    n_rows = max(len(rows_data), 1)
     center_x = text_x + target_width / 2.0
     col_width = (target_width / 2.0) - 1.0 * cm
     form = c.acroForm
@@ -1047,17 +1128,43 @@ def create_standard_two_columns_page(
     y_row = y_start - 0.8 * cm - row_height
 
     for i, item in enumerate(rows_data):
-        row_label = item if isinstance(item, str) else item[0]
-        left_tip = (
-            item[1]
-            if isinstance(item, (tuple, list)) and len(item) > 1
-            else row_label
-        )
-        right_tip = (
-            item[2]
-            if isinstance(item, (tuple, list)) and len(item) > 2
-            else f"Enseignement {i+1}"
-        )
+        if isinstance(item, str):
+            row_label = item
+            left_tip = row_label
+            right_tip = f"Enseignement {i+1}"
+        elif isinstance(item, dict):
+            left_tip = (
+                item.get("left")
+                or item.get("col1")
+                or item.get("left_tooltip")
+                or item.get("situation")
+                or item.get("croyance")
+                or ""
+            )
+            right_tip = (
+                item.get("right")
+                or item.get("col2")
+                or item.get("right_tooltip")
+                or item.get("solution")
+                or item.get("levier")
+                or item.get("enseignement")
+                or f"Enseignement {i+1}"
+            )
+            row_label = item.get("label") or item.get("title")
+            if not row_label:
+                if left_tip:
+                    truncated = (left_tip[:40] + "...") if len(left_tip) > 40 else left_tip
+                    row_label = f"{i+1}. {truncated}"
+                else:
+                    row_label = f"Point {i+1}"
+        elif isinstance(item, (tuple, list)):
+            row_label = str(item[0]) if len(item) > 0 else f"Point {i+1}"
+            left_tip = str(item[1]) if len(item) > 1 else row_label
+            right_tip = str(item[2]) if len(item) > 2 else f"Enseignement {i+1}"
+        else:
+            row_label = str(item)
+            left_tip = row_label
+            right_tip = f"Enseignement {i+1}"
 
         # Row label
         c.setFont(PDFStyle.FONT_BODY, 9)
@@ -1187,7 +1294,7 @@ def create_standard_enquete_page(
     y_cursor -= (contact_card_h + 0.4 * cm)
 
     # 2. Three Analytical Question Cards
-    if questions is None:
+    if not questions:
         questions = [
             (
                 "1. Besoins & Douleurs réelles",
@@ -1203,17 +1310,22 @@ def create_standard_enquete_page(
             ),
         ]
 
+    n_q = max(len(questions), 1)
     min_safe_y = 2.8 * cm
     gap = 0.35 * cm
-    available_h = (y_cursor - min_safe_y) - (len(questions) - 1) * gap
-    card_h = max(available_h / len(questions), 4.0 * cm)
+    available_h = (y_cursor - min_safe_y) - (n_q - 1) * gap
+    card_h = max(available_h / n_q, 4.0 * cm)
 
     for i, q in enumerate(questions):
-        q_title = q[0] if isinstance(q, (tuple, list)) else f"Question {i+1}"
-        q_sub = q[1] if isinstance(q, (tuple, list)) and len(q) > 1 else ""
-        if isinstance(q, dict):
-            q_title = q.get("title", f"Question {i+1}")
-            q_sub = q.get("subtitle", "")
+        if isinstance(q, (tuple, list)):
+            q_title = str(q[0]) if len(q) > 0 else f"Question {i+1}"
+            q_sub = str(q[1]) if len(q) > 1 else ""
+        elif isinstance(q, dict):
+            q_title = q.get("title") or q.get("question") or q.get("label") or f"Question {i+1}"
+            q_sub = q.get("subtitle") or q.get("desc") or q.get("description") or ""
+        else:
+            q_title = str(q)
+            q_sub = ""
 
         draw_card(c, text_x, y_cursor - card_h, target_width, card_h)
 
@@ -1285,7 +1397,7 @@ def create_standard_roadmap_page(
     else:
         y_cursor = new_y - 0.6 * cm
 
-    if stages_data is None:
+    if not stages_data:
         stages_data = [
             {
                 "period": "PALIER 1 · 0 À 30 JOURS",
@@ -1323,7 +1435,7 @@ def create_standard_roadmap_page(
         ]
 
     min_safe_y = 2.8 * cm
-    n_stages = len(stages_data)
+    n_stages = max(len(stages_data), 1)
     gap = 0.4 * cm
     available_h = (y_cursor - min_safe_y) - (n_stages - 1) * gap
     stage_h = min(max(available_h / n_stages, 5.0 * cm), 5.3 * cm)
@@ -1335,11 +1447,18 @@ def create_standard_roadmap_page(
     ]
 
     for i, stage in enumerate(stages_data):
-        period = stage.get("period", f"PALIER {i+1}")
-        st_theme = stage.get("theme", "")
-        def_obj = stage.get("default_obj", "")
-        actions = stage.get("actions", ["Action 1", "Action 2", "Action 3"])
-        def_kpi = stage.get("default_kpi", "")
+        if isinstance(stage, dict):
+            period = stage.get("period") or stage.get("palier") or f"PALIER {i+1}"
+            st_theme = stage.get("theme") or stage.get("title") or ""
+            def_obj = stage.get("default_obj") or stage.get("obj") or stage.get("objective") or stage.get("objectif") or ""
+            actions = stage.get("actions") or stage.get("items") or ["Action 1", "Action 2", "Action 3"]
+            def_kpi = stage.get("default_kpi") or stage.get("kpi") or stage.get("resultat") or ""
+        else:
+            period = f"PALIER {i+1}"
+            st_theme = str(stage)
+            def_obj = ""
+            actions = ["Action 1", "Action 2", "Action 3"]
+            def_kpi = ""
         h_color = colors_header[i % len(colors_header)]
 
         # 1. Main White Card Container with subtle border

@@ -5,9 +5,12 @@ FastAPI Server for Marge de Manœuvre Workbook Generator.
 import io
 import os
 import sys
+import logging
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.responses import HTMLResponse, StreamingResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
+
+logger = logging.getLogger("uvicorn.error")
 
 # Ensure path resolution
 SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -25,8 +28,8 @@ for _env_candidate in [os.path.join(PROJECT_ROOT, ".env"), os.path.join(SERVER_D
                     _k, _v = _line.split("=", 1)
                     os.environ.setdefault(_k.strip(), _v.strip().strip('"').strip("'"))
 
-from server.models import WorkbookSpec, ParseRequest
-from server.gemini_service import parse_notes_with_gemini
+from server.models import WorkbookSpec, ParseRequest, IterateRequest, IterateResponse
+from server.gemini_service import parse_notes_with_gemini, refine_spec_with_gemini
 from server.pdf_compiler import compile_workbook_from_spec
 
 app = FastAPI(
@@ -51,6 +54,18 @@ def health_check():
     return {"status": "ok", "service": "mdm-workbook-generator"}
 
 
+FAVICON_SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8" fill="#2F2EFA"/>
+  <text x="16" y="22" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-weight="900" font-size="16" fill="#FFFFFF" text-anchor="middle">M</text>
+</svg>"""
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+def get_favicon():
+    """Serves the MDM brand favicon to prevent 404 logs."""
+    return Response(content=FAVICON_SVG, media_type="image/svg+xml")
+
+
 @app.get("/", response_class=HTMLResponse)
 def get_index():
     """Serves the single-page application UI."""
@@ -71,8 +86,24 @@ def api_parse_notes(request: ParseRequest):
         spec = parse_notes_with_gemini(request)
         return spec
     except Exception as e:
+        logger.error("Erreur lors de l'analyse IA : %s", e, exc_info=True)
         raise HTTPException(
             status_code=500, detail=f"Erreur lors de l'analyse IA : {str(e)}"
+        )
+
+
+@app.post("/api/iterate", response_model=IterateResponse)
+def api_iterate_spec(request: IterateRequest):
+    """
+    Refines an existing WorkbookSpec iteratively based on user feedback.
+    """
+    try:
+        response = refine_spec_with_gemini(request)
+        return response
+    except Exception as e:
+        logger.error("Erreur lors de l'itération IA : %s", e, exc_info=True)
+        raise HTTPException(
+            status_code=500, detail=f"Erreur lors de l'ajustement IA : {str(e)}"
         )
 
 
@@ -94,6 +125,7 @@ def api_compile_pdf(spec: WorkbookSpec):
             headers={"Content-Disposition": f"attachment; filename={filename}"},
         )
     except Exception as e:
+        logger.error("Erreur lors de la compilation du PDF : %s", e, exc_info=True)
         raise HTTPException(
             status_code=500,
             detail=f"Erreur lors de la compilation du PDF : {str(e)}",
@@ -115,6 +147,7 @@ def api_quick_generate(request: ParseRequest):
             headers={"Content-Disposition": f"attachment; filename={filename}"},
         )
     except Exception as e:
+        logger.error("Erreur lors de la génération rapide : %s", e, exc_info=True)
         raise HTTPException(
             status_code=500, detail=f"Erreur lors de la génération : {str(e)}"
         )

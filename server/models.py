@@ -116,4 +116,41 @@ class ParseRequest(BaseModel):
     chapter_title: Optional[str] = Field(None, description="Titre souhaité (optionnel, inféré si omis)")
     theme: Literal["indigo", "earth"] = Field("indigo", description="Thème de couleur")
     beneficiary_name: Optional[str] = Field(None, description="Prénom ou nom du coaché")
+    meteo_option: Optional[
+        Literal["auto", "none", "classic", "clarity", "mental_load"]
+    ] = Field(
+        "auto",
+        description="Option de check-in / météo : 'auto' (décision IA), 'none' (pas de météo), 'classic' (météo classique), 'clarity' (boussole/intention), 'mental_load' (charge mentale)",
+    )
+    session_focus: Optional[
+        Literal["auto", "bilan", "decision", "action"]
+    ] = Field(
+        "auto",
+        description="Focus pédagogique dominant : 'auto' (libre), 'bilan' (diagnostic/recul), 'decision' (arbitrage/comparatif), 'action' (plan d'action/roadmap)",
+    )
+    book_format: Optional[
+        Literal["auto", "short", "standard", "deep"]
+    ] = Field(
+        "standard",
+        description="Format de longueur : 'short' (court, 6-7p), 'standard' (7-10p), 'deep' (complet, + de 10p)",
+    )
+    include_engagement: Optional[bool] = Field(
+        True,
+        description="Inclure la page de pacte d'engagement et signature en fin de livret",
+    )
     api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
+
+
+
+class IterateRequest(BaseModel):
+    current_spec: WorkbookSpec = Field(..., description="Spécification actuelle du livret à modifier")
+    feedback: str = Field(..., description="Consigne d'ajustement ou feedback utilisateur")
+    raw_notes: Optional[str] = Field(None, description="Notes de séance brutes d'origine pour contexte")
+    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
+
+
+class IterateResponse(BaseModel):
+    spec: WorkbookSpec = Field(..., description="Spécification mise à jour du livret")
+    changes_summary: str = Field(..., description="Explication concise des modifications apportées")
+    pedagogical_note: Optional[str] = Field(None, description="Note ou conseil pédagogique sur l'ajustement")
+

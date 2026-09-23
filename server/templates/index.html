@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marge de Manœuvre · Générateur de Workbooks</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
   <!-- Google Fonts: Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +52,7 @@
 <body class="min-h-screen text-slate-800 flex flex-col">
 
   <!-- Header -->
-  <header class="bg-white/80 backdrop-blur border-b border-indigo-100 py-4 px-6 sticky top-0 z-30 shadow-xs">
+  <header class="bg-white/80 backdrop-blur border-b border-indigo-100 py-3.5 px-6 sticky top-0 z-30 shadow-2xs">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div>
@@ -65,14 +66,8 @@
         </div>
         <div class="h-8 w-px bg-slate-200 mx-2"></div>
         <div class="text-xs uppercase font-bold text-mdm-blue tracking-widest">
-          Générateur de Workbooks · IA Studio
+          Générateur de Workbooks
         </div>
-      </div>
-      <div class="flex items-center space-x-3 text-xs">
-        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-mdm-blue border border-indigo-100">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-          8 Gabarits One-Shot
-        </span>
       </div>
     </div>
   </header>
@@ -81,17 +76,17 @@
   <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     
     <!-- LEFT COLUMN: Saisie & Contrôles -->
-    <div class="lg:col-span-5 bg-white/90 rounded-3xl p-6 sm:p-7 shadow-xl shadow-indigo-900/5 border border-indigo-50 flex flex-col space-y-6">
+    <div class="lg:col-span-5 bg-white/90 rounded-3xl p-6 sm:p-7 shadow-xl shadow-indigo-900/5 border border-indigo-50 flex flex-col space-y-5">
       
       <div>
-        <h2 class="text-lg font-bold text-slate-900 flex items-center">
-          <svg class="w-5 h-5 text-mdm-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h2 class="text-base font-bold text-slate-900 flex items-center">
+          <svg class="w-4 h-4 text-mdm-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
           </svg>
           Notes de Séance
         </h2>
-        <p class="text-xs text-slate-500 mt-1">
-          Collez vos notes brutes, bullet points ou débriefs informels.
+        <p class="text-xs text-slate-500 mt-0.5">
+          Collez vos notes brutes ou votre compte-rendu de séance.
         </p>
       </div>
 
@@ -104,70 +99,99 @@
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Palette Couleur</label>
           <select id="theme" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-            <option value="indigo" selected>Indigo Moderne 🔵</option>
-            <option value="earth">Earth Terracotta 🟠</option>
+            <option value="indigo" selected>Indigo 🔵</option>
+            <option value="earth">Earth 🟠</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom du Bénéficiaire (Optionnel)</label>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom du Bénéficiaire</label>
         <input type="text" id="beneficiary_name" placeholder="Ex: Thomas, Sarah..." class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
       </div>
 
       <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Titre Suggeré (Optionnel)</label>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Titre Suggéré</label>
         <input type="text" id="chapter_title" placeholder="Ex: Clarifier mes Valeurs & Poser mes Limites" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
       </div>
 
       <div>
         <div class="flex justify-between items-center mb-1">
-          <label class="block text-xs font-semibold text-slate-600">Vos Notes Brutes</label>
+          <label class="block text-xs font-semibold text-slate-600">Notes de la séance</label>
           <button type="button" onclick="loadSampleNotes()" class="text-xs text-mdm-blue hover:underline font-medium">Charger un exemple</button>
         </div>
-        <textarea id="raw_notes" rows="9" placeholder="Ex :
-- Bilan séance 3 : prise de conscience forte sur la charge mentale
-- Exercice météo : énergie à 4/10, beaucoup d'urgence
-- 4 axes de vie : pro, perso, famille, temps pour soi
-- Questionner les 3 situations où dire oui coûte trop cher
-- Ancrer 1 engagement simple pour les 15 prochains jours..." class="w-full p-3.5 border border-slate-200 rounded-2xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
+        <textarea id="raw_notes" rows="8" placeholder="Collez ici les notes brutes..." class="w-full p-3.5 border border-slate-200 rounded-2xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
+      </div>
+
+      <!-- Options du Livret -->
+      <div class="bg-indigo-50/50 rounded-2xl p-3.5 border border-indigo-100/70 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Options du Livret</span>
+          <span class="text-[10px] text-slate-400 font-medium">Structure</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Format du livret</label>
+            <select id="book_format" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+              <option value="short">Court (6 – 7 pages)</option>
+              <option value="standard" selected>Standard (7 – 10 pages)</option>
+              <option value="deep">Complet (+ de 10 pages)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Page Météo</label>
+            <select id="meteo_option" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+              <option value="classic" selected>Avec météo (émotions & énergie)</option>
+              <option value="none">Sans météo (direct dans le sujet)</option>
+              <option value="auto">Automatique (selon notes)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-0.5 flex items-center">
+          <label class="flex items-center space-x-2 cursor-pointer text-xs text-slate-600">
+            <input type="checkbox" id="include_engagement" checked class="rounded border-slate-300 text-mdm-blue focus:ring-mdm-blue w-3.5 h-3.5">
+            <span>Inclure pacte d'engagement & signature</span>
+          </label>
+        </div>
       </div>
 
       <!-- Advanced: API Key toggle -->
       <details class="text-xs text-slate-500">
-        <summary class="cursor-pointer font-medium hover:text-slate-700">Clé API Gemini (Optionnel si préconfigurée)</summary>
+        <summary class="cursor-pointer font-medium hover:text-slate-700">Clé API (Optionnelle si configurée sur le serveur)</summary>
         <div class="mt-2">
           <input type="password" id="api_key" placeholder="AIzaSy..." class="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-xs">
-          <p class="text-[10px] text-slate-400 mt-1">Si laissée vide, le serveur utilise la clé par défaut ou le mode pédagogique.</p>
         </div>
       </details>
 
-      <!-- Action Buttons -->
-      <div class="space-y-2 pt-2">
+      <!-- Action Button -->
+      <div class="pt-1">
         <button id="btn_parse" onclick="parseNotes()" class="w-full py-3.5 px-4 bg-mdm-blue hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
-          <span>1. Analyser & Structurer (Gemini Flash)</span>
-        </button>
-
-        <button id="btn_quick" onclick="quickGenerate()" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-2xl text-xs flex items-center justify-center space-x-2 transition cursor-pointer">
-          <span>🚀 Génération directe 1-Click (PDF immédiat)</span>
+          <span>Concevoir la maquette</span>
         </button>
       </div>
 
     </div>
 
-    <!-- RIGHT COLUMN: Maquette & Téléchargement -->
+    <!-- RIGHT COLUMN: Maquette, Itération & Téléchargement -->
     <div class="lg:col-span-7 flex flex-col space-y-4">
       
       <!-- Top Action bar when spec ready -->
-      <div id="ready_bar" class="hidden bg-white/95 rounded-2xl p-4 border border-indigo-100 shadow-md flex items-center justify-between">
-        <div>
+      <div id="ready_bar" class="hidden bg-white/95 rounded-2xl p-4 border border-indigo-100 shadow-md flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-2">
           <span id="page_count_badge" class="px-2.5 py-1 bg-blue-50 text-mdm-blue text-xs font-bold rounded-lg border border-blue-100">
-            6 Pages calibrées
+            6 Pages
           </span>
-          <span class="text-xs text-slate-500 ml-2">Vous pouvez ajuster les textes avant l'impression</span>
+          <span id="theme_badge" class="px-2.5 py-1 bg-purple-50 text-purple-700 text-xs font-bold rounded-lg border border-purple-100">
+            Indigo
+          </span>
+          <span id="iteration_badge" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-lg border border-emerald-100">
+            Itération 1
+          </span>
         </div>
         <button onclick="compileCurrentSpec()" class="py-2.5 px-5 bg-mdm-red hover:bg-red-600 text-white font-bold rounded-xl text-xs shadow-md shadow-red-500/20 flex items-center space-x-2 cursor-pointer transition">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -177,25 +201,92 @@
         </button>
       </div>
 
+      <!-- AI Changelog / Feedback Alert (shown when an iteration just occurred) -->
+      <div id="ai_changelog_bar" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 shadow-2xs space-y-0.5">
+        <div class="flex items-center space-x-2 text-emerald-800 text-xs font-bold">
+          <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span id="ai_changelog_title">Ajustement appliqué</span>
+        </div>
+        <p id="ai_changelog_text" class="text-xs text-emerald-950 font-medium pl-5.5"></p>
+      </div>
+
+      <!-- Overview Card -->
+      <div id="pedagogical_briefing" class="hidden bg-white/95 rounded-2xl p-4 sm:p-5 border border-indigo-100 shadow-2xs space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Contenu du Livret (WYSIWYG)</h3>
+          <span class="text-[11px] text-slate-400 font-medium">Textes réels imprimés</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div>
+            <span class="text-slate-400 font-semibold text-[10px] uppercase block">Titre :</span>
+            <span id="briefing_title" class="font-bold text-slate-800 text-sm"></span>
+          </div>
+          <div>
+            <span class="text-slate-400 font-semibold text-[10px] uppercase block">Bénéficiaire :</span>
+            <span id="briefing_beneficiary" class="font-bold text-mdm-blue text-sm"></span>
+          </div>
+        </div>
+        <div>
+          <span class="text-slate-400 font-semibold text-[10px] uppercase block mb-1">Jalons :</span>
+          <div id="briefing_steps" class="flex flex-wrap gap-1.5"></div>
+        </div>
+      </div>
+
+      <!-- Iteration / Feedback Panel -->
+      <div id="iteration_panel" class="hidden bg-white/95 rounded-2xl p-4 sm:p-5 border border-indigo-100 shadow-2xs space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-mdm-blue">Ajuster la maquette</h3>
+        </div>
+        <div class="relative">
+          <textarea id="iteration_prompt" rows="2" placeholder="Ex : Alléger les questions, ajouter une jauge, passer en thème Earth..." class="w-full p-3 border border-slate-200 rounded-xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue pr-24"></textarea>
+          <button id="btn_iterate" onclick="iterateSpec()" class="absolute right-2 bottom-2.5 px-3 py-1.5 bg-mdm-blue hover:bg-blue-700 text-white font-bold rounded-lg text-xs shadow-2xs transition cursor-pointer flex items-center space-x-1">
+            <span>Ajuster</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </button>
+        </div>
+        <!-- Suggestion Chips -->
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button type="button" onclick="applySuggestion('Allège et raccourcis les questions pour aérer la mise en page')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
+            💡 Alléger
+          </button>
+          <button type="button" onclick="applySuggestion('Ajoute une feuille de route 30-60-90 jours pour ancrer les actions')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
+            🛣️ Feuille de route
+          </button>
+          <button type="button" onclick="applySuggestion('Ajoute une jauge ou échelle d\'auto-évaluation de 0 à 10')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
+            ⚖️ Jauge (0-10)
+          </button>
+          <button type="button" onclick="applySuggestion('Bascule le thème graphique en Earth (terracotta chaleureux)')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
+            🎨 Thème Earth
+          </button>
+          <button type="button" onclick="applySuggestion('Rends les questions plus concrètes et orientées passage à l\'action immédiat')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
+            🎯 Plus d'action
+          </button>
+        </div>
+      </div>
+
       <!-- State: Empty / Waiting -->
-      <div id="state_empty" class="bg-white/60 border-2 border-dashed border-indigo-100 rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[450px]">
-        <div class="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-mdm-blue mb-4">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div id="state_empty" class="bg-white/60 border-2 border-dashed border-indigo-100 rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[420px]">
+        <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-mdm-blue mb-3">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
         </div>
-        <h3 class="text-base font-bold text-slate-700">Aucune maquette active</h3>
-        <p class="text-xs text-slate-500 max-w-sm mt-1">
-          Collez vos notes dans le panneau de gauche et lancez l'analyse. Gemini Flash construira la maquette page par page en quelques secondes.
+        <h3 class="text-sm font-bold text-slate-700">Aucune maquette</h3>
+        <p class="text-xs text-slate-400 max-w-xs mt-1">
+          Collez vos notes à gauche puis cliquez sur Concevoir la maquette.
         </p>
       </div>
 
       <!-- State: Loading -->
-      <div id="state_loading" class="hidden bg-white rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[450px] shadow-sm">
-        <div class="w-12 h-12 border-4 border-mdm-blue border-t-transparent rounded-full animate-spin mb-4"></div>
-        <h3 class="text-base font-bold text-slate-800" id="loading_text">Analyse sémantique en cours...</h3>
-        <p class="text-xs text-slate-500 max-w-xs mt-1">
-          Gemini Flash calibre les textes et sélectionne les meilleurs gabarits graphiques.
+      <div id="state_loading" class="hidden bg-white rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[420px] shadow-xs">
+        <div class="w-10 h-10 border-3 border-mdm-blue border-t-transparent rounded-full animate-spin mb-3"></div>
+        <h3 class="text-sm font-bold text-slate-800" id="loading_text">Conception de la maquette...</h3>
+        <p class="text-xs text-slate-400 max-w-xs mt-1">
+          Génération page par page en cours.
         </p>
       </div>
 
@@ -210,17 +301,22 @@
 
   <!-- Footer -->
   <footer class="py-4 text-center text-xs text-slate-400 border-t border-indigo-50 mt-auto">
-    Marge de Manœuvre · Système Déterministe ReportLab & Gemini Flash 3.7
+    Marge de Manœuvre
   </footer>
 
   <script>
     let currentWorkbookSpec = null;
+    let iterationCount = 1;
+    let initialRawNotes = "";
 
     function loadSampleNotes() {
       document.getElementById('chapter_num').value = 4;
       document.getElementById('chapter_title').value = "Clarifier mes Valeurs & Poser mes Limites";
       document.getElementById('beneficiary_name').value = "Julien";
       document.getElementById('theme').value = "indigo";
+      document.getElementById('meteo_option').value = "classic";
+      document.getElementById('book_format').value = "standard";
+      document.getElementById('include_engagement').checked = true;
       document.getElementById('raw_notes').value = 
 `Thème : Chapitre 4 - Les Valeurs & Limites professionnelles.
 Bénéficiaire : Julien, manager en transition.
@@ -250,7 +346,8 @@ Notes de la séance :
         return;
       }
 
-      setLoading(true, "Analyse par Gemini Flash...");
+      initialRawNotes = rawNotes;
+      setLoading(true, "Analyse par Gemini Flash 3.8...");
 
       const payload = {
         raw_notes: rawNotes,
@@ -258,6 +355,10 @@ Notes de la séance :
         chapter_title: document.getElementById('chapter_title').value.trim() || null,
         theme: document.getElementById('theme').value,
         beneficiary_name: document.getElementById('beneficiary_name').value.trim() || null,
+        meteo_option: document.getElementById('meteo_option').value,
+        session_focus: document.getElementById('session_focus') ? document.getElementById('session_focus').value : 'auto',
+        book_format: document.getElementById('book_format').value,
+        include_engagement: document.getElementById('include_engagement').checked,
         api_key: document.getElementById('api_key').value.trim() || null
       };
 
@@ -269,12 +370,13 @@ Notes de la séance :
         });
 
         if (!res.ok) {
-          const err = await res.json();
+          const err = await res.json().catch(() => ({ detail: "Erreur serveur" }));
           throw new Error(err.detail || "Erreur serveur");
         }
 
         currentWorkbookSpec = await res.json();
-        renderPreview(currentWorkbookSpec);
+        iterationCount = 1;
+        renderPreview(currentWorkbookSpec, null, null);
       } catch (err) {
         alert("Erreur : " + err.message);
       } finally {
@@ -282,46 +384,61 @@ Notes de la séance :
       }
     }
 
-    async function quickGenerate() {
-      const rawNotes = document.getElementById('raw_notes').value.trim();
-      if (!rawNotes) {
-        alert("Veuillez saisir des notes de séance.");
+    async function iterateSpec() {
+      if (!currentWorkbookSpec) {
+        alert("Veuillez d'abord analyser ou structurer des notes.");
         return;
       }
 
-      setLoading(true, "Génération directe du PDF en 1-Click...");
+      const promptInput = document.getElementById('iteration_prompt');
+      const feedback = promptInput.value.trim();
+      if (!feedback) {
+        alert("Veuillez renseigner une consigne d'ajustement.");
+        return;
+      }
+
+      setLoading(true, "Ajustement de la maquette par Gemini Flash...");
 
       const payload = {
-        raw_notes: rawNotes,
-        chapter_num: parseInt(document.getElementById('chapter_num').value) || 1,
-        chapter_title: document.getElementById('chapter_title').value.trim() || null,
-        theme: document.getElementById('theme').value,
-        beneficiary_name: document.getElementById('beneficiary_name').value.trim() || null,
+        current_spec: currentWorkbookSpec,
+        feedback: feedback,
+        raw_notes: initialRawNotes || document.getElementById('raw_notes').value.trim() || null,
         api_key: document.getElementById('api_key').value.trim() || null
       };
 
       try {
-        const res = await fetch('/api/quick-generate', {
+        const res = await fetch('/api/iterate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        if (!res.ok) throw new Error("Erreur de génération PDF");
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: "Erreur lors de l'ajustement" }));
+          throw new Error(err.detail || "Erreur lors de l'ajustement");
+        }
 
-        const blob = await res.blob();
-        downloadBlob(blob, `Workbook_Chapitre_${payload.chapter_num}.pdf`);
+        const data = await res.json();
+        currentWorkbookSpec = data.spec;
+        iterationCount++;
+        promptInput.value = "";
+        renderPreview(currentWorkbookSpec, data.changes_summary, data.pedagogical_note);
       } catch (err) {
-        alert("Erreur : " + err.message);
+        alert("Erreur lors de l'ajustement : " + err.message);
       } finally {
         setLoading(false);
       }
     }
 
+    function applySuggestion(text) {
+      document.getElementById('iteration_prompt').value = text;
+      iterateSpec();
+    }
+
     async function compileCurrentSpec() {
       if (!currentWorkbookSpec) return;
 
-      setLoading(true, "Compilation du PDF en cours...");
+      setLoading(true, "Compilation finale du PDF en cours...");
 
       try {
         const res = await fetch('/api/compile', {
@@ -330,7 +447,10 @@ Notes de la séance :
           body: JSON.stringify(currentWorkbookSpec)
         });
 
-        if (!res.ok) throw new Error("Erreur lors de la compilation");
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: "Erreur lors de la compilation" }));
+          throw new Error(err.detail || "Erreur lors de la compilation");
+        }
 
         const blob = await res.blob();
         downloadBlob(blob, `Workbook_Chapitre_${currentWorkbookSpec.chapter_num}.pdf`);
@@ -352,65 +472,524 @@ Notes de la séance :
       a.remove();
     }
 
-    function renderPreview(spec) {
+    function renderPreview(spec, changesSummary = null, pedagogicalNote = null) {
       const container = document.getElementById('state_preview');
       container.innerHTML = '';
 
+      // 1. Ready bar
       document.getElementById('ready_bar').classList.remove('hidden');
-      document.getElementById('page_count_badge').innerText = `${spec.pages.length} Pages calibrées`;
+      document.getElementById('page_count_badge').innerText = `${spec.pages.length} Pages`;
+      document.getElementById('theme_badge').innerText = spec.theme === 'earth' ? 'Earth 🟠' : 'Indigo 🔵';
+      document.getElementById('iteration_badge').innerText = `Version ${iterationCount}`;
 
+      // 2. AI Changelog Bar
+      const changelogBar = document.getElementById('ai_changelog_bar');
+      if (changesSummary) {
+        changelogBar.classList.remove('hidden');
+        document.getElementById('ai_changelog_text').innerText = changesSummary;
+      } else {
+        changelogBar.classList.add('hidden');
+      }
+
+      // 3. Pedagogical Briefing Card
+      const briefing = document.getElementById('pedagogical_briefing');
+      briefing.classList.remove('hidden');
+      document.getElementById('briefing_title').innerText = spec.chapter_title || "Bilan & Alignement";
+      document.getElementById('briefing_beneficiary').innerText = spec.beneficiary_name || "Bénéficiaire non spécifié";
+
+      const stepsContainer = document.getElementById('briefing_steps');
+      stepsContainer.innerHTML = '';
+      spec.pages.forEach((p, i) => {
+        const stepBadge = document.createElement('span');
+        stepBadge.className = "px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-700 text-[10px] font-medium rounded-md";
+        stepBadge.innerText = `${i+1}. ${p.title || p.template}`;
+        stepsContainer.appendChild(stepBadge);
+      });
+
+      // 4. Iteration Panel
+      document.getElementById('iteration_panel').classList.remove('hidden');
+
+      // 5. Render individual page cards (WYSIWYG content sheets)
       spec.pages.forEach((page, idx) => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3";
+        card.className = "bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm space-y-3.5 transition hover:border-indigo-300";
 
-        let badgeColor = "bg-blue-50 text-mdm-blue";
-        if (page.template === 'meteo') badgeColor = "bg-amber-50 text-amber-600";
-        if (page.template === 'quadrants') badgeColor = "bg-purple-50 text-purple-600";
-        if (page.template === 'two_columns') badgeColor = "bg-emerald-50 text-emerald-600";
-        if (page.template === 'engagement') badgeColor = "bg-rose-50 text-rose-600";
-        if (page.template === 'enquete') badgeColor = "bg-cyan-50 text-cyan-600";
-        if (page.template === 'roadmap') badgeColor = "bg-indigo-50 text-indigo-600";
-        if (page.template === 'composite') badgeColor = "bg-teal-50 text-teal-700";
+        let badgeColor = "bg-blue-50 text-mdm-blue border border-blue-100";
+        if (page.template === 'meteo') badgeColor = "bg-amber-50 text-amber-800 border border-amber-200";
+        if (page.template === 'quadrants') badgeColor = "bg-purple-50 text-purple-800 border border-purple-200";
+        if (page.template === 'two_columns') badgeColor = "bg-emerald-50 text-emerald-800 border border-emerald-200";
+        if (page.template === 'engagement') badgeColor = "bg-rose-50 text-rose-800 border border-rose-200";
+        if (page.template === 'enquete') badgeColor = "bg-cyan-50 text-cyan-800 border border-cyan-200";
+        if (page.template === 'roadmap') badgeColor = "bg-indigo-50 text-indigo-800 border border-indigo-200";
+        if (page.template === 'composite') badgeColor = "bg-teal-50 text-teal-900 border border-teal-200";
 
-        let contentSnippet = "";
-        if (page.template === 'questions' && page.params.questions) {
-          contentSnippet = `<div class="text-xs text-slate-600 space-y-1.5 pl-2 border-l-2 border-slate-200">
-            ${page.params.questions.map(q => `<div><strong>·</strong> ${escapeHtml(q.question)}</div>`).join('')}
-          </div>`;
-        } else if (page.template === 'quadrants' && page.params.quadrants) {
-          contentSnippet = `<div class="grid grid-cols-2 gap-2 text-xs text-slate-600">
-            ${page.params.quadrants.map(q => `<div class="bg-slate-50 p-2 rounded-lg font-medium">${escapeHtml(Array.isArray(q) ? q[0] : (q.title || ''))}</div>`).join('')}
-          </div>`;
-        } else if (page.template === 'two_columns' && page.params.rows) {
-          contentSnippet = `<div class="text-xs text-slate-600 space-y-1">
-            ${page.params.rows.map(r => `<div>⮀ ${escapeHtml(Array.isArray(r) ? r[0] : (r.label || ''))}</div>`).join('')}
-          </div>`;
-        } else if (page.template === 'enquete') {
-          contentSnippet = `<div class="text-xs text-slate-500 italic bg-slate-50 p-2 rounded-lg">Fiche contact + 3 axes d'investigation terrain</div>`;
+        const p = page.params || {};
+        let contentHtml = "";
+
+        if (page.template === 'cover') {
+          contentHtml = `
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2 text-xs">
+              <div class="flex items-center justify-between text-[11px] pb-2 border-b border-slate-200/60">
+                <span class="font-bold text-slate-700 uppercase tracking-wider">Page de Couverture</span>
+                <span class="px-2 py-0.5 rounded font-bold uppercase ${spec.theme === 'earth' ? 'bg-amber-100 text-amber-800' : 'bg-indigo-100 text-mdm-blue'}">
+                  ${escapeHtml(spec.theme === 'earth' ? 'Thème Earth 🟠' : 'Thème Indigo 🔵')}
+                </span>
+              </div>
+              <div>
+                <div class="text-[10px] uppercase font-bold text-slate-400">Titre principal du livret :</div>
+                <div class="text-base font-black text-slate-900 leading-tight">${escapeHtml(spec.chapter_title || "Bilan & Alignement")}</div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs">
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 block">Sous-titre / En-tête :</span>
+                  <span class="text-slate-700 font-semibold">${escapeHtml(spec.subtitle || "BILAN DE COMPÉTENCES & ALIGNEMENT")}</span>
+                </div>
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 block">Personnalisation :</span>
+                  <span class="text-slate-700 font-semibold">${spec.beneficiary_name ? `Pour ${escapeHtml(spec.beneficiary_name)}` : 'Non spécifié'}</span>
+                </div>
+              </div>
+            </div>`;
+        } else if (page.template === 'summary') {
+          const rawPts = p.points || p.steps || p.items || [];
+          const pts = Array.isArray(rawPts) ? rawPts : Object.values(rawPts);
+          contentHtml = `
+            <div class="space-y-3 text-xs">
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Introduction :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              <div class="space-y-2">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Étapes imprimées au sommaire :</div>
+                <div class="space-y-1.5">
+                  ${pts.map((pt, i) => {
+                    let num = (i+1)+'.';
+                    let text = '';
+                    if (Array.isArray(pt)) {
+                      num = pt[0] || (i+1)+'.';
+                      text = pt[1] || '';
+                    } else if (typeof pt === 'object' && pt !== null) {
+                      num = pt.label || pt.num || (i+1)+'.';
+                      const titlePart = pt.title || pt.name || '';
+                      const descPart = pt.desc || pt.description || pt.subtitle || '';
+                      text = (titlePart && descPart) ? `<strong>${escapeHtml(titlePart)}</strong> : ${escapeHtml(descPart)}` : (titlePart || descPart);
+                    } else {
+                      text = String(pt);
+                    }
+                    return `
+                      <div class="flex items-start space-x-2.5 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                        <span class="font-mono font-bold text-mdm-blue text-xs mt-0.5">${escapeHtml(num)}</span>
+                        <span class="text-slate-800 leading-snug">${typeof pt === 'object' && !Array.isArray(pt) && (pt.title && pt.desc) ? text : escapeHtml(text)}</span>
+                      </div>`;
+                  }).join('')}
+                </div>
+              </div>
+            </div>`;
+        } else if (page.template === 'meteo') {
+          contentHtml = `
+            <div class="space-y-3 text-xs bg-amber-50/40 p-3.5 rounded-xl border border-amber-200/60">
+              <div class="space-y-1.5">
+                <span class="text-[10px] font-bold uppercase text-amber-900 tracking-wider">1. Sélecteur d'état d'esprit</span>
+                <div class="bg-white p-2.5 rounded-lg border border-amber-100 flex flex-wrap items-center justify-between gap-2">
+                  <span class="font-semibold text-slate-800">${escapeHtml(p.emotion_prompt || "Aujourd'hui, je me sens :")}</span>
+                  <div class="flex items-center space-x-2 text-xs font-bold text-slate-700 bg-amber-50/60 px-2 py-1 rounded">
+                    <span>☀️ Beau fixe</span>
+                    <span>·</span>
+                    <span>⛅ Éclaircies</span>
+                    <span>·</span>
+                    <span>🌧️ Pluvieux</span>
+                    <span>·</span>
+                    <span>⚡ Sous tension</span>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-1.5">
+                <span class="text-[10px] font-bold uppercase text-amber-900 tracking-wider">2. Jauge d'énergie vitale</span>
+                <div class="bg-white p-2.5 rounded-lg border border-amber-100 flex items-center justify-between text-xs">
+                  <span class="font-semibold text-slate-800">${escapeHtml(p.energy_prompt || "Niveau d'énergie actuel :")}</span>
+                  <span class="font-mono font-bold text-mdm-blue bg-blue-50 px-2.5 py-1 rounded border border-blue-100">0 · · · · 5 · · · · 10</span>
+                </div>
+              </div>
+              <div class="space-y-1.5">
+                <span class="text-[10px] font-bold uppercase text-amber-900 tracking-wider">3. Question de recentrage</span>
+                <div class="bg-white p-3 rounded-lg border border-amber-100 space-y-1.5">
+                  <p class="text-slate-900 font-bold">« ${escapeHtml(p.thought_prompt || "Ce qui prend le plus de place dans mon esprit...")} »</p>
+                  <div class="p-2 bg-slate-50 border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic flex items-center space-x-1.5">
+                    <span>✏️</span>
+                    <span>Espace de réflexion et prise de notes pour le bénéficiaire</span>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        } else if (page.template === 'quadrants') {
+          let quads = p.quadrants || p.quadrants_data || p.axes;
+          if (!quads && (p.top_left || p.top_right)) {
+            quads = [p.top_left, p.top_right, p.bottom_left, p.bottom_right];
+          }
+          if (!quads) quads = [];
+          contentHtml = `
+            <div class="space-y-3 text-xs">
+              ${p.instruction ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-purple-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.instruction)}</div>` : ''}
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${quads.map(q => {
+                  const t = Array.isArray(q) ? q[0] : (q.title || '');
+                  const s = Array.isArray(q) ? (q[1] || '') : (q.subtitle || q.placeholder || '');
+                  return `
+                    <div class="bg-purple-50/50 p-3 rounded-xl border border-purple-100 space-y-1.5">
+                      <div class="font-black text-purple-950 text-xs">${escapeHtml(t)}</div>
+                      ${s ? `<div class="text-[11px] text-purple-800 font-medium">${escapeHtml(s)}</div>` : ''}
+                      <div class="p-2 bg-white border border-dashed border-purple-200 rounded text-[10px] text-slate-400 italic">
+                        ✏️ Priorité ou constat formulé par le bénéficiaire
+                      </div>
+                    </div>`;
+                }).join('')}
+              </div>
+            </div>`;
+        } else if (page.template === 'two_columns') {
+          const rawRows = p.rows || p.rows_data || p.items || [];
+          const rows = Array.isArray(rawRows) ? rawRows : Object.values(rawRows);
+          contentHtml = `
+            <div class="space-y-3 text-xs">
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-emerald-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              <div class="grid grid-cols-2 gap-2 font-bold text-[11px] uppercase tracking-wider pb-1 border-b border-slate-200">
+                <span class="text-mdm-blue">${escapeHtml(p.col1_header || "Situation / Frein")}</span>
+                <span class="text-mdm-red">${escapeHtml(p.col2_header || "Levier / Enseignement")}</span>
+              </div>
+              <div class="space-y-2">
+                ${rows.map(r => {
+                  let left = "", right = "", lbl = "";
+                  if (typeof r === 'object' && !Array.isArray(r)) {
+                    left = r.left || r.col1 || r.situation || r.left_tooltip || '';
+                    right = r.right || r.col2 || r.solution || r.levier || r.right_tooltip || '';
+                    lbl = r.label || r.title || '';
+                  } else if (Array.isArray(r)) {
+                    lbl = r[0] || '';
+                    left = r[1] || lbl;
+                    right = r[2] || '';
+                  } else {
+                    lbl = String(r);
+                    left = lbl;
+                  }
+                  return `
+                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 space-y-1.5">
+                      ${lbl ? `<div class="font-bold text-slate-900 text-xs">${escapeHtml(lbl)}</div>` : ''}
+                      <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-white p-2 rounded border border-slate-200 text-slate-700 leading-snug">
+                          <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Constat initial :</span>
+                          ${escapeHtml(left)}
+                        </div>
+                        <div class="bg-white p-2 rounded border border-slate-200 text-slate-900 font-semibold leading-snug">
+                          <span class="text-[10px] uppercase font-bold text-emerald-600 block mb-0.5">Levier / Règle posée :</span>
+                          ${escapeHtml(right)}
+                        </div>
+                      </div>
+                    </div>`;
+                }).join('')}
+              </div>
+            </div>`;
+        } else if (page.template === 'questions') {
+          const rawQs = p.questions || p.items || [];
+          const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
+          contentHtml = `
+            <div class="space-y-3 text-xs">
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              <div class="space-y-2.5">
+                ${qs.map((q, i) => {
+                  const qText = typeof q === 'object' ? (q.question || q.text || q.title || `Question ${i+1}`) : String(q);
+                  const qSub = typeof q === 'object' ? q.subtitle : null;
+                  const qEx = typeof q === 'object' ? (q.example || q.ex) : null;
+                  return `
+                    <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-200/80 space-y-1.5">
+                      <div class="font-bold text-slate-900 text-xs flex items-start space-x-2">
+                        <span class="font-mono text-mdm-blue font-black">${i+1}.</span>
+                        <span>${escapeHtml(qText)}</span>
+                      </div>
+                      ${qSub ? `<div class="text-[11px] text-slate-600 pl-4 font-normal">${escapeHtml(qSub)}</div>` : ''}
+                      ${qEx ? `
+                        <div class="ml-4 p-2 bg-indigo-50/70 border border-indigo-100 rounded-lg text-[11px] text-indigo-900">
+                          <span class="font-bold">💡 Exemple concret donné :</span> « ${escapeHtml(qEx)} »
+                        </div>` : ''}
+                      <div class="ml-4 p-2.5 bg-white border border-dashed border-slate-200 rounded-lg text-[10px] text-slate-400 italic flex items-center space-x-1.5">
+                        <span>✏️</span>
+                        <span>Zone de réponse pour le bénéficiaire (AcroForm interactif)</span>
+                      </div>
+                    </div>`;
+                }).join('')}
+              </div>
+            </div>`;
         } else if (page.template === 'roadmap') {
-          contentSnippet = `<div class="text-xs text-slate-500 italic bg-slate-50 p-2 rounded-lg">3 Paliers (30 · 60 · 90 jours) avec objectifs, actions et KPI</div>`;
+          const rawStages = p.stages || p.stages_data || p.paliers || [];
+          const stages = Array.isArray(rawStages) ? rawStages : Object.values(rawStages);
+          contentHtml = `
+            <div class="space-y-3 text-xs">
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              <div class="space-y-2.5">
+                ${stages.map((st, i) => {
+                  const per = st.period || st.palier || `PALIER ${i+1}`;
+                  const theme = st.theme || '';
+                  const obj = st.default_obj || st.objective || st.objectif || '';
+                  const kpi = st.default_kpi || st.kpi || '';
+                  const acts = st.actions || [];
+                  return `
+                    <div class="bg-indigo-50/40 p-3 rounded-xl border border-indigo-100 space-y-2">
+                      <div class="flex items-center justify-between pb-1 border-b border-indigo-100/60">
+                        <span class="font-black text-indigo-950 text-xs uppercase tracking-wider">${escapeHtml(per)}</span>
+                        ${theme ? `<span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded text-[10px] font-bold uppercase">${escapeHtml(theme)}</span>` : ''}
+                      </div>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${obj ? `<div><span class="text-[10px] font-bold uppercase text-slate-400 block">Cap / Objectif :</span><span class="text-slate-800 font-semibold">${escapeHtml(obj)}</span></div>` : ''}
+                        ${kpi ? `<div><span class="text-[10px] font-bold uppercase text-emerald-600 block">Indicateur Clé (KPI) :</span><span class="text-emerald-900 font-semibold">${escapeHtml(kpi)}</span></div>` : ''}
+                      </div>
+                      ${acts.length ? `
+                        <div class="pt-1.5 border-t border-indigo-100/60 space-y-1">
+                          <span class="text-[10px] font-bold uppercase text-slate-400 block">Actions prioritaires à cocher :</span>
+                          <div class="space-y-1">
+                            ${acts.map(a => `
+                              <div class="flex items-center space-x-2 text-slate-700 bg-white p-1.5 rounded border border-indigo-50">
+                                <span class="text-mdm-blue text-sm">☑</span>
+                                <span>${escapeHtml(a)}</span>
+                              </div>`).join('')}
+                          </div>
+                        </div>` : ''}
+                    </div>`;
+                }).join('')}
+              </div>
+            </div>`;
+        } else if (page.template === 'enquete') {
+          const rawQs = p.questions || p.items || [];
+          const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
+          contentHtml = `
+            <div class="space-y-3 text-xs">
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-cyan-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              <div class="bg-cyan-50/50 p-3 rounded-xl border border-cyan-100 space-y-2">
+                <div class="font-bold text-cyan-950 text-xs uppercase tracking-wider">Fiche d'Échange Réseau & Métier</div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+                  <div class="bg-white p-1.5 rounded border border-cyan-100 text-slate-700"><strong>Contact :</strong> [Nom & Prénom]</div>
+                  <div class="bg-white p-1.5 rounded border border-cyan-100 text-slate-700"><strong>Poste :</strong> [Fonction]</div>
+                  <div class="bg-white p-1.5 rounded border border-cyan-100 text-slate-700"><strong>Structure :</strong> [Entreprise]</div>
+                  <div class="bg-white p-1.5 rounded border border-cyan-100 text-slate-700"><strong>Date :</strong> [Date de l'échange]</div>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Questions d'exploration terrain :</div>
+                ${qs.length ? qs.map((q, qi) => `
+                  <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
+                    <div class="font-bold text-slate-900 text-xs flex items-center space-x-1.5">
+                      <span class="text-cyan-700 font-mono font-bold">${qi+1}.</span>
+                      <span>${escapeHtml(q.title || q.question || `Axe ${qi+1}`)}</span>
+                    </div>
+                    ${q.subtitle ? `<div class="text-[11px] text-slate-600 pl-4 font-normal">${escapeHtml(q.subtitle)}</div>` : ''}
+                    <div class="ml-4 p-2 bg-white border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic">
+                      ✏️ Notes et pépites recueillies auprès du professionnel
+                    </div>
+                  </div>
+                `).join('') : `
+                  <div class="text-slate-500 italic p-2 bg-slate-50 rounded">3 blocs d'analyse : Besoins & Douleurs, Solutions actuelles, Pépites & Recommandations.</div>
+                `}
+              </div>
+            </div>`;
+        } else if (page.template === 'engagement') {
+          const rawLines = p.lines || p.points || p.commitments || [];
+          const lines = Array.isArray(rawLines) ? rawLines : Object.values(rawLines);
+          contentHtml = `
+            <div class="space-y-3 text-xs bg-rose-50/30 p-4 rounded-xl border border-rose-100">
+              <div class="font-black text-rose-950 text-xs uppercase tracking-wider">Engagements du Bénéficiaire</div>
+              <div class="space-y-2 pl-2.5 border-l-2 border-rose-300">
+                ${lines.map(l => {
+                  const txt = typeof l === 'object' ? (l.text || l.line || '') : String(l);
+                  return `
+                    <div class="text-slate-800 leading-snug flex items-start space-x-2">
+                      <span class="text-rose-600 font-bold">✓</span>
+                      <span>${escapeHtml(txt)}</span>
+                    </div>`;
+                }).join('')}
+              </div>
+              <div class="pt-3 border-t border-rose-100 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
+                <div class="bg-white p-2.5 rounded-lg border border-rose-100 flex items-center justify-between">
+                  <span class="font-bold text-[11px] uppercase text-slate-400">Date & Lieu :</span>
+                  <span class="italic text-slate-400 font-mono">[Champ AcroForm]</span>
+                </div>
+                <div class="bg-white p-2.5 rounded-lg border border-rose-100 flex items-center justify-between">
+                  <span class="font-bold text-[11px] uppercase text-slate-400">Signature :</span>
+                  <span class="italic text-slate-400 font-mono">[Champ AcroForm]</span>
+                </div>
+              </div>
+            </div>`;
+        } else if (page.template === 'closing') {
+          const msgs = p.messages || [p.message, p.submessage].filter(Boolean);
+          contentHtml = `
+            <div class="text-xs bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-3 text-center">
+              <div class="font-black text-slate-900 text-sm">Clôture & Messages Inspirants</div>
+              <div class="space-y-2 max-w-lg mx-auto">
+                ${msgs.map(m => `
+                  <div class="p-2.5 bg-white rounded-lg border border-slate-100 shadow-2xs text-slate-800 italic leading-relaxed">
+                    « ${escapeHtml(typeof m === 'object' ? m.text : m)} »
+                  </div>`).join('')}
+              </div>
+              <div class="text-[10px] text-slate-400 uppercase tracking-widest pt-2 border-t border-slate-200 font-bold">
+                Logo officiel Marge de Manœuvre imprimé au centre
+              </div>
+            </div>`;
         } else if (page.template === 'composite') {
-          const blocks = page.blocks || (page.params && page.params.blocks) || [];
-          contentSnippet = `<div class="space-y-1.5 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-            <div class="text-[10px] font-bold uppercase tracking-wider text-teal-700">Composants assemblés (${blocks.length}) :</div>
-            <div class="flex flex-wrap gap-1.5">
-              ${blocks.map(b => `<span class="px-2 py-0.5 bg-white border border-slate-200 rounded-md text-[10px] font-medium text-slate-700">🧩 ${escapeHtml(b.type)}${b.title ? ' : ' + escapeHtml(b.title) : ''}</span>`).join('')}
-            </div>
-          </div>`;
+          const blocks = page.blocks || (p && p.blocks) || [];
+          contentHtml = `
+            <div class="space-y-3 text-xs">
+              ${blocks.map((b) => {
+                const bType = b.type || '';
+                if (bType === 'callout') {
+                  return `
+                    <div class="p-3 bg-amber-50/70 border border-amber-200/80 rounded-xl space-y-1">
+                      <div class="flex items-center space-x-1.5 text-amber-900 font-bold text-xs">
+                        <span>💡</span>
+                        <span>${escapeHtml(b.title || "Repère Clé")}</span>
+                      </div>
+                      <div class="text-xs text-amber-950 leading-relaxed italic pl-5">
+                        « ${escapeHtml(b.text || '')} »
+                      </div>
+                    </div>`;
+                } else if (bType === 'cards_grid') {
+                  const rawCards = b.cards || b.items || [];
+                  const cardsList = rawCards.length ? rawCards : [
+                    { title: "1. Constat ou Observation clé", subtitle: "Ce que vous avez perçu ou appris", placeholder: "Notes du bénéficiaire..." },
+                    { title: "2. Décision ou Piste d'action", subtitle: "Ce que vous choisissez de poser", placeholder: "Notes du bénéficiaire..." }
+                  ];
+                  return `
+                    <div class="space-y-1.5">
+                      ${b.title ? `<div class="font-bold text-slate-800 text-xs">${escapeHtml(b.title)}</div>` : ''}
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${cardsList.map((c, ci) => {
+                          const cTitle = typeof c === 'object' ? (c.title || c.label || `Point ${ci+1}`) : String(c);
+                          const cSub = typeof c === 'object' ? (c.subtitle || c.desc || '') : '';
+                          return `
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
+                              <div class="font-bold text-slate-900 text-xs">${escapeHtml(cTitle)}</div>
+                              ${cSub ? `<div class="text-[11px] text-slate-600 font-medium">${escapeHtml(cSub)}</div>` : ''}
+                              <div class="p-2 bg-white border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic">
+                                ✏️ Espace de saisie bénéficiaire
+                              </div>
+                            </div>`;
+                        }).join('')}
+                      </div>
+                    </div>`;
+                } else if (bType === 'scale') {
+                  const minL = b.min_label || `0 · Faible`;
+                  const maxL = b.max_label || `10 · Élevé`;
+                  return `
+                    <div class="p-3 bg-indigo-50/40 border border-indigo-100 rounded-xl space-y-2">
+                      <div class="font-bold text-slate-800 text-xs">
+                        ${escapeHtml(b.label || b.title || "Échelle d'évaluation :")}
+                      </div>
+                      <div class="flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                        <span class="text-slate-700 font-semibold">${escapeHtml(minL)}</span>
+                        <div class="flex items-center space-x-1 font-mono font-bold text-xs text-mdm-blue bg-white px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs">
+                          <span>0</span><span>·</span><span>1</span><span>·</span><span>2</span><span>·</span><span>3</span><span>·</span><span>4</span><span>·</span><span>5</span><span>·</span><span>6</span><span>·</span><span>7</span><span>·</span><span>8</span><span>·</span><span>9</span><span>·</span><span>10</span>
+                        </div>
+                        <span class="text-slate-700 font-semibold">${escapeHtml(maxL)}</span>
+                      </div>
+                    </div>`;
+                } else if (bType === 'table') {
+                  const headers = (b.headers && b.headers.length) ? b.headers : ["Critère / Thématique", "Observation terrain", "Impact & Décision"];
+                  const rows = (b.rows && b.rows.length) ? b.rows : [
+                    ["1. Faisabilité & Cap", "Observations recueillies", "Maintenir"],
+                    ["2. Valeur & Adhésion", "Observations recueillies", "Ajuster"]
+                  ];
+                  return `
+                    <div class="space-y-1.5">
+                      ${b.title ? `<div class="font-bold text-slate-800 text-xs">${escapeHtml(b.title)}</div>` : ''}
+                      <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                        <table class="w-full text-xs text-left">
+                          <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                              ${headers.map(h => `<th class="p-2.5 font-bold">${escapeHtml(h)}</th>`).join('')}
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-slate-100">
+                            ${rows.map(row => {
+                              const cells = Array.isArray(row) ? row : (typeof row === 'object' ? Object.values(row) : [row]);
+                              return `
+                                <tr>
+                                  ${cells.map(cell => `<td class="p-2.5 text-slate-800">${escapeHtml(cell)}</td>`).join('')}
+                                </tr>`;
+                            }).join('')}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>`;
+                } else if (bType === 'checklist') {
+                  const items = (b.items && b.items.length) ? b.items : [
+                    "Premier point d'action posé",
+                    "Échange ou confirmation planifié",
+                    "Alignement personnel validé"
+                  ];
+                  return `
+                    <div class="space-y-1.5">
+                      ${b.title ? `<div class="font-bold text-slate-800 text-xs">${escapeHtml(b.title)}</div>` : ''}
+                      <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+                        ${items.map(item => `
+                          <div class="text-xs text-slate-800 flex items-center space-x-2">
+                            <span class="text-mdm-blue text-sm font-bold">☑</span>
+                            <span>${escapeHtml(typeof item === 'object' ? (item.text || item.label || '') : item)}</span>
+                          </div>`).join('')}
+                      </div>
+                    </div>`;
+                } else if (bType === 'question') {
+                  return `
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+                      <div class="font-bold text-slate-900 text-xs">${escapeHtml(b.question || b.text || "Question de réflexion")}</div>
+                      ${b.subtitle ? `<div class="text-[11px] text-slate-600">${escapeHtml(b.subtitle)}</div>` : ''}
+                      ${b.example ? `<div class="p-1.5 bg-indigo-50/70 border border-indigo-100 rounded text-[11px] text-indigo-900">💡 <strong>Exemple :</strong> « ${escapeHtml(b.example)} »</div>` : ''}
+                      <div class="p-2 bg-white border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic">
+                        ✏️ Zone de réponse pour le bénéficiaire
+                      </div>
+                    </div>`;
+                } else if (bType === 'stat_boxes') {
+                  const stats = b.stats || [];
+                  return `
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      ${stats.map(s => `
+                        <div class="bg-indigo-50/40 p-2.5 rounded-xl border border-indigo-100 text-center">
+                          <div class="font-black text-mdm-blue text-base">${escapeHtml(s.stat || s.value || '')}</div>
+                          <div class="text-[10px] text-slate-600 mt-0.5">${escapeHtml(s.label || '')}</div>
+                        </div>`).join('')}
+                    </div>`;
+                } else {
+                  return `<p class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-lg">${escapeHtml(b.text || '')}</p>`;
+                }
+              }).join('')}
+            </div>`;
         }
 
+        const templateLabels = {
+          cover: 'Couverture',
+          summary: 'Sommaire',
+          meteo: 'Météo & Énergie',
+          quadrants: 'Matrice 4 Piliers',
+          two_columns: 'Passerelle Avant / Après',
+          questions: 'Questionnement Guidé',
+          enquete: 'Enquête Terrain',
+          roadmap: 'Feuille de Route 30·60·90j',
+          engagement: 'Pacte d\'Engagement',
+          closing: 'Clôture de Séance',
+          composite: 'Atelier Sur-Mesure',
+        };
+        const pageLabel = templateLabels[page.template] || 'Atelier Pédagogique';
+
         card.innerHTML = `
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-400">Page ${idx + 1}</span>
-            <span class="px-2 py-0.5 rounded text-[11px] font-bold uppercase ${badgeColor}">
-              ${escapeHtml(page.template)}
-            </span>
+          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+            <div class="flex items-center space-x-2">
+              <span class="px-2 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider bg-slate-100 text-slate-700">
+                Page ${idx + 1} / ${spec.pages.length}
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${badgeColor}">
+                ${escapeHtml(pageLabel)}
+              </span>
+            </div>
+            ${page.part_title ? `<span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">${escapeHtml(page.part_title)}</span>` : ''}
           </div>
-          <div>
-            <input type="text" value="${escapeHtml(page.title)}" onchange="updatePageTitle(${idx}, this.value)" class="font-bold text-slate-900 text-sm w-full border-b border-transparent hover:border-slate-300 focus:border-mdm-blue focus:outline-hidden py-0.5">
-            ${page.part_title ? `<div class="text-[10px] text-slate-400 uppercase font-semibold mt-0.5">${escapeHtml(page.part_title)}</div>` : ''}
+          <div class="pt-1">
+            <div class="text-[10px] uppercase font-bold text-slate-400 mb-0.5">Titre affiché :</div>
+            <input type="text" value="${escapeHtml(page.title)}" onchange="updatePageTitle(${idx}, this.value)" class="font-bold text-slate-900 text-sm w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white border border-slate-200 rounded-lg px-2.5 py-1 focus:ring-2 focus:ring-mdm-blue focus:outline-hidden" title="Cliquez pour modifier le titre">
           </div>
-          ${contentSnippet}
+          <div class="pt-1">
+            ${contentHtml}
+          </div>
         `;
 
         container.appendChild(card);
@@ -431,18 +1010,31 @@ Notes de la séance :
       const loader = document.getElementById('state_loading');
       const preview = document.getElementById('state_preview');
       const parseBtn = document.getElementById('btn_parse');
+      const iterateBtn = document.getElementById('btn_iterate');
 
       if (isLoading) {
         empty.classList.add('hidden');
         preview.classList.add('hidden');
         loader.classList.remove('hidden');
         document.getElementById('loading_text').innerText = text;
-        parseBtn.disabled = true;
-        parseBtn.classList.add('opacity-60');
+        if (parseBtn) {
+          parseBtn.disabled = true;
+          parseBtn.classList.add('opacity-60');
+        }
+        if (iterateBtn) {
+          iterateBtn.disabled = true;
+          iterateBtn.classList.add('opacity-60');
+        }
       } else {
         loader.classList.add('hidden');
-        parseBtn.disabled = false;
-        parseBtn.classList.remove('opacity-60');
+        if (parseBtn) {
+          parseBtn.disabled = false;
+          parseBtn.classList.remove('opacity-60');
+        }
+        if (iterateBtn) {
+          iterateBtn.disabled = false;
+          iterateBtn.classList.remove('opacity-60');
+        }
       }
     }
 
