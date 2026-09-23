@@ -446,6 +446,7 @@ class PageLayout:
     def add_cards_grid(self, cards, columns=2, card_height=None, field_prefix="grid"):
         """
         Renders an airy grid of cards (2 or 3 columns) with titles, subtitles and AcroForm text areas.
+        Multi-line title and subtitle support with dynamic sizing to prevent any overflow.
         """
         if not cards:
             return self.y_cursor
@@ -454,6 +455,25 @@ class PageLayout:
         gap = 0.5 * cm
         col_w = (self.target_width - (cols - 1) * gap) / cols
         h = card_height if card_height else (4.8 * cm if cols == 2 else 4.0 * cm)
+        pad_x = 0.35 * cm
+        inner_w = col_w - 2 * pad_x
+
+        # Adapt font sizes based on columns to guarantee breathing room
+        if cols >= 3:
+            title_font_size = 8
+            title_lh = 10
+            sub_font_size = 7.5
+            sub_lh = 9.5
+        elif cols == 2:
+            title_font_size = 9
+            title_lh = 11.5
+            sub_font_size = 8
+            sub_lh = 10
+        else:
+            title_font_size = 10
+            title_lh = 13
+            sub_font_size = 8.5
+            sub_lh = 11
 
         # Group cards in rows
         n_cards = len(cards)
@@ -488,23 +508,40 @@ class PageLayout:
                 # Card Box
                 draw_card(self.c, card_x, row_y, col_w, h)
 
-                # Card Title
+                # Card Title (wrapped to inner_w)
                 self.c.saveState()
-                self.c.setFont(PDFStyle.FONT_SUBTITLE, 9)
-                self.c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE if c_idx % 2 == 0 else PDFStyle.COLOR_ACCENT_RED)
-                self.c.drawString(card_x + 0.35 * cm, row_y + h - 0.5 * cm, c_title.upper())
+                self.c.setFont(PDFStyle.FONT_SUBTITLE, title_font_size)
+                self.c.setFillColor(
+                    PDFStyle.COLOR_ACCENT_BLUE
+                    if c_idx % 2 == 0
+                    else PDFStyle.COLOR_ACCENT_RED
+                )
 
-                sub_h = 0
+                title_lines = simpleSplit(
+                    c_title.upper(), PDFStyle.FONT_SUBTITLE, title_font_size, inner_w
+                )
+                curr_text_y = row_y + h - 0.45 * cm
+                for t_line in title_lines:
+                    self.c.drawString(card_x + pad_x, curr_text_y, t_line)
+                    curr_text_y -= title_lh
+
+                # Card Subtitle (wrapped to inner_w)
                 if c_sub:
-                    self.c.setFont(PDFStyle.FONT_ITALIC, 8)
+                    self.c.setFont(PDFStyle.FONT_ITALIC, sub_font_size)
                     self.c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-                    self.c.drawString(card_x + 0.35 * cm, row_y + h - 0.9 * cm, c_sub)
-                    sub_h = 0.4 * cm
+                    curr_text_y -= 0.05 * cm
+                    sub_lines = simpleSplit(
+                        c_sub, PDFStyle.FONT_ITALIC, sub_font_size, inner_w
+                    )
+                    for s_line in sub_lines:
+                        self.c.drawString(card_x + pad_x, curr_text_y, s_line)
+                        curr_text_y -= sub_lh
+
                 self.c.restoreState()
 
                 # Text Input & Writing Guides inside Card
                 input_y = row_y + 0.3 * cm
-                input_h = h - 0.85 * cm - sub_h
+                input_h = max(1.2 * cm, curr_text_y - 0.15 * cm - input_y)
 
                 # Subtle dotted writing guide lines
                 self.c.saveState()
@@ -514,15 +551,17 @@ class PageLayout:
                 guide_gap = 0.65 * cm
                 curr_gy = input_y + input_h - guide_gap
                 while curr_gy > input_y + 0.2 * cm:
-                    self.c.line(card_x + 0.4 * cm, curr_gy, card_x + col_w - 0.4 * cm, curr_gy)
+                    self.c.line(
+                        card_x + pad_x, curr_gy, card_x + col_w - pad_x, curr_gy
+                    )
                     curr_gy -= guide_gap
                 self.c.restoreState()
 
                 create_input_field(
                     self.form,
                     c_fid,
-                    pos=(card_x + 0.35 * cm, input_y),
-                    size=(col_w - 0.7 * cm, input_h),
+                    pos=(card_x + pad_x, input_y),
+                    size=(inner_w, input_h),
                     multiline=True,
                     tooltip=c_placeholder,
                     fill_color=None,
@@ -608,13 +647,14 @@ class PageLayout:
 
     def add_checklist(self, items, title=None, columns=1, field_prefix="chk"):
         """
-        Renders a checklist of tasks or criteria with checkboxes and labels with comfortable spacing.
+        Renders a checklist of tasks or criteria with checkboxes and labels with comfortable spacing and text wrapping.
         """
         if not items:
             return self.y_cursor
 
         cols = max(1, min(columns, 2))
-        col_w = self.target_width if cols == 1 else (self.target_width - 0.6 * cm) / 2.0
+        gap_x = 0.6 * cm
+        col_w = self.target_width if cols == 1 else (self.target_width - gap_x) / 2.0
 
         if title:
             self.c.saveState()
@@ -622,19 +662,22 @@ class PageLayout:
             self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
             self.c.drawString(self.text_x, self.y_cursor - 0.35 * cm, title)
             self.c.restoreState()
-            self.y_cursor -= 0.7 * cm
+            self.y_cursor -= 0.65 * cm
 
-        row_h = 0.8 * cm
         n_items = len(items)
         rows_count = (n_items + cols - 1) // cols
+        max_label_w = col_w - 0.7 * cm
+        font_size = 8.5
+        line_height = 11.0
 
         for r in range(rows_count):
-            item_y = self.y_cursor - 0.45 * cm
+            # Pre-compute wrapping for this row
+            row_items = []
+            max_lines = 1
             for c in range(cols):
                 idx = r * cols + c
                 if idx >= n_items:
                     break
-
                 item_data = items[idx]
                 if isinstance(item_data, dict):
                     label = item_data.get("label", str(item_data))
@@ -646,25 +689,39 @@ class PageLayout:
                     label = str(item_data)
                     fid = f"{field_prefix}_{idx+1}"
 
-                item_x = self.text_x if c == 0 else self.text_x + col_w + 0.6 * cm
+                lines = simpleSplit(label, PDFStyle.FONT_BODY, font_size, max_label_w)
+                if not lines:
+                    lines = [label]
+                max_lines = max(max_lines, len(lines))
+                row_items.append((c, fid, label, lines))
 
+            row_h = max(0.72 * cm, max_lines * line_height + 0.28 * cm)
+            top_y = self.y_cursor
+
+            for (c, fid, label, lines) in row_items:
+                item_x = self.text_x if c == 0 else self.text_x + col_w + gap_x
+                # Checkbox aligned with first line of text
+                chk_y = top_y - 0.38 * cm
                 create_checkbox(
                     self.form,
                     fid,
-                    pos=(item_x, item_y),
+                    pos=(item_x, chk_y),
                     size=10,
                     tooltip=label,
                 )
 
                 self.c.saveState()
-                self.c.setFont(PDFStyle.FONT_BODY, 8.5)
+                self.c.setFont(PDFStyle.FONT_BODY, font_size)
                 self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-                self.c.drawString(item_x + 0.55 * cm, item_y + 0.05 * cm, label)
+                text_x = item_x + 0.6 * cm
+                base_y = top_y - 0.35 * cm
+                for li, l_text in enumerate(lines):
+                    self.c.drawString(text_x, base_y - li * line_height, l_text)
                 self.c.restoreState()
 
             self.y_cursor -= row_h
 
-        self.y_cursor -= 0.6 * cm
+        self.y_cursor -= 0.4 * cm
         return self.y_cursor
 
     def add_table(self, headers, rows, col_widths=None, field_prefix="tbl"):
@@ -825,7 +882,7 @@ class PageLayout:
         n = len(stats)
         gap = 0.5 * cm
         box_w = (self.target_width - (n - 1) * gap) / n
-        h = 2.0 * cm
+        h = 2.2 * cm
         box_y = self.y_cursor - h
 
         colors_list = [
@@ -836,7 +893,7 @@ class PageLayout:
 
         for i, st in enumerate(stats):
             b_x = self.text_x + i * (box_w + gap)
-            val = st.get("stat", "") if isinstance(st, dict) else str(st[0] if isinstance(st, (tuple, list)) else st)
+            val = (st.get("value") or st.get("stat", "")) if isinstance(st, dict) else str(st[0] if isinstance(st, (tuple, list)) else st)
             lbl = st.get("label", "") if isinstance(st, dict) else str(st[1] if isinstance(st, (tuple, list)) and len(st) > 1 else "")
             color = colors_list[i % len(colors_list)]
 
@@ -846,20 +903,42 @@ class PageLayout:
             self.c.setLineWidth(0.5)
             self.c.roundRect(b_x, box_y, box_w, h, 4, fill=1, stroke=1)
 
+            val_str = str(val).strip()
+            # Dynamic font sizing for stat number
+            if len(val_str) > 14:
+                val_font_size = 11
+            elif len(val_str) > 9:
+                val_font_size = 13.5
+            else:
+                val_font_size = 16.5
+
+            # Wrap label if needed
+            lbl_str = str(lbl).upper().strip()
+            lbl_lines = simpleSplit(lbl_str, PDFStyle.FONT_SUBTITLE, 7.0, box_w - 0.4 * cm) if lbl_str else []
+
+            if len(lbl_lines) > 1:
+                val_y = box_y + 1.25 * cm
+            else:
+                val_y = box_y + 1.1 * cm
+
             # Stat number
-            self.c.setFont(PDFStyle.FONT_BRANDING, 17)
+            self.c.setFont(PDFStyle.FONT_BRANDING, val_font_size)
             self.c.setFillColor(color)
-            self.c.drawCentredString(b_x + box_w / 2.0, box_y + 1.0 * cm, str(val))
+            self.c.drawCentredString(b_x + box_w / 2.0, val_y, val_str)
 
             # Stat label
-            if lbl:
-                self.c.setFont(PDFStyle.FONT_SUBTITLE, 7.5)
+            if lbl_lines:
+                self.c.setFont(PDFStyle.FONT_SUBTITLE, 7.0)
                 self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-                self.c.drawCentredString(b_x + box_w / 2.0, box_y + 0.35 * cm, str(lbl).upper())
+                if len(lbl_lines) == 1:
+                    self.c.drawCentredString(b_x + box_w / 2.0, box_y + 0.35 * cm, lbl_lines[0])
+                else:
+                    self.c.drawCentredString(b_x + box_w / 2.0, box_y + 0.48 * cm, lbl_lines[0])
+                    self.c.drawCentredString(b_x + box_w / 2.0, box_y + 0.22 * cm, lbl_lines[1])
 
             self.c.restoreState()
 
-        self.y_cursor -= (h + 0.7 * cm)
+        self.y_cursor -= (h + 0.5 * cm)
         return self.y_cursor
 
     def add_space(self, height):

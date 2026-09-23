@@ -37,80 +37,42 @@ def draw_page_decorations(c, width, height, part_title=None, x_offset=0):
 
 
 def draw_wavy_background(c, width, height):
-    """Draws subtle organic wave shapes in the background using XObjects for caching."""
-    if not hasattr(c, "_wavy_cache"):
-        c._wavy_cache = {}
-
-    cache_key = (width, height)
-
-    if cache_key not in c._wavy_cache:
-        form_name = f"WavyBg_{len(c._wavy_cache)}"
-        c.beginForm(form_name)
-
-        c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.4)  # Subtle darker nude / blob color
-
-        # Top Left Wave
-        p1 = c.beginPath()
-        p1.moveTo(0, height)
-        p1.curveTo(width * 0.3, height, width * 0.5, height * 0.85, 0, height * 0.65)
-        c.drawPath(p1, fill=1, stroke=0)
-
-        # Bottom Right Wave
-        p2 = c.beginPath()
-        p2.moveTo(width, 0)
-        p2.curveTo(width * 0.7, 0, width * 0.5, height * 0.15, width, height * 0.35)
-        c.drawPath(p2, fill=1, stroke=0)
-
-        c.endForm()
-        c._wavy_cache[cache_key] = form_name
-
+    """Draws subtle organic wave shapes in the background."""
     c.saveState()
-    c.doForm(c._wavy_cache[cache_key])
+    c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.4)
+
+    # Top Left Wave
+    p1 = c.beginPath()
+    p1.moveTo(0, height)
+    p1.curveTo(width * 0.3, height, width * 0.5, height * 0.85, 0, height * 0.65)
+    c.drawPath(p1, fill=1, stroke=0)
+
+    # Bottom Right Wave
+    p2 = c.beginPath()
+    p2.moveTo(width, 0)
+    p2.curveTo(width * 0.7, 0, width * 0.5, height * 0.15, width, height * 0.35)
+    c.drawPath(p2, fill=1, stroke=0)
     c.restoreState()
 
 
 def draw_background_blobs(c, width, height):
-    """Draws large soft organic blobs at Top-Right and Bottom-Left using XObjects for caching."""
-    if not hasattr(c, "_blobs_cache"):
-        c._blobs_cache = {}
-
-    cache_key = (width, height, PDFStyle.COLOR_BG_BLOB)
-
-    if cache_key not in c._blobs_cache:
-        form_name = f"BlobsBg_{len(c._blobs_cache)}"
-        c.beginForm(form_name)
-
-        # Use the specifically defined pink blob color
-        c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
-
-        # Top Right Blob - slightly larger
-        c.circle(width * 0.95, height * 0.92, 140, fill=1, stroke=0)
-
-        # Bottom Blob - spans full width, starts higher, ends lower
-        # We'll use a large ellipse for the bottom one
-        # Moved center a bit higher (~15% of height) and made it very wide
-        c.ellipse(
-            -width * 0.2, -height * 0.1, width * 1.2, height * 0.35, fill=1, stroke=0
-        )
-
-        # Alternatively, use multiple circles to create a "wavy" fill at the bottom
-        # but based on "traverser toute la largeur", a large horizontal ellipse or rect-to-curve is better.
-        # Let's use a path for organic feel
-        p = c.beginPath()
-        p.moveTo(0, height * 0.25)  # Starts higher
-        p.curveTo(
-            width * 0.3, height * 0.3, width * 0.7, height * 0.1, width, height * 0.2
-        )
-        p.lineTo(width, 0)
-        p.lineTo(0, 0)
-        p.close()
-        c.drawPath(p, fill=1, stroke=0)
-
-        c.endForm()
-        c._blobs_cache[cache_key] = form_name
-
+    """Draws large soft organic blobs at Top-Right and Bottom-Left."""
     c.saveState()
-    c.doForm(c._blobs_cache[cache_key])
+    c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
+
+    # Top Right Blob - slightly larger
+    c.circle(width * 0.95, height * 0.92, 140, fill=1, stroke=0)
+
+    # Bottom Blob - spans full width
+    p = c.beginPath()
+    p.moveTo(0, height * 0.25)
+    p.curveTo(
+        width * 0.3, height * 0.3, width * 0.7, height * 0.1, width, height * 0.2
+    )
+    p.lineTo(width, 0)
+    p.lineTo(0, 0)
+    p.close()
+    c.drawPath(p, fill=1, stroke=0)
     c.restoreState()
 
 
@@ -537,41 +499,41 @@ def create_standard_summary_page(
     c.saveState()
     c.setFont(PDFStyle.FONT_BRANDING, 160)
     c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.12)
-    c.drawString(1.5 * cm, height - 9 * cm, f"{chapter_num_str}.")
+    c.drawString(1.5 * cm, height - 7.5 * cm, f"{chapter_num_str}.")
     c.restoreState()
 
-    start_y = height - 10 * cm
-    c.setFont(PDFStyle.FONT_BRANDING, 32)
+    start_y = height - 8.5 * cm
+    c.setFont(PDFStyle.FONT_BRANDING, 30)
     c.setFillColor(PDFStyle.COLOR_WHITE)
 
-    title_lines = simpleSplit(chapter_title, PDFStyle.FONT_BRANDING, 32, width - 5 * cm)
+    title_lines = simpleSplit(chapter_title, PDFStyle.FONT_BRANDING, 30, width - 5 * cm)
     current_y = start_y
     for line in title_lines:
         c.drawString(2.5 * cm, current_y, line)
-        current_y -= 40
+        current_y -= 38
 
-    text_y = current_y - 1 * cm  # Add space after the title
+    text_y = current_y - 0.7 * cm  # Add space after the title
 
     if intro_text:
         style_body = ParagraphStyle(
             "SummaryBody",
             fontName=PDFStyle.FONT_BODY,
-            fontSize=11,
-            leading=15,
+            fontSize=10.5,
+            leading=14.5,
             textColor=colors.white,
             alignment=TA_JUSTIFY,
         )
         p_intro = Paragraph(intro_text, style_body)
         w, h = p_intro.wrap(width - 5 * cm, height)
         p_intro.drawOn(c, 2.5 * cm, text_y - h)
-        text_y -= h + 1 * cm
+        text_y -= h + 0.65 * cm
 
     wrap_w = width - 5.5 * cm
     style_point = ParagraphStyle(
         "SummaryPoint",
         fontName=PDFStyle.FONT_BODY,
-        fontSize=11.5,
-        leading=16,
+        fontSize=11,
+        leading=15,
         textColor=colors.white,
     )
 
@@ -586,7 +548,7 @@ def create_standard_summary_page(
         p_pt = Paragraph(p_text, style_point)
         w, h = p_pt.wrap(wrap_w, height)
         p_pt.drawOn(c, 2.5 * cm, text_y - h)
-        text_y -= h + 0.65 * cm
+        text_y -= h + 0.42 * cm
 
     # Decor (Plume)
     if os.path.exists(PDFStyle.PATH_PLUME_TEXTURE):
@@ -653,47 +615,52 @@ def create_standard_engagement_page(
             clean_lines.append(l_str)
 
     # 1. Commitment Card in upper-mid section
-    card_y_top = new_y - 0.8 * cm
+    card_y_top = new_y - 0.7 * cm
     style_item = ParagraphStyle(
         "EngageItem",
         fontName=PDFStyle.FONT_BODY,
-        fontSize=10.5,
-        leading=15,
+        fontSize=11,
+        leading=16,
         textColor=PDFStyle.COLOR_TEXT_MAIN,
     )
 
     # Calculate total height of items
     item_paragraphs = []
-    total_items_h = 0
+    sum_items_h = 0
     item_wrap_w = content_w - 1.6 * cm
     for l_text in clean_lines:
         p = Paragraph(f'<font color="{PDFStyle.COLOR_ACCENT_BLUE}" name="{PDFStyle.FONT_TITLE}">✓</font>&nbsp;&nbsp;{escape(l_text)}', style_item)
         _, h = p.wrap(item_wrap_w, height)
         item_paragraphs.append((p, h))
-        total_items_h += h + 0.35 * cm
+        sum_items_h += h
 
-    card_pad = 0.6 * cm
-    card_h = total_items_h + 2 * card_pad + 0.4 * cm
+    n_lines = max(1, len(item_paragraphs))
+    card_pad = 0.8 * cm
+    # Generous card height adapted to available page area
+    card_h = max(7.5 * cm, sum_items_h + 2 * card_pad + (n_lines - 1) * 0.55 * cm + 0.4 * cm)
     card_y = card_y_top - card_h
 
     draw_card(c, text_x, card_y, content_w, card_h)
 
-    # Render items inside card
-    curr_item_y = card_y_top - card_pad
+    # Render items inside card with proportional spacing
+    avail_inner = card_h - 2 * card_pad - sum_items_h
+    item_gap = avail_inner / (n_lines + 0.5) if n_lines > 0 else 0.4 * cm
+    curr_item_y = card_y_top - card_pad - item_gap * 0.5
     for p, h in item_paragraphs:
         p.drawOn(c, text_x + 0.8 * cm, curr_item_y - h)
-        curr_item_y -= (h + 0.35 * cm)
+        curr_item_y -= (h + item_gap)
 
-    # 2. Anchored Signature Block at bottom
-    sig_block_y = 3.6 * cm
-    sig_block_h = 3.2 * cm
+    # 2. Anchored Signature Block below card
+    sig_block_h = 3.8 * cm
+    sig_gap = 1.0 * cm
+    sig_block_y = max(3.2 * cm, card_y - sig_gap - sig_block_h)
     draw_card(c, text_x, sig_block_y, content_w, sig_block_h)
 
     # Left: Date & Lieu
     c.saveState()
     c.setFont(PDFStyle.FONT_SUBTITLE, 9)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x + 0.6 * cm, sig_block_y + sig_block_h - 0.7 * cm, "DATE & LIEU :")
+    c.drawString(text_x + 0.6 * cm, sig_block_y + sig_block_h - 0.75 * cm, "DATE & LIEU :")
     c.restoreState()
 
     half_w = (content_w - 1.6 * cm) / 2
@@ -701,8 +668,8 @@ def create_standard_engagement_page(
     create_input_field(
         form,
         "date_lieu_engagement",
-        pos=(text_x + 0.6 * cm, sig_block_y + 0.5 * cm),
-        size=(half_w, 1.3 * cm),
+        pos=(text_x + 0.6 * cm, sig_block_y + 0.55 * cm),
+        size=(half_w, 1.7 * cm),
         tooltip="Fait à ..., le ...",
         fill_color=PDFStyle.COLOR_WHITE,
     )
@@ -712,17 +679,25 @@ def create_standard_engagement_page(
     c.saveState()
     c.setFont(PDFStyle.FONT_SUBTITLE, 9)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawString(sig_x, sig_block_y + sig_block_h - 0.7 * cm, "SIGNATURE DU BÉNÉFICIAIRE :")
+    c.drawString(sig_x, sig_block_y + sig_block_h - 0.75 * cm, "SIGNATURE DU BÉNÉFICIAIRE :")
     c.restoreState()
 
     create_input_field(
         form,
         "signature_engagement",
-        pos=(sig_x, sig_y := sig_block_y + 0.5 * cm),
-        size=(half_w, 1.3 * cm),
+        pos=(sig_x, sig_block_y + 0.55 * cm),
+        size=(half_w, 1.7 * cm),
         tooltip="Votre Signature",
         fill_color=PDFStyle.COLOR_WHITE,
     )
+
+    # 3. Footer citation if space allows
+    if sig_block_y > 4.2 * cm:
+        c.saveState()
+        c.setFont(PDFStyle.FONT_SUBTITLE, 8)
+        c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
+        c.drawCentredString(text_x + content_w / 2.0, sig_block_y - 0.65 * cm, "« La meilleure façon de prédire l'avenir, c'est de le créer. »")
+        c.restoreState()
 
     draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
     c.showPage()
@@ -1527,8 +1502,10 @@ def create_standard_roadmap_page(
             pos=(left_x, line_y - 1.85 * cm),
             size=(left_w, 1.35 * cm),
             multiline=True,
+            value=def_obj,
             tooltip=def_obj,
             fill_color=PDFStyle.COLOR_CARD_CREME,
+            font_size=8.5,
         )
 
         # Indicateur de succès (KPI)
@@ -1540,8 +1517,10 @@ def create_standard_roadmap_page(
             pos=(left_x, line_y - 3.85 * cm),
             size=(left_w, 1.45 * cm),
             multiline=True,
+            value=def_kpi,
             tooltip=def_kpi,
             fill_color=PDFStyle.COLOR_CARD_CREME,
+            font_size=8.5,
         )
 
         # --- RIGHT COLUMN ---
@@ -1568,8 +1547,10 @@ def create_standard_roadmap_page(
                 pos=(right_x + 0.55 * cm, box_y),
                 size=(right_w - 0.55 * cm, box_h),
                 multiline=True,
+                value=act_label,
                 tooltip=act_label,
                 fill_color=PDFStyle.COLOR_CARD_CREME,
+                font_size=8.0,
             )
 
         y_cursor -= (stage_h + gap)
