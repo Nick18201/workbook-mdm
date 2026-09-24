@@ -76,104 +76,193 @@
   <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     
     <!-- LEFT COLUMN: Saisie & Contrôles -->
-    <div class="lg:col-span-5 bg-white/90 rounded-3xl p-6 sm:p-7 shadow-xl shadow-indigo-900/5 border border-indigo-50 flex flex-col space-y-5">
+    <div class="lg:col-span-5 bg-white/90 rounded-3xl p-6 sm:p-7 shadow-xl shadow-indigo-900/5 border border-indigo-50 flex flex-col space-y-4">
       
-      <div>
-        <h2 class="text-base font-bold text-slate-900 flex items-center">
-          <svg class="w-4 h-4 text-mdm-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-          </svg>
-          Notes de Séance
-        </h2>
-        <p class="text-xs text-slate-500 mt-0.5">
-          Collez vos notes brutes ou votre compte-rendu de séance.
-        </p>
+      <!-- MODE SWITCHER TABS -->
+      <div class="grid grid-cols-2 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/60 text-xs font-bold">
+        <button id="tab_customize" onclick="switchMode('customize')" class="py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 bg-white text-mdm-blue shadow-xs cursor-pointer">
+          <span>✨ Livret existant</span>
+        </button>
+        <button id="tab_generate" onclick="switchMode('generate')" class="py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 text-slate-500 hover:text-slate-800 cursor-pointer">
+          <span>📝 Notes brutes</span>
+        </button>
       </div>
 
-      <!-- Form Inputs -->
-      <div class="grid grid-cols-2 gap-3">
+      <!-- PANEL 1: PERSONNALISER UN LIVRET EXISTANT -->
+      <div id="panel_customize" class="space-y-4">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Chapitre N°</label>
-          <input type="number" id="chapter_num" value="1" min="0" max="20" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+          <h2 class="text-base font-bold text-slate-900 flex items-center">
+            <span class="mr-2">🎨</span>
+            Personnaliser un Livret
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Sélectionnez un livret de référence, renseignez le profil de votre bénéficiaire, et l'IA adapte l'ensemble des exercices, questions et exemples à sa situation.
+          </p>
         </div>
+
+        <!-- Livret de référence -->
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Palette Couleur</label>
-          <select id="theme" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-            <option value="indigo" selected>Indigo 🔵</option>
-            <option value="earth">Earth 🟠</option>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold text-slate-700">Livret de référence</label>
+            <button type="button" onclick="document.getElementById('import_json_input').click()" class="text-[11px] text-mdm-blue hover:underline font-semibold flex items-center space-x-1 cursor-pointer">
+              <span>📁 Importer un .json</span>
+            </button>
+            <input type="file" id="import_json_input" accept=".json" class="hidden" onchange="handleImportJson(event)">
+          </div>
+          <select id="custom_template_select" onchange="onTemplateChange()" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-mdm-blue bg-white">
+            <option value="">Chargement des modèles...</option>
           </select>
         </div>
-      </div>
 
-      <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom du Bénéficiaire</label>
-        <input type="text" id="beneficiary_name" placeholder="Ex: Thomas, Sarah..." class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-      </div>
-
-      <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Titre Suggéré</label>
-        <input type="text" id="chapter_title" placeholder="Ex: Clarifier mes Valeurs & Poser mes Limites" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-      </div>
-
-      <div>
-        <div class="flex justify-between items-center mb-1">
-          <label class="block text-xs font-semibold text-slate-600">Notes de la séance</label>
-          <button type="button" onclick="loadSampleNotes()" class="text-xs text-mdm-blue hover:underline font-medium">Charger un exemple</button>
-        </div>
-        <textarea id="raw_notes" rows="8" placeholder="Collez ici les notes brutes..." class="w-full p-3.5 border border-slate-200 rounded-2xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
-      </div>
-
-      <!-- Options du Livret -->
-      <div class="bg-indigo-50/50 rounded-2xl p-3.5 border border-indigo-100/70 space-y-3">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Options du Livret</span>
-          <span class="text-[10px] text-slate-400 font-medium">Structure</span>
+        <!-- Template preview summary card -->
+        <div id="template_preview_card" class="bg-indigo-50/50 rounded-2xl p-3 border border-indigo-100 text-xs space-y-1">
+          <div class="flex items-center justify-between">
+            <span id="tpl_badge_title" class="font-bold text-indigo-950"></span>
+            <span id="tpl_badge_pages" class="px-2 py-0.5 bg-white text-mdm-blue font-bold rounded-md border border-indigo-200 text-[10px]"></span>
+          </div>
+          <p id="tpl_badge_desc" class="text-slate-600 text-[11px] leading-relaxed"></p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <!-- Bénéficiaire & Palette -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Format du livret</label>
-            <select id="book_format" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-              <option value="short">Court (6 – 7 pages)</option>
-              <option value="standard" selected>Standard (7 – 10 pages)</option>
-              <option value="deep">Complet (+ de 10 pages)</option>
-            </select>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Bénéficiaire (Nom / Prénom)</label>
+            <input type="text" id="custom_beneficiary_name" placeholder="Ex: Alexandre Martin" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Page Météo</label>
-            <select id="meteo_option" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-              <option value="classic" selected>Avec météo (émotions & énergie)</option>
-              <option value="none">Sans météo (direct dans le sujet)</option>
-              <option value="auto">Automatique (selon notes)</option>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Palette Couleur</label>
+            <select id="custom_theme" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium focus:outline-hidden focus:ring-2 focus:ring-mdm-blue bg-white">
+              <option value="indigo" selected>Indigo 🔵</option>
+              <option value="earth">Earth 🟠</option>
             </select>
           </div>
         </div>
 
-        <div class="pt-0.5 flex items-center">
-          <label class="flex items-center space-x-2 cursor-pointer text-xs text-slate-600">
-            <input type="checkbox" id="include_engagement" checked class="rounded border-slate-300 text-mdm-blue focus:ring-mdm-blue w-3.5 h-3.5">
-            <span>Inclure pacte d'engagement & signature</span>
-          </label>
+        <!-- Profil & Projet -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold text-slate-700">Profil & Projet du Bénéficiaire</label>
+            <button type="button" onclick="loadSampleBeneficiary()" class="text-[11px] text-mdm-blue hover:underline font-medium cursor-pointer">💡 Tester un exemple</button>
+          </div>
+          <textarea id="custom_beneficiary_context" rows="3" placeholder="Ex: Directeur Marketing de 42 ans en transition vers la création d'un atelier d'ébénisterie et mobilier éco-conçu. Enjeux : transition de revenus, légitimité créative, équilibre familial..." class="w-full p-3 border border-slate-200 rounded-xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
+        </div>
+
+        <!-- Consignes spécifiques du coach -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Consignes spécifiques d'adaptation (Optionnel)</label>
+          <textarea id="custom_instructions" rows="2" placeholder="Ex : Adapter tous les exemples à l'artisanat du bois. Accentuer la gestion du temps et le minimum financier vital..." class="w-full p-3 border border-slate-200 rounded-xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
+        </div>
+
+        <!-- Action Button Customize -->
+        <div class="pt-1">
+          <button id="btn_customize" onclick="customizeExistingWorkbook()" class="w-full py-3.5 px-4 bg-mdm-blue hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span>Personnaliser ce livret</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PANEL 2: GÉNÉRATION DEPUIS NOTES BRUTES -->
+      <div id="panel_generate" class="hidden space-y-4">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center">
+            <svg class="w-4 h-4 text-mdm-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+            </svg>
+            Notes de Séance
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Collez vos notes brutes ou votre compte-rendu de séance pour concevoir un livret à partir de zéro.
+          </p>
+        </div>
+
+        <!-- Form Inputs -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Chapitre N°</label>
+            <input type="number" id="chapter_num" value="1" min="0" max="20" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Palette Couleur</label>
+            <select id="theme" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+              <option value="indigo" selected>Indigo 🔵</option>
+              <option value="earth">Earth 🟠</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom du Bénéficiaire</label>
+          <input type="text" id="beneficiary_name" placeholder="Ex: Thomas, Sarah..." class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Titre Suggéré</label>
+          <input type="text" id="chapter_title" placeholder="Ex: Clarifier mes Valeurs & Poser mes Limites" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="block text-xs font-semibold text-slate-600">Notes de la séance</label>
+            <button type="button" onclick="loadSampleNotes()" class="text-xs text-mdm-blue hover:underline font-medium">Charger un exemple</button>
+          </div>
+          <textarea id="raw_notes" rows="7" placeholder="Collez ici les notes brutes..." class="w-full p-3.5 border border-slate-200 rounded-2xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
+        </div>
+
+        <!-- Options du Livret -->
+        <div class="bg-indigo-50/50 rounded-2xl p-3.5 border border-indigo-100/70 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Options du Livret</span>
+            <span class="text-[10px] text-slate-400 font-medium">Structure</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Format du livret</label>
+              <select id="book_format" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+                <option value="short">Court (6 – 7 pages)</option>
+                <option value="standard" selected>Standard (7 – 10 pages)</option>
+                <option value="deep">Complet (+ de 10 pages)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Page Météo</label>
+              <select id="meteo_option" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+                <option value="classic" selected>Avec météo (émotions & énergie)</option>
+                <option value="none">Sans météo (direct dans le sujet)</option>
+                <option value="auto">Automatique (selon notes)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pt-0.5 flex items-center">
+            <label class="flex items-center space-x-2 cursor-pointer text-xs text-slate-600">
+              <input type="checkbox" id="include_engagement" checked class="rounded border-slate-300 text-mdm-blue focus:ring-mdm-blue w-3.5 h-3.5">
+              <span>Inclure pacte d'engagement & signature</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Action Button Parse -->
+        <div class="pt-1">
+          <button id="btn_parse" onclick="parseNotes()" class="w-full py-3.5 px-4 bg-mdm-blue hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span>Concevoir la maquette</span>
+          </button>
         </div>
       </div>
 
       <!-- Advanced: API Key toggle -->
-      <details class="text-xs text-slate-500">
-        <summary class="cursor-pointer font-medium hover:text-slate-700">Clé API (Optionnelle si configurée sur le serveur)</summary>
+      <details class="text-xs text-slate-500 pt-1">
+        <summary class="cursor-pointer font-medium hover:text-slate-700">Clé API Gemini (Optionnelle si configurée sur le serveur)</summary>
         <div class="mt-2">
           <input type="password" id="api_key" placeholder="AIzaSy..." class="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-xs">
         </div>
       </details>
-
-      <!-- Action Button -->
-      <div class="pt-1">
-        <button id="btn_parse" onclick="parseNotes()" class="w-full py-3.5 px-4 bg-mdm-blue hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
-          <span>Concevoir la maquette</span>
-        </button>
-      </div>
 
     </div>
 
@@ -182,7 +271,7 @@
       
       <!-- Top Action bar when spec ready -->
       <div id="ready_bar" class="hidden bg-white/95 rounded-2xl p-4 border border-indigo-100 shadow-md flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center space-x-2">
+        <div class="flex flex-wrap items-center gap-2">
           <span id="page_count_badge" class="px-2.5 py-1 bg-blue-50 text-mdm-blue text-xs font-bold rounded-lg border border-blue-100">
             6 Pages
           </span>
@@ -190,16 +279,31 @@
             Indigo
           </span>
           <span id="iteration_badge" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-lg border border-emerald-100">
-            Itération 1
+            Version 1
+          </span>
+          <span id="beneficiary_badge" class="hidden px-2.5 py-1 bg-amber-50 text-amber-900 text-xs font-bold rounded-lg border border-amber-200">
+            👤 Bénéficiaire
           </span>
         </div>
-        <button onclick="compileCurrentSpec()" class="py-2.5 px-5 bg-mdm-red hover:bg-red-600 text-white font-bold rounded-xl text-xs shadow-md shadow-red-500/20 flex items-center space-x-2 cursor-pointer transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-          </svg>
-          <span>Télécharger le Livret PDF</span>
-        </button>
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btn_toggle_edit" onclick="toggleDirectEdit()" class="py-2 px-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs border border-slate-200 flex items-center space-x-1.5 transition cursor-pointer" title="Activer ou désactiver l'édition directe des textes">
+            <span>✏️ Édition</span>
+          </button>
+          <button onclick="exportCurrentSpecJson()" class="py-2 px-3 bg-indigo-50 hover:bg-indigo-100 text-mdm-blue font-semibold rounded-xl text-xs border border-indigo-200 flex items-center space-x-1.5 transition cursor-pointer" title="Sauvegarder la maquette en fichier JSON">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+            </svg>
+            <span>JSON</span>
+          </button>
+          <button onclick="compileCurrentSpec()" class="py-2.5 px-4 bg-mdm-red hover:bg-red-600 text-white font-bold rounded-xl text-xs shadow-md shadow-red-500/20 flex items-center space-x-2 cursor-pointer transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>Télécharger le Livret PDF</span>
+          </button>
+        </div>
       </div>
+
 
       <!-- AI Changelog / Feedback Alert (shown when an iteration just occurred) -->
       <div id="ai_changelog_bar" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 shadow-2xs space-y-0.5">
@@ -304,10 +408,402 @@
     Marge de Manœuvre
   </footer>
 
+  <!-- Toast Notification -->
+  <div id="toast_notification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold flex items-center space-x-2 border border-slate-700">
+    <span id="toast_icon" class="text-emerald-400">✓</span>
+    <span id="toast_text">Modifications enregistrées</span>
+  </div>
+
   <script>
     let currentWorkbookSpec = null;
     let iterationCount = 1;
     let initialRawNotes = "";
+    let availableTemplates = [];
+    let isDirectEditMode = false;
+    let currentMode = 'customize';
+
+    // 1. Initialisation au chargement
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchTemplates();
+    });
+
+    // 2. Gestion des onglets de mode
+    function switchMode(mode) {
+      currentMode = mode;
+      const tabCust = document.getElementById('tab_customize');
+      const tabGen = document.getElementById('tab_generate');
+      const panelCust = document.getElementById('panel_customize');
+      const panelGen = document.getElementById('panel_generate');
+
+      if (mode === 'customize') {
+        tabCust.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 bg-white text-mdm-blue shadow-xs cursor-pointer";
+        tabGen.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 text-slate-500 hover:text-slate-800 cursor-pointer";
+        panelCust.classList.remove('hidden');
+        panelGen.classList.add('hidden');
+      } else {
+        tabGen.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 bg-white text-mdm-blue shadow-xs cursor-pointer";
+        tabCust.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 text-slate-500 hover:text-slate-800 cursor-pointer";
+        panelGen.classList.remove('hidden');
+        panelCust.classList.add('hidden');
+      }
+    }
+
+    // 3. Récupération et affichage des modèles de livrets officiels
+    async function fetchTemplates() {
+      try {
+        const res = await fetch('/api/templates');
+        if (!res.ok) throw new Error("Erreur de chargement des modèles");
+        availableTemplates = await res.json();
+        populateTemplatesDropdown(availableTemplates);
+      } catch (err) {
+        console.error("Erreur templates:", err);
+      }
+    }
+
+    function populateTemplatesDropdown(templates) {
+      const select = document.getElementById('custom_template_select');
+      if (!select) return;
+      select.innerHTML = '';
+      templates.forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t.id;
+        opt.innerText = `${t.icon} ${t.title} (${t.page_count} pages)`;
+        select.appendChild(opt);
+      });
+      if (templates.some(t => t.id === 'chap1')) {
+        select.value = 'chap1';
+      }
+      onTemplateChange();
+    }
+
+    function onTemplateChange() {
+      const select = document.getElementById('custom_template_select');
+      if (!select) return;
+      const selectedId = select.value;
+      const tpl = availableTemplates.find(t => t.id === selectedId);
+      if (!tpl) return;
+      const titleEl = document.getElementById('tpl_badge_title');
+      const pagesEl = document.getElementById('tpl_badge_pages');
+      const descEl = document.getElementById('tpl_badge_desc');
+      if (titleEl) titleEl.innerText = `${tpl.icon} ${tpl.title}`;
+      if (pagesEl) pagesEl.innerText = `${tpl.page_count} Pages`;
+      if (descEl) descEl.innerText = `${tpl.description} · ${tpl.subtitle}`;
+    }
+
+    // 4. Exemples de profils réalistes pour tester la personnalisation
+    const samplePersonas = [
+      {
+        name: "Alexandre Martin",
+        context: "Directeur Marketing de 42 ans en reconversion vers la création d'un atelier d'ébénisterie et de mobilier design éco-conçu. Enjeux : transition de revenus, légitimité créative, aménagement d'un atelier et rythme familial.",
+        instructions: "Adapter tous les exemples à l'artisanat du bois et à la création de marque. Accentuer la gestion du temps et le minimum financier vital.",
+        theme: "earth",
+        template: "chap1"
+      },
+      {
+        name: "Sarah Benali",
+        context: "Directrice des Opérations RH (39 ans) souhaitant devenir Consultante indépendante en stratégie RSE & transition écologique des PME. Enjeux : tarification de ses offres, positionnement différenciant, trouver ses 3 premiers clients.",
+        instructions: "Adapter les exemples au conseil RSE et aux PME. Mettre en valeur la posture d'experte et la levée des doutes tarifaires.",
+        theme: "indigo",
+        template: "chap4"
+      },
+      {
+        name: "Julien Thomas",
+        context: "Ingénieur Aéronautique (45 ans) en reconversion vers le coaching professionnel et la formation de managers de terrain. Enjeux : quitter le confort du salariat, posture d'écoute bienveillante, développer son réseau d'alliés.",
+        instructions: "Orienter les questions sur la posture d'accompagnant et le réseau. Insister sur la feuille de route 30-60-90 jours.",
+        theme: "indigo",
+        template: "chap6"
+      },
+      {
+        name: "Élodie Garnier",
+        context: "Responsable Achats (36 ans) souhaitant lancer une boutique en ligne et un concept-store d'objets du quotidien zéro déchet. Enjeux : validation du panier moyen, sourcing fournisseurs responsables, trésorerie de départ.",
+        instructions: "Adapter les exercices aux étapes clés du business plan, à la validation du MVP et aux chiffres de rentabilité.",
+        theme: "earth",
+        template: "business_plan"
+      }
+    ];
+    let samplePersonaIdx = 0;
+
+    function loadSampleBeneficiary() {
+      const p = samplePersonas[samplePersonaIdx % samplePersonas.length];
+      samplePersonaIdx++;
+      document.getElementById('custom_beneficiary_name').value = p.name;
+      document.getElementById('custom_beneficiary_context').value = p.context;
+      document.getElementById('custom_instructions').value = p.instructions;
+      document.getElementById('custom_theme').value = p.theme;
+      const select = document.getElementById('custom_template_select');
+      if (p.template && select) {
+        select.value = p.template;
+        onTemplateChange();
+      }
+      showToast(`Exemple chargé : ${p.name}`);
+    }
+
+    // 5. Appel de personnalisation du livret existant
+    async function customizeExistingWorkbook() {
+      const templateId = document.getElementById('custom_template_select').value;
+      const beneficiaryName = document.getElementById('custom_beneficiary_name').value.trim();
+      const beneficiaryContext = document.getElementById('custom_beneficiary_context').value.trim();
+      const customInstructions = document.getElementById('custom_instructions').value.trim();
+      const theme = document.getElementById('custom_theme').value;
+      const apiKey = document.getElementById('api_key').value.trim() || null;
+
+      if (!beneficiaryName) {
+        alert("Veuillez renseigner le prénom ou nom du bénéficiaire.");
+        document.getElementById('custom_beneficiary_name').focus();
+        return;
+      }
+      if (!beneficiaryContext) {
+        alert("Veuillez décrire brièvement le profil, métier ou projet du bénéficiaire.");
+        document.getElementById('custom_beneficiary_context').focus();
+        return;
+      }
+
+      setLoading(true, `Personnalisation du livret pour ${beneficiaryName} par Gemini Flash...`);
+
+      const payload = {
+        template_id: templateId || "chap1",
+        base_spec: null,
+        beneficiary_name: beneficiaryName,
+        beneficiary_context: beneficiaryContext,
+        custom_instructions: customInstructions || null,
+        theme: theme,
+        api_key: apiKey
+      };
+
+      try {
+        const res = await fetch('/api/customize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: "Erreur lors de la personnalisation" }));
+          throw new Error(err.detail || "Erreur serveur");
+        }
+
+        const data = await res.json();
+        currentWorkbookSpec = data.spec;
+        iterationCount = 1;
+        renderPreview(currentWorkbookSpec, data.customizations_summary, data.pedagogical_note);
+        showToast(`Livret personnalisé pour ${beneficiaryName}`);
+      } catch (err) {
+        alert("Erreur lors de la personnalisation : " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // 6. Sauvegarde et Export / Import JSON
+    function exportCurrentSpecJson() {
+      if (!currentWorkbookSpec) return;
+      const jsonStr = JSON.stringify(currentWorkbookSpec, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const benef = (currentWorkbookSpec.beneficiary_name || 'Modele').replace(/\s+/g, '_');
+      const num = currentWorkbookSpec.chapter_num || 1;
+      const filename = `Workbook_Chapitre_${num}_${benef}.json`;
+      downloadBlob(blob, filename);
+      showToast("Maquette JSON téléchargée");
+    }
+
+    function handleImportJson(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!data.pages || !Array.isArray(data.pages)) {
+            throw new Error("Structure de livret JSON invalide (clé 'pages' manquante)");
+          }
+          currentWorkbookSpec = data;
+          iterationCount = 1;
+          if (data.beneficiary_name) {
+            document.getElementById('custom_beneficiary_name').value = data.beneficiary_name;
+          }
+          if (data.theme) {
+            document.getElementById('custom_theme').value = data.theme;
+          }
+          renderPreview(currentWorkbookSpec, `Livret importé avec succès depuis "${file.name}"`, "Vous pouvez modifier les textes, itérer ou compiler le PDF.");
+          showToast("Fichier JSON importé");
+        } catch (err) {
+          alert("Erreur lors de l'import JSON : " + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = "";
+    }
+
+    // 7. Mode Édition directe et Helpers de mise à jour des champs
+    function toggleDirectEdit() {
+      isDirectEditMode = !isDirectEditMode;
+      const btn = document.getElementById('btn_toggle_edit');
+      if (isDirectEditMode) {
+        btn.className = "py-2 px-3 bg-amber-500 text-white font-bold rounded-xl text-xs shadow-md flex items-center space-x-1.5 transition cursor-pointer";
+        btn.innerHTML = "<span>✏️ Mode Édition ACTIF</span>";
+        showToast("Mode Édition activé : cliquez sur n'importe quel texte");
+      } else {
+        btn.className = "py-2 px-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs border border-slate-200 flex items-center space-x-1.5 transition cursor-pointer";
+        btn.innerHTML = "<span>✏️ Mode Édition</span>";
+        showToast("Mode Édition désactivé");
+      }
+      document.querySelectorAll('[data-editable]').forEach(el => {
+        el.setAttribute('contenteditable', isDirectEditMode ? "true" : "plaintext-only");
+        if (isDirectEditMode) {
+          el.classList.add('ring-1', 'ring-amber-300', 'bg-amber-50/40');
+        } else {
+          el.classList.remove('ring-1', 'ring-amber-300', 'bg-amber-50/40');
+        }
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast_notification');
+      if (!toast) return;
+      document.getElementById('toast_text').innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 2500);
+    }
+
+    function updateQuestionField(pageIdx, qIdx, field, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      const qs = p.questions || p.items;
+      if (qs && qs[qIdx]) {
+        if (typeof qs[qIdx] === 'object') {
+          qs[qIdx][field] = val.trim();
+        } else if (field === 'question') {
+          qs[qIdx] = val.trim();
+        }
+        showToast("Question enregistrée");
+      }
+    }
+
+    function updatePageIntro(pageIdx, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      if (!currentWorkbookSpec.pages[pageIdx].params) currentWorkbookSpec.pages[pageIdx].params = {};
+      currentWorkbookSpec.pages[pageIdx].params.intro_text = val.trim();
+      showToast("Consigne enregistrée");
+    }
+
+    function updateQuadrantField(pageIdx, qIdx, field, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      let quads = p.quadrants || p.quadrants_data || p.axes;
+      if (!quads && (p.top_left || p.top_right)) {
+        quads = [p.top_left, p.top_right, p.bottom_left, p.bottom_right];
+      }
+      if (quads && quads[qIdx]) {
+        if (typeof quads[qIdx] === 'object' && !Array.isArray(quads[qIdx])) {
+          quads[qIdx][field] = val.trim();
+        } else if (Array.isArray(quads[qIdx])) {
+          if (field === 'title') quads[qIdx][0] = val.trim();
+          if (field === 'subtitle') quads[qIdx][1] = val.trim();
+        }
+        showToast("Quadrant enregistré");
+      }
+    }
+
+    function updateTwoColumnsField(pageIdx, rIdx, col, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      const rows = p.rows || p.rows_data || p.items;
+      if (rows && rows[rIdx]) {
+        if (typeof rows[rIdx] === 'object' && !Array.isArray(rows[rIdx])) {
+          if (col === 'left') rows[rIdx].left_tooltip = val.trim();
+          if (col === 'right') rows[rIdx].right_tooltip = val.trim();
+          if (col === 'label') rows[rIdx].label = val.trim();
+        }
+        showToast("Ligne enregistrée");
+      }
+    }
+
+    function updateRoadmapStage(pageIdx, sIdx, field, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      const stages = p.stages || p.stages_data || p.paliers;
+      if (stages && stages[sIdx]) {
+        stages[sIdx][field] = val.trim();
+        showToast("Palier enregistré");
+      }
+    }
+
+    function updateSummaryPoint(pageIdx, pIdx, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      const pts = p.points || p.steps || p.items;
+      if (pts && pts[pIdx]) {
+        if (typeof pts[pIdx] === 'object' && !Array.isArray(pts[pIdx])) {
+          pts[pIdx].desc = val.trim();
+        } else if (Array.isArray(pts[pIdx])) {
+          pts[pIdx][1] = val.trim();
+        } else {
+          pts[pIdx] = val.trim();
+        }
+        showToast("Étape enregistrée");
+      }
+    }
+
+    function updateMeteoField(pageIdx, field, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      if (!currentWorkbookSpec.pages[pageIdx].params) currentWorkbookSpec.pages[pageIdx].params = {};
+      currentWorkbookSpec.pages[pageIdx].params[field] = val.trim();
+      showToast("Question météo enregistrée");
+    }
+
+    function updateQuadrantInstruction(pageIdx, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      if (!currentWorkbookSpec.pages[pageIdx].params) currentWorkbookSpec.pages[pageIdx].params = {};
+      currentWorkbookSpec.pages[pageIdx].params.instruction = val.trim();
+      showToast("Consigne enregistrée");
+    }
+
+    function updateEnqueteField(pageIdx, qIdx, field, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      const qs = p.questions || p.items;
+      if (qs && qs[qIdx]) {
+        if (typeof qs[qIdx] === 'object') {
+          qs[qIdx][field] = val.trim();
+        } else {
+          qs[qIdx] = val.trim();
+        }
+        showToast("Axe d'enquête enregistré");
+      }
+    }
+
+    function updateEngagementLine(pageIdx, lIdx, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      const lines = p.lines || p.points || p.commitments;
+      if (lines && lines[lIdx]) {
+        if (typeof lines[lIdx] === 'object') {
+          lines[lIdx].text = val.trim();
+        } else {
+          lines[lIdx] = val.trim();
+        }
+        showToast("Engagement enregistré");
+      }
+    }
+
+    function updateClosingMsg(pageIdx, mIdx, val) {
+      if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
+      const p = currentWorkbookSpec.pages[pageIdx].params;
+      if (p.messages && p.messages[mIdx]) {
+        if (typeof p.messages[mIdx] === 'object') {
+          p.messages[mIdx].text = val.trim();
+        } else {
+          p.messages[mIdx] = val.trim();
+        }
+        showToast("Message enregistré");
+      }
+    }
+
+
 
     function loadSampleNotes() {
       document.getElementById('chapter_num').value = 4;
@@ -453,7 +949,10 @@ Notes de la séance :
         }
 
         const blob = await res.blob();
-        downloadBlob(blob, `Workbook_Chapitre_${currentWorkbookSpec.chapter_num}.pdf`);
+        const benef = (currentWorkbookSpec.beneficiary_name || '').replace(/\s+/g, '_');
+        const num = currentWorkbookSpec.chapter_num || 1;
+        const filename = benef ? `Workbook_Chapitre_${num}_${benef}.pdf` : `Workbook_Chapitre_${num}.pdf`;
+        downloadBlob(blob, filename);
       } catch (err) {
         alert("Erreur : " + err.message);
       } finally {
@@ -481,6 +980,15 @@ Notes de la séance :
       document.getElementById('page_count_badge').innerText = `${spec.pages.length} Pages`;
       document.getElementById('theme_badge').innerText = spec.theme === 'earth' ? 'Earth 🟠' : 'Indigo 🔵';
       document.getElementById('iteration_badge').innerText = `Version ${iterationCount}`;
+      const benefBadge = document.getElementById('beneficiary_badge');
+      if (benefBadge) {
+        if (spec.beneficiary_name) {
+          benefBadge.classList.remove('hidden');
+          benefBadge.innerText = `👤 Pour ${spec.beneficiary_name}`;
+        } else {
+          benefBadge.classList.add('hidden');
+        }
+      }
 
       // 2. AI Changelog Bar
       const changelogBar = document.getElementById('ai_changelog_bar');
@@ -555,7 +1063,7 @@ Notes de la séance :
           const pts = Array.isArray(rawPts) ? rawPts : Object.values(rawPts);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Introduction :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Introduction :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
               <div class="space-y-2">
                 <div class="text-[10px] uppercase font-bold text-slate-400">Étapes imprimées au sommaire :</div>
                 <div class="space-y-1.5">
@@ -576,7 +1084,7 @@ Notes de la séance :
                     return `
                       <div class="flex items-start space-x-2.5 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
                         <span class="font-mono font-bold text-mdm-blue text-xs mt-0.5">${escapeHtml(num)}</span>
-                        <span class="text-slate-800 leading-snug">${typeof pt === 'object' && !Array.isArray(pt) && (pt.title && pt.desc) ? text : escapeHtml(text)}</span>
+                        <span data-editable="true" onblur="updateSummaryPoint(${idx}, ${i}, this.innerText)" class="text-slate-800 leading-snug">${typeof pt === 'object' && !Array.isArray(pt) && (pt.title && pt.desc) ? text : escapeHtml(text)}</span>
                       </div>`;
                   }).join('')}
                 </div>
@@ -588,7 +1096,7 @@ Notes de la séance :
               <div class="space-y-1.5">
                 <span class="text-[10px] font-bold uppercase text-amber-900 tracking-wider">1. Sélecteur d'état d'esprit</span>
                 <div class="bg-white p-2.5 rounded-lg border border-amber-100 flex flex-wrap items-center justify-between gap-2">
-                  <span class="font-semibold text-slate-800">${escapeHtml(p.emotion_prompt || "Aujourd'hui, je me sens :")}</span>
+                  <span data-editable="true" onblur="updateMeteoField(${idx}, 'emotion_prompt', this.innerText)" class="font-semibold text-slate-800">${escapeHtml(p.emotion_prompt || "Aujourd'hui, je me sens :")}</span>
                   <div class="flex items-center space-x-2 text-xs font-bold text-slate-700 bg-amber-50/60 px-2 py-1 rounded">
                     <span>☀️ Beau fixe</span>
                     <span>·</span>
@@ -603,14 +1111,14 @@ Notes de la séance :
               <div class="space-y-1.5">
                 <span class="text-[10px] font-bold uppercase text-amber-900 tracking-wider">2. Jauge d'énergie vitale</span>
                 <div class="bg-white p-2.5 rounded-lg border border-amber-100 flex items-center justify-between text-xs">
-                  <span class="font-semibold text-slate-800">${escapeHtml(p.energy_prompt || "Niveau d'énergie actuel :")}</span>
+                  <span data-editable="true" onblur="updateMeteoField(${idx}, 'energy_prompt', this.innerText)" class="font-semibold text-slate-800">${escapeHtml(p.energy_prompt || "Niveau d'énergie actuel :")}</span>
                   <span class="font-mono font-bold text-mdm-blue bg-blue-50 px-2.5 py-1 rounded border border-blue-100">0 · · · · 5 · · · · 10</span>
                 </div>
               </div>
               <div class="space-y-1.5">
                 <span class="text-[10px] font-bold uppercase text-amber-900 tracking-wider">3. Question de recentrage</span>
                 <div class="bg-white p-3 rounded-lg border border-amber-100 space-y-1.5">
-                  <p class="text-slate-900 font-bold">« ${escapeHtml(p.thought_prompt || "Ce qui prend le plus de place dans mon esprit...")} »</p>
+                  <p data-editable="true" onblur="updateMeteoField(${idx}, 'thought_prompt', this.innerText)" class="text-slate-900 font-bold">« ${escapeHtml(p.thought_prompt || "Ce qui prend le plus de place dans mon esprit...")} »</p>
                   <div class="p-2 bg-slate-50 border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic flex items-center space-x-1.5">
                     <span>✏️</span>
                     <span>Espace de réflexion et prise de notes pour le bénéficiaire</span>
@@ -626,15 +1134,15 @@ Notes de la séance :
           if (!quads) quads = [];
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.instruction ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-purple-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.instruction)}</div>` : ''}
+              ${p.instruction ? `<div data-editable="true" onblur="updateQuadrantInstruction(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-purple-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.instruction)}</div>` : ''}
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                ${quads.map(q => {
+                ${quads.map((q, qi) => {
                   const t = Array.isArray(q) ? q[0] : (q.title || '');
                   const s = Array.isArray(q) ? (q[1] || '') : (q.subtitle || q.placeholder || '');
                   return `
                     <div class="bg-purple-50/50 p-3 rounded-xl border border-purple-100 space-y-1.5">
-                      <div class="font-black text-purple-950 text-xs">${escapeHtml(t)}</div>
-                      ${s ? `<div class="text-[11px] text-purple-800 font-medium">${escapeHtml(s)}</div>` : ''}
+                      <div data-editable="true" onblur="updateQuadrantField(${idx}, ${qi}, 'title', this.innerText)" class="font-black text-purple-950 text-xs cursor-pointer">${escapeHtml(t)}</div>
+                      ${s ? `<div data-editable="true" onblur="updateQuadrantField(${idx}, ${qi}, 'subtitle', this.innerText)" class="text-[11px] text-purple-800 font-medium cursor-pointer">${escapeHtml(s)}</div>` : ''}
                       <div class="p-2 bg-white border border-dashed border-purple-200 rounded text-[10px] text-slate-400 italic">
                         ✏️ Priorité ou constat formulé par le bénéficiaire
                       </div>
@@ -647,13 +1155,13 @@ Notes de la séance :
           const rows = Array.isArray(rawRows) ? rawRows : Object.values(rawRows);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-emerald-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-emerald-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
               <div class="grid grid-cols-2 gap-2 font-bold text-[11px] uppercase tracking-wider pb-1 border-b border-slate-200">
                 <span class="text-mdm-blue">${escapeHtml(p.col1_header || "Situation / Frein")}</span>
                 <span class="text-mdm-red">${escapeHtml(p.col2_header || "Levier / Enseignement")}</span>
               </div>
               <div class="space-y-2">
-                ${rows.map(r => {
+                ${rows.map((r, ri) => {
                   let left = "", right = "", lbl = "";
                   if (typeof r === 'object' && !Array.isArray(r)) {
                     left = r.left || r.col1 || r.situation || r.left_tooltip || '';
@@ -669,15 +1177,15 @@ Notes de la séance :
                   }
                   return `
                     <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 space-y-1.5">
-                      ${lbl ? `<div class="font-bold text-slate-900 text-xs">${escapeHtml(lbl)}</div>` : ''}
+                      ${lbl ? `<div data-editable="true" onblur="updateTwoColumnsField(${idx}, ${ri}, 'label', this.innerText)" class="font-bold text-slate-900 text-xs cursor-pointer">${escapeHtml(lbl)}</div>` : ''}
                       <div class="grid grid-cols-2 gap-2 text-xs">
                         <div class="bg-white p-2 rounded border border-slate-200 text-slate-700 leading-snug">
                           <span class="text-[10px] uppercase font-bold text-slate-400 block mb-0.5">Constat initial :</span>
-                          ${escapeHtml(left)}
+                          <span data-editable="true" onblur="updateTwoColumnsField(${idx}, ${ri}, 'left', this.innerText)" class="cursor-pointer block">${escapeHtml(left)}</span>
                         </div>
                         <div class="bg-white p-2 rounded border border-slate-200 text-slate-900 font-semibold leading-snug">
                           <span class="text-[10px] uppercase font-bold text-emerald-600 block mb-0.5">Levier / Règle posée :</span>
-                          ${escapeHtml(right)}
+                          <span data-editable="true" onblur="updateTwoColumnsField(${idx}, ${ri}, 'right', this.innerText)" class="cursor-pointer block">${escapeHtml(right)}</span>
                         </div>
                       </div>
                     </div>`;
@@ -689,7 +1197,7 @@ Notes de la séance :
           const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
               <div class="space-y-2.5">
                 ${qs.map((q, i) => {
                   const qText = typeof q === 'object' ? (q.question || q.text || q.title || `Question ${i+1}`) : String(q);
@@ -699,12 +1207,12 @@ Notes de la séance :
                     <div class="p-3 bg-slate-50/80 rounded-xl border border-slate-200/80 space-y-1.5">
                       <div class="font-bold text-slate-900 text-xs flex items-start space-x-2">
                         <span class="font-mono text-mdm-blue font-black">${i+1}.</span>
-                        <span>${escapeHtml(qText)}</span>
+                        <span data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'question', this.innerText)" class="cursor-pointer">${escapeHtml(qText)}</span>
                       </div>
-                      ${qSub ? `<div class="text-[11px] text-slate-600 pl-4 font-normal">${escapeHtml(qSub)}</div>` : ''}
+                      ${qSub ? `<div data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'subtitle', this.innerText)" class="text-[11px] text-slate-600 pl-4 font-normal cursor-pointer">${escapeHtml(qSub)}</div>` : ''}
                       ${qEx ? `
                         <div class="ml-4 p-2 bg-indigo-50/70 border border-indigo-100 rounded-lg text-[11px] text-indigo-900">
-                          <span class="font-bold">💡 Exemple concret donné :</span> « ${escapeHtml(qEx)} »
+                          <span class="font-bold">💡 Exemple concret :</span> <span data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'example', this.innerText)" class="cursor-pointer italic">« ${escapeHtml(qEx)} »</span>
                         </div>` : ''}
                       <div class="ml-4 p-2.5 bg-white border border-dashed border-slate-200 rounded-lg text-[10px] text-slate-400 italic flex items-center space-x-1.5">
                         <span>✏️</span>
@@ -719,7 +1227,7 @@ Notes de la séance :
           const stages = Array.isArray(rawStages) ? rawStages : Object.values(rawStages);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
               <div class="space-y-2.5">
                 ${stages.map((st, i) => {
                   const per = st.period || st.palier || `PALIER ${i+1}`;
@@ -730,12 +1238,12 @@ Notes de la séance :
                   return `
                     <div class="bg-indigo-50/40 p-3 rounded-xl border border-indigo-100 space-y-2">
                       <div class="flex items-center justify-between pb-1 border-b border-indigo-100/60">
-                        <span class="font-black text-indigo-950 text-xs uppercase tracking-wider">${escapeHtml(per)}</span>
-                        ${theme ? `<span class="px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded text-[10px] font-bold uppercase">${escapeHtml(theme)}</span>` : ''}
+                        <span data-editable="true" onblur="updateRoadmapStage(${idx}, ${i}, 'period', this.innerText)" class="font-black text-indigo-950 text-xs uppercase tracking-wider cursor-pointer">${escapeHtml(per)}</span>
+                        ${theme ? `<span data-editable="true" onblur="updateRoadmapStage(${idx}, ${i}, 'theme', this.innerText)" class="px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded text-[10px] font-bold uppercase cursor-pointer">${escapeHtml(theme)}</span>` : ''}
                       </div>
                       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                        ${obj ? `<div><span class="text-[10px] font-bold uppercase text-slate-400 block">Cap / Objectif :</span><span class="text-slate-800 font-semibold">${escapeHtml(obj)}</span></div>` : ''}
-                        ${kpi ? `<div><span class="text-[10px] font-bold uppercase text-emerald-600 block">Indicateur Clé (KPI) :</span><span class="text-emerald-900 font-semibold">${escapeHtml(kpi)}</span></div>` : ''}
+                        ${obj ? `<div><span class="text-[10px] font-bold uppercase text-slate-400 block">Cap / Objectif :</span><span data-editable="true" onblur="updateRoadmapStage(${idx}, ${i}, 'default_obj', this.innerText)" class="text-slate-800 font-semibold cursor-pointer">${escapeHtml(obj)}</span></div>` : ''}
+                        ${kpi ? `<div><span class="text-[10px] font-bold uppercase text-emerald-600 block">Indicateur Clé (KPI) :</span><span data-editable="true" onblur="updateRoadmapStage(${idx}, ${i}, 'default_kpi', this.innerText)" class="text-emerald-900 font-semibold cursor-pointer">${escapeHtml(kpi)}</span></div>` : ''}
                       </div>
                       ${acts.length ? `
                         <div class="pt-1.5 border-t border-indigo-100/60 space-y-1">
@@ -757,7 +1265,7 @@ Notes de la séance :
           const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-cyan-400 text-slate-700 italic"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-cyan-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
               <div class="bg-cyan-50/50 p-3 rounded-xl border border-cyan-100 space-y-2">
                 <div class="font-bold text-cyan-950 text-xs uppercase tracking-wider">Fiche d'Échange Réseau & Métier</div>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
@@ -773,9 +1281,9 @@ Notes de la séance :
                   <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5">
                     <div class="font-bold text-slate-900 text-xs flex items-center space-x-1.5">
                       <span class="text-cyan-700 font-mono font-bold">${qi+1}.</span>
-                      <span>${escapeHtml(q.title || q.question || `Axe ${qi+1}`)}</span>
+                      <span data-editable="true" onblur="updateEnqueteField(${idx}, ${qi}, 'title', this.innerText)" class="cursor-pointer">${escapeHtml(q.title || q.question || `Axe ${qi+1}`)}</span>
                     </div>
-                    ${q.subtitle ? `<div class="text-[11px] text-slate-600 pl-4 font-normal">${escapeHtml(q.subtitle)}</div>` : ''}
+                    ${q.subtitle ? `<div data-editable="true" onblur="updateEnqueteField(${idx}, ${qi}, 'subtitle', this.innerText)" class="text-[11px] text-slate-600 pl-4 font-normal cursor-pointer">${escapeHtml(q.subtitle)}</div>` : ''}
                     <div class="ml-4 p-2 bg-white border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic">
                       ✏️ Notes et pépites recueillies auprès du professionnel
                     </div>
@@ -792,12 +1300,12 @@ Notes de la séance :
             <div class="space-y-3 text-xs bg-rose-50/30 p-4 rounded-xl border border-rose-100">
               <div class="font-black text-rose-950 text-xs uppercase tracking-wider">Engagements du Bénéficiaire</div>
               <div class="space-y-2 pl-2.5 border-l-2 border-rose-300">
-                ${lines.map(l => {
+                ${lines.map((l, li) => {
                   const txt = typeof l === 'object' ? (l.text || l.line || '') : String(l);
                   return `
                     <div class="text-slate-800 leading-snug flex items-start space-x-2">
                       <span class="text-rose-600 font-bold">✓</span>
-                      <span>${escapeHtml(txt)}</span>
+                      <span data-editable="true" onblur="updateEngagementLine(${idx}, ${li}, this.innerText)" class="cursor-pointer">${escapeHtml(txt)}</span>
                     </div>`;
                 }).join('')}
               </div>
@@ -818,9 +1326,9 @@ Notes de la séance :
             <div class="text-xs bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-3 text-center">
               <div class="font-black text-slate-900 text-sm">Clôture & Messages Inspirants</div>
               <div class="space-y-2 max-w-lg mx-auto">
-                ${msgs.map(m => `
+                ${msgs.map((m, mi) => `
                   <div class="p-2.5 bg-white rounded-lg border border-slate-100 shadow-2xs text-slate-800 italic leading-relaxed">
-                    « ${escapeHtml(typeof m === 'object' ? m.text : m)} »
+                    <span data-editable="true" onblur="updateClosingMsg(${idx}, ${mi}, this.innerText)" class="cursor-pointer">« ${escapeHtml(typeof m === 'object' ? m.text : m)} »</span>
                   </div>`).join('')}
               </div>
               <div class="text-[10px] text-slate-400 uppercase tracking-widest pt-2 border-t border-slate-200 font-bold">
@@ -997,6 +1505,13 @@ Notes de la séance :
 
       document.getElementById('state_empty').classList.add('hidden');
       document.getElementById('state_preview').classList.remove('hidden');
+
+      if (isDirectEditMode) {
+        document.querySelectorAll('[data-editable]').forEach(el => {
+          el.setAttribute('contenteditable', 'true');
+          el.classList.add('ring-1', 'ring-amber-300', 'bg-amber-50/40', 'rounded', 'px-1');
+        });
+      }
     }
 
     function updatePageTitle(idx, val) {

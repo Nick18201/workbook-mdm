@@ -154,3 +154,31 @@ class IterateResponse(BaseModel):
     changes_summary: str = Field(..., description="Explication concise des modifications apportées")
     pedagogical_note: Optional[str] = Field(None, description="Note ou conseil pédagogique sur l'ajustement")
 
+
+class TemplateInfo(BaseModel):
+    id: str = Field(..., description="Identifiant unique du livret modèle")
+    chapter_num: int = Field(..., description="Numéro du chapitre")
+    title: str = Field(..., description="Titre du livret")
+    subtitle: str = Field(..., description="Sous-titre de couverture")
+    description: str = Field(..., description="Brève description pédagogique")
+    page_count: int = Field(..., description="Nombre de pages du livret")
+    icon: str = Field(..., description="Emoji distinctif pour l'affichage")
+    category: str = Field("Bilan de Compétences", description="Catégorie du modèle")
+
+
+class CustomizeRequest(BaseModel):
+    template_id: Optional[str] = Field(None, description="Identifiant du modèle de base (ex: 'chap1')")
+    base_spec: Optional[WorkbookSpec] = Field(None, description="Spécification de base si livret personnalisé ou importé")
+    beneficiary_name: str = Field(..., description="Prénom ou nom complet du bénéficiaire")
+    beneficiary_context: str = Field(..., description="Profil, métier actuel, projet visé, défis majeurs")
+    custom_instructions: Optional[str] = Field(None, description="Consignes spécifiques d'adaptation souhaitées")
+    theme: Optional[Literal["indigo", "earth"]] = Field("indigo", description="Palette de couleur")
+    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
+
+
+class CustomizeResponse(BaseModel):
+    spec: WorkbookSpec = Field(..., description="Spécification personnalisée du livret")
+    customizations_summary: str = Field(..., description="Résumé des adaptations clés apportées pour ce profil")
+    pedagogical_note: Optional[str] = Field(None, description="Conseil pédagogique pour l'accompagnement")
+
+

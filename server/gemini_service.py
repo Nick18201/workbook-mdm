@@ -10,7 +10,17 @@ from typing import Optional
 from google import genai
 from google.genai import types
 
-from .models import WorkbookSpec, PageSpec, BlockSpec, ParseRequest, IterateRequest, IterateResponse
+from .models import (
+    WorkbookSpec,
+    PageSpec,
+    BlockSpec,
+    ParseRequest,
+    IterateRequest,
+    IterateResponse,
+    CustomizeRequest,
+    CustomizeResponse,
+)
+from .predefined_workbooks import get_predefined_spec
 
 logger = logging.getLogger(__name__)
 
@@ -720,4 +730,169 @@ def _build_fallback_iteration(request: IterateRequest) -> IterateResponse:
         changes_summary=" ".join(summary_parts),
         pedagogical_note="Maquette révisée.",
     )
+
+
+CUSTOMIZE_SYSTEM_PROMPT = """Tu es un ingénieur pédagogique et directeur artistique d'élite pour 'Marge de Manœuvre' (bilans de compétences et coaching de cadres & entrepreneurs).
+Ton rôle est de prendre un livret pédagogique existant de référence (`WorkbookSpec`) et de le PERSONNALISER SUR-MESURE pour un bénéficiaire précis, selon son profil professionnel, son projet de transition et les consignes du coach.
+
+RÈGLES D'OR DE PERSONNALISATION :
+1. PRÉSERVER L'OSSATURE PÉDAGOGIQUE ET LE DESIGN SYSTEM :
+   - Conserve scrupuleusement l'ordre logique, les gabarits prévus (cover, summary, questions, meteo, quadrants, two_columns, enquete, roadmap, engagement, closing, composite) et le nombre de pages du livret modèle.
+   - Ne modifie JAMAIS la structure des clés de paramètres ('params', 'blocks', 'quadrants', 'rows', 'questions', 'stages', 'lines', 'messages').
+2. CONTEXTUALISER EN PROFONDEUR POUR LE BÉNÉFICIAIRE :
+   - Renseigne `beneficiary_name` avec le prénom et nom du bénéficiaire.
+   - Adapte les **exemples concrets** (`example` dans les questions et blocs) pour qu'ils soient directement issus ou représentatifs de son métier, secteur d'activité ou projet cible (ex: si le bénéficiaire est consultant IT voulant créer une marque de mobilier éco-conçu, donne des exemples liés à l'artisanat, au passage du salariat à l'entrepreneuriat, etc.).
+   - Contextualise avec subtilité les consignes, les sous-titres et les questions pour qu'elles fassent directement écho à sa situation et à ses défis spécifiques.
+   - Pour les matrices 4 quadrants, comparatifs 2 colonnes ou feuilles de route 30·60·90j, injecte des constats, leviers ou actions pertinents pour son profil.
+   - Si des consignes spécifiques (`custom_instructions`) sont indiquées par le coach, applique-les fidèlement.
+3. RESPECT STRICT DES BUDGETS DE CARACTÈRES (AUCUN DÉBORDEMENT REPORTLAB) :
+   - Titre de page : 25 à 45 caractères max.
+   - Intitulé de question : max 120 caractères.
+   - Exemple concret : max 90 caractères (direct, percutant, sans préfixe 'Ex :').
+   - Points de sommaire ('desc') : max 85 caractères.
+   - Ne jamais surcharger une page : la respiration et les espaces blancs sont sacrés.
+4. THÈME GRAPHIQUE :
+   - Respecte le thème demandé ('indigo' ou 'earth').
+
+FORMAT DE SORTIE JSON STRICT :
+Produis uniquement un objet JSON valide avec les clés suivantes :
+{
+  "spec": { ...WorkbookSpec complet personnalisé... },
+  "customizations_summary": "Explication claire et valorisante en 3-5 points des adaptations clés apportées pour ce bénéficiaire.",
+  "pedagogical_note": "Conseil méthodologique pour le coach lors de l'animation de ce livret avec le bénéficiaire."
+}
+"""
+
+
+def customize_spec_with_gemini(request: CustomizeRequest) -> CustomizeResponse:
+    """
+    Personnalise un livret existant (spécification de référence) en fonction du profil
+    du bénéficiaire et des consignes du coach via Gemini Flash.
+    """
+    # 1. Résolution de la spécification de base
+    base_spec = request.base_spec
+    if not base_spec and request.template_id:
+        base_spec = get_predefined_spec(request.template_id)
+
+    if not base_spec:
+        raise ValueError("Spécification de base introuvable. Veuillez sélectionner un modèle valide ou fournir une spécification.")
+
+    api_key = request.api_key or os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        logger.warning("GEMINI_API_KEY non configurée. Utilisation du fallback.")
+        return _build_fallback_customization(request, base_spec)
+
+    client = genai.Client(api_key=api_key)
+
+    base_spec_json = base_spec.model_dump_json(indent=2)
+    user_prompt = f"""Voici le livret pédagogique de référence (modèle existant) à personnaliser :
+---
+{base_spec_json}
+---
+
+PROFIL DU BÉNÉFICIAIRE :
+- Nom / Prénom : {request.beneficiary_name}
+- Contexte & Métier / Projet : {request.beneficiary_context}
+- Consignes spécifiques d'adaptation du coach : {request.custom_instructions or "Adapter harmonieusement l'ensemble des exemples et questions au profil du bénéficiaire."}
+- Thème graphique souhaité : {request.theme or base_spec.theme}
+
+MISSION :
+Personnalise ce livret de référence pour {request.beneficiary_name}.
+Adapte les exemples concrets, contextualise les questions et affine les exercices pour que le livret lui parle immédiatement.
+Respecte scrupuleusement la structure des gabarits et les longueurs maximales de texte.
+Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_note'."""
+
+    models_to_try = ["gemini-3.8-flash", "gemini-3.6-flash"]
+    last_err = None
+
+    for model_name in models_to_try:
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                contents=user_prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    temperature=0.2,
+                    system_instruction=CUSTOMIZE_SYSTEM_PROMPT,
+                ),
+            )
+            raw_text = response.text.strip() if response.text else ""
+            if raw_text:
+                if raw_text.startswith("```"):
+                    lines = raw_text.splitlines()
+                    if lines and lines[0].startswith("```"):
+                        lines = lines[1:]
+                    if lines and lines[-1].startswith("```"):
+                        lines = lines[:-1]
+                    raw_text = "\n".join(lines).strip()
+
+                data = json.loads(raw_text)
+                spec_data = data.get("spec", data)
+                new_spec = WorkbookSpec(**spec_data)
+                summary = data.get(
+                    "customizations_summary",
+                    f"Livret adapté avec succès pour {request.beneficiary_name} ({request.beneficiary_context}).",
+                )
+                note = data.get("pedagogical_note", "")
+                return CustomizeResponse(
+                    spec=new_spec,
+                    customizations_summary=summary,
+                    pedagogical_note=note,
+                )
+        except Exception as e:
+            logger.warning(f"Error calling {model_name} in customize: {e}")
+            last_err = e
+
+    logger.error(f"Customize failed on all models: {last_err}. Using fallback.")
+    return _build_fallback_customization(request, base_spec)
+
+
+def _build_fallback_customization(
+    request: CustomizeRequest, base_spec: WorkbookSpec
+) -> CustomizeResponse:
+    """
+    Personnalisation déterministe hors-ligne lorsque l'API Gemini est indisponible.
+    """
+    spec_dict = base_spec.model_dump()
+    spec_dict["beneficiary_name"] = request.beneficiary_name
+    if request.theme:
+        spec_dict["theme"] = request.theme
+
+    # Contextualiser la couverture
+    pages = spec_dict.get("pages", [])
+    if pages and pages[0].get("template") == "cover":
+        cov_params = pages[0].get("params", {})
+        sub = cov_params.get("subtitle", "")
+        if "pour" not in sub.lower():
+            cov_params["subtitle"] = f"{sub} · Pour {request.beneficiary_name}"
+        pages[0]["params"] = cov_params
+
+    # Contextualiser l'introduction du sommaire si présente
+    if len(pages) > 1 and pages[1].get("template") == "summary":
+        sum_params = pages[1].get("params", {})
+        old_intro = sum_params.get("intro_text", "")
+        if request.beneficiary_context and "adapté" not in old_intro.lower():
+            sum_params["intro_text"] = f"{old_intro} (Livret personnalisé pour {request.beneficiary_name} - {request.beneficiary_context[:60]})."
+        pages[1]["params"] = sum_params
+
+    # Injection du contexte dans un exemple de question si disponible
+    for p in pages:
+        if p.get("template") == "questions":
+            qs = p.get("params", {}).get("questions", [])
+            if qs and isinstance(qs[0], dict):
+                qs[0]["example"] = f"Projet {request.beneficiary_context[:45]}..." if request.beneficiary_context else qs[0].get("example")
+
+    new_spec = WorkbookSpec(**spec_dict)
+    summary = (
+        f"Version personnalisée pour {request.beneficiary_name} générée avec succès. "
+        f"Thème graphique '{new_spec.theme}' appliqué et intégration du profil ({request.beneficiary_context})."
+    )
+    pedagogical_note = f"Ce livret servira de support personnalisé pour votre travail avec {request.beneficiary_name}."
+
+    return CustomizeResponse(
+        spec=new_spec,
+        customizations_summary=summary,
+        pedagogical_note=pedagogical_note,
+    )
+
 

@@ -28,11 +28,28 @@ for _env_candidate in [os.path.join(PROJECT_ROOT, ".env"), os.path.join(SERVER_D
                     _k, _v = _line.split("=", 1)
                     os.environ.setdefault(_k.strip(), _v.strip().strip('"').strip("'"))
 
-from server.models import WorkbookSpec, ParseRequest, IterateRequest, IterateResponse
-from server.gemini_service import parse_notes_with_gemini, refine_spec_with_gemini
+from server.models import (
+    WorkbookSpec,
+    ParseRequest,
+    IterateRequest,
+    IterateResponse,
+    CustomizeRequest,
+    CustomizeResponse,
+    TemplateInfo,
+)
+from server.gemini_service import (
+    parse_notes_with_gemini,
+    refine_spec_with_gemini,
+    customize_spec_with_gemini,
+)
 from server.pdf_compiler import compile_workbook_from_spec
+from server.predefined_workbooks import (
+    get_predefined_info_list,
+    get_predefined_spec,
+)
 
 app = FastAPI(
+
     title="MDM Workbook Generator API",
     description="Générateur de livrets pédagogiques PDF piloté par IA pour Marge de Manœuvre",
     version="1.0.0",
@@ -107,7 +124,46 @@ def api_iterate_spec(request: IterateRequest):
         )
 
 
+@app.get("/api/templates", response_model=list[TemplateInfo])
+def api_list_templates():
+    """
+    Retourne la liste des livrets de référence pré-intégrés (MDM Bilan de Compétences & Business Plan).
+    """
+    return get_predefined_info_list()
+
+
+@app.get("/api/templates/{template_id}", response_model=WorkbookSpec)
+def api_get_template_spec(template_id: str):
+    """
+    Retourne la spécification canonique complète d'un livret modèle.
+    """
+    spec = get_predefined_spec(template_id)
+    if not spec:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Modèle de livret '{template_id}' introuvable.",
+        )
+    return spec
+
+
+@app.post("/api/customize", response_model=CustomizeResponse)
+def api_customize_workbook(request: CustomizeRequest):
+    """
+    Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du coach.
+    """
+    try:
+        response = customize_spec_with_gemini(request)
+        return response
+    except Exception as e:
+        logger.error("Erreur lors de la personnalisation IA : %s", e, exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Erreur lors de la personnalisation : {str(e)}",
+        )
+
+
 @app.post("/api/compile")
+
 def api_compile_pdf(spec: WorkbookSpec):
     """
     Compiles a WorkbookSpec JSON into a PDF file stream.
