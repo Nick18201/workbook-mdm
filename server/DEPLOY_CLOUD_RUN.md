@@ -56,5 +56,39 @@ gcloud run deploy mdm-workbook-generator \
 
 Si vous ne souhaitez pas que l'outil soit ouvert au grand public (`--no-allow-unauthenticated`) :
 
-* **Option A (Google IAP / Comptes Google)** : Activez Identity-Aware Proxy sur Cloud Run pour autoriser uniquement les adresses email de votre organisation / domaine.
-* **Option B (Protection simple)** : Ajouter un mot de passe d'équipe partagé au niveau de l'interface web.
+* **Option A (Google IAP / Comptes Google)** : Identity-Aware Proxy sur Cloud Run restreint l'accès aux membres autorisés (@margedemanoeuvre.fr).
+* **Option B (Protection simple)** : Mot de passe d'équipe partagé au niveau de l'interface web.
+
+---
+
+## 4. Mettre à jour l'application après une modification sur GitHub
+
+### Méthode 1 : Mise à jour manuelle rapide (2 commandes dans Cloud Shell)
+
+Dès que vous avez poussé (`git push`) du nouveau code sur GitHub :
+
+1. Ouvrez votre Cloud Shell et tapez :
+   ```bash
+   cd ~/workbook-mdm
+   git pull
+   ```
+2. Relancez le déploiement (Cloud Run conserve automatiquement toutes les configurations et variables d'environnement existantes) :
+   ```bash
+   gcloud run deploy mdm-workbook-generator --source . --region europe-west1
+   ```
+   *En 1 à 2 minutes, la nouvelle version est en ligne sans coupure de service !*
+
+---
+
+### Méthode 2 : Déploiement automatique continu (CI/CD GitHub)
+
+Si vous voulez que **chaque `git push` déclenche le redéploiement automatiquement** sans ouvrir Cloud Shell :
+
+1. Rendez-vous sur la console Cloud Run :  
+   👉 **[console.cloud.google.com/run?project=mdm-workbooks-2026](https://console.cloud.google.com/run?project=mdm-workbooks-2026)**
+2. Cliquez sur votre service `mdm-workbook-generator`.
+3. En haut, cliquez sur **"Configurer la livraison continue"** (Set up Continuous Deployment).
+4. Connectez votre compte GitHub et sélectionnez votre dépôt `Nick18201/workbook-mdm`.
+5. Sélectionnez la branche `main` et le type de compilation **Dockerfile**.
+6. Cliquez sur Enregistrer. Désormais, chaque push déploie automatiquement la nouvelle version.
+
