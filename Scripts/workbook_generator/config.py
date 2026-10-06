@@ -117,3 +117,6 @@ class PDFStyle:
     PATH_PLANTE_ROSE_OMBRE = os.path.join(ILLUS_DIR, "plante rose ombre copy.png")
     PATH_PLAN_ACCES = os.path.join(ILLUS_DIR, "plan_acces_carte.png")
     PATH_PARKING_PMR = os.path.join(ILLUS_DIR, "parking_pmr_aerien.png")
+    PATH_LOGO_CPF = os.path.join(ILLUS_DIR, "logo_cpf.png")
+    PATH_LOGO_FRANCE_TRAVAIL = os.path.join(ILLUS_DIR, "logo_france_travail.png")
+    PATH_LOGO_QUALIOPI = os.path.join(ILLUS_DIR, "logo_qualiopi.jpg")

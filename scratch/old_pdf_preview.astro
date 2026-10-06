@@ -1,0 +1,469 @@
+---
+export const prerender = true;
+
+import { stepsData } from "../../data/fourSteps";
+import logoCpf from "../../assets/images/logo-cpf.png";
+import logoFranceTravail from "../../assets/images/Logo_FranceTravail.png";
+import logoQualiopi from "../../assets/images/qualiopi.jpg";
+
+import "@fontsource-variable/newsreader";
+import "@fontsource-variable/newsreader/wght-italic.css";
+import "@fontsource-variable/manrope";
+import "../../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Marge de Manœuvre — Programme et Tarifs (PDF Preview)</title>
+  <style>
+    /* A4 page sizes setup for print */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Base styles for the PDF page */
+    .pdf-page {
+      width: 210mm;
+      height: 297mm;
+      padding: 16mm 18mm;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      break-after: page;
+      background-color: #ffffff;
+    }
+
+    /* Screen preview styling helper */
+    @media screen {
+      body {
+        background-color: #f0f2f5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 30px;
+      }
+      .pdf-page {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+      }
+    }
+
+    /* Font classes override just in case */
+    .font-newsreader {
+      font-family: 'Newsreader Variable', serif;
+    }
+    .font-body {
+      font-family: 'Manrope Variable', sans-serif;
+    }
+
+    /* Neutralize scroll reveals for PDF generation */
+    .reveal-up, .reveal-left, .reveal-right, .reveal-fade, [class*="reveal-"] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="font-body text-gray-800 antialiased">
+
+  <!-- ================= PAGE 1 : PAGE DE GARDE ================= -->
+  <div class="pdf-page relative">
+    <!-- Background patterns (Soft earth/peach gradient) -->
+    <div class="absolute inset-0 bg-gradient-to-br from-peach-50/70 via-white to-sand-50/70 -z-10"></div>
+    <div class="absolute -bottom-16 -left-16 w-80 h-80 rounded-full bg-peach-100/40 blur-3xl -z-10"></div>
+    <div class="absolute -top-16 -right-16 w-80 h-80 rounded-full bg-sage-100/30 blur-3xl -z-10"></div>
+
+    <!-- Top line -->
+    <div class="flex justify-between items-center">
+      <div class="flex flex-col">
+        <span class="font-newsreader text-2xl font-bold tracking-tight text-gray-900">marge</span>
+        <span class="font-body text-xs font-black tracking-[0.25em] text-earth-600 uppercase -mt-1">de manœuvre</span>
+      </div>
+      <div class="px-4 py-1.5 border border-earth-200 rounded-full bg-white/80 shadow-sm text-[10px] font-bold text-earth-700 tracking-wider uppercase">
+        Bilan de compétences
+      </div>
+    </div>
+
+    <!-- Main Hero Box -->
+    <div class="flex-grow flex flex-col justify-center items-center text-center my-auto max-w-2xl mx-auto px-4">
+      <div class="w-16 h-1 w-12 bg-earth-500 rounded-full mb-8"></div>
+      
+      <h1 class="font-newsreader text-5xl md:text-6xl font-bold text-gray-900 tracking-tight leading-[1.05] mb-6">
+        Votre Bilan de<br/>
+        <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-earth-600 to-peach-600">Compétences</span><br/>
+        sur-mesure
+      </h1>
+
+      <p class="font-body text-base text-gray-600 font-medium leading-relaxed max-w-xl mb-12">
+        Un accompagnement individuel associant psychologie du travail et coaching opérationnel pour repenser sereinement votre vie professionnelle.
+      </p>
+
+      <!-- Qualiopi badge -->
+      <div class="flex flex-col items-center gap-2 px-8 py-5 rounded-3xl bg-white border border-earth-100 shadow-md">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-peach-500 animate-pulse"></span>
+          <span class="font-body text-xs font-extrabold tracking-widest text-gray-800 uppercase">Organisme certifié</span>
+        </div>
+        <span class="font-newsreader text-xl font-bold text-earth-700 tracking-wide uppercase">Qualiopi</span>
+        <span class="font-body text-[9px] text-gray-500 max-w-[200px] leading-tight mt-1">
+          Actions permettant de valider les acquis de l'expérience
+        </span>
+      </div>
+    </div>
+
+    <!-- Footer info -->
+    <div class="border-t border-earth-100 pt-6 flex justify-between items-center text-[10px] text-gray-500 font-medium">
+      <div>marge-de-manoeuvre.fr • contact@margedemanoeuvre.fr</div>
+      <div class="text-right">Document d'information 2026</div>
+    </div>
+  </div>
+
+
+  <!-- ================= PAGES 2 à 5 : LES ÉTAPES DU BILAN (UNE PAR PAGE) ================= -->
+  {stepsData.map((step) => (
+    <div class="pdf-page">
+      <!-- Header -->
+      <div class="flex justify-between items-start border-b border-earth-100 pb-4">
+        <div>
+          <h2 class="font-newsreader text-2xl font-bold text-gray-900 leading-tight">Votre parcours d'accompagnement</h2>
+          <p class="font-body text-xs text-gray-500 mt-1">Un parcours structuré en séances individuelles d'une heure</p>
+        </div>
+        <div class="text-right flex flex-col items-end">
+          <span class="font-newsreader text-lg font-bold tracking-tight text-gray-800">marge de manœuvre</span>
+          <span class="font-body text-[8px] font-black tracking-wider text-gray-400 uppercase">Le Programme</span>
+        </div>
+      </div>
+
+      <!-- Content: One Step -->
+      <div class="flex-grow py-6 flex flex-col justify-center space-y-4">
+        <!-- Intro description sur la première étape -->
+        {step.stepNumber === 1 && (
+          <p class="font-body text-xs text-gray-600 leading-relaxed italic border-l-2 border-peach-400 pl-3 mb-2">
+            Notre bilan de compétences comprend 13 séances pédagogiques structurées. Il associe 12h d'entretiens individuels en direct (par visioconférence) avec votre psychologue du travail et votre coach dédié, et 12h de travail personnel accompagné à l'aide de livrets de bord personnalisés.
+          </p>
+        )}
+
+        <div class="space-y-4">
+          <!-- Step Title block -->
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-earth-800 text-white flex items-center justify-center font-newsreader font-bold text-base shadow-sm">
+              0{step.stepNumber}
+            </div>
+            <div>
+              <span class="font-body text-[9px] font-black tracking-widest text-earth-500 uppercase block leading-none">Étape {step.stepNumber}</span>
+              <h3 class="font-newsreader text-xl font-bold text-gray-900 leading-tight">{step.title}</h3>
+            </div>
+          </div>
+          
+          <p class="font-body text-xs text-gray-600 leading-relaxed italic pl-12">
+            {step.intro}
+          </p>
+
+          <!-- Sessions grid/stack -->
+          <div class="pl-12 space-y-3">
+            {step.sessions.map((session) => (
+              <div class="bg-sand-50/50 rounded-2xl p-4 border border-earth-100/30 flex gap-4 items-start shadow-sm">
+                <div class="w-8 h-8 rounded-xl bg-peach-100/80 text-peach-700 font-newsreader font-bold text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                  {session.badge}
+                </div>
+                <div class="space-y-1">
+                  <h4 class="font-newsreader text-sm font-bold text-gray-800 leading-tight">
+                    {session.title}
+                  </h4>
+                  <p class="font-body text-xs text-gray-600 leading-relaxed">
+                    {session.description}
+                  </p>
+                  <div class="text-xs font-body text-earth-700 font-bold flex items-center gap-1.5 pt-0.5">
+                    <span class="uppercase tracking-wider text-gray-400 font-black text-[9px]">Objectif :</span>
+                    <span>{session.objective}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Footnote for step 4 -->
+      {step.stepNumber === 4 && (
+        <p class="text-[9px] text-gray-500 text-center mt-2 border-t border-gray-100 pt-3 font-body leading-relaxed max-w-xl mx-auto italic">
+          * Le déroulement pédagogique complet comprend 13 séances. Selon la formule choisie (8, 10 ou 12 rendez-vous individuels avec le binôme), certaines séances de diagnostic ou de préparation sont regroupées ou réalisées en autonomie avec nos livrets de bord.
+        </p>
+      )}
+
+      <!-- Footer -->
+      <div class="border-t border-earth-100 pt-4 flex justify-between items-center text-[10px] text-gray-500 font-medium">
+        <div>marge-de-manoeuvre.fr • Programme du bilan</div>
+        <div class="text-right">Page {step.stepNumber + 1} / 7</div>
+      </div>
+    </div>
+  ))}
+
+
+  <!-- ================= PAGE 4 : LES BÉNÉFICES & POST-BILAN ================= -->
+  <div class="pdf-page">
+    <!-- Header -->
+    <div class="flex justify-between items-start border-b border-earth-100 pb-4">
+      <div>
+        <h2 class="font-newsreader text-2xl font-bold text-gray-900 leading-tight">Bénéfices &amp; Impact</h2>
+        <p class="font-body text-xs text-gray-500 mt-1">Ce que l'accompagnement change concrètement dans votre vie</p>
+      </div>
+      <div class="text-right flex flex-col items-end">
+        <span class="font-newsreader text-lg font-bold tracking-tight text-gray-800">marge de manœuvre</span>
+        <span class="font-body text-[8px] font-black tracking-wider text-gray-400 uppercase">Vos acquis</span>
+      </div>
+    </div>
+
+    <!-- Content: Outcomes & Life post-bilan -->
+    <div class="flex-grow py-8 flex flex-col justify-between">
+      <!-- 4 main benefits grid -->
+      <div class="space-y-6">
+        <h3 class="font-newsreader text-xl font-bold text-gray-900 mb-2">
+          Ce que ce bilan <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-earth-600 to-sage-600">vous apporte</span>
+        </h3>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Benefit 1 -->
+          <div class="bg-white border border-earth-100 shadow-sm rounded-2xl p-5 space-y-2">
+            <div class="w-8 h-8 rounded-full bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-bold shadow-sm">
+              E
+            </div>
+            <h4 class="font-body font-bold text-sm text-gray-800 leading-tight">Regain d'énergie &amp; Motivation</h4>
+            <p class="font-body text-xs text-gray-600 leading-relaxed">
+              Clarifier son parcours et sortir d'un sentiment d'échec redonne la force de se mettre en mouvement.
+            </p>
+          </div>
+
+          <!-- Benefit 2 -->
+          <div class="bg-white border border-earth-100 shadow-sm rounded-2xl p-5 space-y-2">
+            <div class="w-8 h-8 rounded-full bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-bold shadow-sm">
+              C
+            </div>
+            <h4 class="font-body font-bold text-sm text-gray-800 leading-tight">Sortir de la confusion</h4>
+            <p class="font-body text-xs text-gray-600 leading-relaxed">
+              Fini de tourner en rond : retrouvez une direction claire, stratégique et compatible avec votre réalité.
+            </p>
+          </div>
+
+          <!-- Benefit 3 -->
+          <div class="bg-white border border-earth-100 shadow-sm rounded-2xl p-5 space-y-2">
+            <div class="w-8 h-8 rounded-full bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-bold shadow-sm">
+              P
+            </div>
+            <h4 class="font-body font-bold text-sm text-gray-800 leading-tight">De multiples possibilités</h4>
+            <p class="font-body text-xs text-gray-600 leading-relaxed">
+              Reconversion, projet entrepreneurial, évolution interne, ou simple réorganisation de votre quotidien.
+            </p>
+          </div>
+
+          <!-- Benefit 4 -->
+          <div class="bg-white border border-earth-100 shadow-sm rounded-2xl p-5 space-y-2">
+            <div class="w-8 h-8 rounded-full bg-sage-50 text-sage-600 flex items-center justify-center text-sm font-bold shadow-sm">
+              S
+            </div>
+            <h4 class="font-body font-bold text-sm text-gray-800 leading-tight">Vous n'êtes plus seul·e</h4>
+            <p class="font-body text-xs text-gray-600 leading-relaxed">
+              Un parcours structuré où vous êtes épaulé·e pour oser envisager autre chose avec légitimité.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Life post bilan (Super Card) -->
+      <div class="bg-gradient-to-br from-peach-50/50 via-white to-sand-50/50 border border-peach-100 rounded-3xl p-6 space-y-4 shadow-sm mt-8">
+        <h3 class="font-newsreader text-xl font-bold text-gray-900 leading-tight">
+          À quoi ressemble <span class="italic text-transparent bg-clip-text bg-gradient-to-r from-earth-600 to-peach-600">la vie post bilan ?</span>
+        </h3>
+        
+        <ul class="grid grid-cols-2 gap-y-3.5 gap-x-4">
+          <li class="flex items-start gap-2.5">
+            <span class="text-peach-500 text-sm mt-0.5 shrink-0">✓</span>
+            <span class="font-body text-xs text-gray-700 font-bold leading-tight">
+              Reprendre sa puissance d'agir, sans idéaliser les choses.
+            </span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-peach-500 text-sm mt-0.5 shrink-0">✓</span>
+            <span class="font-body text-xs text-gray-700 font-bold leading-tight">
+              Retrouver une cohérence entre soi et sa vie professionnelle.
+            </span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-peach-500 text-sm mt-0.5 shrink-0">✓</span>
+            <span class="font-body text-xs text-gray-700 font-bold leading-tight">
+              Reprendre confiance dans son propre discernement.
+            </span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="text-peach-500 text-sm mt-0.5 shrink-0">✓</span>
+            <span class="font-body text-xs text-gray-700 font-bold leading-tight">
+              Cesser de tourner en rond et se reconnecter à ce qui compte.
+            </span>
+          </li>
+        </ul>
+        
+        <div class="text-center text-earth-600/70 font-body text-[10px] italic border-t border-earth-100/55 pt-3.5">
+          Il peut être très difficile de chercher seul·e : avec nous, vous ne porterez plus vos questions dans votre coin.
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="border-t border-earth-100 pt-4 flex justify-between items-center text-[10px] text-gray-500 font-medium">
+      <div>marge-de-manoeuvre.fr • Impact post-bilan</div>
+      <div class="text-right">Page 6 / 7</div>
+    </div>
+  </div>
+
+
+  <!-- ================= PAGE 5 : FORMULES ET FINANCEMENTS ================= -->
+  <div class="pdf-page">
+    <!-- Header -->
+    <div class="flex justify-between items-start border-b border-earth-100 pb-4">
+      <div>
+        <h2 class="font-newsreader text-2xl font-bold text-gray-900 leading-tight">Formules &amp; Tarifs</h2>
+        <p class="font-body text-xs text-gray-500 mt-1">Des formats adaptés éligibles aux financements CPF et publics</p>
+      </div>
+      <div class="text-right flex flex-col items-end">
+        <span class="font-newsreader text-lg font-bold tracking-tight text-gray-800">marge de manœuvre</span>
+        <span class="font-body text-[8px] font-black tracking-wider text-gray-400 uppercase">Tarification</span>
+      </div>
+    </div>
+
+    <!-- Content: Formulas and Financing details -->
+    <div class="flex-grow py-6 flex flex-col justify-between">
+      <!-- 3 formulas grid -->
+      <div class="grid grid-cols-3 gap-3">
+        <!-- Essentiel -->
+        <div class="bg-white p-4 rounded-2xl border border-sand-100 flex flex-col justify-between h-full shadow-sm">
+          <div class="text-center space-y-1">
+            <h3 class="font-newsreader text-xs font-bold text-gray-700 uppercase tracking-wider">L'Essentiel</h3>
+            <p class="font-body text-[9px] text-earth-600 italic">Validation rapide</p>
+            <div class="py-2.5 font-newsreader text-xl font-bold text-gray-800">1 600 €</div>
+            <span class="font-body text-[8px] text-gray-400 block -mt-2.5">(Net de taxes)</span>
+          </div>
+          <ul class="space-y-2 border-t border-sand-100 pt-3 mt-3 text-[10px] text-gray-600 font-medium">
+            <li class="flex items-start gap-1.5">
+              <span class="text-sage-500 text-xs leading-none shrink-0">•</span>
+              <p class="leading-snug">8 séances d'1h (4 Psy / 4 Coach)</p>
+            </li>
+            <li class="flex items-start gap-1.5 pt-1 border-t border-dashed border-gray-100">
+              <p class="text-[9px] leading-snug italic text-gray-500">
+                Vous avez déjà une idée précise et devez valider sa viabilité.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Optimal -->
+        <div class="bg-gradient-to-b from-white to-peach-50/40 p-4 rounded-2xl border-2 border-peach-500 flex flex-col justify-between h-full shadow-md relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-peach-500 text-white px-3 py-0.5 rounded-full font-body font-bold text-[8px] uppercase tracking-wider shadow-sm">
+            N°1 ⭐
+          </div>
+          <div class="text-center space-y-1">
+            <h3 class="font-newsreader text-xs font-bold text-gray-700 uppercase tracking-wider">L'Optimal</h3>
+            <p class="font-body text-[9px] text-earth-600 italic">Équilibre idéal</p>
+            <div class="py-2.5 font-newsreader text-xl font-bold text-gray-800">1 850 €</div>
+            <span class="font-body text-[8px] text-gray-400 block -mt-2.5">(Net de taxes)</span>
+          </div>
+          <ul class="space-y-2 border-t border-peach-100 pt-3 mt-3 text-[10px] text-gray-600 font-medium">
+            <li class="flex items-start gap-1.5">
+              <span class="text-peach-500 text-xs leading-none shrink-0">•</span>
+              <p class="leading-snug">10 séances d'1h (5 Psy / 5 Coach)</p>
+            </li>
+            <li class="flex items-start gap-1.5 pt-1 border-t border-dashed border-peach-100/50">
+              <p class="text-[9px] leading-snug italic text-gray-500">
+                Vous êtes dans le flou complet et avez besoin d'explorer en profondeur.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Intégral -->
+        <div class="bg-white p-4 rounded-2xl border border-sand-100 flex flex-col justify-between h-full shadow-sm">
+          <div class="text-center space-y-1">
+            <h3 class="font-newsreader text-xs font-bold text-gray-700 uppercase tracking-wider">L'Intégral</h3>
+            <p class="font-body text-[9px] text-earth-600 italic">Transitions complexes</p>
+            <div class="py-2.5 font-newsreader text-xl font-bold text-gray-800">2 220 €</div>
+            <span class="font-body text-[8px] text-gray-400 block -mt-2.5">(Net de taxes)</span>
+          </div>
+          <ul class="space-y-2 border-t border-sand-100 pt-3 mt-3 text-[10px] text-gray-600 font-medium">
+            <li class="flex items-start gap-1.5">
+              <span class="text-sage-500 text-xs leading-none shrink-0">•</span>
+              <p class="leading-snug">12 séances d'1h (6 Psy / 6 Coach)</p>
+            </li>
+            <li class="flex items-start gap-1.5 pt-1 border-t border-dashed border-gray-100">
+              <p class="text-[9px] leading-snug italic text-gray-500">
+                Accompagnement approfondi (reconstruction burn-out, entrepreneuriat).
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="text-[8px] text-gray-400 mt-2 text-center">
+        * Tous nos accompagnements incluent le binôme (Psy + Coach), l'accès à nos livrets de bord papier et notre IA, ainsi que la passation des tests de personnalité (MBTI).
+      </p>
+
+      <!-- Financing section -->
+      <div class="bg-sand-50/50 rounded-2xl p-4 border border-earth-100/40 space-y-3 mt-4">
+        <h4 class="font-newsreader text-sm font-bold text-gray-900 text-center">Comment financer votre bilan de compétences ?</h4>
+        <p class="font-body text-[10px] text-gray-600 leading-relaxed text-center max-w-xl mx-auto">
+          En tant qu'organisme <strong>certifié Qualiopi</strong>, nos parcours répondent aux normes de qualité de l'État et peuvent être <strong>pris en charge à 100%</strong> par votre Compte Personnel de Formation (CPF), par France Travail, ou co-financés par votre employeur.
+        </p>
+        
+        <!-- Logo block -->
+        <div class="flex items-center justify-center gap-8 pt-2">
+          <div class="flex flex-col items-center">
+            <img src={logoCpf.src} alt="CPF" class="h-7 w-auto object-contain grayscale opacity-80" />
+            <span class="font-body text-[7px] font-bold text-gray-500 mt-1">CPF</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src={logoFranceTravail.src} alt="France Travail" class="h-7 w-auto object-contain grayscale opacity-80" />
+            <span class="font-body text-[7px] font-bold text-gray-500 mt-1">France Travail</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src={logoQualiopi.src} alt="Qualiopi" class="h-8 w-auto object-contain grayscale opacity-80" />
+            <span class="font-body text-[7px] font-bold text-gray-500 mt-1">Qualiopi</span>
+          </div>
+        </div>
+
+        <div class="border-t border-earth-100/35 pt-2 text-center">
+          <p class="font-body italic text-[8px] text-gray-400 leading-snug">
+            "La certification qualité a été délivrée au titre de la catégorie d'action suivante : Actions permettant de valider les acquis de l'expérience."
+          </p>
+          <p class="font-body text-[7px] text-gray-400 mt-1">
+            * Les personnes actives finançant via le CPF devront s’acquitter de la participation forfaitaire légale de 150 € (sauf exonération).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="border-t border-earth-100 pt-4 flex justify-between items-center text-[10px] text-gray-500 font-medium">
+      <div>marge-de-manoeuvre.fr • Tarifs et Financements</div>
+      <div class="text-right">Page 7 / 7</div>
+    </div>
+  </div>
+
+</body>
+</html>
