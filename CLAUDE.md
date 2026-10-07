@@ -24,7 +24,7 @@ python -m uvicorn server.app:app --port 8080 --reload
 - `Scripts/test_*.py` are not tests but showcase scripts that render `Test_*.pdf` at the repo root. `test_composite_page.py` and `chapters/programme/render_inspect.py` write PNG previews to a hard-coded `C:\Users\nblum\.gemini\...` folder.
 - If `DocumentBuilder` raises `PermissionError: Cannot overwrite ...`, the target PDF is open in another program.
 - Generated PDFs are git-ignored. `scratch/` holds committed page PNG previews.
-- Deployment (Cloud Run via `Dockerfile`, `GEMINI_API_KEY` env var) is covered in `server/DEPLOY_CLOUD_RUN.md`.
+- Deployment (Cloud Run via `Dockerfile`; `GEMINI_API_KEY` is injected from the Secret Manager secret `gemini-api-key`, never set as a plain env var) is covered in `server/DEPLOY_CLOUD_RUN.md`.
 
 ## Architecture
 
