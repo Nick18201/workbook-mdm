@@ -55,7 +55,7 @@ def create_programme_page_objectifs(c):
     )
     add_card(
         layout,
-        title="Premier échange gratuit (30 à 45 min en visio)",
+        title="Premier échange gratuit (30 min en visio)",
         body="Présentation détaillée de l'accompagnement, analyse de votre situation, clarification de vos objectifs "
              "et vérification de l'adéquation mutuelle avant tout engagement.<br/><br/>"
              "<i>Le contenu du programme est ajustable après cet échange en fonction de vos besoins spécifiques et du "

@@ -34,8 +34,8 @@ def _price_card(layout):
     c = layout.c
     x, w = layout.text_x, layout.target_width
     inner = w - 2 * PAD
-    details, details_h = rich("10 séances individuelles en visio + entretien de suivi à 6 mois (45 min), soit 13 h "
-                              "d'accompagnement", inner, color=PDFStyle.COLOR_INK_MUTED)
+    details, details_h = rich("10 séances individuelles de 1 h 20 en visio + entretien de suivi à 6 mois (40 min), "
+                              "soit 14 h d'accompagnement", inner, color=PDFStyle.COLOR_INK_MUTED)
     pill_h = label_pill_size("Formule unique")[1]
     h = 2 * PAD + pill_h + 0.3 * cm + 16 + 0.15 * cm + details_h + 0.3 * cm + 44 + 0.2 * cm + 10 + 0.45 * cm \
         + 10 + 0.25 * cm + _items_height(INCLUS, inner)

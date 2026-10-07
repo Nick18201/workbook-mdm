@@ -33,7 +33,7 @@ def create_programme_page_infos_pratiques(c):
                 "séance.",
                 "<b>Questionnaire de satisfaction :</b> évaluation anonyme à chaud en fin de parcours pour mesurer la "
                 "qualité de l'accompagnement et l'atteinte de vos objectifs.",
-                "<b>Entretien individuel de suivi à 6 mois (45 min) :</b> point d'étape sur la concrétisation de vos "
+                "<b>Entretien individuel de suivi à 6 mois (40 min) :</b> point d'étape sur la concrétisation de vos "
                 "démarches.",
             ],
         },
