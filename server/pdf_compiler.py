@@ -5,6 +5,7 @@ Compiles a WorkbookSpec (JSON) into PDF bytes in-memory using ReportLab template
 import io
 import os
 import sys
+from xml.sax.saxutils import escape
 
 # Ensure Scripts/ is accessible in Python path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,11 +59,13 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
     def make_summary_renderer(page_obj):
         num_str = str(page_obj.params.get("num") or spec.chapter_num or "1")
         title = str(page_obj.title or spec.chapter_title or "SOMMAIRE")
-        intro_text = str(
+        # The summary intro is rendered as ReportLab markup: escape it so spec text
+        # (LLM or user) cannot inject <img>/<a> tags or break the parser
+        intro_text = escape(str(
             page_obj.params.get("intro_text")
             or page_obj.params.get("intro")
             or ""
-        )
+        ))
         raw_points = (
             page_obj.params.get("points")
             or page_obj.params.get("steps")
@@ -94,7 +97,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
             c, num_str, title, intro_text, points_list
         )
 
-    def make_questions_renderer(page_obj):
+    def make_questions_renderer(page_obj, page_idx):
         def _render(c):
             layout = PageLayout(
                 c,
@@ -132,7 +135,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                             question=str(q_text),
                             form_field_id=str(
                                 q.get("field_id")
-                                or f"p{spec.chapter_num}_q{i+1}"
+                                or f"p{page_idx}_q{i+1}"
                             ),
                             subtitle=str(q.get("subtitle")) if q.get("subtitle") else None,
                             example=str(q.get("example") or q.get("ex")) if (q.get("example") or q.get("ex")) else None,
@@ -143,7 +146,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                     q_items.append(
                         QuestionItem(
                             question=str(q),
-                            form_field_id=f"p{spec.chapter_num}_q{i+1}",
+                            form_field_id=f"p{page_idx}_q{i+1}",
                         )
                     )
             layout.add_questions_group(q_items)
@@ -151,7 +154,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
 
         return _render
 
-    def make_meteo_renderer(page_obj):
+    def make_meteo_renderer(page_obj, page_idx):
         return lambda c: create_standard_meteo_page(
             c,
             title=page_obj.title or "Mon État d'Esprit Actuel",
@@ -172,10 +175,10 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                 or page_obj.params.get("prompt")
                 or "Ce qui prend le plus de place dans ma tête :"
             ),
-            field_prefix=str(page_obj.params.get("field_prefix", "meteo")),
+            field_prefix=str(page_obj.params.get("field_prefix", f"p{page_idx}_meteo")),
         )
 
-    def make_quadrants_renderer(page_obj):
+    def make_quadrants_renderer(page_obj, page_idx):
         quads = (
             page_obj.params.get("quadrants")
             or page_obj.params.get("quadrants_data")
@@ -209,10 +212,10 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                 )
             ),
             quadrants_data=quads,
-            field_prefix=str(page_obj.params.get("field_prefix", "vision")),
+            field_prefix=str(page_obj.params.get("field_prefix", f"p{page_idx}_vision")),
         )
 
-    def make_two_columns_renderer(page_obj):
+    def make_two_columns_renderer(page_obj, page_idx):
         rows = (
             page_obj.params.get("rows")
             or page_obj.params.get("rows_data")
@@ -237,10 +240,10 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                 or "Enseignement / Compétence"
             ),
             rows_data=rows,
-            field_prefix=str(page_obj.params.get("field_prefix", "twocol")),
+            field_prefix=str(page_obj.params.get("field_prefix", f"p{page_idx}_twocol")),
         )
 
-    def make_engagement_renderer(page_obj):
+    def make_engagement_renderer(page_obj, page_idx):
         lines = (
             page_obj.params.get("lines")
             or page_obj.params.get("points")
@@ -261,9 +264,10 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
             custom_lines=lines,
             title=page_obj.title or "Mon Engagement",
             signature_label=sig_label,
+            field_prefix=str(page_obj.params.get("field_prefix", f"p{page_idx}_engagement")),
         )
 
-    def make_enquete_renderer(page_obj):
+    def make_enquete_renderer(page_obj, page_idx):
         questions = (
             page_obj.params.get("questions")
             or page_obj.params.get("items")
@@ -277,10 +281,10 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
             part_title=page_obj.part_title or "EXPLORATION DU TERRAIN",
             intro_text=page_obj.params.get("intro_text") or page_obj.params.get("intro"),
             questions=questions,
-            field_prefix=str(page_obj.params.get("field_prefix", "enquete")),
+            field_prefix=str(page_obj.params.get("field_prefix", f"p{page_idx}_enquete")),
         )
 
-    def make_roadmap_renderer(page_obj):
+    def make_roadmap_renderer(page_obj, page_idx):
         stages = (
             page_obj.params.get("stages")
             or page_obj.params.get("stages_data")
@@ -295,7 +299,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
             part_title=page_obj.part_title or "PLAN D'ACTION OPÉRATIONNEL",
             intro_text=page_obj.params.get("intro_text") or page_obj.params.get("intro"),
             stages_data=stages,
-            field_prefix=str(page_obj.params.get("field_prefix", "roadmap")),
+            field_prefix=str(page_obj.params.get("field_prefix", f"p{page_idx}_roadmap")),
         )
 
     def make_closing_renderer(page_obj):
@@ -384,7 +388,11 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                         items, title=title, columns=cols, field_prefix=prefix
                     )
                 elif b_type == "table":
-                    headers = b_data.get("headers") or b_data.get("columns") or [
+                    headers = b_data.get("headers")
+                    # 'columns' is also BlockSpec's int column count: only a list can stand in for headers
+                    if not headers and isinstance(b_data.get("columns"), list):
+                        headers = b_data["columns"]
+                    headers = headers or [
                         "Critère / Thématique",
                         "Observation terrain",
                         "Impact & Décision"
@@ -427,26 +435,26 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
         elif tmpl == "summary":
             builder.add_page(make_summary_renderer(page))
         elif tmpl == "questions":
-            builder.add_page(make_questions_renderer(page))
+            builder.add_page(make_questions_renderer(page, page_idx))
         elif tmpl == "meteo":
-            builder.add_page(make_meteo_renderer(page))
+            builder.add_page(make_meteo_renderer(page, page_idx))
         elif tmpl == "quadrants":
-            builder.add_page(make_quadrants_renderer(page))
+            builder.add_page(make_quadrants_renderer(page, page_idx))
         elif tmpl == "two_columns":
-            builder.add_page(make_two_columns_renderer(page))
+            builder.add_page(make_two_columns_renderer(page, page_idx))
         elif tmpl == "engagement":
-            builder.add_page(make_engagement_renderer(page))
+            builder.add_page(make_engagement_renderer(page, page_idx))
         elif tmpl == "enquete":
-            builder.add_page(make_enquete_renderer(page))
+            builder.add_page(make_enquete_renderer(page, page_idx))
         elif tmpl == "roadmap":
-            builder.add_page(make_roadmap_renderer(page))
+            builder.add_page(make_roadmap_renderer(page, page_idx))
         elif tmpl == "closing":
             builder.add_page(make_closing_renderer(page))
         elif tmpl == "composite":
             builder.add_page(make_composite_renderer(page, page_idx))
         else:
             # Fallback to questions if unspecified
-            builder.add_page(make_questions_renderer(page))
+            builder.add_page(make_questions_renderer(page, page_idx))
 
     builder.save()
     pdf_bytes = buffer.getvalue()
