@@ -6,7 +6,7 @@ Uses google-genai SDK with strict Pydantic Structured Outputs.
 import os
 import json
 import logging
-from typing import Optional
+from typing import Any, Callable, NamedTuple, Optional
 from google import genai
 from google.genai import types
 
@@ -23,6 +23,64 @@ from .models import (
 from .predefined_workbooks import get_predefined_spec
 
 logger = logging.getLogger(__name__)
+
+# Modèles essayés dans l'ordre, configurables sans redéploiement de code (ex: GEMINI_MODELS="gemini-x-flash,gemini-y-flash")
+GEMINI_MODELS = [
+    m.strip()
+    for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash,gemini-3.6-flash").split(",")
+    if m.strip()
+]
+
+
+class GenerationResult(NamedTuple):
+    """Résultat d'une génération : fallback_reason vaut None quand Gemini a répondu,
+    sinon 'no_api_key' ou 'model_error' (le contenu vient alors du modèle de secours)."""
+
+    value: Any
+    fallback_reason: Optional[str] = None
+
+
+def _generate_json(
+    api_key: str, system_prompt: str, user_prompt: str, build: Callable[[dict], Any], label: str
+) -> Optional[Any]:
+    """
+    Essaie chaque modèle de GEMINI_MODELS et retourne build(json) au premier succès,
+    ou None si tous les modèles ont échoué.
+    """
+    client = genai.Client(api_key=api_key)
+    last_err = None
+
+    for model_name in GEMINI_MODELS:
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                contents=user_prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    temperature=0.2,
+                    system_instruction=system_prompt,
+                ),
+            )
+            raw_text = response.text.strip() if response.text else ""
+            if not raw_text:
+                continue
+            # Strip markdown code blocks if wrapped by model
+            if raw_text.startswith("```"):
+                lines = raw_text.splitlines()
+                if lines and lines[0].startswith("```"):
+                    lines = lines[1:]
+                if lines and lines[-1].startswith("```"):
+                    lines = lines[:-1]
+                raw_text = "\n".join(lines).strip()
+
+            return build(json.loads(raw_text))
+        except Exception as e:
+            logger.warning(f"Error calling {model_name} in {label}: {e}")
+            last_err = e
+
+    logger.error(f"{label}: all Gemini models failed ({last_err}). Falling back to heuristic.")
+    return None
+
 
 SYSTEM_PROMPT = """Tu es un ingénieur pédagogique et directeur artistique d'élite pour 'Marge de Manœuvre' (bilans de compétences et coaching professionnel).
 Ton rôle est de transformer des notes de séance brutes ou des comptes-rendus informels en une structure de livret pédagogique PDF élégant, synthétique et percutant.
@@ -114,12 +172,13 @@ Produis UNIQUEMENT un objet JSON valide conforme à la structure suivante :
 """
 
 
-def parse_notes_with_gemini(request: ParseRequest) -> WorkbookSpec:
+def parse_notes_with_gemini(request: ParseRequest) -> GenerationResult:
     """
     Calls Gemini Flash to parse raw notes into a WorkbookSpec.
     Uses response_mime_type='application/json' for 100% compatibility with Gemini Developer API
     (avoiding additionalProperties schema rejection).
-    Falls back to a smart heuristic mock if no API key is available or on failure.
+    Falls back to a smart heuristic mock if no API key is available or on failure,
+    and reports it through GenerationResult.fallback_reason.
     """
     api_key = request.api_key or os.environ.get("GEMINI_API_KEY")
 
@@ -127,9 +186,7 @@ def parse_notes_with_gemini(request: ParseRequest) -> WorkbookSpec:
         logger.warning(
             "GEMINI_API_KEY not found. Using structured heuristic mock for demonstration."
         )
-        return _build_fallback_spec(request)
-
-    client = genai.Client(api_key=api_key)
+        return GenerationResult(_build_fallback_spec(request), "no_api_key")
 
     user_prompt = f"""Voici les notes de séance à transformer en livret pédagogique :
 ---
@@ -154,42 +211,12 @@ NOTES BRUTES :
 ---
 Génère la structure JSON complète du livret au format WorkbookSpec."""
 
-    # Priorité absolue sur Gemini 3.8 Flash avec repli sur Gemini 3.6 Flash
-    models_to_try = ["gemini-3.8-flash", "gemini-3.6-flash"]
-    last_err = None
-
-    for model_name in models_to_try:
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=user_prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    temperature=0.2,
-                    system_instruction=SYSTEM_PROMPT,
-                ),
-            )
-            raw_text = response.text.strip() if response.text else ""
-            if raw_text:
-                # Strip markdown code blocks if wrapped by model
-                if raw_text.startswith("```"):
-                    lines = raw_text.splitlines()
-                    if lines and lines[0].startswith("```"):
-                        lines = lines[1:]
-                    if lines and lines[-1].startswith("```"):
-                        lines = lines[:-1]
-                    raw_text = "\n".join(lines).strip()
-
-                data = json.loads(raw_text)
-                return WorkbookSpec(**data)
-        except Exception as e:
-            logger.warning(f"Error calling {model_name}: {e}")
-            last_err = e
-
-    logger.error(
-        f"All Gemini models failed: {last_err}. Falling back to smart heuristic."
+    spec = _generate_json(
+        api_key, SYSTEM_PROMPT, user_prompt, lambda data: WorkbookSpec(**data), "parse"
     )
-    return _build_fallback_spec(request)
+    if spec is None:
+        return GenerationResult(_build_fallback_spec(request), "model_error")
+    return GenerationResult(spec)
 
 
 def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
@@ -626,10 +653,10 @@ Tu dois impérativement répondre avec un objet JSON valide contenant exactement
 """
 
 
-def refine_spec_with_gemini(request: IterateRequest) -> IterateResponse:
+def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
     """
     Refines an existing WorkbookSpec based on conversational user feedback using Gemini Flash.
-    Prioritizes gemini-3.8-flash with fallback to gemini-3.6-flash.
+    Tries the models of GEMINI_MODELS in order.
     """
     api_key = request.api_key or os.environ.get("GEMINI_API_KEY")
 
@@ -637,9 +664,7 @@ def refine_spec_with_gemini(request: IterateRequest) -> IterateResponse:
         logger.warning(
             "GEMINI_API_KEY not found. Using structured heuristic iteration fallback."
         )
-        return _build_fallback_iteration(request)
-
-    client = genai.Client(api_key=api_key)
+        return GenerationResult(_build_fallback_iteration(request), "no_api_key")
 
     current_json = json.dumps(
         request.current_spec.model_dump(), ensure_ascii=False, indent=2
@@ -661,49 +686,20 @@ CONSIGNE D'AJUSTEMENT OU RETOUCHE :
 Applique précisément ces modifications à la structure du livret tout en conservant l'harmonie et l'aération de l'ensemble.
 Génère la réponse JSON complète avec 'spec', 'changes_summary' et 'pedagogical_note'."""
 
-    models_to_try = ["gemini-3.8-flash", "gemini-3.6-flash"]
-    last_err = None
+    def build(data: dict) -> IterateResponse:
+        return IterateResponse(
+            spec=WorkbookSpec(**data.get("spec", data)),
+            changes_summary=data.get(
+                "changes_summary",
+                "Ajustements appliqués avec succès selon vos consignes.",
+            ),
+            pedagogical_note=data.get("pedagogical_note", ""),
+        )
 
-    for model_name in models_to_try:
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=user_prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    temperature=0.2,
-                    system_instruction=ITERATE_SYSTEM_PROMPT,
-                ),
-            )
-            raw_text = response.text.strip() if response.text else ""
-            if raw_text:
-                if raw_text.startswith("```"):
-                    lines = raw_text.splitlines()
-                    if lines and lines[0].startswith("```"):
-                        lines = lines[1:]
-                    if lines and lines[-1].startswith("```"):
-                        lines = lines[:-1]
-                    raw_text = "\n".join(lines).strip()
-
-                data = json.loads(raw_text)
-                spec_data = data.get("spec", data)
-                new_spec = WorkbookSpec(**spec_data)
-                summary = data.get(
-                    "changes_summary",
-                    "Ajustements appliqués avec succès selon vos consignes.",
-                )
-                note = data.get("pedagogical_note", "")
-                return IterateResponse(
-                    spec=new_spec,
-                    changes_summary=summary,
-                    pedagogical_note=note,
-                )
-        except Exception as e:
-            logger.warning(f"Error calling {model_name} in iteration: {e}")
-            last_err = e
-
-    logger.error(f"Iteration failed on all models: {last_err}. Using fallback.")
-    return _build_fallback_iteration(request)
+    result = _generate_json(api_key, ITERATE_SYSTEM_PROMPT, user_prompt, build, "iterate")
+    if result is None:
+        return GenerationResult(_build_fallback_iteration(request), "model_error")
+    return GenerationResult(result)
 
 
 def _build_fallback_iteration(request: IterateRequest) -> IterateResponse:
@@ -764,7 +760,7 @@ Produis uniquement un objet JSON valide avec les clés suivantes :
 """
 
 
-def customize_spec_with_gemini(request: CustomizeRequest) -> CustomizeResponse:
+def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
     """
     Personnalise un livret existant (spécification de référence) en fonction du profil
     du bénéficiaire et des consignes du coach via Gemini Flash.
@@ -780,9 +776,7 @@ def customize_spec_with_gemini(request: CustomizeRequest) -> CustomizeResponse:
     api_key = request.api_key or os.environ.get("GEMINI_API_KEY")
     if not api_key:
         logger.warning("GEMINI_API_KEY non configurée. Utilisation du fallback.")
-        return _build_fallback_customization(request, base_spec)
-
-    client = genai.Client(api_key=api_key)
+        return GenerationResult(_build_fallback_customization(request, base_spec), "no_api_key")
 
     base_spec_json = base_spec.model_dump_json(indent=2)
     user_prompt = f"""Voici le livret pédagogique de référence (modèle existant) à personnaliser :
@@ -802,49 +796,20 @@ Adapte les exemples concrets, contextualise les questions et affine les exercice
 Respecte scrupuleusement la structure des gabarits et les longueurs maximales de texte.
 Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_note'."""
 
-    models_to_try = ["gemini-3.8-flash", "gemini-3.6-flash"]
-    last_err = None
+    def build(data: dict) -> CustomizeResponse:
+        return CustomizeResponse(
+            spec=WorkbookSpec(**data.get("spec", data)),
+            customizations_summary=data.get(
+                "customizations_summary",
+                f"Livret adapté avec succès pour {request.beneficiary_name} ({request.beneficiary_context}).",
+            ),
+            pedagogical_note=data.get("pedagogical_note", ""),
+        )
 
-    for model_name in models_to_try:
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=user_prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    temperature=0.2,
-                    system_instruction=CUSTOMIZE_SYSTEM_PROMPT,
-                ),
-            )
-            raw_text = response.text.strip() if response.text else ""
-            if raw_text:
-                if raw_text.startswith("```"):
-                    lines = raw_text.splitlines()
-                    if lines and lines[0].startswith("```"):
-                        lines = lines[1:]
-                    if lines and lines[-1].startswith("```"):
-                        lines = lines[:-1]
-                    raw_text = "\n".join(lines).strip()
-
-                data = json.loads(raw_text)
-                spec_data = data.get("spec", data)
-                new_spec = WorkbookSpec(**spec_data)
-                summary = data.get(
-                    "customizations_summary",
-                    f"Livret adapté avec succès pour {request.beneficiary_name} ({request.beneficiary_context}).",
-                )
-                note = data.get("pedagogical_note", "")
-                return CustomizeResponse(
-                    spec=new_spec,
-                    customizations_summary=summary,
-                    pedagogical_note=note,
-                )
-        except Exception as e:
-            logger.warning(f"Error calling {model_name} in customize: {e}")
-            last_err = e
-
-    logger.error(f"Customize failed on all models: {last_err}. Using fallback.")
-    return _build_fallback_customization(request, base_spec)
+    result = _generate_json(api_key, CUSTOMIZE_SYSTEM_PROMPT, user_prompt, build, "customize")
+    if result is None:
+        return GenerationResult(_build_fallback_customization(request, base_spec), "model_error")
+    return GenerationResult(result)
 
 
 def _build_fallback_customization(
