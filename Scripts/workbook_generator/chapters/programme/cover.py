@@ -8,10 +8,9 @@ from reportlab.lib.styles import ParagraphStyle
 from workbook_generator.config import PDFStyle
 from workbook_generator.components import (
     draw_page_background,
-    draw_dot_grid,
     draw_branding_logo,
-    cached_image_reader,
 )
+from workbook_generator.utils import cached_image_reader
 from .common import ensure_montserrat_family
 
 

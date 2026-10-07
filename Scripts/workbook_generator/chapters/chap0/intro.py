@@ -13,7 +13,6 @@ from workbook_generator.components import (
     create_standard_cover,
     draw_title,
     draw_page_footer,
-    draw_dot_grid,
     draw_branding_logo,
     draw_side_panel,
     draw_page_decorations,

@@ -4,8 +4,8 @@ from workbook_generator.chapters import chap3
 from workbook_generator.components import create_closing_page
 
 
-def generate_workbook_chap3(output_filename="Workbook_Chapitre_3.pdf", theme="indigo"):
-    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+def generate_workbook_chap3(output_filename="Workbook_Chapitre_3.pdf"):
+    builder = DocumentBuilder(output_path=output_filename, carnet=3)
     builder.set_title("MDM - Workbook Chapitre 3")
 
     # 2. Generate Pages
@@ -29,4 +29,4 @@ if __name__ == "__main__":
         description="Générer le chapitre 3 PDF.",
         default_output="Workbook_Chapitre_3.pdf"
     )
-    generate_workbook_chap3(output_filename=args.output, theme=args.theme)
+    generate_workbook_chap3(output_filename=args.output)

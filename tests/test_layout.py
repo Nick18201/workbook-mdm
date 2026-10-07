@@ -16,10 +16,15 @@ def _open(*pages):
 
 
 def _page_titles(doc):
-    return [
-        next(s["text"] for b in p.get_text("dict")["blocks"] for l in b.get("lines", []) for s in l["spans"] if s["size"] > 20)
-        for p in doc
-    ]
+    """The large text of each page: the title, whose accent word is a span of its own."""
+    titles = []
+    for p in doc:
+        lines = [
+            "".join(s["text"] for s in l["spans"] if s["size"] > 18)
+            for b in p.get_text("dict")["blocks"] for l in b.get("lines", [])
+        ]
+        titles.append(" ".join(" ".join(line for line in lines if line.strip()).split()))
+    return titles
 
 
 def _assert_nothing_off_page(doc):
@@ -94,15 +99,16 @@ def test_scales_are_single_choice_radio_groups():
         assert sorted(int(w.on_state()) for w in radios) == list(range(11))
 
 
-def test_pictograms_are_drawn_with_a_font_that_has_them():
+def test_pictograms_are_drawn_with_the_icon_font():
     doc = _open(
-        PageSpec(template="engagement", title="Engagement", params={"lines": ["Je m'engage"]}),
-        PageSpec(template="roadmap", title="Feuille de route"),
+        PageSpec(template="meteo", title="Météo"),  # weather icons
+        PageSpec(template="engagement", title="Engagement", params={"lines": ["Je m'engage"]}),  # stamp check mark
     )
 
     for page in doc:
         fonts = {s["font"] for b in page.get_text("dict")["blocks"] for l in b.get("lines", []) for s in l["spans"]}
-        assert "ZapfDingbats" in fonts
+        assert any(f.startswith("MaterialSymbolsOutlined") for f in fonts), fonts
+        assert "ZapfDingbats" not in fonts
 
 
 def test_spec_emojis_are_removed_without_leaving_gaps():
@@ -119,5 +125,7 @@ def test_spec_emojis_are_removed_without_leaving_gaps():
 def test_strip_unsupported_glyphs():
     assert strip_unsupported_glyphs("Soleil ☀️ et nuages") == "Soleil et nuages"
     assert strip_unsupported_glyphs("🎯 Objectif") == "Objectif"
-    # Accents, typographic quotes and symbols Montserrat has are kept as is
-    assert strip_unsupported_glyphs("Être « sûr » · 1 800 € → ◀ ▶") == "Être « sûr » · 1 800 € → ◀ ▶"
+    # Accents, typographic quotes and symbols the title, body and label fonts all have are kept as is
+    assert strip_unsupported_glyphs("Être « sûr » · 1 800 € → œ") == "Être « sûr » · 1 800 € → œ"
+    # Shapes the art direction fonts lack are dropped (pictograms are drawn as icons instead)
+    assert strip_unsupported_glyphs("Avant ◀ ▶ après ✓") == "Avant après"

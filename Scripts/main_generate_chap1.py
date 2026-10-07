@@ -4,8 +4,8 @@ from workbook_generator.components import create_closing_page
 from workbook_generator.chapters import chap1
 
 
-def generate_workbook_chap1(output_filename="Workbook_Chapitre_1.pdf", theme="indigo"):
-    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+def generate_workbook_chap1(output_filename="Workbook_Chapitre_1.pdf"):
+    builder = DocumentBuilder(output_path=output_filename, carnet=1)
     builder.set_title("Marge de Manœuvre - Chapitre 1")
 
     # --- PAGE 1: COVER ---
@@ -41,4 +41,4 @@ if __name__ == "__main__":
         description="Générer le chapitre 1 PDF.",
         default_output="Workbook_Chapitre_1.pdf"
     )
-    generate_workbook_chap1(args.output, theme=args.theme)
+    generate_workbook_chap1(args.output)

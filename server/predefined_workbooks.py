@@ -12,7 +12,6 @@ def _build_chap0_spec() -> WorkbookSpec:
         chapter_num=0,
         chapter_title="Le Prélude : Onboarding & Démarrage",
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(
@@ -142,7 +141,6 @@ def _build_chap1_spec() -> WorkbookSpec:
         chapter_num=1,
         chapter_title="L'État des Lieux & La Boussole",
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(
@@ -276,7 +274,6 @@ def _build_chap2_spec() -> WorkbookSpec:
         chapter_num=2,
         chapter_title="L'Histoire, Les Racines & Les Mentors",
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(
@@ -410,7 +407,6 @@ def _build_chap3_spec() -> WorkbookSpec:
         chapter_num=3,
         chapter_title="Les Compétences, Talents & Moteurs",
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(
@@ -544,7 +540,6 @@ def _build_chap4_spec() -> WorkbookSpec:
         chapter_num=4,
         chapter_title="Valeurs, Limites & Rapport à l'Argent",
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(
@@ -678,7 +673,6 @@ def _build_chap5_spec() -> WorkbookSpec:
         chapter_num=5,
         chapter_title="L'Exploration Terrain, Enquête & Marché",
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(
@@ -820,7 +814,6 @@ def _build_chap6_spec() -> WorkbookSpec:
         chapter_num=6,
         chapter_title="Le Plan d'Action, Arbitrage & Feuille de Route",
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(
@@ -983,7 +976,6 @@ def _build_business_plan_spec() -> WorkbookSpec:
         chapter_num=99,
         chapter_title="Mon Business Plan : De l'Idée au Projet Viable",
         subtitle="ENTREPRENEURIAT & PROJET VIABLE",
-        theme="indigo",
         beneficiary_name=None,
         pages=[
             PageSpec(

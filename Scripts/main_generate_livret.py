@@ -28,13 +28,13 @@ from workbook_generator.chapters.livret import (
 )
 
 
-def build_livret_competences(output_filename="Livret_Competences.pdf", theme="indigo"):
+def build_livret_competences(output_filename="Livret_Competences.pdf"):
     """
     Génère le Livret de Compétences Augmenté - Marge de Manœuvre.
     Format étendu en 16 pages : très pédagogique, sans jargon ésotérique,
     avec des explications approfondies et de grands espaces d'écriture (5.0 cm).
     """
-    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+    builder = DocumentBuilder(output_path=output_filename, folio="livret de compétences")
     builder.set_title("Livret de Compétences Augmenté - Marge de Manœuvre")
 
     # --- COUVERTURE OFFICIELLE MDM ---
@@ -84,4 +84,4 @@ if __name__ == "__main__":
         default_output="Livret_Competences.pdf",
     )
 
-    build_livret_competences(args.output, theme=args.theme)
+    build_livret_competences(args.output)

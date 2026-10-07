@@ -29,12 +29,15 @@ class DocumentBuilder:
     Orchestrates the creation and setup of a PDF workbook.
     Handles font registration, file permission checks, and the fluid chaining of pages.
 
-    pastel: dominant pastel of the workbook (a PDFStyle.PASTELS key; see
-    PDFStyle.CARNET_PASTELS for the core workbooks). folio: what the page footer shows
-    between the brand and the page number, e.g. "carnet 3/7" or a short title.
+    carnet: number of a core workbook (0 to 6), which sets its pastel and the folio
+    "carnet N/7". Otherwise pastel is a PDFStyle.PASTELS key (lilac by default) and folio
+    what the page footer shows between the brand and the page number (a short title).
     """
-    def __init__(self, output_path, pastel=None, folio=""):
+    def __init__(self, output_path, pastel=None, folio="", carnet=None):
         self.output_path = output_path
+        if carnet in PDFStyle.CARNET_PASTELS:
+            pastel = pastel or PDFStyle.CARNET_PASTELS[carnet]
+            folio = folio or f"carnet {carnet}/{len(PDFStyle.CARNET_PASTELS)}"
 
         # Register fonts automatically
         register_fonts()

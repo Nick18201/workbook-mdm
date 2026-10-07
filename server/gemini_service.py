@@ -170,7 +170,6 @@ Produis UNIQUEMENT un objet JSON valide conforme à la structure suivante :
   "chapter_num": 1,
   "chapter_title": "Titre du livret",
   "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
-  "theme": "indigo",
   "beneficiary_name": "Nom ou prénom",
   "pages": [
     {
@@ -205,7 +204,6 @@ def parse_notes_with_gemini(request: ParseRequest) -> GenerationResult:
 ---
 Numéro de chapitre souhaité : {request.chapter_num}
 Titre suggéré : {request.chapter_title or 'À déterminer selon les notes'}
-Thème graphique : {request.theme}
 Bénéficiaire : {request.beneficiary_name or 'Non spécifié'}
 
 OPTIONS STRUCTURELLES SOUHAITÉES EN AMONT :
@@ -628,7 +626,6 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         chapter_num=request.chapter_num,
         chapter_title=title,
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme=request.theme,
         beneficiary_name=request.beneficiary_name,
         pages=all_pages,
     )
@@ -638,7 +635,7 @@ ITERATE_SYSTEM_PROMPT = """Tu es le copilote pédagogique et directeur artistiqu
 L'utilisateur te fournit la structure actuelle d'un livret pédagogique (WorkbookSpec) ainsi qu'une consigne d'ajustement ou de retouche (feedback).
 
 TON RÔLE :
-1. Analyser précisément la demande de l'utilisateur (ex: ajouter un exercice, modifier une question, alléger des textes, changer le template d'une page, ajouter une échelle d'évaluation, changer le thème en 'earth', etc.).
+1. Analyser précisément la demande de l'utilisateur (ex: ajouter un exercice, modifier une question, alléger des textes, changer le template d'une page, ajouter une échelle d'évaluation, etc.).
 2. Appliquer les modifications demandées à la spécification du livret (WorkbookSpec) avec rigueur et intelligence pédagogique.
 3. Préserver l'intégrité de toutes les autres pages et éléments qui ne sont pas concernés par la demande.
 4. Respecter impérativement les règles de design system 'Marge de Manœuvre' :
@@ -657,7 +654,6 @@ Tu dois impérativement répondre avec un objet JSON valide contenant exactement
     "chapter_num": 1,
     "chapter_title": "Titre du livret",
     "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
-    "theme": "indigo",
     "beneficiary_name": "Nom",
     "pages": [...]
   },
@@ -720,24 +716,10 @@ def _build_fallback_iteration(request: IterateRequest) -> IterateResponse:
     """
     Fallback heuristic when offline or when Gemini is unreachable.
     """
-    spec_data = request.current_spec.model_dump()
-    fb = request.feedback.lower()
-
-    summary_parts = []
-    if "earth" in fb:
-        spec_data["theme"] = "earth"
-        summary_parts.append("Thème graphique basculé sur 'Earth' (terracotta).")
-    elif "indigo" in fb:
-        spec_data["theme"] = "indigo"
-        summary_parts.append("Thème graphique basculé sur 'Indigo'.")
-
-    if not summary_parts:
-        summary_parts.append("Ajustements enregistrés sur votre maquette.")
-
-    new_spec = WorkbookSpec(**spec_data)
+    new_spec = WorkbookSpec(**request.current_spec.model_dump())
     return IterateResponse(
         spec=new_spec,
-        changes_summary=" ".join(summary_parts),
+        changes_summary="Ajustements enregistrés sur votre maquette.",
         pedagogical_note="Maquette révisée.",
     )
 
@@ -762,8 +744,6 @@ RÈGLES D'OR DE PERSONNALISATION :
    - Exemple concret : max 90 caractères (direct, percutant, sans préfixe 'Ex :').
    - Points de sommaire ('desc') : max 85 caractères.
    - Ne jamais surcharger une page : la respiration et les espaces blancs sont sacrés.
-4. THÈME GRAPHIQUE :
-   - Respecte le thème demandé ('indigo' ou 'earth').
 
 FORMAT DE SORTIE JSON STRICT :
 Produis uniquement un objet JSON valide avec les clés suivantes :
@@ -803,7 +783,6 @@ PROFIL DU BÉNÉFICIAIRE :
 - Nom / Prénom : {request.beneficiary_name}
 - Contexte & Métier / Projet : {request.beneficiary_context}
 - Consignes spécifiques d'adaptation du coach : {request.custom_instructions or "Adapter harmonieusement l'ensemble des exemples et questions au profil du bénéficiaire."}
-- Thème graphique souhaité : {request.theme or base_spec.theme}
 
 MISSION :
 Personnalise ce livret de référence pour {request.beneficiary_name}.
@@ -835,8 +814,6 @@ def _build_fallback_customization(
     """
     spec_dict = base_spec.model_dump()
     spec_dict["beneficiary_name"] = request.beneficiary_name
-    if request.theme:
-        spec_dict["theme"] = request.theme
 
     # Contextualiser la couverture
     pages = spec_dict.get("pages", [])
@@ -865,7 +842,7 @@ def _build_fallback_customization(
     new_spec = WorkbookSpec(**spec_dict)
     summary = (
         f"Version personnalisée pour {request.beneficiary_name} générée avec succès. "
-        f"Thème graphique '{new_spec.theme}' appliqué et intégration du profil ({request.beneficiary_context})."
+        f"Profil intégré ({request.beneficiary_context})."
     )
     pedagogical_note = f"Ce livret servira de support personnalisé pour votre travail avec {request.beneficiary_name}."
 

@@ -5,7 +5,6 @@ from reportlab.lib import colors
 from workbook_generator.config import PDFStyle
 from workbook_generator.utils import cached_image_reader, cached_simpleSplit as simpleSplit
 from workbook_generator.components import (
-    draw_dot_grid,
     draw_branding_logo,
     draw_card,
     create_standard_summary_page,
@@ -27,7 +26,6 @@ def create_business_plan_cover(c):
     # 1. Fond Nude & Dot Grid
     c.setFillColor(PDFStyle.COLOR_BG_NUDE)
     c.rect(0, 0, width, height, fill=1, stroke=0)
-    draw_dot_grid(c, width, height)
 
     # 2. Bande latérale
     band_width = 1.75 * cm

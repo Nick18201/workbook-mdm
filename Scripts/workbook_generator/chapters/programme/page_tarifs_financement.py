@@ -5,7 +5,7 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 
 from workbook_generator.config import PDFStyle
-from workbook_generator.components import cached_image_reader
+from workbook_generator.utils import cached_image_reader
 from .common import setup_programme_page
 
 
