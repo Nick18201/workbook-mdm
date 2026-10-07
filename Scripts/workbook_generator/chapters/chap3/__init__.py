@@ -11,6 +11,7 @@ from .exercices import (
     create_chap4_temps,
     create_chap5_ombre,
 )
+from .cloture import create_livrable_page
 
 __all__ = [
     "create_chap3_cover",
@@ -22,4 +23,5 @@ __all__ = [
     "create_chap3_decisions",
     "create_chap4_temps",
     "create_chap5_ombre",
+    "create_livrable_page",
 ]

@@ -6,7 +6,7 @@ from workbook_generator.components import create_closing_page
 
 def generate_workbook_chap6(output_filename="Workbook_Chapitre_6.pdf"):
     builder = DocumentBuilder(output_path=output_filename, carnet=6)
-    builder.set_title("MDM - Workbook Chapitre 6")
+    builder.set_title("Marge de Manœuvre - Chapitre 6 : Phase d'exploration")
 
     builder.add_page(chap6.create_chap6_cover)
     builder.add_page(chap6.create_concept_page)
@@ -14,11 +14,10 @@ def generate_workbook_chap6(output_filename="Workbook_Chapitre_6.pdf"):
     builder.add_page(chap6.create_cartographie_page)
     builder.add_page(chap6.create_retours_proches_page)
     builder.add_page(chap6.create_pistes_intro_page)
-    builder.add_page(chap6.create_pistes_no_limit_1_page)
-    builder.add_page(chap6.create_pistes_no_limit_2_page)
-    builder.add_page(chap6.create_pistes_realistes_1_page)
-    builder.add_page(chap6.create_pistes_realistes_2_page)
+    builder.add_page(chap6.create_pistes_no_limit_page)
+    builder.add_page(chap6.create_pistes_realistes_page)
     builder.add_page(chap6.create_ressources_page)
+    builder.add_page(chap6.create_livrable_page)
     builder.add_page(create_closing_page)
 
     builder.save()

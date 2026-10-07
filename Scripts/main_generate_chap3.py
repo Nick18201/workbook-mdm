@@ -6,7 +6,7 @@ from workbook_generator.components import create_closing_page
 
 def generate_workbook_chap3(output_filename="Workbook_Chapitre_3.pdf"):
     builder = DocumentBuilder(output_path=output_filename, carnet=3)
-    builder.set_title("MDM - Workbook Chapitre 3")
+    builder.set_title("Marge de Manœuvre - Chapitre 3 : Mes fonctionnements propres")
 
     # 2. Generate Pages
     builder.add_page(chap3.create_chap3_cover)
@@ -18,6 +18,7 @@ def generate_workbook_chap3(output_filename="Workbook_Chapitre_3.pdf"):
     builder.add_page(chap3.create_chap3_decisions)
     builder.add_page(chap3.create_chap4_temps)
     builder.add_page(chap3.create_chap5_ombre)
+    builder.add_page(chap3.create_livrable_page)
     builder.add_page(create_closing_page)
 
     # 3. Save

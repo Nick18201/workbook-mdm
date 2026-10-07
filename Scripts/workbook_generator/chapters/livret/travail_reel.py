@@ -14,8 +14,8 @@ def create_travail_reel_coulisses_page(c):
     """
     layout = PageLayout(
         c,
-        "P2.1 : LES COULISSES DU TRAVAIL RÉEL",
-        config=LayoutConfig(part_title="2. LE TRAVAIL RÉEL & LES COULISSES"),
+        "Les coulisses *du travail réel.*",
+        config=LayoutConfig(part_title="Thème 2 · Travail réel"),
     )
 
     layout.add_text(
@@ -40,7 +40,7 @@ def create_travail_reel_coulisses_page(c):
     )
 
     layout.add_question_block(
-        "Mes Astuces & Bricolages Ingénieux",
+        "Mes astuces et mes solutions maison",
         "livret_p2_bricolages",
         config=QuestionConfig(
             box_height=5.0 * cm,
@@ -61,8 +61,8 @@ def create_travail_reel_empeche_page(c):
     """
     layout = PageLayout(
         c,
-        "P2.2 : DÉSIRS DE QUALITÉ & TRAVAIL CONTRARIÉ",
-        config=LayoutConfig(part_title="2. LE TRAVAIL RÉEL & LES COULISSES"),
+        "Qualité voulue, *travail empêché.*",
+        config=LayoutConfig(part_title="Thème 2 · Travail réel"),
     )
 
     layout.add_text(
@@ -86,7 +86,7 @@ def create_travail_reel_empeche_page(c):
     )
 
     layout.add_question_block(
-        "Mes Exigences de Qualité pour Demain",
+        "Mes exigences de qualité pour demain",
         "livret_p2_exigences",
         config=QuestionConfig(
             box_height=5.0 * cm,

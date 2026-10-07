@@ -4,17 +4,13 @@ from .intro import (
     create_intro_page,
 )
 from .alignement import (
-    create_alignement_pages_part1,
-    create_alignement_pages_part2,
-    create_desalignement_pages_part1,
-    create_desalignement_pages_part2,
-    create_choix_difficiles_page1,
-    create_choix_difficiles_page2,
+    create_alignement_pages,
+    create_desalignement_pages,
+    create_choix_difficiles_page,
 )
 from .valeurs import (
     CATEGORIES_VALEURS,
-    create_liste_valeurs_page1,
-    create_liste_valeurs_page2,
+    create_liste_valeurs_page,
     create_hierarchiser_valeurs_page,
     create_incarner_valeur_1_page,
     create_incarner_valeur_2_page,
@@ -23,31 +19,27 @@ from .valeurs import (
 )
 from .synthese import (
     TENSIONS_LIST,
-    create_tensions_page1,
-    create_tensions_page2,
+    create_tensions_page,
     create_synthese_page,
+    create_livrable_page,
 )
 
 __all__ = [
+    "CATEGORIES_VALEURS",
+    "TENSIONS_LIST",
     "create_valeurs_cover",
     "create_concept_page",
     "create_intro_page",
-    "create_alignement_pages_part1",
-    "create_alignement_pages_part2",
-    "create_desalignement_pages_part1",
-    "create_desalignement_pages_part2",
-    "create_choix_difficiles_page1",
-    "create_choix_difficiles_page2",
-    "CATEGORIES_VALEURS",
-    "create_liste_valeurs_page1",
-    "create_liste_valeurs_page2",
+    "create_alignement_pages",
+    "create_desalignement_pages",
+    "create_choix_difficiles_page",
+    "create_liste_valeurs_page",
     "create_hierarchiser_valeurs_page",
     "create_incarner_valeur_1_page",
     "create_incarner_valeur_2_page",
     "create_incarner_valeur_3_page",
     "create_conditions_travail_page",
-    "TENSIONS_LIST",
-    "create_tensions_page1",
-    "create_tensions_page2",
+    "create_tensions_page",
     "create_synthese_page",
+    "create_livrable_page",
 ]

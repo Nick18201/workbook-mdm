@@ -15,16 +15,22 @@ from .components import (
     draw_question,
     question_text_height,
 )
-from .forms import create_checkbox, reserve_field_name
+from .forms import create_checkbox, create_radio, reserve_field_name
 from .utils import french_typography
 from .primitives import (
     content_frame,
+    draw_annotation,
+    draw_card_title,
+    draw_drawn_arrow,
     draw_folio,
+    draw_frise,
     draw_label_pill,
     draw_page_head,
     draw_paragraph,
     draw_pastel_card,
     draw_rule,
+    draw_star,
+    draw_star_list,
     draw_text,
     draw_white_card,
     label_pill_size,
@@ -32,6 +38,7 @@ from .primitives import (
     text_width,
     fit_text,
     pastel_cycle,
+    star_list_height,
     wrap_text,
 )
 
@@ -582,6 +589,417 @@ class PageLayout:
 
     def add_space(self, height):
         self.y_cursor -= height
+        return self.y_cursor
+
+    def page_break(self):
+        """Continues on a new page titled "<title> (suite)" (to share a long exercise evenly)."""
+        self._new_page()
+        return self.y_cursor
+
+    # --- Reading pages ------------------------------------------------------------
+
+    def add_frise(self, steps, start_label="", end_label=""):
+        """The art direction's timeline: steps are (icon, title, marker) on a dotted line."""
+        above = 40 if (start_label or end_label) else 22
+        below = 15 + 10 + 3 * 12.5 + 14
+        self._ensure_space(above + below)
+        line_y = self.y_cursor - above
+        h = draw_frise(self.c, self.text_x, line_y, self.target_width, steps, start_label, end_label)
+        self.y_cursor = line_y - h - PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_heading(self, text, color=None, size=None):
+        """A heading inside the page (DM Sans 700), kept with the first lines that follow it."""
+        size = size or PDFStyle.SIZE_TITLE_CARD
+        leading = size * 1.25
+        h = paragraph_height(text, self.target_width, PDFStyle.FONT_HEADING_BOLD, size, leading)
+        self._ensure_space(h + 4 + 2 * PDFStyle.SIZE_BODY * PDFStyle.LEADING_BODY)
+        self.y_cursor -= draw_paragraph(self.c, text, self.text_x, self.y_cursor, self.target_width,
+                                        PDFStyle.FONT_HEADING_BOLD, size, color or PDFStyle.COLOR_INK, leading) + 4
+        return self.y_cursor
+
+    def add_paragraphs(self, paragraphs, gap=0.3 * cm, spacing_after=None, color=None, size=None):
+        """
+        Running text: one paragraph per item, and runs of items starting with '• ' as a
+        star list. Long text continues on the next page line by line.
+        """
+        bullets = []
+        for i, paragraph in enumerate(paragraphs):
+            paragraph = str(paragraph).strip()
+            if paragraph.startswith("•"):
+                bullets.append(paragraph.lstrip("• ").strip())
+            elif paragraph:
+                if bullets:
+                    self.add_star_list(bullets, spacing_after=gap)
+                    bullets = []
+                self.add_text(paragraph, TextConfig(spacing_after=gap, color=color, font_size=size))
+        if bullets:
+            self.add_star_list(bullets, spacing_after=gap)
+        self.y_cursor -= (PDFStyle.GAP_BLOCK if spacing_after is None else spacing_after) - gap
+        return self.y_cursor
+
+    def add_star_list(self, items, spacing_after=None, size=None):
+        """A list with coral-strong star bullets; an item never splits across pages."""
+        size = size or PDFStyle.SIZE_BODY
+        for i, item in enumerate(items):
+            h = star_list_height([item], self.target_width, size)
+            self._ensure_space(h)
+            draw_star_list(self.c, [item], self.text_x, self.y_cursor, self.target_width, size)
+            self.y_cursor -= h + (size * 0.75 if i < len(items) - 1 else 0)
+        self.y_cursor -= PDFStyle.GAP_BLOCK if spacing_after is None else spacing_after
+        return self.y_cursor
+
+    def add_annotation(self, text, arrow=True, width_ratio=0.55):
+        """
+        The page's handwritten touch: a short note in Instrument Serif italic, slightly
+        turned, on the right, with the drawn arrow pointing back up to the content.
+        """
+        width = self.target_width * width_ratio
+        x = self.text_x + self.target_width - width
+        size = PDFStyle.SIZE_ANNOTATION
+        h = paragraph_height(text, width, PDFStyle.FONT_SERIF, size, size * 1.3)
+        self._ensure_space(h + 0.5 * cm)
+        top = self.y_cursor - 0.2 * cm
+        draw_annotation(self.c, x, top, text, width)
+        if arrow:
+            draw_drawn_arrow(self.c, x - 1.9 * cm, top - h / 2 - 0.1 * cm, width=1.5 * cm, flip=True)
+        self.y_cursor = top - h - PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    # --- Form blocks --------------------------------------------------------------
+
+    FIELD_LABEL_SIZE = 7.5
+    FIELD_LABEL_LEADING = 10
+
+    QUESTION_LABEL_SIZE = 10
+    QUESTION_LABEL_LEADING = 13
+
+    def _field_label_height(self, label, width, questions=False):
+        if questions:
+            return paragraph_height(label, width, PDFStyle.FONT_HEADING_BOLD, self.QUESTION_LABEL_SIZE,
+                                    self.QUESTION_LABEL_LEADING)
+        lines = wrap_text(str(label).upper(), PDFStyle.FONT_LABEL, self.FIELD_LABEL_SIZE, width,
+                          PDFStyle.TRACKING_LABEL)
+        return min(len(lines), 2) * self.FIELD_LABEL_LEADING
+
+    def _draw_field_label(self, label, x, top, width, questions=False):
+        if questions:
+            return draw_paragraph(self.c, label, x, top, width, PDFStyle.FONT_HEADING_BOLD, self.QUESTION_LABEL_SIZE,
+                                  PDFStyle.COLOR_INK, self.QUESTION_LABEL_LEADING)
+        return draw_paragraph(self.c, str(label).upper(), x, top, width, PDFStyle.FONT_LABEL, self.FIELD_LABEL_SIZE,
+                              PDFStyle.COLOR_INK_MUTED, self.FIELD_LABEL_LEADING, tracking=PDFStyle.TRACKING_LABEL,
+                              max_lines=2)
+
+    def add_fields_card(self, rows, title=None, hint=None, color=None, field_height=0.85 * cm, question_labels=False):
+        """
+        A pastel card of labelled answer boxes laid out in rows (an experience sheet, a job
+        sheet, a contact card...). rows: lists of fields, each (label, field_id) or
+        (label, field_id, height_cm) or (label, field_id, height_cm, weight); boxes taller
+        than 1.2 cm are multiline. title is a pill label, hint a line of ink-muted text.
+        Labels are PT Mono markers, or short questions in DM Sans with question_labels.
+        """
+        pad = PDFStyle.CARD_PADDING
+        inner = self.target_width - 2 * pad
+        col_gap, row_gap, label_gap = 0.4 * cm, 0.35 * cm, 3
+
+        def parse(field):
+            label, fid = field[0], field[1]
+            height = field[2] * cm if len(field) > 2 and field[2] else field_height
+            weight = field[3] if len(field) > 3 else 1
+            return label, fid, height, weight
+
+        layout_rows = []
+        for row in rows:
+            fields = [parse(f) for f in row]
+            total = sum(f[3] for f in fields)
+            widths = [(inner - col_gap * (len(fields) - 1)) * f[3] / total for f in fields]
+            label_h = max((self._field_label_height(f[0], w, question_labels) for f, w in zip(fields, widths) if f[0]),
+                          default=0)
+            box_h = max(f[2] for f in fields)
+            layout_rows.append((fields, widths, label_h, box_h))
+
+        head_h = 0
+        if title:
+            head_h += label_pill_size(title)[1] + 0.3 * cm
+        if hint:
+            head_h += paragraph_height(hint, inner, PDFStyle.FONT_BODY, HINT_SIZE, HINT_LEADING) + 0.25 * cm
+        body_h = sum((lh + label_gap if lh else 0) + bh for _, _, lh, bh in layout_rows) + row_gap * (len(layout_rows) - 1)
+        h = 2 * pad + head_h + body_h
+        self._ensure_space(h)
+
+        draw_pastel_card(self.c, self.text_x, self.y_cursor - h, self.target_width, h, color=color)
+        x0, t = self.text_x + pad, self.y_cursor - pad
+        if title:
+            _, pill_h = draw_label_pill(self.c, x0, t - label_pill_size(title)[1], title, variant="on_pastel",
+                                        max_width=inner)
+            t -= pill_h + 0.3 * cm
+        if hint:
+            t -= draw_paragraph(self.c, hint, x0, t, inner, PDFStyle.FONT_BODY, HINT_SIZE, PDFStyle.COLOR_INK_MUTED,
+                                HINT_LEADING) + 0.25 * cm
+        for fields, widths, label_h, box_h in layout_rows:
+            fx = x0
+            for (label, fid, height, _), w in zip(fields, widths):
+                if label:
+                    self._draw_field_label(label, fx, t, w, question_labels)
+                box_top = t - (label_h + label_gap if label_h else 0)
+                draw_answer_box(self.c, fx, box_top - height, w, height, fid, tooltip=str(label or fid),
+                                multiline=height > 1.2 * cm)
+                fx += w + col_gap
+            t -= (label_h + label_gap if label_h else 0) + box_h + row_gap
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_numbered_lines(self, columns, count=5, line_height=0.8 * cm, start=1):
+        """
+        Side by side pastel cards, each with a title, an optional hint and `count` numbered
+        one-line answer boxes. columns: [(title, field_prefix) or (title, field_prefix, hint)].
+        """
+        n = max(1, min(len(columns), 2))
+        gap = 0.45 * cm
+        col_w = (self.target_width - gap * (n - 1)) / n
+        pad = 0.45 * cm
+        inner = col_w - 2 * pad
+        number_w = 0.6 * cm
+        line_gap = 0.2 * cm
+
+        def head_height(col):
+            h = paragraph_height(col[0], inner, PDFStyle.FONT_HEADING_BOLD, PDFStyle.SIZE_TITLE_ELEMENT,
+                                 PDFStyle.SIZE_TITLE_ELEMENT * 1.3)
+            if len(col) > 2 and col[2]:
+                h += 2 + paragraph_height(col[2], inner, PDFStyle.FONT_BODY, HINT_SIZE, HINT_LEADING)
+            return h + 0.3 * cm
+
+        head_h = max(head_height(col) for col in columns[:n])
+        h = 2 * pad + head_h + count * line_height + (count - 1) * line_gap
+        self._ensure_space(h)
+        pastels = pastel_cycle(self.c)
+        for k, col in enumerate(columns[:n]):
+            x = self.text_x + k * (col_w + gap)
+            draw_pastel_card(self.c, x, self.y_cursor - h, col_w, h, color=pastels[k % len(pastels)], radius=12)
+            t = self.y_cursor - pad
+            t2 = t - draw_paragraph(self.c, col[0], x + pad, t, inner, PDFStyle.FONT_HEADING_BOLD,
+                                    PDFStyle.SIZE_TITLE_ELEMENT, PDFStyle.COLOR_INK, PDFStyle.SIZE_TITLE_ELEMENT * 1.3)
+            if len(col) > 2 and col[2]:
+                draw_paragraph(self.c, col[2], x + pad, t2 - 2, inner, PDFStyle.FONT_BODY, HINT_SIZE,
+                               PDFStyle.COLOR_INK_MUTED, HINT_LEADING)
+            t -= head_h
+            for i in range(count):
+                box_y = t - line_height
+                draw_text(self.c, x + pad, box_y + line_height / 2 - 3, f"{start + i:02d}", PDFStyle.FONT_LABEL, 9,
+                          PDFStyle.COLOR_BLUE)
+                draw_answer_box(self.c, x + pad + number_w, box_y, inner - number_w, line_height,
+                                f"{col[1]}_{start + i}", tooltip=f"{col[0]} {start + i}", multiline=False)
+                t -= line_height + line_gap
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_rating_grid(self, labels, field_prefix, values=None, min_label="", max_label="", title=None):
+        """
+        One single-choice scale per label, as rows of pastilles in a pastel card (the values
+        are written once, above the first row). labels: texts or (text, field_id).
+        """
+        values = list(values or range(1, 11))
+        pad = PDFStyle.CARD_PADDING
+        inner = self.target_width - 2 * pad
+        label_w = inner * 0.38
+        scale_x = self.text_x + pad + label_w + 0.3 * cm
+        scale_w = self.text_x + self.target_width - pad - scale_x
+        d = 13
+        step = (scale_w - d) / max(len(values) - 1, 1)
+        row_h = 0.82 * cm
+        numbers_h = 12
+        footer_h = 14 if (min_label or max_label) else 0
+        title_h = label_pill_size(title)[1] + 0.3 * cm if title else 0
+        h = 2 * pad + title_h + numbers_h + len(labels) * row_h + footer_h
+        self._ensure_space(h)
+
+        draw_pastel_card(self.c, self.text_x, self.y_cursor - h, self.target_width, h)
+        t = self.y_cursor - pad
+        if title:
+            draw_label_pill(self.c, self.text_x + pad, t - label_pill_size(title)[1], title, variant="on_pastel",
+                            max_width=inner)
+            t -= title_h
+        for k, val in enumerate(values):
+            draw_text(self.c, scale_x + d / 2 + k * step, t - 8, str(val), PDFStyle.FONT_LABEL, 8,
+                      PDFStyle.COLOR_INK_MUTED, align="center")
+        t -= numbers_h
+        for i, item in enumerate(labels):
+            text, fid = (item[0], item[1]) if isinstance(item, (tuple, list)) else (item, f"{field_prefix}_{i + 1}")
+            cy = t - row_h / 2
+            if i:
+                draw_rule(self.c, self.text_x + pad, self.text_x + self.target_width - pad, t, color=PDFStyle.COLOR_INK,
+                          alpha=0.1)
+            draw_text(self.c, self.text_x + pad, cy - 3.5, fit_text(str(text), PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY,
+                                                                  label_w), PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY,
+                      PDFStyle.COLOR_INK)
+            group = reserve_field_name(self.form, fid)
+            for k, val in enumerate(values):
+                cx = scale_x + d / 2 + k * step
+                self.c.saveState()
+                self.c.setFillColor(PDFStyle.COLOR_SURFACE_CARD)
+                self.c.setStrokeColor(PDFStyle.COLOR_LINE_STRONG)
+                self.c.setLineWidth(PDFStyle.LINE_WIDTH_FIELD)
+                self.c.circle(cx, cy, d / 2, stroke=1, fill=1)
+                self.c.restoreState()
+                create_radio(self.form, group, val, pos=(cx - d / 2 + 1, cy - d / 2 + 1), size=d - 2,
+                             tooltip=f"{text} : {val}", framed=False)
+            t -= row_h
+        if footer_h:
+            if min_label:
+                draw_text(self.c, scale_x, t - 10, str(min_label), PDFStyle.FONT_BODY, HINT_SIZE, PDFStyle.COLOR_INK_MUTED)
+            if max_label:
+                draw_text(self.c, scale_x + scale_w, t - 10, str(max_label), PDFStyle.FONT_BODY, HINT_SIZE,
+                          PDFStyle.COLOR_INK_MUTED, align="right")
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_info_cards(self, cards, columns=2, check_label=None):
+        """
+        Pastel cards to read: a two-part title (ink, then blue italic), a text and an
+        optional note in ink-muted italic. cards: dicts {title, subtitle, text, note,
+        field_id}; with check_label and a field_id, a check box sits under the note
+        (« Me correspond »). Each row is as tall as its tallest card.
+        """
+        cols = max(1, min(columns, 3))
+        gap = 0.4 * cm
+        col_w = (self.target_width - gap * (cols - 1)) / cols
+        pad = 0.45 * cm
+        inner = col_w - 2 * pad
+        size, leading = PDFStyle.SIZE_BODY_SMALL, PDFStyle.SIZE_BODY_SMALL * 1.4
+        title_size = 11.5
+
+        def heights(card):
+            h = paragraph_height(card.get("title", ""), inner, PDFStyle.FONT_HEADING_BOLD, title_size, title_size * 1.15)
+            if card.get("subtitle"):
+                h += paragraph_height(card["subtitle"], inner, PDFStyle.FONT_HEADING_ITALIC, title_size, title_size * 1.15)
+            h += 0.2 * cm
+            if card.get("text"):
+                h += paragraph_height(card["text"], inner, PDFStyle.FONT_BODY, size, leading) + 0.15 * cm
+            if card.get("note"):
+                h += paragraph_height(card["note"], inner, PDFStyle.FONT_HEADING_ITALIC, size, leading) + 0.15 * cm
+            if check_label and card.get("field_id"):
+                h += 14
+            return h + 2 * pad
+
+        pastels = pastel_cycle(self.c)
+        for r in range(0, len(cards), cols):
+            row = cards[r:r + cols]
+            h = max(heights(card) for card in row)
+            self._ensure_space(h)
+            for k, card in enumerate(row):
+                x = self.text_x + k * (col_w + gap)
+                draw_pastel_card(self.c, x, self.y_cursor - h, col_w, h, color=pastels[(r + k) % len(pastels)], radius=12)
+                t = self.y_cursor - pad
+                t -= draw_card_title(self.c, card.get("title", ""), card.get("subtitle"), x + pad, t, inner,
+                                     size=title_size) + 0.2 * cm
+                if card.get("text"):
+                    t -= draw_paragraph(self.c, card["text"], x + pad, t, inner, PDFStyle.FONT_BODY, size,
+                                        PDFStyle.COLOR_INK, leading) + 0.15 * cm
+                if card.get("note"):
+                    t -= draw_paragraph(self.c, card["note"], x + pad, t, inner, PDFStyle.FONT_HEADING_ITALIC, size,
+                                        PDFStyle.COLOR_INK_MUTED, leading) + 0.15 * cm
+                if check_label and card.get("field_id"):
+                    box_y = self.y_cursor - h + pad
+                    create_checkbox(self.form, card["field_id"], pos=(x + pad, box_y), size=10,
+                                    tooltip=f"{card.get('title', '')} : {check_label}")
+                    draw_text(self.c, x + pad + 15, box_y + 2, check_label.upper(), PDFStyle.FONT_LABEL, 7,
+                              PDFStyle.COLOR_INK_MUTED, PDFStyle.TRACKING_LABEL)
+            self.y_cursor -= h + gap
+        self.y_cursor -= PDFStyle.GAP_BLOCK - gap
+        return self.y_cursor
+
+    def add_link_card(self, title, links, color=None):
+        """
+        A pastel card listing resources: a pill title, then per link a star, the name in
+        blue (clickable) and a short description. links: [(name, url, description), ...].
+        """
+        pad = PDFStyle.CARD_PADDING
+        inner = self.target_width - 2 * pad
+        size, leading = PDFStyle.SIZE_BODY, PDFStyle.SIZE_BODY * 1.4
+        _, pill_h = label_pill_size(title)
+        text_x_offset = size * 1.6
+
+        def item_text(name, description):
+            return f"{name} : {description}" if description else name
+
+        # 8 pt of slack: the name is set in semibold, wider than the regular text it is measured in
+        items_h = [paragraph_height(item_text(n, d), inner - text_x_offset - 8, PDFStyle.FONT_BODY, size, leading)
+                   for n, _, d in links]
+        h = 2 * pad + pill_h + 0.3 * cm + sum(items_h) + 0.2 * cm * (len(links) - 1)
+        self._ensure_space(h)
+        draw_pastel_card(self.c, self.text_x, self.y_cursor - h, self.target_width, h, color=color)
+        draw_label_pill(self.c, self.text_x + pad, self.y_cursor - pad - pill_h, title, variant="on_pastel",
+                        max_width=inner)
+        t = self.y_cursor - pad - pill_h - 0.3 * cm
+        for (name, url, description), item_h in zip(links, items_h):
+            x = self.text_x + pad
+            baseline = t - (leading - size) / 2 - 0.8 * size
+            draw_star(self.c, x, baseline + 0.36 * size - size * 0.425, size * 0.85)
+            # The name in blue semibold, then the description in ink on the same paragraph
+            name_w = text_width(name, PDFStyle.FONT_BODY_BOLD, size)
+            draw_text(self.c, x + text_x_offset, baseline, name, PDFStyle.FONT_BODY_BOLD, size, PDFStyle.COLOR_BLUE)
+            self.c.linkURL(url, (x + text_x_offset, baseline - 2, x + text_x_offset + name_w, baseline + size), relative=0)
+            if description:
+                rest = wrap_text(f"{name} : {description}", PDFStyle.FONT_BODY, size, inner - text_x_offset - 8)
+                first = rest[0][len(name):] if rest[0].startswith(name) else rest[0]
+                draw_text(self.c, x + text_x_offset + name_w, baseline, first, PDFStyle.FONT_BODY, size, PDFStyle.COLOR_INK)
+                for k, line in enumerate(rest[1:], start=1):
+                    draw_text(self.c, x + text_x_offset, baseline - k * leading, line, PDFStyle.FONT_BODY, size,
+                              PDFStyle.COLOR_INK)
+            t -= item_h + 0.2 * cm
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_checklist_cards(self, groups, columns=2, field_prefix="chk", item_columns=1):
+        """
+        Check boxes sorted by category: one pastel card per group (title, items), `columns`
+        cards per row, each row as tall as its tallest card. A row never splits across pages.
+        """
+        cols = max(1, min(columns, 3))
+        gap = 0.4 * cm
+        col_w = (self.target_width - gap * (cols - 1)) / cols
+        pad = 0.4 * cm
+        inner = col_w - 2 * pad
+        sub_gap = 0.3 * cm
+        sub_w = (inner - sub_gap * (item_columns - 1)) / item_columns
+        size, leading = PDFStyle.SIZE_BODY_SMALL, PDFStyle.SIZE_BODY_SMALL * 1.35
+        box = 9
+        label_w = sub_w - box - 5
+
+        def item_rows(items):
+            per_col = -(-len(items) // item_columns)
+            return [items[k * per_col:(k + 1) * per_col] for k in range(item_columns)]
+
+        def card_height(title, items):
+            h = paragraph_height(title, inner, PDFStyle.FONT_HEADING_BOLD, 10.5, 13) + 0.25 * cm
+            h += max(sum(paragraph_height(it, label_w, PDFStyle.FONT_BODY, size, leading) + 1 for it in col)
+                     for col in item_rows(items))
+            return h + 2 * pad
+
+        pastels = pastel_cycle(self.c)
+        n = 0
+        for r in range(0, len(groups), cols):
+            row = groups[r:r + cols]
+            h = max(card_height(t, items) for t, items in row)
+            self._ensure_space(h)
+            for k, (title, items) in enumerate(row):
+                x = self.text_x + k * (col_w + gap)
+                draw_pastel_card(self.c, x, self.y_cursor - h, col_w, h, color=pastels[(r + k) % len(pastels)], radius=12)
+                t = self.y_cursor - pad
+                t -= draw_paragraph(self.c, title, x + pad, t, inner, PDFStyle.FONT_HEADING_BOLD, 10.5,
+                                    PDFStyle.COLOR_INK, 13) + 0.25 * cm
+                for s, col_items in enumerate(item_rows(items)):
+                    it_x = x + pad + s * (sub_w + sub_gap)
+                    yy = t
+                    for item in col_items:
+                        n += 1
+                        baseline = yy - (leading - size) / 2 - 0.8 * size
+                        create_checkbox(self.form, f"{field_prefix}_{n}", pos=(it_x, baseline - 1.5), size=box,
+                                        tooltip=str(item))
+                        yy -= draw_paragraph(self.c, str(item), it_x + box + 5, yy, label_w, PDFStyle.FONT_BODY, size,
+                                             PDFStyle.COLOR_INK, leading) + 1
+            self.y_cursor -= h + gap
+        self.y_cursor -= PDFStyle.GAP_BLOCK - gap
         return self.y_cursor
 
     def render(self):

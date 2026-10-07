@@ -14,8 +14,8 @@ def create_recit_contexte_page(c):
     """
     layout = PageLayout(
         c,
-        "P5.1 : ARRÊT SUR IMAGE (DÉCOR & DÉCLIC)",
-        config=LayoutConfig(part_title="5. ARRÊT SUR IMAGE (RÉCIT D'ACTION)"),
+        "Arrêt sur image : *le décor et le déclic.*",
+        config=LayoutConfig(part_title="Thème 5 · Récit d'action"),
     )
 
     layout.add_text(
@@ -26,7 +26,7 @@ def create_recit_contexte_page(c):
     )
 
     layout.add_question_block(
-        "1. La Situation de Départ & le Défi Inattendu",
+        "1. La situation de départ et le défi inattendu",
         "livret_p5_situation",
         config=QuestionConfig(
             box_height=5.0 * cm,
@@ -38,7 +38,7 @@ def create_recit_contexte_page(c):
     )
 
     layout.add_question_block(
-        "2. Le Déclic & ce que vous avez Observé",
+        "2. Le déclic et ce que vous avez observé",
         "livret_p5_declic",
         config=QuestionConfig(
             box_height=5.0 * cm,
@@ -59,8 +59,8 @@ def create_recit_impact_page(c):
     """
     layout = PageLayout(
         c,
-        "P5.2 : MES ACTIONS PAS À PAS & MA FIERTÉ",
-        config=LayoutConfig(part_title="5. ARRÊT SUR IMAGE (RÉCIT D'ACTION)"),
+        "Vos actions *pas à pas.*",
+        config=LayoutConfig(part_title="Thème 5 · Récit d'action"),
     )
 
     layout.add_text(
@@ -70,7 +70,7 @@ def create_recit_impact_page(c):
     )
 
     layout.add_question_block(
-        "3. Ce que VOUS avez fait Pas à Pas (Actions & Choix)",
+        "3. Ce que vous avez fait, pas à pas (actions et choix)",
         "livret_p5_action",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -83,7 +83,7 @@ def create_recit_impact_page(c):
     )
 
     layout.add_question_block(
-        "4. L'Impact Positif & votre Sentiment de Fierté",
+        "4. Le résultat et ce dont vous êtes fier ou fière",
         "livret_p5_resultat",
         config=QuestionConfig(
             box_height=5.2 * cm,

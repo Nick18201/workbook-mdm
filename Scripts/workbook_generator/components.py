@@ -373,7 +373,7 @@ def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise
     c.showPage()
 
 
-def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT", promise=None):
+def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES", promise=None):
     """
     Former cover API: subtitle is the chapter label ('CHAPITRE 4 : MON RAPPORT À L'ARGENT'),
     title the line shown at the bottom. See create_cover_page.
@@ -614,9 +614,9 @@ def create_standard_recap_page(c, part_title, intro_txt, questions):
     texts = [question_text_height(width, q) for q in questions]
     gap = 0.6 * cm
     available = y - PDFStyle.CONTENT_BOTTOM - sum(texts) - gap * max(len(questions) - 1, 0)
-    box_h = max(2.2 * cm, min(4.6 * cm, available / max(len(questions), 1)))
+    box_h = max(1.6 * cm, min(4.6 * cm, available / max(len(questions), 1)))
     for i, question in enumerate(questions):
-        if y - texts[i] - box_h < PDFStyle.CONTENT_BOTTOM:
+        if y - texts[i] - box_h < PDFStyle.CONTENT_BOTTOM - 0.5:  # tolerance: the boxes share the exact height left
             _finish_page(c)
             y = draw_page_head(c, title, eyebrow=part_title, suffix="(suite)") - 0.5 * cm
         y = draw_question(c, x, y, width, question, f"recap_q{i + 1}", box_h) - gap
