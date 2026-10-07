@@ -6,7 +6,7 @@ from workbook_generator.components import create_closing_page
 
 def generate_workbook_chap4(output_filename="Workbook_Chapitre_4.pdf"):
     builder = DocumentBuilder(output_path=output_filename, carnet=4)
-    builder.set_title("MDM - Workbook Chapitre 4")
+    builder.set_title("Marge de Manœuvre - Chapitre 4 : Mon rapport à l'argent")
 
     builder.add_page(chap4.create_chap4_v2_cover)
     builder.add_page(chap4.create_concept_page)
@@ -18,6 +18,7 @@ def generate_workbook_chap4(output_filename="Workbook_Chapitre_4.pdf"):
     builder.add_page(chap4.create_minimum_financier_page)
     builder.add_page(chap4.create_archetypes_v2_page)
     builder.add_page(chap4.create_synthese_v2_page)
+    builder.add_page(chap4.create_livrable_page)
     builder.add_page(create_closing_page)
 
     builder.save()

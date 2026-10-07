@@ -1,72 +1,49 @@
-from reportlab.lib.units import cm
-
+from workbook_generator.components import create_cover_page, create_standard_summary_page
 from workbook_generator.config import PDFStyle
-from workbook_generator.components import (
-    create_standard_cover,
-    create_standard_summary_page,
-)
-from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig
+from workbook_generator.templates import PageLayout, LayoutConfig
 
 
 def create_valeurs_cover(c):
-    create_standard_cover(c, "CHAPITRE 5 : MES VALEURS ET MOTEURS PROFONDS")
+    """Cover of chapter 5: Valeurs et moteurs profonds."""
+    create_cover_page(c, "Valeurs et moteurs *profonds.*", number=5, tagline="Bilan de compétences",
+                      promise="Ce qui doit compter dans votre prochain poste.")
 
 
 def create_concept_page(c):
-    points = [
-        ("Sommaire :", ""),
-        ("1.", "Mes Expériences d'Alignement"),
-        ("2.", "Mes Expériences de Désalignement"),
-        ("3.", "Mes Choix Difficiles"),
-        ("4.", "Liste de Valeurs pour s'aider à nommer"),
-        ("5.", "Hiérarchiser mes Valeurs"),
-        ("6.", "Incarner ses Valeurs Non Négociables"),
-        ("7.", "Traduire ses Valeurs en Conditions de Travail"),
-        ("8.", "Mes Tensions de Valeurs"),
-        ("9.", "Synthèse Finale"),
+    """Chapter opener: the objective of the workbook and its exercises."""
+    intro_txt = (
+        "Ce carnet identifie les valeurs qui guident réellement vos choix, votre énergie et votre rapport au "
+        "travail, puis les traduit en conditions de travail concrètes pour évaluer vos futures pistes."
+    )
+    exercises = [
+        "Exercice 1 · Vos expériences d'alignement.",
+        "Exercice 2 · Vos expériences de désalignement.",
+        "Exercice 3 · Vos choix difficiles.",
+        "Exercice 4 · Nommer ce qui compte : la liste de valeurs.",
+        "Exercice 5 · Hiérarchiser vos valeurs.",
+        "Exercice 6 · Incarner vos valeurs non négociables.",
+        "Exercice 7 · Traduire vos valeurs en conditions de travail.",
+        "Exercice 8 · Vos tensions de valeurs.",
+        "Exercice 9 · Synthèse.",
     ]
-    create_standard_summary_page(c, "5", "VALEURS", "", points)
+    create_standard_summary_page(c, "5", "Ce qui compte *vraiment.*", intro_txt, exercises)
 
 
 def create_intro_page(c):
-    layout = PageLayout(
-        c,
-        "Comprendre ses valeurs",
-        config=LayoutConfig(part_title="INTRODUCTION")
+    """Introduction: where values show, and what the workbook looks for."""
+    layout = PageLayout(c, "Comprendre *vos valeurs.*", config=LayoutConfig(part_title="Introduction"))
+    layout.add_paragraphs([
+        "Ce carnet vous aide à identifier ce qui compte vraiment pour vous dans votre vie professionnelle.",
+        "Les valeurs ne sont pas des idées abstraites. Elles se repèrent dans les situations où vous vous sentez :",
+    ], size=PDFStyle.SIZE_LEAD)
+    layout.add_star_list(["motivé·e ;", "fier ou fière ;", "utile ;", "libre ;", "reconnu·e ;", "en confiance ;"],
+                         size=PDFStyle.SIZE_LEAD, spacing_after=0.3 * 28.35)
+    layout.add_paragraphs([
+        "mais aussi frustré·e, en colère, vidé·e, empêché·e ou en conflit intérieur.",
+    ], size=PDFStyle.SIZE_LEAD)
+    layout.add_callout(
+        "Ne cherchez pas les valeurs qui semblent les plus « belles » ou les plus attendues : identifiez celles "
+        "qui influencent réellement vos choix, votre énergie et votre rapport au travail.",
+        title="L'objectif",
     )
-    
-    layout.add_text(
-        "Ce workbook vous aide à identifier ce qui compte profondément pour vous dans votre vie professionnelle.",
-        config=TextConfig(font_size=12, spacing_after=0.6 * cm, style_choice="subtitle", color=PDFStyle.COLOR_ACCENT_BLUE)
-    )
-    
-    layout.add_text(
-        "Les valeurs ne sont pas seulement des idées abstraites. Elles se repèrent dans les situations où vous vous sentez :",
-        config=TextConfig(font_size=11, spacing_after=0.4 * cm)
-    )
-    
-    sentiments = [
-        "• motivé(e) ;",
-        "• fier(e) ;",
-        "• utile ;",
-        "• libre ;",
-        "• reconnu(e) ;",
-        "• en confiance ;"
-    ]
-    for s in sentiments:
-        layout.add_text(
-            s,
-            config=TextConfig(font_size=11, spacing_after=0.2 * cm, color=PDFStyle.COLOR_ACCENT_RED, style_choice="subtitle")
-        )
-        
-    layout.add_text(
-        "mais aussi frustré(e), en colère, vidé(e), empêché(e) ou en conflit intérieur.",
-        config=TextConfig(font_size=11, spacing_after=0.6 * cm)
-    )
-    
-    layout.add_text(
-        "L’objectif n’est pas de choisir les valeurs qui semblent les plus “belles” ou les plus attendues, mais d’identifier celles qui influencent réellement vos choix, votre énergie et votre rapport au travail.",
-        config=TextConfig(font_size=11, spacing_after=0.5 * cm, style_choice="italic", color=PDFStyle.COLOR_TEXT_SECONDARY)
-    )
-    
     layout.render()

@@ -20,6 +20,7 @@ from .utils import french_typography
 from .primitives import (
     content_frame,
     draw_annotation,
+    draw_card_title,
     draw_drawn_arrow,
     draw_folio,
     draw_frise,
@@ -669,22 +670,32 @@ class PageLayout:
     FIELD_LABEL_SIZE = 7.5
     FIELD_LABEL_LEADING = 10
 
-    def _field_label_height(self, label, width):
+    QUESTION_LABEL_SIZE = 10
+    QUESTION_LABEL_LEADING = 13
+
+    def _field_label_height(self, label, width, questions=False):
+        if questions:
+            return paragraph_height(label, width, PDFStyle.FONT_HEADING_BOLD, self.QUESTION_LABEL_SIZE,
+                                    self.QUESTION_LABEL_LEADING)
         lines = wrap_text(str(label).upper(), PDFStyle.FONT_LABEL, self.FIELD_LABEL_SIZE, width,
                           PDFStyle.TRACKING_LABEL)
         return min(len(lines), 2) * self.FIELD_LABEL_LEADING
 
-    def _draw_field_label(self, label, x, top, width):
+    def _draw_field_label(self, label, x, top, width, questions=False):
+        if questions:
+            return draw_paragraph(self.c, label, x, top, width, PDFStyle.FONT_HEADING_BOLD, self.QUESTION_LABEL_SIZE,
+                                  PDFStyle.COLOR_INK, self.QUESTION_LABEL_LEADING)
         return draw_paragraph(self.c, str(label).upper(), x, top, width, PDFStyle.FONT_LABEL, self.FIELD_LABEL_SIZE,
                               PDFStyle.COLOR_INK_MUTED, self.FIELD_LABEL_LEADING, tracking=PDFStyle.TRACKING_LABEL,
                               max_lines=2)
 
-    def add_fields_card(self, rows, title=None, hint=None, color=None, field_height=0.85 * cm):
+    def add_fields_card(self, rows, title=None, hint=None, color=None, field_height=0.85 * cm, question_labels=False):
         """
         A pastel card of labelled answer boxes laid out in rows (an experience sheet, a job
         sheet, a contact card...). rows: lists of fields, each (label, field_id) or
         (label, field_id, height_cm) or (label, field_id, height_cm, weight); boxes taller
         than 1.2 cm are multiline. title is a pill label, hint a line of ink-muted text.
+        Labels are PT Mono markers, or short questions in DM Sans with question_labels.
         """
         pad = PDFStyle.CARD_PADDING
         inner = self.target_width - 2 * pad
@@ -701,7 +712,8 @@ class PageLayout:
             fields = [parse(f) for f in row]
             total = sum(f[3] for f in fields)
             widths = [(inner - col_gap * (len(fields) - 1)) * f[3] / total for f in fields]
-            label_h = max((self._field_label_height(f[0], w) for f, w in zip(fields, widths) if f[0]), default=0)
+            label_h = max((self._field_label_height(f[0], w, question_labels) for f, w in zip(fields, widths) if f[0]),
+                          default=0)
             box_h = max(f[2] for f in fields)
             layout_rows.append((fields, widths, label_h, box_h))
 
@@ -727,7 +739,7 @@ class PageLayout:
             fx = x0
             for (label, fid, height, _), w in zip(fields, widths):
                 if label:
-                    self._draw_field_label(label, fx, t, w)
+                    self._draw_field_label(label, fx, t, w, question_labels)
                 box_top = t - (label_h + label_gap if label_h else 0)
                 draw_answer_box(self.c, fx, box_top - height, w, height, fid, tooltip=str(label or fid),
                                 multiline=height > 1.2 * cm)
@@ -840,6 +852,61 @@ class PageLayout:
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 
+    def add_info_cards(self, cards, columns=2, check_label=None):
+        """
+        Pastel cards to read: a two-part title (ink, then blue italic), a text and an
+        optional note in ink-muted italic. cards: dicts {title, subtitle, text, note,
+        field_id}; with check_label and a field_id, a check box sits under the note
+        (« Me correspond »). Each row is as tall as its tallest card.
+        """
+        cols = max(1, min(columns, 3))
+        gap = 0.4 * cm
+        col_w = (self.target_width - gap * (cols - 1)) / cols
+        pad = 0.45 * cm
+        inner = col_w - 2 * pad
+        size, leading = PDFStyle.SIZE_BODY_SMALL, PDFStyle.SIZE_BODY_SMALL * 1.4
+        title_size = 11.5
+
+        def heights(card):
+            h = paragraph_height(card.get("title", ""), inner, PDFStyle.FONT_HEADING_BOLD, title_size, title_size * 1.15)
+            if card.get("subtitle"):
+                h += paragraph_height(card["subtitle"], inner, PDFStyle.FONT_HEADING_ITALIC, title_size, title_size * 1.15)
+            h += 0.2 * cm
+            if card.get("text"):
+                h += paragraph_height(card["text"], inner, PDFStyle.FONT_BODY, size, leading) + 0.15 * cm
+            if card.get("note"):
+                h += paragraph_height(card["note"], inner, PDFStyle.FONT_HEADING_ITALIC, size, leading) + 0.15 * cm
+            if check_label and card.get("field_id"):
+                h += 14
+            return h + 2 * pad
+
+        pastels = pastel_cycle(self.c)
+        for r in range(0, len(cards), cols):
+            row = cards[r:r + cols]
+            h = max(heights(card) for card in row)
+            self._ensure_space(h)
+            for k, card in enumerate(row):
+                x = self.text_x + k * (col_w + gap)
+                draw_pastel_card(self.c, x, self.y_cursor - h, col_w, h, color=pastels[(r + k) % len(pastels)], radius=12)
+                t = self.y_cursor - pad
+                t -= draw_card_title(self.c, card.get("title", ""), card.get("subtitle"), x + pad, t, inner,
+                                     size=title_size) + 0.2 * cm
+                if card.get("text"):
+                    t -= draw_paragraph(self.c, card["text"], x + pad, t, inner, PDFStyle.FONT_BODY, size,
+                                        PDFStyle.COLOR_INK, leading) + 0.15 * cm
+                if card.get("note"):
+                    t -= draw_paragraph(self.c, card["note"], x + pad, t, inner, PDFStyle.FONT_HEADING_ITALIC, size,
+                                        PDFStyle.COLOR_INK_MUTED, leading) + 0.15 * cm
+                if check_label and card.get("field_id"):
+                    box_y = self.y_cursor - h + pad
+                    create_checkbox(self.form, card["field_id"], pos=(x + pad, box_y), size=10,
+                                    tooltip=f"{card.get('title', '')} : {check_label}")
+                    draw_text(self.c, x + pad + 15, box_y + 2, check_label.upper(), PDFStyle.FONT_LABEL, 7,
+                              PDFStyle.COLOR_INK_MUTED, PDFStyle.TRACKING_LABEL)
+            self.y_cursor -= h + gap
+        self.y_cursor -= PDFStyle.GAP_BLOCK - gap
+        return self.y_cursor
+
     def add_checklist_cards(self, groups, columns=2, field_prefix="chk", item_columns=1):
         """
         Check boxes sorted by category: one pastel card per group (title, items), `columns`
@@ -862,7 +929,7 @@ class PageLayout:
 
         def card_height(title, items):
             h = paragraph_height(title, inner, PDFStyle.FONT_HEADING_BOLD, 10.5, 13) + 0.25 * cm
-            h += max(sum(paragraph_height(it, label_w, PDFStyle.FONT_BODY, size, leading) + 2 for it in col)
+            h += max(sum(paragraph_height(it, label_w, PDFStyle.FONT_BODY, size, leading) + 1 for it in col)
                      for col in item_rows(items))
             return h + 2 * pad
 
@@ -887,7 +954,7 @@ class PageLayout:
                         create_checkbox(self.form, f"{field_prefix}_{n}", pos=(it_x, baseline - 1.5), size=box,
                                         tooltip=str(item))
                         yy -= draw_paragraph(self.c, str(item), it_x + box + 5, yy, label_w, PDFStyle.FONT_BODY, size,
-                                             PDFStyle.COLOR_INK, leading) + 2
+                                             PDFStyle.COLOR_INK, leading) + 1
             self.y_cursor -= h + gap
         self.y_cursor -= PDFStyle.GAP_BLOCK - gap
         return self.y_cursor
