@@ -19,3 +19,6 @@ venv/
 Thumbs.db
 .idea/
 .vscode/
+
+# PNG previews written by Scripts/test_composite_page.py
+previews/

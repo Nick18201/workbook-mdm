@@ -21,7 +21,7 @@ python -m uvicorn server.app:app --port 8080 --reload
 
 - Every `Scripts/main_generate_*.py` (chap0–chap6, `livret`, `business_plan`, `programme`) takes `--theme {indigo,earth}` and `--output`. Exit code 0 plus `PDF generated successfully: ...` means it built.
 - `tests/` is the pytest suite (compiler and API; Gemini is faked by monkeypatching `gemini_service.genai.Client`). It needs `requirements-dev.txt` (pytest, pymupdf, httpx). There is no linter config.
-- `Scripts/test_*.py` are not tests but showcase scripts that render `Test_*.pdf` at the repo root. `test_composite_page.py` and `chapters/programme/render_inspect.py` write PNG previews to a hard-coded `C:\Users\nblum\.gemini\...` folder.
+- `Scripts/test_*.py` are not tests but showcase scripts that render `Test_*.pdf` at the repo root. `test_composite_page.py` also writes PNG previews to `previews/` (git-ignored).
 - If `DocumentBuilder` raises `PermissionError: Cannot overwrite ...`, the target PDF is open in another program.
 - Generated PDFs are git-ignored. `scratch/` holds committed page PNG previews.
 - Deployment (Cloud Run via `Dockerfile`; `GEMINI_API_KEY` is injected from the Secret Manager secret `gemini-api-key`, never set as a plain env var) is covered in `server/DEPLOY_CLOUD_RUN.md`.
@@ -46,7 +46,7 @@ The same rendering library feeds two pipelines.
 - Rule from `Agent.md`: **one folder per chapter, never one file per chapter.** Each `chapters/<name>/` has an `__init__.py` that only re-exports page functions, plus split modules (`intro.py`, `exercices.py`, `cloture.py`, thematic files). `chapters/` itself has no `__init__.py` (namespace package).
 - Conventions: page functions are named `create_<page>_page(c)`, the canvas is always `c` as the first argument, and the running vertical cursor is `y_pos`.
 - The `main_generate_*.py` script lists page order via `builder.add_page(...)`. The scripts add `Scripts/` to `sys.path` so `from workbook_generator...` resolves.
-- `chapters/programme/` (the Qualiopi programme/pricing brochure) is laid out by hand on `setup_programme_page()` from `programme/common.py`, not on `PageLayout`. Several `page_*.py` files there are not wired into `programme/__init__.py` or `main_generate_programme.py`. Check the router before editing a page. After building, `main_generate_programme.py` also copies the PDF into a sibling `../marge-de-manoeuvre/public/documents/` repo if that folder exists.
+- `chapters/programme/` (the Qualiopi programme/pricing brochure) is laid out by hand on `setup_programme_page()` from `programme/common.py`, not on `PageLayout`. Page order is set in `main_generate_programme.py`; the `create_programme_page_N` aliases in `programme/__init__.py` follow it. After building, `main_generate_programme.py` also copies the PDF into a sibling `../marge-de-manoeuvre/public/documents/` repo if that folder exists.
 
 ### 3. Web app: `server/` (FastAPI + Gemini)
 - Flow: raw coaching notes → `gemini_service.parse_notes_with_gemini` → a `models.WorkbookSpec` (pages, each with a `template` + `params`, or `composite` + `blocks`) → `pdf_compiler.compile_workbook_from_spec` → PDF bytes.
