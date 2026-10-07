@@ -5,6 +5,7 @@ Architecture en 35 pages structurée selon la norme 1 dossier = 1 livret du proj
 
 from .cover import (
     create_business_plan_cover,
+    create_business_plan_identity_page,
     create_business_plan_summary,
 )
 from .fondations import (
@@ -57,6 +58,7 @@ from .action_synthese import (
 __all__ = [
     # Couverture & Cadrage
     "create_business_plan_cover",
+    "create_business_plan_identity_page",
     "create_business_plan_summary",
     # 1. Fondations
     "create_fondations_idee_page",

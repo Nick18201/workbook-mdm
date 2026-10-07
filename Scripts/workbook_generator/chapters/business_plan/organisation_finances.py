@@ -16,7 +16,7 @@ def create_communication_message_page(c):
     """
     layout = PageLayout(
         c,
-        "12.1 : IDENTITÉ DE MESSAGE & TON",
+        "Votre message *et votre ton.*",
         config=LayoutConfig(part_title="12. COMMUNICATION"),
     )
 
@@ -28,7 +28,7 @@ def create_communication_message_page(c):
 
     questions = [
         QuestionItem(
-            question="1. Mon message principal (L'idée directrice incontournable)",
+            question="1. Mon message principal (l'idée directrice incontournable)",
             form_field_id="bp_p22_message_principal",
             subtitle="Quelle conviction fondamentale souhaitez-vous répéter avec constance à votre communauté ?",
             color=PDFStyle.COLOR_ACCENT_BLUE,
@@ -40,13 +40,13 @@ def create_communication_message_page(c):
             color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
-            question="3. Mon ton d'expression & mes mots signatures",
+            question="3. Mon ton d'expression et mes mots signatures",
             form_field_id="bp_p22_ton_expression",
             subtitle="Plutôt chaleureux et complice ? Structuré et directif ? Pédagogue et imagé ?",
             color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
-            question="4. Ce que je refuse catégoriquement de communiquer (Mes Lignes Rouges)",
+            question="4. Ce que je refuse catégoriquement de communiquer (mes lignes rouges)",
             form_field_id="bp_p22_refus_communication",
             subtitle="Les discours culpabilisants, les astuces miracles ou les codes marketing que vous rejetez fermement.",
             color=PDFStyle.COLOR_ACCENT_RED,
@@ -64,7 +64,7 @@ def create_communication_plan_page(c):
     """
     layout = PageLayout(
         c,
-        "12.2 : PLAN DE COMMUNICATION OPÉRATIONNEL",
+        "Plan *de communication.*",
         config=LayoutConfig(part_title="12. COMMUNICATION"),
     )
 
@@ -127,13 +127,13 @@ def create_communication_plan_page(c):
 
     cards = [
         {
-            "title": "Mon Rythme de Publication Soutenable",
+            "title": "Mon rythme de publication soutenable",
             "subtitle": "Quel rituel de création hebdomadaire pouvez-vous respecter avec plaisir ?",
             "field_id": "bp_p23_rituel_creation",
             "placeholder": "Ex : Bloquer le mardi matin pour rédiger l'ensemble des contenus de la quinzaine...",
         },
         {
-            "title": "Le Message Clé d'Appel à l'Action (CTA)",
+            "title": "Le message clé d'appel à l'action (CTA)",
             "subtitle": "Vers quoi orientez-vous systématiquement vos lecteurs intéressés ?",
             "field_id": "bp_p23_call_to_action",
             "placeholder": "Ex : « Réservez votre séance d'alignement de 30 minutes offerte via mon calendrier en ligne »...",
@@ -151,7 +151,7 @@ def create_ressources_moyens_page(c):
     """
     layout = PageLayout(
         c,
-        "13.1 : RESSOURCES & ARBITRAGES",
+        "Ressources *et arbitrages.*",
         config=LayoutConfig(part_title="13. LES RESSOURCES NÉCESSAIRES"),
     )
 
@@ -170,31 +170,31 @@ def create_ressources_moyens_page(c):
             ("Accompagnement comptable & juridique dédié", "bp_p24_chk_compta"),
             ("Compétences techniques spécifiques à acquérir", "bp_p24_chk_competences"),
         ],
-        title="RESSOURCES NÉCESSAIRES POUR DÉMARRER :",
+        title="Ressources nécessaires pour démarrer :",
         columns=2,
     )
 
     cards = [
         {
-            "title": "1. Ce que j'AI DÉJÀ sous la main",
+            "title": "1. Ce que j'ai déjà sous la main",
             "subtitle": "Matériel, compétences acquises, carnet d'adresses disponible...",
             "field_id": "bp_p24_ressources_dispo",
             "placeholder": "Ordinateur récent, réseau d'anciennes collègues, compétences rédactionnelles...",
         },
         {
-            "title": "2. Ce qui me MANQUE impérativement",
+            "title": "2. Ce qui me manque impérativement",
             "subtitle": "Les investissements ou acquisitions prioritaires pour ouvrir...",
             "field_id": "bp_p24_ressources_manque",
             "placeholder": "Assurance pro, identité visuelle claire, logiciel de facturation conforme...",
         },
         {
-            "title": "3. Acheter, Louer ou Mutualiser ?",
+            "title": "3. Acheter, louer ou mutualiser ?",
             "subtitle": "Quels arbitrages pour limiter vos charges fixes initiales ?",
             "field_id": "bp_p24_arbitrage_logistique",
             "placeholder": "Mutualiser un bureau 2 jours/semaine, utiliser des outils freemium au début...",
         },
         {
-            "title": "4. Ce que je FAIS vs ce que je DÉLÈGUE",
+            "title": "4. Ce que je fais vs ce que je délègue",
             "subtitle": "Préservez votre énergie vitale pour votre cœur de valeur ajoutée...",
             "field_id": "bp_p24_faire_deleguer",
             "placeholder": "Je fais l'accompagnement et la com ; je délègue la déclaration fiscale et le webdesign...",
@@ -212,7 +212,7 @@ def create_ressources_competences_page(c):
     """
     layout = PageLayout(
         c,
-        "14.1 : COMPÉTENCES & ÉCOSYSTÈME",
+        "Compétences *et entourage.*",
         config=LayoutConfig(part_title="14. MOI ET LE PROJET"),
     )
 
@@ -269,13 +269,13 @@ def create_ressources_competences_page(c):
 
     cards = [
         {
-            "title": "Mes Forces & Expériences Piliers",
+            "title": "Mes forces et expériences piliers",
             "subtitle": "Quels succès passés vous donnent une légitimité indiscutable ?",
             "field_id": "bp_p25_forces_legitimite",
             "placeholder": "10 ans d'expérience en gestion d'équipe, capacité d'écoute empathique, persévérance...",
         },
         {
-            "title": "Mon Entourage Clé & Personnes Ressources",
+            "title": "Mon entourage clé et personnes ressources",
             "subtitle": "De quelles personnes avez-vous besoin autour de vous ?",
             "field_id": "bp_p25_entourage_ressource",
             "placeholder": "Un pair à retrouver chaque quinzaine, une mentore expérimentée, mon expert-comptable...",
@@ -293,7 +293,7 @@ def create_juridique_cadre_page(c):
     """
     layout = PageLayout(
         c,
-        "15.1 : STRUCTURATION JURIDIQUE & FISCALE",
+        "Cadre juridique *et fiscal.*",
         config=LayoutConfig(part_title="15. LE CADRE JURIDIQUE"),
     )
 
@@ -312,7 +312,7 @@ def create_juridique_cadre_page(c):
             ("Conformité RGPD & Mentions légales obligatoires", "bp_p26_chk_rgpd"),
             ("Adhésion à un médiateur de la consommation (si B2C)", "bp_p26_chk_mediateur"),
         ],
-        title="OBLIGATIONS ADMINISTRATIVES ET LÉGALES :",
+        title="Obligations administratives et légales :",
         columns=2,
     )
 
@@ -348,7 +348,7 @@ def create_finances_depenses_page(c):
     """
     layout = PageLayout(
         c,
-        "16.1 : DÉPENSES & CHARGES PRÉVISIONNELLES",
+        "Dépenses *et charges prévues.*",
         config=LayoutConfig(part_title="16. PRÉVISIONNEL FINANCIER"),
     )
 
@@ -427,7 +427,7 @@ def create_finances_depenses_page(c):
     layout.add_callout(
         "Règle de sécurité : Prévoyez toujours une marge d'imprévus de 15% à 20% sur vos dépenses de démarrage. "
         "La trésorerie est le poumon qui vous permet de vous installer sereinement sans angoisse du lendemain.",
-        title="CONSEIL FINANCIER MARGE DE MANŒUVRE",
+        title="Le conseil de Marge de Manœuvre",
         variant="warning",
     )
 
@@ -441,7 +441,7 @@ def create_finances_previsionnel_page(c):
     """
     layout = PageLayout(
         c,
-        "16.2 : SCÉNARIOS DE CA & POINT MORT",
+        "Chiffre d'affaires *et point mort.*",
         config=LayoutConfig(part_title="16. PRÉVISIONNEL FINANCIER"),
     )
 
@@ -453,19 +453,19 @@ def create_finances_previsionnel_page(c):
 
     scenarios = [
         {
-            "title": "Scénario 1 : Prudent (Démarrage)",
+            "title": "Scénario 1 : prudent (démarrage)",
             "subtitle": "Hypothèses basses : 2 à 3 ventes / mois pour couvrir les charges fixes minimales...",
             "field_id": "bp_p28_scen_prudent",
             "placeholder": "Ex : 2 forfaits à 750 € = 1 500 € / mois de CA...",
         },
         {
-            "title": "Scénario 2 : Réaliste (Vitesse de Croisière)",
+            "title": "Scénario 2 : réaliste (vitesse de croisière)",
             "subtitle": "Hypothèses moyennes à 12 mois : volume régulier et rémunération cible assurée...",
             "field_id": "bp_p28_scen_intermediaire",
             "placeholder": "Ex : 4 forfaits à 750 € + 2 ateliers = 3 500 € / mois de CA...",
         },
         {
-            "title": "Scénario 3 : Ambitieux (Plein Régime)",
+            "title": "Scénario 3 : ambitieux (plein régime)",
             "subtitle": "Hypothèses hautes : carnet de commandes plein, liste d'attente et partenariats...",
             "field_id": "bp_p28_scen_ambitieux",
             "placeholder": "Ex : 6 forfaits + formations d'entreprise = 5 500 € / mois de CA...",
@@ -498,7 +498,7 @@ def create_finances_financement_page(c):
     """
     layout = PageLayout(
         c,
-        "17.1 : PLAN DE FINANCEMENT INITIAL",
+        "Plan de financement *initial.*",
         config=LayoutConfig(part_title="17. FINANCER LE PROJET"),
     )
 

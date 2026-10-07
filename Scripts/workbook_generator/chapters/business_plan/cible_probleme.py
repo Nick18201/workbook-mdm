@@ -16,7 +16,7 @@ def create_cible_public_page(c):
     """
     layout = PageLayout(
         c,
-        "2.1 : MON PUBLIC CIBLE",
+        "Mon public *cible.*",
         config=LayoutConfig(part_title="2. COMPRENDRE À QUI JE M'ADRESSE"),
     )
 
@@ -59,7 +59,7 @@ def create_cible_persona_page(c):
     """
     layout = PageLayout(
         c,
-        "2.2 : FICHE PERSONA & MATRICE DE LUCIDITÉ",
+        "Fiche persona *et matrice de lucidité.*",
         config=LayoutConfig(part_title="2. COMPRENDRE À QUI JE M'ADRESSE"),
     )
 
@@ -72,13 +72,13 @@ def create_cible_persona_page(c):
     # Grille 1 : Portrait du Persona
     persona_cards = [
         {
-            "title": "Profil Type & Contexte",
+            "title": "Profil type et contexte",
             "subtitle": "Prénom fictif, âge, métier, contexte de vie et habitudes...",
             "field_id": "bp_p6_persona_profil",
             "placeholder": "Ex : Claire, 38 ans, cadre en reconversion...",
         },
         {
-            "title": "Freins, Craintes & Motivations",
+            "title": "Freins, craintes et motivations",
             "subtitle": "Ce qui l'empêche d'agir vs ce qui la fait avancer...",
             "field_id": "bp_p6_persona_freins",
             "placeholder": "Peur de se tromper, manque de temps, désir d'autonomie...",
@@ -89,13 +89,13 @@ def create_cible_persona_page(c):
     # Grille 2 : Matrice de Lucidité (Ce que je pense savoir vs Ce que je dois vérifier)
     lucidite_cards = [
         {
-            "title": "Ce que je PENSE savoir (Mes Intuitions)",
+            "title": "Ce que je pense savoir (mes intuitions)",
             "subtitle": "Mes idées spontanées sur ses attentes et son budget...",
             "field_id": "bp_p6_lucidite_pense",
             "placeholder": "Je pense qu'elle est prête à payer pour gagner du temps...",
         },
         {
-            "title": "Ce que je DOIS encore Vérifier sur le terrain",
+            "title": "Ce que je dois encore vérifier sur le terrain",
             "subtitle": "Les angles morts et questions à lui poser directement...",
             "field_id": "bp_p6_lucidite_verifier",
             "placeholder": "Vérifier si ce problème est une priorité budgétaire...",
@@ -113,7 +113,7 @@ def create_probleme_analyse_page(c):
     """
     layout = PageLayout(
         c,
-        "3.1 : QUEL PROBLÈME RÉSOUDRE ?",
+        "Quel problème *résoudre ?*",
         config=LayoutConfig(part_title="3. LE BESOIN ET LE PROBLÈME"),
     )
 
@@ -125,7 +125,7 @@ def create_probleme_analyse_page(c):
 
     questions = [
         QuestionItem(
-            question="1. Le problème que j'ai identifié (Description précise)",
+            question="1. Le problème que j'ai identifié (description précise)",
             form_field_id="bp_p7_probleme_desc",
             subtitle="Quelle est la douleur, la frustration ou la perte de temps/argent constatée ?",
             color=PDFStyle.COLOR_ACCENT_BLUE,
@@ -155,7 +155,7 @@ def create_probleme_hypotheses_page(c):
     """
     layout = PageLayout(
         c,
-        "3.2 : MES HYPOTHÈSES À VÉRIFIER",
+        "Mes hypothèses *à vérifier.*",
         config=LayoutConfig(part_title="3. LE BESOIN ET LE PROBLÈME"),
     )
 

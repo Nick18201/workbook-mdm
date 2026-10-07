@@ -19,13 +19,13 @@ def create_action_mvp_page(c):
     """
     layout = PageLayout(
         c,
-        "18.1 : EXPÉRIMENTATION MVP & ENQUÊTE",
+        "Tester avec *un MVP.*",
         config=LayoutConfig(part_title="18. TESTER AVANT DE SE LANCER"),
     )
 
     layout.add_callout(
         "« Quelle est la plus petite version de mon projet que je peux tester en moins de 30 jours et à moindre coût ? »",
-        title="LE PRINCIPE DU MINIMUM VIABLE PRODUCT (MVP)",
+        title="Le principe du minimum viable product (MVP)",
         variant="tip",
     )
 
@@ -33,25 +33,25 @@ def create_action_mvp_page(c):
 
     cards = [
         {
-            "title": "1. Mon MVP (Expérimentation Minimale)",
+            "title": "1. Mon MVP (expérimentation minimale)",
             "subtitle": "Que pouvez-vous tester immédiatement ? Avec qui ? Sous quel format léger ?",
             "field_id": "bp_p30_mvp_definition",
             "placeholder": "Ex : Proposer 3 ateliers pilotes gratuits ou à prix libre auprès de 5 connaissances cibles...",
         },
         {
-            "title": "2. Critères de Décision (Continuer ou Pivoter)",
+            "title": "2. Critères de décision (continuer ou pivoter)",
             "subtitle": "Quel résultat vous encouragera à foncer ? Quel retour vous fera réajuster ?",
             "field_id": "bp_p30_mvp_criteres",
             "placeholder": "Si au moins 2 personnes recommandent l'atelier sans hésiter, je valide l'offre...",
         },
         {
-            "title": "3. Mon Guide d'Interviews Terrain",
+            "title": "3. Mon guide d'interviews terrain",
             "subtitle": "Qui interroger ? Quelles questions neutres poser pour comprendre sans vendre ?",
             "field_id": "bp_p30_interviews_guide",
             "placeholder": "« Racontez-moi la dernière fois où vous avez rencontré ce problème... Comment avez-vous fait ? »...",
         },
         {
-            "title": "4. Ce que mes Tests m'ont Appris (Surprises)",
+            "title": "4. Ce que mes tests m'ont appris (surprises)",
             "subtitle": "Quels retours inattendus confirment ou bousculent vos certitudes de départ ?",
             "field_id": "bp_p30_interviews_surprises",
             "placeholder": "J'ai découvert qu'elles demandent surtout un modèle prêt à l'emploi plutôt que de la théorie...",
@@ -69,7 +69,7 @@ def create_action_risques_page(c):
     """
     layout = PageLayout(
         c,
-        "19.1 : RISQUES & HYPOTHÈSES VITALES",
+        "Risques *et hypothèses clés.*",
         config=LayoutConfig(part_title="19. RISQUES ET INCERTITUDES"),
     )
 
@@ -182,9 +182,9 @@ def create_action_roadmap_page(c):
 
     create_standard_roadmap_page(
         c,
-        title="Feuille de Route : Mes Prochains Jalons",
+        title="Feuille de route : *vos prochains jalons.*",
         part_title="20. MON PLAN D'ACTION",
-        intro_text="Découpez votre lancement en trois paliers temporels clairs pour ancrer des victoires rapides et garder le cap sans dispersion.",
+        intro_text="Découpez votre lancement en trois paliers clairs, pour obtenir de premiers résultats rapides et garder le cap.",
         stages_data=stages,
         field_prefix="bp_p32_road",
     )
@@ -197,7 +197,7 @@ def create_synthese_executive_page(c):
     """
     layout = PageLayout(
         c,
-        "21.1 : EXECUTIVE SUMMARY (SYNTHÈSE)",
+        "La synthèse *du projet.*",
         config=LayoutConfig(part_title="21. SYNTHÈSE DU BUSINESS PLAN"),
     )
 
@@ -209,37 +209,37 @@ def create_synthese_executive_page(c):
 
     summary_cards = [
         {
-            "title": "1. Le Projet & sa Raison d'Être",
+            "title": "1. Le projet et sa raison d'être",
             "subtitle": "Nom du projet, mission centrale et déclic personnel...",
             "field_id": "bp_p33_exec_projet",
             "placeholder": "Présentation concise du projet et de la mission sociétale...",
         },
         {
-            "title": "2. La Cible & le Problème Résolu",
+            "title": "2. La cible et le problème résolu",
             "subtitle": "Pour qui ? Quelle douleur majeure et fréquente comblez-vous ?",
             "field_id": "bp_p33_exec_cible",
             "placeholder": "Profil type de cliente et difficulté quotidienne résolue...",
         },
         {
-            "title": "3. L'Offre & la Proposition de Valeur",
+            "title": "3. L'offre et la proposition de valeur",
             "subtitle": "Vos prestations phares et ce qui rend votre approche unique...",
             "field_id": "bp_p33_exec_offre",
             "placeholder": "Formules proposées, promesse et singularité concurrentielle...",
         },
         {
-            "title": "4. Le Marché & les Opportunités",
+            "title": "4. Le marché et les opportunités",
             "subtitle": "Secteur porteur, tendances favorables et positionnement clé...",
             "field_id": "bp_p33_exec_marche",
             "placeholder": "Taille de marché, vents porteurs et différenciation...",
         },
         {
-            "title": "5. Modèle Économique & Chiffres Clés",
+            "title": "5. Modèle économique et chiffres clés",
             "subtitle": "Prix moyen, seuil de rentabilité et CA prévisionnel an 1...",
             "field_id": "bp_p33_exec_finances",
             "placeholder": "Prix forfaits, point mort mensuel et scénario cible...",
         },
         {
-            "title": "6. Besoin de Financement & Échéance Clé",
+            "title": "6. Besoin de financement et échéance clé",
             "subtitle": "Montant recherché, statut juridique et date de lancement...",
             "field_id": "bp_p33_exec_besoins",
             "placeholder": "Besoin de démarrage, apport personnel et prochain jalon...",
@@ -256,17 +256,18 @@ def create_engagement_signature_page(c):
     Pacte officiel avec signature interactive AcroForm.
     """
     lignes_engagement = [
-        "Je m'engage à faire confiance à mon intuition tout en confrontant mes hypothèses au terrain avec lucidité.",
-        "À regarder mes chiffres, mes devis et mes finances avec honnêteté, sans fuite ni déni.",
-        "À accepter l'imperfection des débuts et à tester vite pour apprendre.",
-        "À poser des limites saines pour préserver mon énergie vitale, ma santé et mon équilibre de vie.",
-        "À incarner fièrement la valeur de mon travail et à faire grandir mon projet pas à pas avec audace.",
+        "Je confronte mes hypothèses au terrain, sans me fier à ma seule intuition.",
+        "Je regarde mes chiffres, mes devis et mes finances avec honnêteté.",
+        "J'accepte l'imperfection des débuts et je teste vite pour apprendre.",
+        "Je pose des limites pour préserver ma santé et mon rythme de vie.",
+        "J'assume la valeur de mon travail et je développe mon projet pas à pas.",
     ]
 
     create_standard_engagement_page(
         c,
-        part_title="22. ENGAGEMENT & PASSAGE À L'ACTION",
+        part_title="Fin du livret",
         custom_lines=lignes_engagement,
-        title="Mon Pacte d'Action & d'Audace",
-        signature_label="Fait à ..., le ... et Signature :",
+        livrable_title="Votre business plan",
+        livrable_text="Votre modèle économique, votre prévisionnel et votre feuille de route, validés en séance.",
+        field_prefix="livrable_bp",
     )
