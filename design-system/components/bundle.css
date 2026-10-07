@@ -1,0 +1,127 @@
+/* Marge de Manœuvre — composants de la DA « Éditorial & Affirmé », en CSS seul (repris des composants Astro du site).
+   Toutes les valeurs viennent des tokens (tokens.css) ; les polices sont chargées depuis Google Fonts par chaque page. */
+
+body { margin: 0; background: var(--surface); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+.mm-scene { padding: var(--space-8); display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: flex-start; }
+.mm-scene--alt { background: var(--surface-alt); }
+.mm-scene--col { flex-direction: column; gap: var(--space-4); }
+
+/* ── Repères (PT Mono, 400 seulement) ───────────────────────── */
+.mm-sourcil { margin: 0; font-family: var(--font-label); font-weight: 400; font-size: 12px; line-height: 1.33; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-muted); font-synthesis-weight: none; }
+.mm-etiquette { display: inline-block; padding: 6px 12px; border-radius: var(--radius-full); font-family: var(--font-label); font-weight: 400; font-size: 12px; line-height: 1.33; text-transform: uppercase; letter-spacing: 0.14em; color: var(--brand-blue); background: color-mix(in srgb, var(--surface-card) 70%, transparent); font-synthesis-weight: none; }
+.mm-etiquette--encre { color: var(--ink); }
+.mm-etiquette--plein { background: var(--brand-blue); color: var(--surface-card); }
+
+/* ── Titres (DM Sans) ───────────────────────────────────────── */
+.mm-titre { margin: 0; font-family: var(--font-heading); font-weight: 800; font-size: 48px; line-height: 1.02; letter-spacing: -0.05em; color: var(--ink); text-wrap: balance; }
+.mm-titre--hero { font-weight: 700; font-size: 72px; line-height: 0.95; }
+.mm-titre-carte { margin: 0; font-family: var(--font-heading); font-weight: 700; font-size: 30px; line-height: 1.08; letter-spacing: -0.025em; color: var(--ink); text-wrap: balance; }
+.mm-suite { font-style: italic; font-weight: 400; color: var(--brand-blue); }
+.mm-corail { color: var(--brand-coral); }
+.mm-corail-fort { color: var(--brand-coral-strong); }
+.mm-bleu { color: var(--brand-blue); }
+.mm-chapeau { margin: 0; font-family: var(--font-body); font-size: 18px; line-height: 1.65; color: var(--ink-muted); max-width: var(--largeur-texte); text-wrap: balance; }
+.mm-corps { margin: 0; font-family: var(--font-body); font-size: 16px; line-height: 1.65; color: var(--ink); }
+.mm-corps-petit { margin: 0; font-family: var(--font-body); font-size: 14px; line-height: 1.65; color: var(--ink-muted); }
+.mm-corps strong, .mm-corps-petit strong { font-weight: 600; color: var(--ink); }
+
+/* ── Cartes ─────────────────────────────────────────────────── */
+.mm-carte-pastel { border-radius: var(--radius-carte); padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-5); max-width: 30rem; }
+.mm-carte-blanche { background: var(--surface-card); border: 1px solid var(--line); border-radius: var(--radius-carte); padding: var(--space-8); display: flex; flex-direction: column; gap: var(--space-4); max-width: 26rem; }
+.mm-carte-blanche--bento { box-shadow: var(--shadow-bento); }
+.mm-bg-almond { background: var(--pastel-almond); }
+.mm-bg-jasmine { background: var(--pastel-jasmine); }
+.mm-bg-lilac { background: var(--pastel-lilac); }
+.mm-bg-sky { background: var(--pastel-sky); }
+.mm-bg-mint { background: var(--pastel-mint); }
+.mm-bg-blush { background: var(--pastel-blush); }
+.mm-liste-icones { list-style: none; margin: 0; padding: 0; }
+.mm-liste-icones li { display: flex; gap: var(--space-4); align-items: flex-start; padding-block: var(--space-4); border-top: 1px solid color-mix(in srgb, var(--ink) 10%, transparent); }
+.mm-liste-icones li:first-child { border-top: 0; padding-top: 0; }
+
+/* ── Fait main : post-it, ruban, annotation, flèche, tampon ─── */
+.mm-postit { position: relative; width: 14rem; padding: var(--space-6) var(--space-5) var(--space-5); background: var(--pastel-jasmine); border-radius: var(--radius-postit); border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent); box-shadow: var(--shadow-postit); transform: rotate(var(--rotation-postit)); }
+.mm-postit--almond { background: var(--pastel-almond); }
+.mm-postit--droite { transform: rotate(2deg); }
+.mm-postit::before { content: ""; position: absolute; top: -10px; left: 50%; width: 56px; height: 16px; margin-left: -28px; background: color-mix(in srgb, var(--surface-card) 60%, transparent); border: 1px dashed color-mix(in srgb, var(--surface-card) 40%, transparent); box-shadow: var(--shadow-washi); transform: rotate(var(--rotation-washi)); }
+.mm-postit p { margin: 0; font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 22px; line-height: 1.375; color: var(--ink); font-synthesis-weight: none; }
+.mm-annotation { display: inline-flex; align-items: flex-end; gap: var(--space-2); }
+.mm-annotation p { margin: 0; max-width: 17rem; font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 24px; line-height: 1.375; color: var(--ink); transform: rotate(-3deg); font-synthesis-weight: none; }
+.mm-fleche { flex-shrink: 0; fill: none; stroke: var(--ink); stroke-width: var(--trait-fleche); stroke-linecap: round; stroke-linejoin: round; }
+.mm-tampon { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border: var(--trait-tampon) solid var(--brand-coral-strong); border-radius: var(--radius-tampon); font-family: var(--font-label); font-weight: 400; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; color: var(--brand-coral-strong); transform: rotate(var(--rotation-tampon)); font-synthesis-weight: none; }
+.mm-tampon svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ── Numéro de chapitre, puces étoile ───────────────────────── */
+.mm-chapitre { display: flex; align-items: flex-end; gap: var(--space-4); }
+.mm-numero { font-family: var(--font-label); font-weight: 400; font-size: 72px; line-height: 1; color: var(--brand-blue); }
+.mm-chapitre .mm-sourcil { padding-bottom: 4px; letter-spacing: 0.14em; }
+.mm-etoiles { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3); }
+.mm-etoiles li { display: flex; gap: var(--space-3); align-items: flex-start; font-family: var(--font-body); font-size: 16px; line-height: 1.375; color: var(--ink); }
+.mm-etoiles svg { width: 14px; height: 14px; margin-top: 4px; flex-shrink: 0; fill: var(--brand-coral-strong); }
+
+/* ── Pastilles d'icône (Material Symbols Outlined) ──────────── */
+.mm-pastille-icone { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; flex-shrink: 0; border-radius: var(--radius-full); background: color-mix(in srgb, var(--surface-card) 70%, transparent); color: var(--brand-blue); }
+.mm-pastille-icone .material-symbols-outlined { font-size: 30px; }
+.mm-pastille-icone--encre { color: var(--ink); }
+
+/* ── Frise ──────────────────────────────────────────────────── */
+.mm-frise { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-8); padding-top: var(--space-8); }
+.mm-frise::before { content: ""; position: absolute; left: 24px; right: 0; top: calc(var(--space-8) + 24px); border-top: var(--trait-frise) dashed color-mix(in srgb, var(--ink) 25%, transparent); }
+.mm-frise li { list-style: none; position: relative; display: flex; flex-direction: column; gap: var(--space-3); }
+.mm-frise .mm-pastille-icone { width: 48px; height: 48px; box-shadow: 0 0 0 6px var(--surface-alt); color: var(--ink); }
+.mm-frise .mm-pastille-icone .material-symbols-outlined { font-size: 24px; }
+.mm-frise-bout { display: flex; align-items: center; gap: var(--space-3); }
+.mm-frise-point { width: 12px; height: 12px; border-radius: var(--radius-full); background: var(--ink); }
+
+/* ── Bouton 3D double calque (ButtonLink3D) ─────────────────── */
+.mm-bouton3d { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 44px; padding: 22px 43px; border-radius: var(--radius-bouton); font-family: var(--font-heading); font-weight: 900; font-size: 16px; line-height: 16px; text-transform: lowercase; text-decoration: none; color: var(--brand-red); transition: color 0.2s ease; }
+.mm-bouton3d::before, .mm-bouton3d::after { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: 0; transition: transform 0.2s ease; }
+.mm-bouton3d::before { background: var(--surface-card); transform: translate3d(3px, 3px, 0); }
+.mm-bouton3d::after { border: 1px solid var(--brand-red); transform: translate3d(-3px, -3px, 0); }
+.mm-bouton3d > * { position: relative; z-index: 1; }
+.mm-bouton3d .mm-fleche-pleine { width: 24px; height: 18px; transition: transform 0.2s ease; }
+.mm-bouton3d:hover .mm-fleche-pleine, .mm-bouton3d:focus-visible .mm-fleche-pleine { transform: translate3d(7px, 0, 0); }
+.mm-bouton3d:hover::before, .mm-bouton3d:focus-visible::before { transform: translate3d(6px, 6px, 0); }
+.mm-bouton3d:hover::after, .mm-bouton3d:focus-visible::after { transform: translate3d(-6px, -6px, 0); }
+.mm-bouton3d:focus-visible { outline: 2px solid var(--brand-red); outline-offset: 4px; }
+.mm-bouton3d--bleu { color: var(--brand-blue); }
+.mm-bouton3d--bleu::after { border-color: var(--brand-blue); }
+.mm-bouton3d--bleu:focus-visible { outline-color: var(--brand-blue); }
+.mm-bouton3d--compact { padding: 17px 22px; gap: 10px; font-size: 14px; line-height: 14px; border-radius: var(--radius-bouton-compact); }
+.mm-bouton3d--compact .mm-fleche-pleine { width: 18px; height: 13px; }
+.mm-bouton3d .mm-pastille { position: absolute; z-index: 2; top: -12px; right: 12px; padding: 3px 7px 2px; border: 1px solid currentColor; border-radius: var(--radius-full); background: var(--surface-card); font-family: var(--font-label); font-weight: 400; font-size: 10px; line-height: 1; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; transition: transform 0.2s ease; }
+.mm-bouton3d:hover .mm-pastille, .mm-bouton3d:focus-visible .mm-pastille { transform: translate3d(-3px, -3px, 0) rotate(-3deg); }
+
+/* ── Lien fléché, bouton rond ───────────────────────────────── */
+.mm-lien-fleche { display: inline-flex; align-items: center; gap: var(--space-3); min-height: 44px; font-family: var(--font-heading); font-weight: 700; font-size: 16px; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+.mm-lien-fleche .mm-fleche-pleine { width: 20px; height: 14px; fill: var(--brand-coral-strong); transition: transform 0.2s ease; }
+.mm-lien-fleche:hover, .mm-lien-fleche:focus-visible { color: var(--brand-coral-strong); }
+.mm-lien-fleche:hover .mm-fleche-pleine, .mm-lien-fleche:focus-visible .mm-fleche-pleine { transform: translate3d(4px, 0, 0); }
+.mm-lien-fleche:focus-visible, .mm-rond:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-bouton-compact); }
+.mm-rond-wrap { position: relative; display: inline-block; }
+.mm-rond-wrap::before { content: ""; position: absolute; inset: 0; border-radius: var(--radius-full); background: var(--brand-blue); transform: translate(12px, 12px); }
+.mm-rond { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2); width: 144px; height: 144px; border-radius: var(--radius-full); background: var(--brand-coral-strong); color: var(--surface-card); text-decoration: none; font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; transition: transform 0.2s ease; }
+.mm-rond:hover, .mm-rond:focus-visible { transform: scale(1.05) rotate(-5deg); border-radius: var(--radius-full); }
+.mm-rond .mm-fleche-pleine { width: 30px; height: 22px; fill: currentColor; }
+.mm-fleche-pleine { fill: currentColor; flex-shrink: 0; }
+
+/* ── Logotype ───────────────────────────────────────────────── */
+.mm-logo { display: inline-flex; flex-direction: column; }
+.mm-logo span { font-family: var(--font-body); font-weight: 800; font-size: 20px; line-height: 0.85; letter-spacing: -0.05em; text-transform: lowercase; color: var(--ink); }
+.mm-logo i { display: block; width: 96px; height: 4px; margin-top: 8px; background: var(--ink); }
+.mm-signature { margin: 0; font-family: var(--font-body); font-weight: 800; font-size: 72px; line-height: 0.8; letter-spacing: -0.05em; text-transform: lowercase; white-space: nowrap; color: var(--ink); padding-bottom: 0.25em; }
+.mm-signature b { display: inline-block; width: 0.17em; height: 0.17em; margin-left: 0.03em; border-radius: var(--radius-full); background: var(--brand-coral); }
+
+/* ── Page de carnet ─────────────────────────────────────────── */
+.mm-page-carnet { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 0.95fr); gap: var(--space-6) var(--space-12); padding: var(--space-10); background: var(--surface-card); border-radius: var(--radius-carte); }
+.mm-page-carnet h4 { margin: var(--space-4) 0 0; font-family: var(--font-heading); font-weight: 800; font-size: 24px; line-height: 1.1; letter-spacing: -0.025em; color: var(--ink); text-wrap: balance; }
+.mm-page-carnet .mm-corps-petit { margin-top: var(--space-4); font-size: 16px; }
+.mm-livrable { align-self: start; transform: rotate(-1deg); width: auto; }
+.mm-livrable .mm-sourcil { letter-spacing: 0.14em; }
+.mm-livrable strong { display: block; margin-top: var(--space-2); font-family: var(--font-heading); font-weight: 700; font-size: 20px; line-height: 1.375; color: var(--ink); text-wrap: balance; }
+.mm-livrable span.mm-texte { display: block; margin-top: 6px; font-family: var(--font-body); font-size: 15px; line-height: 1.65; color: var(--ink); }
+.mm-livrable .mm-tampon { margin-top: var(--space-4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-bouton3d::before, .mm-bouton3d::after, .mm-bouton3d .mm-fleche-pleine, .mm-bouton3d .mm-pastille, .mm-lien-fleche .mm-fleche-pleine, .mm-rond { transition: none; }
+}

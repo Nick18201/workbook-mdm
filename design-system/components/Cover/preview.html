@@ -1,0 +1,56 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Marge de Manœuvre</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..900;1,9..40,400&family=Manrope:wght@400..800&family=PT+Mono&family=Instrument+Serif:ital@1&display=swap">
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--surface); color:var(--ink); font-family:var(--font-body); overflow:hidden; }
+  .cover { position:relative; width:960px; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .jasmine { fill:var(--pastel-jasmine); }
+  .blue { fill:var(--brand-blue); }
+  .coral { fill:var(--brand-coral); }
+  .almond { fill:var(--pastel-almond); }
+  .washi { fill:var(--surface-card); fill-opacity:.6; }
+  .slab { rx:var(--radius-carte); }
+  .postit { rx:var(--radius-postit); transform-box:fill-box; transform-origin:center; transform:rotate(var(--rotation-postit)); }
+  .tape { transform-box:fill-box; transform-origin:center; transform:rotate(var(--rotation-washi)); }
+  .words { position:absolute; left:var(--space-8); bottom:var(--space-8); max-width:440px; }
+  .name { margin:0; font-family:var(--font-heading); font-weight:800; font-size:88px; line-height:.95; letter-spacing:-0.05em; color:var(--ink); }
+  .name b { display:inline-block; width:.17em; height:.17em; margin-left:.04em; border-radius:var(--radius-full); background:var(--brand-coral); }
+  .tag { margin:var(--space-3) 0 0 4px; font-family:var(--font-body); font-size:14px; line-height:20px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      pastel-jasmine disc r176 bled off the top-right corner (the hero's and the footer's big disc) · brand-blue slab 160×200 bled off the bottom (the final action block) · pastel-almond post-it 128×112 · brand-coral disc d56 overlapping the slab's left edge (the hero's disc on the photo)
+  arrangement one big disc cut by the corner, a tall slab with a coral satellite, the post-it leaning on the disc, washi strip in surface-card at 60 %
+  pattern     discs, from "géométrie arrondie : disques, pilules et grands rayons" and the frise : 13 brand-blue dots r4 at a space-4 pitch, a dotted line toward the disc
+  scales      pitch space-4 (16px); slab corner radius-carte; post-it radius-postit and rotation-postit; washi rotation-washi; discs radius-full
+-->
+<circle class="jasmine" cx="400" cy="30" r="176"/>
+<rect class="blue slab" x="96" y="120" width="160" height="200" rx="32"/>
+<circle class="coral" cx="96" cy="190" r="28"/>
+<rect class="almond postit" x="296" y="150" width="128" height="112" rx="2"/>
+<rect class="washi tape" x="336" y="142" width="48" height="14"/>
+<circle class="blue" cx="24" cy="64" r="4"/><circle class="blue" cx="40" cy="64" r="4"/><circle class="blue" cx="56" cy="64" r="4"/>
+<circle class="blue" cx="72" cy="64" r="4"/><circle class="blue" cx="88" cy="64" r="4"/><circle class="blue" cx="104" cy="64" r="4"/>
+<circle class="blue" cx="120" cy="64" r="4"/><circle class="blue" cx="136" cy="64" r="4"/><circle class="blue" cx="152" cy="64" r="4"/>
+<circle class="blue" cx="168" cy="64" r="4"/><circle class="blue" cx="184" cy="64" r="4"/><circle class="blue" cx="200" cy="64" r="4"/>
+<circle class="blue" cx="216" cy="64" r="4"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">Marge de<br>Manœuvre<b aria-hidden="true"></b></h1>
+<p class="tag">Éditorial &amp; affirmé, du bilan à l'action.</p>
+</div>
+</div>
+</body>
+</html>
