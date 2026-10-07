@@ -56,7 +56,8 @@ cached_simple_split = cached_simpleSplit
 # Text runs left alone: markup tags, entities, e-mail addresses and URLs or domain names
 _PROTECTED = re.compile(
     r"(<[^>]*>|&#?\w+;|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|(?:https?://|www\.)\S+"
-    r"|\b[\w-]+(?:\.[\w-]+)*\.(?:fr|com|org|net|io|so|eu)\b\S*)"
+    r"|\b[\w-]+(?:\.[\w-]+)*\.(?:fr|com|org|net|io|so|eu)\b\S*)",
+    re.IGNORECASE,  # eyebrows set URLs in capitals: MARGEDEMANOEUVRE.FR must keep its OE
 )
 _TYPO_RULES = [
     # « » with a no-break space inside
@@ -201,13 +202,6 @@ def register_fonts():
     for normal, (bold, italic, bold_italic) in families.items():
         if normal not in pdfmetrics.standardFonts:
             pdfmetrics.registerFontFamily(normal, normal=normal, bold=bold, italic=italic, boldItalic=bold_italic)
-
-    # Former names used by the chapters until lot E5
-    s.FONT_TITLE = s.FONT_HEADING
-    s.FONT_SUBTITLE = s.FONT_HEADING_BOLD
-    s.FONT_ITALIC = s.FONT_HEADING_ITALIC
-    s.FONT_BRANDING = s.FONT_HEADING
-    s.FONT_HAND = s.FONT_SERIF
 
 
 # Cache ImageReader to avoid reloading and re-parsing identical images multiple times.

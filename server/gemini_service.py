@@ -182,7 +182,7 @@ Produis UNIQUEMENT un objet JSON valide conforme à la structure suivante :
 {
   "chapter_num": 1,
   "chapter_title": "Titre du livret",
-  "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
+  "subtitle": "BILAN DE COMPÉTENCES",
   "beneficiary_name": "Nom ou prénom",
   "pages": [
     {
@@ -206,7 +206,7 @@ def parse_notes_with_gemini(request: ParseRequest) -> GenerationResult:
     Falls back to a smart heuristic mock if no API key is available or on failure,
     and reports it through GenerationResult.fallback_reason.
     """
-    api_key = request.api_key or os.environ.get("GEMINI_API_KEY")
+    api_key = os.environ.get("GEMINI_API_KEY")  # from Secret Manager in production
 
     if not api_key:
         logger.warning(
@@ -267,10 +267,10 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
     pages.append(
         PageSpec(
             template="cover",
-            title="BILAN DE COMPÉTENCES & ALIGNEMENT",
+            title="BILAN DE COMPÉTENCES",
             params={
                 "subtitle": f"Chapitre {request.chapter_num} : {title}",
-                "title": "BILAN DE COMPÉTENCES & ALIGNEMENT",
+                "title": "BILAN DE COMPÉTENCES",
                 "promise": "De la réflexion à une décision concrète.",
             },
         )
@@ -386,7 +386,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         PageSpec(
             template="quadrants",
             title="Vos quatre *piliers d'équilibre.*",
-            part_title=f"{len(summary_items)+1}. MATRICE D'ALIGNEMENT",
+            part_title=f"{len(summary_items)+1}. MATRICE D'ÉQUILIBRE",
             params={
                 "instruction": "Pour chacun des quatre domaines, formulez en une phrase courte votre priorité.",
                 "quadrants": [
@@ -640,7 +640,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
     return WorkbookSpec(
         chapter_num=request.chapter_num,
         chapter_title=title,
-        subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
+        subtitle="BILAN DE COMPÉTENCES",
         beneficiary_name=request.beneficiary_name,
         pages=all_pages,
     )
@@ -669,7 +669,7 @@ Tu dois impérativement répondre avec un objet JSON valide contenant exactement
   "spec": {
     "chapter_num": 1,
     "chapter_title": "Titre du livret",
-    "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
+    "subtitle": "BILAN DE COMPÉTENCES",
     "beneficiary_name": "Nom",
     "pages": [...]
   },
@@ -685,7 +685,7 @@ def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
     Refines an existing WorkbookSpec based on conversational user feedback using Gemini Flash.
     Tries the models of GEMINI_MODELS in order.
     """
-    api_key = request.api_key or os.environ.get("GEMINI_API_KEY")
+    api_key = os.environ.get("GEMINI_API_KEY")  # from Secret Manager in production
 
     if not api_key:
         logger.warning(
@@ -786,7 +786,7 @@ def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
     if not base_spec:
         raise ValueError("Spécification de base introuvable. Veuillez sélectionner un modèle valide ou fournir une spécification.")
 
-    api_key = request.api_key or os.environ.get("GEMINI_API_KEY")
+    api_key = os.environ.get("GEMINI_API_KEY")  # from Secret Manager in production
     if not api_key:
         logger.warning("GEMINI_API_KEY non configurée. Utilisation du fallback.")
         return GenerationResult(_build_fallback_customization(request, base_spec), "no_api_key")

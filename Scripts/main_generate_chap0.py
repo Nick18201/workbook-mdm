@@ -13,10 +13,10 @@ def generate_workbook_chap0(output_filename="chapitre 0 _ Le prélude.pdf"):
     builder.add_page(chap0.create_editorial_page_card)
     builder.add_page(chap0.create_intro_sense_page)
     builder.add_page(chap0.create_form_page_card)
-    builder.add_page(chap0.create_premiere_etape_page)
     builder.add_page(chap0.create_faire_le_point_pages)
     builder.add_page(chap0.create_domaines_de_vie_page)
     builder.add_page(chap0.create_entourage_page)
+    builder.add_page(chap0.create_livrable_page)
     builder.add_page(create_closing_page)
 
     builder.save()

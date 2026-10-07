@@ -1,50 +1,46 @@
-from reportlab.lib.units import cm
-
-from ...config import PDFStyle
-from ...components import (
-    create_standard_cover,
-    create_standard_summary_page,
+from workbook_generator.components import (
+    create_cover_page,
     create_standard_recap_page,
+    create_standard_summary_page,
 )
 
 
 def create_chap4_v2_cover(c):
-    """
-    Cover Page for Chapter 4 (v2) : Mon rapport à l'argent
-    """
-    create_standard_cover(c, "CHAPITRE 4 : MON RAPPORT À L'ARGENT")
+    """Cover of chapter 4: Mon rapport à l'argent."""
+    create_cover_page(c, "Mon rapport *à l'argent.*", number=4, tagline="Bilan de compétences",
+                      promise="Un salaire et un rythme de vie sécurisés.")
 
 
 def create_concept_page(c):
-    """
-    Page 2 : Concept (v2)
-    """
-    points = [
-        ("Sommaire :", ""),
-        ("1.", "Votre situation actuelle"),
-        ("2.", "Votre histoire avec l'argent"),
-        ("3.", "Vos premières expériences"),
-        ("4.", "Argent et projet professionnel"),
-        ("5.", "Identifier votre minimum financier acceptable"),
-        ("6.", "Repérer ce que l'argent représente pour vous (Archétypes)"),
-        ("7.", "Synthèse"),
-    ]
-    create_standard_summary_page(
-        c,
-        "4",
-        "CONCEPT",
-        "Ce temps d'exploration vise à repérer la manière dont votre rapport à l'argent influence vos choix professionnels : besoin de sécurité, capacité à prendre des risques, rapport à la rémunération, négociation, ambition, liberté, peur du manque ou sentiment de légitimité. L'objectif n'est pas d'analyser en profondeur votre gestion financière, mais d'identifier les éléments qui peuvent soutenir ou freiner votre projet professionnel.",
-        points,
+    """Chapter opener: the objective of the workbook and its exercises."""
+    intro_txt = (
+        "Ce carnet repère comment votre rapport à l'argent influence vos choix professionnels : besoin de "
+        "sécurité, prise de risque, rémunération, négociation, ambition, liberté, peur du manque, légitimité. "
+        "Il ne s'agit pas d'analyser votre gestion financière, mais d'identifier ce qui peut soutenir ou freiner "
+        "votre projet."
     )
+    exercises = [
+        "Exercice 1 · Récapitulatif : votre profil MBTI®.",
+        "Exercice 2 · Votre situation actuelle.",
+        "Exercice 3 · Votre histoire avec l'argent.",
+        "Exercice 4 · Vos premières expériences financières.",
+        "Exercice 5 · Argent et projet professionnel.",
+        "Exercice 6 · Votre minimum financier acceptable.",
+        "Exercice 7 · Ce que l'argent représente pour vous : huit tendances.",
+        "Exercice 8 · Synthèse.",
+    ]
+    create_standard_summary_page(c, "4", "Ce que l'argent *pèse dans vos choix.*", intro_txt, exercises)
 
 
 def create_recap_seance_page(c):
-    intro_txt = "Prenez un moment pour revenir sur la restitution de votre profil MBTI lors de la dernière séance. Cet exercice vous aide à consolider ces apprentissages avant d'explorer vos moteurs profonds."
-    questions = [
-        "Quelles sont les forces naturelles de votre profil MBTI dans lesquelles vous vous reconnaissez le plus ?",
-        "Comment ce mode de fonctionnement (énergie, information, décision, action) s'illustre-t-il dans votre quotidien ?",
-        "En quoi la compréhension de votre profil change-t-elle votre regard sur vous-même ou sur vos interactions ?",
-    ]
-    create_standard_recap_page(
-        c, "1. RÉCAPITULATIF (MON PROFIL MBTI)", intro_txt, questions
+    """Exercise 1: back on the MBTI® profile presented in the previous session."""
+    intro_txt = (
+        "Revenez sur la restitution de votre profil MBTI® lors de la dernière séance, pour consolider ce que vous "
+        "en retenez avant d'explorer votre rapport à l'argent."
     )
+    questions = [
+        "Dans quelles forces naturelles de votre profil MBTI® vous reconnaissez-vous le plus ?",
+        "Comment ce mode de fonctionnement (énergie, information, décision, action) se voit-il dans votre quotidien ?",
+        "En quoi la compréhension de votre profil change-t-elle votre regard sur vous-même ou sur vos relations ?",
+    ]
+    create_standard_recap_page(c, "Exercice 1 · Récapitulatif MBTI®", intro_txt, questions)

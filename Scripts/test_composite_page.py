@@ -104,7 +104,6 @@ def test_direct_composite_pages():
                 subtitle="Visualisez l'impact concret sur votre quotidien et votre sérénité.",
                 example="Ex : Retrouver du calme mental le soir et libérer mes vendredis après-midi.",
                 box_height=3.5 * 28.3465,
-                color=PDFStyle.COLOR_ACCENT_BLUE,
             ),
         )
         layout.render()

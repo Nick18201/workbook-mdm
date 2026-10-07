@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -14,8 +13,8 @@ def create_boussole_regard_page(c):
     """
     layout = PageLayout(
         c,
-        "P6.1 : REGARD SUR DEMAIN & MES CHOIX",
-        config=LayoutConfig(part_title="6. MA BOUSSOLE DE PROJECTION"),
+        "Regard sur demain *et vos choix.*",
+        config=LayoutConfig(part_title="Thème 6 · Projection"),
     )
 
     layout.add_text(
@@ -26,28 +25,24 @@ def create_boussole_regard_page(c):
     )
 
     layout.add_question_block(
-        "Ce qui m'appelle dans l'Avenir (Mon Regard)",
+        "Ce qui m'attire pour l'avenir",
         "livret_p6_regard",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Quelles évolutions sociétales, écologiques ou techniques résonnent avec vos valeurs "
             "et vous donnent envie de participer et d'agir ?",
             example="Ex : La transition énergétique des territoires, la transmission des savoirs aux bâtisseurs, la sobriété d'usage.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Ce que je décide Moi-Même (Mon Pouvoir de Choix)",
+        "Ce que je décide moi-même",
         "livret_p6_choix",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Quelles décisions sur votre vie professionnelle et votre équilibre personnel vous appartiennent en propre "
             "et ne dépendent que de vous ?",
             example="Ex : Fixer ma limite stricte de temps de trajet, décider de mon niveau d'implication, refuser un management désincarné.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -60,8 +55,8 @@ def create_boussole_confiance_page(c):
     """
     layout = PageLayout(
         c,
-        "P6.2 : CURIOSITÉS & SOCLE DE CONFIANCE",
-        config=LayoutConfig(part_title="6. MA BOUSSOLE DE PROJECTION"),
+        "Curiosités *et socle de confiance.*",
+        config=LayoutConfig(part_title="Thème 6 · Projection"),
     )
 
     layout.add_text(
@@ -71,27 +66,23 @@ def create_boussole_confiance_page(c):
     )
 
     layout.add_question_block(
-        "Ce que j'ai Envie d'Explorer (Mes Curiosités Métiers)",
+        "Ce que j'ai envie d'explorer (mes curiosités métiers)",
         "livret_p6_curiosite",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Quels métiers, structures ou professionnels en poste avez-vous envie d'interviewer "
             "pour découvrir la réalité concrète de leur quotidien ?",
             example="Ex : Solliciter un formateur technique en CFA et un chargé de mission énergie en collectivité pour 20 minutes d'échange.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Mes Victoires Passées (Mon Socle de Confiance)",
+        "Mes réussites passées (mon socle de confiance)",
         "livret_p6_confiance",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Sur quelle difficulté, reconversion ou étape antérieure déjà traversée avec succès vous appuyez-vous aujourd'hui ?",
             example="Ex : Avoir validé un diplôme d'ingénieur après un BTS en apprenant tout sur le tas avec discipline et méthode.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

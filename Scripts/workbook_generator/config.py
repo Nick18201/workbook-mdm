@@ -51,16 +51,6 @@ class PDFStyle:
     CARNET_PASTELS = {0: "lilac", 1: "sky", 2: "almond", 3: "mint", 4: "blush", 5: "lilac", 6: "sky"}
     DEFAULT_PASTEL = "lilac"
 
-    # Former names, kept for the hand-drawn chapter pages until they are redone (lot E5)
-    COLOR_BG_NUDE = COLOR_PAGE
-    COLOR_WHITE = COLOR_SURFACE_CARD
-    COLOR_FIELD_BG = COLOR_SURFACE_CARD
-    COLOR_ACCENT_BLUE = COLOR_BLUE
-    COLOR_ACCENT_RED = COLOR_CORAL_STRONG
-    COLOR_ACCENT_YELLOW = COLOR_JASMINE
-    COLOR_TEXT_MAIN = COLOR_INK
-    COLOR_TEXT_SECONDARY = COLOR_INK_MUTED
-
     # B. Fonts (files in assets/fonts, see its README). register_fonts() swaps a name
     # for a Helvetica font when its file is missing.
     FONT_HEADING = "DMSans-ExtraBold"  # large titles (800)
@@ -72,17 +62,6 @@ class PDFStyle:
     FONT_LABEL = "PTMono-Regular"  # markers: eyebrows, labels, numbers, folio. Never bold.
     FONT_SERIF = "InstrumentSerif-Italic"  # post-its, annotations. Never bold nor upright.
     FONT_ICONS = "MaterialSymbolsOutlined"  # icons, drawn by code point
-
-    # Former names (chapters until lot E5), kept in sync by register_fonts()
-    FONT_TITLE = FONT_HEADING
-    FONT_SUBTITLE = FONT_HEADING_BOLD
-    FONT_ITALIC = FONT_HEADING_ITALIC
-    FONT_BRANDING = FONT_HEADING
-    FONT_HAND = FONT_SERIF
-
-    FONT_TITLE_FALLBACK = "Helvetica-Bold"
-    FONT_BODY_FALLBACK = "Helvetica"
-    FONT_ITALIC_FALLBACK = "Helvetica-Oblique"
 
     # C. Type scale for print (pt). No arbitrary sizes.
     SIZE_TITLE_COVER = 40
@@ -121,7 +100,6 @@ class PDFStyle:
     RADIUS_FIELD = 8
     RADIUS_POSTIT = 1.5
     RADIUS_STAMP = 5
-    CARD_RADIUS = RADIUS_CARD  # former name
 
     LINE_WIDTH_FIELD = 1
     LINE_WIDTH_ARROW = 1.3
@@ -133,13 +111,6 @@ class PDFStyle:
     FONTS_DIR = os.path.join(PROJECT_DIR, "assets", "fonts")
     ILLUS_DIR = os.path.join(PROJECT_DIR, "assets", "illustrations")
 
-    # Illustrations of the former art direction, still used by some chapters (redone in lot E5)
-    PATH_ILLU_COVER = os.path.join(ILLUS_DIR, "01a_ILLU.png")
-    PATH_GUILLEMETS = os.path.join(ILLUS_DIR, "guillemets.png")
-    PATH_STAMP = os.path.join(ILLUS_DIR, "stamp_rouge.png")
-    PATH_PLUME_TEXTURE = os.path.join(ILLUS_DIR, "plume texture.png")
-    PATH_PLANTE_BLEUE = os.path.join(ILLUS_DIR, "plante bleue copy.png")
-    PATH_PLANTE_ROSE_OMBRE = os.path.join(ILLUS_DIR, "plante rose ombre copy.png")
     # Logos of the Programme brochure
     PATH_LOGO_CPF = os.path.join(ILLUS_DIR, "logo_cpf.png")
     PATH_LOGO_FRANCE_TRAVAIL = os.path.join(ILLUS_DIR, "logo_france_travail.png")

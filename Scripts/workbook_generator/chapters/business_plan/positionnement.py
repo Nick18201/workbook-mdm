@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -15,7 +14,7 @@ def create_positionnement_identite_page(c):
     """
     layout = PageLayout(
         c,
-        "7.1 : IDENTITÉ & UNIVERS DE MARQUE",
+        "Identité *et univers de marque.*",
         config=LayoutConfig(part_title="7. MON POSITIONNEMENT"),
     )
 
@@ -27,25 +26,25 @@ def create_positionnement_identite_page(c):
 
     cards = [
         {
-            "title": "1. Si mon Projet était une Personne",
+            "title": "1. Si mon projet était une personne",
             "subtitle": "Comment serait-elle ? Quel ton ? Quelle énergie ? Quels traits ?",
             "field_id": "bp_p14_personnalite",
             "placeholder": "Ex : Chaleureuse mais sans complaisance, structurée, rassurante, pétillante...",
         },
         {
-            "title": "2. 3 à 5 Mots décrivant mon Univers",
+            "title": "2. 3 à 5 mots décrivant mon univers",
             "subtitle": "Les termes signatures qui définissent l'ambiance et la vibration...",
             "field_id": "bp_p14_mots_univers",
             "placeholder": "Ex : Clarté, Empathie, Rigueur, Action, Émancipation...",
         },
         {
-            "title": "3. Ce que je Veux Incarner vs Refuser",
+            "title": "3. Ce que je veux incarner vs refuser",
             "subtitle": "Ce que vous défendez fièrement vs ce que vous refusez catégoriquement...",
             "field_id": "bp_p14_incarner_refuser",
             "placeholder": "J'incarne le respect du rythme, je refuse les promesses miracles et le marketing agressif...",
         },
         {
-            "title": "4. Niveau de Gamme & Expérience Client",
+            "title": "4. Niveau de gamme et expérience client",
             "subtitle": "Accessible, équitable, premium ? Quelle relation humaine privilégiée ?",
             "field_id": "bp_p14_gamme_relation",
             "placeholder": "Accompagnement de proximité sur-mesure, écoute intime et grande disponibilité...",
@@ -63,7 +62,7 @@ def create_positionnement_pitch_page(c):
     """
     layout = PageLayout(
         c,
-        "7.2 : LABORATOIRE DE PITCH",
+        "Laboratoire *de pitch.*",
         config=LayoutConfig(part_title="7. MON POSITIONNEMENT"),
     )
 
@@ -75,19 +74,19 @@ def create_positionnement_pitch_page(c):
 
     pitch_versions = [
         {
-            "title": "Version 1 : Factuelle & Descriptive",
+            "title": "Version 1 : factuelle et descriptive",
             "subtitle": "Sobre et directe : Ce que vous faites, pour qui et avec quel moyen...",
             "field_id": "bp_p15_pitch_v1",
             "placeholder": "Ex : Je propose du conseil en organisation pour les artisanes indépendantes...",
         },
         {
-            "title": "Version 2 : Axée sur la Transformation",
+            "title": "Version 2 : axée sur la transformation",
             "subtitle": "Centrée sur le bénéfice vécu et le passage d'un état A à un état B...",
             "field_id": "bp_p15_pitch_v2",
             "placeholder": "Ex : J'aide les créatrices à retrouver 10h de sérénité par semaine sans sacrifier leur CA...",
         },
         {
-            "title": "Version 3 : Audacieuse & Différenciante",
+            "title": "Version 3 : audacieuse et différenciante",
             "subtitle": "Votre parti-pris singulier qui prend le contre-pied des habitudes du marché...",
             "field_id": "bp_p15_pitch_v3",
             "placeholder": "Ex : L'accompagnement qui réconcilie performance entrepreneuriale et écologie du repos...",
@@ -105,8 +104,6 @@ def create_positionnement_pitch_page(c):
             box_height=5.5 * cm,
             subtitle="La synthèse qui résonne avec justesse et que vous aurez fierté à prononcer lors de vos rencontres professionnelles.",
             example="Ex : J'aide les femmes en reconversion à bâtir un projet professionnel rentable qui respecte leur santé et leurs valeurs profondes.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 

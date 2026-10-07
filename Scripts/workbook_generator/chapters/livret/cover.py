@@ -1,12 +1,12 @@
-from workbook_generator.components import create_standard_cover
+from workbook_generator.components import create_cover_page
 
 
 def create_livret_cover(c):
-    """
-    Couverture du Livret de Compétences Augmenté - Marge de Manœuvre.
-    """
-    create_standard_cover(
+    """Cover of the skills booklet."""
+    create_cover_page(
         c,
-        subtitle="Portfolio Dynamique & Boussole d'Émancipation",
-        title="LIVRET DE COMPÉTENCES AUGMENTÉ",
+        "Votre portfolio *de compétences.*",
+        eyebrow="Livret de compétences",
+        tagline="Livret de compétences augmenté",
+        promise="Vos compétences, prouvées par des faits.",
     )

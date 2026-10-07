@@ -14,10 +14,11 @@ from .autonomie import (
 )
 from .recit_action import create_recit_contexte_page, create_recit_impact_page
 from .boussole import create_boussole_regard_page, create_boussole_confiance_page
-from .plan_action import create_plan_securite_page, create_plan_pas_proximal_page
+from .plan_action import create_plan_securite_page, create_plan_pas_proximal_page, create_livret_livrable_page
 
 __all__ = [
     "create_livret_cover",
+    "create_livret_livrable_page",
     "create_profil_mbti_page",
     "create_profil_ecologie_page",
     "create_travail_reel_coulisses_page",

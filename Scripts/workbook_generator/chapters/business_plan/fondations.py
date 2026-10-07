@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -15,7 +14,7 @@ def create_fondations_idee_page(c):
     """
     layout = PageLayout(
         c,
-        "1.1 : MON IDÉE DE PROJET",
+        "Mon idée *de projet.*",
         config=LayoutConfig(part_title="1. POSER LES FONDATIONS"),
     )
 
@@ -28,22 +27,19 @@ def create_fondations_idee_page(c):
 
     questions = [
         QuestionItem(
-            question="1. Mon idée aujourd'hui (Description libre)",
+            question="1. Mon idée aujourd'hui (description libre)",
             form_field_id="bp_p3_idee_libre",
             subtitle="Décrivez librement et sans censure ce que vous aimeriez créer, proposer ou développer.",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Mon projet en une phrase",
             form_field_id="bp_p3_projet_phrase",
             subtitle="Résumez l'essence : « J'aimerais créer / développer... pour aider... à... »",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
-            question="3. Pourquoi ce projet ? (Sens personnel & Déclic)",
+            question="3. Pourquoi ce projet ? (sens personnel et déclic)",
             form_field_id="bp_p3_pourquoi_sens",
             subtitle="Qu'est-ce qui vous a donné cette idée ? Quel problème ou manque avez-vous observé ? Pourquoi ce projet compte-t-il pour vous ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -58,7 +54,7 @@ def create_fondations_vision_page(c):
     """
     layout = PageLayout(
         c,
-        "1.2 : MA VISION DU PROJET À 3 ANS",
+        "Ma vision *à 3 ans.*",
         config=LayoutConfig(part_title="1. POSER LES FONDATIONS"),
     )
 
@@ -70,25 +66,25 @@ def create_fondations_vision_page(c):
 
     cards = [
         {
-            "title": "1. Mon Projet Idéal dans 3 Ans",
+            "title": "1. Mon projet idéal dans 3 ans",
             "subtitle": "À quoi ressemble une journée type ? Quelle est la taille de l'activité ?",
             "field_id": "bp_p4_vision_ideal",
             "placeholder": "Décrivez votre quotidien, votre activité et vos clients idéaux...",
         },
         {
-            "title": "2. Ce que j'aimerais avoir Construit",
+            "title": "2. Ce que j'aimerais avoir construit",
             "subtitle": "Quels produits, services, réputation ou impact concret ?",
             "field_id": "bp_p4_vision_construit",
             "placeholder": "Vos accomplissements concrets d'ici 3 ans...",
         },
         {
-            "title": "3. La Place dans ma Vie & mon Équilibre",
+            "title": "3. La place dans ma vie et mon équilibre",
             "subtitle": "Quel temps de travail ? Quelle liberté ? Quel équilibre pro/perso ?",
             "field_id": "bp_p4_vision_vie",
             "placeholder": "Vos conditions de vie, votre rémunération cible, votre sérénité...",
         },
         {
-            "title": "4. Ce que je refuse Absolument de Construire",
+            "title": "4. Ce que je refuse absolument de construire",
             "subtitle": "Quels pièges, contraintes ou compromis ne voulez-vous jamais accepter ?",
             "field_id": "bp_p4_vision_refus",
             "placeholder": "Vos limites non négociables et ce qui dénaturerait votre projet...",

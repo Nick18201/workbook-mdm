@@ -1,57 +1,26 @@
-import os
-from reportlab.lib.units import cm
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.enums import TA_JUSTIFY
-from reportlab.platypus import Paragraph
-from reportlab.lib.styles import ParagraphStyle
+from workbook_generator.components import create_cover_page, create_standard_summary_page
 
-from workbook_generator.config import PDFStyle
-from workbook_generator.forms import create_input_field
-from workbook_generator.components import (
-    create_standard_cover,
-    draw_title,
-    draw_page_decorations,
-    draw_side_panel,
-    create_standard_engagement_page,
-    create_standard_summary_page,
-)
-from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
 
 def create_chap1_cover(c):
-    """
-    Cover Page for Chapter 1: L'État des Lieux.
-    """
-    create_standard_cover(c, "CHAPITRE 1 : L'ÉTAT DES LIEUX")
-
-
-
-
-def create_engagement_page(c):
-    """
-    Page 1: Mon Engagement.
-    Text heavy page with signature.
-    """
-    create_standard_engagement_page(c, "1. MON ENGAGEMENT")
-
-
+    """Cover of chapter 1: L'état des lieux."""
+    create_cover_page(c, "L'état *des lieux.*", number=1, tagline="Bilan de compétences",
+                      promise="Savoir d'où vous partez.")
 
 
 def create_concept_page(c):
-    """
-    Page 2: Chapter Cover - 1. Concept
-    Blue background, large watermark.
-    """
-    # Points
-    points = [
-        ("Sommaire :", ""),
-        ("1.", "Mon Engagement"),
-        ("2.", "Ma Météo Intérieure"),
-        ("3.", "Ma Vision 360°"),
-        ("4.", "Mon Objectif Boussole"),
-        ("5.", "Le Sac à Dos"),
-        ("6.", "Mon Héritage"),
-        ("7.", "Image du Monde du Travail"),
-        ("8.", "Mentors & Anti-Modèles"),
+    """Chapter opener: the objective of the workbook and its exercises."""
+    intro_txt = (
+        "Ce carnet fixe votre point de départ : votre état d'esprit, l'équilibre de vos domaines de vie, "
+        "l'objectif de votre bilan, et ce que vous avez reçu de votre milieu sur le travail. "
+        "Il servira de référence pour mesurer le chemin parcouru."
+    )
+    exercises = [
+        "Exercice 1 · Votre état d'esprit du moment.",
+        "Exercice 2 · Votre vision à 360° : vos quatre domaines de vie.",
+        "Exercice 3 · Votre objectif boussole : le cap prioritaire à 3 mois.",
+        "Exercice 4 · Le sac à dos : ce que vous décidez de déposer.",
+        "Exercice 5 · Votre héritage familial (matrice 3FVS).",
+        "Exercice 6 · Votre image du travail, reçue et choisie.",
+        "Exercice 7 · Vos mentors et vos anti-modèles.",
     ]
-
-    create_standard_summary_page(c, "1", "CONCEPT", "", points)
+    create_standard_summary_page(c, "1", "Fixer votre point *de départ.*", intro_txt, exercises)

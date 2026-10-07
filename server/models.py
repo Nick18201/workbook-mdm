@@ -141,7 +141,7 @@ class WorkbookSpec(BaseModel):
     chapter_num: int = Field(1, description="Numéro du chapitre")
     chapter_title: str = Field("Mes Réflexions", description="Titre principal du chapitre")
     title: Optional[str] = Field(None, description="Alias pour chapter_title")
-    subtitle: str = Field("BILAN DE COMPÉTENCES & ALIGNEMENT", description="Sous-titre de couverture")
+    subtitle: str = Field("BILAN DE COMPÉTENCES", description="Sous-titre de couverture")
     beneficiary_name: Optional[str] = Field(None, description="Nom ou prénom du bénéficiaire pour personnalisation")
     pages: List[PageSpec] = Field(
         default_factory=list, max_length=MAX_PAGES, description="Liste ordonnée des pages du livret"
@@ -191,7 +191,6 @@ class ParseRequest(BaseModel):
         True,
         description="Inclure la page de pacte d'engagement et signature en fin de livret",
     )
-    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
 
 
@@ -199,7 +198,6 @@ class IterateRequest(BaseModel):
     current_spec: WorkbookSpec = Field(..., description="Spécification actuelle du livret à modifier")
     feedback: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Consigne d'ajustement ou feedback utilisateur")
     raw_notes: Optional[str] = Field(None, max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes d'origine pour contexte")
-    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
 
 class IterateResponse(BaseModel):
@@ -215,7 +213,7 @@ class TemplateInfo(BaseModel):
     subtitle: str = Field(..., description="Sous-titre de couverture")
     description: str = Field(..., description="Brève description pédagogique")
     page_count: int = Field(..., description="Nombre de pages du livret")
-    icon: str = Field(..., description="Emoji distinctif pour l'affichage")
+    icon: str = Field(..., description="Nom d'une icône Material Symbols Outlined pour l'affichage")
     category: str = Field("Bilan de Compétences", description="Catégorie du modèle")
 
 
@@ -225,7 +223,6 @@ class CustomizeRequest(BaseModel):
     beneficiary_name: str = Field(..., max_length=MAX_NAME_LENGTH, description="Prénom ou nom complet du bénéficiaire")
     beneficiary_context: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Profil, métier actuel, projet visé, défis majeurs")
     custom_instructions: Optional[str] = Field(None, max_length=MAX_INSTRUCTION_LENGTH, description="Consignes spécifiques d'adaptation souhaitées")
-    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
     @model_validator(mode="after")
     def check_base(self):

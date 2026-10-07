@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -14,8 +13,8 @@ def create_travail_reel_coulisses_page(c):
     """
     layout = PageLayout(
         c,
-        "P2.1 : LES COULISSES DU TRAVAIL RÉEL",
-        config=LayoutConfig(part_title="2. LE TRAVAIL RÉEL & LES COULISSES"),
+        "Les coulisses *du travail réel.*",
+        config=LayoutConfig(part_title="Thème 2 · Travail réel"),
     )
 
     layout.add_text(
@@ -34,21 +33,17 @@ def create_travail_reel_coulisses_page(c):
             subtitle="Les micro-décisions, arbitrages et ajustements indispensables que vous réalisez chaque semaine "
             "et qui n'étaient écrits sur aucun descriptif officiel de poste.",
             example="Ex : Anticiper les erreurs d'un logiciel, vulgariser des règles techniques pour des non-spécialistes, désamorcer des tensions.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Mes Astuces & Bricolages Ingénieux",
+        "Mes astuces et mes solutions maison",
         "livret_p2_bricolages",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="Les outils, raccourcis, matrices ou méthodes que vous avez créés ou adaptés vous-même "
             "pour fluidifier votre quotidien et gagner en efficacité.",
             example="Ex : Mise en place spontanée d'un tableau de chiffrage et d'aide à la saisie réduisant de moitié les délais administratifs.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -61,8 +56,8 @@ def create_travail_reel_empeche_page(c):
     """
     layout = PageLayout(
         c,
-        "P2.2 : DÉSIRS DE QUALITÉ & TRAVAIL CONTRARIÉ",
-        config=LayoutConfig(part_title="2. LE TRAVAIL RÉEL & LES COULISSES"),
+        "Qualité voulue, *travail empêché.*",
+        config=LayoutConfig(part_title="Thème 2 · Travail réel"),
     )
 
     layout.add_text(
@@ -80,21 +75,17 @@ def create_travail_reel_empeche_page(c):
             subtitle="Quelles missions ou gestes professionnels auriez-vous voulu soigner davantage si l'organisation "
             "ou les contraintes de votre précédent poste ne vous avaient pas freiné ?",
             example="Ex : Prendre le temps d'accompagner les acteurs sur le terrain plutôt que de devoir produire des calculs d'écran à la chaîne.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Mes Exigences de Qualité pour Demain",
+        "Mes exigences de qualité pour demain",
         "livret_p2_exigences",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="De quelles conditions (autonomie, temps de réflexion, relations saines, impact concret) "
             "aurez-vous impérativement besoin dans votre futur métier pour être pleinement fier de votre geste ?",
             example="Ex : Avoir un impact environnemental visible, échanger avec un collectif de confiance, retrouver le plaisir du travail soigné.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

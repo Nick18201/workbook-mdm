@@ -24,6 +24,7 @@ def generate_workbook_business_plan(
 
     # --- 0. OUVERTURE & CADRAGE ---
     builder.add_page(business_plan.create_business_plan_cover)  # P1
+    builder.add_page(business_plan.create_business_plan_identity_page)  # Fiche projet
     builder.add_page(business_plan.create_business_plan_summary)  # P2
 
     # --- PARTIE 1 : POSER LES FONDATIONS ---

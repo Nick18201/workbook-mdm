@@ -9,7 +9,6 @@ from .templates import (
 )
 from .components import (
     create_cover_page,
-    create_standard_cover,
     create_standard_summary_page,
     create_standard_recap_page,
     create_standard_engagement_page,
@@ -22,11 +21,6 @@ from .components import (
     draw_question,
     draw_answer_box,
     draw_choice_scale,
-    draw_title,
-    draw_card,
-    draw_side_panel,
-    draw_page_background,
-    draw_page_decorations,
 )
 from .primitives import (
     draw_annotation,
@@ -61,7 +55,6 @@ __all__ = [
     "QuestionItem",
     "TextConfig",
     "create_cover_page",
-    "create_standard_cover",
     "create_standard_summary_page",
     "create_standard_recap_page",
     "create_standard_engagement_page",
@@ -74,11 +67,6 @@ __all__ = [
     "draw_question",
     "draw_answer_box",
     "draw_choice_scale",
-    "draw_title",
-    "draw_card",
-    "draw_side_panel",
-    "draw_page_background",
-    "draw_page_decorations",
     "draw_annotation",
     "draw_card_title",
     "draw_drawn_arrow",

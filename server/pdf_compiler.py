@@ -196,7 +196,6 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                             ),
                             subtitle=str(q.get("subtitle")) if q.get("subtitle") else None,
                             example=str(q.get("example") or q.get("ex")) if (q.get("example") or q.get("ex")) else None,
-                            color=q.get("color"),
                         )
                     )
                 else:

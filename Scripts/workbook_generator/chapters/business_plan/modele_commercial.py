@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -16,7 +15,7 @@ def create_modele_revenus_page(c):
     """
     layout = PageLayout(
         c,
-        "8.1 : SOURCES DE REVENUS & MODÈLE",
+        "Sources de revenus *et modèle.*",
         config=LayoutConfig(part_title="8. MON MODÈLE ÉCONOMIQUE"),
     )
 
@@ -35,7 +34,7 @@ def create_modele_revenus_page(c):
             ("Partenariats / Apport d'affaires", "bp_p16_chk_partenariat"),
             ("Modèle hybride (Particuliers + Entreprises)", "bp_p16_chk_hybride"),
         ],
-        title="SOURCES DE REVENUS ENVISAGÉES :",
+        title="Sources de revenus envisagées :",
         columns=2,
     )
 
@@ -44,19 +43,16 @@ def create_modele_revenus_page(c):
             question="1. Mes sources de revenus prioritaires et secondaires",
             form_field_id="bp_p16_sources_revenus",
             subtitle="Quelle offre génère le cœur de vos revenus ? Quelles sont les rentrées complémentaires ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Quelle personne ou organisation paie concrètement ?",
             form_field_id="bp_p16_qui_paie",
             subtitle="La personne accompagnée elle-même, son employeur (B2B), une caisse de retraite, un OPCO...",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Pour quoi paie-t-elle et à quel moment du parcours ?",
             form_field_id="bp_p16_quand_paie",
             subtitle="Acompte à la commande (30%), solde à la livraison, prélèvement mensuel, paiement en 3x...",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -71,7 +67,7 @@ def create_modele_canvas_page(c):
     """
     layout = PageLayout(
         c,
-        "8.2 : BUSINESS MODEL CANVAS INTERACTIF",
+        "Business Model *Canvas.*",
         config=LayoutConfig(part_title="8. MON MODÈLE ÉCONOMIQUE"),
     )
 
@@ -84,57 +80,57 @@ def create_modele_canvas_page(c):
     canvas_blocks = [
         # Ligne 1
         {
-            "title": "1. Segments Clients",
+            "title": "1. Segments clients",
             "subtitle": "Pour qui créez-vous de la valeur ?",
             "field_id": "bp_p17_canvas_segments",
             "placeholder": "Cibles prioritaires, personas...",
         },
         {
-            "title": "2. Proposition de Valeur",
+            "title": "2. Proposition de valeur",
             "subtitle": "Quelle promesse unique délivrez-vous ?",
             "field_id": "bp_p17_canvas_valeur",
             "placeholder": "Bénéfice clé, transformation...",
         },
         {
-            "title": "3. Relations Clients",
+            "title": "3. Relations clients",
             "subtitle": "Quel lien entretenez-vous ?",
             "field_id": "bp_p17_canvas_relations",
             "placeholder": "Accompagnement individuel, communauté...",
         },
         # Ligne 2
         {
-            "title": "4. Canaux de Vente",
+            "title": "4. Canaux de vente",
             "subtitle": "Comment vous faites-vous connaître ?",
             "field_id": "bp_p17_canvas_canaux",
             "placeholder": "Réseaux, site, bouche-à-oreille...",
         },
         {
-            "title": "5. Activités Clés",
+            "title": "5. Activités clés",
             "subtitle": "Quelles actions devez-vous réussir ?",
             "field_id": "bp_p17_canvas_activites",
             "placeholder": "Production, accompagnement, com...",
         },
         {
-            "title": "6. Ressources Clés",
+            "title": "6. Ressources clés",
             "subtitle": "De quoi avez-vous besoin pour tourner ?",
             "field_id": "bp_p17_canvas_ressources",
             "placeholder": "Matériel, compétences, temps...",
         },
         # Ligne 3
         {
-            "title": "7. Partenaires Clés",
+            "title": "7. Partenaires clés",
             "subtitle": "Qui sont vos alliés stratégiques ?",
             "field_id": "bp_p17_canvas_partenaires",
             "placeholder": "Prescripteurs, pairs, mentors...",
         },
         {
-            "title": "8. Structure de Coûts",
+            "title": "8. Structure de coûts",
             "subtitle": "Quelles sont vos dépenses majeures ?",
             "field_id": "bp_p17_canvas_couts",
             "placeholder": "Charges fixes, outils, sous-traitance...",
         },
         {
-            "title": "9. Flux de Revenus",
+            "title": "9. Flux de revenus",
             "subtitle": "Comment rentre l'argent dans l'entreprise ?",
             "field_id": "bp_p17_canvas_revenus",
             "placeholder": "Tarifs forfaits, récurrence, marge...",
@@ -152,7 +148,7 @@ def create_commercial_offres_page(c):
     """
     layout = PageLayout(
         c,
-        "9.1 : GRILLE DES OFFRES & FORMULES",
+        "Grille des offres *et formules.*",
         config=LayoutConfig(part_title="9. MON OFFRE COMMERCIALE"),
     )
 
@@ -215,13 +211,13 @@ def create_commercial_offres_page(c):
 
     cards = [
         {
-            "title": "Mon Offre Phare (Core Offer)",
+            "title": "Mon offre phare (core offer)",
             "subtitle": "L'offre signature sur laquelle vous concentrez 80% de votre énergie commerciale...",
             "field_id": "bp_p18_offre_phare",
             "placeholder": "Pourquoi cette offre est votre fer de lance ? À quel problème n°1 répond-elle ?",
         },
         {
-            "title": "Mes Offres Complémentaires & Futures",
+            "title": "Mes offres complémentaires et futures",
             "subtitle": "Ce que vous proposerez dans un second temps (cross-sell, montée en gamme, produits digitaux)...",
             "field_id": "bp_p18_offres_futures",
             "placeholder": "Idées à mûrir sans vous disperser lors des premiers mois...",
@@ -239,7 +235,7 @@ def create_commercial_prix_page(c):
     """
     layout = PageLayout(
         c,
-        "10.1 : COMMENT FIXER MES PRIX ?",
+        "Comment fixer *mes prix ?*",
         config=LayoutConfig(part_title="10. MES PRIX"),
     )
 
@@ -251,25 +247,25 @@ def create_commercial_prix_page(c):
 
     tarifs_repères = [
         {
-            "title": "1. Prix Plancher (Minimum Vital)",
+            "title": "1. Prix plancher (minimum vital)",
             "subtitle": "En-dessous de ce prix, vous travaillez à perte ou sacrifiez votre santé...",
             "field_id": "bp_p19_prix_plancher",
             "placeholder": "Ex : 450 € minimum par prestation...",
         },
         {
-            "title": "2. Prix Cible (Idéal & Rentable)",
+            "title": "2. Prix cible (idéal et rentable)",
             "subtitle": "Le tarif juste qui rémunère votre expertise et finance votre sérénité...",
             "field_id": "bp_p19_prix_cible",
             "placeholder": "Ex : 750 € par prestation...",
         },
         {
-            "title": "3. Prix Plafond (Audacieux)",
+            "title": "3. Prix plafond (audacieux)",
             "subtitle": "Le prix maximal justifiable si vous ajoutez un accompagnement sur-mesure...",
             "field_id": "bp_p19_prix_plafond",
             "placeholder": "Ex : 1 200 € en formule premium...",
         },
         {
-            "title": "4. Prix Observés sur le Marché",
+            "title": "4. Prix observés sur le marché",
             "subtitle": "Les fourchettes pratiquées par les acteurs comparables...",
             "field_id": "bp_p19_prix_marche",
             "placeholder": "Ex : Entre 500 € et 900 € selon l'expérience...",
@@ -287,8 +283,6 @@ def create_commercial_prix_page(c):
             box_height=3.2 * cm,
             subtitle="Écrivez vos arguments clés pour assumer vos tarifs avec sérénité et sans baisser vos prix par peur.",
             example="Ex : Mon tarif reflète un suivi individuel sans compromis, un gain de plusieurs mois d'errance pour la cliente et une disponibilité réelle.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -302,7 +296,7 @@ def create_commercial_acquisition_page(c):
     """
     layout = PageLayout(
         c,
-        "11.1 : TROUVER MES PREMIERS CLIENTS",
+        "Trouver mes *premiers clients.*",
         config=LayoutConfig(part_title="11. COMMERCIALISATION"),
     )
 
@@ -321,28 +315,25 @@ def create_commercial_acquisition_page(c):
             ("Site web & Référencement (SEO)", "bp_p20_chk_site"),
             ("Démarchage direct & Prise de contact qualifiée", "bp_p20_chk_direct"),
         ],
-        title="CANAUX D'ACQUISITION PRIVILÉGIÉS :",
+        title="Canaux d'acquisition privilégiés :",
         columns=2,
     )
 
     questions = [
         QuestionItem(
-            question="1. Mes 2 à 3 canaux prioritaires & Justification",
+            question="1. Mes 2 à 3 canaux prioritaires et justification",
             form_field_id="bp_p20_canaux_choisis",
             subtitle="Pourquoi ces canaux correspondent-ils à votre personnalité et aux habitudes de vos clientes ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Comment vais-je obtenir mes 10 premiers clients ?",
             form_field_id="bp_p20_dix_premiers_clients",
             subtitle="Détaillez vos actions directes : liste de 20 contacts tièdes, appel découverte, offre pilote à prix doux...",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Comment transformer un premier contact intéressé en cliente engagée ?",
             form_field_id="bp_p20_conversion_contact",
             subtitle="Quel est votre rituel d'échange : appel d'alignement de 30 min, diagnostic offert, proposition personnalisée...",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -357,7 +348,7 @@ def create_commercial_parcours_page(c):
     """
     layout = PageLayout(
         c,
-        "11.2 : LE PARCOURS CLIENT EN 7 ÉTAPES",
+        "Le parcours client *en 7 étapes.*",
         config=LayoutConfig(part_title="11. COMMERCIALISATION"),
     )
 
@@ -408,13 +399,13 @@ def create_commercial_parcours_page(c):
 
     cards = [
         {
-            "title": "Le Moment Clé d'Enchantement (Effet Whaou)",
+            "title": "Le moment clé d'enchantement (effet whaou)",
             "subtitle": "Quelle attention inattendue allez-vous lui offrir pour marquer les esprits ?",
             "field_id": "bp_p21_enchantement",
             "placeholder": "Ex : Un livret d'accueil imprimé envoyé par courrier, une synthèse sur-mesure...",
         },
         {
-            "title": "La Mécanique de Recommandation",
+            "title": "La mécanique de recommandation",
             "subtitle": "Comment inciterez-vous vos clientes satisfaites à parler de vous ?",
             "field_id": "bp_p21_recommandation",
             "placeholder": "Ex : Programme de parrainage, demande d'avis Google systématique...",

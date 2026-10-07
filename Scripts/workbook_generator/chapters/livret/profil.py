@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -14,8 +13,8 @@ def create_profil_mbti_page(c):
     """
     layout = PageLayout(
         c,
-        "P1.1 : MES PRÉFÉRENCES NATURELLES (MBTI)",
-        config=LayoutConfig(part_title="1. MON PROFIL & MON ÉCOLOGIE"),
+        "Vos préférences *naturelles.*",
+        config=LayoutConfig(part_title="Thème 1 · Profil et énergie"),
     )
 
     layout.add_text(
@@ -27,28 +26,24 @@ def create_profil_mbti_page(c):
     )
 
     layout.add_question_block(
-        "Mes Préférences Spontanées (ou mon type MBTI)",
+        "Mes préférences spontanées (ou mon type MBTI)",
         "livret_p1_mbti",
         config=QuestionConfig(
             box_height=4.7 * cm,
             subtitle="Vos 4 lettres (si exploré : ex. ISFJ, ENFP...) ou vos dominantes : Plutôt calme ou action partagée ? "
             "Détails concrets ou vision globale ? Logique rationnelle ou harmonie humaine ? Organisation posée ou flexibilité ?",
             example="Ex : ISFJ — Réfléchi, rigoureux, attentif aux personnes et aux faits concrets, besoin de calme pour préparer l'action.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Mes Forces Naturelles dans le Travail",
+        "Mes forces naturelles au travail",
         "livret_p1_forces",
         config=QuestionConfig(
             box_height=4.7 * cm,
             subtitle="Grâce à cette manière d'être, quelle valeur ajoutée et quels atouts précieux apportez-vous "
             "spontanément à un collectif ou dans vos missions au quotidien ?",
             example="Ex : Mon sens du détail évite les erreurs critiques ; ma posture calme et mon écoute rassurent mes collègues et les partenaires.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -61,39 +56,35 @@ def create_profil_ecologie_page(c):
     """
     layout = PageLayout(
         c,
-        "P1.2 : MON ÉCOLOGIE D'ÉNERGIE & CLIMAT IDÉAL",
-        config=LayoutConfig(part_title="1. MON PROFIL & MON ÉCOLOGIE"),
+        "Votre énergie *et votre climat idéal.*",
+        config=LayoutConfig(part_title="Thème 1 · Profil et énergie"),
     )
 
     layout.add_text(
         "Dans le travail, nous avons tous un « réservoir d'énergie ». Certaines tâches et ambiances rechargent "
         "naturellement vos batteries, tandis que d'autres vous demandent un effort d'adaptation coûteux. "
-        "Construire une trajectoire durable, c'est choisir un environnement respectueux de votre équilibre intérieur.",
+        "Construire une trajectoire durable, c'est choisir un environnement qui respecte votre énergie.",
         config=TextConfig(spacing_after=0.5 * cm),
     )
 
     layout.add_question_block(
-        "Mon Climat de Travail Idéal",
+        "Mon climat de travail idéal",
         "livret_p1_climat",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="Dans quel type d'ambiance, de rythme de travail, de style de management et de relations humaines "
             "donnez-vous le meilleur de vous-même ?",
             example="Ex : Une équipe soudée, un management qui fait confiance sans être directif, un rythme régulier sans urgences artificielles.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Ce qui Vide mes Batteries (Mes Signaux de Vigilance)",
+        "Ce qui vide mes batteries (mes signaux de vigilance)",
         "livret_p1_couts",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="Quelles sont les situations ou modes de fonctionnement qui vous épuisent rapidement ou vous pèsent lourdement ?",
             example="Ex : Les conflits ouverts non résolus, l'absence de consignes claires, le bruit permanent ou l'isolement complet sans échange.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

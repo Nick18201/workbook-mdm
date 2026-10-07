@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -14,8 +13,8 @@ def create_recit_contexte_page(c):
     """
     layout = PageLayout(
         c,
-        "P5.1 : ARRÊT SUR IMAGE (DÉCOR & DÉCLIC)",
-        config=LayoutConfig(part_title="5. ARRÊT SUR IMAGE (RÉCIT D'ACTION)"),
+        "Arrêt sur image : *le décor et le déclic.*",
+        config=LayoutConfig(part_title="Thème 5 · Récit d'action"),
     )
 
     layout.add_text(
@@ -26,27 +25,23 @@ def create_recit_contexte_page(c):
     )
 
     layout.add_question_block(
-        "1. La Situation de Départ & le Défi Inattendu",
+        "1. La situation de départ et le défi inattendu",
         "livret_p5_situation",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="Où étiez-vous ? Quelle était la mission initiale, et quel obstacle, anomalie ou urgence est survenu ?",
             example="Ex : Bloqué sur un dossier complexe à 48h de l'échéance finale avec un calcul non-conforme et un client sous pression.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "2. Le Déclic & ce que vous avez Observé",
+        "2. Le déclic et ce que vous avez observé",
         "livret_p5_declic",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="À quel micro-signal précis (un chiffre anormal, une hésitation, un détail matériel) "
             "avez-vous compris qu'il fallait intervenir sans attendre ?",
             example="Ex : En lisant les plans de structure, j'ai repéré immédiatement un pont thermique oublié que personne n'avait décelé.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -59,8 +54,8 @@ def create_recit_impact_page(c):
     """
     layout = PageLayout(
         c,
-        "P5.2 : MES ACTIONS PAS À PAS & MA FIERTÉ",
-        config=LayoutConfig(part_title="5. ARRÊT SUR IMAGE (RÉCIT D'ACTION)"),
+        "Vos actions *pas à pas.*",
+        config=LayoutConfig(part_title="Thème 5 · Récit d'action"),
     )
 
     layout.add_text(
@@ -70,28 +65,24 @@ def create_recit_impact_page(c):
     )
 
     layout.add_question_block(
-        "3. Ce que VOUS avez fait Pas à Pas (Actions & Choix)",
+        "3. Ce que vous avez fait, pas à pas (actions et choix)",
         "livret_p5_action",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Qu'avez-vous fait concrètement ? (Vos gestes, arbitrages, paroles, outils ou personnes mobilisés). "
             "Privilégiez le « Comment » plutôt que la théorie.",
             example="Ex : J'ai isolé les variables critiques, appelé le projeteur pour convenir d'une variante et rédigé une note technique vulgarisée.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "4. L'Impact Positif & votre Sentiment de Fierté",
+        "4. Le résultat et ce dont vous êtes fier ou fière",
         "livret_p5_resultat",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Quels ont été les effets concrets et mesurables pour le projet, le client ou l'équipe ? "
             "De quoi êtes-vous le plus fier dans votre réaction ?",
             example="Ex : Dossier validé dans les délais sans surcoût, client rassuré et reconnaissant, fierté d'avoir trouvé une solution élégante.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

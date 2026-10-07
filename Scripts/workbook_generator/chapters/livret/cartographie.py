@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -14,8 +13,8 @@ def create_cartographie_metier_page(c):
     """
     layout = PageLayout(
         c,
-        "P3.1 : SAVOIR-FAIRE MÉTIER & MÉTHODES",
-        config=LayoutConfig(part_title="3. MA CARTOGRAPHIE DES COMPÉTENCES"),
+        "Savoir-faire *et méthodes.*",
+        config=LayoutConfig(part_title="Thème 3 · Compétences en action"),
     )
 
     layout.add_text(
@@ -26,28 +25,24 @@ def create_cartographie_metier_page(c):
     )
 
     layout.add_question_block(
-        "Mes Savoir-Faire Techniques & Cœur de Métier",
+        "Mes savoir-faire techniques et mon cœur de métier",
         "livret_p3_techniques",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="Les outils, logiciels spécialisés, réglementations, calculs, normes et gestes professionnels "
             "que vous maîtrisez avec une grande aisance.",
             example="Ex : Modélisation réglementaire RE2020, logiciels thermiques et de CAO, analyse de plans de construction, métrés.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Mes Méthodes pour Structurer, Chiffrer & Résoudre",
+        "Mes méthodes pour structurer, chiffrer et résoudre",
         "livret_p3_methodes",
         config=QuestionConfig(
             box_height=5.0 * cm,
             subtitle="Comment vous y prenez-vous pour organiser un planning, vérifier la qualité, chiffrer un projet "
             "ou trouver l'origine d'un dysfonctionnement ?",
             example="Ex : Détection méthodique des goulets d'étranglement, fiabilisation des bases de données, suivi financier analytique.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -60,8 +55,8 @@ def create_cartographie_humain_page(c):
     """
     layout = PageLayout(
         c,
-        "P3.2 : COOPÉRATION & AGILITÉ D'APPRENTISSAGE",
-        config=LayoutConfig(part_title="3. MA CARTOGRAPHIE DES COMPÉTENCES"),
+        "Coopération *et apprentissage.*",
+        config=LayoutConfig(part_title="Thème 3 · Compétences en action"),
     )
 
     layout.add_text(
@@ -72,28 +67,24 @@ def create_cartographie_humain_page(c):
     )
 
     layout.add_question_block(
-        "Ma Coopération, Écoute & Transmission",
+        "Coopérer, écouter, transmettre",
         "livret_p3_relation",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Comment interagissez-vous au quotidien ? (Vulgariser des notions complexes pour des novices, "
             "apaiser des tensions, négocier avec tact, transmettre).",
             example="Ex : Expliquer des contraintes thermiques avec des mots simples aux artisans sur le chantier, former un nouveau collègue.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
     layout.add_question_block(
-        "Mon Agilité & ma Curiosité d'Apprendre",
+        "Mon agilité et mon envie d'apprendre",
         "livret_p3_apprentissage",
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Comment réagissez-vous face à la nouveauté ? Racontez votre manière d'apprendre par vous-même "
             "et d'explorer des sujets inédits.",
             example="Ex : Veille continue sur les nouvelles réglementations, montée en compétence rapide en autodidacte sur un logiciel complexe.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

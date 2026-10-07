@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -16,7 +15,7 @@ def create_offre_definition_page(c):
     """
     layout = PageLayout(
         c,
-        "4.1 : CE QUE JE PROPOSE CONCRÈTEMENT",
+        "Ce que je propose *concrètement.*",
         config=LayoutConfig(part_title="4. MON OFFRE"),
     )
 
@@ -33,20 +32,18 @@ def create_offre_definition_page(c):
             box_height=4.2 * cm,
             subtitle="À quoi sert-il concrètement ? Que reçoit la personne ? Quelle expérience relationnelle lui faites-vous vivre ?",
             example="Ex : Un accompagnement individuel en 5 séances avec livret d'exercices et support WhatsApp entre les séances.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
     cards = [
         {
-            "title": "Ce qui est RIGOUREUSEMENT INCLUS",
+            "title": "Ce qui est rigoureusement inclus",
             "subtitle": "Temps dédié, livrables, accès, ressources partagées...",
             "field_id": "bp_p9_offre_inclus",
             "placeholder": "Ex : 5 séances de 1h30, livret personnalisé, compte-rendu écrit après chaque séance...",
         },
         {
-            "title": "Ce qui N'EST PAS INCLUS (Périmètre)",
+            "title": "Ce qui n'est pas inclus (périmètre)",
             "subtitle": "Limites saines, conditions préalables, hors périmètre...",
             "field_id": "bp_p9_offre_exclus",
             "placeholder": "Ex : Disponibilité les week-ends, interventions d'urgence, prise en charge juridique ou comptable...",
@@ -64,13 +61,13 @@ def create_offre_valeur_page(c):
     """
     layout = PageLayout(
         c,
-        "4.2 : MA PROPOSITION DE VALEUR",
+        "Ma proposition *de valeur.*",
         config=LayoutConfig(part_title="4. MON OFFRE"),
     )
 
     layout.add_callout(
         "« Pourquoi une personne choisirait-elle votre projet plutôt qu'une autre solution ou plutôt que de ne rien faire ? »",
-        title="LA QUESTION PIVOT DU BUSINESS PLAN",
+        title="La question pivot du business plan",
         variant="tip",
     )
 
@@ -78,22 +75,19 @@ def create_offre_valeur_page(c):
 
     questions = [
         QuestionItem(
-            question="1. Le Bénéfice Principal & les Bénéfices Secondaires",
+            question="1. Le bénéfice principal et les bénéfices secondaires",
             form_field_id="bp_p10_benefices",
             subtitle="Quel est le résultat tangible promis ? Quels sont les bénéfices émotionnels (sérénité, fierté, clarté) ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Ce qui rend mon approche unique et singulière",
             form_field_id="bp_p10_approche_differente",
             subtitle="Qu'est-ce qui vous distingue (votre histoire, votre méthode, votre énergie, votre éthique) ?",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
-            question="3. Formule de Pitch : Mon énoncé de valeur",
+            question="3. Formule de pitch : mon énoncé de valeur",
             form_field_id="bp_p10_pitch_promesse",
             subtitle="Complétez : « J'accompagne [Cible] qui rencontrent [Problème] grâce à [Solution], contrairement à [Alternatives]. »",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -108,7 +102,7 @@ def create_marche_tendances_page(c):
     """
     layout = PageLayout(
         c,
-        "5.1 : MON MARCHÉ & TENDANCES",
+        "Mon marché *et ses tendances.*",
         config=LayoutConfig(part_title="5. ÉTUDIER LE MARCHÉ"),
     )
 
@@ -124,20 +118,18 @@ def create_marche_tendances_page(c):
         config=QuestionConfig(
             box_height=3.2 * cm,
             subtitle="Définissez votre domaine (ex : conseil, artisanat d'art, services aux familles, formation, bien-être...).",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
     tendances_cards = [
         {
-            "title": "Tendances Favorables (Vents porteurs)",
+            "title": "Tendances favorables (vents porteurs)",
             "subtitle": "Quelles évolutions sociétales ou technologiques favorisent votre projet ?",
             "field_id": "bp_p11_tendances_favorables",
             "placeholder": "Ex : Besoin croissant de déconnexion, recherche d'utilité, essor du télétravail...",
         },
         {
-            "title": "Tendances Fragilisantes (Risques du marché)",
+            "title": "Tendances fragilisantes (risques du marché)",
             "subtitle": "Quels changements économiques ou concurrentiels peuvent fragiliser l'activité ?",
             "field_id": "bp_p11_tendances_risques",
             "placeholder": "Ex : Baisse du pouvoir d'achat, saturation d'un canal, montée de solutions IA gratuites...",
@@ -151,8 +143,6 @@ def create_marche_tendances_page(c):
         config=QuestionConfig(
             box_height=3.2 * cm,
             subtitle="Diplômes requis, normes ERP, RGPD, médiation de la consommation, assurances spécifiques...",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -166,7 +156,7 @@ def create_marche_concurrents_page(c):
     """
     layout = PageLayout(
         c,
-        "5.2 : CONCURRENTS & ALTERNATIVES",
+        "Concurrents *et alternatives.*",
         config=LayoutConfig(part_title="5. ÉTUDIER LE MARCHÉ"),
     )
 
@@ -183,19 +173,19 @@ def create_marche_concurrents_page(c):
             ("Alternatives : méthodes maison, systèmes D, livres, tutos", "bp_p12_chk_alternatives"),
             ("L'Inaction : ne rien changer et subir la situation", "bp_p12_chk_inaction"),
         ],
-        title="LES 4 FAMILLES D'ACTEURS À OBSERVER :",
+        title="Les 4 familles d'acteurs à observer :",
         columns=2,
     )
 
     cards = [
         {
-            "title": "Acteur / Concurrent Clé n°1",
+            "title": "Acteur / concurrent clé n°1",
             "subtitle": "Nom, offre, tarifs, forces observées et limites...",
             "field_id": "bp_p12_concurrent_1",
             "placeholder": "Nom : ...\nOffre & Prix : ...\nForces : ...\nCe que je peux apprendre ou faire différemment : ...",
         },
         {
-            "title": "Acteur / Alternative Clé n°2",
+            "title": "Acteur / alternative clé n°2",
             "subtitle": "Nom, offre, tarifs, forces observées et limites...",
             "field_id": "bp_p12_concurrent_2",
             "placeholder": "Nom : ...\nOffre & Prix : ...\nForces : ...\nCe que je peux apprendre ou faire différemment : ...",
@@ -213,7 +203,7 @@ def create_marche_benchmark_page(c):
     """
     layout = PageLayout(
         c,
-        "6.1 : BENCHMARK & INSPIRATIONS",
+        "Benchmark *et inspirations.*",
         config=LayoutConfig(part_title="6. S'INSPIRER DE PROJETS EXISTANTS"),
     )
 
@@ -273,13 +263,11 @@ def create_marche_benchmark_page(c):
             question="Les idées fortes que je retiens et que je pourrais adapter",
             form_field_id="bp_p13_idees_adaptees",
             subtitle="Quelles bonnes pratiques découvrez-vous chez ces pionniers ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
-            question="Ce que je ne veux SURTOUT PAS reproduire",
+            question="Ce que je ne veux surtout pas reproduire",
             form_field_id="bp_p13_idees_refusees",
             subtitle="Quels écueils, lourdeurs ou manques observez-vous chez eux que vous refusez ?",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     ]
 

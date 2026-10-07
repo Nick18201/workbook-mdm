@@ -6,27 +6,18 @@ from workbook_generator.chapters import chap1
 
 def generate_workbook_chap1(output_filename="Workbook_Chapitre_1.pdf"):
     builder = DocumentBuilder(output_path=output_filename, carnet=1)
-    builder.set_title("Marge de Manœuvre - Chapitre 1")
+    builder.set_title("Marge de Manœuvre - Chapitre 1 : L'état des lieux")
 
-    # --- PAGE 1: COVER ---
     builder.add_page(chap1.create_chap1_cover)
-
-    # --- PAGE 2: CONCEPT ---
     builder.add_page(chap1.create_concept_page)
-
-    # --- PAGES 3-10: CHAPITRE 1 EXERCICES ---
-    builder.add_page(chap1.create_engagement_page)
     builder.add_page(chap1.create_meteo_page)
     builder.add_page(chap1.create_vision_page)
     builder.add_page(chap1.create_boussole_page)
     builder.add_page(chap1.create_sac_a_dos_page)
-
-    # From old Chapitre 2
     builder.add_page(chap1.create_heritage_page)
     builder.add_page(chap1.create_work_image_page)
     builder.add_page(chap1.create_mentors_page)
-
-    # --- PAGE 11: CLOSING PAGE ---
+    builder.add_page(chap1.create_livrable_page)
     builder.add_page(create_closing_page)
 
     builder.save()

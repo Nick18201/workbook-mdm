@@ -6,7 +6,7 @@ from .exercices import (
     create_skills_transfer_page,
     create_tree_of_life_page,
 )
-from .cloture import create_interview_page
+from .cloture import create_interview_page, create_livrable_page
 
 __all__ = [
     "create_chap2_cover",
@@ -18,4 +18,5 @@ __all__ = [
     "create_skills_transfer_page",
     "create_tree_of_life_page",
     "create_interview_page",
+    "create_livrable_page",
 ]
