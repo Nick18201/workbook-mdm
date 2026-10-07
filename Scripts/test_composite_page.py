@@ -235,7 +235,7 @@ if __name__ == "__main__":
     pdf1 = test_direct_composite_pages()
     pdf2 = test_spec_composite_compilation()
 
-    artifacts_dir = r"C:\Users\nblum\.gemini\antigravity\brain\6263769c-38df-4954-b871-c361934e47b8"
+    artifacts_dir = os.path.join(PROJECT_ROOT, "previews")
     imgs1 = render_pdf_to_images(pdf1, artifacts_dir, prefix="airy_composite")
     imgs2 = render_pdf_to_images(pdf2, artifacts_dir, prefix="airy_spec")
     print("All airy tests and visual renderings completed successfully.")
