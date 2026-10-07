@@ -21,6 +21,8 @@ python -m uvicorn server.app:app --port 8080 --reload
 
 - Every `Scripts/main_generate_*.py` (chap0–chap6, `livret`, `business_plan`, `programme`) takes `--theme {indigo,earth}` and `--output`. Exit code 0 plus `PDF generated successfully: ...` means it built.
 - `tests/` is the pytest suite (compiler and API; Gemini is faked by monkeypatching `gemini_service.genai.Client`). It needs `requirements-dev.txt` (pytest, pymupdf, httpx). There is no linter config.
+- CI (`.github/workflows/tests.yml`, on pull requests and pushes to `main`) runs pytest and builds the 10 CLI documents on Python 3.14.
+- Python 3.14 everywhere (local `.venv`, `python:3.14-slim` in Docker, CI). `requirements.txt` and `requirements-dev.txt` are lock files with every package pinned, for Windows and Linux alike. Edit the direct dependencies in `requirements.in` / `requirements-dev.in`, then regenerate both locks with the `uv pip compile ...` commands written at the top of each (`pip install uv` first), `requirements.txt` first since the dev lock is constrained by it.
 - `Scripts/test_*.py` are not tests but showcase scripts that render `Test_*.pdf` at the repo root. `test_composite_page.py` also writes PNG previews to `previews/` (git-ignored).
 - If `DocumentBuilder` raises `PermissionError: Cannot overwrite ...`, the target PDF is open in another program.
 - Generated PDFs are git-ignored. `scratch/` holds committed page PNG previews.
