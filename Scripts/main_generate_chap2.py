@@ -6,7 +6,7 @@ from workbook_generator.components import create_closing_page
 
 def generate_workbook_chap2(output_filename="Workbook_Chapitre_2.pdf"):
     builder = DocumentBuilder(output_path=output_filename, carnet=2)
-    builder.set_title("MDM - Workbook Chapitre 2")
+    builder.set_title("Marge de Manœuvre - Chapitre 2 : Mon parcours")
 
     # 2. Generate Pages
     builder.add_page(chap2.create_chap2_cover)
@@ -18,6 +18,7 @@ def generate_workbook_chap2(output_filename="Workbook_Chapitre_2.pdf"):
     builder.add_page(chap2.create_skills_transfer_page)
     builder.add_page(chap2.create_tree_of_life_page)
     builder.add_page(chap2.create_interview_page)
+    builder.add_page(chap2.create_livrable_page)
     builder.add_page(create_closing_page)
 
     # 3. Save
