@@ -40,9 +40,22 @@ def test_field_names_are_unique_across_the_document():
     )
     doc = _open(WorkbookSpec(pages=pages))
 
-    names = [w.field_name for page in doc for w in page.widgets()]
+    # Radio buttons of one scale share their group name on purpose: one entry per group
+    pages_by_name = {}
+    names = []
+    for page in doc:
+        seen_radio_groups = set()
+        for w in page.widgets():
+            pages_by_name.setdefault(w.field_name, set()).add(page.number)
+            if w.field_type == pymupdf.PDF_WIDGET_TYPE_RADIOBUTTON:
+                if w.field_name in seen_radio_groups:
+                    continue
+                seen_radio_groups.add(w.field_name)
+            names.append(w.field_name)
+
     duplicates = {n for n in names if names.count(n) > 1}
     assert names and duplicates == set()
+    assert all(len(p) == 1 for p in pages_by_name.values())
 
 
 def test_table_block_without_headers_compiles_with_default_headers():

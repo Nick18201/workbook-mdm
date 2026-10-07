@@ -30,13 +30,31 @@ from workbook_generator import (
     create_standard_roadmap_page,
     create_closing_page,
 )
+from workbook_generator.utils import strip_unsupported_glyphs
 from .models import WorkbookSpec
+
+
+def _without_unsupported_glyphs(spec: WorkbookSpec) -> WorkbookSpec:
+    """Removes characters the PDF fonts cannot draw (emojis, ✓…) from every text of the spec."""
+
+    def clean(value):
+        if isinstance(value, str):
+            return strip_unsupported_glyphs(value)
+        if isinstance(value, dict):
+            return {k: clean(v) for k, v in value.items()}
+        if isinstance(value, (list, tuple)):
+            return type(value)(clean(v) for v in value)
+        return value
+
+    return WorkbookSpec.model_validate(clean(spec.model_dump()))
 
 
 def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
     """
     Compiles a WorkbookSpec object into in-memory PDF bytes.
     """
+    # Gemini or the coach may write emojis: ReportLab would drop them and leave gaps
+    spec = _without_unsupported_glyphs(spec)
     buffer = io.BytesIO()
     builder = DocumentBuilder(output_path=buffer, theme=spec.theme)
     builder.set_title(f"{spec.chapter_title} - {spec.subtitle}")
