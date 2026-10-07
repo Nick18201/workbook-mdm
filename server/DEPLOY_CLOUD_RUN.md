@@ -31,6 +31,21 @@ Google Cloud Run permet d'héberger ce service gratuitement (dans le quota Free 
 * Le SDK Google Cloud installé (`gcloud`).
 * Un projet GCP actif avec facturation activée.
 
+### Clé Gemini dans Secret Manager (à faire une fois)
+
+La clé n'est jamais écrite dans la configuration Cloud Run : elle est rangée dans le secret `gemini-api-key`, et Cloud Run l'injecte au démarrage dans la variable d'environnement `GEMINI_API_KEY` que lit l'application. Ne jamais la passer avec `--set-env-vars` : elle serait lisible en clair par tout compte qui peut consulter le service, et recopiée dans chaque révision.
+
+1. Créer la clé dans Google AI Studio (https://aistudio.google.com/api-keys, **Create API key**). Les nouvelles clés sont limitées à l'API Gemini par défaut.
+2. Activer Secret Manager :
+   ```bash
+   gcloud services enable secretmanager.googleapis.com
+   ```
+3. Créer le secret dans la console (**Sécurité → Secret Manager → Créer un secret**), nom `gemini-api-key`, en collant la clé comme valeur, sans espace ni retour à la ligne final.
+4. Autoriser le compte d'exécution du service (par défaut le compte Compute) à lire ce secret, et uniquement celui-là :
+   ```bash
+   gcloud secrets add-iam-policy-binding gemini-api-key --member=serviceAccount:<NUMÉRO_PROJET>-compute@developer.gserviceaccount.com --role=roles/secretmanager.secretAccessor
+   ```
+
 ### Commande de premier déploiement :
 
 ```bash
@@ -39,10 +54,27 @@ gcloud run deploy mdm-workbook-generator \
   --region europe-west1 \
   --no-allow-unauthenticated \
   --iap \
-  --set-env-vars GEMINI_API_KEY="VOTRE_CLE_API_GEMINI" \
+  --set-secrets GEMINI_API_KEY=gemini-api-key:latest \
   --memory 512Mi \
   --cpu 1
 ```
+
+Pour vérifier qu'aucune clé n'est en clair, la variable doit apparaître comme une référence au secret (`secretKeyRef`), sans `value` :
+
+```bash
+gcloud run services describe mdm-workbook-generator --region europe-west1 --format="value(spec.template.spec.containers[0].env)"
+```
+
+### Changer de clé (rotation)
+
+1. Créer une nouvelle clé dans AI Studio, sans supprimer l'ancienne.
+2. Dans la console Secret Manager, ouvrir `gemini-api-key` et **Ajouter une version** avec la nouvelle clé.
+3. Créer une nouvelle révision pour que les instances relisent le secret (il est lu au démarrage) :
+   ```bash
+   gcloud run services update mdm-workbook-generator --region europe-west1 --update-secrets GEMINI_API_KEY=gemini-api-key:latest
+   ```
+4. Lancer une analyse dans l'interface : pas de bandeau orange = la nouvelle clé fonctionne.
+5. Supprimer l'ancienne clé dans AI Studio, puis désactiver l'ancienne version du secret.
 
 > ⚠️ **Ne jamais ajouter `--allow-unauthenticated`** : ce flag donne le rôle d'invocation à `allUsers`, ce qui rend l'adresse `*.run.app` publique et contourne l'IAP. L'application n'a aucune authentification propre : toute la protection vient de l'IAP (section 3).
 
@@ -98,7 +130,7 @@ Dès que vous avez poussé (`git push`) du nouveau code sur GitHub :
    cd ~/workbook-mdm
    git pull
    ```
-2. Relancez le déploiement (Cloud Run conserve automatiquement toutes les configurations et variables d'environnement existantes) :
+2. Relancez le déploiement (Cloud Run conserve automatiquement toutes les configurations, variables d'environnement et références au secret existantes ; inutile de repasser la clé) :
    ```bash
    gcloud run deploy mdm-workbook-generator --source . --region europe-west1
    ```
