@@ -245,6 +245,22 @@ def heading_height(title, max_width, size=None, font=None, tracking=None, min_si
     return len(lines) * (leading or size * PDFStyle.LEADING_TITLE)
 
 
+def draw_card_title(c, first, second, x, top, width, size=None):
+    """
+    Card title in two parts: the first in DM Sans 700 ink, the second in DM Sans italic
+    400 blue (« Moteurs profonds et réalité économique / pour valider chaque décision »).
+    Returns its height.
+    """
+    size = size or PDFStyle.SIZE_TITLE_CARD
+    leading = size * 1.15
+    tracking = PDFStyle.TRACKING_TITLE_CARD
+    h = draw_paragraph(c, first, x, top, width, PDFStyle.FONT_HEADING_BOLD, size, PDFStyle.COLOR_INK, leading, tracking)
+    if second:
+        h += draw_paragraph(c, second, x, top - h, width, PDFStyle.FONT_HEADING_ITALIC, size, PDFStyle.COLOR_BLUE,
+                            leading, tracking)
+    return h
+
+
 # --- Markers (PT Mono) -------------------------------------------------------
 
 def draw_eyebrow(c, x, y, text, color=None, size=None, tracking=None, max_width=None, align="left"):
@@ -350,6 +366,15 @@ def draw_disc(c, cx, cy, r, color, alpha=1.0):
     c.setFillColor(color, alpha=alpha)
     c.circle(cx, cy, r, stroke=0, fill=1)
     c.restoreState()
+
+
+_PASTEL_ORDER = ("sky", "mint", "almond", "lilac", "blush")
+
+
+def pastel_cycle(c):
+    """The document pastel first, then the other card pastels (jasmine stays for post-its)."""
+    dominant = document_pastel(c)
+    return [dominant] + [PDFStyle.PASTELS[n] for n in _PASTEL_ORDER if PDFStyle.PASTELS[n] != dominant]
 
 
 # --- Hand-made touches -------------------------------------------------------
@@ -558,6 +583,55 @@ def draw_icon_badge(c, cx, cy, name, diameter=26, on_pastel=False, color=None, f
     draw_icon(c, name, cx, cy, diameter * 0.56, color)
 
 
+def draw_frise(c, x, y, width, steps, start_label="", end_label="", background=None):
+    """
+    Timeline: a dotted ink line at 25 % from a dot to a triangle, with an icon badge per
+    step (pastel disc ringed with the background color), its title and its marker below.
+    steps: [(icon, title, marker), ...]. y is the line's height. Returns the height used
+    below the line.
+    """
+    background = background or PDFStyle.COLOR_SURFACE_CARD
+    badge = 30
+    c.saveState()
+    c.setStrokeColor(PDFStyle.COLOR_INK, alpha=0.25)
+    c.setLineWidth(1.5)
+    c.setDash(3, 3)
+    c.line(x + 6, y, x + width - 8, y)
+    c.restoreState()
+    draw_disc(c, x + 4.5, y, 4.5, PDFStyle.COLOR_INK)
+    c.saveState()
+    c.setFillColor(PDFStyle.COLOR_INK)
+    p = c.beginPath()
+    p.moveTo(x + width - 9, y + 5)
+    p.lineTo(x + width, y)
+    p.lineTo(x + width - 9, y - 5)
+    p.close()
+    c.drawPath(p, stroke=0, fill=1)
+    c.restoreState()
+    if start_label:
+        draw_eyebrow(c, x, y + badge / 2 + 10, start_label, size=PDFStyle.SIZE_FOLIO)
+    if end_label:
+        draw_eyebrow(c, x + width, y + badge / 2 + 10, end_label, size=PDFStyle.SIZE_FOLIO, align="right")
+
+    n = max(len(steps), 1)
+    col = (width - 30) / n
+    lowest = y
+    pastels = [PDFStyle.COLOR_LILAC, PDFStyle.COLOR_SKY, PDFStyle.COLOR_MINT, PDFStyle.COLOR_ALMOND]
+    for i, (icon, title, marker) in enumerate(steps):
+        cx = x + 24 + i * col + badge / 2
+        draw_disc(c, cx, y, badge / 2 + 4, background)  # ring of the background color
+        draw_icon_badge(c, cx, y, icon, diameter=badge, fill=pastels[i % len(pastels)], color=PDFStyle.COLOR_INK)
+        top = y - badge / 2 - 10
+        top -= draw_paragraph(c, title, cx - badge / 2, top, col - 10, PDFStyle.FONT_HEADING_BOLD, 10, PDFStyle.COLOR_INK,
+                              12.5)
+        if marker:
+            draw_eyebrow(c, cx - badge / 2, top - 10, marker, size=PDFStyle.SIZE_FOLIO, color=PDFStyle.COLOR_BLUE,
+                         max_width=col - 10)
+            top -= 14
+        lowest = min(lowest, top)
+    return y - lowest
+
+
 # --- Brand -------------------------------------------------------------------
 
 def draw_logotype(c, x, y, size=14, color=None):
@@ -605,18 +679,22 @@ def draw_page_head(c, title, eyebrow=None, suffix="", title_size=None, min_size=
     Top of a content page: the eyebrow (sourcil) then the page title with its accent.
     Returns the y under the title, where the content starts.
     """
-    _, height = A4
+    page_w, height = A4
     x, width = content_frame()
+    # A jasmine disc cut by the top right corner; the title stays clear of it
+    draw_disc(c, page_w + 0.6 * 28.3465, height + 0.6 * 28.3465, 3.6 * 28.3465, PDFStyle.COLOR_JASMINE)
+    title_w = width - 2.6 * 28.3465
     top = height - PDFStyle.EYEBROW_TOP
     if eyebrow:
-        draw_eyebrow(c, x, top, eyebrow, max_width=width)
-        top -= 0.55 * 28.3465
+        # The exercise marker is a pill label (« EXERCICE 2 · 20 MIN »)
+        _, pill_h = draw_label_pill(c, x, top - 6, eyebrow, max_width=title_w)
+        top -= 6 + 0.4 * 28.3465
     else:
         top += 0.25 * 28.3465
     if not title:
         return top
     return draw_heading(
-        c, title, x, top, width,
+        c, title, x, top, title_w,
         size=title_size or PDFStyle.SIZE_TITLE_PAGE,
         min_size=min_size or PDFStyle.SIZE_TITLE_PAGE_MIN,
         max_lines=2, suffix=suffix,

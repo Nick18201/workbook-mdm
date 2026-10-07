@@ -5,7 +5,6 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
-from .utils import ellipsize
 from .config import PDFStyle
 from .components import (
     HINT_LEADING,
@@ -19,10 +18,7 @@ from .components import (
 from .forms import create_checkbox, reserve_field_name
 from .primitives import (
     content_frame,
-    draw_eyebrow,
-    draw_field_box,
     draw_folio,
-    draw_heading,
     draw_label_pill,
     draw_page_head,
     draw_paragraph,
@@ -34,6 +30,7 @@ from .primitives import (
     paragraph_height,
     text_width,
     fit_text,
+    pastel_cycle,
     wrap_text,
 )
 
@@ -133,7 +130,7 @@ class PageLayout:
 
     def _question_text_height(self, question, subtitle=None, example=None):
         """Vertical space taken by a question block, input box excluded (matches add_question_block)."""
-        return question_text_height(self.target_width, question, subtitle, example) + 0.6 * cm
+        return question_text_height(self.target_width, question, subtitle, example) + 0.45 * cm
 
     def add_text(self, text, config: TextConfig = None):
         """Adds a paragraph of text, automatically wrapping and moving the cursor."""
@@ -169,7 +166,7 @@ class PageLayout:
             self.c, self.text_x, self.y_cursor, self.target_width, question, form_field_id, box_h,
             subtitle=config.subtitle, example=config.example,
         )
-        self.y_cursor = bottom - 0.6 * cm
+        self.y_cursor = bottom - 0.45 * cm
         self.question_index += 1
         return self.y_cursor
 
@@ -348,6 +345,7 @@ class PageLayout:
                 h += 2 + paragraph_height(c_sub, inner_w, PDFStyle.FONT_BODY, sub_size, sub_lead)
             return h
 
+        pastels = pastel_cycle(self.c)
         for r_idx in range(0, len(parsed), cols):
             row = parsed[r_idx:r_idx + cols]
             texts_h = max(texts_height(t, s) for t, s, _, _ in row)
@@ -357,7 +355,7 @@ class PageLayout:
             row_y = self.y_cursor - h
             for c_idx, (c_title, c_sub, c_fid, c_placeholder) in enumerate(row):
                 card_x = self.text_x + c_idx * (col_w + gap)
-                draw_pastel_card(self.c, card_x, row_y, col_w, h)
+                draw_pastel_card(self.c, card_x, row_y, col_w, h, color=pastels[(r_idx + c_idx) % 2])
                 t = self.y_cursor - pad
                 t -= draw_paragraph(self.c, c_title, card_x + pad, t, inner_w, PDFStyle.FONT_HEADING_BOLD,
                                     title_size, PDFStyle.COLOR_INK, title_lead)
@@ -381,19 +379,24 @@ class PageLayout:
         self.question_index += 1
 
         label = str(label)
-        label_h = paragraph_height(label, self.target_width, PDFStyle.FONT_HEADING_BOLD,
+        pad = 0.45 * cm
+        inner_w = self.target_width - 2 * pad
+        label_h = paragraph_height(label, inner_w, PDFStyle.FONT_HEADING_BOLD,
                                    PDFStyle.SIZE_TITLE_ELEMENT, PDFStyle.SIZE_TITLE_ELEMENT * 1.3)
         scale_h = choice_scale_height(bool(min_label or max_label))
-        self._ensure_space(label_h + 6 + scale_h)
+        card_h = 2 * pad + label_h + 6 + scale_h
+        self._ensure_space(card_h)
 
-        self.y_cursor -= draw_paragraph(self.c, label, self.text_x, self.y_cursor, self.target_width,
-                                        PDFStyle.FONT_HEADING_BOLD, PDFStyle.SIZE_TITLE_ELEMENT, PDFStyle.COLOR_INK,
-                                        PDFStyle.SIZE_TITLE_ELEMENT * 1.3) + 6
+        draw_pastel_card(self.c, self.text_x, self.y_cursor - card_h, self.target_width, card_h,
+                         color=pastel_cycle(self.c)[1], radius=12)
+        top = self.y_cursor - pad
+        top -= draw_paragraph(self.c, label, self.text_x + pad, top, inner_w, PDFStyle.FONT_HEADING_BOLD,
+                              PDFStyle.SIZE_TITLE_ELEMENT, PDFStyle.COLOR_INK, PDFStyle.SIZE_TITLE_ELEMENT * 1.3) + 6
         group = reserve_field_name(self.form, fid_base)
-        scale_w = min(self.target_width, (max_val - min_val + 1) * 1.45 * cm)
-        self.y_cursor -= draw_choice_scale(self.c, group, self.text_x, self.y_cursor, scale_w,
-                                           list(range(min_val, max_val + 1)), min_label, max_label, tooltip=label)
-        self.y_cursor -= PDFStyle.GAP_BLOCK
+        scale_w = min(inner_w, (max_val - min_val + 1) * 1.45 * cm)
+        draw_choice_scale(self.c, group, self.text_x + pad, top, scale_w,
+                          list(range(min_val, max_val + 1)), min_label, max_label, tooltip=label)
+        self.y_cursor -= card_h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 
     def add_checklist(self, items, title=None, columns=1, field_prefix="chk"):

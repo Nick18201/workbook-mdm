@@ -107,7 +107,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - 'deep' (Complet) : STRICTEMENT PLUS DE 10 PAGES (11 à 14 pages).
      Parcours d'introspection approfondi et complet : Couverture, Sommaire, (Météo si demandée), Matrice 4 piliers, Passerelle freins/leviers, Enquête exploratoire terrain, Tableau d'évaluation / Crash test, Matrice d'arbitrage de cap, Feuille de route 30-60-90j, Questions d'ancrage, (Engagement si demandé), Clôture.
 3. Structure & Enchaînement des pages :
-   - Page 1 : 'cover' (Couverture standard avec titre et sous-titre)
+   - Page 1 : 'cover' (Couverture : numéro et titre du chapitre, et la promesse du carnet sur un post-it)
    - Page 2 : 'summary' (Sommaire fidèle des étapes du livret avec numéros et courtes descriptions)
    - Page 3 (Conditionnelle selon l'option Page Météo demandée) :
      * Si Check-in = 'none' : NE METS AUCUNE PAGE MÉTÉO NI ICE-BREAKER ! Passe immédiatement aux exercices de fond après le sommaire.
@@ -127,12 +127,12 @@ RÈGLES D'OR DE STRUCTURATION :
        - 'table' : tableau structuré avec headers et cellules de saisie
        - 'stat_boxes' : rangée de 2 à 4 chiffres clés ou indicateurs phares
        - 'question' : question ouverte avec champ de saisie
-   - Page avant-dernière (Conditionnelle) : 'engagement' (Pacte moral, 4 à 6 puces affirmatives et bienveillantes + signature).
+   - Page avant-dernière (Conditionnelle) : 'engagement' (Fin de carnet : le livrable du carnet sur un post-it avec le tampon « Validé en séance », la date de la séance, puis 3 à 5 engagements à cocher).
      * Si include_engagement est False : Ne PAS inclure de page 'engagement'.
-   - Dernière page : 'closing' (Page finale avec messages chaleureux et logo centré).
+   - Dernière page : 'closing' (4e de couverture : la signature de Marge de Manœuvre et 2 ou 3 phrases courtes).
 4. Calibrage des textes & Aération visuelle :
    - AUCUN émoji ni pictogramme (☀️, 🎯, ✅, 🟢…) dans les textes : la police du PDF ne les affiche pas.
-   - Titre de page : 25 à 45 caractères maximum.
+   - Titre de page : 25 à 45 caractères maximum. Son dernier mot s'affiche en corail ; pour mettre en corail un autre groupe de mots, entoure-le d'astérisques (ex : "Mon rapport *à l'argent.*").
    - Question : max 120 caractères.
    - Exemple : max 90 caractères. Écris directement l'exemple SANS préfixe "Ex :" ou "Exemple :" (ex: "Responsable RSE en PME...").
    - Points de sommaire ('desc') : max 85 caractères par point.
@@ -146,7 +146,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - Sois synthétique, inspirant et orienté passage à l'action.
 
 5. STRUCTURE DES PARAMÈTRES PAR GABARIT (dans "params") :
-   - 'cover' : {"subtitle": "Sous-titre (ex: Chapitre 4 : ...)", "title": "BILAN DE COMPÉTENCES & ALIGNEMENT"}
+   - 'cover' : {"subtitle": "Chapitre 4 : Mon rapport à l'argent", "title": "BILAN DE COMPÉTENCES", "promise": "Phrase de 3 à 8 mots sur ce que le carnet apporte (post-it)"}
    - 'summary' : {"intro_text": "Court texte d'introduction...", "points": [{"label": "01", "desc": "Titre et résumé de l'étape"}]}
    - 'meteo' : {"emotion_prompt": "Aujourd'hui, je me sens :", "energy_prompt": "Mon niveau d'énergie :", "thought_prompt": "Ce qui prend le plus de place dans ma tête :"}
    - 'quadrants' : {"instruction": "Consigne...", "quadrants": [{"title": "Professionnel", "subtitle": "Sens, Mission"}, {"title": "Personnel", "subtitle": "Santé, Équilibre"}, {"title": "Social", "subtitle": "Relations"}, {"title": "Cadre", "subtitle": "Limites, Règles"}]}
@@ -154,7 +154,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - 'questions' : {"intro_text": "...", "questions": [{"question": "Intitulé...", "subtitle": "Précision...", "example": "Responsable RSE en PME..."}]}
    - 'enquete' : {"intro_text": "...", "questions": [{"title": "1. Besoins & Douleurs", "subtitle": "..."}, {"title": "2. Solutions & Limites", "subtitle": "..."}, {"title": "3. Recommandations", "subtitle": "..."}]}
    - 'roadmap' : {"intro_text": "...", "stages": [{"period": "PALIER 1 · 0 À 30 JOURS", "theme": "CONSOLIDER", "default_obj": "Objectif...", "actions": ["Action 1", "Action 2", "Action 3"], "default_kpi": "KPI..."}]}
-   - 'engagement' : {"lines": ["Je m'engage à...", "À regarder...", "À tester...", "Ce travail est pour moi..."]}
+   - 'engagement' : {"livrable_title": "Nom du livrable validé en séance", "livrable_text": "Une phrase qui décrit ce livrable", "lines": ["Engagement concret 1", "Engagement concret 2", "Engagement concret 3"]}
    - 'closing' : {"messages": ["Félicitations pour ce temps pris pour vous.", "Laissez infuser ces réflexions.", "À très vite pour la prochaine étape."]}
    - 'composite' : la liste des composants va dans "blocks" (2 blocs idéalement, max 3 petits). RÈGLE CRITIQUE : Ne JAMAIS produire un bloc vide ! Chaque bloc DOIT contenir son contenu textuel complet :
      * 'callout' : {"type": "callout", "title": "Titre du repère", "text": "Citation percutante ou conseil clé...", "variant": "info|tip|quote"}
