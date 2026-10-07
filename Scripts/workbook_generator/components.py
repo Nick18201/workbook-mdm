@@ -1,5 +1,13 @@
-import os
-import math
+"""
+Full-page templates and shared blocks of the workbooks, in the « Éditorial & Affirmé »
+art direction (DA-workbook.md, section 8): white pages, an eyebrow and a punctuated title
+with a coral accent, pastel cards, fields bordered in `line-strong`, PT Mono folio.
+
+Every page function ends its own page (c.showPage()). Long content continues on pages
+titled "<title> (suite)", so nothing is drawn off the page.
+"""
+
+import re
 from xml.sax.saxutils import escape
 from dataclasses import dataclass
 
@@ -9,224 +17,109 @@ from reportlab.lib.units import cm
 from reportlab.lib.utils import simpleSplit
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.enums import TA_JUSTIFY
 
 from .config import PDFStyle
+from .document_builder import document_pastel
 from .forms import create_input_field, create_checkbox, create_radio, reserve_field_name
-from .utils import cached_image_reader, fit_font_size, ellipsize
+from .primitives import (
+    content_frame,
+    draw_annotation,
+    draw_disc,
+    draw_drawn_arrow,
+    draw_eyebrow,
+    draw_field_box,
+    draw_filled_arrow,
+    draw_folio,
+    draw_heading,
+    draw_icon_badge,
+    draw_label_pill,
+    draw_logotype,
+    draw_number,
+    draw_paragraph,
+    draw_pastel_card,
+    draw_page_head,
+    draw_rule,
+    draw_signature,
+    draw_stamp,
+    draw_star_list,
+    draw_text,
+    draw_white_card,
+    first_baseline,
+    heading_height,
+    label_pill_size,
+    paragraph_height,
+    postit,
+    stamp_size,
+    star_list_height,
+    text_width,
+    wrap_text,
+)
+from .utils import fit_font_size, ellipsize
 
+WIDTH, HEIGHT = A4
+
+
+# --- Former helpers, restyled (the hand-drawn chapter pages use them until lot E5) ---
 
 def draw_page_background(c, width, height, use_blobs=False):
-    """Refactored: Standard background with Nude color, Dot Grid, and Waves."""
-    c.setFillColor(PDFStyle.COLOR_BG_NUDE)
-    c.rect(0, 0, width, height, fill=1, stroke=0)
-
-    if use_blobs:
-        draw_background_blobs(c, width, height)
-    else:
-        draw_wavy_background(c, width, height)
-
-    draw_dot_grid(c, width, height)
-
-
-def draw_page_decorations(c, width, height, part_title=None, x_offset=0):
-    """Draws Header (Logo + part title) and Footer (Page num) on top of the content."""
-    if part_title is not None:
-        draw_page_header(c, part_title, width, height, x_offset=x_offset)
-    draw_page_footer(c, width, height, x_offset=x_offset)
-
-
-def draw_wavy_background(c, width, height):
-    """Draws subtle organic wave shapes in the background."""
-    c.saveState()
-    c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.4)
-
-    # Top Left Wave
-    p1 = c.beginPath()
-    p1.moveTo(0, height)
-    p1.curveTo(width * 0.3, height, width * 0.5, height * 0.85, 0, height * 0.65)
-    c.drawPath(p1, fill=1, stroke=0)
-
-    # Bottom Right Wave
-    p2 = c.beginPath()
-    p2.moveTo(width, 0)
-    p2.curveTo(width * 0.7, 0, width * 0.5, height * 0.15, width, height * 0.35)
-    c.drawPath(p2, fill=1, stroke=0)
-    c.restoreState()
-
-
-def draw_background_blobs(c, width, height):
-    """Draws large soft organic blobs at Top-Right and Bottom-Left."""
-    c.saveState()
-    c.setFillColor(PDFStyle.COLOR_BG_BLOB, alpha=0.5)
-
-    # Top Right Blob - slightly larger
-    c.circle(width * 0.95, height * 0.92, 140, fill=1, stroke=0)
-
-    # Bottom Blob - spans full width
-    p = c.beginPath()
-    p.moveTo(0, height * 0.25)
-    p.curveTo(
-        width * 0.3, height * 0.3, width * 0.7, height * 0.1, width, height * 0.2
-    )
-    p.lineTo(width, 0)
-    p.lineTo(0, 0)
-    p.close()
-    c.drawPath(p, fill=1, stroke=0)
-    c.restoreState()
-
-
-def draw_page_header(c, part_title, width, height, x_offset=0):
-    """Draws the standard header: small logo left, part title right."""
-    c.saveState()
-    # Left Logo - Shifted by x_offset + internal padding
-    logo_y = height - 1.5 * cm
-    draw_branding_logo(c, x_offset + 0.8 * cm, logo_y, size=12)
-
-    # Right Part Title - Shifted from right edge
-    if part_title:
-        c.setFont(PDFStyle.FONT_TITLE, 10)
-        c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-        c.drawRightString(width - 1.2 * cm, logo_y, part_title.upper())
-    c.restoreState()
-
-
-def draw_page_footer(c, width, height, x_offset=0):
-    """Draws the standard footer: page number centered relative to the content area."""
-    c.saveState()
-    page_num = c.getPageNumber()
-    c.setFont(PDFStyle.FONT_TITLE, 10)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-
-    # Center relative to the panel if x_offset is provided
-    content_area_center = x_offset + (width - x_offset) / 2.0
-    c.drawCentredString(content_area_center, 1.5 * cm, str(page_num))
-    c.restoreState()
-
-
-def draw_dot_grid(c, width, height, color=PDFStyle.COLOR_ACCENT_BLUE, opacity=0.015):
-    """
-    Draws the signature Dot Grid using Form XObjects to dramatically improve performance
-    and reduce output PDF size by caching the grid.
-    """
-    # Initialize cache dictionary on canvas object if it doesn't exist
-    if not hasattr(c, "_dot_grid_cache"):
-        c._dot_grid_cache = {}
-
-    # Create a unique cache key based on dimensions, color, and opacity
-    color_val = getattr(color, "hexval", color)
-    cache_key = (width, height, color_val, opacity)
-
-    if cache_key not in c._dot_grid_cache:
-        # Use a simple, safe name for the XObject to avoid escaping issues
-        form_name = f"DotGrid_{len(c._dot_grid_cache)}"
-        c.beginForm(form_name)
-        step = 25
-        c.setFillColor(color, alpha=opacity)
-        # Using a single path is faster than emitting individual circle operators
-        p = c.beginPath()
-        for x in range(0, int(width), step):
-            for y in range(0, int(height), step):
-                p.circle(x, y, 0.4)
-        c.drawPath(p, fill=1, stroke=0)
-        c.endForm()
-        c._dot_grid_cache[cache_key] = form_name
-
-    c.saveState()
-    c.doForm(c._dot_grid_cache[cache_key])
-    c.restoreState()
-
-
-def draw_marginal_signature(c, height):
-    """Draws vertical 'marge de manœuvre' signature on the left."""
-    c.saveState()
-    c.translate(1.2 * cm, height / 2)
-    c.rotate(90)
-    c.setFont(PDFStyle.FONT_BODY, 8)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawCentredString(0, 0, "m a r g e   d e   m a n œ u v r e")
-    c.restoreState()
-
-
-def draw_card(c, x, y, width, height):
-    """Draws a creme rounded card with shadow."""
-    c.saveState()
-    # Soft Shadow
-    c.setFillColor(PDFStyle.COLOR_SHADOW, alpha=0.03)
-    c.roundRect(x + 3, y - 3, width, height, PDFStyle.CARD_RADIUS, fill=1, stroke=0)
-    # Card
-    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
-    c.roundRect(x, y, width, height, PDFStyle.CARD_RADIUS, fill=1, stroke=0)
-    c.restoreState()
+    """Pages are white in the art direction: nothing to draw. Kept for the chapter pages."""
 
 
 def draw_side_panel(c, x, page_width, page_height):
-    """Draws a creme panel extending to Top, Bottom, Right."""
-    c.saveState()
-    # Shadow (Left side only)
-    c.setFillColor(PDFStyle.COLOR_SHADOW, alpha=0.05)
-    c.rect(x - 3, 0, page_width - x + 3, page_height, fill=1, stroke=0)
-
-    # Main Creme Panel
-    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
-    c.rect(x, 0, page_width - x, page_height, fill=1, stroke=0)
-    c.restoreState()
+    """The side panel of the former art direction is gone: nothing to draw."""
 
 
-def draw_symbol(c, char, x, y, size, color):
+def draw_page_header(c, part_title, width, height, x_offset=0):
+    """Eyebrow at the top of the page."""
+    if part_title:
+        x, content_w = content_frame()
+        draw_eyebrow(c, x, height - PDFStyle.EYEBROW_TOP, part_title, max_width=content_w)
+
+
+def draw_page_footer(c, width, height, x_offset=0):
+    """Folio at the bottom of the page."""
+    draw_folio(c)
+
+
+def draw_page_decorations(c, width, height, part_title=None, x_offset=0):
+    """Eyebrow (when part_title is given) and folio, for pages that draw their own title."""
+    draw_page_header(c, part_title, width, height, x_offset)
+    draw_folio(c)
+
+
+def draw_card(c, x, y, width, height):
+    """Pastel card in the document's dominant pastel."""
+    draw_pastel_card(c, x, y, width, height)
+
+
+@dataclass
+class TitleStyle:
+    size: float = 24
+    color: object = None  # titles are ink in the art direction; kept for the former callers
+
+
+def draw_title(c, text, pos, available_width=None, style: TitleStyle = None):
     """
-    Draws a pictogram from ZapfDingbats, the symbol font built into every PDF viewer
-    (✔ ✓ ★ ➔ ➤ ☛ ✉ ☎ ● ◆…), since Montserrat has none of them. Pass the Unicode
-    character: ReportLab maps it. Returns the symbol width so text can follow it.
+    Title whose first baseline is at pos (former API): ink with a coral accent on the
+    last word. Returns the y one line below the title, as before.
     """
-    c.saveState()
-    c.setFont("ZapfDingbats", size)
-    c.setFillColor(color)
-    c.drawString(x, y, char)
-    c.restoreState()
-    return c.stringWidth(char, "ZapfDingbats", size)
+    style = style or TitleStyle()
+    x, y = pos
+    if available_width is None:
+        available_width = WIDTH - x - PDFStyle.MARGIN_MAIN
+    leading = style.size * PDFStyle.LEADING_TITLE
+    top = y + (leading - style.size) / 2 + 0.8 * style.size
+    bottom = draw_heading(c, text, x, top, available_width, size=style.size, min_size=style.size, max_lines=4)
+    n_lines = round((top - bottom) / leading)
+    return y - n_lines * style.size * 1.2
 
 
-def _draw_cloud(c, x, y, w):
-    """Filled cloud silhouette: bottom-left corner at (x, y), w wide, about 0.56 w tall."""
-    c.circle(x + 0.30 * w, y + 0.22 * w, 0.20 * w, fill=1, stroke=0)
-    c.circle(x + 0.58 * w, y + 0.30 * w, 0.26 * w, fill=1, stroke=0)
-    c.roundRect(x + 0.06 * w, y, 0.88 * w, 0.26 * w, 0.13 * w, fill=1, stroke=0)
-
-
-def draw_weather_icon(c, kind, x, y, size, color):
-    """Vector weather pictogram ('soleil', 'nuageux', 'pluvieux', 'orageux') in a size x size box at (x, y)."""
-    c.saveState()
-    c.setFillColor(color)
-    c.setStrokeColor(color)
-    c.setLineWidth(max(0.8, size / 14.0))
-    c.setLineCap(1)
-    if kind == "soleil":
-        cx, cy, r = x + size / 2, y + size / 2, size * 0.2
-        c.circle(cx, cy, r, fill=1, stroke=0)
-        for i in range(8):
-            a = math.radians(i * 45)
-            c.line(cx + math.cos(a) * r * 1.5, cy + math.sin(a) * r * 1.5,
-                   cx + math.cos(a) * r * 2.3, cy + math.sin(a) * r * 2.3)
-    elif kind == "nuageux":
-        _draw_cloud(c, x, y + size * 0.22, size)
-    else:
-        _draw_cloud(c, x + size * 0.05, y + size * 0.42, size * 0.9)
-        if kind == "pluvieux":
-            for i in range(3):
-                drop_x = x + size * (0.30 + i * 0.22)
-                c.line(drop_x, y + size * 0.34, drop_x - size * 0.08, y + size * 0.08)
-        else:  # orageux: lightning bolt under the cloud
-            p = c.beginPath()
-            p.moveTo(x + size * 0.56, y + size * 0.44)
-            p.lineTo(x + size * 0.36, y + size * 0.20)
-            p.lineTo(x + size * 0.50, y + size * 0.20)
-            p.lineTo(x + size * 0.40, y)
-            p.lineTo(x + size * 0.66, y + size * 0.27)
-            p.lineTo(x + size * 0.52, y + size * 0.27)
-            p.close()
-            c.drawPath(p, fill=1, stroke=0)
-    c.restoreState()
+def draw_branding_logo(c, x, y, size=40, align="left"):
+    """Logotype « marge / de manœuvre » (former API: size 40 = cover size)."""
+    logo_size = size * 0.6
+    if align == "center":
+        x -= text_width("de manœuvre", PDFStyle.FONT_LOGO, logo_size, -0.05) / 2
+    draw_logotype(c, x, y, size=logo_size)
 
 
 def draw_fitted_text(c, text, x, y, max_width, font_name, size, min_size=None,
@@ -256,612 +149,424 @@ def draw_fitted_text(c, text, x, y, max_width, font_name, size, min_size=None,
     return len(lines), size
 
 
-@dataclass
-class LeafStyle:
-    size: float = 50
-    color: str = PDFStyle.COLOR_ACCENT_BLUE
-    angle: float = 0
-    alpha: float = 1.0
-
-
-def draw_leaf(c, pos, style: LeafStyle = None):
-    """Leaf decoration."""
-    if style is None:
-        style = LeafStyle()
-
-    x, y = pos
-
-    c.saveState()
-    c.translate(x, y)
-    c.rotate(style.angle)
-    c.scale(style.size / 100.0, style.size / 100.0)
-    p = c.beginPath()
-    p.moveTo(0, 0)
-    p.curveTo(30, 20, 50, 60, 0, 100)
-    p.curveTo(-50, 60, -30, 20, 0, 0)
-    if isinstance(style.color, colors.Color):
-        r, g, b = style.color.red, style.color.green, style.color.blue
-        c.setFillColorRGB(r, g, b, style.alpha)
-    else:
-        c.setFillColor(style.color)
-    c.drawPath(p, fill=1, stroke=0)
-    c.restoreState()
-
-
-@dataclass
-class TitleStyle:
-    size: float = 24
-    color: str = PDFStyle.COLOR_ACCENT_BLUE
-
-
-def draw_title(c, text, pos, available_width=None, style: TitleStyle = None):
-    """Refactored: Standard H1 title. Returns the Y position after the title."""
-    if style is None:
-        style = TitleStyle()
-
-    x, y = pos
-
-    if available_width is None:
-        width, _ = A4
-        available_width = width - x - 2 * cm
-
-    c.saveState()
-    c.setFont(PDFStyle.FONT_TITLE, style.size)
-    c.setFillColor(style.color)
-
-    lines = simpleSplit(text, PDFStyle.FONT_TITLE, style.size, available_width)
-    current_y = y
-
-    for line in lines:
-        c.drawString(x, current_y, line)
-        current_y -= style.size * 1.2
-
-    c.restoreState()
-
-    # Return the position after the last line
-    return current_y
-
-
-def draw_branding_logo(c, x, y, size=40, align="left"):
-    """
-    Draws the 'marge de manœuvre' logo with underline.
-    align: 'left' or 'center'
-    """
-    c.saveState()
-    c.setFont(PDFStyle.FONT_BRANDING, size)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-
-    line_height = size * 1.1  # Approx line height based on font size font
-
-    # Calculate underline length adaptable to size
-    length = 9 * cm * (size / 40.0)
-
-    if align == "center":
-        c.drawCentredString(x, y, "marge")
-        c.drawCentredString(x, y - line_height, "de manœuvre")
-    else:
-        c.drawString(x, y, "marge")
-        c.drawString(x, y - line_height, "de manœuvre")
-
-    # Underline
-    underline_y = y - line_height - 0.3 * cm
-    c.setLineWidth(3 * (size / 40.0))
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_RED)
-
-    if align == "center":
-        c.line(x - length / 2, underline_y, x + length / 2, underline_y)
-    else:
-        c.line(x, underline_y, x + length, underline_y)
-    c.restoreState()
-
-
-def create_closing_page(c, messages=None):
-    """
-    Standard Closing Page.
-    """
-    width, height = A4
-    draw_page_background(c, width, height)
-
-    # 1. Logo Centered
-    logo_x = width / 2
-    logo_y = height / 2 + 2.5 * cm
-
-    draw_branding_logo(c, logo_x, logo_y, size=40, align="center")
-
-    # 2. Encouraging Text (Auto-wrapped so long inspirational sentences never overflow)
-    text_y = logo_y - 3.8 * cm
-    wrap_w = width - 4.5 * cm
-
-    if not messages:
-        messages = [
-            "Félicitations pour ce temps pris pour vous.",
-            "Laissez infuser ces réflexions.",
-            "À très vite pour la suite de votre exploration.",
-        ]
-
-    style_closing = ParagraphStyle(
-        "ClosingText",
-        fontName=PDFStyle.FONT_TITLE,
-        fontSize=12,
-        leading=18,
-        textColor=PDFStyle.COLOR_TEXT_MAIN,
-        alignment=1,  # Centered
-    )
-
-    for msg in messages:
-        msg_str = (msg.get("text") or str(msg)) if isinstance(msg, dict) else str(msg)
-        if not msg_str.strip():
-            continue
-        p = Paragraph(escape(msg_str), style_closing)
-        w, h = p.wrap(wrap_w, height)
-        p.drawOn(c, (width - wrap_w) / 2, text_y - h)
-        text_y -= h + 0.6 * cm
-
-    c.showPage()
-
-
-
-def draw_section_separator(c, x, y, width, color=PDFStyle.COLOR_ACCENT_BLUE):
-    """
-    Draws a simple separator line with a centered dot/symbol.
-    """
-    c.saveState()
-    c.setStrokeColor(color)
-    c.setLineWidth(1)
-
-    # Line left
-    c.line(x, y, x + width / 2 - 0.5 * cm, y)
-    # Dot center
-    c.setFillColor(color)
-    c.circle(x + width / 2, y, 0.1 * cm, fill=1, stroke=0)
-    # Line right
-    c.line(x + width / 2 + 0.5 * cm, y, x + width, y)
-
-    c.restoreState()
-
-
-def draw_circular_stamp(c, x, y, text, radius=1.8 * cm):
-    """Draws text curved around a central point, simulating a stamp."""
-    c.saveState()
-    c.translate(x, y)
-    c.rotate(-15)  # slight tilt
-
-    c.setFont(PDFStyle.FONT_TITLE, 8)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-
-    chars = text + " · "
-    angle_step = 360 / len(chars)
-    for i, char in enumerate(chars):
-        c.saveState()
-        angle = math.radians(i * angle_step)
-        char_x = radius * math.sin(angle)
-        char_y = radius * math.cos(angle)
-        c.translate(char_x, char_y)
-        c.rotate(-math.degrees(angle))
-        c.drawCentredString(0, 0, char)
-        c.restoreState()
-
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_RED)
-    c.setLineWidth(1)
-    # Simple placeholder shape in the center (hands/clap icon approximation)
-    c.circle(0, 0.2 * cm, radius * 0.4, stroke=1, fill=0)
-    c.line(-radius * 0.3, -0.1 * cm, radius * 0.3, -0.1 * cm)
-    c.line(-radius * 0.2, -0.3 * cm, radius * 0.2, -0.3 * cm)
-
-    c.restoreState()
-
-
 def draw_pause_badge(c, x, y, radius=0.4 * cm):
-    """Draws the 'Pause' badge icon (circle with Play + Pause bars)."""
+    """Draws the 'Pause' badge icon (circle with Play + Pause bars), in white."""
     c.saveState()
-
-    # Circle
-    c.setStrokeColor(PDFStyle.COLOR_WHITE)
+    c.setStrokeColor(PDFStyle.COLOR_SURFACE_CARD)
     c.setLineWidth(1.5)
     c.circle(x, y + 0.15 * cm, radius, fill=0, stroke=1)
-
-    # Pause bars
     bar_width = 0.08 * cm
     bar_height = 0.3 * cm
-    c.setFillColor(PDFStyle.COLOR_WHITE)
+    c.setFillColor(PDFStyle.COLOR_SURFACE_CARD)
     c.rect(x - 0.15 * cm, y, bar_width, bar_height, fill=1, stroke=0)
-
-    # Play triangle
     p = c.beginPath()
     p.moveTo(x + 0.02 * cm, y)
     p.lineTo(x + 0.02 * cm, y + bar_height)
     p.lineTo(x + 0.22 * cm, y + bar_height / 2)
     p.close()
     c.drawPath(p, fill=1, stroke=0)
-
     c.restoreState()
 
 
-def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT"):
+# --- Shared blocks ------------------------------------------------------------
+
+QUESTION_SIZE = PDFStyle.SIZE_TITLE_ELEMENT
+QUESTION_LEADING = QUESTION_SIZE * 1.3
+HINT_SIZE = PDFStyle.SIZE_BODY_SMALL
+HINT_LEADING = HINT_SIZE * 1.45
+QUESTION_GAP_TO_BOX = 6
+
+
+def example_display(example):
+    """Normalizes an example to the 'Exemple : …' form shown under a question."""
+    ex_clean = str(example).strip()
+    if ex_clean.lower().startswith("exemple :"):
+        return ex_clean
+    if ex_clean.lower().startswith("ex :"):
+        return "Exemple :" + ex_clean[4:]
+    if ex_clean.lower().startswith("ex:"):
+        return "Exemple :" + ex_clean[3:]
+    return f"Exemple : {ex_clean}"
+
+
+def question_text_height(width, question, subtitle=None, example=None):
+    """Height of a question with its hints, answer box excluded (matches draw_question)."""
+    h = paragraph_height(question, width, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
+    if subtitle:
+        h += 2 + paragraph_height(subtitle, width, PDFStyle.FONT_BODY, HINT_SIZE, HINT_LEADING)
+    if example:
+        h += 2 + paragraph_height(example_display(example), width, PDFStyle.FONT_HEADING_ITALIC, HINT_SIZE, HINT_LEADING)
+    return h + QUESTION_GAP_TO_BOX
+
+
+def draw_question(c, x, top, width, question, field_name, box_height, subtitle=None, example=None, tooltip=""):
     """
-    Standard Cover Page generator for Workbooks.
+    A question (DM Sans 700), its hint and example (ink-muted), then a white answer box
+    bordered in line-strong with a multiline field. Returns the bottom y of the box.
     """
-    width, height = A4
+    y = top
+    y -= draw_paragraph(c, question, x, y, width, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE,
+                        PDFStyle.COLOR_INK, QUESTION_LEADING)
+    if subtitle:
+        y -= 2
+        y -= draw_paragraph(c, subtitle, x, y, width, PDFStyle.FONT_BODY, HINT_SIZE,
+                            PDFStyle.COLOR_INK_MUTED, HINT_LEADING)
+    if example:
+        y -= 2
+        y -= draw_paragraph(c, example_display(example), x, y, width, PDFStyle.FONT_HEADING_ITALIC, HINT_SIZE,
+                            PDFStyle.COLOR_INK_MUTED, HINT_LEADING)
+    y -= QUESTION_GAP_TO_BOX
+    draw_answer_box(c, x, y - box_height, width, box_height, field_name, tooltip=tooltip or question)
+    return y - box_height
 
-    # 1. Background Nude + Grid
-    c.setFillColor(PDFStyle.COLOR_BG_NUDE)
-    c.rect(0, 0, width, height, fill=1, stroke=0)
-    draw_dot_grid(c, width, height)
 
-    # 1b. Blue Side Band (Left)
-    band_width = 1.75 * cm
-    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.rect(0, 0, band_width, height, fill=1, stroke=0)
+def draw_answer_box(c, x, y, width, height, field_name, tooltip="", multiline=True, value="", font_size=None):
+    """White rounded box bordered in line-strong, with a transparent form field on top."""
+    draw_field_box(c, x, y, width, height)
+    pad = 3
+    create_input_field(
+        c.acroForm, field_name, pos=(x + pad, y + pad), size=(width - 2 * pad, height - 2 * pad),
+        tooltip=tooltip, multiline=multiline, value=value, font_size=font_size, framed=False,
+    )
 
-    # A. Illustration Principale (Cover)
-    if os.path.exists(PDFStyle.PATH_ILLU_COVER):
-        content_width = width - band_width
-        img_width = content_width * 0.75
-        center_x = band_width + (content_width - img_width) / 2
 
-        c.drawImage(
-            cached_image_reader(PDFStyle.PATH_ILLU_COVER),
-            center_x,
-            height * 0.10,
-            width=img_width,
-            height=height * 0.5,
-            mask="auto",
-            preserveAspectRatio=True,
-            anchor="sw",
-        )
-    else:
-        # Fallback
-        c.setFillColor(PDFStyle.COLOR_WHITE)
-        c.circle(width * 0.35, height * 0.55, 160, fill=1, stroke=0)
+SCALE_NUMBER_SIZE = 8
 
-    # 2b. Marque Header
-    logo_x = band_width + 1.5 * cm
-    logo_y = height - 3 * cm
-    draw_branding_logo(c, logo_x, logo_y, size=40)
 
-    # 2c. Stamp Rouge
-    if os.path.exists(PDFStyle.PATH_STAMP):
+def choice_scale_height(with_labels):
+    return SCALE_NUMBER_SIZE + 4 + 20 + (14 if with_labels else 0)
+
+
+def draw_choice_scale(c, group, x, top, width, values, min_label="", max_label="", tooltip=""):
+    """
+    A single-choice scale as a row of pastilles: the value above each disc, one radio
+    button per disc (reserve `group` once with reserve_field_name). Returns its height.
+    """
+    n = len(values)
+    d = min(20, (width / max(n, 1)) * 0.75)
+    step = (width - d) / (n - 1) if n > 1 else 0
+    num_y = top - SCALE_NUMBER_SIZE
+    disc_cy = num_y - 4 - 10
+    for i, val in enumerate(values):
+        cx = x + d / 2 + i * step
+        draw_text(c, cx, num_y, str(val), PDFStyle.FONT_LABEL, SCALE_NUMBER_SIZE, PDFStyle.COLOR_INK_MUTED, align="center")
         c.saveState()
-        c.translate(width - 4 * cm, 4 * cm)
-        c.rotate(-15)
-        c.drawImage(
-            cached_image_reader(PDFStyle.PATH_STAMP),
-            -2 * cm,
-            -2 * cm,
-            width=4 * cm,
-            height=4 * cm,
-            mask="auto",
-            preserveAspectRatio=True,
-            anchor="c",
-        )
+        c.setFillColor(PDFStyle.COLOR_SURFACE_CARD)
+        c.setStrokeColor(PDFStyle.COLOR_LINE_STRONG)
+        c.setLineWidth(PDFStyle.LINE_WIDTH_FIELD)
+        c.circle(cx, disc_cy, d / 2, stroke=1, fill=1)
         c.restoreState()
+        create_radio(
+            c.acroForm, group, val, pos=(cx - d / 2 + 1, disc_cy - d / 2 + 1), size=d - 2,
+            tooltip=f"{tooltip} : {val}" if tooltip else str(val), framed=False,
+        )
+    if min_label or max_label:
+        label_y = disc_cy - d / 2 - 12
+        half = width / 2 - 6
+        if min_label:
+            draw_text(c, x, label_y, ellipsize(str(min_label), PDFStyle.FONT_BODY, HINT_SIZE, half),
+                      PDFStyle.FONT_BODY, HINT_SIZE, PDFStyle.COLOR_INK_MUTED)
+        if max_label:
+            draw_text(c, x + width, label_y, ellipsize(str(max_label), PDFStyle.FONT_BODY, HINT_SIZE, half),
+                      PDFStyle.FONT_BODY, HINT_SIZE, PDFStyle.COLOR_INK_MUTED, align="right")
+    return choice_scale_height(bool(min_label or max_label))
 
-    # 3. Titres
-    max_text_width = width - band_width - 40 - 1 * cm
 
-    c.setFont(PDFStyle.FONT_BODY, 14)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    title_lines = simpleSplit(title, PDFStyle.FONT_BODY, 14, max_text_width)
-
-    y_text = height - 210
-    for line in title_lines:
-        c.drawRightString(width - 40, y_text, line)
-        y_text -= 16
-
-    y_text -= 14  # Extra space between title and subtitle
-
-    c.setFont(PDFStyle.FONT_TITLE, 18)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    subtitle_lines = simpleSplit(subtitle, PDFStyle.FONT_TITLE, 18, max_text_width)
-
-    for line in subtitle_lines:
-        c.drawRightString(width - 40, y_text, line)
-        y_text -= 20
-
+def _finish_page(c):
+    draw_folio(c)
     c.showPage()
 
 
-# --- STANDARD HARMONIZED COMPONENTS ---
+def _intro(c, text, x, top, width, size=None):
+    """Lead paragraph under a page title, ink-muted. Returns its height (gap included)."""
+    if not text:
+        return 0
+    size = size or PDFStyle.SIZE_BODY
+    return draw_paragraph(c, str(text), x, top, width, PDFStyle.FONT_BODY, size, PDFStyle.COLOR_INK_MUTED) + 0.45 * cm
 
 
-def create_standard_summary_page(
-    c, chapter_num_str, chapter_title, intro_text, points_list
-):
+# --- Cover ---------------------------------------------------------------------
+
+_CHAPTER_LABEL = re.compile(r"^\s*chapitre\s+(\d+)\s*[:·.\-–—]\s*(.+)$", re.IGNORECASE)
+
+
+def split_chapter_label(label):
+    """'CHAPITRE 4 : MON RAPPORT À L'ARGENT' -> ('4', 'MON RAPPORT À L'ARGENT'); (None, label) otherwise."""
+    match = _CHAPTER_LABEL.match(str(label or ""))
+    if match:
+        return match.group(1), match.group(2).strip()
+    return None, str(label or "").strip()
+
+
+def as_title(text):
+    """A former all-caps chapter name as a punctuated title: 'MON PARCOURS' -> 'Mon parcours.'"""
+    text = " ".join(str(text).split())
+    if text.isupper():
+        text = text[:1] + text[1:].lower()
+    if text and text[-1] not in ".!?…":
+        text += "."
+    return text
+
+
+def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise=None):
     """
-    Standard Summary Page: Blue Background, large watermark number, and list of points.
+    Cover of a workbook: logotype, a pastel disc cut by the corner, the eyebrow, the big
+    chapter number in PT Mono blue, the title with its coral accent (see primitives.title_runs),
+    and the workbook's promise on a post-it.
+    """
+    x, width = content_frame()
+    pastel = document_pastel(c)
+
+    draw_disc(c, WIDTH - 1.2 * cm, HEIGHT - 4.6 * cm, 8.4 * cm, pastel)
+    draw_logotype(c, x, HEIGHT - 2.6 * cm, size=16)
+
+    if promise:
+        note_w, note_size = 6.4 * cm, PDFStyle.SIZE_POSTIT
+        note_h = paragraph_height(promise, note_w - 1.2 * cm, PDFStyle.FONT_SERIF, note_size, note_size * 1.3) + 1.3 * cm
+        note_x, note_y = WIDTH - PDFStyle.MARGIN_MAIN - note_w, HEIGHT * 0.56
+        with postit(c, note_x, note_y, note_w, note_h, angle=-3):
+            draw_paragraph(c, promise, 0.6 * cm, note_h - 0.65 * cm, note_w - 1.2 * cm,
+                           PDFStyle.FONT_SERIF, note_size, PDFStyle.COLOR_INK, note_size * 1.3)
+
+    y = HEIGHT * 0.42
+    if eyebrow is None:
+        eyebrow = f"Carnet de bord · chapitre {number}" if number not in (None, "") else "Carnet de bord"
+    if number not in (None, ""):
+        number_size = 96
+        draw_number(c, x - 4, y, str(number).zfill(2) if str(number).isdigit() else number, size=number_size)
+        draw_eyebrow(c, x, y + number_size * 0.82, eyebrow, max_width=width)
+        y -= 0.9 * cm
+    else:
+        draw_eyebrow(c, x, y, eyebrow, max_width=width)
+        y -= 0.5 * cm
+    draw_heading(c, title, x, y, width * 0.92, size=PDFStyle.SIZE_TITLE_COVER, min_size=28, max_lines=3,
+                 tracking=PDFStyle.TRACKING_TITLE_XL)
+
+    if tagline:
+        draw_eyebrow(c, x, 1.6 * cm, tagline, max_width=width)
+    c.showPage()
+
+
+def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES & ALIGNEMENT", promise=None):
+    """
+    Former cover API: subtitle is the chapter label ('CHAPITRE 4 : MON RAPPORT À L'ARGENT'),
+    title the line shown at the bottom. See create_cover_page.
+    """
+    number, name = split_chapter_label(subtitle)
+    create_cover_page(c, as_title(name), number=number, tagline=title, promise=promise)
+
+
+# --- Chapter opener (former summary page) --------------------------------------
+
+def _point_text(point):
+    if isinstance(point, (tuple, list)):
+        label = str(point[0]).strip() if len(point) > 0 else ""
+        desc = str(point[1]).strip() if len(point) > 1 else ""
+        if desc and re.fullmatch(r"[\d.)\s]*", label):
+            return desc
+        return f"{label} {desc}".strip()
+    return str(point).strip()
+
+
+def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, points_list):
+    """
+    Chapter opener: eyebrow, big number, title, objective, then the exercises of the
+    chapter as a star list in a pastel card (EXERCICES & PROTOCOLES).
     intro_text is rendered as ReportLab paragraph markup (<b>, <br/>...): callers passing
     untrusted text must escape it first, as server/pdf_compiler.py does.
     """
-    width, height = A4
+    x, width = content_frame()
+    items = [t for t in (_point_text(p) for p in points_list or []) if t]
+    eyebrow = f"Carnet de bord · chapitre {chapter_num_str}" if chapter_num_str else "Carnet de bord"
 
-    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.rect(0, 0, width, height, fill=1, stroke=0)
-
-    # Faint Grid
-    draw_dot_grid(c, width, height, color=PDFStyle.COLOR_WHITE, opacity=0.1)
-
-    # Watermark
-    c.saveState()
-    c.setFont(PDFStyle.FONT_BRANDING, 160)
-    c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.12)
-    c.drawString(1.5 * cm, height - 7.5 * cm, f"{chapter_num_str}.")
-    c.restoreState()
-
-    start_y = height - 8.5 * cm
-    c.setFont(PDFStyle.FONT_BRANDING, 30)
-    c.setFillColor(PDFStyle.COLOR_WHITE)
-
-    title_lines = simpleSplit(chapter_title, PDFStyle.FONT_BRANDING, 30, width - 5 * cm)
-    current_y = start_y
-    for line in title_lines:
-        c.drawString(2.5 * cm, current_y, line)
-        current_y -= 38
-
-    text_y = current_y - 0.7 * cm  # Add space after the title
+    draw_disc(c, WIDTH + 1.5 * cm, HEIGHT - 5.2 * cm, 6.2 * cm, document_pastel(c))
+    top = HEIGHT - PDFStyle.EYEBROW_TOP
+    draw_eyebrow(c, x, top, eyebrow, max_width=width * 0.7)
+    y = top - 1.0 * cm
+    if chapter_num_str:
+        number = str(chapter_num_str)
+        draw_number(c, x - 3, y - PDFStyle.SIZE_NUMBER * 0.75, number.zfill(2) if number.isdigit() else number)
+        y -= PDFStyle.SIZE_NUMBER * 0.75 + 0.55 * cm
+    y = draw_heading(c, chapter_title, x, y, width * 0.85, size=30, min_size=22, max_lines=3) - 0.45 * cm
 
     if intro_text:
-        style_body = ParagraphStyle(
-            "SummaryBody",
-            fontName=PDFStyle.FONT_BODY,
-            fontSize=10.5,
-            leading=14.5,
-            textColor=colors.white,
-            alignment=TA_JUSTIFY,
+        style = ParagraphStyle(
+            "OpenerIntro", fontName=PDFStyle.FONT_BODY, fontSize=PDFStyle.SIZE_LEAD,
+            leading=PDFStyle.SIZE_LEAD * 1.5, textColor=PDFStyle.COLOR_INK_MUTED,
         )
-        p_intro = Paragraph(intro_text, style_body)
-        w, h = p_intro.wrap(width - 5 * cm, height)
-        p_intro.drawOn(c, 2.5 * cm, text_y - h)
-        text_y -= h + 0.65 * cm
+        p = Paragraph(intro_text, style)
+        _, h = p.wrap(width * 0.88, HEIGHT)
+        p.drawOn(c, x, y - h)
+        y -= h + 0.7 * cm
 
-    wrap_w = width - 5.5 * cm
-    style_point = ParagraphStyle(
-        "SummaryPoint",
-        fontName=PDFStyle.FONT_BODY,
-        fontSize=11,
-        leading=15,
-        textColor=colors.white,
-    )
+    remaining = items
+    first = True
+    while remaining or first:
+        page_items, remaining = _fit_star_items(remaining, width - 2 * PDFStyle.CARD_PADDING, y - PDFStyle.CONTENT_BOTTOM)
+        if page_items:
+            _draw_exercises_card(c, x, y, width, page_items)
+        if remaining:
+            _finish_page(c)
+            y = draw_page_head(c, chapter_title, eyebrow=eyebrow, suffix="(suite)") - 0.6 * cm
+        first = False
+    _finish_page(c)
 
-    # Render points with auto-wrapping so they never bleed off the right edge
-    for point in points_list:
-        if isinstance(point, (tuple, list)):
-            label = str(point[0]) if len(point) > 0 else ""
-            desc = str(point[1]) if len(point) > 1 else ""
-            p_text = f'<b><font name="{PDFStyle.FONT_TITLE}">{escape(label)}</font></b>&nbsp;&nbsp;{escape(desc)}'
-        else:
-            p_text = f'<b><font name="{PDFStyle.FONT_TITLE}">{escape(str(point))}</font></b>'
-        p_pt = Paragraph(p_text, style_point)
-        w, h = p_pt.wrap(wrap_w, height)
-        p_pt.drawOn(c, 2.5 * cm, text_y - h)
-        text_y -= h + 0.42 * cm
 
-    # Decor (Plume)
-    if os.path.exists(PDFStyle.PATH_PLUME_TEXTURE):
-        c.saveState()
-        c.translate(width - 1 * cm, height - 3 * cm)
-        c.rotate(30)
-        c.drawImage(
-            cached_image_reader(PDFStyle.PATH_PLUME_TEXTURE),
-            0,
-            0,
-            width=5 * cm,
-            height=5 * cm,
-            mask="auto",
-            preserveAspectRatio=True,
-            anchor="ne",
-        )
-        c.restoreState()
+def _exercises_card_height(items, inner_w):
+    _, pill_h = label_pill_size("Exercices & protocoles")
+    return 2 * PDFStyle.CARD_PADDING + pill_h + 0.45 * cm + star_list_height(items, inner_w)
 
-    c.showPage()
 
+def _fit_star_items(items, inner_w, available):
+    """As many items as fit in an exercises card of the available height (at least one)."""
+    count = len(items)
+    while count > 1 and _exercises_card_height(items[:count], inner_w) > available:
+        count -= 1
+    return items[:count], items[count:]
+
+
+def _draw_exercises_card(c, x, top, width, items):
+    pad = PDFStyle.CARD_PADDING
+    inner_w = width - 2 * pad
+    h = _exercises_card_height(items, inner_w)
+    draw_pastel_card(c, x, top - h, width, h)
+    _, pill_h = draw_label_pill(c, x + pad, top - pad - label_pill_size("x")[1], "Exercices & protocoles", variant="on_pastel")
+    draw_star_list(c, items, x + pad, top - pad - pill_h - 0.45 * cm, inner_w)
+    return h
+
+
+# --- End of the workbook ------------------------------------------------------
 
 def create_standard_engagement_page(
     c,
     part_title,
     custom_lines=None,
-    title="Pacte d'Action & d'Engagement",
-    signature_label="Date et Signature :",
+    title="Votre livrable.",
+    signature_label="Date de la séance",
     field_prefix="engagement",
+    livrable_title=None,
+    livrable_text=None,
 ):
     """
-    Standard Engagement Page: Balanced commitment card with checkmarks and an anchored signature card.
+    End of the workbook: the deliverable on a jasmine post-it with the « Validé en séance »
+    stamp, the session date and a validation box, then the commitments (custom_lines) as a
+    checklist. signature_label names the date field (former signature block).
     """
-    width, height = A4
-    draw_page_background(c, width, height)
-
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    content_w = width - text_x - 1.8 * cm
-    text_top = height - 4.2 * cm
-
-    new_y = draw_title(c, title, pos=(text_x, text_top), available_width=content_w)
-
-    lines = (
-        custom_lines
-        if custom_lines
-        else [
-            "Je m'engage aujourd'hui à prendre ce temps pour moi avec sincérité.",
-            "À regarder ma situation avec honnêteté et bienveillance.",
-            "À accepter de ne pas avoir toutes les réponses tout de suite.",
-            "À explorer, tester concrètement et avancer pas à pas.",
-            "Ce travail est pour moi, et je décide de m'y investir pleinement.",
-        ]
-    )
-
-    clean_lines = []
-    for line in lines:
-        l_str = (
-            (line.get("text") or line.get("line") or str(line))
-            if isinstance(line, dict)
-            else str(line)
-        ).strip()
-        if l_str:
-            clean_lines.append(l_str)
-
-    # 1. Commitment Card in upper-mid section
-    card_y_top = new_y - 0.7 * cm
-    style_item = ParagraphStyle(
-        "EngageItem",
-        fontName=PDFStyle.FONT_BODY,
-        fontSize=11,
-        leading=16,
-        textColor=PDFStyle.COLOR_TEXT_MAIN,
-    )
-
-    # Calculate total height of items
-    item_paragraphs = []
-    sum_items_h = 0
-    item_wrap_w = content_w - 1.6 * cm
-    for l_text in clean_lines:
-        # ZapfDingbats: Montserrat has no check mark glyph
-        p = Paragraph(f'<font color="{PDFStyle.COLOR_ACCENT_BLUE}" name="ZapfDingbats">✔</font>&nbsp;&nbsp;{escape(l_text)}', style_item)
-        _, h = p.wrap(item_wrap_w, height)
-        item_paragraphs.append((p, h))
-        sum_items_h += h
-
-    n_lines = max(1, len(item_paragraphs))
-    card_pad = 0.8 * cm
-    # Generous card height adapted to available page area
-    card_h = max(7.5 * cm, sum_items_h + 2 * card_pad + (n_lines - 1) * 0.55 * cm + 0.4 * cm)
-    card_y = card_y_top - card_h
-
-    draw_card(c, text_x, card_y, content_w, card_h)
-
-    # Render items inside card with proportional spacing
-    avail_inner = card_h - 2 * card_pad - sum_items_h
-    item_gap = avail_inner / (n_lines + 0.5) if n_lines > 0 else 0.4 * cm
-    curr_item_y = card_y_top - card_pad - item_gap * 0.5
-    for p, h in item_paragraphs:
-        p.drawOn(c, text_x + 0.8 * cm, curr_item_y - h)
-        curr_item_y -= (h + item_gap)
-
-    # 2. Anchored Signature Block below card
-    sig_block_h = 3.8 * cm
-    sig_gap = 1.0 * cm
-    sig_block_y = max(3.2 * cm, card_y - sig_gap - sig_block_h)
-    draw_card(c, text_x, sig_block_y, content_w, sig_block_h)
-
-    # Left: Date & Lieu
-    c.saveState()
-    c.setFont(PDFStyle.FONT_SUBTITLE, 9)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x + 0.6 * cm, sig_block_y + sig_block_h - 0.75 * cm, "DATE & LIEU :")
-    c.restoreState()
-
-    half_w = (content_w - 1.6 * cm) / 2
+    x, width = content_frame()
     form = c.acroForm
-    create_input_field(
-        form,
-        f"date_lieu_{field_prefix}",
-        pos=(text_x + 0.6 * cm, sig_block_y + 0.55 * cm),
-        size=(half_w, 1.7 * cm),
-        tooltip="Fait à ..., le ...",
-        fill_color=PDFStyle.COLOR_WHITE,
-    )
+    y = draw_page_head(c, title or "Votre livrable.", eyebrow=part_title or "Fin de carnet") - 0.7 * cm
 
-    # Right: Signature
-    sig_x = text_x + 0.6 * cm + half_w + 0.4 * cm
-    c.saveState()
-    c.setFont(PDFStyle.FONT_SUBTITLE, 9)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawString(sig_x, sig_block_y + sig_block_h - 0.75 * cm, "SIGNATURE DU BÉNÉFICIAIRE :")
-    c.restoreState()
+    lines = []
+    for line in custom_lines or []:
+        text = ((line.get("text") or line.get("line") or str(line)) if isinstance(line, dict) else str(line)).strip()
+        if text:
+            lines.append(text)
 
-    create_input_field(
-        form,
-        f"signature_{field_prefix}",
-        pos=(sig_x, sig_block_y + 0.55 * cm),
-        size=(half_w, 1.7 * cm),
-        tooltip="Votre Signature",
-        fill_color=PDFStyle.COLOR_WHITE,
-    )
+    # 1. The deliverable on a post-it, with the stamp
+    livrable_title = livrable_title or "La synthèse de ce carnet"
+    livrable_text = livrable_text or "À relire avec la personne qui vous accompagne lors de la prochaine séance."
+    note_w = width * 0.62
+    pad = 0.6 * cm
+    inner = note_w - 2 * pad
+    title_h = paragraph_height(livrable_title, inner, PDFStyle.FONT_HEADING_BOLD, 13, 13 * 1.3)
+    text_h = paragraph_height(livrable_text, inner, PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY)
+    _, stamp_h = stamp_size()
+    note_h = pad + 10 + 0.25 * cm + title_h + 0.15 * cm + text_h + 0.45 * cm + stamp_h + pad
+    note_x, note_y = x + 0.2 * cm, y - note_h
+    with postit(c, note_x, note_y, note_w, note_h, angle=-1):
+        top = note_h - pad
+        draw_eyebrow(c, pad, top - 8, "Livrable", tracking=PDFStyle.TRACKING_LABEL)
+        top -= 10 + 0.25 * cm
+        top -= draw_paragraph(c, livrable_title, pad, top, inner, PDFStyle.FONT_HEADING_BOLD, 13,
+                              PDFStyle.COLOR_INK, 13 * 1.3)
+        top -= 0.15 * cm
+        draw_paragraph(c, livrable_text, pad, top, inner, PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY, PDFStyle.COLOR_INK)
+        stamp_w, _ = stamp_size()
+        draw_stamp(c, pad + stamp_w / 2 + 2, pad + stamp_h / 2)
 
-    # 3. Footer citation if space allows
-    if sig_block_y > 4.2 * cm:
-        c.saveState()
-        c.setFont(PDFStyle.FONT_SUBTITLE, 8)
-        c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-        c.drawCentredString(text_x + content_w / 2.0, sig_block_y - 0.65 * cm, "« La meilleure façon de prédire l'avenir, c'est de le créer. »")
-        c.restoreState()
+    # 2. Validation, beside the post-it
+    side_x = note_x + note_w + 0.9 * cm
+    side_w = x + width - side_x
+    side_top = y - 0.2 * cm
+    draw_eyebrow(c, side_x, side_top - 8, signature_label or "Date de la séance", max_width=side_w,
+                 tracking=PDFStyle.TRACKING_LABEL)
+    draw_answer_box(c, side_x, side_top - 0.45 * cm - 0.95 * cm, side_w, 0.95 * cm,
+                    f"date_{field_prefix}", tooltip=signature_label or "Date de la séance", multiline=False)
+    check_y = side_top - 0.45 * cm - 0.95 * cm - 0.85 * cm
+    create_checkbox(form, f"valide_{field_prefix}", pos=(side_x, check_y), size=12, tooltip="Livrable validé en séance")
+    draw_paragraph(c, "Livrable validé en séance", side_x + 18, check_y + 13, side_w - 18,
+                   PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY_SMALL, PDFStyle.COLOR_INK)
 
-    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
+    # 3. Commitments
+    y = note_y - 1.0 * cm
+    if lines:
+        draw_eyebrow(c, x, y - 8, "Mes engagements", max_width=width)
+        y -= 8 + 0.45 * cm
+        for i, text in enumerate(lines):
+            h = paragraph_height(text, width - 20, PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY)
+            if y - h < PDFStyle.CONTENT_BOTTOM:
+                _finish_page(c)
+                y = draw_page_head(c, title or "Votre livrable.", eyebrow=part_title or "Fin de carnet",
+                                   suffix="(suite)") - 0.7 * cm
+            create_checkbox(form, f"{field_prefix}_{i + 1}", pos=(x, first_baseline(y, PDFStyle.SIZE_BODY, PDFStyle.SIZE_BODY * 1.5) - 2),
+                            size=11, tooltip=text)
+            y -= draw_paragraph(c, text, x + 20, y, width - 20) + 0.25 * cm
+    _finish_page(c)
+
+
+def create_closing_page(c, messages=None):
+    """Back cover: the signature with its coral dot, a few closing lines, a pastel disc."""
+    x, width = content_frame()
+    draw_disc(c, -1.5 * cm, 3.5 * cm, 7.5 * cm, document_pastel(c))
+    y = HEIGHT * 0.56
+    draw_signature(c, WIDTH / 2, y, size=38, align="center")
+
+    if messages is None:
+        messages = [
+            "Ce carnet reste le vôtre.",
+            "Gardez-le à portée de main pour la prochaine séance.",
+        ]
+    y -= 1.4 * cm
+    for msg in messages:
+        text = (msg.get("text") or str(msg)) if isinstance(msg, dict) else str(msg)
+        text = text.strip()
+        if not text:
+            continue
+        y -= draw_paragraph(c, text, x + width * 0.1, y, width * 0.8, PDFStyle.FONT_BODY, PDFStyle.SIZE_LEAD,
+                            PDFStyle.COLOR_INK_MUTED, align="center") + 0.15 * cm
     c.showPage()
 
+
+# --- Recap of the previous session ----------------------------------------------
 
 def create_standard_recap_page(c, part_title, intro_txt, questions):
-    """
-    Standard Recap Page.
-    """
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
+    """Recap of the previous session: an intro, then one answer box per question."""
+    x, width = content_frame()
+    title = "Récapitulatif de la séance précédente."
+    y = draw_page_head(c, title, eyebrow=part_title) - 0.5 * cm
+    y -= _intro(c, intro_txt, x, y, width)
 
-    text_x = card_margin + 1.0 * cm
-    target_width = width - card_margin - 2.0 * cm
-
-    new_y = draw_title(
-        c, "Récapitulatif de la séance précédente", pos=(text_x, height - 4.0 * cm)
-    )
-
-    c.setFont(PDFStyle.FONT_BODY, 11)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    text_y = new_y - 0.5 * cm
-    for line in simpleSplit(intro_txt, PDFStyle.FONT_BODY, 11, target_width):
-        c.drawString(text_x, text_y, line)
-        text_y -= 0.5 * cm
-
-    form = c.acroForm
-    y_cursor = text_y - 0.5 * cm
-
-    # Calculate uniform box height depending on the number of questions.
-    max_y_cursor = y_cursor
-    min_y_cursor = 3.2 * cm  # Avoid overlap with footer decorations (~2.0 cm)
-    available_space = max_y_cursor - min_y_cursor
-
-    # Estimated space per question: title (max 2 lines) -> ~1.2cm, margin -> 0.4cm.
-    # Total fixed taken per question ~ 1.8cm.
-    if len(questions) > 0:
-        box_height = max(
-            (available_space - (len(questions) * 1.8 * cm)) / len(questions), 2.8 * cm
-        )
-        box_height = min(box_height, 4.6 * cm)  # Generous cap for open reflection
-    else:
-        box_height = 4.2 * cm
-
+    questions = list(questions or [])
+    texts = [question_text_height(width, q) for q in questions]
+    gap = 0.6 * cm
+    available = y - PDFStyle.CONTENT_BOTTOM - sum(texts) - gap * max(len(questions) - 1, 0)
+    box_h = max(2.2 * cm, min(4.6 * cm, available / max(len(questions), 1)))
     for i, question in enumerate(questions):
-        # Color alternation for rhythm
-        color = PDFStyle.COLOR_ACCENT_BLUE if i % 2 == 0 else PDFStyle.COLOR_ACCENT_RED
+        if y - texts[i] - box_h < PDFStyle.CONTENT_BOTTOM:
+            _finish_page(c)
+            y = draw_page_head(c, title, eyebrow=part_title, suffix="(suite)") - 0.5 * cm
+        y = draw_question(c, x, y, width, question, f"recap_q{i + 1}", box_h) - gap
+    _finish_page(c)
 
-        text_obj = c.beginText(text_x, y_cursor)
-        text_obj.setFont(PDFStyle.FONT_SUBTITLE, 11)
-        text_obj.setFillColor(color)
-        lines = simpleSplit(question, PDFStyle.FONT_SUBTITLE, 11, target_width)
-        for line in lines:
-            text_obj.textLine(line)
-        c.drawText(text_obj)
 
-        y_cursor -= len(lines) * 0.5 * cm + 0.3 * cm
+# --- Inner weather ------------------------------------------------------------------
 
-        create_input_field(
-            form,
-            f"recap_q{i+1}",
-            pos=(text_x, y_cursor - box_height),
-            size=(target_width, box_height),
-            multiline=True,
-        )
-
-        y_cursor -= box_height + 0.8 * cm  # Using 0.8cm strict gap between elements
-
-    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
-    c.showPage()
+_WEATHER = [("Soleil", "sunny"), ("Nuageux", "partly_cloudy_day"), ("Pluvieux", "rainy"), ("Orageux", "thunderstorm")]
 
 
 def create_standard_meteo_page(
     c,
-    title="Mon État d'Esprit Actuel",
+    title="Mon état d'esprit actuel.",
     part_title=None,
     emotion_prompt="Aujourd'hui, je me sens :",
     energy_prompt="Mon niveau d'énergie :",
@@ -869,304 +574,117 @@ def create_standard_meteo_page(
     field_prefix="meteo",
 ):
     """
-    Standard Ice-Breaker / Inner Weather Page.
-    Includes:
-    - Emotion prompt with word field & 4 checkboxes (Soleil, Nuageux, Pluvieux, Orageux) with vector icons
-    - Energy scale 0 to 10 (radio buttons: a single level can be chosen)
-    - Large reflection multiline textfield
-    Long prompts wrap; the word field moves below the emotion prompt when it does not fit beside it.
+    Inner weather check-in: a word for the mood and four weather boxes (icons), the energy
+    level from 0 to 10 (pastilles, a single choice), and a large box for what fills the mind.
     """
-    width, height = A4
-    draw_page_background(c, width, height)
-
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    content_w = width - text_x - 1.5 * cm
-
-    y_pos = draw_title(c, title, pos=(text_x, text_top))
+    x, width = content_frame()
     form = c.acroForm
+    y = draw_page_head(c, title, eyebrow=part_title) - 0.7 * cm
 
-    # 1. Emotion section
-    y_opts = y_pos - 0.5 * cm
-    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+    # 1. Mood
+    y -= draw_paragraph(c, emotion_prompt, x, y, width, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE,
+                        PDFStyle.COLOR_INK, QUESTION_LEADING) + QUESTION_GAP_TO_BOX
+    draw_answer_box(c, x, y - 0.95 * cm, width, 0.95 * cm, f"{field_prefix}_emotion_word",
+                    tooltip="Un mot pour décrire l'instant", multiline=False)
+    y -= 0.95 * cm + 0.6 * cm
 
-    prompt_width = c.stringWidth(emotion_prompt, PDFStyle.FONT_SUBTITLE, 12)
-    if prompt_width + 0.5 * cm + 4 * cm <= content_w:
-        c.drawString(text_x, y_opts, emotion_prompt)
-        field_x = text_x + prompt_width + 0.5 * cm
-        field_w = width - (text_x + prompt_width + 2.0 * cm)
+    col_w = width / len(_WEATHER)
+    badge = 1.15 * cm
+    for i, (label, icon) in enumerate(_WEATHER):
+        col_x = x + i * col_w
+        create_checkbox(form, f"{field_prefix}_{label}", pos=(col_x, y - badge / 2 - 6), size=12, tooltip=label)
+        draw_icon_badge(c, col_x + 20 + badge / 2, y - badge / 2, icon, diameter=badge)
+        draw_text(c, col_x + 20 + badge + 6, y - badge / 2 - 3.5, label, PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY,
+                  PDFStyle.COLOR_INK)
+    y -= badge + 0.9 * cm
+
+    # 2. Energy
+    y -= draw_paragraph(c, energy_prompt, x, y, width, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE,
+                        PDFStyle.COLOR_INK, QUESTION_LEADING) + QUESTION_GAP_TO_BOX
+    group = reserve_field_name(form, f"{field_prefix}_energy")
+    y -= draw_choice_scale(c, group, x, y, width, list(range(11)), "Épuisé (0)", "Plein d'énergie (10)",
+                           tooltip="Niveau") + 0.9 * cm
+
+    # 3. What fills the mind
+    y -= draw_paragraph(c, thought_prompt, x, y, width, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE,
+                        PDFStyle.COLOR_INK, QUESTION_LEADING) + QUESTION_GAP_TO_BOX
+    box_h = max(3.0 * cm, min(7.5 * cm, y - PDFStyle.CONTENT_BOTTOM - 0.4 * cm))
+    draw_answer_box(c, x, y - box_h, width, box_h, f"{field_prefix}_pensee", tooltip="Pensée envahissante ou intention")
+    _finish_page(c)
+
+
+# --- Four quadrants -------------------------------------------------------------
+
+def _quadrant_item(item, field_prefix):
+    if isinstance(item, (tuple, list)):
+        title = str(item[0]) if item else ""
+        sub = str(item[1]) if len(item) > 1 and item[1] else ""
+        fid = item[2] if len(item) > 2 else f"{field_prefix}_{title}"
+    elif isinstance(item, dict):
+        title = str(item.get("title", ""))
+        sub = str(item.get("subtitle", "") or "")
+        fid = item.get("field_id") or f"{field_prefix}_{title}"
     else:
-        prompt_lines = simpleSplit(emotion_prompt, PDFStyle.FONT_SUBTITLE, 12, content_w)
-        for line in prompt_lines:
-            c.drawString(text_x, y_opts, line)
-            y_opts -= 15
-        y_opts -= 5
-        field_x, field_w = text_x, content_w
-
-    create_input_field(
-        form,
-        f"{field_prefix}_emotion_word",
-        pos=(field_x, y_opts - 5),
-        size=(field_w, 20),
-        tooltip="Un mot pour décrire l'instant",
-    )
-
-    options = [("Soleil", "soleil"), ("Nuageux", "nuageux"), ("Pluvieux", "pluvieux"), ("Orageux", "orageux")]
-    opt_x = text_x
-    opt_y = y_opts - 1.5 * cm
-
-    for label, icon in options:
-        create_checkbox(
-            form,
-            f"{field_prefix}_{label}",
-            pos=(opt_x, opt_y),
-            size=0.6 * cm,
-            tooltip=label,
-        )
-        draw_weather_icon(c, icon, opt_x + 0.85 * cm, opt_y + 0.03 * cm, 0.55 * cm, PDFStyle.COLOR_ACCENT_BLUE)
-        c.setFont(PDFStyle.FONT_SUBTITLE, 12)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        c.drawString(opt_x + 1.6 * cm, opt_y + 0.15 * cm, label)
-        opt_x += 3.8 * cm
-
-    y_pos = opt_y - 2.0 * cm
-
-    # 2. Energy scale
-    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    energy_lines = simpleSplit(energy_prompt, PDFStyle.FONT_SUBTITLE, 12, content_w) or [energy_prompt]
-    for i, line in enumerate(energy_lines):
-        c.drawString(text_x, y_pos - i * 15, line)
-    y_pos -= (len(energy_lines) - 1) * 15
-
-    c.setFont(PDFStyle.FONT_ITALIC, 9)
-    c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-    c.drawString(text_x, y_pos - 0.5 * cm, "Épuisé (0)")
-    c.drawRightString(text_x + 14 * cm, y_pos - 0.5 * cm, "Plein de vitalité (10)")
-
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.setLineWidth(1)
-    c.line(text_x, y_pos - 1.5 * cm, text_x + 14 * cm, y_pos - 1.5 * cm)
-
-    energy_group = reserve_field_name(form, f"{field_prefix}_energy")
-    for i in range(11):
-        x_mark = text_x + i * 1.4 * cm
-        c.setLineWidth(0.5)
-        c.line(x_mark, y_pos - 1.6 * cm, x_mark, y_pos - 1.4 * cm)
-
-        create_radio(
-            form,
-            energy_group,
-            i,
-            pos=(x_mark - 0.22 * cm, y_pos - 2.1 * cm),
-            size=0.45 * cm,
-            tooltip=f"Niveau {i}",
-        )
-
-        c.setFont(PDFStyle.FONT_BODY, 8)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        c.drawCentredString(x_mark, y_pos - 2.6 * cm, str(i))
-
-    y_pos = y_pos - 4.0 * cm
-
-    # 3. Thought reflection
-    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    thought_lines = simpleSplit(thought_prompt, PDFStyle.FONT_SUBTITLE, 12, content_w) or [thought_prompt]
-    for i, line in enumerate(thought_lines):
-        c.drawString(text_x, y_pos - i * 15, line)
-    y_pos -= (len(thought_lines) - 1) * 15
-
-    box_h = 5.0 * cm
-    create_input_field(
-        form,
-        f"{field_prefix}_pensee",
-        pos=(text_x, y_pos - box_h - 0.5 * cm),
-        size=(width - text_x - 1.5 * cm, box_h),
-        tooltip="Pensée envahissante ou intention",
-        multiline=True,
-    )
-
-    draw_page_decorations(
-        c, width, height, part_title=part_title, x_offset=card_margin
-    )
-    c.showPage()
+        title, sub, fid = str(item), "", f"{field_prefix}_{item}"
+    return title, sub, fid
 
 
 def create_standard_quadrants_page(
     c,
-    title="Ma Vision 360°",
+    title="Ma vision à 360°.",
     part_title=None,
-    instruction="Instruction : Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.",
+    instruction="Pour chaque domaine, écrivez une phrase de synthèse sur votre aspiration.",
     quadrants_data=None,
     field_prefix="vision",
 ):
     """
-    Standard 4-Quadrant / Matrix Page.
-    quadrants_data is a list of 4 tuples or dicts:
-    [
-        ("Professionnel", "Sens, Mission, Salaire", "pro"),
-        ("Personnel", "Temps pour soi, Santé", "perso"),
-        ("Social / Relationnel", "Relations, Équilibre", "social"),
-        ("Cadre & Autonomie", "Besoin de liberté", "cadre")
-    ]
-    Beyond 4 quadrants, the remaining ones continue on additional pages titled "(suite)".
+    Four domains as a 2 x 2 grid of pastel cards, each with its answer box.
+    quadrants_data: tuples (title, keywords, field_id) or dicts {title, subtitle, field_id}.
+    Beyond 4 quadrants, the remaining ones continue on pages titled "(suite)".
     """
     if not quadrants_data:
         quadrants_data = [
-            ("Professionnel", "Sens, Mission, Salaire", "pro"),
-            ("Personnel", "Temps pour soi, Santé", "perso"),
-            ("Social/Familial", "Relations, Équilibre", "social"),
-            ("Hiérarchie/Structure", "Besoin de cadre vs Liberté", "cadre"),
+            ("Professionnel", "Sens, mission, salaire", "pro"),
+            ("Personnel", "Temps pour soi, santé", "perso"),
+            ("Social et familial", "Relations, équilibre", "social"),
+            ("Cadre de travail", "Besoin de cadre ou de liberté", "cadre"),
         ]
     quadrants_data = list(quadrants_data)
-
     for start in range(0, len(quadrants_data), 4):
-        page_title = title if start == 0 else f"{title} (suite)"
         _draw_quadrants_page(
-            c, page_title, part_title, instruction, quadrants_data[start:start + 4], field_prefix
+            c, title, part_title, instruction if start == 0 else None,
+            quadrants_data[start:start + 4], field_prefix, suffix="(suite)" if start else "",
         )
 
 
-def _draw_quadrants_page(c, title, part_title, instruction, quadrants_data, field_prefix):
-    width, height = A4
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
+def _draw_quadrants_page(c, title, part_title, instruction, quadrants_data, field_prefix, suffix=""):
+    x, width = content_frame()
+    y = draw_page_head(c, title, eyebrow=part_title, suffix=suffix) - 0.6 * cm
+    y -= _intro(c, instruction, x, y, width)
 
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(c, title, pos=(text_x, text_top))
+    gap = 0.45 * cm
+    card_w = (width - gap) / 2
+    card_h = (y - PDFStyle.CONTENT_BOTTOM - gap) / 2
+    pad = PDFStyle.CARD_PADDING
+    inner = card_w - 2 * pad
+    for i, item in enumerate(quadrants_data):
+        q_title, sub, fid = _quadrant_item(item, field_prefix)
+        cx = x + (i % 2) * (card_w + gap)
+        top = y - (i // 2) * (card_h + gap)
+        draw_pastel_card(c, cx, top - card_h, card_w, card_h)
+        t = top - pad
+        t = draw_heading(c, q_title, cx + pad, t, inner, size=PDFStyle.SIZE_TITLE_CARD, min_size=10,
+                         font=PDFStyle.FONT_HEADING_BOLD, tracking=PDFStyle.TRACKING_TITLE_CARD, max_lines=2,
+                         accent_color=PDFStyle.COLOR_INK)
+        if sub:
+            t -= 2 + draw_paragraph(c, sub, cx + pad, t - 2, inner, PDFStyle.FONT_BODY, HINT_SIZE,
+                                    PDFStyle.COLOR_INK_MUTED, HINT_LEADING, max_lines=2)
+        t -= 0.3 * cm
+        draw_answer_box(c, cx + pad, top - card_h + pad, inner, t - (top - card_h + pad), fid, tooltip=f"Synthèse {q_title}")
+    _finish_page(c)
 
-    if instruction:
-        c.setFont(PDFStyle.FONT_BODY, 11)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        instr_y = new_y - 0.2 * cm
-        for line in simpleSplit(instruction, PDFStyle.FONT_BODY, 11, width - text_x - 1.5 * cm):
-            c.drawString(text_x, instr_y, line)
-            instr_y -= 14
 
-    center_x = card_margin + (width - card_margin) / 2
-    center_y = height / 2 - 2.5 * cm
-
-    # Draw Radar Background
-    c.setLineWidth(1)
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.setFillColor(PDFStyle.COLOR_BG_BLOB)
-    c.circle(center_x, center_y, 7 * cm, stroke=1, fill=1)
-
-    c.setLineWidth(0.5)
-    c.setFillColor(PDFStyle.COLOR_CARD_CREME)
-    c.circle(center_x, center_y, 3.5 * cm, stroke=1, fill=1)
-
-    c.saveState()
-    c.setDash(4, 4)
-    c.line(center_x, center_y - 7 * cm, center_x, center_y + 7 * cm)
-    c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)
-    c.restoreState()
-
-    # Grid positions: (dx, dy)
-    positions = [(-1, 1), (1, 1), (-1, -1), (1, -1)]
-    form = c.acroForm
-    # Widest text a pill may hold without spilling into the neighbouring quadrant
-    pill_text_w = 6.4 * cm
-
-    for item, (dx, dy) in zip(quadrants_data, positions):
-        if isinstance(item, (tuple, list)):
-            main_title = str(item[0])
-            sub_title = f"({item[1]})" if len(item) > 1 and item[1] else ""
-            fid = item[2] if len(item) > 2 else f"{field_prefix}_{main_title}"
-        elif isinstance(item, dict):
-            main_title = str(item.get("title", ""))
-            sub = item.get("subtitle", "")
-            sub_title = f"({sub})" if sub else ""
-            fid = item.get("field_id", f"{field_prefix}_{main_title}")
-        else:
-            main_title = str(item)
-            sub_title = ""
-            fid = f"{field_prefix}_{main_title}"
-
-        q_center_x = center_x + (dx * (3.5 * cm))
-        field_width = 5.8 * cm
-        field_height = 1.8 * cm
-
-        if dy == 1:
-            text_y = center_y + 5.2 * cm
-            f_y = center_y + 1.5 * cm
-        else:
-            text_y = center_y - 5.0 * cm
-            f_y = center_y - 3.3 * cm
-
-        f_x = q_center_x - (field_width / 2)
-
-        # Title pill badge (font shrinks, then wraps, so long titles stay inside the quadrant)
-        t_size = fit_font_size(main_title, PDFStyle.FONT_BRANDING, 14, pill_text_w, min_size=9)
-        t_lines = simpleSplit(main_title, PDFStyle.FONT_BRANDING, t_size, pill_text_w) or [main_title]
-        t_lead = t_size * 1.2
-        text_width = max(c.stringWidth(line, PDFStyle.FONT_BRANDING, t_size) for line in t_lines)
-        extra_h = (len(t_lines) - 1) * t_lead
-        c.saveState()
-        c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
-        c.roundRect(
-            q_center_x - text_width / 2 - 10,
-            text_y - 5 - extra_h,
-            text_width + 20,
-            20 + extra_h,
-            radius=10,
-            fill=1,
-            stroke=0,
-        )
-        c.restoreState()
-
-        c.setFont(PDFStyle.FONT_BRANDING, t_size)
-        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-        for k, line in enumerate(t_lines):
-            c.drawCentredString(q_center_x, text_y - k * t_lead, line)
-
-        if sub_title:
-            s_size = fit_font_size(sub_title, PDFStyle.FONT_BODY, 9, pill_text_w, min_size=7)
-            s_lines = simpleSplit(sub_title, PDFStyle.FONT_BODY, s_size, pill_text_w) or [sub_title]
-            s_lead = s_size * 1.25
-            sub_y = text_y - 0.5 * cm - extra_h
-            sub_width = max(c.stringWidth(line, PDFStyle.FONT_BODY, s_size) for line in s_lines)
-            sub_extra_h = (len(s_lines) - 1) * s_lead
-            # One pill around all subtitle lines
-            c.saveState()
-            c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
-            c.roundRect(
-                q_center_x - sub_width / 2 - 6,
-                sub_y - 4 - sub_extra_h,
-                sub_width + 12,
-                14 + sub_extra_h,
-                radius=7,
-                fill=1,
-                stroke=0,
-            )
-            c.restoreState()
-
-            c.setFont(PDFStyle.FONT_BODY, s_size)
-            c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-            for k, line in enumerate(s_lines):
-                c.drawCentredString(q_center_x, sub_y - k * s_lead, line)
-
-        create_input_field(
-            form,
-            fid,
-            pos=(f_x, f_y),
-            size=(field_width, field_height),
-            tooltip=f"Synthèse {main_title}",
-            multiline=True,
-            fill_color=PDFStyle.COLOR_CARD_CREME,
-        )
-
-    draw_page_decorations(
-        c, width, height, part_title=part_title, x_offset=card_margin
-    )
-    c.showPage()
-
+# --- Two columns ----------------------------------------------------------------
 
 def create_standard_two_columns_page(
     c,
@@ -1179,15 +697,9 @@ def create_standard_two_columns_page(
     field_prefix="twocol",
 ):
     """
-    Standard Two-Column Comparative Page (Mirror Table).
-    rows_data is a list of labels or tuples:
-    [
-        "1. Vie personnelle & familiale",
-        "2. Épreuves & défis surmontés",
-        "3. Engagements & loisirs",
-        "4. Réussites marquantes",
-    ]
-    Rows that do not fit continue on additional pages titled "(suite)", headers repeated.
+    Two-column comparison: for each row, a label then two answer boxes joined by an arrow.
+    rows_data: labels, tuples (label, left tip, right tip) or dicts (label, left/right...).
+    Rows that do not fit continue on pages titled "(suite)", headers repeated.
     """
     if not rows_data:
         rows_data = [
@@ -1202,329 +714,172 @@ def create_standard_two_columns_page(
     first = True
     while remaining:
         remaining = _draw_two_columns_page(
-            c,
-            title if first else f"{title} (suite)",
-            part_title,
-            intro_text if first else None,
-            col1_header,
-            col2_header,
-            remaining,
-            field_prefix,
+            c, title, part_title, intro_text if first else None, col1_header, col2_header,
+            remaining, field_prefix, suffix="" if first else "(suite)",
         )
         first = False
 
 
-def _draw_two_columns_page(c, title, part_title, intro_text, col1_header, col2_header, rows, field_prefix):
+def _two_columns_row(i, item):
+    if isinstance(item, str):
+        return item, item, f"Enseignement {i+1}"
+    if isinstance(item, dict):
+        left_tip = (item.get("left") or item.get("col1") or item.get("left_tooltip")
+                    or item.get("situation") or item.get("croyance") or "")
+        right_tip = (item.get("right") or item.get("col2") or item.get("right_tooltip") or item.get("solution")
+                     or item.get("levier") or item.get("enseignement") or f"Enseignement {i+1}")
+        label = item.get("label") or item.get("title")
+        if not label:
+            label = f"{i+1}. {(left_tip[:40] + '...') if len(left_tip) > 40 else left_tip}" if left_tip else f"Point {i+1}"
+        return str(label), str(left_tip), str(right_tip)
+    if isinstance(item, (tuple, list)):
+        label = str(item[0]) if item else f"Point {i+1}"
+        return label, str(item[1]) if len(item) > 1 else label, str(item[2]) if len(item) > 2 else f"Enseignement {i+1}"
+    return str(item), str(item), f"Enseignement {i+1}"
+
+
+def _draw_two_columns_page(c, title, part_title, intro_text, col1_header, col2_header, rows, field_prefix, suffix=""):
     """Draws as many rows as fit on one page and returns the rows left for the next one."""
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
+    x, width = content_frame()
+    y = draw_page_head(c, title, eyebrow=part_title, suffix=suffix) - 0.6 * cm
+    y -= _intro(c, intro_text, x, y, width)
 
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(c, title, pos=(text_x, text_top))
+    arrow_w = 0.9 * cm
+    col_w = (width - arrow_w) / 2
+    col2_x = x + col_w + arrow_w
+    head_size = 10.5
+    head_lead = head_size * 1.25
+    h1 = draw_paragraph(c, col1_header, x, y, col_w, PDFStyle.FONT_HEADING_BOLD, head_size, PDFStyle.COLOR_INK,
+                        head_lead, max_lines=2)
+    h2 = draw_paragraph(c, col2_header, col2_x, y, col_w, PDFStyle.FONT_HEADING_BOLD, head_size, PDFStyle.COLOR_BLUE,
+                        head_lead, max_lines=2)
+    y -= max(h1, h2) + 0.2 * cm
+    draw_rule(c, x, x + width, y, color=PDFStyle.COLOR_LINE_STRONG, width=0.75)
+    y -= 0.45 * cm
 
-    target_width = width - text_x - 1.0 * cm
+    label_size, label_lead = PDFStyle.SIZE_BODY_SMALL, PDFStyle.SIZE_BODY_SMALL * 1.35
+    min_box, max_box, row_gap = 1.5 * cm, 3.2 * cm, 0.45 * cm
+    available = y - PDFStyle.CONTENT_BOTTOM
 
-    if intro_text:
-        c.setFont(PDFStyle.FONT_BODY, 10)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        text_y = new_y - 0.3 * cm
-        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
-            c.drawString(text_x, text_y, line)
-            text_y -= 0.45 * cm
-        y_start = text_y - 0.5 * cm
-    else:
-        y_start = new_y - 0.8 * cm
+    def label_h(row):
+        return paragraph_height(_two_columns_row(*row)[0], width, PDFStyle.FONT_BODY_BOLD, label_size, label_lead, max_lines=2)
 
-    # Headers (shrunk, then wrapped on 2 lines, so they never run into the other column)
-    col1_x = text_x
-    col2_x = text_x + target_width / 2.0 + 0.5 * cm
-    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    draw_fitted_text(c, col1_header, col1_x, y_start, col2_x - col1_x - 0.4 * cm, PDFStyle.FONT_SUBTITLE, 12, min_size=9)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    draw_fitted_text(c, col2_header, col2_x, y_start, text_x + target_width - col2_x, PDFStyle.FONT_SUBTITLE, 12, min_size=9)
+    page_rows, used = [], 0
+    for row in rows:
+        need = label_h(row) + 4 + min_box + row_gap
+        if page_rows and used + need > available:
+            break
+        page_rows.append(row)
+        used += need
+    rest = rows[len(page_rows):]
+    labels_total = sum(label_h(r) + 4 + row_gap for r in page_rows)
+    box_h = max(min_box, min(max_box, (available - labels_total) / max(len(page_rows), 1)))
 
-    center_x = text_x + target_width / 2.0
-    col_width = (target_width / 2.0) - 1.0 * cm
-    form = c.acroForm
+    for row in page_rows:
+        i, item = row
+        label, left_tip, right_tip = _two_columns_row(i, item)
+        y -= draw_paragraph(c, label, x, y, width, PDFStyle.FONT_BODY_BOLD, label_size, PDFStyle.COLOR_INK,
+                            label_lead, max_lines=2) + 4
+        draw_answer_box(c, x, y - box_h, col_w, box_h, f"{field_prefix}_col1_{i+1}", tooltip=left_tip)
+        draw_answer_box(c, col2_x, y - box_h, col_w, box_h, f"{field_prefix}_col2_{i+1}", tooltip=right_tip)
+        draw_filled_arrow(c, x + col_w + (arrow_w - 12) / 2, y - box_h / 2 - 4, width=12)
+        y -= box_h + row_gap
 
-    min_safe_y = 2.8 * cm
-    min_row_h = 2.4 * cm
-    available_h = (y_start - 0.8 * cm) - min_safe_y
-    n_fit = max(1, int(available_h // min_row_h))
-    page_rows, rest = rows[:n_fit], rows[n_fit:]
-
-    n_rows = max(len(page_rows), 1)
-    row_height = max(min(available_h / n_rows, 3.5 * cm), min_row_h)
-
-    y_row = y_start - 0.8 * cm - row_height
-
-    for i, item in page_rows:
-        if isinstance(item, str):
-            row_label = item
-            left_tip = row_label
-            right_tip = f"Enseignement {i+1}"
-        elif isinstance(item, dict):
-            left_tip = (
-                item.get("left")
-                or item.get("col1")
-                or item.get("left_tooltip")
-                or item.get("situation")
-                or item.get("croyance")
-                or ""
-            )
-            right_tip = (
-                item.get("right")
-                or item.get("col2")
-                or item.get("right_tooltip")
-                or item.get("solution")
-                or item.get("levier")
-                or item.get("enseignement")
-                or f"Enseignement {i+1}"
-            )
-            row_label = item.get("label") or item.get("title")
-            if not row_label:
-                if left_tip:
-                    truncated = (left_tip[:40] + "...") if len(left_tip) > 40 else left_tip
-                    row_label = f"{i+1}. {truncated}"
-                else:
-                    row_label = f"Point {i+1}"
-        elif isinstance(item, (tuple, list)):
-            row_label = str(item[0]) if len(item) > 0 else f"Point {i+1}"
-            left_tip = str(item[1]) if len(item) > 1 else row_label
-            right_tip = str(item[2]) if len(item) > 2 else f"Enseignement {i+1}"
-        else:
-            row_label = str(item)
-            left_tip = row_label
-            right_tip = f"Enseignement {i+1}"
-
-        # Row label (wraps on a second line, which lowers the top of the inputs)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        n_label_lines, _ = draw_fitted_text(
-            c, str(row_label), col1_x, y_row + row_height - 0.4 * cm, target_width,
-            PDFStyle.FONT_BODY, 9, min_size=8, leading=10,
-        )
-        input_h = row_height - 0.8 * cm - (n_label_lines - 1) * 10
-
-        # Arrow between columns
-        cx_arrow = center_x
-        c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
-        c.setLineWidth(1)
-        arrow_y = y_row + input_h / 2
-        c.line(cx_arrow - 0.35 * cm, arrow_y, cx_arrow + 0.35 * cm, arrow_y)
-        c.line(cx_arrow + 0.35 * cm, arrow_y, cx_arrow + 0.1 * cm, arrow_y + 0.1 * cm)
-        c.line(cx_arrow + 0.35 * cm, arrow_y, cx_arrow + 0.1 * cm, arrow_y - 0.1 * cm)
-
-        # Left Input
-        create_input_field(
-            form,
-            f"{field_prefix}_col1_{i+1}",
-            pos=(col1_x, y_row),
-            size=(col_width, input_h),
-            multiline=True,
-            tooltip=left_tip,
-        )
-
-        # Right Input
-        create_input_field(
-            form,
-            f"{field_prefix}_col2_{i+1}",
-            pos=(col2_x, y_row),
-            size=(col_width, input_h),
-            multiline=True,
-            tooltip=right_tip,
-        )
-
-        y_row -= row_height
-
-    draw_page_decorations(
-        c, width, height, part_title=part_title, x_offset=card_margin
-    )
-    c.showPage()
+    _finish_page(c)
     return rest
 
 
+# --- Field survey (enquête) -------------------------------------------------------
+
 def create_standard_enquete_page(
     c,
-    title="Fiche Enquête Réseau & Métier",
-    part_title="EXPLORATION DU TERRAIN",
-    intro_text="Interrogez un professionnel ou un pair pour confronter vos hypothèses à la réalité de terrain sans chercher à vendre.",
+    title="Fiche enquête réseau et métier.",
+    part_title="Exploration du terrain",
+    intro_text="Interrogez un professionnel ou un pair pour confronter vos hypothèses à la réalité du terrain, sans chercher à vendre.",
     questions=None,
     field_prefix="enquete",
 ):
     """
-    Gabarit standard d'enquête terrain / Customer Discovery.
-    1. Carte d'identité de l'échange (Nom, Fonction, Entreprise, Date)
-    2. 3 blocs d'analyse qualitative avec boîtes interactives généreuses.
-    Les blocs qui ne tiennent pas sur la page continuent sur une page « (suite) ».
+    Field survey sheet: the contact card (name, role, company, date), then one answer box
+    per question. Questions that do not fit continue on pages titled "(suite)".
     """
     if not questions:
         questions = [
-            (
-                "1. Besoins & Douleurs réelles",
-                "Quelles difficultés majeures ou irritants cette personne rencontre-t-elle au quotidien ?",
-            ),
-            (
-                "2. Solutions actuelles & Limites",
-                "Que fait-elle aujourd'hui pour y répondre ? Quels sont ses freins ou manques ?",
-            ),
-            (
-                "3. Pépites & Recommandations",
-                "Quels conseils clés, avis sur votre idée ou autres contacts vous a-t-elle recommandés ?",
-            ),
+            ("1. Besoins et difficultés réelles",
+             "Quelles difficultés majeures cette personne rencontre-t-elle au quotidien ?"),
+            ("2. Solutions actuelles et limites",
+             "Que fait-elle aujourd'hui pour y répondre ? Qu'est-ce qui lui manque ?"),
+            ("3. Conseils et contacts",
+             "Quels conseils, quel avis sur votre projet, quels autres contacts vous a-t-elle donnés ?"),
         ]
 
     remaining = list(enumerate(questions))
     first = True
     while remaining:
         remaining = _draw_enquete_page(
-            c,
-            title if first else f"{title} (suite)",
-            part_title,
-            intro_text if first else None,
-            remaining,
-            field_prefix,
-            with_contact_card=first,
+            c, title, part_title, intro_text if first else None, remaining, field_prefix,
+            with_contact_card=first, suffix="" if first else "(suite)",
         )
         first = False
 
 
-def _draw_enquete_page(c, title, part_title, intro_text, questions, field_prefix, with_contact_card):
-    """Draws as many question cards as fit on one page and returns the ones left for the next one."""
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
+def _enquete_question(i, q):
+    if isinstance(q, (tuple, list)):
+        return (str(q[0]) if q else f"Question {i+1}"), (str(q[1]) if len(q) > 1 else "")
+    if isinstance(q, dict):
+        return (str(q.get("title") or q.get("question") or q.get("label") or f"Question {i+1}"),
+                str(q.get("subtitle") or q.get("desc") or q.get("description") or ""))
+    return str(q), ""
 
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(c, title, pos=(text_x, text_top))
-    target_width = width - text_x - 1.0 * cm
-    form = c.acroForm
 
-    if intro_text:
-        c.setFont(PDFStyle.FONT_BODY, 10)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        text_y = new_y - 0.25 * cm
-        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
-            c.drawString(text_x, text_y, line)
-            text_y -= 0.42 * cm
-        y_cursor = text_y - 0.35 * cm
-    else:
-        y_cursor = new_y - 0.6 * cm
+def _draw_enquete_page(c, title, part_title, intro_text, questions, field_prefix, with_contact_card, suffix=""):
+    """Draws as many questions as fit on one page and returns the ones left for the next one."""
+    x, width = content_frame()
+    y = draw_page_head(c, title, eyebrow=part_title, suffix=suffix) - 0.6 * cm
+    y -= _intro(c, intro_text, x, y, width)
 
     if with_contact_card:
-        # 1. Contact Info Card (2.2 cm height)
-        contact_card_h = 2.2 * cm
-        draw_card(c, text_x, y_cursor - contact_card_h, target_width, contact_card_h)
+        pad = PDFStyle.CARD_PADDING
+        col_gap = 0.45 * cm
+        col_w = (width - 2 * pad - col_gap) / 2
+        field_h = 0.8 * cm
+        row_h = 9 + 0.2 * cm + field_h
+        card_h = 2 * pad + 2 * row_h + 0.35 * cm
+        draw_pastel_card(c, x, y - card_h, width, card_h)
+        fields = [
+            ("Interlocuteur (nom, prénom)", "contact_nom"), ("Fonction, rôle", "contact_role"),
+            ("Entreprise, secteur", "contact_ent"), ("Date et contexte de l'échange", "contact_date"),
+        ]
+        for k, (label, key) in enumerate(fields):
+            fx = x + pad + (k % 2) * (col_w + col_gap)
+            ftop = y - pad - (k // 2) * (row_h + 0.35 * cm)
+            draw_eyebrow(c, fx, ftop - 7, label, size=PDFStyle.SIZE_LABEL, tracking=PDFStyle.TRACKING_LABEL,
+                         max_width=col_w)
+            draw_answer_box(c, fx, ftop - row_h, col_w, field_h, f"{field_prefix}_{key}", tooltip=label, multiline=False)
+        y -= card_h + 0.75 * cm
 
-        col_w = (target_width - 0.8 * cm) / 2.0
-        half1_x = text_x + 0.3 * cm
-        half2_x = text_x + 0.3 * cm + col_w + 0.2 * cm
-
-        # Labels and fields row 1
-        c.setFont(PDFStyle.FONT_SUBTITLE, 8.5)
-        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-        c.drawString(half1_x, y_cursor - 0.45 * cm, "INTERLOCUTEUR (NOM, PRÉNOM) :")
-        c.drawString(half2_x, y_cursor - 0.45 * cm, "FONCTION / RÔLE :")
-
-        create_input_field(
-            form,
-            f"{field_prefix}_contact_nom",
-            pos=(half1_x, y_cursor - 1.05 * cm),
-            size=(col_w, 0.55 * cm),
-            fill_color=colors.white,
-        )
-        create_input_field(
-            form,
-            f"{field_prefix}_contact_role",
-            pos=(half2_x, y_cursor - 1.05 * cm),
-            size=(col_w, 0.55 * cm),
-            fill_color=colors.white,
-        )
-
-        # Labels and fields row 2
-        c.drawString(half1_x, y_cursor - 1.35 * cm, "ENTREPRISE / SECTEUR :")
-        c.drawString(half2_x, y_cursor - 1.35 * cm, "DATE & CONTEXTE DE L'ÉCHANGE :")
-
-        create_input_field(
-            form,
-            f"{field_prefix}_contact_ent",
-            pos=(half1_x, y_cursor - 1.95 * cm),
-            size=(col_w, 0.55 * cm),
-            fill_color=colors.white,
-        )
-        create_input_field(
-            form,
-            f"{field_prefix}_contact_date",
-            pos=(half2_x, y_cursor - 1.95 * cm),
-            size=(col_w, 0.55 * cm),
-            fill_color=colors.white,
-        )
-
-        y_cursor -= (contact_card_h + 0.4 * cm)
-
-    # 2. Analytical Question Cards
-    min_safe_y = 2.8 * cm
-    gap = 0.35 * cm
-    min_card_h = 4.0 * cm
-    n_fit = max(1, int((y_cursor - min_safe_y + gap) // (min_card_h + gap)))
-    page_questions, rest = questions[:n_fit], questions[n_fit:]
-
-    n_q = max(len(page_questions), 1)
-    available_h = (y_cursor - min_safe_y) - (n_q - 1) * gap
-    card_h = max(available_h / n_q, min_card_h)
-    inner_w = target_width - 0.7 * cm
+    gap = 0.6 * cm
+    min_box = 2.2 * cm
+    available = y - PDFStyle.CONTENT_BOTTOM
+    texts = [question_text_height(width, *_enquete_question(i, q)) for i, q in questions]
+    count, used = 0, 0
+    for t in texts:
+        if count and used + t + min_box > available:
+            break
+        used += t + min_box + gap
+        count += 1
+    page_questions, rest = questions[:count], questions[count:]
+    box_h = max(min_box, min(6.5 * cm, (available - sum(texts[:count]) - gap * (count - 1)) / max(count, 1)))
 
     for i, q in page_questions:
-        if isinstance(q, (tuple, list)):
-            q_title = str(q[0]) if len(q) > 0 else f"Question {i+1}"
-            q_sub = str(q[1]) if len(q) > 1 else ""
-        elif isinstance(q, dict):
-            q_title = str(q.get("title") or q.get("question") or q.get("label") or f"Question {i+1}")
-            q_sub = str(q.get("subtitle") or q.get("desc") or q.get("description") or "")
-        else:
-            q_title = str(q)
-            q_sub = ""
+        q_title, q_sub = _enquete_question(i, q)
+        y = draw_question(c, x, y, width, q_title, f"{field_prefix}_q_{i+1}", box_h, subtitle=q_sub or None) - gap
 
-        draw_card(c, text_x, y_cursor - card_h, target_width, card_h)
-
-        # Header bar in card
-        c.setFillColor(PDFStyle.COLOR_ACCENT_RED if i == 0 else PDFStyle.COLOR_ACCENT_BLUE)
-        draw_fitted_text(
-            c, q_title.upper(), text_x + 0.35 * cm, y_cursor - 0.5 * cm, inner_w,
-            PDFStyle.FONT_SUBTITLE, 9.5, min_size=8, max_lines=1,
-        )
-
-        if q_sub:
-            c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-            n_sub_lines, _ = draw_fitted_text(
-                c, q_sub, text_x + 0.35 * cm, y_cursor - 0.85 * cm, inner_w,
-                PDFStyle.FONT_ITALIC, 8.5, min_size=8, leading=9.5,
-            )
-            input_y = y_cursor - card_h + 0.25 * cm
-            input_h = card_h - 1.25 * cm - (n_sub_lines - 1) * 9.5
-        else:
-            input_y = y_cursor - card_h + 0.25 * cm
-            input_h = card_h - 0.9 * cm
-
-        create_input_field(
-            form,
-            f"{field_prefix}_q_{i+1}",
-            pos=(text_x + 0.35 * cm, input_y),
-            size=(inner_w, input_h),
-            multiline=True,
-            fill_color=colors.white,
-        )
-
-        y_cursor -= (card_h + gap)
-
-    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
-    c.showPage()
+    _finish_page(c)
     return rest
 
+
+# --- Roadmap ----------------------------------------------------------------------
 
 def _as_action_list(actions):
     """Normalizes roadmap actions (Gemini may send a single string or dicts) into a list of labels."""
@@ -1538,60 +893,63 @@ def _as_action_list(actions):
     return labels or ["Action 1", "Action 2", "Action 3"]
 
 
-def _roadmap_stage_height_needed(n_actions):
-    """Card height needed to list n_actions action rows (3 rows fit in the standard card)."""
-    return (2.55 + (max(n_actions, 3) - 1) * 1.10) * cm
+ROADMAP_ACTION_H = 0.95 * cm
+ROADMAP_ACTION_GAP = 0.2 * cm
+
+
+def _roadmap_stage_height(n_actions):
+    """Card height for a stage listing n_actions actions (3 rows at least)."""
+    head = PDFStyle.CARD_PADDING + 18 + 0.45 * cm
+    actions = 9 + 0.25 * cm + max(n_actions, 3) * (ROADMAP_ACTION_H + ROADMAP_ACTION_GAP)
+    return head + actions + PDFStyle.CARD_PADDING
 
 
 def create_standard_roadmap_page(
     c,
-    title="Feuille de Route 30 · 60 · 90 Jours",
-    part_title="PLAN D'ACTION OPÉRATIONNEL",
-    intro_text="Découpez votre mise en action en trois jalons progressifs pour ancrer des victoires rapides et structurer votre lancement.",
+    title="Feuille de route à 30, 60 et 90 jours.",
+    part_title="Plan d'action",
+    intro_text="Découpez votre passage à l'action en trois paliers, avec un objectif, un résultat observable et des actions datées.",
     stages_data=None,
     field_prefix="roadmap",
 ):
     """
-    Gabarit standard Feuille de Route / Timeline d'action (3 Paliers).
-    Chaque palier comprend :
-    - En-tête avec Pill Badge de couleur (Palier) + Thème de cap
-    - Filet séparateur interne
-    - Colonne Gauche (42%) : Cap & Objectif clé + Livrable / KPI
-    - Colonne Droite (58%) : Actions prioritaires avec cases à cocher (la carte s'agrandit au-delà de 3)
-    Les paliers qui ne tiennent pas sur la page continuent sur une page « (suite) ».
+    Roadmap in stages: each stage card has its period (blue pill) and focus, the objective
+    and the observable result on the left, the priority actions with check boxes on the
+    right (the card grows beyond 3 actions). Stages that do not fit continue on pages
+    titled "(suite)".
     """
     if not stages_data:
         stages_data = [
             {
-                "period": "PALIER 1 · 0 À 30 JOURS",
-                "theme": "CONSOLIDER & TESTER",
+                "period": "Palier 1 · 0 à 30 jours",
+                "theme": "Consolider et tester",
                 "default_obj": "Valider l'intérêt du marché et tester l'offre pilote auprès de 5 pairs.",
                 "actions": [
                     "Mener 5 entretiens d'enquête terrain ciblés",
                     "Formaliser la proposition de valeur sur 1 page",
-                    "Identifier et contacter 2 premiers prospects cibles",
+                    "Identifier et contacter 2 premiers prospects",
                 ],
-                "default_kpi": "5 entretiens qualifiés menés et 1 retour d'intérêt concret",
+                "default_kpi": "5 entretiens menés et 1 retour d'intérêt concret",
             },
             {
-                "period": "PALIER 2 · 30 À 60 JOURS",
-                "theme": "STRUCTURER & SÉCURISER",
-                "default_obj": "Poser le cadre juridique, formaliser les tarifs et préparer le lancement.",
+                "period": "Palier 2 · 30 à 60 jours",
+                "theme": "Structurer et sécuriser",
+                "default_obj": "Poser le cadre juridique, fixer les tarifs et préparer le lancement.",
                 "actions": [
-                    "Valider le statut juridique et les aides de transition (ARE/ARCE)",
-                    "Fixer la grille tarifaire et créer le modèle de proposition/devis",
-                    "Activer son réseau relationnel (e-mail d'annonce de lancement)",
+                    "Valider le statut juridique et les aides de transition (ARE, ARCE)",
+                    "Fixer la grille tarifaire et le modèle de devis",
+                    "Annoncer le lancement à son réseau",
                 ],
-                "default_kpi": "Cadre juridique validé et 3 devis/propositions envoyés",
+                "default_kpi": "Cadre juridique validé et 3 devis envoyés",
             },
             {
-                "period": "PALIER 3 · 60 À 90 JOURS",
-                "theme": "LANCER & DÉVELOPPER",
+                "period": "Palier 3 · 60 à 90 jours",
+                "theme": "Lancer et développer",
                 "default_obj": "Signer les premières missions, recueillir des retours et caler son rythme.",
                 "actions": [
-                    "Signer et délivrer la première mission pilote avec succès",
-                    "Recueillir un témoignage ou une recommandation client",
-                    "Faire le bilan d'étape et ajuster ses priorités pour le trimestre",
+                    "Signer et réaliser la première mission pilote",
+                    "Recueillir une recommandation client",
+                    "Faire le bilan d'étape et ajuster les priorités du trimestre",
                 ],
                 "default_kpi": "Premier chiffre d'affaires encaissé et premier avis client obtenu",
             },
@@ -1601,214 +959,91 @@ def create_standard_roadmap_page(
     for i, stage in enumerate(stages_data):
         if isinstance(stage, dict):
             stages.append((i, {
-                "period": str(stage.get("period") or stage.get("palier") or f"PALIER {i+1}"),
+                "period": str(stage.get("period") or stage.get("palier") or f"Palier {i+1}"),
                 "theme": str(stage.get("theme") or stage.get("title") or ""),
                 "obj": str(stage.get("default_obj") or stage.get("obj") or stage.get("objective") or stage.get("objectif") or ""),
                 "actions": _as_action_list(stage.get("actions") or stage.get("items")),
                 "kpi": str(stage.get("default_kpi") or stage.get("kpi") or stage.get("resultat") or ""),
             }))
         else:
-            stages.append((i, {
-                "period": f"PALIER {i+1}",
-                "theme": str(stage),
-                "obj": "",
-                "actions": _as_action_list(None),
-                "kpi": "",
-            }))
+            stages.append((i, {"period": f"Palier {i+1}", "theme": str(stage), "obj": "",
+                               "actions": _as_action_list(None), "kpi": ""}))
 
     first = True
     while stages:
-        stages = _draw_roadmap_page(
-            c,
-            title if first else f"{title} (suite)",
-            part_title,
-            intro_text if first else None,
-            stages,
-            field_prefix,
-        )
+        stages = _draw_roadmap_page(c, title, part_title, intro_text if first else None, stages, field_prefix,
+                                    suffix="" if first else "(suite)")
         first = False
 
 
-def _draw_roadmap_page(c, title, part_title, intro_text, stages, field_prefix):
+def _draw_roadmap_page(c, title, part_title, intro_text, stages, field_prefix, suffix=""):
     """Draws as many stages as fit on one page and returns the ones left for the next one."""
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(c, title, pos=(text_x, text_top))
-    target_width = width - text_x - 1.0 * cm
+    x, width = content_frame()
     form = c.acroForm
+    y = draw_page_head(c, title, eyebrow=part_title, suffix=suffix) - 0.6 * cm
+    y -= _intro(c, intro_text, x, y, width)
 
-    if intro_text:
-        c.setFont(PDFStyle.FONT_BODY, 10)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        text_y = new_y - 0.25 * cm
-        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
-            c.drawString(text_x, text_y, line)
-            text_y -= 0.42 * cm
-        y_cursor = text_y - 0.35 * cm
-    else:
-        y_cursor = new_y - 0.6 * cm
+    gap = 0.45 * cm
+    available = y - PDFStyle.CONTENT_BOTTOM
+    page_stages, used = [], 0
+    for stage in stages:
+        h = _roadmap_stage_height(len(stage[1]["actions"]))
+        if page_stages and used + h > available:
+            break
+        page_stages.append(stage)
+        used += h + gap
+    rest = stages[len(page_stages):]
 
-    min_safe_y = 2.8 * cm
-    gap = 0.4 * cm
-    available_total = y_cursor - min_safe_y
+    pad = PDFStyle.CARD_PADDING
+    for i, stage in page_stages:
+        stage_h = _roadmap_stage_height(len(stage["actions"]))
+        draw_white_card(c, x, y - stage_h, width, stage_h)
 
-    def stage_heights(k):
-        default_h = min(max((available_total - (k - 1) * gap) / k, 5.0 * cm), 5.3 * cm)
-        return [max(default_h, _roadmap_stage_height_needed(len(s["actions"]))) for _, s in stages[:k]]
-
-    # As many stages as fit on this page (at least one)
-    k = len(stages)
-    while k > 1 and sum(stage_heights(k)) + (k - 1) * gap > available_total:
-        k -= 1
-    heights = stage_heights(k)
-    page_stages, rest = stages[:k], stages[k:]
-
-    colors_header = [
-        PDFStyle.COLOR_ACCENT_BLUE,
-        PDFStyle.COLOR_ACCENT_RED,
-        PDFStyle.COLOR_SUCCESS,
-    ]
-
-    for (i, stage), stage_h in zip(page_stages, heights):
-        actions = stage["actions"]
-        h_color = colors_header[i % len(colors_header)]
-
-        # 1. Main White Card Container with subtle border
-        c.saveState()
-        c.setFillColor(PDFStyle.COLOR_WHITE)
-        c.setStrokeColor(PDFStyle.COLOR_LINE)
-        c.setLineWidth(0.6)
-        c.roundRect(text_x, y_cursor - stage_h, target_width, stage_h, 6, fill=1, stroke=1)
-        c.restoreState()
-
-        # 2. Top Header inside Card:
-        # A. Pill Badge on the left (font shrinks, then '…', to stay inside the pill)
-        pill_w = 4.8 * cm
-        pill_h = 0.55 * cm
-        pill_x = text_x + 0.35 * cm
-        pill_y = y_cursor - 0.72 * cm
-        period = stage["period"].upper()
-        period_size = fit_font_size(period, PDFStyle.FONT_BRANDING, 8.5, pill_w - 0.4 * cm, min_size=6.5)
-        period = ellipsize(period, PDFStyle.FONT_BRANDING, period_size, pill_w - 0.4 * cm)
-
-        c.saveState()
-        c.setFillColor(h_color)
-        c.roundRect(pill_x, pill_y, pill_w, pill_h, radius=pill_h / 2.0, fill=1, stroke=0)
-        c.setFont(PDFStyle.FONT_BRANDING, period_size)
-        c.setFillColor(PDFStyle.COLOR_WHITE)
-        c.drawCentredString(pill_x + pill_w / 2.0, pill_y + 0.16 * cm, period)
-        c.restoreState()
-
-        # B. Focus Theme text next to the pill
+        # Header: period in a blue pill, then the stage's focus
+        top = y - pad
+        pill_w, pill_h = draw_label_pill(c, x + pad, top - 18, stage["period"], variant="solid", max_width=width * 0.45)
         if stage["theme"]:
-            theme_x = pill_x + pill_w + 0.4 * cm
-            c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-            draw_fitted_text(
-                c, stage["theme"].upper(), theme_x, pill_y + 0.16 * cm,
-                text_x + target_width - 0.35 * cm - theme_x,
-                PDFStyle.FONT_SUBTITLE, 9.5, min_size=7, max_lines=1,
-            )
+            theme_x = x + pad + pill_w + 0.35 * cm
+            draw_text(c, theme_x, top - 18 + (pill_h - 9) / 2 + 1.2,
+                      ellipsize(stage["theme"], PDFStyle.FONT_HEADING_BOLD, 11.5, x + width - pad - theme_x),
+                      PDFStyle.FONT_HEADING_BOLD, 11.5, PDFStyle.COLOR_INK)
+        top -= 18 + 0.45 * cm
 
-        # C. Thin horizontal divider line
-        line_y = y_cursor - 0.9 * cm
+        # Left column: objective and observable result
+        left_w = width * 0.4 - pad
+        right_x = x + pad + left_w + 0.6 * cm
+        right_w = x + width - pad - right_x
+        block_h = (top - (y - stage_h + pad) - 2 * (9 + 0.25 * cm) - 0.35 * cm) / 2
+        t = top
+        for label, key, value in (("Cap et objectif", "obj", stage["obj"]), ("Résultat observable", "kpi", stage["kpi"])):
+            draw_eyebrow(c, x + pad, t - 7, label, size=PDFStyle.SIZE_LABEL, tracking=PDFStyle.TRACKING_LABEL,
+                         max_width=left_w)
+            t -= 9 + 0.25 * cm
+            draw_answer_box(c, x + pad, t - block_h, left_w, block_h, f"{field_prefix}_s{i+1}_{key}",
+                            tooltip=value, value=value, font_size=8.5)
+            t -= block_h + 0.35 * cm
         c.saveState()
         c.setStrokeColor(PDFStyle.COLOR_LINE)
-        c.setLineWidth(0.4)
-        c.line(text_x + 0.35 * cm, line_y, text_x + target_width - 0.35 * cm, line_y)
-        c.restoreState()
-
-        # 3. Two-Column Layout below divider line
-        # Left column (Objectif & KPI): 42% width (~6.8 cm)
-        # Right column (Actions): 58% width (~9.2 cm)
-        sep_x = text_x + 7.2 * cm
-        c.saveState()
-        c.setStrokeColor(PDFStyle.COLOR_LINE)
-        c.setLineWidth(0.4)
+        c.setLineWidth(0.75)
         c.setDash(2, 2)
-        c.line(sep_x, line_y - 0.15 * cm, sep_x, y_cursor - stage_h + 0.25 * cm)
+        c.line(right_x - 0.3 * cm, top, right_x - 0.3 * cm, y - stage_h + pad)
         c.restoreState()
 
-        left_x = text_x + 0.35 * cm
-        left_w = sep_x - left_x - 0.35 * cm
-
-        right_x = sep_x + 0.35 * cm
-        right_w = text_x + target_width - right_x - 0.35 * cm
-
-        # --- LEFT COLUMN ---
-        # Objectif Clé
-        _draw_symbol_label(c, "➔", "CAP & OBJECTIF DU PALIER :", left_x, line_y - 0.35 * cm)
-
-        create_input_field(
-            form,
-            f"{field_prefix}_s{i+1}_obj",
-            pos=(left_x, line_y - 1.85 * cm),
-            size=(left_w, 1.35 * cm),
-            multiline=True,
-            value=stage["obj"],
-            tooltip=stage["obj"],
-            fill_color=PDFStyle.COLOR_CARD_CREME,
-            font_size=8.5,
-        )
-
-        # Indicateur de succès (KPI)
-        _draw_symbol_label(c, "★", "RÉSULTAT OBSERVABLE (KPI) :", left_x, line_y - 2.25 * cm)
-
-        create_input_field(
-            form,
-            f"{field_prefix}_s{i+1}_kpi",
-            pos=(left_x, line_y - 3.85 * cm),
-            size=(left_w, 1.45 * cm),
-            multiline=True,
-            value=stage["kpi"],
-            tooltip=stage["kpi"],
-            fill_color=PDFStyle.COLOR_CARD_CREME,
-            font_size=8.5,
-        )
-
-        # --- RIGHT COLUMN ---
-        actions_label = f"{len(actions)} ACTIONS PRIORITAIRES :" if len(actions) > 1 else "ACTION PRIORITAIRE :"
-        _draw_symbol_label(c, "✔", actions_label, right_x, line_y - 0.35 * cm)
-
-        chk_size = 11
+        # Right column: actions with check boxes
+        actions = stage["actions"]
+        label = f"{len(actions)} actions prioritaires" if len(actions) > 1 else "Action prioritaire"
+        draw_eyebrow(c, right_x, top - 7, label, size=PDFStyle.SIZE_LABEL, tracking=PDFStyle.TRACKING_LABEL,
+                     max_width=right_w)
+        t = top - 9 - 0.25 * cm
         for a_idx, act_label in enumerate(actions):
-            box_h = 0.85 * cm
-            box_y = line_y - (1.40 * cm + a_idx * 1.10 * cm)
+            box_y = t - ROADMAP_ACTION_H
+            create_checkbox(form, f"{field_prefix}_s{i+1}_chk_{a_idx+1}", pos=(right_x, box_y + (ROADMAP_ACTION_H - 11) / 2),
+                            size=11, tooltip=f"Cocher l'action {a_idx+1}")
+            draw_answer_box(c, right_x + 18, box_y, right_w - 18, ROADMAP_ACTION_H,
+                            f"{field_prefix}_s{i+1}_act_{a_idx+1}", tooltip=act_label, value=act_label, font_size=8)
+            t -= ROADMAP_ACTION_H + ROADMAP_ACTION_GAP
 
-            create_checkbox(
-                form,
-                f"{field_prefix}_s{i+1}_chk_{a_idx+1}",
-                pos=(right_x, box_y + 0.15 * cm),
-                size=chk_size,
-                tooltip=f"Cocher action {a_idx+1}",
-            )
+        y -= stage_h + gap
 
-            create_input_field(
-                form,
-                f"{field_prefix}_s{i+1}_act_{a_idx+1}",
-                pos=(right_x + 0.55 * cm, box_y),
-                size=(right_w - 0.55 * cm, box_h),
-                multiline=True,
-                value=act_label,
-                tooltip=act_label,
-                fill_color=PDFStyle.COLOR_CARD_CREME,
-                font_size=8.0,
-            )
-
-        y_cursor -= (stage_h + gap)
-
-    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
-    c.showPage()
+    _finish_page(c)
     return rest
-
-
-def _draw_symbol_label(c, symbol, text, x, y):
-    """Small roadmap column label preceded by a ZapfDingbats pictogram."""
-    symbol_w = draw_symbol(c, symbol, x, y, 7, PDFStyle.COLOR_ACCENT_BLUE)
-    c.setFont(PDFStyle.FONT_SUBTITLE, 7.5)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(x + symbol_w + 3, y, text)
