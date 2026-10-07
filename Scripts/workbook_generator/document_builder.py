@@ -27,7 +27,7 @@ def document_pastel(c):
 
 class _PageCanvas(canvas.Canvas):
     """
-    Canvas whose pages are tinted with PDFStyle.COLOR_PAGE (cream): the tint is
+    Canvas whose pages are tinted with PDFStyle.COLOR_PAGE (warm ivory): the tint is
     put at the very start of each page's content when the page ends, so it stays under
     everything and an unused last page is not created by it.
     """

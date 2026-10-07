@@ -132,10 +132,10 @@ def test_strip_unsupported_glyphs():
     assert strip_unsupported_glyphs("Avant ◀ ▶ après ✓") == "Avant après"
 
 
-def test_pages_are_tinted_cream_under_their_content():
+def test_pages_are_tinted_ivory_under_their_content():
     doc = _open(PageSpec(template="questions", title="Questions", params={"questions": [{"question": "Pourquoi ?"}]}))
 
     assert len(doc) == 1  # the tint does not create an extra page
     first = doc[0].get_drawings()[0]
     assert first["rect"] == doc[0].rect
-    assert [round(v * 255) for v in first["fill"]] == [0xFA, 0xF8, 0xF5]
+    assert [round(v * 255) for v in first["fill"]] == [0xFF, 0xF8, 0xEC]
