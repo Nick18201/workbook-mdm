@@ -1,6 +1,5 @@
 from reportlab.lib.units import cm
 from workbook_generator.components import create_standard_engagement_page
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -34,8 +33,6 @@ def create_plan_securite_page(c):
             subtitle="Vos critères de sérénité obligatoires : salaire net minimum vital pour le foyer, "
             "temps de trajet maximal (ex : 20 min max), préservation de votre rythme familial.",
             example="Ex : Maintien du revenu net cadre indispensable, temps de route limité à 20 min, aucun découchage, disponibilité pour mes 3 enfants.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -47,8 +44,6 @@ def create_plan_securite_page(c):
             subtitle="Piste A (votre projet d'élan, de transmission et de sens) vs Piste B (votre projet refuge "
             "ou tremplin sécurisant).",
             example="Ex : Piste A : Enseignant / formateur technique | Piste B : Économe de flux territorial ou conseil indépendant en coopérative (CAE).",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -80,8 +75,6 @@ def create_plan_pas_proximal_page(c):
             subtitle="Quelle est la toute petite action (un coup de fil de 10 min, vérifier son compte CPF, contacter un pair) "
             "que vous vous engagez à réaliser d'ici notre prochain rendez-vous ?",
             example="Ex : Consulter le solde de mes droits CPF et envoyer un message à un ancien collègue devenu formateur pour prendre la température.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -93,8 +86,6 @@ def create_plan_pas_proximal_page(c):
             subtitle="Quels modules courts (quelques dizaines d'heures finançables CPF), conseils ou démarches "
             "vous donneraient une pleine sérénité pour franchir le pas ?",
             example="Ex : Module court de pédagogie pour adultes (30 heures éligibles CPF) pour valider la posture d'animation sans surcharger mon emploi du temps.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

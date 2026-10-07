@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -32,19 +31,16 @@ def create_cible_public_page(c):
             question="1. Qui sont les personnes que je veux accompagner / servir ?",
             form_field_id="bp_p5_qui_cible",
             subtitle="Précisez leur situation : statut, contexte de vie, activité, environnement...",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Quels sont leurs besoins profonds et difficultés actuelles ?",
             form_field_id="bp_p5_besoins_difficultes",
             subtitle="Quelles épreuves ou irritants rencontrent-elles ? Que recherchent-elles en priorité ?",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Que font-elles ou qu'utilisent-elles déjà aujourd'hui ?",
             form_field_id="bp_p5_solutions_actuelles",
             subtitle="Quelles alternatives ou solutions imparfaites bricolent-elles pour y répondre sans vous ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -128,19 +124,16 @@ def create_probleme_analyse_page(c):
             question="1. Le problème que j'ai identifié (description précise)",
             form_field_id="bp_p7_probleme_desc",
             subtitle="Quelle est la douleur, la frustration ou la perte de temps/argent constatée ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Pour qui ce problème existe-t-il, à quelle fréquence et avec quelle importance ?",
             form_field_id="bp_p7_probleme_intensite",
             subtitle="Est-ce un problème vital, urgent, régulier ou secondaire ? Qui en souffre le plus ?",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Comment font les personnes aujourd'hui et pourquoi les solutions actuelles ne suffisent-elles pas ?",
             form_field_id="bp_p7_probleme_limites",
             subtitle="Quels sont les manques des offres existantes (trop chères, impersonnelles, complexes...) ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -217,8 +210,6 @@ def create_probleme_hypotheses_page(c):
             box_height=5.6 * cm,
             subtitle="Quels sont les retours majeurs, les surprises et les prises de conscience suite à vos premières investigations ?",
             example="Ex : J'ai découvert que le besoin n'était pas tant technique qu'émotionnel (besoin de réassurance et de cadre sécurisant).",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 

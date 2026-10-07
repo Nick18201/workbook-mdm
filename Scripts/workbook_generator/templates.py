@@ -48,8 +48,6 @@ logger = logging.getLogger(__name__)
 @dataclass
 class LayoutConfig:
     part_title: str = ""  # eyebrow above the page title
-    use_side_panel: bool = True  # former art direction, ignored
-    use_blobs: bool = False  # former art direction, ignored
     y_start: float = None
 
 
@@ -58,8 +56,6 @@ class QuestionConfig:
     box_height: float = 3.0 * cm
     subtitle: str = None
     example: str = None
-    color_alternation: bool = True  # former art direction: questions are now always ink
-    color: str = None
 
 
 @dataclass
@@ -68,7 +64,6 @@ class QuestionItem:
     form_field_id: str
     subtitle: str = None
     example: str = None
-    color: str = None
     box_height: float = None  # None for auto-fit
 
 
@@ -212,7 +207,6 @@ class PageLayout:
                         or q.get("field_id", f"q_{self.question_index}_{len(norm_questions)}"),
                         subtitle=q.get("subtitle"),
                         example=q.get("example"),
-                        color=q.get("color"),
                         box_height=q.get("box_height"),
                     )
                 )

@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -31,25 +30,21 @@ def create_communication_message_page(c):
             question="1. Mon message principal (l'idée directrice incontournable)",
             form_field_id="bp_p22_message_principal",
             subtitle="Quelle conviction fondamentale souhaitez-vous répéter avec constance à votre communauté ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Mes messages secondaires et piliers de contenu",
             form_field_id="bp_p22_messages_secondaires",
             subtitle="Quels sont vos 3 grands thèmes de prédilection (ex : organisation, écologie personnelle, méthode...) ?",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Mon ton d'expression et mes mots signatures",
             form_field_id="bp_p22_ton_expression",
             subtitle="Plutôt chaleureux et complice ? Structuré et directif ? Pédagogue et imagé ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="4. Ce que je refuse catégoriquement de communiquer (mes lignes rouges)",
             form_field_id="bp_p22_refus_communication",
             subtitle="Les discours culpabilisants, les astuces miracles ou les codes marketing que vous rejetez fermement.",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     ]
 
@@ -321,19 +316,16 @@ def create_juridique_cadre_page(c):
             question="1. Le statut juridique retenu ou envisagé pour démarrer",
             form_field_id="bp_p26_statut_choisi",
             subtitle="Pourquoi ce choix ? (Simplicité de gestion, protection du patrimoine, cumul avec allocations...)",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Ce que j'ai déjà vérifié auprès de professionnels fiables",
             form_field_id="bp_p26_verifications_faites",
             subtitle="Conseils reçus auprès d'un expert-comptable, de la BGE, de la CCI, de France Travail...",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Les questions administratives ou fiscales en suspens",
             form_field_id="bp_p26_questions_juridiques",
             subtitle="Quels doutes restent à éclaircir avant la signature des statuts ou l'immatriculation ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -483,8 +475,6 @@ def create_finances_previsionnel_page(c):
             box_height=5.2 * cm,
             subtitle="Combien de prestations devez-vous impérativement vendre chaque mois pour couvrir vos charges et vous verser votre rémunération ?",
             example="Ex : Charges fixes (300 €) + Cotisations (700 €) + Salaire net cible (2 000 €) = 3 000 € de CA requis, soit 4 forfaits à 750 € par mois.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -509,9 +499,9 @@ def create_finances_financement_page(c):
     )
 
     stats = [
-        {"value": "BESOIN INITIAL", "label": "Achats & Matériel", "color": PDFStyle.COLOR_ACCENT_BLUE},
-        {"value": "TRÉSORERIE", "label": "Sécurité 3 à 6 mois", "color": PDFStyle.COLOR_ACCENT_RED},
-        {"value": "TOTAL GLOBAL", "label": "À Financer au J1", "color": PDFStyle.COLOR_ACCENT_BLUE},
+        {"value": "BESOIN INITIAL", "label": "Achats & Matériel"},
+        {"value": "TRÉSORERIE", "label": "Sécurité 3 à 6 mois"},
+        {"value": "TOTAL GLOBAL", "label": "À Financer au J1"},
     ]
     layout.add_stat_boxes(stats)
 
@@ -568,8 +558,6 @@ def create_finances_financement_page(c):
         config=QuestionConfig(
             box_height=4.8 * cm,
             subtitle="Quelle combinaison de financements retenez-vous pour sécuriser votre lancement sans prendre de risque inconsidéré ?",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

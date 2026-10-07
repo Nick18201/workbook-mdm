@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -32,8 +31,6 @@ def create_recit_contexte_page(c):
             box_height=5.0 * cm,
             subtitle="Où étiez-vous ? Quelle était la mission initiale, et quel obstacle, anomalie ou urgence est survenu ?",
             example="Ex : Bloqué sur un dossier complexe à 48h de l'échéance finale avec un calcul non-conforme et un client sous pression.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -45,8 +42,6 @@ def create_recit_contexte_page(c):
             subtitle="À quel micro-signal précis (un chiffre anormal, une hésitation, un détail matériel) "
             "avez-vous compris qu'il fallait intervenir sans attendre ?",
             example="Ex : En lisant les plans de structure, j'ai repéré immédiatement un pont thermique oublié que personne n'avait décelé.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -77,8 +72,6 @@ def create_recit_impact_page(c):
             subtitle="Qu'avez-vous fait concrètement ? (Vos gestes, arbitrages, paroles, outils ou personnes mobilisés). "
             "Privilégiez le « Comment » plutôt que la théorie.",
             example="Ex : J'ai isolé les variables critiques, appelé le projeteur pour convenir d'une variante et rédigé une note technique vulgarisée.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -90,8 +83,6 @@ def create_recit_impact_page(c):
             subtitle="Quels ont été les effets concrets et mesurables pour le projet, le client ou l'équipe ? "
             "De quoi êtes-vous le plus fier dans votre réaction ?",
             example="Ex : Dossier validé dans les délais sans surcoût, client rassuré et reconnaissant, fierté d'avoir trouvé une solution élégante.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

@@ -203,13 +203,6 @@ def register_fonts():
         if normal not in pdfmetrics.standardFonts:
             pdfmetrics.registerFontFamily(normal, normal=normal, bold=bold, italic=italic, boldItalic=bold_italic)
 
-    # Former names used by the chapters until lot E5
-    s.FONT_TITLE = s.FONT_HEADING
-    s.FONT_SUBTITLE = s.FONT_HEADING_BOLD
-    s.FONT_ITALIC = s.FONT_HEADING_ITALIC
-    s.FONT_BRANDING = s.FONT_HEADING
-    s.FONT_HAND = s.FONT_SERIF
-
 
 # Cache ImageReader to avoid reloading and re-parsing identical images multiple times.
 # This saves I/O and CPU time when the same image (like logos or repeated illustrations)

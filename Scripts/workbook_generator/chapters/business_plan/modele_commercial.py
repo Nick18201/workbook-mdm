@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -44,19 +43,16 @@ def create_modele_revenus_page(c):
             question="1. Mes sources de revenus prioritaires et secondaires",
             form_field_id="bp_p16_sources_revenus",
             subtitle="Quelle offre génère le cœur de vos revenus ? Quelles sont les rentrées complémentaires ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Quelle personne ou organisation paie concrètement ?",
             form_field_id="bp_p16_qui_paie",
             subtitle="La personne accompagnée elle-même, son employeur (B2B), une caisse de retraite, un OPCO...",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Pour quoi paie-t-elle et à quel moment du parcours ?",
             form_field_id="bp_p16_quand_paie",
             subtitle="Acompte à la commande (30%), solde à la livraison, prélèvement mensuel, paiement en 3x...",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -287,8 +283,6 @@ def create_commercial_prix_page(c):
             box_height=3.2 * cm,
             subtitle="Écrivez vos arguments clés pour assumer vos tarifs avec sérénité et sans baisser vos prix par peur.",
             example="Ex : Mon tarif reflète un suivi individuel sans compromis, un gain de plusieurs mois d'errance pour la cliente et une disponibilité réelle.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -330,19 +324,16 @@ def create_commercial_acquisition_page(c):
             question="1. Mes 2 à 3 canaux prioritaires et justification",
             form_field_id="bp_p20_canaux_choisis",
             subtitle="Pourquoi ces canaux correspondent-ils à votre personnalité et aux habitudes de vos clientes ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Comment vais-je obtenir mes 10 premiers clients ?",
             form_field_id="bp_p20_dix_premiers_clients",
             subtitle="Détaillez vos actions directes : liste de 20 contacts tièdes, appel découverte, offre pilote à prix doux...",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Comment transformer un premier contact intéressé en cliente engagée ?",
             form_field_id="bp_p20_conversion_contact",
             subtitle="Quel est votre rituel d'échange : appel d'alignement de 30 min, diagnostic offert, proposition personnalisée...",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 

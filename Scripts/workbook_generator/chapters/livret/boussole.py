@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -33,8 +32,6 @@ def create_boussole_regard_page(c):
             subtitle="Quelles évolutions sociétales, écologiques ou techniques résonnent avec vos valeurs "
             "et vous donnent envie de participer et d'agir ?",
             example="Ex : La transition énergétique des territoires, la transmission des savoirs aux bâtisseurs, la sobriété d'usage.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -46,8 +43,6 @@ def create_boussole_regard_page(c):
             subtitle="Quelles décisions sur votre vie professionnelle et votre équilibre personnel vous appartiennent en propre "
             "et ne dépendent que de vous ?",
             example="Ex : Fixer ma limite stricte de temps de trajet, décider de mon niveau d'implication, refuser un management désincarné.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -78,8 +73,6 @@ def create_boussole_confiance_page(c):
             subtitle="Quels métiers, structures ou professionnels en poste avez-vous envie d'interviewer "
             "pour découvrir la réalité concrète de leur quotidien ?",
             example="Ex : Solliciter un formateur technique en CFA et un chargé de mission énergie en collectivité pour 20 minutes d'échange.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -90,8 +83,6 @@ def create_boussole_confiance_page(c):
             box_height=5.2 * cm,
             subtitle="Sur quelle difficulté, reconversion ou étape antérieure déjà traversée avec succès vous appuyez-vous aujourd'hui ?",
             example="Ex : Avoir validé un diplôme d'ingénieur après un BTS en apprenant tout sur le tas avec discipline et méthode.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
