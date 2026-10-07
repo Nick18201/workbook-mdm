@@ -17,7 +17,7 @@ Ouvrez ensuite votre navigateur sur :
 
 ### Fonctionnalités disponibles sur l'interface :
 1. **Bouton "Charger un exemple"** : Remplit instantanément les notes avec un cas concret (Julien, Chapitre 4).
-2. **"1. Analyser & Structurer"** : Appelle Gemini Flash pour découper les notes en 7 ou 8 pages calibrées. Vous pouvez retoucher le titre d'une page directement sur l'écran si nécessaire.
+2. **"1. Analyser & Structurer"** : Appelle Gemini Flash pour découper les notes en 7 ou 8 pages calibrées. Vous pouvez retoucher le titre d'une page directement sur l'écran si nécessaire. Sans `GEMINI_API_KEY` (variable d'environnement ou fichier `.env`), un livret générique de secours est produit et un bandeau orange le signale.
 3. **"Télécharger le Livret PDF"** : Compile et télécharge le livret PDF immédiatement en haute définition (AcroForm interactif, vectoriel, charte MDM).
 4. **"🚀 Génération directe 1-Click"** : Prend les notes et télécharge le livret en un seul clic sans étape intermédiaire.
 
@@ -31,33 +31,57 @@ Google Cloud Run permet d'héberger ce service gratuitement (dans le quota Free 
 * Le SDK Google Cloud installé (`gcloud`).
 * Un projet GCP actif avec facturation activée.
 
-### Commande de déploiement en 1 ligne :
+### Commande de premier déploiement :
 
 ```bash
 gcloud run deploy mdm-workbook-generator \
   --source . \
   --region europe-west1 \
-  --allow-unauthenticated \
+  --no-allow-unauthenticated \
+  --iap \
   --set-env-vars GEMINI_API_KEY="VOTRE_CLE_API_GEMINI" \
-  --memory 1Gi \
+  --memory 512Mi \
   --cpu 1
 ```
+
+> ⚠️ **Ne jamais ajouter `--allow-unauthenticated`** : ce flag donne le rôle d'invocation à `allUsers`, ce qui rend l'adresse `*.run.app` publique et contourne l'IAP. L'application n'a aucune authentification propre : toute la protection vient de l'IAP (section 3).
+
+Variable d'environnement facultative : `GEMINI_MODELS` (liste séparée par des virgules) pour changer les modèles Gemini essayés dans l'ordre, sans modifier le code.
 
 ### Ce que fait cette commande automatiquement :
 1. Envoie le code vers Google Cloud Build.
 2. Construit l'image Docker à partir de notre `Dockerfile` optimisé.
-3. Déploie le conteneur sur Cloud Run dans la région Europe (Belgique).
-4. Vous fournit instantanément une **URL HTTPS sécurisée** du type :  
+3. Déploie le conteneur sur Cloud Run dans la région Europe (Belgique), avec l'IAP activé.
+4. Vous fournit une **URL HTTPS** du type :  
    `https://mdm-workbook-generator-xxxx-ew.a.run.app`
 
 ---
 
-## 3. Sécuriser l'accès pour vos collègues (Options)
+## 3. Contrôle d'accès (IAP)
 
-Si vous ne souhaitez pas que l'outil soit ouvert au grand public (`--no-allow-unauthenticated`) :
+Le service est protégé par **Identity-Aware Proxy activé directement sur Cloud Run** : toute requête, API comprise, passe par une connexion Google, et seuls les comptes **@margedemanoeuvre.fr** sont autorisés.
 
-* **Option A (Google IAP / Comptes Google)** : Identity-Aware Proxy sur Cloud Run restreint l'accès aux membres autorisés (@margedemanoeuvre.fr).
-* **Option B (Protection simple)** : Mot de passe d'équipe partagé au niveau de l'interface web.
+Configuration attendue :
+* L'invocation Cloud Run (`roles/run.invoker`) n'est accordée qu'à l'agent de service IAP (`service-<NUMÉRO_PROJET>@gcp-sa-iap.iam.gserviceaccount.com`), jamais à `allUsers` ni `allAuthenticatedUsers`.
+* L'accès IAP (`roles/iap.httpsResourceAccessor`) est accordé à `domain:margedemanoeuvre.fr`.
+
+Pour l'accorder au domaine (à faire une fois) :
+
+```bash
+gcloud iap web add-iam-policy-binding --resource-type=cloud-run --service=mdm-workbook-generator --region=europe-west1 --member=domain:margedemanoeuvre.fr --role=roles/iap.httpsResourceAccessor
+```
+
+Pour vérifier (aucune ligne ne doit contenir `allUsers` ni `allAuthenticatedUsers`) :
+
+```bash
+gcloud run services get-iam-policy mdm-workbook-generator --region europe-west1
+```
+
+```bash
+gcloud iap web get-iam-policy --resource-type=cloud-run --service=mdm-workbook-generator --region=europe-west1
+```
+
+Test rapide : ouvrir `https://<url>/api/templates` dans une fenêtre de navigation privée doit afficher l'écran de connexion Google, et non du JSON.
 
 ---
 
