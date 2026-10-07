@@ -7,14 +7,10 @@ from .exercices import (
     create_cartographie_page,
     create_retours_proches_page,
     create_pistes_intro_page,
-    create_pistes_no_limit_1_page,
-    create_pistes_no_limit_2_page,
-    create_pistes_realistes_1_page,
-    create_pistes_realistes_2_page,
+    create_pistes_no_limit_page,
+    create_pistes_realistes_page,
 )
-from .ressources import (
-    create_ressources_page,
-)
+from .ressources import create_ressources_page, create_livrable_page
 
 __all__ = [
     "create_chap6_cover",
@@ -23,9 +19,8 @@ __all__ = [
     "create_cartographie_page",
     "create_retours_proches_page",
     "create_pistes_intro_page",
-    "create_pistes_no_limit_1_page",
-    "create_pistes_no_limit_2_page",
-    "create_pistes_realistes_1_page",
-    "create_pistes_realistes_2_page",
+    "create_pistes_no_limit_page",
+    "create_pistes_realistes_page",
     "create_ressources_page",
+    "create_livrable_page",
 ]

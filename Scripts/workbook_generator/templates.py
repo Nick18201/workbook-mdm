@@ -29,6 +29,7 @@ from .primitives import (
     draw_paragraph,
     draw_pastel_card,
     draw_rule,
+    draw_star,
     draw_star_list,
     draw_text,
     draw_white_card,
@@ -905,6 +906,48 @@ class PageLayout:
                               PDFStyle.COLOR_INK_MUTED, PDFStyle.TRACKING_LABEL)
             self.y_cursor -= h + gap
         self.y_cursor -= PDFStyle.GAP_BLOCK - gap
+        return self.y_cursor
+
+    def add_link_card(self, title, links, color=None):
+        """
+        A pastel card listing resources: a pill title, then per link a star, the name in
+        blue (clickable) and a short description. links: [(name, url, description), ...].
+        """
+        pad = PDFStyle.CARD_PADDING
+        inner = self.target_width - 2 * pad
+        size, leading = PDFStyle.SIZE_BODY, PDFStyle.SIZE_BODY * 1.4
+        _, pill_h = label_pill_size(title)
+        text_x_offset = size * 1.6
+
+        def item_text(name, description):
+            return f"{name} : {description}" if description else name
+
+        # 8 pt of slack: the name is set in semibold, wider than the regular text it is measured in
+        items_h = [paragraph_height(item_text(n, d), inner - text_x_offset - 8, PDFStyle.FONT_BODY, size, leading)
+                   for n, _, d in links]
+        h = 2 * pad + pill_h + 0.3 * cm + sum(items_h) + 0.2 * cm * (len(links) - 1)
+        self._ensure_space(h)
+        draw_pastel_card(self.c, self.text_x, self.y_cursor - h, self.target_width, h, color=color)
+        draw_label_pill(self.c, self.text_x + pad, self.y_cursor - pad - pill_h, title, variant="on_pastel",
+                        max_width=inner)
+        t = self.y_cursor - pad - pill_h - 0.3 * cm
+        for (name, url, description), item_h in zip(links, items_h):
+            x = self.text_x + pad
+            baseline = t - (leading - size) / 2 - 0.8 * size
+            draw_star(self.c, x, baseline + 0.36 * size - size * 0.425, size * 0.85)
+            # The name in blue semibold, then the description in ink on the same paragraph
+            name_w = text_width(name, PDFStyle.FONT_BODY_BOLD, size)
+            draw_text(self.c, x + text_x_offset, baseline, name, PDFStyle.FONT_BODY_BOLD, size, PDFStyle.COLOR_BLUE)
+            self.c.linkURL(url, (x + text_x_offset, baseline - 2, x + text_x_offset + name_w, baseline + size), relative=0)
+            if description:
+                rest = wrap_text(f"{name} : {description}", PDFStyle.FONT_BODY, size, inner - text_x_offset - 8)
+                first = rest[0][len(name):] if rest[0].startswith(name) else rest[0]
+                draw_text(self.c, x + text_x_offset + name_w, baseline, first, PDFStyle.FONT_BODY, size, PDFStyle.COLOR_INK)
+                for k, line in enumerate(rest[1:], start=1):
+                    draw_text(self.c, x + text_x_offset, baseline - k * leading, line, PDFStyle.FONT_BODY, size,
+                              PDFStyle.COLOR_INK)
+            t -= item_h + 0.2 * cm
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 
     def add_checklist_cards(self, groups, columns=2, field_prefix="chk", item_columns=1):
