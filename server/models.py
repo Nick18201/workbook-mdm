@@ -141,7 +141,7 @@ class WorkbookSpec(BaseModel):
     chapter_num: int = Field(1, description="Numéro du chapitre")
     chapter_title: str = Field("Mes Réflexions", description="Titre principal du chapitre")
     title: Optional[str] = Field(None, description="Alias pour chapter_title")
-    subtitle: str = Field("BILAN DE COMPÉTENCES & ALIGNEMENT", description="Sous-titre de couverture")
+    subtitle: str = Field("BILAN DE COMPÉTENCES", description="Sous-titre de couverture")
     beneficiary_name: Optional[str] = Field(None, description="Nom ou prénom du bénéficiaire pour personnalisation")
     pages: List[PageSpec] = Field(
         default_factory=list, max_length=MAX_PAGES, description="Liste ordonnée des pages du livret"
@@ -213,7 +213,7 @@ class TemplateInfo(BaseModel):
     subtitle: str = Field(..., description="Sous-titre de couverture")
     description: str = Field(..., description="Brève description pédagogique")
     page_count: int = Field(..., description="Nombre de pages du livret")
-    icon: str = Field(..., description="Emoji distinctif pour l'affichage")
+    icon: str = Field(..., description="Nom d'une icône Material Symbols Outlined pour l'affichage")
     category: str = Field("Bilan de Compétences", description="Catégorie du modèle")
 
 

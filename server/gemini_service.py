@@ -182,7 +182,7 @@ Produis UNIQUEMENT un objet JSON valide conforme à la structure suivante :
 {
   "chapter_num": 1,
   "chapter_title": "Titre du livret",
-  "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
+  "subtitle": "BILAN DE COMPÉTENCES",
   "beneficiary_name": "Nom ou prénom",
   "pages": [
     {
@@ -267,10 +267,10 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
     pages.append(
         PageSpec(
             template="cover",
-            title="BILAN DE COMPÉTENCES & ALIGNEMENT",
+            title="BILAN DE COMPÉTENCES",
             params={
                 "subtitle": f"Chapitre {request.chapter_num} : {title}",
-                "title": "BILAN DE COMPÉTENCES & ALIGNEMENT",
+                "title": "BILAN DE COMPÉTENCES",
                 "promise": "De la réflexion à une décision concrète.",
             },
         )
@@ -386,7 +386,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         PageSpec(
             template="quadrants",
             title="Vos quatre *piliers d'équilibre.*",
-            part_title=f"{len(summary_items)+1}. MATRICE D'ALIGNEMENT",
+            part_title=f"{len(summary_items)+1}. MATRICE D'ÉQUILIBRE",
             params={
                 "instruction": "Pour chacun des quatre domaines, formulez en une phrase courte votre priorité.",
                 "quadrants": [
@@ -640,7 +640,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
     return WorkbookSpec(
         chapter_num=request.chapter_num,
         chapter_title=title,
-        subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
+        subtitle="BILAN DE COMPÉTENCES",
         beneficiary_name=request.beneficiary_name,
         pages=all_pages,
     )
@@ -669,7 +669,7 @@ Tu dois impérativement répondre avec un objet JSON valide contenant exactement
   "spec": {
     "chapter_num": 1,
     "chapter_title": "Titre du livret",
-    "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
+    "subtitle": "BILAN DE COMPÉTENCES",
     "beneficiary_name": "Nom",
     "pages": [...]
   },
