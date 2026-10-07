@@ -24,10 +24,11 @@ class PDFStyle:
     COLOR_CORAL_STRONG = colors.HexColor("#C22626")  # any small coral text, bullets, stamp
     COLOR_BLUE = colors.HexColor("#251FD3")  # second accent: title word, icons, big numbers
 
-    # Every page is tinted linen (DocumentBuilder); white is for cards and fields to fill in.
-    # Bright coral text needs cream or white behind it (3:1): on linen, title accents are coral-strong.
-    COLOR_PAGE = COLOR_SURFACE_ALT
-    COLOR_TITLE_ACCENT = COLOR_CORAL_STRONG
+    # Every page is tinted off-white (DocumentBuilder), halfway between cream and linen;
+    # white is for cards and fields to fill in. Bright coral title accents keep 3:1 on it
+    # (from 18 pt); a page as dark as linen would need COLOR_TITLE_ACCENT = COLOR_CORAL_STRONG.
+    COLOR_PAGE = colors.HexColor("#F6F2EE")
+    COLOR_TITLE_ACCENT = COLOR_CORAL
 
     # Pastels: card backgrounds, post-its, background discs. Text on them stays ink.
     PASTELS = {

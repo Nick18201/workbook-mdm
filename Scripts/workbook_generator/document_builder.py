@@ -27,15 +27,13 @@ def document_pastel(c):
 
 class _PageCanvas(canvas.Canvas):
     """
-    Canvas whose pages are tinted with PDFStyle.COLOR_PAGE (linen): the tint is
+    Canvas whose pages are tinted with PDFStyle.COLOR_PAGE (off-white): the tint is
     put at the very start of each page's content when the page ends, so it stays under
     everything and an unused last page is not created by it.
     """
 
-    page_background = PDFStyle.COLOR_PAGE
-
     def showPage(self):
-        color = self.page_background
+        color = PDFStyle.COLOR_PAGE
         if color is not None:
             w, h = self._pagesize
             self._code.insert(0, f"q {fp_str(color.red, color.green, color.blue)} rg 0 0 {fp_str(w, h)} re f Q")
