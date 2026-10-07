@@ -25,7 +25,3 @@ Dépôts GitHub de Google, téléchargés le 2026-10-07 :
 - `google/material-design-icons` : `variablefont/MaterialSymbolsOutlined[FILL,GRAD,opsz,wght].ttf` et `.codepoints`, et `LICENSE`.
 
 PT Mono et Instrument Serif sont déjà statiques. Les autres sont des polices variables, que ReportLab ne sait pas lire. Elles sont figées par `Scripts/tools/make_static_fonts.py`, qui attend les sources renommées `DMSans-VF.ttf`, `DMSans-Italic-VF.ttf`, `Manrope-VF.ttf` et `MaterialSymbolsOutlined-VF.ttf`. Pour une autre graisse, ajouter une ligne à `INSTANCES`.
-
-## Ancienne DA
-
-Montserrat, Lato et Amatic SC servent aux documents actuels, en attendant la refonte.
