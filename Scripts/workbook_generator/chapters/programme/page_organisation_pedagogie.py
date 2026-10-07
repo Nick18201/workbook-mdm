@@ -41,7 +41,8 @@ def create_programme_page_organisation_pedagogie(c):
         white=True,
         items=[
             "<b>Rythme et alternance :</b> Le bilan alterne des entretiens réguliers en visio et des temps dédiés de "
-            "travail personnel (environ 1 h à 2 h par carnet, selon vos disponibilités).",
+            "travail personnel : 10 à 20 h en tout selon les personnes, soit environ 1 h 30 à 3 h par carnet, en plus "
+            "des 14 h d'accompagnement.",
             "<b>Supports accessibles en continu :</b> Vos exercices s'appuient sur vos carnets guidés et l'espace "
             "Notion ressource, disponibles dès la formalisation de votre parcours.",
             "<b>Consignes personnalisées :</b> À l'issue de chaque séance, votre accompagnateur formule des consignes "
@@ -55,8 +56,10 @@ def create_programme_page_organisation_pedagogie(c):
             "<b>Assistance pédagogique et technique réactive :</b> Tout au long du parcours, vous n'êtes jamais "
             "seul(e). Votre accompagnateur référent répond à vos questions par email ou par téléphone dans un délai "
             "garanti de <b>48 h ouvrées</b>.",
-            "<b>Cadre de confiance absolu :</b> Respect strict du secret professionnel, posture de neutralité, "
-            "adhésion au code de déontologie des psychologues et protection intégrale de vos données personnelles.",
+            "<b>Cadre de confiance absolu :</b> Respect strict du secret professionnel (Code du travail, "
+            "art. L. 6313-4), posture de neutralité et protection intégrale de vos données personnelles. Les bilans "
+            "menés par Lysiane Brand, psychologue du travail, relèvent en outre du code de déontologie des "
+            "psychologues.",
         ],
     )
     layout.render()
