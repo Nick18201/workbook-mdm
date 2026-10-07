@@ -126,7 +126,7 @@ def create_programme_cover(c):
 
     c.setFont(PDFStyle.FONT_TITLE, 10.0)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawString(content_x + 0.5 * cm, y_hero - 0.72 * cm, "📍 100 % à distance, en visio, partout en France")
+    c.drawString(content_x + 0.5 * cm, y_hero - 0.72 * cm, "100 % à distance, en visio, partout en France")
     c.restoreState()
     y_hero -= pill_h + 1.4 * cm
 

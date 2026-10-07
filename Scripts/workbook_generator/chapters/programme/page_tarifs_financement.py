@@ -86,7 +86,7 @@ def create_programme_page_tarifs(c):
     inclus_y = price_box_y - 0.50 * cm
     c.setFont(PDFStyle.FONT_TITLE, 9.0)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawString(content_x + 0.8 * cm, inclus_y, "🎁 INCLUS DANS CET ACCOMPAGNEMENT :")
+    c.drawString(content_x + 0.8 * cm, inclus_y, "INCLUS DANS CET ACCOMPAGNEMENT :")
 
     style_inclus = ParagraphStyle(
         "TarifInclus",

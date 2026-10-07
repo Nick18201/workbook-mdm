@@ -102,7 +102,7 @@ def create_liste_valeurs_page1(c):
         config=LayoutConfig(part_title="4. SÉLECTION & HIÉRARCHISATION")
     )
     layout.add_text(
-        "⏱ ~10 min | À partir des situations d'alignement, de désalignement et de vos choix difficiles, cochez les valeurs qui reviennent régulièrement dans votre parcours :",
+        "Durée : ~10 min · À partir des situations d'alignement, de désalignement et de vos choix difficiles, cochez les valeurs qui reviennent régulièrement dans votre parcours :",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.4 * cm)
     )
     _draw_valeurs_grid(c, layout, CATEGORIES_VALEURS[0:5], 0)
@@ -130,7 +130,7 @@ def create_hierarchiser_valeurs_page(c):
         config=LayoutConfig(part_title="5. SÉLECTION & HIÉRARCHISATION")
     )
     layout.add_text(
-        "⏱ ~10 min | Trier et prioriser vos moteurs pour dégager vos valeurs fondamentales.",
+        "Durée : ~10 min · Trier et prioriser vos moteurs pour dégager vos valeurs fondamentales.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
     layout.add_text(
@@ -169,7 +169,7 @@ def _create_incarner_valeur_page(c, num):
         config=LayoutConfig(part_title="6. INCARNATION DES VALEURS")
     )
     layout.add_text(
-        "⏱ ~5 min | Traduire chaque valeur clé en ressentis, actions et besoins concrets.",
+        "Durée : ~5 min · Traduire chaque valeur clé en ressentis, actions et besoins concrets.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
     
@@ -232,7 +232,7 @@ def create_conditions_travail_page(c):
         config=LayoutConfig(part_title="7. CONDITIONS DE TRAVAIL")
     )
     layout.add_text(
-        "⏱ ~10 min | 🎯 Formuler des critères concrets et observables pour évaluer vos futurs postes.",
+        "Durée : ~10 min · Objectif : Formuler des critères concrets et observables pour évaluer vos futurs postes.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
 

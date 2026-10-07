@@ -201,7 +201,7 @@ def create_programme_page_indicateurs_satisfaction(c):
         textColor=PDFStyle.COLOR_ACCENT_BLUE,
     )
     txt_qualite = (
-        "<b>⭐ ENGAGEMENT QUALITÉ & DÉMARCHE QUALIOPI :</b><br/>"
+        "<font name='ZapfDingbats'>★</font> <b>ENGAGEMENT QUALITÉ & DÉMARCHE QUALIOPI :</b><br/>"
         "Ces résultats traduisent notre engagement constant pour un accompagnement d'excellence, rigoureux et humain. "
         "Chaque retour d'expérience est minutieusement analysé afin d'alimenter notre démarche d'amélioration continue."
     )

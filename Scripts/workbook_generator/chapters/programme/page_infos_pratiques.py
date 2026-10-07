@@ -37,7 +37,7 @@ def create_programme_page_infos_pratiques(c):
             "row": 0,
             "col": 0,
             "height": 5.9 * cm,
-            "title": "📋 PRÉREQUIS",
+            "title": "PRÉREQUIS",
             "text": (
                 "<b>Aucun prérequis</b> de diplôme, de niveau d'études, d'expérience professionnelle "
                 "ou de statut n'est exigé.<br/><br/>"
@@ -49,7 +49,7 @@ def create_programme_page_infos_pratiques(c):
             "row": 0,
             "col": 1,
             "height": 5.9 * cm,
-            "title": "⏱️ DÉLAIS D'ACCÈS",
+            "title": "DÉLAIS D'ACCÈS",
             "text": (
                 "• <b>Premier échange gratuit (30 min en visio) :</b> pour cerner vos attentes et valider l'adéquation.<br/>"
                 "• <b>Inscription sur MonCompteFormation :</b> validation en ligne de votre dossier.<br/>"
@@ -62,7 +62,7 @@ def create_programme_page_infos_pratiques(c):
             "row": 1,
             "col": 0,
             "height": 6.8 * cm,
-            "title": "📊 MODALITÉS D'ÉVALUATION",
+            "title": "MODALITÉS D'ÉVALUATION",
             "text": (
                 "• <b>Évaluation continue :</b> validation des livrables et des exercices pratiques à la fin de chaque séance.<br/>"
                 "• <b>Questionnaire de satisfaction :</b> évaluation anonyme à chaud en fin de parcours pour mesurer la qualité "
@@ -74,12 +74,12 @@ def create_programme_page_infos_pratiques(c):
             "row": 1,
             "col": 1,
             "height": 6.8 * cm,
-            "title": "♿ ACCESSIBILITÉ & HANDICAP",
+            "title": "ACCESSIBILITÉ & HANDICAP",
             "text": (
                 "Notre démarche s'adapte à chacun : nous adaptons les rythmes, les supports et les formats d'accompagnement.<br/><br/>"
                 "Notre <b>référent handicap</b> étudie chaque situation pour organiser les aménagements nécessaires ou vous orienter :<br/><br/>"
                 "<b>Nicolas Blum Ferracci</b><br/>"
-                "✉️ <b>nicolas.blumferracci@margedemanoeuvre.fr</b>"
+                "<font name='ZapfDingbats'>✉</font> <b>nicolas.blumferracci@margedemanoeuvre.fr</b>"
             ),
         },
         # Ligne 3
@@ -87,7 +87,7 @@ def create_programme_page_infos_pratiques(c):
             "row": 2,
             "col": 0,
             "height": 6.4 * cm,
-            "title": "✉️ CONTACT & INSCRIPTION",
+            "title": "CONTACT & INSCRIPTION",
             "text": (
                 "Pour poser vos questions, étudier vos possibilités de prise en charge ou convenir d'un premier échange :<br/><br/>"
                 "• <b>Email :</b> contact@margedemanoeuvre.fr<br/>"
@@ -100,7 +100,7 @@ def create_programme_page_infos_pratiques(c):
             "row": 2,
             "col": 1,
             "height": 6.4 * cm,
-            "title": "🔒 CONFIDENTIALITÉ & PROPRIÉTÉ",
+            "title": "CONFIDENTIALITÉ & PROPRIÉTÉ",
             "text": (
                 "Le document de synthèse officiel co-rédigé <b>n'appartient qu'à vous</b> et ne peut être communiqué "
                 "à aucun tiers sans votre accord explicite (art. L. 6313-4 du Code du travail).<br/><br/>"
