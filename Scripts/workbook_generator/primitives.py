@@ -215,16 +215,17 @@ def draw_heading(c, title, x, top, max_width, size=None, font=None, color=None, 
                  tracking=None, min_size=None, max_lines=3, leading=None, suffix=""):
     """
     Draws a title in ink with its accent run (see title_runs) in coral, balanced over its
-    lines. Coral text is only legible from 18 pt on white: smaller titles, or titles on a
-    pastel, take accent_color=COLOR_CORAL_STRONG (the default below 18 pt). `suffix` is
-    appended without accent, e.g. " (suite)". Returns the bottom y of the block.
+    lines. Bright coral text is only legible from 18 pt on cream or white: the default
+    accent is PDFStyle.COLOR_TITLE_ACCENT (coral-strong on the linen pages) and coral-strong
+    below 18 pt. `suffix` is appended without accent, e.g. " (suite)". Returns the bottom y
+    of the block.
     """
     font = font or PDFStyle.FONT_HEADING
     tracking = PDFStyle.TRACKING_TITLE if tracking is None else tracking
     color = color or PDFStyle.COLOR_INK
     lines, size = heading_layout(title, max_width, size, font, tracking, min_size, max_lines, suffix)
     if accent_color is None:
-        accent_color = PDFStyle.COLOR_CORAL if size >= 18 else PDFStyle.COLOR_CORAL_STRONG
+        accent_color = PDFStyle.COLOR_TITLE_ACCENT if size >= 18 else PDFStyle.COLOR_CORAL_STRONG
     leading = leading or size * PDFStyle.LEADING_TITLE
 
     y = first_baseline(top, size, leading)

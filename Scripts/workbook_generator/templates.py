@@ -448,7 +448,7 @@ class PageLayout:
 
     def add_table(self, headers, rows, col_widths=None, field_prefix="tbl"):
         """
-        Table: a linen header row in PT Mono, then rows separated by rules. A dict cell is an
+        Table: a white header row in PT Mono, then rows separated by rules. A dict cell is an
         answer field, an empty cell a check box; text cells wrap. The header repeats on
         continuation pages.
         """
@@ -488,7 +488,7 @@ class PageLayout:
         def draw_header():
             h_y = self.y_cursor - header_h
             self.c.saveState()
-            self.c.setFillColor(PDFStyle.COLOR_SURFACE_ALT)
+            self.c.setFillColor(PDFStyle.COLOR_SURFACE_CARD)
             self.c.roundRect(self.text_x, h_y, self.target_width, header_h, 6, fill=1, stroke=0)
             self.c.restoreState()
             curr_x = self.text_x

@@ -12,7 +12,6 @@ class PDFStyle:
     # A. Colors
     # Neutrals
     COLOR_SURFACE = colors.HexColor("#FAF8F5")  # cream
-    COLOR_PAGE = COLOR_SURFACE  # every page is tinted cream (DocumentBuilder); white is for cards and fields
     COLOR_SURFACE_CARD = colors.HexColor("#FFFFFF")  # white: pages, white cards, fields to fill in
     COLOR_SURFACE_ALT = colors.HexColor("#F1EBE6")  # linen
     COLOR_INK = colors.HexColor("#111111")  # main text, drawn strokes
@@ -24,6 +23,11 @@ class PDFStyle:
     COLOR_CORAL = colors.HexColor("#FF3B3B")  # decoration; as text, only at 18 pt and up, on white
     COLOR_CORAL_STRONG = colors.HexColor("#C22626")  # any small coral text, bullets, stamp
     COLOR_BLUE = colors.HexColor("#251FD3")  # second accent: title word, icons, big numbers
+
+    # Every page is tinted linen (DocumentBuilder); white is for cards and fields to fill in.
+    # Bright coral text needs cream or white behind it (3:1): on linen, title accents are coral-strong.
+    COLOR_PAGE = COLOR_SURFACE_ALT
+    COLOR_TITLE_ACCENT = COLOR_CORAL_STRONG
 
     # Pastels: card backgrounds, post-its, background discs. Text on them stays ink.
     PASTELS = {
