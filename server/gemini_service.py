@@ -69,7 +69,6 @@ def _generate_json(
                 contents=user_prompt,
                 config=types.GenerateContentConfig(
                     response_mime_type="application/json",
-                    temperature=0.2,
                     system_instruction=system_prompt,
                 ),
             )
