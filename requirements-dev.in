@@ -1,0 +1,5 @@
+# Dépendances de développement : tests (pytest, httpx) et rendu PNG (pymupdf).
+-r requirements.in
+pytest
+pymupdf
+httpx

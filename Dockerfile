@@ -1,5 +1,5 @@
 # Dockerfile optimisé pour Google Cloud Run
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # Empêche Python d'écrire des fichiers .pyc et assure le flush immédiat des logs
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copie et installation des dépendances Python
+# Copie et installation des dépendances Python (versions figées, voir requirements.in)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
