@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -131,8 +130,6 @@ def create_action_risques_page(c):
             box_height=5.6 * cm,
             subtitle="Quelles sont les 5 conditions indispensables dont dépend la survie de votre projet ? Comment les surveiller ?",
             example="1. Les clientes reconnaissent ce problème comme urgent • 2. Elles ont le budget disponible • 3. Mon canal LinkedIn génère 2 leads/mois • 4. Je délivre en 5h max • 5. Mon écologie de vie est préservée.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 

@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -33,8 +32,6 @@ def create_offre_definition_page(c):
             box_height=4.2 * cm,
             subtitle="À quoi sert-il concrètement ? Que reçoit la personne ? Quelle expérience relationnelle lui faites-vous vivre ?",
             example="Ex : Un accompagnement individuel en 5 séances avec livret d'exercices et support WhatsApp entre les séances.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -81,19 +78,16 @@ def create_offre_valeur_page(c):
             question="1. Le bénéfice principal et les bénéfices secondaires",
             form_field_id="bp_p10_benefices",
             subtitle="Quel est le résultat tangible promis ? Quels sont les bénéfices émotionnels (sérénité, fierté, clarté) ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="2. Ce qui rend mon approche unique et singulière",
             form_field_id="bp_p10_approche_differente",
             subtitle="Qu'est-ce qui vous distingue (votre histoire, votre méthode, votre énergie, votre éthique) ?",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
         QuestionItem(
             question="3. Formule de pitch : mon énoncé de valeur",
             form_field_id="bp_p10_pitch_promesse",
             subtitle="Complétez : « J'accompagne [Cible] qui rencontrent [Problème] grâce à [Solution], contrairement à [Alternatives]. »",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     ]
 
@@ -124,8 +118,6 @@ def create_marche_tendances_page(c):
         config=QuestionConfig(
             box_height=3.2 * cm,
             subtitle="Définissez votre domaine (ex : conseil, artisanat d'art, services aux familles, formation, bien-être...).",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -151,8 +143,6 @@ def create_marche_tendances_page(c):
         config=QuestionConfig(
             box_height=3.2 * cm,
             subtitle="Diplômes requis, normes ERP, RGPD, médiation de la consommation, assurances spécifiques...",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -273,13 +263,11 @@ def create_marche_benchmark_page(c):
             question="Les idées fortes que je retiens et que je pourrais adapter",
             form_field_id="bp_p13_idees_adaptees",
             subtitle="Quelles bonnes pratiques découvrez-vous chez ces pionniers ?",
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
         QuestionItem(
             question="Ce que je ne veux surtout pas reproduire",
             form_field_id="bp_p13_idees_refusees",
             subtitle="Quels écueils, lourdeurs ou manques observez-vous chez eux que vous refusez ?",
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     ]
 

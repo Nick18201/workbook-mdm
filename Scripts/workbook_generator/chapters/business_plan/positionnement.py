@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -105,8 +104,6 @@ def create_positionnement_pitch_page(c):
             box_height=5.5 * cm,
             subtitle="La synthèse qui résonne avec justesse et que vous aurez fierté à prononcer lors de vos rencontres professionnelles.",
             example="Ex : J'aide les femmes en reconversion à bâtir un projet professionnel rentable qui respecte leur santé et leurs valeurs profondes.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 

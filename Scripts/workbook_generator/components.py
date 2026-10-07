@@ -8,7 +8,6 @@ titled "<title> (suite)", so nothing is drawn off the page.
 """
 
 import re
-from dataclasses import dataclass
 
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
@@ -36,7 +35,6 @@ from .primitives import (
     draw_pastel_card,
     draw_page_head,
     draw_rule,
-    draw_signature,
     draw_stamp,
     draw_star_list,
     draw_text,
@@ -54,68 +52,7 @@ from .utils import cached_simpleSplit, ellipsize, fit_font_size, french_typograp
 WIDTH, HEIGHT = A4
 
 
-# --- Former helpers, restyled (the hand-drawn chapter pages use them until lot E5) ---
-
-def draw_page_background(c, width, height, use_blobs=False):
-    """Pages are white in the art direction: nothing to draw. Kept for the chapter pages."""
-
-
-def draw_side_panel(c, x, page_width, page_height):
-    """The side panel of the former art direction is gone: nothing to draw."""
-
-
-def draw_page_header(c, part_title, width, height, x_offset=0):
-    """Eyebrow at the top of the page."""
-    if part_title:
-        x, content_w = content_frame()
-        draw_eyebrow(c, x, height - PDFStyle.EYEBROW_TOP, part_title, max_width=content_w)
-
-
-def draw_page_footer(c, width, height, x_offset=0):
-    """Folio at the bottom of the page."""
-    draw_folio(c)
-
-
-def draw_page_decorations(c, width, height, part_title=None, x_offset=0):
-    """Eyebrow (when part_title is given) and folio, for pages that draw their own title."""
-    draw_page_header(c, part_title, width, height, x_offset)
-    draw_folio(c)
-
-
-def draw_card(c, x, y, width, height):
-    """Pastel card in the document's dominant pastel."""
-    draw_pastel_card(c, x, y, width, height)
-
-
-@dataclass
-class TitleStyle:
-    size: float = 24
-    color: object = None  # titles are ink in the art direction; kept for the former callers
-
-
-def draw_title(c, text, pos, available_width=None, style: TitleStyle = None):
-    """
-    Title whose first baseline is at pos (former API): ink with a coral accent on the
-    last word. Returns the y one line below the title, as before.
-    """
-    style = style or TitleStyle()
-    x, y = pos
-    if available_width is None:
-        available_width = WIDTH - x - PDFStyle.MARGIN_MAIN
-    leading = style.size * PDFStyle.LEADING_TITLE
-    top = y + (leading - style.size) / 2 + 0.8 * style.size
-    bottom = draw_heading(c, text, x, top, available_width, size=style.size, min_size=style.size, max_lines=4)
-    n_lines = round((top - bottom) / leading)
-    return y - n_lines * style.size * 1.2
-
-
-def draw_branding_logo(c, x, y, size=40, align="left"):
-    """Logotype « marge / de manœuvre » (former API: size 40 = cover size)."""
-    logo_size = size * 0.6
-    if align == "center":
-        x -= text_width("de manœuvre", PDFStyle.FONT_LOGO, logo_size, -0.05) / 2
-    draw_logotype(c, x, y, size=logo_size)
-
+# --- Text helpers ------------------------------------------------------------
 
 def draw_fitted_text(c, text, x, y, max_width, font_name, size, min_size=None,
                      max_lines=2, leading=None, align="left"):
@@ -143,25 +80,6 @@ def draw_fitted_text(c, text, x, y, max_width, font_name, size, min_size=None,
         else:
             c.drawString(x, line_y, line)
     return len(lines), size
-
-
-def draw_pause_badge(c, x, y, radius=0.4 * cm):
-    """Draws the 'Pause' badge icon (circle with Play + Pause bars), in white."""
-    c.saveState()
-    c.setStrokeColor(PDFStyle.COLOR_SURFACE_CARD)
-    c.setLineWidth(1.5)
-    c.circle(x, y + 0.15 * cm, radius, fill=0, stroke=1)
-    bar_width = 0.08 * cm
-    bar_height = 0.3 * cm
-    c.setFillColor(PDFStyle.COLOR_SURFACE_CARD)
-    c.rect(x - 0.15 * cm, y, bar_width, bar_height, fill=1, stroke=0)
-    p = c.beginPath()
-    p.moveTo(x + 0.02 * cm, y)
-    p.lineTo(x + 0.02 * cm, y + bar_height)
-    p.lineTo(x + 0.22 * cm, y + bar_height / 2)
-    p.close()
-    c.drawPath(p, fill=1, stroke=0)
-    c.restoreState()
 
 
 # --- Shared blocks ------------------------------------------------------------
@@ -371,15 +289,6 @@ def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise
         draw_rule(c, x, x + width, 2.35 * cm, color=PDFStyle.COLOR_INK, width=0.75)
         draw_eyebrow(c, x, 1.6 * cm, tagline, max_width=width)
     c.showPage()
-
-
-def create_standard_cover(c, subtitle, title="BILAN DE COMPÉTENCES", promise=None):
-    """
-    Former cover API: subtitle is the chapter label ('CHAPITRE 4 : MON RAPPORT À L'ARGENT'),
-    title the line shown at the bottom. See create_cover_page.
-    """
-    number, name = split_chapter_label(subtitle)
-    create_cover_page(c, as_title(name), number=number, tagline=title, promise=promise)
 
 
 # --- Chapter opener (former summary page) --------------------------------------

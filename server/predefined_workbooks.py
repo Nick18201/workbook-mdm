@@ -1219,7 +1219,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Cadre de travail, objectif et engagements",
         description="Poser le cadre de travail, préciser l'objectif du bilan et ce que le bénéficiaire s'autorise à explorer.",
         page_count=7,
-        icon="🕯️",
+        icon="flag",
         category="Bilan de Compétences",
     ),
     TemplateInfo(
@@ -1229,7 +1229,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Météo, vision à 360° et objectif boussole",
         description="Fixer le point de départ : les quatre domaines de vie, l'objectif boussole et ce qui pèse.",
         page_count=8,
-        icon="🧭",
+        icon="explore",
         category="Bilan de Compétences",
     ),
     TemplateInfo(
@@ -1239,7 +1239,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Héritage professionnel, modèles et arbre de vie",
         description="Repérer le fil rouge du parcours, distinguer les modèles reçus des choix personnels, cartographier les acquis.",
         page_count=8,
-        icon="🌳",
+        icon="park",
         category="Bilan de Compétences",
     ),
     TemplateInfo(
@@ -1249,7 +1249,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Zones de compétences, énergie et verbes d'action",
         description="Les quatre zones de compétences, ce qui donne ou prend de l'énergie, et les verbes d'action clés.",
         page_count=8,
-        icon="⭐",
+        icon="star",
         category="Bilan de Compétences",
     ),
     TemplateInfo(
@@ -1259,7 +1259,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Limites, idées reçues sur l'argent et minimum vital",
         description="Confronter les idées reçues sur l'argent aux faits, poser ses non-négociables et chiffrer son minimum vital.",
         page_count=8,
-        icon="⚖️",
+        icon="balance",
         category="Bilan de Compétences",
     ),
     TemplateInfo(
@@ -1269,7 +1269,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Entretiens métier, réseau et test de réalité",
         description="Grille d'entretien en trois axes, idées reçues confrontées au terrain et plan de contact.",
         page_count=8,
-        icon="🔍",
+        icon="travel_explore",
         category="Bilan de Compétences",
     ),
     TemplateInfo(
@@ -1279,7 +1279,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Arbitrage A / B et feuille de route à 90 jours",
         description="Arbitrage entre la piste A et la piste B, feuille de route à 30, 60 et 90 jours, garde-fous et livrable final.",
         page_count=8,
-        icon="🚀",
+        icon="route",
         category="Bilan de Compétences",
     ),
     TemplateInfo(
@@ -1289,7 +1289,7 @@ PREDEFINED_WORKBOOKS_INFO: List[TemplateInfo] = [
         subtitle="Vision, cible, offre, modèle économique et lancement à 90 jours",
         description="Le livret complet pour structurer une création d'activité, tester son marché et obtenir ses premières ventes.",
         page_count=10,
-        icon="💼",
+        icon="business_center",
         category="Entrepreneuriat",
     ),
 ]

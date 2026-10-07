@@ -1,12 +1,14 @@
 """Package Programme du Bilan de Compétences - Marge de Manœuvre."""
 
-from .common import create_closing_page
+from workbook_generator.components import create_closing_page
 from .cover import create_programme_cover
 from .page_objectifs import create_programme_page_objectifs
-from .page_deroule_1 import create_programme_page_deroule_1
-from .page_deroule_2 import create_programme_page_deroule_2
-from .page_deroule_3 import create_programme_page_deroule_3
-from .page_deroule_4 import create_programme_page_deroule_4
+from .page_deroule import (
+    create_programme_page_deroule_1,
+    create_programme_page_deroule_2,
+    create_programme_page_deroule_3,
+    create_programme_page_deroule_4,
+)
 from .page_projets import create_programme_page_projets
 from .page_organisation_pedagogie import create_programme_page_organisation_pedagogie
 from .page_accompagnateurs import create_programme_page_accompagnateurs

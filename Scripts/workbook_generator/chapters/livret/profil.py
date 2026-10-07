@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -34,8 +33,6 @@ def create_profil_mbti_page(c):
             subtitle="Vos 4 lettres (si exploré : ex. ISFJ, ENFP...) ou vos dominantes : Plutôt calme ou action partagée ? "
             "Détails concrets ou vision globale ? Logique rationnelle ou harmonie humaine ? Organisation posée ou flexibilité ?",
             example="Ex : ISFJ — Réfléchi, rigoureux, attentif aux personnes et aux faits concrets, besoin de calme pour préparer l'action.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -47,8 +44,6 @@ def create_profil_mbti_page(c):
             subtitle="Grâce à cette manière d'être, quelle valeur ajoutée et quels atouts précieux apportez-vous "
             "spontanément à un collectif ou dans vos missions au quotidien ?",
             example="Ex : Mon sens du détail évite les erreurs critiques ; ma posture calme et mon écoute rassurent mes collègues et les partenaires.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -80,8 +75,6 @@ def create_profil_ecologie_page(c):
             subtitle="Dans quel type d'ambiance, de rythme de travail, de style de management et de relations humaines "
             "donnez-vous le meilleur de vous-même ?",
             example="Ex : Une équipe soudée, un management qui fait confiance sans être directif, un rythme régulier sans urgences artificielles.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -92,8 +85,6 @@ def create_profil_ecologie_page(c):
             box_height=5.0 * cm,
             subtitle="Quelles sont les situations ou modes de fonctionnement qui vous épuisent rapidement ou vous pèsent lourdement ?",
             example="Ex : Les conflits ouverts non résolus, l'absence de consignes claires, le bruit permanent ou l'isolement complet sans échange.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 

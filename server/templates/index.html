@@ -5,26 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marge de Manœuvre · Générateur de Workbooks</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.ico">
-  <!-- Google Fonts: Montserrat -->
+  <!-- Google Fonts of the art direction « Éditorial & Affirmé » (DA-workbook.md, section 4) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..900;1,9..40,400&family=Manrope:wght@400..800&family=PT+Mono&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    // The generic Tailwind color families used by the markup are mapped onto the DA tokens
+    // (design-system/tokens.json), so every slate, indigo, amber… class lands on the palette.
+    const ink = { 50: '#FAF8F5', 100: '#F1EBE6', 200: '#E5E5EE', 300: '#CFCAC4', 400: '#8A8680',
+                  500: '#6B6863', 600: '#4A4844', 700: '#2E2C29', 800: '#1C1B19', 900: '#111111', 950: '#111111' };
+    const blue = { 50: '#F3EFFF', 100: '#E7E0FF', 200: '#D6CCFF', 300: '#A9A3F0', 400: '#6A66E6',
+                   500: '#3F3ADB', 600: '#251FD3', 700: '#1C18A8', 800: '#15127E', 900: '#0E0C54', 950: '#0E0C54' };
+    const sky = { 50: '#EEF4FC', 100: '#DDEAF9', 200: '#C3D8F3', 300: '#A9C6EE', 400: '#6A66E6',
+                  500: '#3F3ADB', 600: '#251FD3', 700: '#1C18A8', 800: '#15127E', 900: '#0E0C54', 950: '#0E0C54' };
+    const coral = { 50: '#FFF1EF', 100: '#FFE2D9', 200: '#FFC9BE', 300: '#FF9A8C', 400: '#FF6B5E',
+                    500: '#FF3B3B', 600: '#C22626', 700: '#A11E1E', 800: '#801818', 900: '#5E1111', 950: '#5E1111' };
+    const jasmine = { 50: '#FFF8DA', 100: '#FFF1B8', 200: '#FFEA8C', 300: '#FFDDCB', 400: '#F2B880',
+                      500: '#C22626', 600: '#C22626', 700: '#A11E1E', 800: '#801818', 900: '#5E1111', 950: '#5E1111' };
+    const mint = { 50: '#EBF8F1', 100: '#D7F2E3', 200: '#BEE8D1', 300: '#9BDCB9', 400: '#3F3ADB',
+                   500: '#251FD3', 600: '#251FD3', 700: '#1C18A8', 800: '#15127E', 900: '#0E0C54', 950: '#0E0C54' };
     tailwind.config = {
       theme: {
         extend: {
           colors: {
+            slate: ink, gray: ink,
+            indigo: blue, blue: blue, purple: blue, violet: blue,
+            cyan: sky, sky: sky,
+            red: coral, rose: coral, orange: coral,
+            amber: jasmine, yellow: jasmine,
+            emerald: mint, green: mint, teal: mint,
             mdm: {
-              nude: '#FFF0E6',
-              card: '#FFF8F2',
-              blue: '#2F2EFA',
-              red: '#FF4D4D',
+              nude: '#FFF8EC',   // page, the same ivory as the PDF pages
+              card: '#FFFFFF',
+              blue: '#251FD3',
+              red: '#C22626',    // coral-strong: any coral text
+              coral: '#FF3B3B',  // bright coral: decoration only
+              jasmine: '#FFEA8C',
+              lilac: '#E7E0FF',
+              ink: '#111111',
+              muted: '#4A4844',
             }
           },
           fontFamily: {
-            sans: ['Montserrat', 'sans-serif'],
+            sans: ['Manrope', 'sans-serif'],
+            display: ['"DM Sans"', 'sans-serif'],
+            mono: ['"PT Mono"', 'monospace'],
+            serif: ['"Instrument Serif"', 'Georgia', 'serif'],
           }
         }
       }
@@ -32,9 +61,33 @@
   </script>
   <style>
     body {
-      background-color: #FFF0E6;
-      font-family: 'Montserrat', sans-serif;
+      background-color: #FFF8EC;
+      font-family: 'Manrope', sans-serif;
+      color: #111111;
     }
+    h1, h2, h3, h4, .font-display {
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    /* Markers (eyebrows, labels): PT Mono, uppercase, never bold */
+    .uppercase.tracking-widest, .uppercase.tracking-wider, .mdm-label {
+      font-family: 'PT Mono', monospace;
+      font-weight: 400 !important;
+      letter-spacing: 0.14em;
+    }
+    .mdm-logo {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 0.85;
+      text-transform: lowercase;
+    }
+    .mdm-dot { display: inline-block; width: 0.22em; height: 0.22em; border-radius: 9999px; background: #FF3B3B; margin-left: 0.04em; }
+    ::selection { background: #FFEA8C; }
+    /* Icons: Material Symbols Outlined, as in the DA (no emoji) */
+    .mi { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 1.15em;
+          line-height: 1; vertical-align: -0.2em; letter-spacing: normal; text-transform: none; display: inline-block;
+          white-space: nowrap; -webkit-font-feature-settings: 'liga'; font-feature-settings: 'liga'; }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
     }
@@ -42,7 +95,7 @@
       background: rgba(0,0,0,0.03);
     }
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: rgba(47,46,250,0.2);
+      background: rgba(37,31,211,0.2);
       border-radius: 3px;
     }
   </style>
@@ -50,21 +103,17 @@
 <body class="min-h-screen text-slate-800 flex flex-col">
 
   <!-- Header -->
-  <header class="bg-white/80 backdrop-blur border-b border-indigo-100 py-3.5 px-6 sticky top-0 z-30 shadow-2xs">
+  <header class="bg-white/80 backdrop-blur border-b border-slate-200 py-3.5 px-6 sticky top-0 z-30 shadow-2xs">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div>
-          <div class="text-xl font-black tracking-tight text-mdm-red uppercase leading-none">
-            marge
-          </div>
-          <div class="text-xl font-black tracking-tight text-mdm-red uppercase leading-none">
-            de manœuvre
-          </div>
-          <div class="h-0.5 w-16 bg-mdm-red mt-1"></div>
+          <div class="mdm-logo text-xl text-mdm-ink">marge</div>
+          <div class="mdm-logo text-xl text-mdm-ink">de manœuvre</div>
+          <div class="h-1 w-16 bg-mdm-ink mt-1"></div>
         </div>
         <div class="h-8 w-px bg-slate-200 mx-2"></div>
-        <div class="text-xs uppercase font-bold text-mdm-blue tracking-widest">
-          Générateur de Workbooks
+        <div class="text-xs uppercase tracking-widest text-mdm-muted">
+          Générateur de carnets
         </div>
       </div>
     </div>
@@ -79,19 +128,19 @@
       <!-- MODE SWITCHER TABS -->
       <div class="grid grid-cols-2 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/60 text-xs font-bold">
         <button id="tab_customize" onclick="switchMode('customize')" class="py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 bg-white text-mdm-blue shadow-xs cursor-pointer">
-          <span>✨ Livret existant</span>
+          <span><span class="mi">auto_awesome</span> Livret existant</span>
         </button>
         <button id="tab_generate" onclick="switchMode('generate')" class="py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 text-slate-500 hover:text-slate-800 cursor-pointer">
-          <span>📝 Notes brutes</span>
+          <span><span class="mi">edit_note</span> Notes brutes</span>
         </button>
       </div>
 
       <!-- PANEL 1: PERSONNALISER UN LIVRET EXISTANT -->
       <div id="panel_customize" class="space-y-4">
         <div>
-          <h2 class="text-base font-bold text-slate-900 flex items-center">
-            <span class="mr-2">🎨</span>
-            Personnaliser un Livret
+          <h2 class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center">
+            <span class="mr-2 text-mdm-blue"><span class="mi">tune</span></span>
+            Personnaliser&nbsp;<span class="text-mdm-red">un livret.</span>
           </h2>
           <p class="text-xs text-slate-500 mt-0.5">
             Sélectionnez un livret de référence, renseignez le profil de votre bénéficiaire, et l'IA adapte l'ensemble des exercices, questions et exemples à sa situation.
@@ -103,7 +152,7 @@
           <div class="flex items-center justify-between mb-1">
             <label class="block text-xs font-semibold text-slate-700">Livret de référence</label>
             <button type="button" onclick="document.getElementById('import_json_input').click()" class="text-[11px] text-mdm-blue hover:underline font-semibold flex items-center space-x-1 cursor-pointer">
-              <span>📁 Importer un .json</span>
+              <span><span class="mi">folder_open</span> Importer un .json</span>
             </button>
             <input type="file" id="import_json_input" accept=".json" class="hidden" onchange="handleImportJson(event)">
           </div>
@@ -133,7 +182,7 @@
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block text-xs font-semibold text-slate-700">Profil & Projet du Bénéficiaire</label>
-            <button type="button" onclick="loadSampleBeneficiary()" class="text-[11px] text-mdm-blue hover:underline font-medium cursor-pointer">💡 Tester un exemple</button>
+            <button type="button" onclick="loadSampleBeneficiary()" class="text-[11px] text-mdm-blue hover:underline font-medium cursor-pointer"><span class="mi">lightbulb</span> Tester un exemple</button>
           </div>
           <textarea id="custom_beneficiary_context" rows="3" placeholder="Ex: Directeur Marketing de 42 ans en transition vers la création d'un atelier d'ébénisterie et mobilier éco-conçu. Enjeux : transition de revenus, légitimité créative, équilibre familial..." class="w-full p-3 border border-slate-200 rounded-xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
         </div>
@@ -158,11 +207,9 @@
       <!-- PANEL 2: GÉNÉRATION DEPUIS NOTES BRUTES -->
       <div id="panel_generate" class="hidden space-y-4">
         <div>
-          <h2 class="text-base font-bold text-slate-900 flex items-center">
-            <svg class="w-4 h-4 text-mdm-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-            </svg>
-            Notes de Séance
+          <h2 class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center">
+            <span class="mr-2 text-mdm-blue"><span class="mi">edit_note</span></span>
+            Notes de&nbsp;<span class="text-mdm-red">séance.</span>
           </h2>
           <p class="text-xs text-slate-500 mt-0.5">
             Collez vos notes brutes ou votre compte-rendu de séance pour concevoir un livret à partir de zéro.
@@ -240,14 +287,6 @@
         </div>
       </div>
 
-      <!-- Advanced: API Key toggle -->
-      <details class="text-xs text-slate-500 pt-1">
-        <summary class="cursor-pointer font-medium hover:text-slate-700">Clé API Gemini (Optionnelle si configurée sur le serveur)</summary>
-        <div class="mt-2">
-          <input type="password" id="api_key" placeholder="AIzaSy..." class="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-xs">
-        </div>
-      </details>
-
     </div>
 
     <!-- RIGHT COLUMN: Maquette, Itération & Téléchargement -->
@@ -263,12 +302,12 @@
             Version 1
           </span>
           <span id="beneficiary_badge" class="hidden px-2.5 py-1 bg-amber-50 text-amber-900 text-xs font-bold rounded-lg border border-amber-200">
-            👤 Bénéficiaire
+            <span class="mi">person</span> Bénéficiaire
           </span>
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <button id="btn_toggle_edit" onclick="toggleDirectEdit()" class="py-2 px-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs border border-slate-200 flex items-center space-x-1.5 transition cursor-pointer" title="Activer ou désactiver l'édition directe des textes">
-            <span>✏️ Édition</span>
+            <span><span class="mi">edit</span> Édition</span>
           </button>
           <button onclick="exportCurrentSpecJson()" class="py-2 px-3 bg-indigo-50 hover:bg-indigo-100 text-mdm-blue font-semibold rounded-xl text-xs border border-indigo-200 flex items-center space-x-1.5 transition cursor-pointer" title="Sauvegarder la maquette en fichier JSON">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,7 +328,7 @@
       <!-- AI Changelog / Feedback Alert (shown when an iteration just occurred) -->
       <div id="ai_fallback_bar" class="hidden bg-amber-50 border border-amber-300 rounded-2xl p-3.5 shadow-2xs space-y-0.5">
         <div class="flex items-center space-x-2 text-amber-900 text-xs font-bold">
-          <span>⚠️</span>
+          <span><span class="mi">warning</span></span>
           <span>Gemini n'a pas été utilisé</span>
         </div>
         <p id="ai_fallback_text" class="text-xs text-amber-950 font-medium pl-5.5"></p>
@@ -308,7 +347,7 @@
       <!-- Overview Card -->
       <div id="pedagogical_briefing" class="hidden bg-white/95 rounded-2xl p-4 sm:p-5 border border-indigo-100 shadow-2xs space-y-3">
         <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Contenu du Livret (WYSIWYG)</h3>
+          <h3 class="text-xs uppercase tracking-wider text-slate-600">Contenu du livret</h3>
           <span class="text-[11px] text-slate-400 font-medium">Textes réels imprimés</span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -330,7 +369,7 @@
       <!-- Iteration / Feedback Panel -->
       <div id="iteration_panel" class="hidden bg-white/95 rounded-2xl p-4 sm:p-5 border border-indigo-100 shadow-2xs space-y-3">
         <div class="flex items-center justify-between">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-mdm-blue">Ajuster la maquette</h3>
+          <h3 class="text-xs uppercase tracking-wider text-mdm-blue">Ajuster la maquette</h3>
         </div>
         <div class="relative">
           <textarea id="iteration_prompt" rows="2" placeholder="Ex : Alléger les questions, ajouter une jauge, une feuille de route..." class="w-full p-3 border border-slate-200 rounded-xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue pr-24"></textarea>
@@ -344,16 +383,16 @@
         <!-- Suggestion Chips -->
         <div class="flex flex-wrap items-center gap-1.5">
           <button type="button" onclick="applySuggestion('Allège et raccourcis les questions pour aérer la mise en page')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
-            💡 Alléger
+            <span class="mi">lightbulb</span> Alléger
           </button>
           <button type="button" onclick="applySuggestion('Ajoute une feuille de route 30-60-90 jours pour ancrer les actions')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
-            🛣️ Feuille de route
+            <span class="mi">route</span> Feuille de route
           </button>
           <button type="button" onclick="applySuggestion('Ajoute une jauge ou échelle d\'auto-évaluation de 0 à 10')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
-            ⚖️ Jauge (0-10)
+            <span class="mi">balance</span> Jauge (0-10)
           </button>
           <button type="button" onclick="applySuggestion('Rends les questions plus concrètes et orientées passage à l\'action immédiat')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
-            🎯 Plus d'action
+            <span class="mi">flag</span> Plus d'action
           </button>
         </div>
       </div>
@@ -365,7 +404,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
           </svg>
         </div>
-        <h3 class="text-sm font-bold text-slate-700">Aucune maquette</h3>
+        <h3 class="text-lg font-extrabold tracking-tight text-slate-900">Aucune <span class="text-mdm-red">maquette.</span></h3>
         <p class="text-xs text-slate-400 max-w-xs mt-1">
           Collez vos notes à gauche puis cliquez sur Concevoir la maquette.
         </p>
@@ -374,7 +413,7 @@
       <!-- State: Loading -->
       <div id="state_loading" class="hidden bg-white rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[420px] shadow-xs">
         <div class="w-10 h-10 border-3 border-mdm-blue border-t-transparent rounded-full animate-spin mb-3"></div>
-        <h3 class="text-sm font-bold text-slate-800" id="loading_text">Conception de la maquette...</h3>
+        <h3 class="text-lg font-extrabold tracking-tight text-slate-900" id="loading_text">Conception de la maquette…</h3>
         <p class="text-xs text-slate-400 max-w-xs mt-1">
           Génération page par page en cours.
         </p>
@@ -396,7 +435,7 @@
 
   <!-- Toast Notification -->
   <div id="toast_notification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl text-xs font-semibold flex items-center space-x-2 border border-slate-700">
-    <span id="toast_icon" class="text-emerald-400">✓</span>
+    <span id="toast_icon" class="text-emerald-400"><span class="mi">check</span></span>
     <span id="toast_text">Modifications enregistrées</span>
   </div>
 
@@ -453,7 +492,7 @@
       templates.forEach(t => {
         const opt = document.createElement('option');
         opt.value = t.id;
-        opt.innerText = `${t.icon} ${t.title} (${t.page_count} pages)`;
+        opt.innerText = `${t.title} (${t.page_count} pages)`;
         select.appendChild(opt);
       });
       if (templates.some(t => t.id === 'chap1')) {
@@ -471,7 +510,7 @@
       const titleEl = document.getElementById('tpl_badge_title');
       const pagesEl = document.getElementById('tpl_badge_pages');
       const descEl = document.getElementById('tpl_badge_desc');
-      if (titleEl) titleEl.innerText = `${tpl.icon} ${tpl.title}`;
+      if (titleEl) titleEl.innerHTML = `<span class="mi text-mdm-blue">${escapeHtml(tpl.icon)}</span> ${escapeHtml(tpl.title)}`;
       if (pagesEl) pagesEl.innerText = `${tpl.page_count} Pages`;
       if (descEl) descEl.innerText = `${tpl.description} · ${tpl.subtitle}`;
     }
@@ -525,7 +564,6 @@
       const beneficiaryName = document.getElementById('custom_beneficiary_name').value.trim();
       const beneficiaryContext = document.getElementById('custom_beneficiary_context').value.trim();
       const customInstructions = document.getElementById('custom_instructions').value.trim();
-      const apiKey = document.getElementById('api_key').value.trim() || null;
 
       if (!beneficiaryName) {
         alert("Veuillez renseigner le prénom ou nom du bénéficiaire.");
@@ -545,8 +583,7 @@
         base_spec: null,
         beneficiary_name: beneficiaryName,
         beneficiary_context: beneficiaryContext,
-        custom_instructions: customInstructions || null,
-        api_key: apiKey
+        custom_instructions: customInstructions || null
       };
 
       try {
@@ -617,11 +654,11 @@
       const btn = document.getElementById('btn_toggle_edit');
       if (isDirectEditMode) {
         btn.className = "py-2 px-3 bg-amber-500 text-white font-bold rounded-xl text-xs shadow-md flex items-center space-x-1.5 transition cursor-pointer";
-        btn.innerHTML = "<span>✏️ Mode Édition ACTIF</span>";
+        btn.innerHTML = '<span><span class="mi">edit</span> Mode édition actif</span>';
         showToast("Mode Édition activé : cliquez sur n'importe quel texte");
       } else {
         btn.className = "py-2 px-3 bg-slate-50 hover:bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs border border-slate-200 flex items-center space-x-1.5 transition cursor-pointer";
-        btn.innerHTML = "<span>✏️ Mode Édition</span>";
+        btn.innerHTML = '<span><span class="mi">edit</span> Mode édition</span>';
         showToast("Mode Édition désactivé");
       }
       document.querySelectorAll('[data-editable]').forEach(el => {
@@ -855,8 +892,7 @@ Notes de la séance :
         meteo_option: document.getElementById('meteo_option').value,
         session_focus: document.getElementById('session_focus') ? document.getElementById('session_focus').value : 'auto',
         book_format: document.getElementById('book_format').value,
-        include_engagement: document.getElementById('include_engagement').checked,
-        api_key: document.getElementById('api_key').value.trim() || null
+        include_engagement: document.getElementById('include_engagement').checked
       };
 
       try {
@@ -900,8 +936,7 @@ Notes de la séance :
       const payload = {
         current_spec: currentWorkbookSpec,
         feedback: feedback,
-        raw_notes: initialRawNotes || document.getElementById('raw_notes').value.trim() || null,
-        api_key: document.getElementById('api_key').value.trim() || null
+        raw_notes: initialRawNotes || document.getElementById('raw_notes').value.trim() || null
       };
 
       try {
@@ -986,7 +1021,7 @@ Notes de la séance :
       if (benefBadge) {
         if (spec.beneficiary_name) {
           benefBadge.classList.remove('hidden');
-          benefBadge.innerText = `👤 Pour ${spec.beneficiary_name}`;
+          benefBadge.innerHTML = `<span class="mi">person</span> Pour ${escapeHtml(spec.beneficiary_name)}`;
         } else {
           benefBadge.classList.add('hidden');
         }
@@ -1005,7 +1040,7 @@ Notes de la séance :
       // 3. Pedagogical Briefing Card
       const briefing = document.getElementById('pedagogical_briefing');
       briefing.classList.remove('hidden');
-      document.getElementById('briefing_title').innerText = spec.chapter_title || "Bilan & Alignement";
+      document.getElementById('briefing_title').innerText = plainTitle(spec.chapter_title) || "Bilan de compétences";
       document.getElementById('briefing_beneficiary').innerText = spec.beneficiary_name || "Bénéficiaire non spécifié";
 
       const stepsContainer = document.getElementById('briefing_steps');
@@ -1013,7 +1048,7 @@ Notes de la séance :
       spec.pages.forEach((p, i) => {
         const stepBadge = document.createElement('span');
         stepBadge.className = "px-2 py-0.5 bg-slate-50 border border-slate-200 text-slate-700 text-[10px] font-medium rounded-md";
-        stepBadge.innerText = `${i+1}. ${p.title || p.template}`;
+        stepBadge.innerText = `${i+1}. ${plainTitle(p.title) || p.template}`;
         stepsContainer.appendChild(stepBadge);
       });
 
@@ -1045,12 +1080,12 @@ Notes de la séance :
               </div>
               <div>
                 <div class="text-[10px] uppercase font-bold text-slate-400">Titre principal du livret :</div>
-                <div class="text-base font-black text-slate-900 leading-tight">${escapeHtml(spec.chapter_title || "Bilan & Alignement")}</div>
+                <div class="text-base font-black text-slate-900 leading-tight">${escapeHtml(plainTitle(spec.chapter_title) || "Bilan de compétences")}</div>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs">
                 <div>
                   <span class="text-[10px] uppercase font-bold text-slate-400 block">Sous-titre / En-tête :</span>
-                  <span class="text-slate-700 font-semibold">${escapeHtml(spec.subtitle || "BILAN DE COMPÉTENCES & ALIGNEMENT")}</span>
+                  <span class="text-slate-700 font-semibold">${escapeHtml(spec.subtitle || "BILAN DE COMPÉTENCES")}</span>
                 </div>
                 <div>
                   <span class="text-[10px] uppercase font-bold text-slate-400 block">Personnalisation :</span>
@@ -1101,13 +1136,13 @@ Notes de la séance :
                 <div class="bg-white p-2.5 rounded-lg border border-amber-100 flex flex-wrap items-center justify-between gap-2">
                   <span data-editable="true" onblur="updateMeteoField(${idx}, 'emotion_prompt', this.innerText)" class="font-semibold text-slate-800">${escapeHtml(p.emotion_prompt || "Aujourd'hui, je me sens :")}</span>
                   <div class="flex items-center space-x-2 text-xs font-bold text-slate-700 bg-amber-50/60 px-2 py-1 rounded">
-                    <span>☀️ Beau fixe</span>
+                    <span><span class="mi">sunny</span> Beau fixe</span>
                     <span>·</span>
-                    <span>⛅ Éclaircies</span>
+                    <span><span class="mi">partly_cloudy_day</span> Éclaircies</span>
                     <span>·</span>
-                    <span>🌧️ Pluvieux</span>
+                    <span><span class="mi">rainy</span> Pluvieux</span>
                     <span>·</span>
-                    <span>⚡ Sous tension</span>
+                    <span><span class="mi">thunderstorm</span> Sous tension</span>
                   </div>
                 </div>
               </div>
@@ -1123,7 +1158,7 @@ Notes de la séance :
                 <div class="bg-white p-3 rounded-lg border border-amber-100 space-y-1.5">
                   <p class="text-slate-900 font-bold">« <span data-editable="true" onblur="updateMeteoField(${idx}, 'thought_prompt', this.innerText)">${escapeHtml(p.thought_prompt || "Ce qui prend le plus de place dans mon esprit...")}</span> »</p>
                   <div class="p-2 bg-slate-50 border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic flex items-center space-x-1.5">
-                    <span>✏️</span>
+                    <span><span class="mi">edit</span></span>
                     <span>Espace de réflexion et prise de notes pour le bénéficiaire</span>
                   </div>
                 </div>
@@ -1147,7 +1182,7 @@ Notes de la séance :
                       <div data-editable="true" onblur="updateQuadrantField(${idx}, ${qi}, 'title', this.innerText)" class="font-black text-purple-950 text-xs cursor-pointer">${escapeHtml(t)}</div>
                       ${s ? `<div data-editable="true" onblur="updateQuadrantField(${idx}, ${qi}, 'subtitle', this.innerText)" class="text-[11px] text-purple-800 font-medium cursor-pointer">${escapeHtml(s)}</div>` : ''}
                       <div class="p-2 bg-white border border-dashed border-purple-200 rounded text-[10px] text-slate-400 italic">
-                        ✏️ Priorité ou constat formulé par le bénéficiaire
+                        <span class="mi">edit</span> Priorité ou constat formulé par le bénéficiaire
                       </div>
                     </div>`;
                 }).join('')}
@@ -1215,10 +1250,10 @@ Notes de la séance :
                       ${qSub ? `<div data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'subtitle', this.innerText)" class="text-[11px] text-slate-600 pl-4 font-normal cursor-pointer">${escapeHtml(qSub)}</div>` : ''}
                       ${qEx ? `
                         <div class="ml-4 p-2 bg-indigo-50/70 border border-indigo-100 rounded-lg text-[11px] text-indigo-900">
-                          <span class="font-bold">💡 Exemple concret :</span> <span class="italic">« <span data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'example', this.innerText)" class="cursor-pointer">${escapeHtml(qEx)}</span> »</span>
+                          <span class="font-bold"><span class="mi">lightbulb</span> Exemple concret :</span> <span class="italic">« <span data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'example', this.innerText)" class="cursor-pointer">${escapeHtml(qEx)}</span> »</span>
                         </div>` : ''}
                       <div class="ml-4 p-2.5 bg-white border border-dashed border-slate-200 rounded-lg text-[10px] text-slate-400 italic flex items-center space-x-1.5">
-                        <span>✏️</span>
+                        <span><span class="mi">edit</span></span>
                         <span>Zone de réponse pour le bénéficiaire (AcroForm interactif)</span>
                       </div>
                     </div>`;
@@ -1254,7 +1289,7 @@ Notes de la séance :
                           <div class="space-y-1">
                             ${acts.map(a => `
                               <div class="flex items-center space-x-2 text-slate-700 bg-white p-1.5 rounded border border-indigo-50">
-                                <span class="text-mdm-blue text-sm">☑</span>
+                                <span class="text-mdm-blue text-sm"><span class="mi">check_box</span></span>
                                 <span>${escapeHtml(a)}</span>
                               </div>`).join('')}
                           </div>
@@ -1288,7 +1323,7 @@ Notes de la séance :
                     </div>
                     ${q.subtitle ? `<div data-editable="true" onblur="updateEnqueteField(${idx}, ${qi}, 'subtitle', this.innerText)" class="text-[11px] text-slate-600 pl-4 font-normal cursor-pointer">${escapeHtml(q.subtitle)}</div>` : ''}
                     <div class="ml-4 p-2 bg-white border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic">
-                      ✏️ Notes et pépites recueillies auprès du professionnel
+                      <span class="mi">edit</span> Notes et pépites recueillies auprès du professionnel
                     </div>
                   </div>
                 `).join('') : `
@@ -1307,7 +1342,7 @@ Notes de la séance :
                   const txt = typeof l === 'object' ? (l.text || l.line || '') : String(l);
                   return `
                     <div class="text-slate-800 leading-snug flex items-start space-x-2">
-                      <span class="text-rose-600 font-bold">✓</span>
+                      <span class="text-rose-600 font-bold"><span class="mi">check</span></span>
                       <span data-editable="true" onblur="updateEngagementLine(${idx}, ${li}, this.innerText)" class="cursor-pointer">${escapeHtml(txt)}</span>
                     </div>`;
                 }).join('')}
@@ -1348,7 +1383,7 @@ Notes de la séance :
                   return `
                     <div class="p-3 bg-amber-50/70 border border-amber-200/80 rounded-xl space-y-1">
                       <div class="flex items-center space-x-1.5 text-amber-900 font-bold text-xs">
-                        <span>💡</span>
+                        <span><span class="mi">lightbulb</span></span>
                         <span>${escapeHtml(b.title || "Repère Clé")}</span>
                       </div>
                       <div class="text-xs text-amber-950 leading-relaxed italic pl-5">
@@ -1373,7 +1408,7 @@ Notes de la séance :
                               <div class="font-bold text-slate-900 text-xs">${escapeHtml(cTitle)}</div>
                               ${cSub ? `<div class="text-[11px] text-slate-600 font-medium">${escapeHtml(cSub)}</div>` : ''}
                               <div class="p-2 bg-white border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic">
-                                ✏️ Espace de saisie bénéficiaire
+                                <span class="mi">edit</span> Espace de saisie bénéficiaire
                               </div>
                             </div>`;
                         }).join('')}
@@ -1435,7 +1470,7 @@ Notes de la séance :
                       <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
                         ${items.map(item => `
                           <div class="text-xs text-slate-800 flex items-center space-x-2">
-                            <span class="text-mdm-blue text-sm font-bold">☑</span>
+                            <span class="text-mdm-blue text-sm font-bold"><span class="mi">check_box</span></span>
                             <span>${escapeHtml(typeof item === 'object' ? (item.text || item.label || '') : item)}</span>
                           </div>`).join('')}
                       </div>
@@ -1445,9 +1480,9 @@ Notes de la séance :
                     <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
                       <div class="font-bold text-slate-900 text-xs">${escapeHtml(b.question || b.text || "Question de réflexion")}</div>
                       ${b.subtitle ? `<div class="text-[11px] text-slate-600">${escapeHtml(b.subtitle)}</div>` : ''}
-                      ${b.example ? `<div class="p-1.5 bg-indigo-50/70 border border-indigo-100 rounded text-[11px] text-indigo-900">💡 <strong>Exemple :</strong> « ${escapeHtml(b.example)} »</div>` : ''}
+                      ${b.example ? `<div class="p-1.5 bg-indigo-50/70 border border-indigo-100 rounded text-[11px] text-indigo-900"><span class="mi">lightbulb</span> <strong>Exemple :</strong> « ${escapeHtml(b.example)} »</div>` : ''}
                       <div class="p-2 bg-white border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic">
-                        ✏️ Zone de réponse pour le bénéficiaire
+                        <span class="mi">edit</span> Zone de réponse pour le bénéficiaire
                       </div>
                     </div>`;
                 } else if (bType === 'stat_boxes') {
@@ -1554,6 +1589,11 @@ Notes de la séance :
           iterateBtn.classList.remove('opacity-60');
         }
       }
+    }
+
+    // Titles mark their coral accent with *…* (rendered in the PDF): plain text for the previews
+    function plainTitle(str) {
+      return String(str || '').replace(/\*/g, '');
     }
 
     function escapeHtml(str) {

@@ -1,5 +1,4 @@
 from reportlab.lib.units import cm
-from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
     LayoutConfig,
@@ -34,8 +33,6 @@ def create_autonomie_paliers_page(c):
             box_height=4.5 * cm,
             subtitle="Choisissez 2 ou 3 de vos compétences phares : à quel niveau (1, 2, 3 ou 4) vous situez-vous aujourd'hui et pourquoi ?",
             example="Ex : Modélisation technique : Niveau 3 (Améliorateur) — je conçois des outils partagés pour fluidifier le travail de l'équipe.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -46,8 +43,6 @@ def create_autonomie_paliers_page(c):
             box_height=4.5 * cm,
             subtitle="Qu'est-ce qui vous semble tellement naturel dans votre métier qu'un débutant mettrait des mois à assimiler ?",
             example="Ex : Repérer une incohérence thermique d'un simple coup d'œil sur un plan sans avoir besoin de tout recalculer.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
@@ -79,8 +74,6 @@ def create_autonomie_transfert_page(c):
             subtitle="Quelles sont les 3 grandes compétences méthodologiques ou humaines que vous possédez "
             "et qui marcheraient instantanément dans un tout autre secteur ?",
             example="Ex : Diagnostic d'efficacité énergétique, animation d'ateliers pédagogiques pour adultes, chiffrage financier de dossiers.",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_RED,
         ),
     )
 
@@ -92,8 +85,6 @@ def create_autonomie_transfert_page(c):
             subtitle="Imaginez des contextes, structures ou métiers (même différents du vôtre) où ces compétences "
             "feraient de vous un candidat précieux.",
             example="Ex : Enseignant technique en lycée/CFA, économe de flux territorial en collectivité, conseiller technique en coopérative (CAE).",
-            color_alternation=False,
-            color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
     )
 
