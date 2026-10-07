@@ -306,6 +306,14 @@
 
 
       <!-- AI Changelog / Feedback Alert (shown when an iteration just occurred) -->
+      <div id="ai_fallback_bar" class="hidden bg-amber-50 border border-amber-300 rounded-2xl p-3.5 shadow-2xs space-y-0.5">
+        <div class="flex items-center space-x-2 text-amber-900 text-xs font-bold">
+          <span>⚠️</span>
+          <span>Gemini n'a pas été utilisé</span>
+        </div>
+        <p id="ai_fallback_text" class="text-xs text-amber-950 font-medium pl-5.5"></p>
+      </div>
+
       <div id="ai_changelog_bar" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 shadow-2xs space-y-0.5">
         <div class="flex items-center space-x-2 text-emerald-800 text-xs font-bold">
           <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -586,6 +594,7 @@
         currentWorkbookSpec = data.spec;
         iterationCount = 1;
         renderPreview(currentWorkbookSpec, data.customizations_summary, data.pedagogical_note);
+        showGenerationSource(res);
         showToast(`Livret personnalisé pour ${beneficiaryName}`);
       } catch (err) {
         alert("Erreur lors de la personnalisation : " + err.message);
@@ -655,6 +664,25 @@
           el.classList.remove('ring-1', 'ring-amber-300', 'bg-amber-50/40');
         }
       });
+    }
+
+    // Le serveur signale via des en-têtes HTTP quand il a dû utiliser le modèle de secours au lieu de Gemini
+    const FALLBACK_REASONS = {
+      no_api_key: "aucune clé API Gemini n'est configurée",
+      model_error: "les modèles Gemini n'ont pas répondu correctement",
+    };
+
+    function showGenerationSource(res) {
+      const bar = document.getElementById('ai_fallback_bar');
+      if (!bar) return;
+      if (res.headers.get('X-MDM-Generation') !== 'fallback') {
+        bar.classList.add('hidden');
+        return;
+      }
+      const reason = FALLBACK_REASONS[res.headers.get('X-MDM-Fallback-Reason')] || "Gemini est indisponible";
+      document.getElementById('ai_fallback_text').innerText =
+        `Ce résultat vient d'un modèle générique de secours (${reason}) : il ne tient pas compte de vos notes ni de vos consignes.`;
+      bar.classList.remove('hidden');
     }
 
     function showToast(message) {
@@ -738,7 +766,14 @@
       const pts = p.points || p.steps || p.items;
       if (pts && pts[pIdx]) {
         if (typeof pts[pIdx] === 'object' && !Array.isArray(pts[pIdx])) {
-          pts[pIdx].desc = val.trim();
+          const pt = pts[pIdx];
+          if (pt.desc || pt.description || pt.subtitle || !(pt.title || pt.name)) {
+            pt.desc = val.trim();
+          } else if (pt.title) {
+            pt.title = val.trim();
+          } else {
+            pt.name = val.trim();
+          }
         } else if (Array.isArray(pts[pIdx])) {
           pts[pIdx][1] = val.trim();
         } else {
@@ -843,7 +878,7 @@ Notes de la séance :
       }
 
       initialRawNotes = rawNotes;
-      setLoading(true, "Analyse par Gemini Flash 3.8...");
+      setLoading(true, "Analyse par Gemini...");
 
       const payload = {
         raw_notes: rawNotes,
@@ -873,6 +908,7 @@ Notes de la séance :
         currentWorkbookSpec = await res.json();
         iterationCount = 1;
         renderPreview(currentWorkbookSpec, null, null);
+        showGenerationSource(res);
       } catch (err) {
         alert("Erreur : " + err.message);
       } finally {
@@ -919,6 +955,7 @@ Notes de la séance :
         iterationCount++;
         promptInput.value = "";
         renderPreview(currentWorkbookSpec, data.changes_summary, data.pedagogical_note);
+        showGenerationSource(res);
       } catch (err) {
         alert("Erreur lors de l'ajustement : " + err.message);
       } finally {
@@ -990,7 +1027,8 @@ Notes de la séance :
         }
       }
 
-      // 2. AI Changelog Bar
+      // 2. AI Changelog Bar (l'alerte de repli est réaffichée par showGenerationSource si besoin)
+      document.getElementById('ai_fallback_bar').classList.add('hidden');
       const changelogBar = document.getElementById('ai_changelog_bar');
       if (changesSummary) {
         changelogBar.classList.remove('hidden');
@@ -1063,12 +1101,13 @@ Notes de la séance :
           const pts = Array.isArray(rawPts) ? rawPts : Object.values(rawPts);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Introduction :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic"><strong>Introduction :</strong> <span data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)">${escapeHtml(p.intro_text)}</span></div>` : ''}
               <div class="space-y-2">
                 <div class="text-[10px] uppercase font-bold text-slate-400">Étapes imprimées au sommaire :</div>
                 <div class="space-y-1.5">
                   ${pts.map((pt, i) => {
                     let num = (i+1)+'.';
+                    let prefixHtml = '';
                     let text = '';
                     if (Array.isArray(pt)) {
                       num = pt[0] || (i+1)+'.';
@@ -1077,14 +1116,16 @@ Notes de la séance :
                       num = pt.label || pt.num || (i+1)+'.';
                       const titlePart = pt.title || pt.name || '';
                       const descPart = pt.desc || pt.description || pt.subtitle || '';
-                      text = (titlePart && descPart) ? `<strong>${escapeHtml(titlePart)}</strong> : ${escapeHtml(descPart)}` : (titlePart || descPart);
+                      // Le titre reste hors de la zone éditable pour ne pas être recopié dans 'desc'
+                      if (titlePart && descPart) prefixHtml = `<strong>${escapeHtml(titlePart)}</strong> : `;
+                      text = descPart || titlePart;
                     } else {
                       text = String(pt);
                     }
                     return `
                       <div class="flex items-start space-x-2.5 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
                         <span class="font-mono font-bold text-mdm-blue text-xs mt-0.5">${escapeHtml(num)}</span>
-                        <span data-editable="true" onblur="updateSummaryPoint(${idx}, ${i}, this.innerText)" class="text-slate-800 leading-snug">${typeof pt === 'object' && !Array.isArray(pt) && (pt.title && pt.desc) ? text : escapeHtml(text)}</span>
+                        <span class="text-slate-800 leading-snug">${prefixHtml}<span data-editable="true" onblur="updateSummaryPoint(${idx}, ${i}, this.innerText)">${escapeHtml(text)}</span></span>
                       </div>`;
                   }).join('')}
                 </div>
@@ -1118,7 +1159,7 @@ Notes de la séance :
               <div class="space-y-1.5">
                 <span class="text-[10px] font-bold uppercase text-amber-900 tracking-wider">3. Question de recentrage</span>
                 <div class="bg-white p-3 rounded-lg border border-amber-100 space-y-1.5">
-                  <p data-editable="true" onblur="updateMeteoField(${idx}, 'thought_prompt', this.innerText)" class="text-slate-900 font-bold">« ${escapeHtml(p.thought_prompt || "Ce qui prend le plus de place dans mon esprit...")} »</p>
+                  <p class="text-slate-900 font-bold">« <span data-editable="true" onblur="updateMeteoField(${idx}, 'thought_prompt', this.innerText)">${escapeHtml(p.thought_prompt || "Ce qui prend le plus de place dans mon esprit...")}</span> »</p>
                   <div class="p-2 bg-slate-50 border border-dashed border-slate-200 rounded text-[10px] text-slate-400 italic flex items-center space-x-1.5">
                     <span>✏️</span>
                     <span>Espace de réflexion et prise de notes pour le bénéficiaire</span>
@@ -1134,7 +1175,7 @@ Notes de la séance :
           if (!quads) quads = [];
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.instruction ? `<div data-editable="true" onblur="updateQuadrantInstruction(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-purple-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.instruction)}</div>` : ''}
+              ${p.instruction ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-purple-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> <span data-editable="true" onblur="updateQuadrantInstruction(${idx}, this.innerText)">${escapeHtml(p.instruction)}</span></div>` : ''}
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 ${quads.map((q, qi) => {
                   const t = Array.isArray(q) ? q[0] : (q.title || '');
@@ -1155,7 +1196,7 @@ Notes de la séance :
           const rows = Array.isArray(rawRows) ? rawRows : Object.values(rawRows);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-emerald-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-emerald-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> <span data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)">${escapeHtml(p.intro_text)}</span></div>` : ''}
               <div class="grid grid-cols-2 gap-2 font-bold text-[11px] uppercase tracking-wider pb-1 border-b border-slate-200">
                 <span class="text-mdm-blue">${escapeHtml(p.col1_header || "Situation / Frein")}</span>
                 <span class="text-mdm-red">${escapeHtml(p.col2_header || "Levier / Enseignement")}</span>
@@ -1197,7 +1238,7 @@ Notes de la séance :
           const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> <span data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)">${escapeHtml(p.intro_text)}</span></div>` : ''}
               <div class="space-y-2.5">
                 ${qs.map((q, i) => {
                   const qText = typeof q === 'object' ? (q.question || q.text || q.title || `Question ${i+1}`) : String(q);
@@ -1212,7 +1253,7 @@ Notes de la séance :
                       ${qSub ? `<div data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'subtitle', this.innerText)" class="text-[11px] text-slate-600 pl-4 font-normal cursor-pointer">${escapeHtml(qSub)}</div>` : ''}
                       ${qEx ? `
                         <div class="ml-4 p-2 bg-indigo-50/70 border border-indigo-100 rounded-lg text-[11px] text-indigo-900">
-                          <span class="font-bold">💡 Exemple concret :</span> <span data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'example', this.innerText)" class="cursor-pointer italic">« ${escapeHtml(qEx)} »</span>
+                          <span class="font-bold">💡 Exemple concret :</span> <span class="italic">« <span data-editable="true" onblur="updateQuestionField(${idx}, ${i}, 'example', this.innerText)" class="cursor-pointer">${escapeHtml(qEx)}</span> »</span>
                         </div>` : ''}
                       <div class="ml-4 p-2.5 bg-white border border-dashed border-slate-200 rounded-lg text-[10px] text-slate-400 italic flex items-center space-x-1.5">
                         <span>✏️</span>
@@ -1227,7 +1268,7 @@ Notes de la séance :
           const stages = Array.isArray(rawStages) ? rawStages : Object.values(rawStages);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-indigo-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> <span data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)">${escapeHtml(p.intro_text)}</span></div>` : ''}
               <div class="space-y-2.5">
                 ${stages.map((st, i) => {
                   const per = st.period || st.palier || `PALIER ${i+1}`;
@@ -1265,7 +1306,7 @@ Notes de la séance :
           const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${p.intro_text ? `<div data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)" class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-cyan-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> ${escapeHtml(p.intro_text)}</div>` : ''}
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg border-l-3 border-cyan-400 text-slate-700 italic cursor-pointer"><strong>Consigne :</strong> <span data-editable="true" onblur="updatePageIntro(${idx}, this.innerText)">${escapeHtml(p.intro_text)}</span></div>` : ''}
               <div class="bg-cyan-50/50 p-3 rounded-xl border border-cyan-100 space-y-2">
                 <div class="font-bold text-cyan-950 text-xs uppercase tracking-wider">Fiche d'Échange Réseau & Métier</div>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
@@ -1328,7 +1369,7 @@ Notes de la séance :
               <div class="space-y-2 max-w-lg mx-auto">
                 ${msgs.map((m, mi) => `
                   <div class="p-2.5 bg-white rounded-lg border border-slate-100 shadow-2xs text-slate-800 italic leading-relaxed">
-                    <span data-editable="true" onblur="updateClosingMsg(${idx}, ${mi}, this.innerText)" class="cursor-pointer">« ${escapeHtml(typeof m === 'object' ? m.text : m)} »</span>
+                    <span>« <span data-editable="true" onblur="updateClosingMsg(${idx}, ${mi}, this.innerText)" class="cursor-pointer">${escapeHtml(typeof m === 'object' ? m.text : m)}</span> »</span>
                   </div>`).join('')}
               </div>
               <div class="text-[10px] text-slate-400 uppercase tracking-widest pt-2 border-t border-slate-200 font-bold">
