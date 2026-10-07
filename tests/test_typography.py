@@ -26,6 +26,7 @@ def test_french_typography(text, expected):
     [
         "Rendez-vous à 10:30, puis https://www.notion.so/page?x=1",
         "contact@margedemanoeuvre.fr et margedemanoeuvre.fr",
+        "MARGEDEMANOEUVRE.FR · CONTACT@MARGEDEMANOEUVRE.FR",
         '<font color="#C22626">texte</font> &amp; <a href="https://x.fr/a?b">lien</a>',
     ],
 )

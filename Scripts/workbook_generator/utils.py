@@ -56,7 +56,8 @@ cached_simple_split = cached_simpleSplit
 # Text runs left alone: markup tags, entities, e-mail addresses and URLs or domain names
 _PROTECTED = re.compile(
     r"(<[^>]*>|&#?\w+;|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|(?:https?://|www\.)\S+"
-    r"|\b[\w-]+(?:\.[\w-]+)*\.(?:fr|com|org|net|io|so|eu)\b\S*)"
+    r"|\b[\w-]+(?:\.[\w-]+)*\.(?:fr|com|org|net|io|so|eu)\b\S*)",
+    re.IGNORECASE,  # eyebrows set URLs in capitals: MARGEDEMANOEUVRE.FR must keep its OE
 )
 _TYPO_RULES = [
     # « » with a no-break space inside

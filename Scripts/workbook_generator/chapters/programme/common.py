@@ -1,259 +1,262 @@
-import os
-from reportlab.lib.units import cm
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
-from reportlab.platypus import Paragraph
+"""
+Building blocks of the Programme brochure (published on the website), in the art direction:
+each page is a PageLayout (eyebrow pill, punctuated title, folio) whose blocks size
+themselves to their text, written in ReportLab paragraph markup (<b>, <i>, <br/>).
+"""
+
+import re
+
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.fonts import addMapping
+from reportlab.lib.units import cm
+from reportlab.platypus import Paragraph
 
 from workbook_generator.config import PDFStyle
-from workbook_generator.components import (
-    draw_page_background,
-    draw_side_panel,
-    draw_branding_logo,
+from workbook_generator.primitives import (
+    draw_card_title,
+    draw_label_pill,
+    draw_number,
+    draw_paragraph,
+    draw_pastel_card,
+    draw_star,
+    draw_text,
+    draw_white_card,
+    label_pill_size,
+    paragraph_height,
+    pastel_cycle,
 )
+from workbook_generator.templates import PageLayout, LayoutConfig
+from workbook_generator.utils import french_typography
+
+BODY_SIZE = PDFStyle.SIZE_BODY_SMALL  # dense reading text of the brochure (9.5 pt)
+BODY_LEADING = BODY_SIZE * 1.42
+PAD = 0.5 * cm
+ITEM_GAP = 0.18 * cm
+CARD_GAP = 0.35 * cm
 
 
-def ensure_montserrat_family():
-    """Assure le mapping des variantes bold et italic pour Montserrat dans ReportLab."""
-    try:
-        addMapping("montserrat", 0, 0, "Montserrat-Regular")
-        addMapping("montserrat", 1, 0, "Montserrat-Bold")
-        addMapping("montserrat", 0, 1, "Montserrat-Italic")
-        addMapping("montserrat", 1, 1, "Montserrat-Bold")
-        addMapping("montserrat-regular", 0, 0, "Montserrat-Regular")
-        addMapping("montserrat-regular", 1, 0, "Montserrat-Bold")
-        addMapping("montserrat-regular", 0, 1, "Montserrat-Italic")
-        addMapping("montserrat-regular", 1, 1, "Montserrat-Bold")
-    except Exception:
-        pass
+def _hex(color):
+    return "#" + color.hexval()[2:]
 
 
-def setup_programme_page(
-    c,
-    title="Votre parcours d'accompagnement",
-    subtitle="Un parcours structuré en séances individuelles",
-    page_num=2,
-    total_pages=8,
-    topic="Programme du bilan",
-    card_margin=2.0 * cm,
-):
-    """
-    Configure une page du Programme de Bilan de Compétences :
-    - Fond Nude officiel, Dot Grid et subtiles vagues
-    - Signature marginale verticale 'm a r g e   d e   m a n œ u v r e' dans la marge gauche
-    - Panneau latéral blanc/crème avec ombre douce
-    - En-tête professionnel : Titre de section à gauche, Marque et catégorie à droite
-    - Pied de page normalisé : « margedemanoeuvre.fr • {topic} » à gauche, « Page {page_num} / {total_pages} » à droite
-    """
-    ensure_montserrat_family()
-    width, height = A4
+def markup(text):
+    """Brochure text as paragraph markup in the DA: palette colors, no pictogram fonts, typography."""
+    text = re.sub(r"<font name='ZapfDingbats'[^>]*>.*?</font>\s*", "", str(text))
+    for old, new in (("#2F2EFA", PDFStyle.COLOR_BLUE), ("#DC2626", PDFStyle.COLOR_CORAL_STRONG),
+                     ("#6B7280", PDFStyle.COLOR_INK_MUTED)):
+        text = re.sub(old, _hex(new), text, flags=re.IGNORECASE)
+    text = text.replace("seul(e)", "seul·e").replace("prêt(e)", "prêt·e")
+    return french_typography(text)
 
-    # 1. Fond Nude et signature marginale
-    draw_page_background(c, width, height, use_blobs=False)
 
-    # 2. Grand panneau latéral blanc/crème
-    draw_side_panel(c, card_margin, width, height)
+def _style(size=BODY_SIZE, leading=None, color=None, name="ProgrammeText"):
+    return ParagraphStyle(name, fontName=PDFStyle.FONT_BODY, fontSize=size, leading=leading or size * 1.42,
+                          textColor=color or PDFStyle.COLOR_INK)
 
-    # 3. Zone de contenu intérieur
-    content_x = card_margin + 0.9 * cm
-    content_w = width - card_margin - 1.8 * cm
 
-    # 4. En-tête de page
-    header_top_y = height - 1.35 * cm
+def rich(text, width, size=BODY_SIZE, color=None):
+    """A wrapped Paragraph of brochure markup and its height."""
+    p = Paragraph(markup(text), _style(size, color=color))
+    _, h = p.wrap(width, 10000)
+    return p, h
+
+
+def _items_height(items, width, size=BODY_SIZE):
+    indent = size * 1.6
+    return sum(rich(item, width - indent, size)[1] for item in items) + ITEM_GAP * max(len(items) - 1, 0)
+
+
+def _draw_items(c, items, x, top, width, size=BODY_SIZE):
+    """Star-bulleted paragraphs of markup; returns their height."""
+    indent = size * 1.6
+    star = size * 0.85
+    y = top
+    for i, item in enumerate(items):
+        p, h = rich(item, width - indent, size)
+        baseline = y - (size * 1.42 - size) / 2 - 0.8 * size
+        draw_star(c, x, baseline + 0.36 * size - star / 2, star)
+        p.drawOn(c, x + indent, y - h)
+        y -= h + (ITEM_GAP if i < len(items) - 1 else 0)
+    return top - y
+
+
+def programme_layout(c, title, eyebrow, lead=None):
+    """A brochure page: the eyebrow pill, the title, then an ink-muted lead paragraph."""
+    layout = PageLayout(c, title, config=LayoutConfig(part_title=eyebrow))
+    if lead:
+        layout.add_paragraphs([lead], color=PDFStyle.COLOR_INK_MUTED, spacing_after=0.4 * cm)
+    return layout
+
+
+def add_rich_text(layout, text, size=BODY_SIZE, color=None):
+    """Running text in brochure markup (<b>, <i>…), without a card."""
+    p, h = rich(text, layout.target_width, size, color)
+    layout._ensure_space(h)
+    p.drawOn(layout.c, layout.text_x, layout.y_cursor - h)
+    layout.y_cursor -= h + 0.4 * cm
+    return layout.y_cursor
+
+
+def _card_height(width, label=None, title=None, subtitle=None, body=None, items=None):
+    inner = width - 2 * PAD
+    h = 2 * PAD
+    if label:
+        h += label_pill_size(label)[1] + 0.25 * cm
+    if title:
+        h += paragraph_height(title, inner, PDFStyle.FONT_HEADING_BOLD, PDFStyle.SIZE_TITLE_ELEMENT,
+                              PDFStyle.SIZE_TITLE_ELEMENT * 1.15)
+        if subtitle:
+            h += paragraph_height(subtitle, inner, PDFStyle.FONT_HEADING_ITALIC, PDFStyle.SIZE_TITLE_ELEMENT,
+                                  PDFStyle.SIZE_TITLE_ELEMENT * 1.15)
+        h += 0.2 * cm
+    if body:
+        h += rich(body, inner)[1] + (0.2 * cm if items else 0)
+    if items:
+        h += _items_height(items, inner)
+    return h
+
+
+def _draw_card(c, x, top, width, height, label=None, title=None, subtitle=None, body=None, items=None, color=None,
+               white=False):
+    if white:
+        draw_white_card(c, x, top - height, width, height, radius=14)
+    else:
+        draw_pastel_card(c, x, top - height, width, height, color=color, radius=14)
+    inner = width - 2 * PAD
+    t = top - PAD
+    if label:
+        _, pill_h = draw_label_pill(c, x + PAD, t - label_pill_size(label)[1], label,
+                                    variant="pastel" if white else "on_pastel", max_width=inner)
+        t -= pill_h + 0.25 * cm
+    if title:
+        t -= draw_card_title(c, title, subtitle, x + PAD, t, inner, size=PDFStyle.SIZE_TITLE_ELEMENT) + 0.2 * cm
+    if body:
+        p, h = rich(body, inner)
+        p.drawOn(c, x + PAD, t - h)
+        t -= h + (0.2 * cm if items else 0)
+    if items:
+        _draw_items(c, items, x + PAD, t, inner)
+
+
+def add_card(layout, label=None, title=None, subtitle=None, body=None, items=None, color=None, white=False):
+    """A full-width card: an optional pill label, a two-part title, a paragraph and star items."""
+    h = _card_height(layout.target_width, label, title, subtitle, body, items)
+    layout._ensure_space(h)
+    _draw_card(layout.c, layout.text_x, layout.y_cursor, layout.target_width, h, label, title, subtitle, body, items,
+               color, white)
+    layout.y_cursor -= h + CARD_GAP
+    return layout.y_cursor
+
+
+def add_card_row(layout, cards, colors=None):
+    """Cards side by side, as tall as the tallest. cards: dicts of add_card arguments."""
+    gap = 0.4 * cm
+    n = len(cards)
+    w = (layout.target_width - gap * (n - 1)) / n
+    h = max(_card_height(w, **card) for card in cards)
+    layout._ensure_space(h)
+    pastels = colors or pastel_cycle(layout.c)
+    for k, card in enumerate(cards):
+        card = dict(card)
+        card.setdefault("color", pastels[k % len(pastels)])
+        _draw_card(layout.c, layout.text_x + k * (w + gap), layout.y_cursor, w, h, **card)
+    layout.y_cursor -= h + CARD_GAP
+    return layout.y_cursor
+
+
+def add_temps_band(layout, number, title, motto, intro=None):
+    """The banner of a stage of the bilan: big PT Mono number, title, motto and one sentence."""
+    c = layout.c
+    x, w = layout.text_x, layout.target_width
+    text_x = x + 2.4 * cm
+    inner = x + w - PAD - text_x
+    intro_p, intro_h = rich(intro, inner, color=PDFStyle.COLOR_INK_MUTED) if intro else (None, 0)
+    h = max(2.2 * cm, 2 * PAD + 16 + 0.15 * cm + intro_h)
+    layout._ensure_space(h)
+    top = layout.y_cursor
+    draw_pastel_card(c, x, top - h, w, h, radius=14)
+    draw_number(c, x + PAD - 2, top - h / 2 - 15, number, size=44)
+    t = top - PAD
+    tw = draw_text(c, text_x, t - 12, title, PDFStyle.FONT_HEADING_BOLD, 13, PDFStyle.COLOR_INK)
+    if motto:
+        draw_text(c, text_x + tw + 0.3 * cm, t - 12, motto, PDFStyle.FONT_SERIF, 13, PDFStyle.COLOR_INK)
+    if intro_p:
+        intro_p.drawOn(c, text_x, t - 16 - 0.15 * cm - intro_h)
+    layout.y_cursor -= h + CARD_GAP
+    return layout.y_cursor
+
+
+def add_session_card(layout, badge, title, description, objective, followup=False):
+    """A session: a pill badge (S1…), its title, what happens, and its objective."""
+    c = layout.c
+    x, w = layout.text_x, layout.target_width
+    badge_w = 1.5 * cm if followup else 1.1 * cm
+    text_x = x + PAD + badge_w + 0.4 * cm
+    inner = x + w - PAD - text_x
+    title_h = paragraph_height(title, inner, PDFStyle.FONT_HEADING_BOLD, PDFStyle.SIZE_TITLE_ELEMENT,
+                               PDFStyle.SIZE_TITLE_ELEMENT * 1.2)
+    desc_p, desc_h = rich(description, inner)
+    obj_p, obj_h = rich(f"<font color='{_hex(PDFStyle.COLOR_BLUE)}'><b>Objectif :</b> {objective}</font>", inner)
+    h = 2 * PAD + title_h + 0.15 * cm + desc_h + 0.25 * cm + obj_h
+    layout._ensure_space(h)
+    top = layout.y_cursor
+    if followup:
+        draw_pastel_card(c, x, top - h, w, h, color=PDFStyle.COLOR_SKY, radius=14)
+    else:
+        draw_white_card(c, x, top - h, w, h, radius=14)
+    pill_h = 0.75 * cm
     c.saveState()
-
-    # Gauche : Titre et sous-titre
-    c.setFont(PDFStyle.FONT_TITLE, 14.5)
-    c.setFillColor(colors.HexColor("#111827"))
-    c.drawString(content_x, header_top_y, title)
-
-    if subtitle:
-        c.setFont(PDFStyle.FONT_BODY, 9.2)
-        c.setFillColor(colors.HexColor("#6B7280"))
-        c.drawString(content_x, header_top_y - 0.48 * cm, subtitle)
-
-    # Droite : Branding "marge de manœuvre" + "LE PROGRAMME"
-    c.setFont(PDFStyle.FONT_BRANDING, 11)
-    c.setFillColor(colors.HexColor("#1F2937"))
-    c.drawRightString(width - 1.2 * cm, header_top_y, "marge de manœuvre")
-
-    c.setFont(PDFStyle.FONT_TITLE, 7.5)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawRightString(width - 1.2 * cm, header_top_y - 0.42 * cm, "LE PROGRAMME")
-
-    # Ligne de séparation en-tête
-    sep_y = header_top_y - 0.85 * cm
-    c.setStrokeColor(colors.HexColor("#E5E7EB"))
-    c.setLineWidth(0.7)
-    c.line(content_x, sep_y, width - 1.2 * cm, sep_y)
+    c.setFillColor(PDFStyle.COLOR_BLUE)
+    c.roundRect(x + PAD, top - PAD - pill_h, badge_w, pill_h, pill_h / 2, stroke=0, fill=1)
     c.restoreState()
-
-    # 5. Pied de page normalisé (sans tiret dans margedemanoeuvre.fr)
-    footer_y = 1.25 * cm
-    c.saveState()
-    # Ligne fine au-dessus du footer
-    c.setStrokeColor(colors.HexColor("#E5E7EB"))
-    c.setLineWidth(0.7)
-    c.line(content_x, footer_y + 0.45 * cm, width - 1.2 * cm, footer_y + 0.45 * cm)
-
-    # Texte gauche
-    c.setFont(PDFStyle.FONT_BODY, 8.2)
-    c.setFillColor(colors.HexColor("#6B7280"))
-    c.drawString(content_x, footer_y, f"margedemanoeuvre.fr • {topic}")
-
-    # Numérotation droite
-    c.setFont(PDFStyle.FONT_BODY, 8.2)
-    c.setFillColor(colors.HexColor("#6B7280"))
-    c.drawRightString(width - 1.2 * cm, footer_y, f"Page {page_num} / {total_pages}")
-    c.restoreState()
-
-    # Curseur Y de départ sous l'en-tête
-    start_y = sep_y - 0.50 * cm
-    return content_x, content_w, start_y
+    draw_text(c, x + PAD + badge_w / 2, top - PAD - pill_h / 2 - 3.5, badge, PDFStyle.FONT_LABEL, 10,
+              PDFStyle.COLOR_SURFACE_CARD, align="center")
+    t = top - PAD
+    t -= draw_paragraph(c, title, text_x, t, inner, PDFStyle.FONT_HEADING_BOLD, PDFStyle.SIZE_TITLE_ELEMENT,
+                        PDFStyle.COLOR_INK, PDFStyle.SIZE_TITLE_ELEMENT * 1.2) + 0.15 * cm
+    desc_p.drawOn(c, text_x, t - desc_h)
+    t -= desc_h + 0.25 * cm
+    obj_p.drawOn(c, text_x, t - obj_h)
+    layout.y_cursor -= h + PDFStyle.GAP_BLOCK * 0.5
+    return layout.y_cursor
 
 
-def draw_session_card(c, x, y, w, h, badge, title, description, objective, is_followup=False):
-    """
-    Dessine une carte de séance pédagogique harmonisée et lisible :
-    - Badge stylisé à gauche (ex: S1, S2, Suivi)
-    - Titre en gras
-    - Description détaillée
-    - Objectif clé dans un sous-bloc dédié en bas de carte
-    """
-    c.saveState()
-
-    # Fond de carte arrondi
-    bg_col = colors.HexColor("#FFFFFF") if not is_followup else colors.HexColor("#EFF6FF")
-    border_col = colors.HexColor("#E5E7EB") if not is_followup else colors.HexColor("#BFDBFE")
-    c.setFillColor(bg_col)
-    c.setStrokeColor(border_col)
-    c.setLineWidth(0.8)
-    c.roundRect(x, y, w, h, 6, fill=1, stroke=1)
-
-    # Badge séance à gauche
-    badge_w = 1.05 * cm if not is_followup else 1.55 * cm
-    badge_h = 0.85 * cm
-    badge_x = x + 0.45 * cm
-    badge_y = y + h - badge_h - 0.45 * cm
-
-    badge_bg = PDFStyle.COLOR_ACCENT_RED if not is_followup else PDFStyle.COLOR_ACCENT_BLUE
-    c.setFillColor(badge_bg)
-    c.roundRect(badge_x, badge_y, badge_w, badge_h, 4, fill=1, stroke=0)
-
-    c.setFont(PDFStyle.FONT_TITLE, 9.5 if not is_followup else 8.0)
-    c.setFillColor(colors.HexColor("#FFFFFF"))
-    c.drawCentredString(badge_x + badge_w / 2.0, badge_y + 0.24 * cm, badge)
-
-    # Zone de texte à droite du badge
-    text_x = badge_x + badge_w + 0.45 * cm
-    text_w = w - (text_x - x) - 0.45 * cm
-
-    # Titre de la séance
-    c.setFont(PDFStyle.FONT_TITLE, 10.0)
-    c.setFillColor(colors.HexColor("#111827"))
-    c.drawString(text_x, y + h - 0.68 * cm, title)
-
-    # Description (Paragraph avec wrap)
-    style_desc = ParagraphStyle(
-        "CardDesc",
-        fontName=PDFStyle.FONT_BODY,
-        fontSize=8.6,
-        leading=12.4,
-        textColor=colors.HexColor("#374151"),
-    )
-    p_desc = Paragraph(description, style_desc)
-    avail_h = h - 2.0 * cm
-    p_desc.wrap(text_w, avail_h)
-    p_desc.drawOn(c, text_x, y + h - 0.95 * cm - p_desc.height)
-
-    # Bloc Objectif stylisé en bas de carte
-    obj_box_h = 0.80 * cm
-    obj_box_y = y + 0.35 * cm
-    c.setFillColor(colors.HexColor("#F9FAFB") if not is_followup else colors.HexColor("#DBEAFE"))
-    c.setStrokeColor(colors.HexColor("#E5E7EB") if not is_followup else colors.HexColor("#BFDBFE"))
-    c.setLineWidth(0.6)
-    c.roundRect(text_x, obj_box_y, text_w, obj_box_h, 4, fill=1, stroke=1)
-
-    accent_hex = PDFStyle.COLOR_ACCENT_BLUE.hexval() if hasattr(PDFStyle.COLOR_ACCENT_BLUE, "hexval") else "2F2EFA"
-    if not accent_hex.startswith("#"):
-        accent_hex = f"#{accent_hex}"
-
-    style_obj = ParagraphStyle(
-        "CardObj",
-        fontName=PDFStyle.FONT_BODY,
-        fontSize=8.2,
-        leading=11.2,
-        textColor=colors.HexColor(accent_hex),
-    )
-    txt_obj = f"<b><font color='#6B7280'>OBJECTIF :</font></b> {objective}"
-    p_obj = Paragraph(txt_obj, style_obj)
-    p_obj.wrap(text_w - 0.4 * cm, obj_box_h)
-    p_obj.drawOn(c, text_x + 0.25 * cm, obj_box_y + (obj_box_h - p_obj.height) / 2.0)
-
-    c.restoreState()
+def add_deliverables(layout, title, items):
+    """The deliverables validated at the end of a stage, on a jasmine card."""
+    return add_card(layout, label="Livrables validés", title=title, items=items, color=PDFStyle.COLOR_JASMINE)
 
 
-def draw_deliverables_card(c, x, y, w, h, title, items):
-    """
-    Dessine un encadré récapitulatif des livrables validés à la fin d'un temps.
-    """
-    c.saveState()
-    # Fond doux teinté
-    c.setFillColor(PDFStyle.COLOR_FIELD_BG)
-    c.setStrokeColor(PDFStyle.COLOR_ACCENT_RED)
-    c.setLineWidth(0.8)
-    c.roundRect(x, y, w, h, 6, fill=1, stroke=1)
-
-    # Accent latéral rouge
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.rect(x, y + 3, 3, h - 6, fill=1, stroke=0)
-
-    # Titre des livrables
-    c.setFont(PDFStyle.FONT_TITLE, 8.8)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawString(x + 0.6 * cm, y + h - 0.60 * cm, title)
-
-    # Puces des livrables
-    item_y = y + h - 0.95 * cm
-    style_item = ParagraphStyle(
-        "DelivItem",
-        fontName=PDFStyle.FONT_BODY,
-        fontSize=8.3,
-        leading=11.6,
-        textColor=colors.HexColor("#1F2937"),
-    )
-
-    for item in items:
-        p = Paragraph(f"• <b>{item}</b>", style_item)
-        p.wrap(w - 1.2 * cm, 1.0 * cm)
-        p.drawOn(c, x + 0.6 * cm, item_y - p.height)
-        item_y -= p.height + 0.15 * cm
-
-    c.restoreState()
-
-
-def create_closing_page(c):
-    """Page de fin optionnelle."""
-    width, height = A4
-    draw_page_background(c, width, height)
-
-    logo_x = width / 2
-    logo_y = height / 2 + 2 * cm
-    draw_branding_logo(c, logo_x, logo_y, size=40, align="center")
-
-    text_y = logo_y - 4 * cm
-    c.setFont(PDFStyle.FONT_TITLE, 14)
-    c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-
-    messages = [
-        "Merci pour votre confiance.",
-        "Prenez contact pour démarrer votre bilan :",
-        "margedemanoeuvre.fr • contact@margedemanoeuvre.fr",
-    ]
-
-    for msg in messages:
-        c.drawCentredString(width / 2, text_y, msg)
-        text_y -= 0.9 * cm
-
-    c.showPage()
+def add_bars(layout, rows, total, title=None):
+    """A light bar chart in a white card: rows of (label, count) out of total, with the share."""
+    c = layout.c
+    x, w = layout.text_x, layout.target_width
+    inner = w - 2 * PAD
+    label_w = inner * 0.5
+    bar_x = x + PAD + label_w + 0.3 * cm
+    bar_w = inner - label_w - 0.3 * cm - 2.2 * cm
+    row_h = 0.62 * cm
+    title_h = (label_pill_size(title)[1] + 0.3 * cm) if title else 0
+    label_hs = [paragraph_height(label, label_w, PDFStyle.FONT_BODY, BODY_SIZE, BODY_LEADING) for label, _ in rows]
+    h = 2 * PAD + title_h + sum(max(row_h, lh) for lh in label_hs) + 0.1 * cm * (len(rows) - 1)
+    layout._ensure_space(h)
+    top = layout.y_cursor
+    draw_white_card(c, x, top - h, w, h, radius=14)
+    t = top - PAD
+    if title:
+        draw_label_pill(c, x + PAD, t - label_pill_size(title)[1], title, max_width=inner)
+        t -= title_h
+    for (label, count), lh in zip(rows, label_hs):
+        rh = max(row_h, lh)
+        draw_paragraph(c, label, x + PAD, t, label_w, PDFStyle.FONT_BODY, BODY_SIZE, PDFStyle.COLOR_INK, BODY_LEADING)
+        cy = t - min(rh, BODY_LEADING) / 2 - 1
+        c.saveState()
+        c.setFillColor(PDFStyle.COLOR_LINE)
+        c.roundRect(bar_x, cy - 4, bar_w, 8, 4, stroke=0, fill=1)
+        c.setFillColor(PDFStyle.COLOR_BLUE)
+        c.roundRect(bar_x, cy - 4, max(8, bar_w * count / total), 8, 4, stroke=0, fill=1)
+        c.restoreState()
+        share = round(100 * count / total)
+        draw_text(c, x + w - PAD, cy - 3.5, f"{count} · {share} %", PDFStyle.FONT_LABEL, 9, PDFStyle.COLOR_BLUE,
+                  align="right")
+        t -= rh + 0.1 * cm
+    layout.y_cursor -= h + CARD_GAP
+    return layout.y_cursor
