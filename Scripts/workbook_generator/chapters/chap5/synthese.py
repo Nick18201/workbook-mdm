@@ -28,7 +28,7 @@ def create_tensions_page1(c):
         config=LayoutConfig(part_title="8. TENSIONS DE VALEURS")
     )
     layout.add_text(
-        "⏱ ~10 min | 🎯 Repérer les contradictions internes entre des valeurs importantes pour vous.",
+        "Durée : ~10 min · Objectif : Repérer les contradictions internes entre des valeurs importantes pour vous.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
     layout.add_text(
@@ -125,7 +125,7 @@ def create_synthese_page(c):
         config=LayoutConfig(part_title="SYNTHÈSE FINALE")
     )
     layout.add_text(
-        "⏱ ~10 min | 🎯 Rassembler vos conclusions pour guider la suite de votre projet de transition.",
+        "Durée : ~10 min · Objectif : Rassembler vos conclusions pour guider la suite de votre projet de transition.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
     layout.add_text(

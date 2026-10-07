@@ -99,7 +99,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - Page 2 : 'summary' (Sommaire fidèle des étapes du livret avec numéros et courtes descriptions)
    - Page 3 (Conditionnelle selon l'option Page Météo demandée) :
      * Si Check-in = 'none' : NE METS AUCUNE PAGE MÉTÉO NI ICE-BREAKER ! Passe immédiatement aux exercices de fond après le sommaire.
-     * Si Check-in = 'classic' : Page 'meteo' standard (émotions ☀️/⛅/🌧️/⚡, jauge d'énergie 0-10, question de recentrage).
+     * Si Check-in = 'classic' : Page 'meteo' standard (émotions soleil/nuageux/pluvieux/orageux, jauge d'énergie 0-10, question de recentrage).
      * Si Check-in = 'auto' : N'insère une page 'meteo' QUE si les notes de séance décrivent explicitement un état d'esprit, une fatigue ou une météo d'ouverture. Si les notes abordent directement le sujet de fond, NE METS PAS de page météo.
    - Pages intermédiaires : Exercices variés choisissant le gabarit le plus percutant selon les besoins :
      * 'questions' : Pour du questionnement guidé (1 à 3 questions maximum par page). Intitulés courts (max 120 caractères), sous-titre explicatif et exemple concret (précédé de 'Ex :').
@@ -119,6 +119,7 @@ RÈGLES D'OR DE STRUCTURATION :
      * Si include_engagement est False : Ne PAS inclure de page 'engagement'.
    - Dernière page : 'closing' (Page finale avec messages chaleureux et logo centré).
 4. Calibrage des textes & Aération visuelle :
+   - AUCUN émoji ni pictogramme (☀️, 🎯, ✅, 🟢…) dans les textes : la police du PDF ne les affiche pas.
    - Titre de page : 25 à 45 caractères maximum.
    - Question : max 120 caractères.
    - Exemple : max 90 caractères. Écris directement l'exemple SANS préfixe "Ex :" ou "Exemple :" (ex: "Responsable RSE en PME...").
@@ -147,7 +148,7 @@ RÈGLES D'OR DE STRUCTURATION :
      * 'callout' : {"type": "callout", "title": "Titre du repère", "text": "Citation percutante ou conseil clé...", "variant": "info|tip|quote"}
      * 'cards_grid' : {"type": "cards_grid", "title": "Titre de la grille", "columns": 2, "cards": [{"title": "1. Atout / Constat", "subtitle": "Ce qui a suscité de l'intérêt", "placeholder": "Notes du bénéficiaire..."}, {"title": "2. Friction / Risque", "subtitle": "Ce qui a freiné ou bloqué", "placeholder": "Notes du bénéficiaire..."}]}
      * 'scale' : {"type": "scale", "label": "Niveau d'alignement ou de confiance :", "min_val": 0, "max_val": 10, "min_label": "0 · Décalage", "max_label": "10 · Confiance totale"}
-     * 'table' : {"type": "table", "title": "Tableau d'évaluation", "headers": ["Pilier / Critère", "Niveau de risque", "Plan de parade ou levier"], "rows": [["Finances & Rémunération", "🟡 Modéré", "Maintien ARE, négociation"], ["Temps & Équilibre", "🟢 Faible", "Télétravail partiel"]]}
+     * 'table' : {"type": "table", "title": "Tableau d'évaluation", "headers": ["Pilier / Critère", "Niveau de risque", "Plan de parade ou levier"], "rows": [["Finances & Rémunération", "Modéré", "Maintien ARE, négociation"], ["Temps & Équilibre", "Faible", "Télétravail partiel"]]}
      * 'checklist' : {"type": "checklist", "title": "Critères de validation", "items": ["Premier prospect contacté", "Proposition relue à voix haute", "Date butoir fixée"]}
      * 'question' : {"type": "question", "question": "Intitulé...", "subtitle": "Précision...", "example": "Pilote de projets à impact..."}
 
@@ -477,9 +478,9 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                         title="Évaluation des 3 Piliers de Sécurisation",
                         headers=["Critère Analysé", "Niveau de Risque", "Plan de Parade Identifié"],
                         rows=[
-                            ["Finances & Rémunération", "🟡 Modéré", "Maintien ARE, négociation salariale"],
-                            ["Temps & Équilibre de vie", "🟢 Faible", "Télétravail partiel, horaires cadrés"],
-                            ["Compétences & Passerelles", "🟢 Porteur", "Valorisation du transfert d'expérience"],
+                            ["Finances & Rémunération", "Modéré", "Maintien ARE, négociation salariale"],
+                            ["Temps & Équilibre de vie", "Faible", "Télétravail partiel, horaires cadrés"],
+                            ["Compétences & Passerelles", "Porteur", "Valorisation du transfert d'expérience"],
                         ],
                     ),
                     BlockSpec(
@@ -629,6 +630,7 @@ TON RÔLE :
 2. Appliquer les modifications demandées à la spécification du livret (WorkbookSpec) avec rigueur et intelligence pédagogique.
 3. Préserver l'intégrité de toutes les autres pages et éléments qui ne sont pas concernés par la demande.
 4. Respecter impérativement les règles de design system 'Marge de Manœuvre' :
+   - AUCUN émoji ni pictogramme (☀️, 🎯, ✅, 🟢…) dans les textes : la police du PDF ne les affiche pas.
    - Pagination équilibrée selon le format souhaité : Court (6-7 pages), Standard (7-10 pages), Complet (+ de 10 pages).
    - Aération maximale : 2 à 3 composants maximum par page composite. Ne JAMAIS empiler un tableau de 3-4 lignes et une grille de cartes sur la même page (séparer en 2 pages si besoin).
    - Textes courts et percutants : titres 25-45 caractères max, questions 120 caractères max, exemples concrets sans préfixe de 90 caractères max, points de sommaire max 85 caractères.
@@ -742,6 +744,7 @@ RÈGLES D'OR DE PERSONNALISATION :
    - Pour les matrices 4 quadrants, comparatifs 2 colonnes ou feuilles de route 30·60·90j, injecte des constats, leviers ou actions pertinents pour son profil.
    - Si des consignes spécifiques (`custom_instructions`) sont indiquées par le coach, applique-les fidèlement.
 3. RESPECT STRICT DES BUDGETS DE CARACTÈRES (AUCUN DÉBORDEMENT REPORTLAB) :
+   - AUCUN émoji ni pictogramme (☀️, 🎯, ✅, 🟢…) dans les textes : la police du PDF ne les affiche pas.
    - Titre de page : 25 à 45 caractères max.
    - Intitulé de question : max 120 caractères.
    - Exemple concret : max 90 caractères (direct, percutant, sans préfixe 'Ex :').

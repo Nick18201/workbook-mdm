@@ -2,7 +2,7 @@ from reportlab.lib import colors
 from .config import PDFStyle
 
 
-def _unique_field_name(form, name):
+def reserve_field_name(form, name):
     """
     Returns a field name not yet used in this document. PDF viewers link widgets that
     share a name (typing in one fills the other), so a repeated name gets a numeric suffix.
@@ -59,7 +59,7 @@ def create_input_field(
             font_size = 0 if height <= 28 else 11
 
     form.textfield(
-        name=_unique_field_name(form, name),
+        name=reserve_field_name(form, name),
         tooltip=tooltip,
         value=value,
         x=x,
@@ -77,11 +77,38 @@ def create_input_field(
     )
 
 
+def create_radio(form, group, value, pos, size=10, tooltip=""):
+    """
+    Adds one option to a radio group: every button created with the same `group` is
+    mutually exclusive. Reserve the group name once with reserve_field_name() (not per button).
+    Unlike ReportLab's default flags, the choice can be cleared by clicking it again.
+    """
+    x, y = pos
+    form.radio(
+        name=group,
+        value=str(value),
+        selected=False,
+        tooltip=tooltip,
+        x=x,
+        y=y,
+        size=size,
+        buttonStyle="circle",
+        shape="circle",
+        borderStyle="solid",
+        borderWidth=1,
+        borderColor=colors.black,
+        fillColor=colors.white,
+        textColor=colors.black,
+        forceBorder=False,
+        fieldFlags="radio",
+    )
+
+
 def create_checkbox(form, name, pos, size=18, tooltip=""):
     """Helper to create consistent checkboxes."""
     x, y = pos
     form.checkbox(
-        name=_unique_field_name(form, name),
+        name=reserve_field_name(form, name),
         tooltip=tooltip,
         x=x,
         y=y,

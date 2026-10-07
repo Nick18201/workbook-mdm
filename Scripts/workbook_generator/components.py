@@ -12,8 +12,8 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 
 from .config import PDFStyle
-from .forms import create_input_field, create_checkbox
-from .utils import cached_image_reader
+from .forms import create_input_field, create_checkbox, create_radio, reserve_field_name
+from .utils import cached_image_reader, fit_font_size, ellipsize
 
 
 def draw_page_background(c, width, height, use_blobs=False):
@@ -171,6 +171,89 @@ def draw_side_panel(c, x, page_width, page_height):
     c.setFillColor(PDFStyle.COLOR_CARD_CREME)
     c.rect(x, 0, page_width - x, page_height, fill=1, stroke=0)
     c.restoreState()
+
+
+def draw_symbol(c, char, x, y, size, color):
+    """
+    Draws a pictogram from ZapfDingbats, the symbol font built into every PDF viewer
+    (✔ ✓ ★ ➔ ➤ ☛ ✉ ☎ ● ◆…), since Montserrat has none of them. Pass the Unicode
+    character: ReportLab maps it. Returns the symbol width so text can follow it.
+    """
+    c.saveState()
+    c.setFont("ZapfDingbats", size)
+    c.setFillColor(color)
+    c.drawString(x, y, char)
+    c.restoreState()
+    return c.stringWidth(char, "ZapfDingbats", size)
+
+
+def _draw_cloud(c, x, y, w):
+    """Filled cloud silhouette: bottom-left corner at (x, y), w wide, about 0.56 w tall."""
+    c.circle(x + 0.30 * w, y + 0.22 * w, 0.20 * w, fill=1, stroke=0)
+    c.circle(x + 0.58 * w, y + 0.30 * w, 0.26 * w, fill=1, stroke=0)
+    c.roundRect(x + 0.06 * w, y, 0.88 * w, 0.26 * w, 0.13 * w, fill=1, stroke=0)
+
+
+def draw_weather_icon(c, kind, x, y, size, color):
+    """Vector weather pictogram ('soleil', 'nuageux', 'pluvieux', 'orageux') in a size x size box at (x, y)."""
+    c.saveState()
+    c.setFillColor(color)
+    c.setStrokeColor(color)
+    c.setLineWidth(max(0.8, size / 14.0))
+    c.setLineCap(1)
+    if kind == "soleil":
+        cx, cy, r = x + size / 2, y + size / 2, size * 0.2
+        c.circle(cx, cy, r, fill=1, stroke=0)
+        for i in range(8):
+            a = math.radians(i * 45)
+            c.line(cx + math.cos(a) * r * 1.5, cy + math.sin(a) * r * 1.5,
+                   cx + math.cos(a) * r * 2.3, cy + math.sin(a) * r * 2.3)
+    elif kind == "nuageux":
+        _draw_cloud(c, x, y + size * 0.22, size)
+    else:
+        _draw_cloud(c, x + size * 0.05, y + size * 0.42, size * 0.9)
+        if kind == "pluvieux":
+            for i in range(3):
+                drop_x = x + size * (0.30 + i * 0.22)
+                c.line(drop_x, y + size * 0.34, drop_x - size * 0.08, y + size * 0.08)
+        else:  # orageux: lightning bolt under the cloud
+            p = c.beginPath()
+            p.moveTo(x + size * 0.56, y + size * 0.44)
+            p.lineTo(x + size * 0.36, y + size * 0.20)
+            p.lineTo(x + size * 0.50, y + size * 0.20)
+            p.lineTo(x + size * 0.40, y)
+            p.lineTo(x + size * 0.66, y + size * 0.27)
+            p.lineTo(x + size * 0.52, y + size * 0.27)
+            p.close()
+            c.drawPath(p, fill=1, stroke=0)
+    c.restoreState()
+
+
+def draw_fitted_text(c, text, x, y, max_width, font_name, size, min_size=None,
+                     max_lines=2, leading=None, align="left"):
+    """
+    Draws text inside max_width instead of letting it run off: the font shrinks down to
+    min_size, then the text wraps onto at most max_lines lines, the last one ending with
+    a visible '…' if it is still too long. y is the first baseline (lines go downward);
+    the fill color is the caller's. Returns (number of lines drawn, font size used).
+    """
+    size = fit_font_size(text, font_name, size, max_width, min_size or size)
+    lines = simpleSplit(text, font_name, size, max_width) or [text]
+    if len(lines) > max_lines:
+        lines = lines[:max_lines - 1] + [" ".join(lines[max_lines - 1:])]
+    lines = [ellipsize(line, font_name, size, max_width) for line in lines]
+    leading = leading or size * 1.2
+
+    c.setFont(font_name, size)
+    for i, line in enumerate(lines):
+        line_y = y - i * leading
+        if align == "center":
+            c.drawCentredString(x, line_y, line)
+        elif align == "right":
+            c.drawRightString(x, line_y, line)
+        else:
+            c.drawString(x, line_y, line)
+    return len(lines), size
 
 
 @dataclass
@@ -632,7 +715,8 @@ def create_standard_engagement_page(
     sum_items_h = 0
     item_wrap_w = content_w - 1.6 * cm
     for l_text in clean_lines:
-        p = Paragraph(f'<font color="{PDFStyle.COLOR_ACCENT_BLUE}" name="{PDFStyle.FONT_TITLE}">✓</font>&nbsp;&nbsp;{escape(l_text)}', style_item)
+        # ZapfDingbats: Montserrat has no check mark glyph
+        p = Paragraph(f'<font color="{PDFStyle.COLOR_ACCENT_BLUE}" name="ZapfDingbats">✔</font>&nbsp;&nbsp;{escape(l_text)}', style_item)
         _, h = p.wrap(item_wrap_w, height)
         item_paragraphs.append((p, h))
         sum_items_h += h
@@ -787,9 +871,10 @@ def create_standard_meteo_page(
     """
     Standard Ice-Breaker / Inner Weather Page.
     Includes:
-    - Emotion prompt with word field & 4 checkboxes (Soleil, Nuageux, Pluvieux, Orageux)
-    - Energy slider 0 to 10
+    - Emotion prompt with word field & 4 checkboxes (Soleil, Nuageux, Pluvieux, Orageux) with vector icons
+    - Energy scale 0 to 10 (radio buttons: a single level can be chosen)
     - Large reflection multiline textfield
+    Long prompts wrap; the word field moves below the emotion prompt when it does not fit beside it.
     """
     width, height = A4
     draw_page_background(c, width, height)
@@ -799,6 +884,7 @@ def create_standard_meteo_page(
 
     text_x = card_margin + 1.0 * cm
     text_top = height - 4.0 * cm
+    content_w = width - text_x - 1.5 * cm
 
     y_pos = draw_title(c, title, pos=(text_x, text_top))
     form = c.acroForm
@@ -807,31 +893,44 @@ def create_standard_meteo_page(
     y_opts = y_pos - 0.5 * cm
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, y_opts, emotion_prompt)
 
     prompt_width = c.stringWidth(emotion_prompt, PDFStyle.FONT_SUBTITLE, 12)
+    if prompt_width + 0.5 * cm + 4 * cm <= content_w:
+        c.drawString(text_x, y_opts, emotion_prompt)
+        field_x = text_x + prompt_width + 0.5 * cm
+        field_w = width - (text_x + prompt_width + 2.0 * cm)
+    else:
+        prompt_lines = simpleSplit(emotion_prompt, PDFStyle.FONT_SUBTITLE, 12, content_w)
+        for line in prompt_lines:
+            c.drawString(text_x, y_opts, line)
+            y_opts -= 15
+        y_opts -= 5
+        field_x, field_w = text_x, content_w
+
     create_input_field(
         form,
         f"{field_prefix}_emotion_word",
-        pos=(text_x + prompt_width + 0.5 * cm, y_opts - 5),
-        size=(width - (text_x + prompt_width + 2.0 * cm), 20),
+        pos=(field_x, y_opts - 5),
+        size=(field_w, 20),
         tooltip="Un mot pour décrire l'instant",
     )
 
-    options = ["Soleil ☀️", "Nuageux ☁️", "Pluvieux 🌧️", "Orageux ⛈️"]
+    options = [("Soleil", "soleil"), ("Nuageux", "nuageux"), ("Pluvieux", "pluvieux"), ("Orageux", "orageux")]
     opt_x = text_x
     opt_y = y_opts - 1.5 * cm
 
-    for opt in options:
-        opt_key = opt.split()[0]
+    for label, icon in options:
         create_checkbox(
             form,
-            f"{field_prefix}_{opt_key}",
+            f"{field_prefix}_{label}",
             pos=(opt_x, opt_y),
             size=0.6 * cm,
-            tooltip=opt,
+            tooltip=label,
         )
-        c.drawString(opt_x + 1 * cm, opt_y + 0.15 * cm, opt)
+        draw_weather_icon(c, icon, opt_x + 0.85 * cm, opt_y + 0.03 * cm, 0.55 * cm, PDFStyle.COLOR_ACCENT_BLUE)
+        c.setFont(PDFStyle.FONT_SUBTITLE, 12)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        c.drawString(opt_x + 1.6 * cm, opt_y + 0.15 * cm, label)
         opt_x += 3.8 * cm
 
     y_pos = opt_y - 2.0 * cm
@@ -839,7 +938,10 @@ def create_standard_meteo_page(
     # 2. Energy scale
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, y_pos, energy_prompt)
+    energy_lines = simpleSplit(energy_prompt, PDFStyle.FONT_SUBTITLE, 12, content_w) or [energy_prompt]
+    for i, line in enumerate(energy_lines):
+        c.drawString(text_x, y_pos - i * 15, line)
+    y_pos -= (len(energy_lines) - 1) * 15
 
     c.setFont(PDFStyle.FONT_ITALIC, 9)
     c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
@@ -850,14 +952,16 @@ def create_standard_meteo_page(
     c.setLineWidth(1)
     c.line(text_x, y_pos - 1.5 * cm, text_x + 14 * cm, y_pos - 1.5 * cm)
 
+    energy_group = reserve_field_name(form, f"{field_prefix}_energy")
     for i in range(11):
         x_mark = text_x + i * 1.4 * cm
         c.setLineWidth(0.5)
         c.line(x_mark, y_pos - 1.6 * cm, x_mark, y_pos - 1.4 * cm)
 
-        create_checkbox(
+        create_radio(
             form,
-            f"{field_prefix}_energy_{i}",
+            energy_group,
+            i,
             pos=(x_mark - 0.22 * cm, y_pos - 2.1 * cm),
             size=0.45 * cm,
             tooltip=f"Niveau {i}",
@@ -872,7 +976,10 @@ def create_standard_meteo_page(
     # 3. Thought reflection
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-    c.drawString(text_x, y_pos, thought_prompt)
+    thought_lines = simpleSplit(thought_prompt, PDFStyle.FONT_SUBTITLE, 12, content_w) or [thought_prompt]
+    for i, line in enumerate(thought_lines):
+        c.drawString(text_x, y_pos - i * 15, line)
+    y_pos -= (len(thought_lines) - 1) * 15
 
     box_h = 5.0 * cm
     create_input_field(
@@ -907,7 +1014,25 @@ def create_standard_quadrants_page(
         ("Social / Relationnel", "Relations, Équilibre", "social"),
         ("Cadre & Autonomie", "Besoin de liberté", "cadre")
     ]
+    Beyond 4 quadrants, the remaining ones continue on additional pages titled "(suite)".
     """
+    if not quadrants_data:
+        quadrants_data = [
+            ("Professionnel", "Sens, Mission, Salaire", "pro"),
+            ("Personnel", "Temps pour soi, Santé", "perso"),
+            ("Social/Familial", "Relations, Équilibre", "social"),
+            ("Hiérarchie/Structure", "Besoin de cadre vs Liberté", "cadre"),
+        ]
+    quadrants_data = list(quadrants_data)
+
+    for start in range(0, len(quadrants_data), 4):
+        page_title = title if start == 0 else f"{title} (suite)"
+        _draw_quadrants_page(
+            c, page_title, part_title, instruction, quadrants_data[start:start + 4], field_prefix
+        )
+
+
+def _draw_quadrants_page(c, title, part_title, instruction, quadrants_data, field_prefix):
     width, height = A4
     card_margin = 2 * cm
     draw_side_panel(c, card_margin, width, height)
@@ -919,7 +1044,10 @@ def create_standard_quadrants_page(
     if instruction:
         c.setFont(PDFStyle.FONT_BODY, 11)
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        c.drawString(text_x, new_y - 0.2 * cm, instruction)
+        instr_y = new_y - 0.2 * cm
+        for line in simpleSplit(instruction, PDFStyle.FONT_BODY, 11, width - text_x - 1.5 * cm):
+            c.drawString(text_x, instr_y, line)
+            instr_y -= 14
 
     center_x = card_margin + (width - card_margin) / 2
     center_y = height / 2 - 2.5 * cm
@@ -940,25 +1068,19 @@ def create_standard_quadrants_page(
     c.line(center_x - 7 * cm, center_y, center_x + 7 * cm, center_y)
     c.restoreState()
 
-    if not quadrants_data:
-        quadrants_data = [
-            ("Professionnel", "Sens, Mission, Salaire", "pro"),
-            ("Personnel", "Temps pour soi, Santé", "perso"),
-            ("Social/Familial", "Relations, Équilibre", "social"),
-            ("Hiérarchie/Structure", "Besoin de cadre vs Liberté", "cadre"),
-        ]
-
     # Grid positions: (dx, dy)
     positions = [(-1, 1), (1, 1), (-1, -1), (1, -1)]
     form = c.acroForm
+    # Widest text a pill may hold without spilling into the neighbouring quadrant
+    pill_text_w = 6.4 * cm
 
     for item, (dx, dy) in zip(quadrants_data, positions):
         if isinstance(item, (tuple, list)):
-            main_title = item[0]
+            main_title = str(item[0])
             sub_title = f"({item[1]})" if len(item) > 1 and item[1] else ""
             fid = item[2] if len(item) > 2 else f"{field_prefix}_{main_title}"
         elif isinstance(item, dict):
-            main_title = item.get("title", "")
+            main_title = str(item.get("title", ""))
             sub = item.get("subtitle", "")
             sub_title = f"({sub})" if sub else ""
             fid = item.get("field_id", f"{field_prefix}_{main_title}")
@@ -980,43 +1102,55 @@ def create_standard_quadrants_page(
 
         f_x = q_center_x - (field_width / 2)
 
-        # Title pill badge
-        text_width = c.stringWidth(main_title, PDFStyle.FONT_BRANDING, 14)
+        # Title pill badge (font shrinks, then wraps, so long titles stay inside the quadrant)
+        t_size = fit_font_size(main_title, PDFStyle.FONT_BRANDING, 14, pill_text_w, min_size=9)
+        t_lines = simpleSplit(main_title, PDFStyle.FONT_BRANDING, t_size, pill_text_w) or [main_title]
+        t_lead = t_size * 1.2
+        text_width = max(c.stringWidth(line, PDFStyle.FONT_BRANDING, t_size) for line in t_lines)
+        extra_h = (len(t_lines) - 1) * t_lead
         c.saveState()
         c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
         c.roundRect(
             q_center_x - text_width / 2 - 10,
-            text_y - 5,
+            text_y - 5 - extra_h,
             text_width + 20,
-            20,
+            20 + extra_h,
             radius=10,
             fill=1,
             stroke=0,
         )
         c.restoreState()
 
-        c.setFont(PDFStyle.FONT_BRANDING, 14)
+        c.setFont(PDFStyle.FONT_BRANDING, t_size)
         c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-        c.drawCentredString(q_center_x, text_y, main_title)
+        for k, line in enumerate(t_lines):
+            c.drawCentredString(q_center_x, text_y - k * t_lead, line)
 
         if sub_title:
-            sub_width = c.stringWidth(sub_title, PDFStyle.FONT_BODY, 9)
+            s_size = fit_font_size(sub_title, PDFStyle.FONT_BODY, 9, pill_text_w, min_size=7)
+            s_lines = simpleSplit(sub_title, PDFStyle.FONT_BODY, s_size, pill_text_w) or [sub_title]
+            s_lead = s_size * 1.25
+            sub_y = text_y - 0.5 * cm - extra_h
+            sub_width = max(c.stringWidth(line, PDFStyle.FONT_BODY, s_size) for line in s_lines)
+            sub_extra_h = (len(s_lines) - 1) * s_lead
+            # One pill around all subtitle lines
             c.saveState()
             c.setFillColor(PDFStyle.COLOR_WHITE, alpha=0.95)
             c.roundRect(
                 q_center_x - sub_width / 2 - 6,
-                text_y - 0.5 * cm - 4,
+                sub_y - 4 - sub_extra_h,
                 sub_width + 12,
-                14,
+                14 + sub_extra_h,
                 radius=7,
                 fill=1,
                 stroke=0,
             )
             c.restoreState()
 
-            c.setFont(PDFStyle.FONT_BODY, 9)
+            c.setFont(PDFStyle.FONT_BODY, s_size)
             c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-            c.drawCentredString(q_center_x, text_y - 0.5 * cm, sub_title)
+            for k, line in enumerate(s_lines):
+                c.drawCentredString(q_center_x, sub_y - k * s_lead, line)
 
         create_input_field(
             form,
@@ -1053,7 +1187,35 @@ def create_standard_two_columns_page(
         "3. Engagements & loisirs",
         "4. Réussites marquantes",
     ]
+    Rows that do not fit continue on additional pages titled "(suite)", headers repeated.
     """
+    if not rows_data:
+        rows_data = [
+            "1. Première situation marquante",
+            "2. Deuxième situation marquante",
+            "3. Troisième situation marquante",
+            "4. Autre élément clé",
+        ]
+
+    # Global indexes keep field ids stable and unique across continuation pages
+    remaining = list(enumerate(rows_data))
+    first = True
+    while remaining:
+        remaining = _draw_two_columns_page(
+            c,
+            title if first else f"{title} (suite)",
+            part_title,
+            intro_text if first else None,
+            col1_header,
+            col2_header,
+            remaining,
+            field_prefix,
+        )
+        first = False
+
+
+def _draw_two_columns_page(c, title, part_title, intro_text, col1_header, col2_header, rows, field_prefix):
+    """Draws as many rows as fit on one page and returns the rows left for the next one."""
     width, height = A4
     draw_page_background(c, width, height)
     card_margin = 2 * cm
@@ -1076,36 +1238,30 @@ def create_standard_two_columns_page(
     else:
         y_start = new_y - 0.8 * cm
 
-    # Headers
+    # Headers (shrunk, then wrapped on 2 lines, so they never run into the other column)
     col1_x = text_x
     col2_x = text_x + target_width / 2.0 + 0.5 * cm
-    c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(col1_x, y_start, col1_header)
-
+    draw_fitted_text(c, col1_header, col1_x, y_start, col2_x - col1_x - 0.4 * cm, PDFStyle.FONT_SUBTITLE, 12, min_size=9)
     c.setFillColor(PDFStyle.COLOR_ACCENT_RED)
-    c.drawString(col2_x, y_start, col2_header)
+    draw_fitted_text(c, col2_header, col2_x, y_start, text_x + target_width - col2_x, PDFStyle.FONT_SUBTITLE, 12, min_size=9)
 
-    if not rows_data:
-        rows_data = [
-            "1. Première situation marquante",
-            "2. Deuxième situation marquante",
-            "3. Troisième situation marquante",
-            "4. Autre élément clé",
-        ]
-
-    n_rows = max(len(rows_data), 1)
     center_x = text_x + target_width / 2.0
     col_width = (target_width / 2.0) - 1.0 * cm
     form = c.acroForm
 
     min_safe_y = 2.8 * cm
+    min_row_h = 2.4 * cm
     available_h = (y_start - 0.8 * cm) - min_safe_y
-    row_height = max(min(available_h / n_rows, 3.5 * cm), 2.4 * cm)
+    n_fit = max(1, int(available_h // min_row_h))
+    page_rows, rest = rows[:n_fit], rows[n_fit:]
+
+    n_rows = max(len(page_rows), 1)
+    row_height = max(min(available_h / n_rows, 3.5 * cm), min_row_h)
 
     y_row = y_start - 0.8 * cm - row_height
 
-    for i, item in enumerate(rows_data):
+    for i, item in page_rows:
         if isinstance(item, str):
             row_label = item
             left_tip = row_label
@@ -1144,16 +1300,19 @@ def create_standard_two_columns_page(
             left_tip = row_label
             right_tip = f"Enseignement {i+1}"
 
-        # Row label
-        c.setFont(PDFStyle.FONT_BODY, 9)
+        # Row label (wraps on a second line, which lowers the top of the inputs)
         c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        c.drawString(col1_x, y_row + row_height - 0.4 * cm, row_label)
+        n_label_lines, _ = draw_fitted_text(
+            c, str(row_label), col1_x, y_row + row_height - 0.4 * cm, target_width,
+            PDFStyle.FONT_BODY, 9, min_size=8, leading=10,
+        )
+        input_h = row_height - 0.8 * cm - (n_label_lines - 1) * 10
 
         # Arrow between columns
         cx_arrow = center_x
         c.setStrokeColor(PDFStyle.COLOR_TEXT_SECONDARY)
         c.setLineWidth(1)
-        arrow_y = y_row + (row_height - 0.8 * cm) / 2
+        arrow_y = y_row + input_h / 2
         c.line(cx_arrow - 0.35 * cm, arrow_y, cx_arrow + 0.35 * cm, arrow_y)
         c.line(cx_arrow + 0.35 * cm, arrow_y, cx_arrow + 0.1 * cm, arrow_y + 0.1 * cm)
         c.line(cx_arrow + 0.35 * cm, arrow_y, cx_arrow + 0.1 * cm, arrow_y - 0.1 * cm)
@@ -1163,7 +1322,7 @@ def create_standard_two_columns_page(
             form,
             f"{field_prefix}_col1_{i+1}",
             pos=(col1_x, y_row),
-            size=(col_width, row_height - 0.8 * cm),
+            size=(col_width, input_h),
             multiline=True,
             tooltip=left_tip,
         )
@@ -1173,7 +1332,7 @@ def create_standard_two_columns_page(
             form,
             f"{field_prefix}_col2_{i+1}",
             pos=(col2_x, y_row),
-            size=(col_width, row_height - 0.8 * cm),
+            size=(col_width, input_h),
             multiline=True,
             tooltip=right_tip,
         )
@@ -1184,6 +1343,7 @@ def create_standard_two_columns_page(
         c, width, height, part_title=part_title, x_offset=card_margin
     )
     c.showPage()
+    return rest
 
 
 def create_standard_enquete_page(
@@ -1198,80 +1358,8 @@ def create_standard_enquete_page(
     Gabarit standard d'enquête terrain / Customer Discovery.
     1. Carte d'identité de l'échange (Nom, Fonction, Entreprise, Date)
     2. 3 blocs d'analyse qualitative avec boîtes interactives généreuses.
+    Les blocs qui ne tiennent pas sur la page continuent sur une page « (suite) ».
     """
-    width, height = A4
-    draw_page_background(c, width, height)
-    card_margin = 2 * cm
-    draw_side_panel(c, card_margin, width, height)
-
-    text_x = card_margin + 1.0 * cm
-    text_top = height - 4.0 * cm
-    new_y = draw_title(c, title, pos=(text_x, text_top))
-    target_width = width - text_x - 1.0 * cm
-    form = c.acroForm
-
-    if intro_text:
-        c.setFont(PDFStyle.FONT_BODY, 10)
-        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        text_y = new_y - 0.25 * cm
-        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
-            c.drawString(text_x, text_y, line)
-            text_y -= 0.42 * cm
-        y_cursor = text_y - 0.35 * cm
-    else:
-        y_cursor = new_y - 0.6 * cm
-
-    # 1. Contact Info Card (2.2 cm height)
-    contact_card_h = 2.2 * cm
-    draw_card(c, text_x, y_cursor - contact_card_h, target_width, contact_card_h)
-
-    col_w = (target_width - 0.8 * cm) / 2.0
-    half1_x = text_x + 0.3 * cm
-    half2_x = text_x + 0.3 * cm + col_w + 0.2 * cm
-
-    # Labels and fields row 1
-    c.setFont(PDFStyle.FONT_SUBTITLE, 8.5)
-    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(half1_x, y_cursor - 0.45 * cm, "INTERLOCUTEUR (NOM, PRÉNOM) :")
-    c.drawString(half2_x, y_cursor - 0.45 * cm, "FONCTION / RÔLE :")
-
-    create_input_field(
-        form,
-        f"{field_prefix}_contact_nom",
-        pos=(half1_x, y_cursor - 1.05 * cm),
-        size=(col_w, 0.55 * cm),
-        fill_color=colors.white,
-    )
-    create_input_field(
-        form,
-        f"{field_prefix}_contact_role",
-        pos=(half2_x, y_cursor - 1.05 * cm),
-        size=(col_w, 0.55 * cm),
-        fill_color=colors.white,
-    )
-
-    # Labels and fields row 2
-    c.drawString(half1_x, y_cursor - 1.35 * cm, "ENTREPRISE / SECTEUR :")
-    c.drawString(half2_x, y_cursor - 1.35 * cm, "DATE & CONTEXTE DE L'ÉCHANGE :")
-
-    create_input_field(
-        form,
-        f"{field_prefix}_contact_ent",
-        pos=(half1_x, y_cursor - 1.95 * cm),
-        size=(col_w, 0.55 * cm),
-        fill_color=colors.white,
-    )
-    create_input_field(
-        form,
-        f"{field_prefix}_contact_date",
-        pos=(half2_x, y_cursor - 1.95 * cm),
-        size=(col_w, 0.55 * cm),
-        fill_color=colors.white,
-    )
-
-    y_cursor -= (contact_card_h + 0.4 * cm)
-
-    # 2. Three Analytical Question Cards
     if not questions:
         questions = [
             (
@@ -1288,71 +1376,23 @@ def create_standard_enquete_page(
             ),
         ]
 
-    n_q = max(len(questions), 1)
-    min_safe_y = 2.8 * cm
-    gap = 0.35 * cm
-    available_h = (y_cursor - min_safe_y) - (n_q - 1) * gap
-    card_h = max(available_h / n_q, 4.0 * cm)
-
-    for i, q in enumerate(questions):
-        if isinstance(q, (tuple, list)):
-            q_title = str(q[0]) if len(q) > 0 else f"Question {i+1}"
-            q_sub = str(q[1]) if len(q) > 1 else ""
-        elif isinstance(q, dict):
-            q_title = q.get("title") or q.get("question") or q.get("label") or f"Question {i+1}"
-            q_sub = q.get("subtitle") or q.get("desc") or q.get("description") or ""
-        else:
-            q_title = str(q)
-            q_sub = ""
-
-        draw_card(c, text_x, y_cursor - card_h, target_width, card_h)
-
-        # Header bar in card
-        c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
-        c.setFillColor(PDFStyle.COLOR_ACCENT_RED if i == 0 else PDFStyle.COLOR_ACCENT_BLUE)
-        c.drawString(text_x + 0.35 * cm, y_cursor - 0.5 * cm, q_title.upper())
-
-        if q_sub:
-            c.setFont(PDFStyle.FONT_ITALIC, 8.5)
-            c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
-            c.drawString(text_x + 0.35 * cm, y_cursor - 0.85 * cm, q_sub)
-            input_y = y_cursor - card_h + 0.25 * cm
-            input_h = card_h - 1.25 * cm
-        else:
-            input_y = y_cursor - card_h + 0.25 * cm
-            input_h = card_h - 0.9 * cm
-
-        create_input_field(
-            form,
-            f"{field_prefix}_q_{i+1}",
-            pos=(text_x + 0.35 * cm, input_y),
-            size=(target_width - 0.7 * cm, input_h),
-            multiline=True,
-            fill_color=colors.white,
+    remaining = list(enumerate(questions))
+    first = True
+    while remaining:
+        remaining = _draw_enquete_page(
+            c,
+            title if first else f"{title} (suite)",
+            part_title,
+            intro_text if first else None,
+            remaining,
+            field_prefix,
+            with_contact_card=first,
         )
-
-        y_cursor -= (card_h + gap)
-
-    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
-    c.showPage()
+        first = False
 
 
-def create_standard_roadmap_page(
-    c,
-    title="Feuille de Route 30 · 60 · 90 Jours",
-    part_title="PLAN D'ACTION OPÉRATIONNEL",
-    intro_text="Découpez votre mise en action en trois jalons progressifs pour ancrer des victoires rapides et structurer votre lancement.",
-    stages_data=None,
-    field_prefix="roadmap",
-):
-    """
-    Gabarit standard Feuille de Route / Timeline d'action (3 Paliers).
-    Chaque palier comprend :
-    - En-tête avec Pill Badge de couleur (Palier) + Thème de cap
-    - Filet séparateur interne
-    - Colonne Gauche (42%) : Cap & Objectif clé + Livrable / KPI
-    - Colonne Droite (58%) : 3 Actions prioritaires avec cases à cocher parfaitement aérées
-    """
+def _draw_enquete_page(c, title, part_title, intro_text, questions, field_prefix, with_contact_card):
+    """Draws as many question cards as fit on one page and returns the ones left for the next one."""
     width, height = A4
     draw_page_background(c, width, height)
     card_margin = 2 * cm
@@ -1375,6 +1415,151 @@ def create_standard_roadmap_page(
     else:
         y_cursor = new_y - 0.6 * cm
 
+    if with_contact_card:
+        # 1. Contact Info Card (2.2 cm height)
+        contact_card_h = 2.2 * cm
+        draw_card(c, text_x, y_cursor - contact_card_h, target_width, contact_card_h)
+
+        col_w = (target_width - 0.8 * cm) / 2.0
+        half1_x = text_x + 0.3 * cm
+        half2_x = text_x + 0.3 * cm + col_w + 0.2 * cm
+
+        # Labels and fields row 1
+        c.setFont(PDFStyle.FONT_SUBTITLE, 8.5)
+        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+        c.drawString(half1_x, y_cursor - 0.45 * cm, "INTERLOCUTEUR (NOM, PRÉNOM) :")
+        c.drawString(half2_x, y_cursor - 0.45 * cm, "FONCTION / RÔLE :")
+
+        create_input_field(
+            form,
+            f"{field_prefix}_contact_nom",
+            pos=(half1_x, y_cursor - 1.05 * cm),
+            size=(col_w, 0.55 * cm),
+            fill_color=colors.white,
+        )
+        create_input_field(
+            form,
+            f"{field_prefix}_contact_role",
+            pos=(half2_x, y_cursor - 1.05 * cm),
+            size=(col_w, 0.55 * cm),
+            fill_color=colors.white,
+        )
+
+        # Labels and fields row 2
+        c.drawString(half1_x, y_cursor - 1.35 * cm, "ENTREPRISE / SECTEUR :")
+        c.drawString(half2_x, y_cursor - 1.35 * cm, "DATE & CONTEXTE DE L'ÉCHANGE :")
+
+        create_input_field(
+            form,
+            f"{field_prefix}_contact_ent",
+            pos=(half1_x, y_cursor - 1.95 * cm),
+            size=(col_w, 0.55 * cm),
+            fill_color=colors.white,
+        )
+        create_input_field(
+            form,
+            f"{field_prefix}_contact_date",
+            pos=(half2_x, y_cursor - 1.95 * cm),
+            size=(col_w, 0.55 * cm),
+            fill_color=colors.white,
+        )
+
+        y_cursor -= (contact_card_h + 0.4 * cm)
+
+    # 2. Analytical Question Cards
+    min_safe_y = 2.8 * cm
+    gap = 0.35 * cm
+    min_card_h = 4.0 * cm
+    n_fit = max(1, int((y_cursor - min_safe_y + gap) // (min_card_h + gap)))
+    page_questions, rest = questions[:n_fit], questions[n_fit:]
+
+    n_q = max(len(page_questions), 1)
+    available_h = (y_cursor - min_safe_y) - (n_q - 1) * gap
+    card_h = max(available_h / n_q, min_card_h)
+    inner_w = target_width - 0.7 * cm
+
+    for i, q in page_questions:
+        if isinstance(q, (tuple, list)):
+            q_title = str(q[0]) if len(q) > 0 else f"Question {i+1}"
+            q_sub = str(q[1]) if len(q) > 1 else ""
+        elif isinstance(q, dict):
+            q_title = str(q.get("title") or q.get("question") or q.get("label") or f"Question {i+1}")
+            q_sub = str(q.get("subtitle") or q.get("desc") or q.get("description") or "")
+        else:
+            q_title = str(q)
+            q_sub = ""
+
+        draw_card(c, text_x, y_cursor - card_h, target_width, card_h)
+
+        # Header bar in card
+        c.setFillColor(PDFStyle.COLOR_ACCENT_RED if i == 0 else PDFStyle.COLOR_ACCENT_BLUE)
+        draw_fitted_text(
+            c, q_title.upper(), text_x + 0.35 * cm, y_cursor - 0.5 * cm, inner_w,
+            PDFStyle.FONT_SUBTITLE, 9.5, min_size=8, max_lines=1,
+        )
+
+        if q_sub:
+            c.setFillColor(PDFStyle.COLOR_TEXT_SECONDARY)
+            n_sub_lines, _ = draw_fitted_text(
+                c, q_sub, text_x + 0.35 * cm, y_cursor - 0.85 * cm, inner_w,
+                PDFStyle.FONT_ITALIC, 8.5, min_size=8, leading=9.5,
+            )
+            input_y = y_cursor - card_h + 0.25 * cm
+            input_h = card_h - 1.25 * cm - (n_sub_lines - 1) * 9.5
+        else:
+            input_y = y_cursor - card_h + 0.25 * cm
+            input_h = card_h - 0.9 * cm
+
+        create_input_field(
+            form,
+            f"{field_prefix}_q_{i+1}",
+            pos=(text_x + 0.35 * cm, input_y),
+            size=(inner_w, input_h),
+            multiline=True,
+            fill_color=colors.white,
+        )
+
+        y_cursor -= (card_h + gap)
+
+    draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
+    c.showPage()
+    return rest
+
+
+def _as_action_list(actions):
+    """Normalizes roadmap actions (Gemini may send a single string or dicts) into a list of labels."""
+    if isinstance(actions, str):
+        actions = [actions]
+    labels = []
+    for action in actions or []:
+        if isinstance(action, dict):
+            action = action.get("label") or action.get("text") or action.get("action") or action.get("title") or ""
+        labels.append(str(action))
+    return labels or ["Action 1", "Action 2", "Action 3"]
+
+
+def _roadmap_stage_height_needed(n_actions):
+    """Card height needed to list n_actions action rows (3 rows fit in the standard card)."""
+    return (2.55 + (max(n_actions, 3) - 1) * 1.10) * cm
+
+
+def create_standard_roadmap_page(
+    c,
+    title="Feuille de Route 30 · 60 · 90 Jours",
+    part_title="PLAN D'ACTION OPÉRATIONNEL",
+    intro_text="Découpez votre mise en action en trois jalons progressifs pour ancrer des victoires rapides et structurer votre lancement.",
+    stages_data=None,
+    field_prefix="roadmap",
+):
+    """
+    Gabarit standard Feuille de Route / Timeline d'action (3 Paliers).
+    Chaque palier comprend :
+    - En-tête avec Pill Badge de couleur (Palier) + Thème de cap
+    - Filet séparateur interne
+    - Colonne Gauche (42%) : Cap & Objectif clé + Livrable / KPI
+    - Colonne Droite (58%) : Actions prioritaires avec cases à cocher (la carte s'agrandit au-delà de 3)
+    Les paliers qui ne tiennent pas sur la page continuent sur une page « (suite) ».
+    """
     if not stages_data:
         stages_data = [
             {
@@ -1412,11 +1597,76 @@ def create_standard_roadmap_page(
             },
         ]
 
+    stages = []
+    for i, stage in enumerate(stages_data):
+        if isinstance(stage, dict):
+            stages.append((i, {
+                "period": str(stage.get("period") or stage.get("palier") or f"PALIER {i+1}"),
+                "theme": str(stage.get("theme") or stage.get("title") or ""),
+                "obj": str(stage.get("default_obj") or stage.get("obj") or stage.get("objective") or stage.get("objectif") or ""),
+                "actions": _as_action_list(stage.get("actions") or stage.get("items")),
+                "kpi": str(stage.get("default_kpi") or stage.get("kpi") or stage.get("resultat") or ""),
+            }))
+        else:
+            stages.append((i, {
+                "period": f"PALIER {i+1}",
+                "theme": str(stage),
+                "obj": "",
+                "actions": _as_action_list(None),
+                "kpi": "",
+            }))
+
+    first = True
+    while stages:
+        stages = _draw_roadmap_page(
+            c,
+            title if first else f"{title} (suite)",
+            part_title,
+            intro_text if first else None,
+            stages,
+            field_prefix,
+        )
+        first = False
+
+
+def _draw_roadmap_page(c, title, part_title, intro_text, stages, field_prefix):
+    """Draws as many stages as fit on one page and returns the ones left for the next one."""
+    width, height = A4
+    draw_page_background(c, width, height)
+    card_margin = 2 * cm
+    draw_side_panel(c, card_margin, width, height)
+
+    text_x = card_margin + 1.0 * cm
+    text_top = height - 4.0 * cm
+    new_y = draw_title(c, title, pos=(text_x, text_top))
+    target_width = width - text_x - 1.0 * cm
+    form = c.acroForm
+
+    if intro_text:
+        c.setFont(PDFStyle.FONT_BODY, 10)
+        c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
+        text_y = new_y - 0.25 * cm
+        for line in simpleSplit(intro_text, PDFStyle.FONT_BODY, 10, target_width):
+            c.drawString(text_x, text_y, line)
+            text_y -= 0.42 * cm
+        y_cursor = text_y - 0.35 * cm
+    else:
+        y_cursor = new_y - 0.6 * cm
+
     min_safe_y = 2.8 * cm
-    n_stages = max(len(stages_data), 1)
     gap = 0.4 * cm
-    available_h = (y_cursor - min_safe_y) - (n_stages - 1) * gap
-    stage_h = min(max(available_h / n_stages, 5.0 * cm), 5.3 * cm)
+    available_total = y_cursor - min_safe_y
+
+    def stage_heights(k):
+        default_h = min(max((available_total - (k - 1) * gap) / k, 5.0 * cm), 5.3 * cm)
+        return [max(default_h, _roadmap_stage_height_needed(len(s["actions"]))) for _, s in stages[:k]]
+
+    # As many stages as fit on this page (at least one)
+    k = len(stages)
+    while k > 1 and sum(stage_heights(k)) + (k - 1) * gap > available_total:
+        k -= 1
+    heights = stage_heights(k)
+    page_stages, rest = stages[:k], stages[k:]
 
     colors_header = [
         PDFStyle.COLOR_ACCENT_BLUE,
@@ -1424,19 +1674,8 @@ def create_standard_roadmap_page(
         PDFStyle.COLOR_SUCCESS,
     ]
 
-    for i, stage in enumerate(stages_data):
-        if isinstance(stage, dict):
-            period = stage.get("period") or stage.get("palier") or f"PALIER {i+1}"
-            st_theme = stage.get("theme") or stage.get("title") or ""
-            def_obj = stage.get("default_obj") or stage.get("obj") or stage.get("objective") or stage.get("objectif") or ""
-            actions = stage.get("actions") or stage.get("items") or ["Action 1", "Action 2", "Action 3"]
-            def_kpi = stage.get("default_kpi") or stage.get("kpi") or stage.get("resultat") or ""
-        else:
-            period = f"PALIER {i+1}"
-            st_theme = str(stage)
-            def_obj = ""
-            actions = ["Action 1", "Action 2", "Action 3"]
-            def_kpi = ""
+    for (i, stage), stage_h in zip(page_stages, heights):
+        actions = stage["actions"]
         h_color = colors_header[i % len(colors_header)]
 
         # 1. Main White Card Container with subtle border
@@ -1448,25 +1687,32 @@ def create_standard_roadmap_page(
         c.restoreState()
 
         # 2. Top Header inside Card:
-        # A. Pill Badge on the left
+        # A. Pill Badge on the left (font shrinks, then '…', to stay inside the pill)
         pill_w = 4.8 * cm
         pill_h = 0.55 * cm
         pill_x = text_x + 0.35 * cm
         pill_y = y_cursor - 0.72 * cm
+        period = stage["period"].upper()
+        period_size = fit_font_size(period, PDFStyle.FONT_BRANDING, 8.5, pill_w - 0.4 * cm, min_size=6.5)
+        period = ellipsize(period, PDFStyle.FONT_BRANDING, period_size, pill_w - 0.4 * cm)
 
         c.saveState()
         c.setFillColor(h_color)
         c.roundRect(pill_x, pill_y, pill_w, pill_h, radius=pill_h / 2.0, fill=1, stroke=0)
-        c.setFont(PDFStyle.FONT_BRANDING, 8.5)
+        c.setFont(PDFStyle.FONT_BRANDING, period_size)
         c.setFillColor(PDFStyle.COLOR_WHITE)
-        c.drawCentredString(pill_x + pill_w / 2.0, pill_y + 0.16 * cm, period.upper())
+        c.drawCentredString(pill_x + pill_w / 2.0, pill_y + 0.16 * cm, period)
         c.restoreState()
 
         # B. Focus Theme text next to the pill
-        if st_theme:
-            c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
+        if stage["theme"]:
+            theme_x = pill_x + pill_w + 0.4 * cm
             c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-            c.drawString(pill_x + pill_w + 0.4 * cm, pill_y + 0.16 * cm, st_theme.upper())
+            draw_fitted_text(
+                c, stage["theme"].upper(), theme_x, pill_y + 0.16 * cm,
+                text_x + target_width - 0.35 * cm - theme_x,
+                PDFStyle.FONT_SUBTITLE, 9.5, min_size=7, max_lines=1,
+            )
 
         # C. Thin horizontal divider line
         line_y = y_cursor - 0.9 * cm
@@ -1478,7 +1724,7 @@ def create_standard_roadmap_page(
 
         # 3. Two-Column Layout below divider line
         # Left column (Objectif & KPI): 42% width (~6.8 cm)
-        # Right column (3 Actions): 58% width (~9.2 cm)
+        # Right column (Actions): 58% width (~9.2 cm)
         sep_x = text_x + 7.2 * cm
         c.saveState()
         c.setStrokeColor(PDFStyle.COLOR_LINE)
@@ -1495,9 +1741,7 @@ def create_standard_roadmap_page(
 
         # --- LEFT COLUMN ---
         # Objectif Clé
-        c.setFont(PDFStyle.FONT_SUBTITLE, 7.5)
-        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-        c.drawString(left_x, line_y - 0.35 * cm, "🎯 CAP & OBJECTIF DU PALIER :")
+        _draw_symbol_label(c, "➔", "CAP & OBJECTIF DU PALIER :", left_x, line_y - 0.35 * cm)
 
         create_input_field(
             form,
@@ -1505,14 +1749,14 @@ def create_standard_roadmap_page(
             pos=(left_x, line_y - 1.85 * cm),
             size=(left_w, 1.35 * cm),
             multiline=True,
-            value=def_obj,
-            tooltip=def_obj,
+            value=stage["obj"],
+            tooltip=stage["obj"],
             fill_color=PDFStyle.COLOR_CARD_CREME,
             font_size=8.5,
         )
 
         # Indicateur de succès (KPI)
-        c.drawString(left_x, line_y - 2.25 * cm, "🏁 RÉSULTAT OBSERVABLE (KPI) :")
+        _draw_symbol_label(c, "★", "RÉSULTAT OBSERVABLE (KPI) :", left_x, line_y - 2.25 * cm)
 
         create_input_field(
             form,
@@ -1520,19 +1764,18 @@ def create_standard_roadmap_page(
             pos=(left_x, line_y - 3.85 * cm),
             size=(left_w, 1.45 * cm),
             multiline=True,
-            value=def_kpi,
-            tooltip=def_kpi,
+            value=stage["kpi"],
+            tooltip=stage["kpi"],
             fill_color=PDFStyle.COLOR_CARD_CREME,
             font_size=8.5,
         )
 
         # --- RIGHT COLUMN ---
-        c.setFont(PDFStyle.FONT_SUBTITLE, 7.5)
-        c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-        c.drawString(right_x, line_y - 0.35 * cm, "✅ 3 ACTIONS PRIORITAIRES :")
+        actions_label = f"{len(actions)} ACTIONS PRIORITAIRES :" if len(actions) > 1 else "ACTION PRIORITAIRE :"
+        _draw_symbol_label(c, "✔", actions_label, right_x, line_y - 0.35 * cm)
 
         chk_size = 11
-        for a_idx, act_label in enumerate(actions[:3]):
+        for a_idx, act_label in enumerate(actions):
             box_h = 0.85 * cm
             box_y = line_y - (1.40 * cm + a_idx * 1.10 * cm)
 
@@ -1560,5 +1803,12 @@ def create_standard_roadmap_page(
 
     draw_page_decorations(c, width, height, part_title=part_title, x_offset=card_margin)
     c.showPage()
+    return rest
 
 
+def _draw_symbol_label(c, symbol, text, x, y):
+    """Small roadmap column label preceded by a ZapfDingbats pictogram."""
+    symbol_w = draw_symbol(c, symbol, x, y, 7, PDFStyle.COLOR_ACCENT_BLUE)
+    c.setFont(PDFStyle.FONT_SUBTITLE, 7.5)
+    c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
+    c.drawString(x + symbol_w + 3, y, text)

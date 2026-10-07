@@ -168,7 +168,7 @@ def create_programme_page_projets(c):
 
         c.setFont(PDFStyle.FONT_TITLE, 8.2)
         c.setFillColor(p["color_tag"])
-        c.drawString(inner_x + 0.3 * cm, deliv_box_y + 0.26 * cm, "🎯 LIVRABLE CLÉ :")
+        c.drawString(inner_x + 0.3 * cm, deliv_box_y + 0.26 * cm, "LIVRABLE CLÉ :")
 
         c.setFont(PDFStyle.FONT_BODY, 8.2)
         c.setFillColor(colors.HexColor("#1F2937"))

@@ -11,7 +11,7 @@ def create_alignement_pages_part1(c):
         config=LayoutConfig(part_title="1. ALIGNEMENT")
     )
     layout.add_text(
-        "⏱ ~10 min | 🎯 Identifier les situations professionnelles ou personnelles où vous vous êtes senti(e) à votre place.",
+        "Durée : ~10 min · Objectif : Identifier les situations professionnelles ou personnelles où vous vous êtes senti(e) à votre place.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
     layout.add_text(
@@ -80,7 +80,7 @@ def create_desalignement_pages_part1(c):
         config=LayoutConfig(part_title="2. DÉSALIGNEMENT")
     )
     layout.add_text(
-        "⏱ ~10 min | 🎯 Comprendre quelle valeur importante a été bafouée ou ignorée dans des moments difficiles.",
+        "Durée : ~10 min · Objectif : Comprendre quelle valeur importante a été bafouée ou ignorée dans des moments difficiles.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
     layout.add_text(
@@ -149,7 +149,7 @@ def create_choix_difficiles_page1(c):
         config=LayoutConfig(part_title="3. CHOIX DIFFICILES")
     )
     layout.add_text(
-        "⏱ ~10 min | 🎯 Révéler vos priorités profondes à travers des arbitrages complexes.",
+        "Durée : ~10 min · Objectif : Révéler vos priorités profondes à travers des arbitrages complexes.",
         config=TextConfig(style_choice="italic", font_size=9, color=PDFStyle.COLOR_TEXT_SECONDARY, spacing_after=0.3 * cm)
     )
     layout.add_text(

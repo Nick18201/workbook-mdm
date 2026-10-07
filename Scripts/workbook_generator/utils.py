@@ -1,4 +1,5 @@
 import os
+import re
 import argparse
 import functools
 import reportlab.rl_config
@@ -16,6 +17,45 @@ reportlab.rl_config.useA85 = 0
 @functools.lru_cache(maxsize=2048)
 def cached_simpleSplit(text, fontName, fontSize, maxWidth):
     return simpleSplit(text, fontName, fontSize, maxWidth)
+
+
+def fit_font_size(text, font_name, size, max_width, min_size=6):
+    """Largest font size <= size (down to min_size) at which text fits on one line of max_width."""
+    while size > min_size and pdfmetrics.stringWidth(text, font_name, size) > max_width:
+        size -= 0.5
+    return max(size, min_size)
+
+
+def ellipsize(text, font_name, size, max_width):
+    """Shortens text with a visible '…' so that it fits max_width (never cuts silently)."""
+    if pdfmetrics.stringWidth(text, font_name, size) <= max_width:
+        return text
+    while text and pdfmetrics.stringWidth(text + "…", font_name, size) > max_width:
+        text = text[:-1]
+    return text.rstrip() + "…"
+
+
+@functools.lru_cache(maxsize=1)
+def _body_font_codepoints():
+    path = os.path.join(PDFStyle.FONTS_DIR, "Montserrat-Regular.ttf")
+    if not os.path.exists(path):
+        return None
+    return frozenset(TTFont("_glyph_probe", path).face.charToGlyph)
+
+
+def strip_unsupported_glyphs(text):
+    """
+    Removes characters the Montserrat fonts cannot draw (emojis, ✓, ☀…). ReportLab drops
+    them silently, leaving gaps such as a stray leading space, so text coming from
+    specs is cleaned up front. Text without such characters is returned unchanged.
+    """
+    codepoints = _body_font_codepoints()
+    if codepoints is None or not text:
+        return text
+    cleaned = "".join(ch for ch in text if ord(ch) < 128 or ch.isspace() or ord(ch) in codepoints)
+    if cleaned == text:
+        return text
+    return re.sub(r"[ \t]{2,}", " ", cleaned).strip()
 
 
 def register_fonts():

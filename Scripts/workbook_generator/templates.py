@@ -6,7 +6,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
-from .utils import cached_simpleSplit as simpleSplit
+from .utils import cached_simpleSplit as simpleSplit, fit_font_size, ellipsize
 from .config import PDFStyle
 from .components import (
     draw_page_background,
@@ -15,7 +15,7 @@ from .components import (
     draw_page_decorations,
     draw_card,
 )
-from .forms import create_input_field, create_checkbox
+from .forms import create_input_field, create_checkbox, create_radio, reserve_field_name
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +57,18 @@ class TextConfig:
     align: str = "left"
 
 
+def _example_display(example):
+    """Normalizes an example to the 'Exemple : …' form shown under a question."""
+    ex_clean = example.strip()
+    if ex_clean.lower().startswith("exemple :"):
+        return ex_clean
+    if ex_clean.lower().startswith("ex :"):
+        return "Exemple :" + ex_clean[4:]
+    if ex_clean.lower().startswith("ex:"):
+        return "Exemple :" + ex_clean[3:]
+    return f"Exemple : {ex_clean}"
+
+
 class PageLayout:
     """
     Base Layout Engine for the Workbook.
@@ -64,6 +76,8 @@ class PageLayout:
     - Page dimensions, Backgrounds, Side Panels, Decorations.
     - Cursor tracking to prevent overlapping elements.
     - Simplified methods to add text and question blocks.
+    - Overflow: a block that would run past the bottom margin continues on a new page
+      titled "<title> (suite)", so content is never drawn off the page.
     """
 
     def __init__(self, c, title, config: LayoutConfig = None):
@@ -73,17 +87,29 @@ class PageLayout:
         if config is None:
             config = LayoutConfig()
 
+        self.config = config
         self.part_title = config.part_title
 
         self.width, self.height = A4
         self.card_margin = 2 * cm
+        # Lowest point a block may reach; the page number sits at 1.5 cm
+        self.bottom_limit = 2.0 * cm
 
-        # Draw background elements
+        self.question_index = 0
+        self.form = self.c.acroForm
+
+        self._start_page(title)
+        if config.y_start is not None:
+            self.y_cursor = config.y_start
+            self._page_top = self.y_cursor
+
+    def _start_page(self, title):
+        """Draws the page frame (background, side panel, title) and puts the cursor below the title."""
         draw_page_background(
-            self.c, self.width, self.height, use_blobs=config.use_blobs
+            self.c, self.width, self.height, use_blobs=self.config.use_blobs
         )
 
-        if config.use_side_panel:
+        if self.config.use_side_panel:
             draw_side_panel(self.c, self.card_margin, self.width, self.height)
             self.text_x = self.card_margin + 1.0 * cm
             self.target_width = self.width - self.card_margin - 2.0 * cm
@@ -96,7 +122,7 @@ class PageLayout:
             self.title_y = self.height - 4.0 * cm
             new_y = draw_title(
                 self.c,
-                self.title,
+                title,
                 pos=(self.text_x, self.title_y),
                 available_width=self.target_width,
             )
@@ -105,11 +131,47 @@ class PageLayout:
             self.title_y = self.height - 2.0 * cm
             self.y_cursor = self.title_y
 
-        if config.y_start is not None:
-            self.y_cursor = config.y_start
+        self._page_top = self.y_cursor
 
-        self.question_index = 0
-        self.form = self.c.acroForm
+    def _new_page(self):
+        """Finishes the current page and starts a continuation page."""
+        self.render()
+        self._start_page(f"{self.title} (suite)" if self.title else "")
+
+    def _ensure_space(self, height):
+        """
+        Starts a continuation page when a block of this height would run past the bottom
+        margin (unless the page is still empty). Returns True when a new page was started,
+        so callers can redraw what must repeat (e.g. a table header) and reset fonts.
+        """
+        if self.y_cursor - height < self.bottom_limit and self.y_cursor < self._page_top:
+            self._new_page()
+            return True
+        return False
+
+    def _question_text_height(self, question, subtitle=None, example=None):
+        """Vertical space taken by a question block, input box excluded (matches add_question_block)."""
+        lines = simpleSplit(question, PDFStyle.FONT_SUBTITLE, 11, self.target_width)
+        t_h = len(lines) * (11 + 0.1 * cm) + 0.1 * cm
+
+        s_h = 0
+        if subtitle:
+            sub_lines = simpleSplit(subtitle, PDFStyle.FONT_BODY, 10, self.target_width)
+            s_h = len(sub_lines) * (10 + 0.1 * cm) + 0.1 * cm
+
+        ex_h = 0
+        if example:
+            box_padding = 0.25 * cm
+            ex_lines = simpleSplit(
+                _example_display(example),
+                PDFStyle.FONT_ITALIC,
+                9,
+                self.target_width - 2 * box_padding,
+            )
+            ex_h = len(ex_lines) * (9 + 2) + 2 * box_padding + 0.35 * cm
+
+        gap_overhead = 0.15 * cm + 0.65 * cm
+        return t_h + s_h + ex_h + gap_overhead
 
     def add_text(self, text, config: TextConfig = None):
         """Adds a paragraph of text, automatically wrapping and moving the cursor."""
@@ -128,8 +190,12 @@ class PageLayout:
         self.c.setFont(font_name, config.font_size)
         self.c.setFillColor(config.color)
 
+        line_h = config.font_size + 0.1 * cm  # Roughly line height
         lines = simpleSplit(text, font_name, config.font_size, self.target_width)
         for line in lines:
+            if self._ensure_space(line_h):
+                self.c.setFont(font_name, config.font_size)
+                self.c.setFillColor(config.color)
             if config.align == "center":
                 self.c.drawCentredString(
                     self.text_x + self.target_width / 2, self.y_cursor, line
@@ -140,7 +206,7 @@ class PageLayout:
                 )
             else:
                 self.c.drawString(self.text_x, self.y_cursor, line)
-            self.y_cursor -= config.font_size + 0.1 * cm  # Roughly line height
+            self.y_cursor -= line_h
 
         self.y_cursor -= config.spacing_after
         return self.y_cursor
@@ -151,6 +217,12 @@ class PageLayout:
         """Adds a standard question block and its AcroForm input."""
         if config is None:
             config = QuestionConfig()
+
+        box_h = config.box_height if config.box_height is not None else 3.0 * cm
+        # Keep the question, its hints and its answer box together on one page
+        self._ensure_space(
+            self._question_text_height(question, config.subtitle, config.example) + box_h
+        )
 
         if config.color_alternation:
             color = (
@@ -187,18 +259,8 @@ class PageLayout:
             font_size = 9
             font_name = PDFStyle.FONT_ITALIC
 
-            ex_clean = config.example.strip()
-            if ex_clean.lower().startswith("exemple :"):
-                ex_display = ex_clean
-            elif ex_clean.lower().startswith("ex :"):
-                ex_display = "Exemple :" + ex_clean[4:]
-            elif ex_clean.lower().startswith("ex:"):
-                ex_display = "Exemple :" + ex_clean[3:]
-            else:
-                ex_display = f"Exemple : {ex_clean}"
-
             lines = simpleSplit(
-                ex_display,
+                _example_display(config.example),
                 font_name,
                 font_size,
                 self.target_width - 2 * box_padding,
@@ -227,8 +289,6 @@ class PageLayout:
             self.y_cursor -= 0.25 * cm
 
         self.y_cursor -= 0.15 * cm  # Gap before input
-
-        box_h = config.box_height if config.box_height is not None else 3.0 * cm
 
         # Always draw visible background on canvas so the writing zone is NEVER blank
         self.c.saveState()
@@ -316,47 +376,52 @@ class PageLayout:
                     )
                 )
 
+        overheads = [
+            self._question_text_height(q.question, q.subtitle, q.example)
+            for q in norm_questions
+        ]
+        min_auto_h = 1.5 * cm
+
+        # Questions are placed in chunks that fit the current page (boxes of at least
+        # min_auto_h); the rest continues on new pages, each chunk auto-fitting its page.
+        start = 0
+        while start < len(norm_questions):
+            available = self.y_cursor - safe_bottom_margin
+            used, count = 0, 0
+            for q, overhead in zip(norm_questions[start:], overheads[start:]):
+                need = overhead + (q.box_height if q.box_height is not None else min_auto_h)
+                if used + need > available:
+                    break
+                used += need
+                count += 1
+
+            if count == 0:
+                if self.y_cursor < self._page_top:
+                    self._new_page()
+                    continue
+                count = 1  # Too tall even for an empty page: place it anyway
+
+            self._add_questions_chunk(
+                norm_questions[start:start + count],
+                overheads[start:start + count],
+                min_box_height,
+                max_box_height,
+                safe_bottom_margin,
+            )
+            start += count
+            if start < len(norm_questions):
+                self._new_page()
+
+        return self.y_cursor
+
+    def _add_questions_chunk(self, questions, overheads, min_box_height, max_box_height, safe_bottom_margin):
+        """Renders questions that fit on the current page, sharing the free height between their boxes."""
         total_text_overhead = 0
         n_auto = 0
         fixed_height_sum = 0
 
-        for q in norm_questions:
-            lines = simpleSplit(
-                q.question, PDFStyle.FONT_SUBTITLE, 11, self.target_width
-            )
-            t_h = len(lines) * (11 + 0.1 * cm) + 0.1 * cm
-
-            s_h = 0
-            if q.subtitle:
-                sub_lines = simpleSplit(
-                    q.subtitle, PDFStyle.FONT_BODY, 10, self.target_width
-                )
-                s_h = len(sub_lines) * (10 + 0.1 * cm) + 0.1 * cm
-
-            ex_h = 0
-            if q.example:
-                box_padding = 0.25 * cm
-                ex_clean = q.example.strip()
-                if ex_clean.lower().startswith("exemple :"):
-                    ex_display = ex_clean
-                elif ex_clean.lower().startswith("ex :"):
-                    ex_display = "Exemple :" + ex_clean[4:]
-                elif ex_clean.lower().startswith("ex:"):
-                    ex_display = "Exemple :" + ex_clean[3:]
-                else:
-                    ex_display = f"Exemple : {ex_clean}"
-
-                ex_lines = simpleSplit(
-                    ex_display,
-                    PDFStyle.FONT_ITALIC,
-                    9,
-                    self.target_width - 2 * box_padding,
-                )
-                ex_h = len(ex_lines) * (9 + 2) + 2 * box_padding + 0.35 * cm
-
-            gap_overhead = 0.15 * cm + 0.65 * cm
-            total_text_overhead += t_h + s_h + ex_h + gap_overhead
-
+        for q, overhead in zip(questions, overheads):
+            total_text_overhead += overhead
             if q.box_height is not None:
                 fixed_height_sum += q.box_height
             else:
@@ -371,7 +436,7 @@ class PageLayout:
         else:
             auto_box_h = min_box_height
 
-        for q in norm_questions:
+        for q in questions:
             target_h = q.box_height if q.box_height is not None else auto_box_h
             cfg = QuestionConfig(
                 box_height=target_h,
@@ -381,8 +446,6 @@ class PageLayout:
                 color=q.color,
             )
             self.add_question_block(q.question, q.form_field_id, config=cfg)
-
-        return self.y_cursor
 
     def add_callout(self, text, title=None, variant="info", height=None):
         """
@@ -404,10 +467,13 @@ class PageLayout:
         lines = simpleSplit(text, font_name, font_size, content_w)
         text_h = len(lines) * line_height
 
-        header_h = 0.55 * cm if title else 0
+        title_lines = simpleSplit(title.upper(), PDFStyle.FONT_SUBTITLE, 9.5, content_w) if title else []
+        title_lead = 12
+        header_h = 0.55 * cm + (len(title_lines) - 1) * title_lead if title_lines else 0
         computed_h = header_h + text_h + 0.8 * cm
         h = max(height if height else computed_h, 1.6 * cm)
 
+        self._ensure_space(h)
         card_y = self.y_cursor - h
 
         # Draw card container
@@ -424,11 +490,14 @@ class PageLayout:
 
         # Text rendering
         curr_text_y = self.y_cursor - 0.5 * cm
-        if title:
+        if title_lines:
             self.c.saveState()
             self.c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
             self.c.setFillColor(accent_color)
-            self.c.drawString(self.text_x + 0.5 * cm, curr_text_y, title.upper())
+            for i, t_line in enumerate(title_lines):
+                if i:
+                    curr_text_y -= title_lead
+                self.c.drawString(self.text_x + 0.5 * cm, curr_text_y, t_line)
             self.c.restoreState()
             curr_text_y -= 0.5 * cm
 
@@ -480,6 +549,7 @@ class PageLayout:
         rows_count = (n_cards + cols - 1) // cols
 
         for r_idx in range(rows_count):
+            self._ensure_space(h)
             row_y = self.y_cursor - h
             for c_idx in range(cols):
                 card_index = r_idx * cols + c_idx
@@ -575,11 +645,17 @@ class PageLayout:
     def add_scale_gauge(self, label, min_val=0, max_val=10, min_label="", max_label="", field_id=None):
         """
         Renders a high-end interactive rating / evaluation scale inside an elegant card.
+        The values are radio buttons of one group, so a single value can be chosen.
+        A long label wraps and the card grows accordingly.
         """
         fid_base = field_id or f"scale_{self.question_index}"
         self.question_index += 1
 
-        card_h = 2.8 * cm if (min_label or max_label) else 2.3 * cm
+        label = str(label)
+        label_lines = simpleSplit(label, PDFStyle.FONT_SUBTITLE, 9.5, self.target_width - 0.8 * cm) or [label]
+        label_lead = 11.5
+        card_h = (2.8 * cm if (min_label or max_label) else 2.3 * cm) + (len(label_lines) - 1) * label_lead
+        self._ensure_space(card_h)
         card_y = self.y_cursor - card_h
 
         # Card container
@@ -589,7 +665,8 @@ class PageLayout:
         self.c.saveState()
         self.c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
         self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-        self.c.drawString(self.text_x + 0.4 * cm, card_y + card_h - 0.55 * cm, label)
+        for i, l_line in enumerate(label_lines):
+            self.c.drawString(self.text_x + 0.4 * cm, card_y + card_h - 0.55 * cm - i * label_lead, l_line)
         self.c.restoreState()
 
         # 2. Track & Steps
@@ -607,6 +684,7 @@ class PageLayout:
         steps = list(range(min_val, max_val + 1))
         n_steps = len(steps)
         step_w = track_w / max(1, n_steps - 1)
+        group = reserve_field_name(self.form, fid_base)
 
         for i, val in enumerate(steps):
             pt_x = self.text_x + track_margin_x + i * step_w
@@ -622,10 +700,11 @@ class PageLayout:
             self.c.drawCentredString(pt_x, track_y + 0.22 * cm, str(val))
             self.c.restoreState()
 
-            # Checkbox below track
-            create_checkbox(
+            # Radio button below track
+            create_radio(
                 self.form,
-                f"{fid_base}_{val}",
+                group,
+                val,
                 pos=(pt_x - 5, track_y - 0.45 * cm),
                 size=10,
                 tooltip=f"{label} : {val}",
@@ -657,12 +736,18 @@ class PageLayout:
         col_w = self.target_width if cols == 1 else (self.target_width - gap_x) / 2.0
 
         if title:
+            title_lines = simpleSplit(str(title), PDFStyle.FONT_SUBTITLE, 9.5, self.target_width) or [str(title)]
+            title_lead = 12
+            title_h = 0.65 * cm + (len(title_lines) - 1) * title_lead
+            # Keep the title with at least the first row
+            self._ensure_space(title_h + 0.72 * cm)
             self.c.saveState()
             self.c.setFont(PDFStyle.FONT_SUBTITLE, 9.5)
             self.c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
-            self.c.drawString(self.text_x, self.y_cursor - 0.35 * cm, title)
+            for i, t_line in enumerate(title_lines):
+                self.c.drawString(self.text_x, self.y_cursor - 0.35 * cm - i * title_lead, t_line)
             self.c.restoreState()
-            self.y_cursor -= 0.65 * cm
+            self.y_cursor -= title_h
 
         n_items = len(items)
         rows_count = (n_items + cols - 1) // cols
@@ -689,6 +774,7 @@ class PageLayout:
                     label = str(item_data)
                     fid = f"{field_prefix}_{idx+1}"
 
+                label = str(label)
                 lines = simpleSplit(label, PDFStyle.FONT_BODY, font_size, max_label_w)
                 if not lines:
                     lines = [label]
@@ -696,6 +782,7 @@ class PageLayout:
                 row_items.append((c, fid, label, lines))
 
             row_h = max(0.72 * cm, max_lines * line_height + 0.28 * cm)
+            self._ensure_space(row_h)
             top_y = self.y_cursor
 
             for (c, fid, label, lines) in row_items:
@@ -778,25 +865,33 @@ class PageLayout:
             max_th_h = max(max_th_h, ph)
 
         header_h = max(0.65 * cm, max_th_h + 0.3 * cm)
-        h_y = self.y_cursor - header_h
 
-        # Draw Header row background
-        self.c.saveState()
-        self.c.setFillColor(PDFStyle.COLOR_CARD_CREME)
-        self.c.setStrokeColor(PDFStyle.COLOR_LINE)
-        self.c.setLineWidth(0.5)
-        self.c.roundRect(self.text_x, h_y, self.target_width, header_h, 3, fill=1, stroke=1)
+        def draw_header():
+            h_y = self.y_cursor - header_h
 
-        curr_x = self.text_x
-        for i, (p_th, ph) in enumerate(th_paragraphs):
-            p_th.drawOn(self.c, curr_x + 0.15 * cm, h_y + (header_h - ph) / 2)
-            curr_x += widths[i]
-        self.c.restoreState()
+            # Draw Header row background
+            self.c.saveState()
+            self.c.setFillColor(PDFStyle.COLOR_CARD_CREME)
+            self.c.setStrokeColor(PDFStyle.COLOR_LINE)
+            self.c.setLineWidth(0.5)
+            self.c.roundRect(self.text_x, h_y, self.target_width, header_h, 3, fill=1, stroke=1)
 
-        self.y_cursor -= (header_h + 0.1 * cm)
+            curr_x = self.text_x
+            for i, (p_th, ph) in enumerate(th_paragraphs):
+                p_th.drawOn(self.c, curr_x + 0.15 * cm, h_y + (header_h - ph) / 2)
+                curr_x += widths[i]
+            self.c.restoreState()
 
-        # 2. Draw Rows with dynamic auto-wrap
+            self.y_cursor -= (header_h + 0.1 * cm)
+
+        # Keep the header with at least one row
+        self._ensure_space(header_h + 0.1 * cm + 0.85 * cm)
+        draw_header()
+
+        # 2. Draw Rows with dynamic auto-wrap (the header repeats on continuation pages)
         for r_idx, row in enumerate(rows):
+            if not isinstance(row, (list, tuple)):
+                row = [row]
             # Pre-wrap all cells in this row to determine required row height
             cell_items = []
             max_row_h = 0.85 * cm
@@ -819,6 +914,8 @@ class PageLayout:
                         max_row_h = max(max_row_h, ch + 0.3 * cm)
 
             row_h = max_row_h
+            if self._ensure_space(row_h):
+                draw_header()
             r_y = self.y_cursor - row_h
 
             # Draw row background
@@ -883,6 +980,7 @@ class PageLayout:
         gap = 0.5 * cm
         box_w = (self.target_width - (n - 1) * gap) / n
         h = 2.2 * cm
+        self._ensure_space(h)
         box_y = self.y_cursor - h
 
         colors_list = [
@@ -911,10 +1009,16 @@ class PageLayout:
                 val_font_size = 13.5
             else:
                 val_font_size = 16.5
+            # Narrow boxes (3-4 stats): shrink further, then show '…' rather than overflow
+            val_font_size = fit_font_size(val_str, PDFStyle.FONT_BRANDING, val_font_size, box_w - 0.3 * cm, min_size=8)
+            val_str = ellipsize(val_str, PDFStyle.FONT_BRANDING, val_font_size, box_w - 0.3 * cm)
 
-            # Wrap label if needed
+            # Wrap label if needed (2 lines fit; the second ends with '…' if more is needed)
             lbl_str = str(lbl).upper().strip()
-            lbl_lines = simpleSplit(lbl_str, PDFStyle.FONT_SUBTITLE, 7.0, box_w - 0.4 * cm) if lbl_str else []
+            lbl_w = box_w - 0.4 * cm
+            lbl_lines = simpleSplit(lbl_str, PDFStyle.FONT_SUBTITLE, 7.0, lbl_w) if lbl_str else []
+            if len(lbl_lines) > 2:
+                lbl_lines = [lbl_lines[0], ellipsize(" ".join(lbl_lines[1:]), PDFStyle.FONT_SUBTITLE, 7.0, lbl_w)]
 
             if len(lbl_lines) > 1:
                 val_y = box_y + 1.25 * cm

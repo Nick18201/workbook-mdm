@@ -179,7 +179,7 @@ def create_programme_page_objectifs(c):
         textColor=colors.HexColor("#1F2937"),
     )
     txt_rdv = (
-        "<b><font color='#DC2626'>👉 Premier échange gratuit (30 à 45 min en visio) :</font></b> "
+        "<font name='ZapfDingbats' color='#DC2626'>☛</font> <b><font color='#DC2626'>Premier échange gratuit (30 à 45 min en visio) :</font></b> "
         "Présentation détaillée de l'accompagnement, analyse de votre situation, clarification de vos objectifs "
         "et vérification de l'adéquation mutuelle avant tout engagement.<br/><br/>"
         "<i>Le contenu du programme est ajustable après cet échange en fonction de vos besoins spécifiques "
@@ -210,7 +210,7 @@ def create_programme_page_objectifs(c):
         textColor=colors.HexColor("#4B5563"),
     )
     txt_res = (
-        "<b>🔒 Document ressource officiel :</b> La synthèse écrite co-construite remise à l'issue de la phase de conclusion "
+        "<b>Document ressource officiel :</b> La synthèse écrite co-construite remise à l'issue de la phase de conclusion "
         "représente un livrable officiel confidentiel, propriété exclusive du bénéficiaire (art. L. 6313-4 du Code du travail)."
     )
     p_res = Paragraph(txt_res, style_res)
