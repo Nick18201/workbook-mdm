@@ -42,6 +42,19 @@ def test_parse_without_api_key_is_flagged_as_fallback(client, monkeypatch):
     assert r.headers["X-MDM-Fallback-Reason"] == "no_api_key"
 
 
+def test_a_key_sent_by_the_client_is_ignored(client, monkeypatch):
+    # The key only comes from the server (Secret Manager): a request cannot bring its own
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    created = []
+    monkeypatch.setattr(gemini_service.genai, "Client", _fake_genai_client(lambda: None, created))
+
+    r = client.post("/api/parse", json={"raw_notes": "Notes de séance", "api_key": "client-key"})
+
+    assert r.status_code == 200
+    assert r.headers["X-MDM-Fallback-Reason"] == "no_api_key"
+    assert created == []
+
+
 def test_parse_is_flagged_as_fallback_when_every_model_fails(client, monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
 

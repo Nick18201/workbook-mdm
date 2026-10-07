@@ -191,7 +191,6 @@ class ParseRequest(BaseModel):
         True,
         description="Inclure la page de pacte d'engagement et signature en fin de livret",
     )
-    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
 
 
@@ -199,7 +198,6 @@ class IterateRequest(BaseModel):
     current_spec: WorkbookSpec = Field(..., description="Spécification actuelle du livret à modifier")
     feedback: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Consigne d'ajustement ou feedback utilisateur")
     raw_notes: Optional[str] = Field(None, max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes d'origine pour contexte")
-    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
 
 class IterateResponse(BaseModel):
@@ -225,7 +223,6 @@ class CustomizeRequest(BaseModel):
     beneficiary_name: str = Field(..., max_length=MAX_NAME_LENGTH, description="Prénom ou nom complet du bénéficiaire")
     beneficiary_context: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Profil, métier actuel, projet visé, défis majeurs")
     custom_instructions: Optional[str] = Field(None, max_length=MAX_INSTRUCTION_LENGTH, description="Consignes spécifiques d'adaptation souhaitées")
-    api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
     @model_validator(mode="after")
     def check_base(self):

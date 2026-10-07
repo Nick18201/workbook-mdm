@@ -240,14 +240,6 @@
         </div>
       </div>
 
-      <!-- Advanced: API Key toggle -->
-      <details class="text-xs text-slate-500 pt-1">
-        <summary class="cursor-pointer font-medium hover:text-slate-700">Clé API Gemini (Optionnelle si configurée sur le serveur)</summary>
-        <div class="mt-2">
-          <input type="password" id="api_key" placeholder="AIzaSy..." class="w-full px-3 py-1.5 border border-slate-200 rounded-lg text-xs">
-        </div>
-      </details>
-
     </div>
 
     <!-- RIGHT COLUMN: Maquette, Itération & Téléchargement -->
@@ -525,7 +517,6 @@
       const beneficiaryName = document.getElementById('custom_beneficiary_name').value.trim();
       const beneficiaryContext = document.getElementById('custom_beneficiary_context').value.trim();
       const customInstructions = document.getElementById('custom_instructions').value.trim();
-      const apiKey = document.getElementById('api_key').value.trim() || null;
 
       if (!beneficiaryName) {
         alert("Veuillez renseigner le prénom ou nom du bénéficiaire.");
@@ -545,8 +536,7 @@
         base_spec: null,
         beneficiary_name: beneficiaryName,
         beneficiary_context: beneficiaryContext,
-        custom_instructions: customInstructions || null,
-        api_key: apiKey
+        custom_instructions: customInstructions || null
       };
 
       try {
@@ -855,8 +845,7 @@ Notes de la séance :
         meteo_option: document.getElementById('meteo_option').value,
         session_focus: document.getElementById('session_focus') ? document.getElementById('session_focus').value : 'auto',
         book_format: document.getElementById('book_format').value,
-        include_engagement: document.getElementById('include_engagement').checked,
-        api_key: document.getElementById('api_key').value.trim() || null
+        include_engagement: document.getElementById('include_engagement').checked
       };
 
       try {
@@ -900,8 +889,7 @@ Notes de la séance :
       const payload = {
         current_spec: currentWorkbookSpec,
         feedback: feedback,
-        raw_notes: initialRawNotes || document.getElementById('raw_notes').value.trim() || null,
-        api_key: document.getElementById('api_key').value.trim() || null
+        raw_notes: initialRawNotes || document.getElementById('raw_notes').value.trim() || null
       };
 
       try {
