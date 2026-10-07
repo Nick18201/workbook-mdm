@@ -16,8 +16,8 @@ def create_programme_page_projets(c):
         c,
         title="Bénéfices & Trajectoires",
         subtitle="Les trois projets professionnels auxquels mène le bilan",
-        page_num=6,
-        total_pages=8,
+        page_num=7,
+        total_pages=12,
         topic="Projets et trajectoires",
     )
 

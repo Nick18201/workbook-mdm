@@ -13,8 +13,8 @@ def create_programme_page_deroule_2(c):
         c,
         title="Votre parcours d'accompagnement",
         subtitle="Un parcours structuré en séances individuelles",
-        page_num=3,
-        total_pages=8,
+        page_num=4,
+        total_pages=12,
         topic="Programme du bilan",
     )
 

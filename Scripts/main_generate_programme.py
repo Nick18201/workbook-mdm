@@ -11,13 +11,17 @@ from workbook_generator.utils import create_cli
 from workbook_generator.document_builder import DocumentBuilder
 from workbook_generator.chapters.programme import (
     create_programme_cover,
+    create_programme_page_objectifs,
     create_programme_page_deroule_1,
     create_programme_page_deroule_2,
     create_programme_page_deroule_3,
     create_programme_page_deroule_4,
     create_programme_page_projets,
+    create_programme_page_organisation_pedagogie,
+    create_programme_page_accompagnateurs,
     create_programme_page_tarifs,
     create_programme_page_infos_pratiques,
+    create_programme_page_indicateurs_satisfaction,
     create_closing_page,
 )
 
@@ -29,7 +33,7 @@ def build_programme_pdf(
     with_closing=False,
 ):
     """
-    Orchestre la génération du PDF Programme du Bilan de Compétences (8 pages)
+    Orchestre la génération du PDF Programme du Bilan de Compétences (12 pages)
     conforme à 100% à la charte graphique des Workbooks de Marge de Manœuvre
     et aux exigences réglementaires Qualiopi.
     """
@@ -40,26 +44,38 @@ def build_programme_pdf(
     if with_cover:
         builder.add_page(create_programme_cover)
 
-    # --- PAGE 2 : DÉROULÉ - TEMPS 1 : COMPRENDRE (PARTIE 1, S1 À S3) ---
+    # --- PAGE 2 : CADRAGE & OBJECTIFS RÉGLEMENTAIRES (CODE DU TRAVAIL) ---
+    builder.add_page(create_programme_page_objectifs)
+
+    # --- PAGE 3 : DÉROULÉ - TEMPS 1 : COMPRENDRE (PARTIE 1, S1 À S3) ---
     builder.add_page(create_programme_page_deroule_1)
 
-    # --- PAGE 3 : DÉROULÉ - TEMPS 1 : COMPRENDRE (PARTIE 2, S4 À S6 + LIVRABLES) ---
+    # --- PAGE 4 : DÉROULÉ - TEMPS 1 : COMPRENDRE (PARTIE 2, S4 À S6 + LIVRABLES) ---
     builder.add_page(create_programme_page_deroule_2)
 
-    # --- PAGE 4 : DÉROULÉ - TEMPS 2 : CONFRONTER (S7 & S8 + LIVRABLES) ---
+    # --- PAGE 5 : DÉROULÉ - TEMPS 2 : CONFRONTER (S7 & S8 + LIVRABLES) ---
     builder.add_page(create_programme_page_deroule_3)
 
-    # --- PAGE 5 : DÉROULÉ - TEMPS 3 : DÉCIDER ET AGIR (S9, S10, SUIVI + LIVRABLES) ---
+    # --- PAGE 6 : DÉROULÉ - TEMPS 3 : DÉCIDER ET AGIR (S9, S10, SUIVI + LIVRABLES) ---
     builder.add_page(create_programme_page_deroule_4)
 
-    # --- PAGE 6 : BÉNÉFICES & TRAJECTOIRES (LES 3 PROJETS : RECONVERSION, CRÉATION, ÉVOLUTION) ---
+    # --- PAGE 7 : BÉNÉFICES & TRAJECTOIRES (LES 3 PROJETS : RECONVERSION, CRÉATION, ÉVOLUTION) ---
     builder.add_page(create_programme_page_projets)
 
-    # --- PAGE 7 : FORMULE UNIQUE (1 800 €), TARIFS & FINANCEMENT CPF ---
+    # --- PAGE 8 : ORGANISATION PRATIQUE & MOYENS PÉDAGOGIQUES (100% VISIO, NOTION, CARNETS) ---
+    builder.add_page(create_programme_page_organisation_pedagogie)
+
+    # --- PAGE 9 : VOS ACCOMPAGNATEURS (LYSIANE BRAND & NICOLAS BLUM FERRACCI) ---
+    builder.add_page(create_programme_page_accompagnateurs)
+
+    # --- PAGE 10 : FORMULE UNIQUE (1 800 €), TARIFS & FINANCEMENT CPF ---
     builder.add_page(create_programme_page_tarifs)
 
-    # --- PAGE 8 : NOUVELLE PAGE INFORMATIONS PRATIQUES (QUALIOPI INDICATEUR 1) ---
+    # --- PAGE 11 : INFORMATIONS PRATIQUES (QUALIOPI INDICATEUR 1) ---
     builder.add_page(create_programme_page_infos_pratiques)
+
+    # --- PAGE 12 : INDICATEURS DE RÉSULTATS & SATISFACTION (SESSION 2025) ---
+    builder.add_page(create_programme_page_indicateurs_satisfaction)
 
     # --- PAGE DE CLÔTURE OPTIONNELLE ---
     if with_closing:

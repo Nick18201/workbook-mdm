@@ -21,8 +21,8 @@ def create_programme_page_infos_pratiques(c):
         c,
         title="Informations pratiques",
         subtitle="Modalités, délais d'accès et cadre réglementaire (Indicateur 1 Qualiopi)",
-        page_num=8,
-        total_pages=8,
+        page_num=11,
+        total_pages=12,
         topic="Informations pratiques",
     )
 

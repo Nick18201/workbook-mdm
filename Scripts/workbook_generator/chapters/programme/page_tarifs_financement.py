@@ -23,8 +23,8 @@ def create_programme_page_tarifs(c):
         c,
         title="Formule & Financement",
         subtitle="Une formule unique, finançable par le CPF",
-        page_num=7,
-        total_pages=8,
+        page_num=10,
+        total_pages=12,
         topic="Tarifs et Financements",
     )
 
