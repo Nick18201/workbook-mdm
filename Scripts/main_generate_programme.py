@@ -28,7 +28,6 @@ from workbook_generator.chapters.programme import (
 
 def build_programme_pdf(
     output_filename="Programme_Bilan_de_Competences.pdf",
-    theme="indigo",
     with_cover=True,
     with_closing=False,
 ):
@@ -37,7 +36,7 @@ def build_programme_pdf(
     conforme à 100% à la charte graphique des Workbooks de Marge de Manœuvre
     et aux exigences réglementaires Qualiopi.
     """
-    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+    builder = DocumentBuilder(output_path=output_filename, folio="programme du bilan")
     builder.set_title("Programme du Bilan de Compétences - Marge de Manœuvre")
 
     # --- PAGE 1 : COUVERTURE OFFICIELLE WORKBOOK ---
@@ -112,4 +111,4 @@ if __name__ == "__main__":
         description="Générer le Programme du Bilan de Compétences PDF conforme aux Workbooks.",
         default_output="Programme_Bilan_de_Competences.pdf",
     )
-    build_programme_pdf(args.output, theme=args.theme)
+    build_programme_pdf(args.output)

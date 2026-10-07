@@ -7,7 +7,7 @@ from reportlab.lib.styles import ParagraphStyle
 
 from workbook_generator.config import PDFStyle
 from workbook_generator.forms import create_input_field
-from workbook_generator.components import draw_pause_badge, draw_dot_grid
+from workbook_generator.components import draw_pause_badge
 
 from workbook_generator.utils import cached_ImageReader
 from workbook_generator.templates import PageLayout, LayoutConfig, TextConfig, QuestionConfig
@@ -22,9 +22,6 @@ def create_premiere_etape_page(c):
 
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
     c.rect(0, 0, width, height, fill=1, stroke=0)
-
-    # Faint Grid
-    draw_dot_grid(c, width, height, color=PDFStyle.COLOR_WHITE, opacity=0.1)
 
     # Moved higher and to the left to avoid overlap, and made smaller/more transparent
     c.saveState()

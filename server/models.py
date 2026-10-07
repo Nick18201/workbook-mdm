@@ -142,7 +142,6 @@ class WorkbookSpec(BaseModel):
     chapter_title: str = Field("Mes Réflexions", description="Titre principal du chapitre")
     title: Optional[str] = Field(None, description="Alias pour chapter_title")
     subtitle: str = Field("BILAN DE COMPÉTENCES & ALIGNEMENT", description="Sous-titre de couverture")
-    theme: Literal["indigo", "earth"] = Field("indigo", description="Palette de couleur ('indigo' ou 'earth')")
     beneficiary_name: Optional[str] = Field(None, description="Nom ou prénom du bénéficiaire pour personnalisation")
     pages: List[PageSpec] = Field(
         default_factory=list, max_length=MAX_PAGES, description="Liste ordonnée des pages du livret"
@@ -169,7 +168,6 @@ class ParseRequest(BaseModel):
     raw_notes: str = Field(..., max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes ou texte au kilomètre")
     chapter_num: int = Field(1, description="Numéro du chapitre")
     chapter_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre souhaité (optionnel, inféré si omis)")
-    theme: Literal["indigo", "earth"] = Field("indigo", description="Thème de couleur")
     beneficiary_name: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Prénom ou nom du coaché")
     meteo_option: Optional[
         Literal["auto", "none", "classic", "clarity", "mental_load"]
@@ -227,7 +225,6 @@ class CustomizeRequest(BaseModel):
     beneficiary_name: str = Field(..., max_length=MAX_NAME_LENGTH, description="Prénom ou nom complet du bénéficiaire")
     beneficiary_context: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Profil, métier actuel, projet visé, défis majeurs")
     custom_instructions: Optional[str] = Field(None, max_length=MAX_INSTRUCTION_LENGTH, description="Consignes spécifiques d'adaptation souhaitées")
-    theme: Optional[Literal["indigo", "earth"]] = Field("indigo", description="Palette de couleur")
     api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
     @model_validator(mode="after")

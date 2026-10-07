@@ -4,8 +4,8 @@ from workbook_generator.chapters import chap5
 from workbook_generator.components import create_closing_page
 
 
-def generate_workbook_chap5(output_filename="Workbook_Chapitre_5.pdf", theme="indigo"):
-    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+def generate_workbook_chap5(output_filename="Workbook_Chapitre_5.pdf"):
+    builder = DocumentBuilder(output_path=output_filename, carnet=5)
     builder.set_title("MDM - Workbook Chapitre 5 (Valeurs)")
 
     builder.add_page(chap5.create_valeurs_cover)
@@ -37,4 +37,4 @@ if __name__ == "__main__":
         description="Générer le workbook Chapitre 5 (Valeurs) PDF.",
         default_output="Workbook_Chapitre_5.pdf"
     )
-    generate_workbook_chap5(output_filename=args.output, theme=args.theme)
+    generate_workbook_chap5(output_filename=args.output)

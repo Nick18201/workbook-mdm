@@ -1,4 +1,3 @@
-from reportlab.lib import colors
 from .config import PDFStyle
 
 
@@ -32,11 +31,14 @@ def create_input_field(
     fill_color=None,
     font_size=None,
     do_not_scroll=True,
+    framed=True,
 ):
-    """Helper to create consistent input fields with auto-scaling font size."""
-    bg_color = fill_color if fill_color else PDFStyle.COLOR_FIELD_BG
-    border_color = PDFStyle.COLOR_FIELD_BG
-
+    """
+    Text field with auto-scaling font size. framed=True: the widget draws its own white box
+    with a `line-strong` border. framed=False: a transparent, borderless widget, to lay over
+    a box drawn on the page (primitives.draw_field_box, rounded like the art direction).
+    Form fields always use page coordinates: canvas translations and rotations do not apply.
+    """
     x, y = pos
     width, height = size
 
@@ -58,6 +60,17 @@ def create_input_field(
         else:
             font_size = 0 if height <= 28 else 11
 
+    if framed:
+        frame = dict(
+            borderStyle="solid",
+            borderColor=PDFStyle.COLOR_LINE_STRONG,
+            borderWidth=0.75,
+            forceBorder=True,
+            fillColor=fill_color if fill_color else PDFStyle.COLOR_SURFACE_CARD,
+        )
+    else:
+        frame = dict(borderColor=None, borderWidth=0, fillColor=None)
+
     form.textfield(
         name=reserve_field_name(form, name),
         tooltip=tooltip,
@@ -66,22 +79,20 @@ def create_input_field(
         y=y,
         width=width,
         height=height,
-        borderStyle="solid",
-        borderColor=border_color,
-        borderWidth=0.5,
-        forceBorder=True,
-        fillColor=bg_color,
+        textColor=PDFStyle.COLOR_INK,
         fieldFlags=flags,
         fontSize=font_size,
         maxlen=0,
+        **frame,
     )
 
 
-def create_radio(form, group, value, pos, size=10, tooltip=""):
+def create_radio(form, group, value, pos, size=10, tooltip="", framed=True):
     """
     Adds one option to a radio group: every button created with the same `group` is
     mutually exclusive. Reserve the group name once with reserve_field_name() (not per button).
     Unlike ReportLab's default flags, the choice can be cleared by clicking it again.
+    framed=False leaves out the circle, for a button laid over a disc drawn on the page.
     """
     x, y = pos
     form.radio(
@@ -95,10 +106,10 @@ def create_radio(form, group, value, pos, size=10, tooltip=""):
         buttonStyle="circle",
         shape="circle",
         borderStyle="solid",
-        borderWidth=1,
-        borderColor=colors.black,
-        fillColor=colors.white,
-        textColor=colors.black,
+        borderWidth=1 if framed else 0,
+        borderColor=PDFStyle.COLOR_LINE_STRONG if framed else None,
+        fillColor=PDFStyle.COLOR_SURFACE_CARD if framed else None,
+        textColor=PDFStyle.COLOR_BLUE,
         forceBorder=False,
         fieldFlags="radio",
     )
@@ -116,7 +127,8 @@ def create_checkbox(form, name, pos, size=18, tooltip=""):
         buttonStyle="check",
         borderStyle="solid",
         borderWidth=1,
-        borderColor=colors.black,
-        fillColor=colors.white,
+        borderColor=PDFStyle.COLOR_LINE_STRONG,
+        fillColor=PDFStyle.COLOR_SURFACE_CARD,
+        textColor=PDFStyle.COLOR_BLUE,
         forceBorder=False,
     )

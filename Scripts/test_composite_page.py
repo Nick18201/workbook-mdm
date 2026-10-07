@@ -31,7 +31,7 @@ from server.pdf_compiler import compile_workbook_from_spec
 
 def test_direct_composite_pages():
     output_pdf = os.path.join(PROJECT_ROOT, "Test_Composite_Page.pdf")
-    builder = DocumentBuilder(output_path=output_pdf, theme="indigo")
+    builder = DocumentBuilder(output_path=output_pdf)
     builder.set_title("Test Composite Pages - Système Atomique Aéré")
 
     # PAGE 1: Repères & Diagnostic (2 composants spacieux : Callout + Grille 2 Cartes)
@@ -164,7 +164,6 @@ def test_spec_composite_compilation():
         chapter_num=5,
         chapter_title="Test Spécification Composite Aérée",
         subtitle="ASSEMBLAGE HARMONIEUX & RESPIRANT",
-        theme="indigo",
         beneficiary_name="Alexandre",
         pages=[
             PageSpec(

@@ -4,8 +4,8 @@ from workbook_generator.chapters import chap0
 from workbook_generator.components import create_closing_page
 
 
-def generate_workbook_chap0(output_filename="chapitre 0 _ Le prélude.pdf", theme="indigo"):
-    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+def generate_workbook_chap0(output_filename="chapitre 0 _ Le prélude.pdf"):
+    builder = DocumentBuilder(output_path=output_filename, carnet=0)
     builder.set_title("chapitre 0 : Le prélude")
 
     builder.add_page(chap0.create_cover_page)
@@ -31,4 +31,4 @@ if __name__ == "__main__":
         description="Générer le chapitre 0 PDF.",
         default_output="chapitre 0 _ Le prélude.pdf"
     )
-    generate_workbook_chap0(args.output, theme=args.theme)
+    generate_workbook_chap0(args.output)

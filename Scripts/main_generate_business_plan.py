@@ -13,13 +13,13 @@ from workbook_generator.chapters import business_plan
 
 
 def generate_workbook_business_plan(
-    output_filename="Workbook_Business_Plan.pdf", theme="indigo"
+    output_filename="Workbook_Business_Plan.pdf"
 ):
     """
     Génère le livret complet 'Mon Business Plan — De l'idée au projet viable' (35 pages).
     Structure pédagogique en 6 temps, formulaires interactifs AcroForm et respect du Design System MDM.
     """
-    builder = DocumentBuilder(output_path=output_filename, theme=theme)
+    builder = DocumentBuilder(output_path=output_filename, folio="business plan")
     builder.set_title("Mon Business Plan — De l'idée au projet viable")
 
     # --- 0. OUVERTURE & CADRAGE ---
@@ -87,4 +87,4 @@ if __name__ == "__main__":
         description="Générer le livret interactif 'Mon Business Plan' (PDF).",
         default_output="Workbook_Business_Plan.pdf",
     )
-    generate_workbook_business_plan(args.output, theme=args.theme)
+    generate_workbook_business_plan(args.output)

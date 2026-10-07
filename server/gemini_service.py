@@ -107,7 +107,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - 'deep' (Complet) : STRICTEMENT PLUS DE 10 PAGES (11 à 14 pages).
      Parcours d'introspection approfondi et complet : Couverture, Sommaire, (Météo si demandée), Matrice 4 piliers, Passerelle freins/leviers, Enquête exploratoire terrain, Tableau d'évaluation / Crash test, Matrice d'arbitrage de cap, Feuille de route 30-60-90j, Questions d'ancrage, (Engagement si demandé), Clôture.
 3. Structure & Enchaînement des pages :
-   - Page 1 : 'cover' (Couverture standard avec titre et sous-titre)
+   - Page 1 : 'cover' (Couverture : numéro et titre du chapitre, et la promesse du carnet sur un post-it)
    - Page 2 : 'summary' (Sommaire fidèle des étapes du livret avec numéros et courtes descriptions)
    - Page 3 (Conditionnelle selon l'option Page Météo demandée) :
      * Si Check-in = 'none' : NE METS AUCUNE PAGE MÉTÉO NI ICE-BREAKER ! Passe immédiatement aux exercices de fond après le sommaire.
@@ -127,12 +127,12 @@ RÈGLES D'OR DE STRUCTURATION :
        - 'table' : tableau structuré avec headers et cellules de saisie
        - 'stat_boxes' : rangée de 2 à 4 chiffres clés ou indicateurs phares
        - 'question' : question ouverte avec champ de saisie
-   - Page avant-dernière (Conditionnelle) : 'engagement' (Pacte moral, 4 à 6 puces affirmatives et bienveillantes + signature).
+   - Page avant-dernière (Conditionnelle) : 'engagement' (Fin de carnet : le livrable du carnet sur un post-it avec le tampon « Validé en séance », la date de la séance, puis 3 à 5 engagements à cocher).
      * Si include_engagement est False : Ne PAS inclure de page 'engagement'.
-   - Dernière page : 'closing' (Page finale avec messages chaleureux et logo centré).
+   - Dernière page : 'closing' (4e de couverture : la signature de Marge de Manœuvre et 2 ou 3 phrases courtes).
 4. Calibrage des textes & Aération visuelle :
    - AUCUN émoji ni pictogramme (☀️, 🎯, ✅, 🟢…) dans les textes : la police du PDF ne les affiche pas.
-   - Titre de page : 25 à 45 caractères maximum.
+   - Titre de page : 25 à 45 caractères maximum. Son dernier mot s'affiche en corail ; pour mettre en corail un autre groupe de mots, entoure-le d'astérisques (ex : "Mon rapport *à l'argent.*").
    - Question : max 120 caractères.
    - Exemple : max 90 caractères. Écris directement l'exemple SANS préfixe "Ex :" ou "Exemple :" (ex: "Responsable RSE en PME...").
    - Points de sommaire ('desc') : max 85 caractères par point.
@@ -146,7 +146,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - Sois synthétique, inspirant et orienté passage à l'action.
 
 5. STRUCTURE DES PARAMÈTRES PAR GABARIT (dans "params") :
-   - 'cover' : {"subtitle": "Sous-titre (ex: Chapitre 4 : ...)", "title": "BILAN DE COMPÉTENCES & ALIGNEMENT"}
+   - 'cover' : {"subtitle": "Chapitre 4 : Mon rapport à l'argent", "title": "BILAN DE COMPÉTENCES", "promise": "Phrase de 3 à 8 mots sur ce que le carnet apporte (post-it)"}
    - 'summary' : {"intro_text": "Court texte d'introduction...", "points": [{"label": "01", "desc": "Titre et résumé de l'étape"}]}
    - 'meteo' : {"emotion_prompt": "Aujourd'hui, je me sens :", "energy_prompt": "Mon niveau d'énergie :", "thought_prompt": "Ce qui prend le plus de place dans ma tête :"}
    - 'quadrants' : {"instruction": "Consigne...", "quadrants": [{"title": "Professionnel", "subtitle": "Sens, Mission"}, {"title": "Personnel", "subtitle": "Santé, Équilibre"}, {"title": "Social", "subtitle": "Relations"}, {"title": "Cadre", "subtitle": "Limites, Règles"}]}
@@ -154,7 +154,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - 'questions' : {"intro_text": "...", "questions": [{"question": "Intitulé...", "subtitle": "Précision...", "example": "Responsable RSE en PME..."}]}
    - 'enquete' : {"intro_text": "...", "questions": [{"title": "1. Besoins & Douleurs", "subtitle": "..."}, {"title": "2. Solutions & Limites", "subtitle": "..."}, {"title": "3. Recommandations", "subtitle": "..."}]}
    - 'roadmap' : {"intro_text": "...", "stages": [{"period": "PALIER 1 · 0 À 30 JOURS", "theme": "CONSOLIDER", "default_obj": "Objectif...", "actions": ["Action 1", "Action 2", "Action 3"], "default_kpi": "KPI..."}]}
-   - 'engagement' : {"lines": ["Je m'engage à...", "À regarder...", "À tester...", "Ce travail est pour moi..."]}
+   - 'engagement' : {"livrable_title": "Nom du livrable validé en séance", "livrable_text": "Une phrase qui décrit ce livrable", "lines": ["Engagement concret 1", "Engagement concret 2", "Engagement concret 3"]}
    - 'closing' : {"messages": ["Félicitations pour ce temps pris pour vous.", "Laissez infuser ces réflexions.", "À très vite pour la prochaine étape."]}
    - 'composite' : la liste des composants va dans "blocks" (2 blocs idéalement, max 3 petits). RÈGLE CRITIQUE : Ne JAMAIS produire un bloc vide ! Chaque bloc DOIT contenir son contenu textuel complet :
      * 'callout' : {"type": "callout", "title": "Titre du repère", "text": "Citation percutante ou conseil clé...", "variant": "info|tip|quote"}
@@ -170,7 +170,6 @@ Produis UNIQUEMENT un objet JSON valide conforme à la structure suivante :
   "chapter_num": 1,
   "chapter_title": "Titre du livret",
   "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
-  "theme": "indigo",
   "beneficiary_name": "Nom ou prénom",
   "pages": [
     {
@@ -205,7 +204,6 @@ def parse_notes_with_gemini(request: ParseRequest) -> GenerationResult:
 ---
 Numéro de chapitre souhaité : {request.chapter_num}
 Titre suggéré : {request.chapter_title or 'À déterminer selon les notes'}
-Thème graphique : {request.theme}
 Bénéficiaire : {request.beneficiary_name or 'Non spécifié'}
 
 OPTIONS STRUCTURELLES SOUHAITÉES EN AMONT :
@@ -628,7 +626,6 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         chapter_num=request.chapter_num,
         chapter_title=title,
         subtitle="BILAN DE COMPÉTENCES & ALIGNEMENT",
-        theme=request.theme,
         beneficiary_name=request.beneficiary_name,
         pages=all_pages,
     )
@@ -638,7 +635,7 @@ ITERATE_SYSTEM_PROMPT = """Tu es le copilote pédagogique et directeur artistiqu
 L'utilisateur te fournit la structure actuelle d'un livret pédagogique (WorkbookSpec) ainsi qu'une consigne d'ajustement ou de retouche (feedback).
 
 TON RÔLE :
-1. Analyser précisément la demande de l'utilisateur (ex: ajouter un exercice, modifier une question, alléger des textes, changer le template d'une page, ajouter une échelle d'évaluation, changer le thème en 'earth', etc.).
+1. Analyser précisément la demande de l'utilisateur (ex: ajouter un exercice, modifier une question, alléger des textes, changer le template d'une page, ajouter une échelle d'évaluation, etc.).
 2. Appliquer les modifications demandées à la spécification du livret (WorkbookSpec) avec rigueur et intelligence pédagogique.
 3. Préserver l'intégrité de toutes les autres pages et éléments qui ne sont pas concernés par la demande.
 4. Respecter impérativement les règles de design system 'Marge de Manœuvre' :
@@ -657,7 +654,6 @@ Tu dois impérativement répondre avec un objet JSON valide contenant exactement
     "chapter_num": 1,
     "chapter_title": "Titre du livret",
     "subtitle": "BILAN DE COMPÉTENCES & ALIGNEMENT",
-    "theme": "indigo",
     "beneficiary_name": "Nom",
     "pages": [...]
   },
@@ -720,24 +716,10 @@ def _build_fallback_iteration(request: IterateRequest) -> IterateResponse:
     """
     Fallback heuristic when offline or when Gemini is unreachable.
     """
-    spec_data = request.current_spec.model_dump()
-    fb = request.feedback.lower()
-
-    summary_parts = []
-    if "earth" in fb:
-        spec_data["theme"] = "earth"
-        summary_parts.append("Thème graphique basculé sur 'Earth' (terracotta).")
-    elif "indigo" in fb:
-        spec_data["theme"] = "indigo"
-        summary_parts.append("Thème graphique basculé sur 'Indigo'.")
-
-    if not summary_parts:
-        summary_parts.append("Ajustements enregistrés sur votre maquette.")
-
-    new_spec = WorkbookSpec(**spec_data)
+    new_spec = WorkbookSpec(**request.current_spec.model_dump())
     return IterateResponse(
         spec=new_spec,
-        changes_summary=" ".join(summary_parts),
+        changes_summary="Ajustements enregistrés sur votre maquette.",
         pedagogical_note="Maquette révisée.",
     )
 
@@ -762,8 +744,6 @@ RÈGLES D'OR DE PERSONNALISATION :
    - Exemple concret : max 90 caractères (direct, percutant, sans préfixe 'Ex :').
    - Points de sommaire ('desc') : max 85 caractères.
    - Ne jamais surcharger une page : la respiration et les espaces blancs sont sacrés.
-4. THÈME GRAPHIQUE :
-   - Respecte le thème demandé ('indigo' ou 'earth').
 
 FORMAT DE SORTIE JSON STRICT :
 Produis uniquement un objet JSON valide avec les clés suivantes :
@@ -803,7 +783,6 @@ PROFIL DU BÉNÉFICIAIRE :
 - Nom / Prénom : {request.beneficiary_name}
 - Contexte & Métier / Projet : {request.beneficiary_context}
 - Consignes spécifiques d'adaptation du coach : {request.custom_instructions or "Adapter harmonieusement l'ensemble des exemples et questions au profil du bénéficiaire."}
-- Thème graphique souhaité : {request.theme or base_spec.theme}
 
 MISSION :
 Personnalise ce livret de référence pour {request.beneficiary_name}.
@@ -835,8 +814,6 @@ def _build_fallback_customization(
     """
     spec_dict = base_spec.model_dump()
     spec_dict["beneficiary_name"] = request.beneficiary_name
-    if request.theme:
-        spec_dict["theme"] = request.theme
 
     # Contextualiser la couverture
     pages = spec_dict.get("pages", [])
@@ -865,7 +842,7 @@ def _build_fallback_customization(
     new_spec = WorkbookSpec(**spec_dict)
     summary = (
         f"Version personnalisée pour {request.beneficiary_name} générée avec succès. "
-        f"Thème graphique '{new_spec.theme}' appliqué et intégration du profil ({request.beneficiary_context})."
+        f"Profil intégré ({request.beneficiary_context})."
     )
     pedagogical_note = f"Ce livret servira de support personnalisé pour votre travail avec {request.beneficiary_name}."
 

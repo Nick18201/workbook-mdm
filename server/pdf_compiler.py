@@ -20,7 +20,7 @@ from workbook_generator import (
     QuestionItem,
     QuestionConfig,
     TextConfig,
-    create_standard_cover,
+    create_cover_page,
     create_standard_summary_page,
     create_standard_meteo_page,
     create_standard_quadrants_page,
@@ -30,6 +30,8 @@ from workbook_generator import (
     create_standard_roadmap_page,
     create_closing_page,
 )
+from workbook_generator.components import as_title, split_chapter_label
+from workbook_generator.primitives import plain_title
 from workbook_generator.utils import strip_unsupported_glyphs
 from .models import MAX_SCALE_STEPS, WorkbookSpec
 
@@ -59,6 +61,12 @@ def _scale_bounds(b_data):
     return low, high
 
 
+def _title(text, default=""):
+    """A page title as shown: an all-caps title from the spec is set in sentence case."""
+    text = " ".join(str(text or default).split())
+    return text[:1] + text[1:].lower() if text.isupper() else text
+
+
 def _without_unsupported_glyphs(spec: WorkbookSpec) -> WorkbookSpec:
     """Removes characters the PDF fonts cannot draw (emojis, ✓…) from every text of the spec."""
 
@@ -81,27 +89,29 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
     # Gemini or the coach may write emojis: ReportLab would drop them and leave gaps
     spec = _without_unsupported_glyphs(spec)
     buffer = io.BytesIO()
-    builder = DocumentBuilder(output_path=buffer, theme=spec.theme)
+    # Generated workbooks are not numbered core workbooks: the folio shows their title
+    builder = DocumentBuilder(output_path=buffer, folio=plain_title(spec.chapter_title))
     builder.set_title(f"{spec.chapter_title} - {spec.subtitle}")
 
     # Helper factories to avoid late-binding closure issues in loops
     def make_cover_renderer(page_obj):
-        subtitle = str(
-            page_obj.params.get(
-                "subtitle", f"Chapitre {spec.chapter_num} : {spec.chapter_title}"
-            )
-            or f"Chapitre {spec.chapter_num} : {spec.chapter_title}"
+        params = page_obj.params
+        # 'subtitle' holds the chapter label, e.g. "Chapitre 4 : Mon rapport à l'argent"
+        label = str(params.get("subtitle") or f"Chapitre {spec.chapter_num} : {spec.chapter_title}")
+        number, name = split_chapter_label(label)
+        if number is None and not params.get("subtitle"):
+            number = spec.chapter_num
+        number = params.get("number", params.get("num", number))
+        title = str(params.get("cover_title") or params.get("heading") or as_title(name or spec.chapter_title))
+        tagline = str(params.get("title") or spec.subtitle or "")
+        promise = params.get("promise") or params.get("promesse") or params.get("tagline")
+        return lambda c: create_cover_page(
+            c, title, number=number, tagline=tagline, promise=str(promise) if promise else None
         )
-        title = str(
-            page_obj.params.get("title", spec.subtitle)
-            or spec.subtitle
-            or "BILAN DE COMPÉTENCES & ALIGNEMENT"
-        )
-        return lambda c: create_standard_cover(c, subtitle=subtitle, title=title)
 
     def make_summary_renderer(page_obj):
         num_str = str(page_obj.params.get("num") or spec.chapter_num or "1")
-        title = str(page_obj.title or spec.chapter_title or "SOMMAIRE")
+        title = _title(page_obj.title or spec.chapter_title, "Au programme")
         # The summary intro is rendered as ReportLab markup: escape it so spec text
         # (LLM or user) cannot inject <img>/<a> tags or break the parser
         intro_text = escape(str(
@@ -144,7 +154,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
         def _render(c):
             layout = PageLayout(
                 c,
-                page_obj.title or "Questions d'Approfondissement",
+                _title(page_obj.title, "Questions d'approfondissement"),
                 config=LayoutConfig(
                     part_title=page_obj.part_title
                     or f"{spec.chapter_num}. {(page_obj.title or 'QUESTIONS').upper()}"
@@ -200,7 +210,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
     def make_meteo_renderer(page_obj, page_idx):
         return lambda c: create_standard_meteo_page(
             c,
-            title=page_obj.title or "Mon État d'Esprit Actuel",
+            title=_title(page_obj.title, "Mon état d'esprit actuel."),
             part_title=page_obj.part_title or "1. MÉTÉO DU MOMENT",
             emotion_prompt=str(
                 page_obj.params.get("emotion_prompt")
@@ -243,7 +253,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
 
         return lambda c: create_standard_quadrants_page(
             c,
-            title=page_obj.title or "Ma Vision 360°",
+            title=_title(page_obj.title, "Ma vision à 360°."),
             part_title=page_obj.part_title,
             instruction=str(
                 page_obj.params.get(
@@ -269,7 +279,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
 
         return lambda c: create_standard_two_columns_page(
             c,
-            title=page_obj.title or "Passerelle : Du Constat au Levier",
+            title=_title(page_obj.title, "Du constat au levier."),
             part_title=page_obj.part_title,
             intro_text=page_obj.params.get("intro_text") or page_obj.params.get("intro"),
             col1_header=str(
@@ -299,15 +309,20 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
         sig_label = str(
             page_obj.params.get("signature_label")
             or page_obj.params.get("signature_text")
-            or "Date et Signature :"
+            or "Date de la séance"
         )
+        params = page_obj.params
+        livrable_title = params.get("livrable_title") or params.get("deliverable_title") or params.get("livrable")
+        livrable_text = params.get("livrable_text") or params.get("deliverable_text") or params.get("deliverable")
         return lambda c: create_standard_engagement_page(
             c,
-            part_title=page_obj.part_title or "MON ENGAGEMENT",
+            part_title=page_obj.part_title or "Fin de carnet",
             custom_lines=lines,
-            title=page_obj.title or "Mon Engagement",
+            title=_title(page_obj.title, "Votre livrable."),
             signature_label=sig_label,
-            field_prefix=str(page_obj.params.get("field_prefix", f"p{page_idx}_engagement")),
+            field_prefix=str(params.get("field_prefix", f"p{page_idx}_engagement")),
+            livrable_title=str(livrable_title) if livrable_title else None,
+            livrable_text=str(livrable_text) if livrable_text else None,
         )
 
     def make_enquete_renderer(page_obj, page_idx):
@@ -320,7 +335,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
 
         return lambda c: create_standard_enquete_page(
             c,
-            title=page_obj.title or "Fiche Enquête Réseau & Métier",
+            title=_title(page_obj.title, "Fiche enquête réseau et métier."),
             part_title=page_obj.part_title or "EXPLORATION DU TERRAIN",
             intro_text=page_obj.params.get("intro_text") or page_obj.params.get("intro"),
             questions=questions,
@@ -338,7 +353,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
 
         return lambda c: create_standard_roadmap_page(
             c,
-            title=page_obj.title or "Feuille de Route 30 · 60 · 90 Jours",
+            title=_title(page_obj.title, "Feuille de route à 30, 60 et 90 jours."),
             part_title=page_obj.part_title or "PLAN D'ACTION OPÉRATIONNEL",
             intro_text=page_obj.params.get("intro_text") or page_obj.params.get("intro"),
             stages_data=stages,
@@ -367,7 +382,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
         def _render(c):
             layout = PageLayout(
                 c,
-                page_obj.title,
+                _title(page_obj.title),
                 config=LayoutConfig(
                     part_title=page_obj.part_title
                     or f"{spec.chapter_num}. {page_obj.title.upper()}"

@@ -19,7 +19,7 @@ def test_summary_intro_markup_is_rendered_as_plain_text():
     )[0]
 
     assert page.get_links() == []
-    assert len(page.get_images()) == 1  # only the decorative feather, not the injected logo
+    assert page.get_images() == []  # the injected logo is not drawn
     assert "href" in page.get_text()
 
 
