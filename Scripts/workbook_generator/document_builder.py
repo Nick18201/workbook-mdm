@@ -1,5 +1,4 @@
 import os
-import sys
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from .config import PDFStyle
@@ -24,9 +23,10 @@ class DocumentBuilder:
         if isinstance(self.output_path, (str, bytes, os.PathLike)) and os.path.exists(self.output_path):
             try:
                 os.remove(self.output_path)
-            except PermissionError:
-                print(f"Error: Cannot overwrite '{self.output_path}'. Please close the PDF if it is open in another program.")
-                sys.exit(1)
+            except PermissionError as e:
+                raise PermissionError(
+                    f"Cannot overwrite '{self.output_path}'. Please close the PDF if it is open in another program."
+                ) from e
 
         # Instantiate the canvas
         self.canvas = canvas.Canvas(self.output_path, pagesize=A4)

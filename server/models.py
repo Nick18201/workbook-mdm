@@ -5,6 +5,39 @@ Pydantic Schemas for Workbook Definition, Templates, and API Requests.
 from typing import List, Optional, Literal, Dict, Any
 from pydantic import BaseModel, Field, model_validator
 
+# Garde-fous contre les entrées démesurées (client ou LLM) : au-delà, l'API répond 422.
+MAX_NOTES_LENGTH = 50_000
+MAX_INSTRUCTION_LENGTH = 5_000
+MAX_NAME_LENGTH = 200
+MAX_PAGES = 30
+MAX_BLOCKS_PER_PAGE = 10
+MAX_LIST_ITEMS = 30
+MAX_TEXT_LENGTH = 2_000
+MAX_NESTING_DEPTH = 10
+MAX_SCALE_STEPS = 10
+
+
+def _check_bounded(value: Any, path: str = "", depth: int = 0) -> None:
+    """
+    Refuse les textes et listes démesurés n'importe où dans une spécification, y compris
+    dans les 'params' libres : chaque élément devient des pages et des champs PDF.
+    """
+    if depth > MAX_NESTING_DEPTH:
+        raise ValueError(f"{path or 'spécification'} : imbrication trop profonde")
+    if isinstance(value, str):
+        if len(value) > MAX_TEXT_LENGTH:
+            raise ValueError(
+                f"{path or 'texte'} : texte trop long ({len(value)} caractères, maximum {MAX_TEXT_LENGTH})"
+            )
+    elif isinstance(value, (list, tuple)):
+        if len(value) > MAX_LIST_ITEMS:
+            raise ValueError(f"{path or 'liste'} : {len(value)} éléments (maximum {MAX_LIST_ITEMS})")
+        for i, item in enumerate(value):
+            _check_bounded(item, f"{path}[{i}]", depth + 1)
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            _check_bounded(item, f"{path}.{key}" if path else str(key), depth + 1)
+
 
 class QuestionItemSpec(BaseModel):
     question: str = Field(..., description="Intitulé de la question ou consigne de réflexion")
@@ -45,8 +78,8 @@ class BlockSpec(BaseModel):
     title: Optional[str] = Field(None, description="Titre optionnel du composant")
     variant: Optional[str] = Field("info", description="Variante visuelle : 'info', 'tip', 'quote'")
     cards: Optional[List[Dict[str, Any]]] = Field(None, description="Cartes pour grille [{'title': '...', 'subtitle': '...', 'field_id': '...'}]")
-    columns: Optional[int] = Field(2, description="Nombre de colonnes (cards_grid ou checklist)")
-    card_height_cm: Optional[float] = Field(None, description="Hauteur personnalisée des cartes en cm")
+    columns: Optional[int] = Field(2, ge=1, le=4, description="Nombre de colonnes (cards_grid ou checklist)")
+    card_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur personnalisée des cartes en cm")
     label: Optional[str] = Field(None, description="Libellé de la jauge / échelle ou stat")
     min_val: Optional[int] = Field(0, description="Valeur minimale (scale)")
     max_val: Optional[int] = Field(10, description="Valeur maximale (scale)")
@@ -60,8 +93,21 @@ class BlockSpec(BaseModel):
     field_id: Optional[str] = Field(None, description="Identifiant unique pour le champ AcroForm")
     subtitle: Optional[str] = Field(None, description="Sous-titre d'aide ou de précision")
     example: Optional[str] = Field(None, description="Exemple d'illustration")
-    box_height_cm: Optional[float] = Field(None, description="Hauteur de la zone de saisie en cm")
+    box_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur de la zone de saisie en cm")
     field_prefix: Optional[str] = Field(None, description="Préfixe d'identifiants AcroForm")
+
+    @model_validator(mode="after")
+    def check_scale_range(self):
+        """Une échelle compte au plus MAX_SCALE_STEPS + 1 boutons radio."""
+        if self.type == "scale":
+            low = 0 if self.min_val is None else self.min_val
+            high = 10 if self.max_val is None else self.max_val
+            if not 0 < high - low <= MAX_SCALE_STEPS:
+                raise ValueError(
+                    f"échelle de {low} à {high} : max_val doit dépasser min_val de 1 à {MAX_SCALE_STEPS}"
+                )
+            self.min_val, self.max_val = low, high
+        return self
 
 
 class PageSpec(BaseModel):
@@ -86,6 +132,7 @@ class PageSpec(BaseModel):
     )
     blocks: Optional[List[BlockSpec]] = Field(
         None,
+        max_length=MAX_BLOCKS_PER_PAGE,
         description="Liste des composants atomiques si template == 'composite'",
     )
 
@@ -97,7 +144,15 @@ class WorkbookSpec(BaseModel):
     subtitle: str = Field("BILAN DE COMPÉTENCES & ALIGNEMENT", description="Sous-titre de couverture")
     theme: Literal["indigo", "earth"] = Field("indigo", description="Palette de couleur ('indigo' ou 'earth')")
     beneficiary_name: Optional[str] = Field(None, description="Nom ou prénom du bénéficiaire pour personnalisation")
-    pages: List[PageSpec] = Field(default_factory=list, description="Liste ordonnée des pages du livret")
+    pages: List[PageSpec] = Field(
+        default_factory=list, max_length=MAX_PAGES, description="Liste ordonnée des pages du livret"
+    )
+
+    @model_validator(mode="before")
+    @classmethod
+    def check_sizes(cls, data: Any) -> Any:
+        _check_bounded(data)
+        return data
 
     @model_validator(mode="before")
     @classmethod
@@ -111,11 +166,11 @@ class WorkbookSpec(BaseModel):
 
 
 class ParseRequest(BaseModel):
-    raw_notes: str = Field(..., description="Notes de séance brutes ou texte au kilomètre")
+    raw_notes: str = Field(..., max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes ou texte au kilomètre")
     chapter_num: int = Field(1, description="Numéro du chapitre")
-    chapter_title: Optional[str] = Field(None, description="Titre souhaité (optionnel, inféré si omis)")
+    chapter_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre souhaité (optionnel, inféré si omis)")
     theme: Literal["indigo", "earth"] = Field("indigo", description="Thème de couleur")
-    beneficiary_name: Optional[str] = Field(None, description="Prénom ou nom du coaché")
+    beneficiary_name: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Prénom ou nom du coaché")
     meteo_option: Optional[
         Literal["auto", "none", "classic", "clarity", "mental_load"]
     ] = Field(
@@ -144,8 +199,8 @@ class ParseRequest(BaseModel):
 
 class IterateRequest(BaseModel):
     current_spec: WorkbookSpec = Field(..., description="Spécification actuelle du livret à modifier")
-    feedback: str = Field(..., description="Consigne d'ajustement ou feedback utilisateur")
-    raw_notes: Optional[str] = Field(None, description="Notes de séance brutes d'origine pour contexte")
+    feedback: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Consigne d'ajustement ou feedback utilisateur")
+    raw_notes: Optional[str] = Field(None, max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes d'origine pour contexte")
     api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
 
 
@@ -167,13 +222,19 @@ class TemplateInfo(BaseModel):
 
 
 class CustomizeRequest(BaseModel):
-    template_id: Optional[str] = Field(None, description="Identifiant du modèle de base (ex: 'chap1')")
+    template_id: Optional[str] = Field(None, max_length=50, description="Identifiant du modèle de base (ex: 'chap1')")
     base_spec: Optional[WorkbookSpec] = Field(None, description="Spécification de base si livret personnalisé ou importé")
-    beneficiary_name: str = Field(..., description="Prénom ou nom complet du bénéficiaire")
-    beneficiary_context: str = Field(..., description="Profil, métier actuel, projet visé, défis majeurs")
-    custom_instructions: Optional[str] = Field(None, description="Consignes spécifiques d'adaptation souhaitées")
+    beneficiary_name: str = Field(..., max_length=MAX_NAME_LENGTH, description="Prénom ou nom complet du bénéficiaire")
+    beneficiary_context: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Profil, métier actuel, projet visé, défis majeurs")
+    custom_instructions: Optional[str] = Field(None, max_length=MAX_INSTRUCTION_LENGTH, description="Consignes spécifiques d'adaptation souhaitées")
     theme: Optional[Literal["indigo", "earth"]] = Field("indigo", description="Palette de couleur")
     api_key: Optional[str] = Field(None, description="Clé API Gemini facultative si non configurée sur le serveur")
+
+    @model_validator(mode="after")
+    def check_base(self):
+        if not self.template_id and self.base_spec is None:
+            raise ValueError("indiquez un modèle de livret (template_id) ou une spécification de base (base_spec)")
+        return self
 
 
 class CustomizeResponse(BaseModel):

@@ -6,6 +6,7 @@ Uses google-genai SDK with strict Pydantic Structured Outputs.
 import os
 import json
 import logging
+from functools import lru_cache
 from typing import Any, Callable, NamedTuple, Optional
 from google import genai
 from google.genai import types
@@ -27,9 +28,20 @@ logger = logging.getLogger(__name__)
 # Modèles essayés dans l'ordre, configurables sans redéploiement de code (ex: GEMINI_MODELS="gemini-x-flash,gemini-y-flash")
 GEMINI_MODELS = [
     m.strip()
-    for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash,gemini-3.6-flash").split(",")
+    for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash").split(",")
     if m.strip()
 ]
+# Délai maximal d'un appel Gemini (une analyse prend ~30 s ; Cloud Run coupe la requête à 300 s)
+GEMINI_TIMEOUT_S = float(os.environ.get("GEMINI_TIMEOUT_S", "120"))
+
+
+@lru_cache(maxsize=4)
+def _get_client(api_key: str) -> genai.Client:
+    """Un client par clé API, réutilisé d'une requête à l'autre."""
+    return genai.Client(
+        api_key=api_key,
+        http_options=types.HttpOptions(timeout=int(GEMINI_TIMEOUT_S * 1000)),
+    )
 
 
 class GenerationResult(NamedTuple):
@@ -47,7 +59,7 @@ def _generate_json(
     Essaie chaque modèle de GEMINI_MODELS et retourne build(json) au premier succès,
     ou None si tous les modèles ont échoué.
     """
-    client = genai.Client(api_key=api_key)
+    client = _get_client(api_key)
     last_err = None
 
     for model_name in GEMINI_MODELS:

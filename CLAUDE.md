@@ -22,7 +22,7 @@ python -m uvicorn server.app:app --port 8080 --reload
 - Every `Scripts/main_generate_*.py` (chap0–chap6, `livret`, `business_plan`, `programme`) takes `--theme {indigo,earth}` and `--output`. Exit code 0 plus `PDF generated successfully: ...` means it built.
 - `tests/` is the pytest suite (compiler and API; Gemini is faked by monkeypatching `gemini_service.genai.Client`). It needs `requirements-dev.txt` (pytest, pymupdf, httpx). There is no linter config.
 - `Scripts/test_*.py` are not tests but showcase scripts that render `Test_*.pdf` at the repo root. `test_composite_page.py` and `chapters/programme/render_inspect.py` write PNG previews to a hard-coded `C:\Users\nblum\.gemini\...` folder.
-- If `DocumentBuilder` exits with "Cannot overwrite", the target PDF is open in another program.
+- If `DocumentBuilder` raises `PermissionError: Cannot overwrite ...`, the target PDF is open in another program.
 - Generated PDFs are git-ignored. `scratch/` holds committed page PNG previews.
 - Deployment (Cloud Run via `Dockerfile`, `GEMINI_API_KEY` env var) is covered in `server/DEPLOY_CLOUD_RUN.md`.
 
@@ -50,9 +50,10 @@ The same rendering library feeds two pipelines.
 
 ### 3. Web app: `server/` (FastAPI + Gemini)
 - Flow: raw coaching notes → `gemini_service.parse_notes_with_gemini` → a `models.WorkbookSpec` (pages, each with a `template` + `params`, or `composite` + `blocks`) → `pdf_compiler.compile_workbook_from_spec` → PDF bytes.
-- Gemini calls go through `_generate_json`, which tries each model of `GEMINI_MODELS` (env var, comma-separated). The three service functions return a `GenerationResult(value, fallback_reason)`: when there is no `GEMINI_API_KEY` (`no_api_key`) or every model fails (`model_error`), the value comes from a heuristic mock. `app.py` exposes this as `X-MDM-Generation: ai|fallback` and `X-MDM-Fallback-Reason` headers, which the UI shows as a warning banner.
+- Gemini calls go through `_generate_json`, which tries each model of `GEMINI_MODELS` (env var, comma-separated, default `gemini-3.8-flash` alone) on a client cached per API key, with a `GEMINI_TIMEOUT_S` timeout (default 120 s; a parse takes ~30 s). The three service functions return a `GenerationResult(value, fallback_reason)`: when there is no `GEMINI_API_KEY` (`no_api_key`) or every model fails (`model_error`), the value comes from a heuristic mock. `app.py` exposes this as `X-MDM-Generation: ai|fallback` and `X-MDM-Fallback-Reason` headers, which the UI shows as a warning banner.
 - Endpoints in `app.py`: `/api/parse`, `/api/iterate` (refine a spec from feedback), `/api/customize` (adapt a predefined workbook to a beneficiary), `/api/templates[/{id}]`, `/api/compile`, `/api/quick-generate`. The UI is a single file, `server/templates/index.html`. `.env` at the root or in `server/` is auto-loaded.
-- In production the service sits behind IAP (Cloud Run `iap-enabled`, access limited to `domain:margedemanoeuvre.fr`); the app itself has no authentication.
+- In production the service sits behind IAP (Cloud Run `iap-enabled`, access limited to `domain:margedemanoeuvre.fr`); the app itself has no authentication. There is no CORS middleware: the UI is same-origin.
+- Input sizes are bounded by the `MAX_*` constants in `models.py` (text lengths, pages, blocks per page, list items and text length anywhere in a spec, scale span). Beyond them the API answers 422, and `app.py` turns validation errors into a French string `detail` that the UI shows as is. A 500 never carries the exception text (it is logged instead).
 - `pdf_compiler.py` maps each template name to a `workbook_generator` function and is deliberately lenient with param aliases (e.g. `points`/`steps`/`items`), because the specs come from an LLM. Keep that tolerance. It is also the trust boundary: spec text that reaches ReportLab paragraph markup (the summary intro) must be escaped there, and default field ids are prefixed with the page index (`p{page_idx}_…`).
 - `predefined_workbooks.py` holds hand-written `WorkbookSpec` versions of chap0–6 and the business plan. They are a **separate copy** of the content in `chapters/`, not generated from it, so content edits in one pipeline do not reach the other.
 
