@@ -218,6 +218,7 @@ Les quatre familles sont sur Google Fonts.
   - fond crème et logotype ;
   - le gros numéro du carnet en PT Mono bleu, puis le titre en DM Sans 800 avec un mot d'accent (« Mon rapport ***à l'argent.*** ») ;
   - un disque pastel coupé par le bord, et un post-it qui porte la promesse du carnet.
+  - Illustration retenue le 2026-10-07 : la table de travail vue du dessus (`assets/illustrations/couverture.svg`), faite des formes de la DA (disques, pilules, traits à l'encre arrondis, étoiles). Le disque pastel prend la couleur du carnet, et le post-it de la promesse est collé sur les carnets fermés.
   - Ne pas reprendre l'illustration de l'ancien livret (voir section 9).
 - **Ouverture de chapitre** :
   - un sourcil « CARNET DE BORD · CHAPITRE 3 », puis le gros numéro et le sous-titre en PT Mono ;

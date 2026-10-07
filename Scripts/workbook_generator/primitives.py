@@ -8,12 +8,15 @@ argument is the top of a text block. Every primitive restores the canvas state i
 """
 
 import functools
+import io
 import os
 import re
 from contextlib import contextmanager
 
+from reportlab.graphics import renderPDF
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
+from svglib.svglib import svg2rlg
 
 from .config import PDFStyle
 from .document_builder import document_pastel, document_style
@@ -636,6 +639,27 @@ def draw_frise(c, x, y, width, steps, start_label="", end_label="", background=N
             top -= 14
         lowest = min(lowest, top)
     return y - lowest
+
+
+# --- Illustration ------------------------------------------------------------
+
+@functools.lru_cache(maxsize=8)
+def _cover_drawing(pastel_hex):
+    """The cover SVG as a ReportLab drawing, its placeholder lilac turned into pastel_hex."""
+    with open(PDFStyle.PATH_COVER_ILLUSTRATION, encoding="utf-8") as f:
+        svg = f.read()
+    svg = re.sub(re.escape(PDFStyle.COVER_ILLUSTRATION_PASTEL), pastel_hex, svg, flags=re.IGNORECASE)
+    return svg2rlg(io.BytesIO(svg.encode("utf-8")))
+
+
+def draw_cover_illustration(c):
+    """
+    The cover illustration (assets/illustrations/couverture.svg, the work table seen from
+    above) across the top 500 pt of the page, in the document pastel. It leaves the top left
+    corner to the logotype and the bottom left to the promise post-it.
+    """
+    drawing = _cover_drawing("#" + document_pastel(c).hexval()[2:])
+    renderPDF.draw(drawing, c, 0, A4[1] - drawing.height)
 
 
 # --- Brand -------------------------------------------------------------------
