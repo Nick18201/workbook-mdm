@@ -99,7 +99,7 @@ def create_modele_canvas_page(c):
             "title": "3. Relations Clients",
             "subtitle": "Quel lien entretenez-vous ?",
             "field_id": "bp_p17_canvas_relations",
-            "placeholder": "Coaching direct, communauté...",
+            "placeholder": "Accompagnement individuel, communauté...",
         },
         # Ligne 2
         {
@@ -388,7 +388,7 @@ def create_commercial_parcours_page(c):
         [
             "2. Contact & Décision",
             {"field_id": "bp_p21_r2_client", "placeholder": "Elle hésite, a besoin de réassurance et de clarté sur le prix..."},
-            {"field_id": "bp_p21_r2_action", "placeholder": "Mener un appel d'alignement bienveillant, envoyer une proposition claire..."},
+            {"field_id": "bp_p21_r2_action", "placeholder": "Mener un appel de découverte, envoyer une proposition claire..."},
         ],
         [
             "3. Expérience Vécue",
@@ -417,7 +417,7 @@ def create_commercial_parcours_page(c):
             "title": "La Mécanique de Recommandation",
             "subtitle": "Comment inciterez-vous vos clientes satisfaites à parler de vous ?",
             "field_id": "bp_p21_recommandation",
-            "placeholder": "Ex : Programme de parrainage bienveillant, demande d'avis Google systématique...",
+            "placeholder": "Ex : Programme de parrainage, demande d'avis Google systématique...",
         },
     ]
 

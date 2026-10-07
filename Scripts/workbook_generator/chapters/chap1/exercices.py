@@ -125,7 +125,7 @@ def create_sac_a_dos_page(c):
     )
 
     layout.add_question_block(
-        "Je lâche cette croyance :",
+        "Je lâche cette idée reçue :",
         "sac_croyance",
         config=QuestionConfig(box_height=3.5 * cm),
     )
@@ -179,7 +179,7 @@ def create_heritage_page(c):
         "heritage_vigilances",
         config=QuestionConfig(
             box_height=3.8 * cm,
-            subtitle="Quels comportements ou croyances limitantes je décide de ne pas reproduire ?",
+            subtitle="Quels comportements ou idées reçues je décide de ne pas reproduire ?",
         ),
     )
 

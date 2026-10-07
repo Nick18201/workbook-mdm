@@ -218,7 +218,7 @@ def create_ressources_competences_page(c):
 
     layout.add_text(
         "Vous êtes le premier actif de votre entreprise. Prendre la mesure de vos forces, identifier avec humilité "
-        "vos axes de progression et vous entourer de personnes bienveillantes et compétentes est la clé de la longévité.",
+        "vos axes de progression et vous entourer de personnes fiables et compétentes est la clé de la longévité.",
         config=TextConfig(spacing_after=0.35 * cm),
     )
 
@@ -278,7 +278,7 @@ def create_ressources_competences_page(c):
             "title": "Mon Entourage Clé & Personnes Ressources",
             "subtitle": "De quelles personnes avez-vous besoin autour de vous ?",
             "field_id": "bp_p25_entourage_ressource",
-            "placeholder": "Un pair pour binômer chaque quinzaine, une mentor bienveillante, mon expert-comptable...",
+            "placeholder": "Un pair à retrouver chaque quinzaine, une mentore expérimentée, mon expert-comptable...",
         },
     ]
 

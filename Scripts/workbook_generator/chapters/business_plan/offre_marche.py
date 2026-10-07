@@ -123,7 +123,7 @@ def create_marche_tendances_page(c):
         "bp_p11_marche_secteur",
         config=QuestionConfig(
             box_height=3.2 * cm,
-            subtitle="Définissez votre domaine (ex : coaching pro, artisanat d'art, services aux familles, formation, bien-être...).",
+            subtitle="Définissez votre domaine (ex : conseil, artisanat d'art, services aux familles, formation, bien-être...).",
             color_alternation=False,
             color=PDFStyle.COLOR_ACCENT_BLUE,
         ),
@@ -134,7 +134,7 @@ def create_marche_tendances_page(c):
             "title": "Tendances Favorables (Vents porteurs)",
             "subtitle": "Quelles évolutions sociétales ou technologiques favorisent votre projet ?",
             "field_id": "bp_p11_tendances_favorables",
-            "placeholder": "Ex : Besoin croissant de déconnexion, quête de sens, essor du télétravail...",
+            "placeholder": "Ex : Besoin croissant de déconnexion, recherche d'utilité, essor du télétravail...",
         },
         {
             "title": "Tendances Fragilisantes (Risques du marché)",

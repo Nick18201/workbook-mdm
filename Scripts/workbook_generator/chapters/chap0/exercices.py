@@ -58,8 +58,8 @@ def create_premiere_etape_page(c):
     )
 
     text_content = [
-        "Il est l'heure de faire le point sur votre situation actuelle ! Le début d'un bilan, c'est le bon moment pour enclencher le bouton PAUSE. Il est difficile de pouvoir réfléchir à ses besoins et à ses envies quand on est ancré•e dans une routine.",
-        "Il est également difficile d'avoir accès à ces réflexions dans une vie où l'on est la tête sous l'eau, que ce soit par surcharge de travail, par ennui profond, ou par manque de sens.",
+        "C'est le moment de faire le point sur votre situation actuelle. Le début d'un bilan est le bon moment pour appuyer sur PAUSE. Il est difficile de pouvoir réfléchir à ses besoins et à ses envies quand on est ancré·e dans une routine.",
+        "Ces réflexions sont aussi difficiles d'accès quand on a la tête sous l'eau, par surcharge de travail, par ennui ou par manque d'intérêt pour ses missions.",
     ]
 
     for block in text_content:
@@ -182,7 +182,7 @@ def create_domaines_de_vie_page(c):
         "Prendre le temps d'observer son niveau de satisfaction dans chacun de ces domaines "
         "permet d'obtenir une « photographie » de son équilibre actuel.<br/><br/>"
         "<b>Consigne :</b> Pour chacun des domaines ci-dessous, attribuez une note de 1 "
-        "(très peu satisfait•e) à 10 (pleinement épanoui•e)."
+        "(très peu satisfait·e) à 10 (pleinement satisfait·e)."
     )
 
     p_intro = Paragraph(intro_txt, style_intro)
@@ -195,7 +195,7 @@ def create_domaines_de_vie_page(c):
     domains = [
         "1. Argent / Finances",
         "2. Impact / Sens",
-        "3. Dév. Personnel / Spiritualité",
+        "3. Temps pour soi / Engagements",
         "4. Famille",
         "5. Santé / Énergie",
         "6. Lieu de vie / Environnement",
@@ -295,10 +295,9 @@ def create_entourage_page(c):
     )
 
     intro_txt = (
-        "Le projet que vous menez ne se fait pas en vase clos. Votre entourage, "
-        "qu'il soit proche ou plus lointain, joue un rôle crucial dans votre "
-        "cheminement. Identifier vos alliés et les sources de tensions possibles "
-        "est une étape importante pour sécuriser votre parcours."
+        "Votre projet ne se construit pas seul. Votre entourage, proche ou plus "
+        "lointain, pèse sur vos décisions. Repérer vos alliés et les sources de "
+        "tension possibles vous aide à sécuriser votre projet."
     )
     layout.add_text(intro_txt, config=TextConfig(spacing_after=0.3 * cm))
 

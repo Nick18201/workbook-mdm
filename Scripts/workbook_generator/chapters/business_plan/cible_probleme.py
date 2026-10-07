@@ -75,7 +75,7 @@ def create_cible_persona_page(c):
             "title": "Profil Type & Contexte",
             "subtitle": "Prénom fictif, âge, métier, contexte de vie et habitudes...",
             "field_id": "bp_p6_persona_profil",
-            "placeholder": "Ex : Claire, 38 ans, cadre en quête de sens...",
+            "placeholder": "Ex : Claire, 38 ans, cadre en reconversion...",
         },
         {
             "title": "Freins, Craintes & Motivations",
@@ -90,7 +90,7 @@ def create_cible_persona_page(c):
     lucidite_cards = [
         {
             "title": "Ce que je PENSE savoir (Mes Intuitions)",
-            "subtitle": "Mes croyances spontanées sur ses attentes et son budget...",
+            "subtitle": "Mes idées spontanées sur ses attentes et son budget...",
             "field_id": "bp_p6_lucidite_pense",
             "placeholder": "Je pense qu'elle est prête à payer pour gagner du temps...",
         },

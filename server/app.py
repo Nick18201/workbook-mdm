@@ -197,7 +197,7 @@ def api_get_template_spec(template_id: str):
 @app.post("/api/customize", response_model=CustomizeResponse)
 def api_customize_workbook(request: CustomizeRequest, response: Response):
     """
-    Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du coach.
+    Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du consultant.
     """
     if request.base_spec is None and not get_predefined_spec(request.template_id):
         raise HTTPException(

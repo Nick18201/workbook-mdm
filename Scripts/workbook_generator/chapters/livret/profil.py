@@ -68,7 +68,7 @@ def create_profil_ecologie_page(c):
     layout.add_text(
         "Dans le travail, nous avons tous un « réservoir d'énergie ». Certaines tâches et ambiances rechargent "
         "naturellement vos batteries, tandis que d'autres vous demandent un effort d'adaptation coûteux. "
-        "Construire une trajectoire épanouissante, c'est choisir un environnement respectueux de votre équilibre intérieur.",
+        "Construire une trajectoire durable, c'est choisir un environnement respectueux de votre équilibre intérieur.",
         config=TextConfig(spacing_after=0.5 * cm),
     )
 
@@ -79,7 +79,7 @@ def create_profil_ecologie_page(c):
             box_height=5.0 * cm,
             subtitle="Dans quel type d'ambiance, de rythme de travail, de style de management et de relations humaines "
             "donnez-vous le meilleur de vous-même ?",
-            example="Ex : Une équipe bienveillante, un management qui fait confiance sans être directif, un rythme régulier sans urgences artificielles.",
+            example="Ex : Une équipe soudée, un management qui fait confiance sans être directif, un rythme régulier sans urgences artificielles.",
             color_alternation=False,
             color=PDFStyle.COLOR_ACCENT_RED,
         ),

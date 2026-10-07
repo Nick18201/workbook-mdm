@@ -17,7 +17,7 @@ from reportlab.pdfbase import pdfmetrics
 
 from .config import PDFStyle
 from .document_builder import document_pastel, document_style
-from .utils import cached_simpleSplit
+from .utils import cached_simpleSplit, french_typography, split_words
 
 
 # --- Text --------------------------------------------------------------------
@@ -26,6 +26,7 @@ def text_width(text, font, size, tracking=0.0):
     """Width of one line drawn by draw_text (tracking in em, added between characters)."""
     if not text:
         return 0.0
+    text = french_typography(str(text))
     return pdfmetrics.stringWidth(text, font, size) + tracking * size * (len(text) - 1)
 
 
@@ -33,8 +34,10 @@ def draw_text(c, x, y, text, font, size, color, tracking=0.0, align="left"):
     """
     Draws one line of text and returns its width. The character spacing (PDF operator Tc)
     is part of the graphics state: it is restored here, otherwise it would leak into every
-    text drawn afterwards.
+    text drawn afterwards. Every text primitive applies the French typography
+    (utils.french_typography).
     """
+    text = french_typography(str(text))
     width = text_width(text, font, size, tracking)
     if align == "center":
         x -= width / 2
@@ -54,6 +57,7 @@ def draw_text(c, x, y, text, font, size, color, tracking=0.0, align="left"):
 
 def fit_text(text, font, size, max_width, tracking=0.0):
     """Shortens text with a visible '…' so that it fits max_width (never cuts silently)."""
+    text = french_typography(str(text))
     if text_width(text, font, size, tracking) <= max_width:
         return text
     while text and text_width(text + "…", font, size, tracking) > max_width:
@@ -64,8 +68,9 @@ def fit_text(text, font, size, max_width, tracking=0.0):
 def wrap_text(text, font, size, max_width, tracking=0.0):
     """
     Splits text into lines of at most max_width (explicit line breaks are kept). A word
-    wider than max_width gets a line of its own.
+    wider than max_width gets a line of its own. A no-break space never breaks a line.
     """
+    text = french_typography(str(text))
     if not tracking:
         lines = []
         for paragraph in str(text).split("\n"):
@@ -74,7 +79,7 @@ def wrap_text(text, font, size, max_width, tracking=0.0):
 
     lines = []
     for paragraph in str(text).split("\n"):
-        words = paragraph.split()
+        words = split_words(paragraph)
         if not words:
             lines.append("")
             continue
@@ -138,7 +143,7 @@ def title_runs(title):
     Splits a title into (text, is_accent) runs. *…* marks the accent (« Mon rapport
     *à l'argent.* »); without it, the last word is the accent, as in « Prenez de la *marge.* ».
     """
-    title = " ".join(str(title).split())
+    title = french_typography(" ".join(split_words(title)))
     if _ACCENT.search(title):
         runs, pos = [], 0
         for match in _ACCENT.finditer(title):
@@ -197,8 +202,8 @@ def heading_layout(title, max_width, size=None, font=None, tracking=None, min_si
     size = size or PDFStyle.SIZE_TITLE_PAGE
     tracking = PDFStyle.TRACKING_TITLE if tracking is None else tracking
     min_size = min_size or size
-    words = [(w, accent) for text, accent in title_runs(title) for w in text.split()]
-    words += [(w, False) for w in suffix.split()]
+    words = [(w, accent) for text, accent in title_runs(title) for w in split_words(text)]
+    words += [(w, False) for w in split_words(suffix)]
     while True:
         lines = _balanced_lines(words, font, size, tracking, max_width)
         if len(lines) <= max_lines or size <= min_size:
@@ -210,16 +215,17 @@ def draw_heading(c, title, x, top, max_width, size=None, font=None, color=None, 
                  tracking=None, min_size=None, max_lines=3, leading=None, suffix=""):
     """
     Draws a title in ink with its accent run (see title_runs) in coral, balanced over its
-    lines. Coral text is only legible from 18 pt on white: smaller titles, or titles on a
-    pastel, take accent_color=COLOR_CORAL_STRONG (the default below 18 pt). `suffix` is
-    appended without accent, e.g. " (suite)". Returns the bottom y of the block.
+    lines. Bright coral text is only legible from 18 pt on cream or white: the default
+    accent is PDFStyle.COLOR_TITLE_ACCENT (bright coral on the ivory pages) and coral-strong
+    below 18 pt. `suffix` is appended without accent, e.g. " (suite)". Returns the bottom y
+    of the block.
     """
     font = font or PDFStyle.FONT_HEADING
     tracking = PDFStyle.TRACKING_TITLE if tracking is None else tracking
     color = color or PDFStyle.COLOR_INK
     lines, size = heading_layout(title, max_width, size, font, tracking, min_size, max_lines, suffix)
     if accent_color is None:
-        accent_color = PDFStyle.COLOR_CORAL if size >= 18 else PDFStyle.COLOR_CORAL_STRONG
+        accent_color = PDFStyle.COLOR_TITLE_ACCENT if size >= 18 else PDFStyle.COLOR_CORAL_STRONG
     leading = leading or size * PDFStyle.LEADING_TITLE
 
     y = first_baseline(top, size, leading)
@@ -590,7 +596,7 @@ def draw_frise(c, x, y, width, steps, start_label="", end_label="", background=N
     steps: [(icon, title, marker), ...]. y is the line's height. Returns the height used
     below the line.
     """
-    background = background or PDFStyle.COLOR_SURFACE_CARD
+    background = background or PDFStyle.COLOR_PAGE
     badge = 30
     c.saveState()
     c.setStrokeColor(PDFStyle.COLOR_INK, alpha=0.25)

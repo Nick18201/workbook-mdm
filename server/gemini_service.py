@@ -1,5 +1,5 @@
 """
-Gemini Flash Integration: Transforms raw coaching notes into a structured WorkbookSpec.
+Gemini Flash Integration: Transforms raw session notes into a structured WorkbookSpec.
 Uses google-genai SDK with strict Pydantic Structured Outputs.
 """
 
@@ -94,7 +94,20 @@ def _generate_json(
     return None
 
 
-SYSTEM_PROMPT = """Tu es un ingénieur pédagogique et directeur artistique d'élite pour 'Marge de Manœuvre' (bilans de compétences et coaching professionnel).
+# Ton et vocabulaire de la DA (DA-workbook.md, section 7), communs aux trois prompts
+TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les textes du livret) :
+- Vouvoiement. Phrases courtes, affirmatives et concrètes, tournées vers la décision et l'action.
+- Lexique à privilégier : action, décision, projet, livrable, marché, faisabilité, salaire, rythme de vie, arbitrage, « validé en séance ».
+- À proscrire : le registre du développement personnel (« quête de sens », « retrouver votre élan », « espace d'écoute bienveillant », « croyances limitantes », « syndrome de l'imposteur », ennéagramme, « lâcher prise », « épanouissement »).
+- Le métier : jamais « coach » ni « coaching ». Dire « consultant en transformation », « la personne qui vous accompagne » ou « votre référent·e ». Jamais « cabinet » pour parler de Marge de Manœuvre.
+- Tout l'accompagnement se fait à distance : jamais « présentiel ».
+- N'invente aucun chiffre, témoignage ou partenariat ; aucune statistique sans source.
+- Titres de page : une affirmation ponctuée, en minuscules sauf la première lettre et les noms propres (jamais de Majuscule À Chaque Mot), terminée par un point, un « ? » ou un « ! » (ex : « Votre situation actuelle. », « Mon rapport *à l'argent.* »).
+- Typographie française : guillemets « », espace avant : ; ! ?, « œ » (cœur, manœuvre), « MBTI® » toujours avec ®.
+"""
+
+
+SYSTEM_PROMPT = """Tu es un ingénieur pédagogique et directeur artistique d'élite pour 'Marge de Manœuvre' (bilans de compétences 100 % à distance, tournés vers le passage à l'action).
 Ton rôle est de transformer des notes de séance brutes ou des comptes-rendus informels en une structure de livret pédagogique PDF élégant, synthétique et percutant.
 
 RÈGLES D'OR DE STRUCTURATION :
@@ -116,7 +129,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - Pages intermédiaires : Exercices variés choisissant le gabarit le plus percutant selon les besoins :
      * 'questions' : Pour du questionnement guidé (1 à 3 questions maximum par page). Intitulés courts (max 120 caractères), sous-titre explicatif et exemple concret (précédé de 'Ex :').
      * 'quadrants' : Pour 4 axes, piliers de vie, SWOT ou matrice 360°.
-     * 'two_columns' : Pour les passages de cap (Avant / Après, Croyance limitante / Croyance ressource, Épreuve / Compétence).
+     * 'two_columns' : Pour les passages de cap (Avant / Après, Frein / Levier, Épreuve / Compétence).
      * 'enquete' : Pour les interviews terrain, démarche réseau, exploration métier.
      * 'roadmap' : Pour les plans d'action 30·60·90 jours avec objectifs, actions et KPI.
      * 'composite' : Pour une page sur-mesure assemblant librement des blocs atomiques ('blocks') :
@@ -143,7 +156,7 @@ RÈGLES D'OR DE STRUCTURATION :
      * S'il y a un tableau d'analyse (ex: Faisabilité / Crash Test) ET des choix (ex: Plan A / Plan B), CRÉER DEUX PAGES DISTINCTES :
        - Page 1 : Tableau d'analyse (ex: Crash Test 4 Piliers) + 1 échelle d'évaluation ou 1 question.
        - Page 2 : Grille de cartes (ex: Plan A L'Étoile / Plan B Le Filet) + 1 question de passage à l'action.
-   - Sois synthétique, inspirant et orienté passage à l'action.
+   - Sois synthétique, concret et orienté passage à l'action.
 
 5. STRUCTURE DES PARAMÈTRES PAR GABARIT (dans "params") :
    - 'cover' : {"subtitle": "Chapitre 4 : Mon rapport à l'argent", "title": "BILAN DE COMPÉTENCES", "promise": "Phrase de 3 à 8 mots sur ce que le carnet apporte (post-it)"}
@@ -155,7 +168,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - 'enquete' : {"intro_text": "...", "questions": [{"title": "1. Besoins & Douleurs", "subtitle": "..."}, {"title": "2. Solutions & Limites", "subtitle": "..."}, {"title": "3. Recommandations", "subtitle": "..."}]}
    - 'roadmap' : {"intro_text": "...", "stages": [{"period": "PALIER 1 · 0 À 30 JOURS", "theme": "CONSOLIDER", "default_obj": "Objectif...", "actions": ["Action 1", "Action 2", "Action 3"], "default_kpi": "KPI..."}]}
    - 'engagement' : {"livrable_title": "Nom du livrable validé en séance", "livrable_text": "Une phrase qui décrit ce livrable", "lines": ["Engagement concret 1", "Engagement concret 2", "Engagement concret 3"]}
-   - 'closing' : {"messages": ["Félicitations pour ce temps pris pour vous.", "Laissez infuser ces réflexions.", "À très vite pour la prochaine étape."]}
+   - 'closing' : {"messages": ["Ce carnet reste le vôtre.", "Relisez vos réponses avant la prochaine séance.", "La suite se décide ensemble, en séance."]}
    - 'composite' : la liste des composants va dans "blocks" (2 blocs idéalement, max 3 petits). RÈGLE CRITIQUE : Ne JAMAIS produire un bloc vide ! Chaque bloc DOIT contenir son contenu textuel complet :
      * 'callout' : {"type": "callout", "title": "Titre du repère", "text": "Citation percutante ou conseil clé...", "variant": "info|tip|quote"}
      * 'cards_grid' : {"type": "cards_grid", "title": "Titre de la grille", "columns": 2, "cards": [{"title": "1. Atout / Constat", "subtitle": "Ce qui a suscité de l'intérêt", "placeholder": "Notes du bénéficiaire..."}, {"title": "2. Friction / Risque", "subtitle": "Ce qui a freiné ou bloqué", "placeholder": "Notes du bénéficiaire..."}]}
@@ -174,14 +187,15 @@ Produis UNIQUEMENT un objet JSON valide conforme à la structure suivante :
   "pages": [
     {
       "template": "cover|summary|meteo|quadrants|two_columns|questions|enquete|roadmap|engagement|closing|composite",
-      "title": "Titre de la page",
+      "title": "Titre de la page.",
       "part_title": "1. TITRE DE LA PARTIE",
       "params": {},
       "blocks": []
     }
   ]
 }
-"""
+
+""" + TONE_RULES
 
 
 def parse_notes_with_gemini(request: ParseRequest) -> GenerationResult:
@@ -237,7 +251,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
     """
     title = (
         request.chapter_title
-        or f"Chapitre {request.chapter_num} : Exploration & Alignement"
+        or "Exploration et décisions."
     )
     ben = f" pour {request.beneficiary_name}" if request.beneficiary_name else ""
 
@@ -257,6 +271,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
             params={
                 "subtitle": f"Chapitre {request.chapter_num} : {title}",
                 "title": "BILAN DE COMPÉTENCES & ALIGNEMENT",
+                "promise": "De la réflexion à une décision concrète.",
             },
         )
     )
@@ -280,13 +295,13 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
             content_pages.append(
                 PageSpec(
                     template="composite",
-                    title="Boussole & Clarté d'Intention",
+                    title="Votre intention pour ce carnet.",
                     part_title="1. CLARIFICATION",
                     blocks=[
                         BlockSpec(
                             type="callout",
                             title="INTENTION DE SÉANCE",
-                            text="Poser une intention claire transforme le temps de réflexion en levier concret d'alignement.",
+                            text="Une intention claire transforme le temps de réflexion en décision concrète.",
                             variant="info",
                         ),
                         BlockSpec(
@@ -309,18 +324,18 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                     ],
                 )
             )
-            summary_items.append("Boussole & Clarté d'Intention")
+            summary_items.append("Votre intention pour ce carnet")
         elif meteo_opt == "mental_load":
             content_pages.append(
                 PageSpec(
                     template="composite",
-                    title="Décharge Mentale & Disponibilité",
+                    title="Ce qui peut attendre.",
                     part_title="1. RECENTRAGE",
                     blocks=[
                         BlockSpec(
                             type="callout",
                             title="ESPACE MENTAL",
-                            text="Déposer ce qui encombre l'esprit permet de consacrer 100% de son énergie aux décisions clés.",
+                            text="Mettre de côté ce qui encombre l'esprit libère du temps pour les décisions clés.",
                             variant="quote",
                         ),
                         BlockSpec(
@@ -343,12 +358,12 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                     ],
                 )
             )
-            summary_items.append("Décharge Mentale & Disponibilité")
+            summary_items.append("Ce qui peut attendre")
         else:  # classic or auto
             content_pages.append(
                 PageSpec(
                     template="meteo",
-                    title="Ma Météo Intérieure & Énergie",
+                    title="Votre état d'esprit du moment.",
                     part_title="1. MÉTÉO DU MOMENT",
                     params={
                         "emotion_prompt": "Aujourd'hui, je me sens :",
@@ -358,7 +373,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                     },
                 )
             )
-            summary_items.append("État des lieux & Énergie du moment")
+            summary_items.append("État d'esprit et énergie du moment")
 
     # 3. Core Exercises dynamically structured according to book_format:
     # - short: Court (6-7 pages total)
@@ -370,16 +385,16 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
     content_pages.append(
         PageSpec(
             template="quadrants",
-            title="Mes 4 Piliers d'Équilibre",
+            title="Vos quatre *piliers d'équilibre.*",
             part_title=f"{len(summary_items)+1}. MATRICE D'ALIGNEMENT",
             params={
-                "instruction": "Pour chacun des 4 domaines, formulez en une phrase courte votre priorité absolue.",
+                "instruction": "Pour chacun des quatre domaines, formulez en une phrase courte votre priorité.",
                 "quadrants": [
-                    ("Professionnel", "Sens, Impact, Salaire", "p_pro"),
-                    ("Personnel", "Temps pour soi, Santé", "p_perso"),
-                    ("Social & Famille", "Relations, Équilibre", "p_social"),
+                    ("Professionnel", "Missions, impact, salaire", "p_pro"),
+                    ("Personnel", "Temps pour soi, santé", "p_perso"),
+                    ("Social et familial", "Relations, rythme de vie", "p_social"),
                     (
-                        "Mes Valeurs Clés" if has_values else "Cadre & Liberté",
+                        "Mes valeurs clés" if has_values else "Cadre et autonomie",
                         "Besoin d'autonomie",
                         "p_cadre",
                     ),
@@ -388,17 +403,17 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
             },
         )
     )
-    summary_items.append("Vision 360° & Priorités fondamentales")
+    summary_items.append("Vision à 360° et priorités")
 
     content_pages.append(
         PageSpec(
             template="two_columns",
-            title="Passerelle : Du Constat au Levier",
+            title="Du constat *au levier.*",
             part_title=f"{len(summary_items)+1}. ÉVOLUTION & DÉCISIONS",
             params={
-                "intro_text": "Transformez chaque difficulté ou situation subie en apprentissage concret et levier d'émancipation.",
-                "col1_header": "Situation Subie / Frein",
-                "col2_header": "Décision / Levier Ressource",
+                "intro_text": "Pour chaque difficulté ou situation subie, notez la décision ou le levier qui vous permet d'avancer.",
+                "col1_header": "Situation subie / frein",
+                "col2_header": "Décision / levier",
                 "rows": [
                     (
                         "1. Ma relation au temps et aux urgences",
@@ -406,9 +421,9 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                         "La règle que je pose",
                     ),
                     (
-                        "2. Poser mes limites avec assertivité",
+                        "2. Poser mes limites",
                         "Où j'avais du mal à dire non",
-                        "Ce que je choisis d'honorer",
+                        "Ce que je décide de tenir",
                     ),
                     (
                         "3. Reconnaissance et légitimité",
@@ -421,9 +436,9 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         )
     )
     summary_items.append(
-        "Passerelle : Transformer les freins en ressources"
+        "Du constat au levier : vos freins, vos décisions"
         if has_obstacle
-        else "Mes Compétences & Moteurs d'action"
+        else "Vos compétences et vos moteurs d'action"
     )
 
     # For Standard & Deep formats: add Questions and Roadmap
@@ -431,15 +446,15 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         content_pages.append(
             PageSpec(
                 template="questions",
-                title="Questions d'Approfondissement",
+                title="Pour aller *plus loin.*",
                 part_title=f"{len(summary_items)+1}. EXPLORATION",
                 params={
-                    "intro_text": "Prenez quelques minutes au calme pour répondre avec honnêteté à ces questions de synthèse.",
+                    "intro_text": "Prenez quelques minutes pour répondre à ces questions de synthèse.",
                     "questions": [
                         {
-                            "question": "1. Quelle a été la prise de conscience la plus forte de notre dernier échange ?",
+                            "question": "1. Qu'est-ce que la dernière séance a changé dans votre façon de voir votre projet ?",
                             "field_id": "q_conscience",
-                            "subtitle": "Le moment où quelque chose a cliqué ou changé de perspective pour vous.",
+                            "subtitle": "Un constat, une information ou une décision qui a fait avancer votre réflexion.",
                         },
                         {
                             "question": "2. Quel est le premier pas, même minuscule, que vous pouvez accomplir d'ici 48h ?",
@@ -450,31 +465,31 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                 },
             )
         )
-        summary_items.append("Questionnement d'approfondissement")
+        summary_items.append("Questions pour aller plus loin")
 
     # For Deep format (+ de 10 pages): add Enquete, Crash-test table, and Options Cards Grid
     if fmt == "deep":
         content_pages.append(
             PageSpec(
                 template="enquete",
-                title="Enquête Métier & Démarche Réseau",
+                title="Enquête métier *et réseau.*",
                 part_title=f"{len(summary_items)+1}. EXPLORATION TERRAIN",
                 params={
                     "intro_text": "Faites valider vos hypothèses par 2 ou 3 professionnels en poste pour confronter votre projet à la réalité.",
                     "questions": [
-                        {"title": "1. Réalité du Quotidien", "subtitle": "Les missions effectives, le rythme et les contraintes non dites"},
-                        {"title": "2. Compétences Clés & Attentes", "subtitle": "Les compétences indispensables et les profils recherchés"},
-                        {"title": "3. Recommandations & Conseils", "subtitle": "Ce que mon interlocuteur ferait à ma place aujourd'hui"},
+                        {"title": "1. Réalité du quotidien", "subtitle": "Les missions effectives, le rythme et les contraintes non dites"},
+                        {"title": "2. Compétences clés et attentes", "subtitle": "Les compétences indispensables et les profils recherchés"},
+                        {"title": "3. Recommandations et conseils", "subtitle": "Ce que mon interlocuteur ferait à ma place aujourd'hui"},
                     ],
                 },
             )
         )
-        summary_items.append("Enquête exploratoire & Réalité terrain")
+        summary_items.append("Enquête métier et réalité du terrain")
 
         content_pages.append(
             PageSpec(
                 template="composite",
-                title="Le Crash Test de Viabilité",
+                title="Le test de *faisabilité.*",
                 part_title=f"{len(summary_items)+1}. ÉVALUATION DES RISQUES",
                 blocks=[
                     BlockSpec(
@@ -485,12 +500,12 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                     ),
                     BlockSpec(
                         type="table",
-                        title="Évaluation des 3 Piliers de Sécurisation",
-                        headers=["Critère Analysé", "Niveau de Risque", "Plan de Parade Identifié"],
+                        title="Les trois piliers à sécuriser",
+                        headers=["Critère", "Niveau de risque", "Parade prévue"],
                         rows=[
-                            ["Finances & Rémunération", "Modéré", "Maintien ARE, négociation salariale"],
-                            ["Temps & Équilibre de vie", "Faible", "Télétravail partiel, horaires cadrés"],
-                            ["Compétences & Passerelles", "Porteur", "Valorisation du transfert d'expérience"],
+                            ["Finances et rémunération", "Modéré", "Maintien de l'ARE, négociation salariale"],
+                            ["Temps et rythme de vie", "Faible", "Télétravail partiel, horaires cadrés"],
+                            ["Compétences et passerelles", "Porteur", "Valorisation de l'expérience transférable"],
                         ],
                     ),
                     BlockSpec(
@@ -505,12 +520,12 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                 ],
             )
         )
-        summary_items.append("Crash Test de Viabilité & Parades")
+        summary_items.append("Test de faisabilité et parades")
 
         content_pages.append(
             PageSpec(
                 template="composite",
-                title="Arbitrage des Caps & Options",
+                title="Arbitrer *entre deux scénarios.*",
                 part_title=f"{len(summary_items)+1}. DÉCISION",
                 blocks=[
                     BlockSpec(
@@ -518,32 +533,32 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                         title="Comparatif des scénarios professionnels",
                         columns=2,
                         cards=[
-                            {"title": "Scénario A (L'Étoile)", "subtitle": "Le projet qui mobilise 100% de ma motivation", "field_id": "c_opt_a"},
-                            {"title": "Scénario B (Le Filet)", "subtitle": "L'alternative sécurisante et réaliste à court terme", "field_id": "c_opt_b"},
+                            {"title": "Scénario A (le projet cible)", "subtitle": "Le projet qui mobilise le plus votre motivation", "field_id": "c_opt_a"},
+                            {"title": "Scénario B (le filet)", "subtitle": "L'alternative sûre et réaliste à court terme", "field_id": "c_opt_b"},
                         ],
                     ),
                     BlockSpec(
                         type="question",
                         question="Quel arbitrage décidez-vous de poser entre le scénario A et le scénario B ?",
                         field_id="q_arbitrage",
-                        subtitle="La décision qui vous permet d'avancer sereinement dès aujourd'hui.",
+                        subtitle="La décision qui vous permet d'avancer dès aujourd'hui.",
                         example="Ex : Avancer sur le scénario A pendant 3 mois, avec le B en repli validé.",
                         box_height_cm=3.0,
                     ),
                 ],
             )
         )
-        summary_items.append("Arbitrage des Scénarios A & B")
+        summary_items.append("Arbitrage entre les scénarios A et B")
 
     # For Standard & Deep formats: add Roadmap
     if fmt in ("standard", "deep", "auto"):
         content_pages.append(
             PageSpec(
                 template="roadmap",
-                title="Ma Feuille de Route Opérationnelle",
+                title="Votre feuille *de route.*",
                 part_title=f"{len(summary_items)+1}. PLAN D'ACTION",
                 params={
-                    "intro_text": "Voici vos 3 étapes clés pour concrétiser vos avancées dans la durée.",
+                    "intro_text": "Trois paliers pour passer de la décision à l'action.",
                     "stages": [
                         {
                             "period": "PALIER 1 · 0 À 30 JOURS",
@@ -563,27 +578,27 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                             "period": "PALIER 3 · 60 À 90 JOURS",
                             "theme": "ANCRER",
                             "default_obj": "Consolider la trajectoire",
-                            "actions": ["Bilan d'étape", "Ajustement de cap", "Célébration"],
+                            "actions": ["Bilan d'étape", "Ajustement du cap", "Point avec la personne qui vous accompagne"],
                             "default_kpi": "Trajectoire sécurisée",
                         },
                     ],
                 },
             )
         )
-        summary_items.append("Feuille de Route 30·60·90 jours")
+        summary_items.append("Feuille de route à 30, 60 et 90 jours")
 
     # 4. Engagement (Conditionnel)
     if request.include_engagement is not False:
         content_pages.append(
             PageSpec(
                 template="engagement",
-                title="Mon Pacte avec Moi-Même",
+                title="Votre livrable.",
                 part_title=f"{len(summary_items)+1}. MON ENGAGEMENT",
                 params={
                     "lines": [
-                        "Je m'engage à accorder à cette démarche toute l'attention qu'elle mérite.",
-                        "À regarder ma trajectoire avec lucidité, bienveillance et sans complaisance.",
-                        "À tester de nouvelles approches avant de décréter leur impossibilité.",
+                        "Je réserve chaque semaine un créneau fixe à ce carnet.",
+                        "Je regarde ma trajectoire avec lucidité, sans complaisance.",
+                        "Je teste une piste sur le terrain avant de l'écarter.",
                         (
                             f"Ce parcours est le mien ({request.beneficiary_name}), et je décide d'en être pleinement l'acteur."
                             if request.beneficiary_name
@@ -593,13 +608,13 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                 },
             )
         )
-        summary_items.append("Mon Engagement & Prochaines victoires")
+        summary_items.append("Votre livrable et vos engagements")
 
     # 5. Summary Page (Page 2) with exact numbering
     points = [(f"{i+1}.", item) for i, item in enumerate(summary_items)]
     summary_page = PageSpec(
         template="summary",
-        title=title.upper(),
+        title=title,
         params={
             "num": str(request.chapter_num),
             "intro_text": f"Ce livret personnel{ben} a été conçu pour structurer les enseignements de votre dernière séance et fixer vos prochains repères d'action.",
@@ -613,9 +628,9 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         title="Clôture",
         params={
             "messages": [
-                "Bravo pour ce travail d'introspection.",
-                "Laissez infuser ces prises de conscience.",
-                "À très vite pour la suite de votre parcours.",
+                "Ce carnet reste le vôtre.",
+                "Relisez vos réponses avant la prochaine séance.",
+                "La suite se décide ensemble, en séance.",
             ]
         },
     )
@@ -645,6 +660,7 @@ TON RÔLE :
    - Textes courts et percutants : titres 25-45 caractères max, questions 120 caractères max, exemples concrets sans préfixe de 90 caractères max, points de sommaire max 85 caractères.
    - Toujours conserver 'cover' en page 1, 'summary' en page 2, 'engagement' en avant-dernière page et 'closing' en dernière page (sauf demande explicite contraire).
    - Sur les pages composites ('composite') : ne JAMAIS créer de bloc vide ! Toujours remplir 'cards' (titre, sous-titre) pour 'cards_grid', 'headers' et 'rows' pour 'table', 'text' pour 'callout'.
+   - Les textes ajoutés ou modifiés suivent le ton et le vocabulaire ci-dessous.
 5. Rédiger un résumé clair, synthétique et courtois des modifications apportées (en 1 à 3 phrases percutantes en français).
 
 STRUCTURE JSON DE RÉPONSE OBLIGATOIRE :
@@ -660,7 +676,8 @@ Tu dois impérativement répondre avec un objet JSON valide contenant exactement
   "changes_summary": "Résumé concis de ce que tu as modifié, ajouté ou supprimé suite à la consigne de l'utilisateur.",
   "pedagogical_note": "Courte justification pédagogique de ce choix."
 }
-"""
+
+""" + TONE_RULES
 
 
 def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
@@ -724,8 +741,8 @@ def _build_fallback_iteration(request: IterateRequest) -> IterateResponse:
     )
 
 
-CUSTOMIZE_SYSTEM_PROMPT = """Tu es un ingénieur pédagogique et directeur artistique d'élite pour 'Marge de Manœuvre' (bilans de compétences et coaching de cadres & entrepreneurs).
-Ton rôle est de prendre un livret pédagogique existant de référence (`WorkbookSpec`) et de le PERSONNALISER SUR-MESURE pour un bénéficiaire précis, selon son profil professionnel, son projet de transition et les consignes du coach.
+CUSTOMIZE_SYSTEM_PROMPT = """Tu es un ingénieur pédagogique et directeur artistique d'élite pour 'Marge de Manœuvre' (bilans de compétences 100 % à distance, pour salariés, cadres et futurs entrepreneurs).
+Ton rôle est de prendre un livret pédagogique existant de référence (`WorkbookSpec`) et de le PERSONNALISER SUR-MESURE pour un bénéficiaire précis, selon son profil professionnel, son projet de transition et les consignes du consultant qui l'accompagne.
 
 RÈGLES D'OR DE PERSONNALISATION :
 1. PRÉSERVER L'OSSATURE PÉDAGOGIQUE ET LE DESIGN SYSTEM :
@@ -736,7 +753,7 @@ RÈGLES D'OR DE PERSONNALISATION :
    - Adapte les **exemples concrets** (`example` dans les questions et blocs) pour qu'ils soient directement issus ou représentatifs de son métier, secteur d'activité ou projet cible (ex: si le bénéficiaire est consultant IT voulant créer une marque de mobilier éco-conçu, donne des exemples liés à l'artisanat, au passage du salariat à l'entrepreneuriat, etc.).
    - Contextualise avec subtilité les consignes, les sous-titres et les questions pour qu'elles fassent directement écho à sa situation et à ses défis spécifiques.
    - Pour les matrices 4 quadrants, comparatifs 2 colonnes ou feuilles de route 30·60·90j, injecte des constats, leviers ou actions pertinents pour son profil.
-   - Si des consignes spécifiques (`custom_instructions`) sont indiquées par le coach, applique-les fidèlement.
+   - Si des consignes spécifiques (`custom_instructions`) sont indiquées par le consultant, applique-les fidèlement.
 3. RESPECT STRICT DES BUDGETS DE CARACTÈRES (AUCUN DÉBORDEMENT REPORTLAB) :
    - AUCUN émoji ni pictogramme (☀️, 🎯, ✅, 🟢…) dans les textes : la police du PDF ne les affiche pas.
    - Titre de page : 25 à 45 caractères max.
@@ -750,15 +767,16 @@ Produis uniquement un objet JSON valide avec les clés suivantes :
 {
   "spec": { ...WorkbookSpec complet personnalisé... },
   "customizations_summary": "Explication claire et valorisante en 3-5 points des adaptations clés apportées pour ce bénéficiaire.",
-  "pedagogical_note": "Conseil méthodologique pour le coach lors de l'animation de ce livret avec le bénéficiaire."
+  "pedagogical_note": "Conseil méthodologique pour le consultant qui animera ce livret avec le bénéficiaire."
 }
-"""
+
+""" + TONE_RULES
 
 
 def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
     """
     Personnalise un livret existant (spécification de référence) en fonction du profil
-    du bénéficiaire et des consignes du coach via Gemini Flash.
+    du bénéficiaire et des consignes du consultant via Gemini Flash.
     """
     # 1. Résolution de la spécification de base
     base_spec = request.base_spec
@@ -782,7 +800,7 @@ def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
 PROFIL DU BÉNÉFICIAIRE :
 - Nom / Prénom : {request.beneficiary_name}
 - Contexte & Métier / Projet : {request.beneficiary_context}
-- Consignes spécifiques d'adaptation du coach : {request.custom_instructions or "Adapter harmonieusement l'ensemble des exemples et questions au profil du bénéficiaire."}
+- Consignes spécifiques d'adaptation du consultant : {request.custom_instructions or "Adapter harmonieusement l'ensemble des exemples et questions au profil du bénéficiaire."}
 
 MISSION :
 Personnalise ce livret de référence pour {request.beneficiary_name}.

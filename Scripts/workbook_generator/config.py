@@ -24,6 +24,13 @@ class PDFStyle:
     COLOR_CORAL_STRONG = colors.HexColor("#C22626")  # any small coral text, bullets, stamp
     COLOR_BLUE = colors.HexColor("#251FD3")  # second accent: title word, icons, big numbers
 
+    # Every page is tinted a warm ivory, barely more than white (chosen over the DA cream and
+    # linen, which read grey); white is for cards and fields to fill in. Bright coral title
+    # accents keep 3:1 on it (from 18 pt); a page as dark as linen would need
+    # COLOR_TITLE_ACCENT = COLOR_CORAL_STRONG.
+    COLOR_PAGE = colors.HexColor("#FFF8EC")
+    COLOR_TITLE_ACCENT = COLOR_CORAL
+
     # Pastels: card backgrounds, post-its, background discs. Text on them stays ink.
     PASTELS = {
         "almond": colors.HexColor("#FFDDCB"),
@@ -45,7 +52,7 @@ class PDFStyle:
     DEFAULT_PASTEL = "lilac"
 
     # Former names, kept for the hand-drawn chapter pages until they are redone (lot E5)
-    COLOR_BG_NUDE = COLOR_SURFACE_CARD
+    COLOR_BG_NUDE = COLOR_PAGE
     COLOR_WHITE = COLOR_SURFACE_CARD
     COLOR_FIELD_BG = COLOR_SURFACE_CARD
     COLOR_ACCENT_BLUE = COLOR_BLUE
