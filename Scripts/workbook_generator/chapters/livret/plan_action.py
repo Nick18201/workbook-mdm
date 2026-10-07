@@ -1,4 +1,5 @@
 from reportlab.lib.units import cm
+from workbook_generator.components import create_standard_engagement_page
 from workbook_generator.config import PDFStyle
 from workbook_generator.templates import (
     PageLayout,
@@ -14,8 +15,8 @@ def create_plan_securite_page(c):
     """
     layout = PageLayout(
         c,
-        "P7.1 : CADRE DE SÉCURITÉ & DEUX PISTES",
-        config=LayoutConfig(part_title="7. MON PLAN D'ÉMANCIPATION"),
+        "Votre cadre de sécurité *et deux pistes.*",
+        config=LayoutConfig(part_title="Thème 7 · Plan d'action"),
     )
 
     layout.add_text(
@@ -26,7 +27,7 @@ def create_plan_securite_page(c):
     )
 
     layout.add_question_block(
-        "Mon Cadre de Sécurité Non-Négociable",
+        "Mon cadre de sécurité non négociable",
         "livret_p7_securite",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -39,7 +40,7 @@ def create_plan_securite_page(c):
     )
 
     layout.add_question_block(
-        "Mes Deux Pistes de Travail (Projet A & Projet B)",
+        "Mes deux pistes de travail (projet A et projet B)",
         "livret_p7_pistes",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -60,8 +61,8 @@ def create_plan_pas_proximal_page(c):
     """
     layout = PageLayout(
         c,
-        "P7.2 : PROCHAIN PETIT PAS & BESOINS",
-        config=LayoutConfig(part_title="7. MON PLAN D'ÉMANCIPATION"),
+        "Votre prochain *petit pas.*",
+        config=LayoutConfig(part_title="Thème 7 · Plan d'action"),
     )
 
     layout.add_text(
@@ -72,7 +73,7 @@ def create_plan_pas_proximal_page(c):
     )
 
     layout.add_question_block(
-        "Mon « Pas Proximal » (Action Concrète à 7 Jours)",
+        "Mon prochain petit pas (une action concrète à 7 jours)",
         "livret_p7_pas_proximal",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -85,7 +86,7 @@ def create_plan_pas_proximal_page(c):
     )
 
     layout.add_question_block(
-        "Mes Besoins d'Étayage & Formations Courtes",
+        "Mes besoins d'appui et de formations courtes",
         "livret_p7_formation",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -98,3 +99,19 @@ def create_plan_pas_proximal_page(c):
     )
 
     layout.render()
+
+
+def create_livret_livrable_page(c):
+    """End of the booklet: the deliverable validated in session, and the commitments."""
+    create_standard_engagement_page(
+        c,
+        "Fin du livret",
+        custom_lines=[
+            "Je m'appuie sur mon récit d'action en entretien.",
+            "Je relis mes compétences transférables avant chaque candidature.",
+            "Je réalise mon prochain petit pas dans les 7 jours.",
+        ],
+        livrable_title="Votre portfolio de compétences",
+        livrable_text="Vos compétences, votre récit d'action et vos deux pistes, validés en séance.",
+        field_prefix="livrable_livret",
+    )

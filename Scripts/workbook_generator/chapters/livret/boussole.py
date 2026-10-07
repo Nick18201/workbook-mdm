@@ -14,8 +14,8 @@ def create_boussole_regard_page(c):
     """
     layout = PageLayout(
         c,
-        "P6.1 : REGARD SUR DEMAIN & MES CHOIX",
-        config=LayoutConfig(part_title="6. MA BOUSSOLE DE PROJECTION"),
+        "Regard sur demain *et vos choix.*",
+        config=LayoutConfig(part_title="Thème 6 · Projection"),
     )
 
     layout.add_text(
@@ -26,7 +26,7 @@ def create_boussole_regard_page(c):
     )
 
     layout.add_question_block(
-        "Ce qui m'appelle dans l'Avenir (Mon Regard)",
+        "Ce qui m'attire pour l'avenir",
         "livret_p6_regard",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -39,7 +39,7 @@ def create_boussole_regard_page(c):
     )
 
     layout.add_question_block(
-        "Ce que je décide Moi-Même (Mon Pouvoir de Choix)",
+        "Ce que je décide moi-même",
         "livret_p6_choix",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -60,8 +60,8 @@ def create_boussole_confiance_page(c):
     """
     layout = PageLayout(
         c,
-        "P6.2 : CURIOSITÉS & SOCLE DE CONFIANCE",
-        config=LayoutConfig(part_title="6. MA BOUSSOLE DE PROJECTION"),
+        "Curiosités *et socle de confiance.*",
+        config=LayoutConfig(part_title="Thème 6 · Projection"),
     )
 
     layout.add_text(
@@ -71,7 +71,7 @@ def create_boussole_confiance_page(c):
     )
 
     layout.add_question_block(
-        "Ce que j'ai Envie d'Explorer (Mes Curiosités Métiers)",
+        "Ce que j'ai envie d'explorer (mes curiosités métiers)",
         "livret_p6_curiosite",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -84,7 +84,7 @@ def create_boussole_confiance_page(c):
     )
 
     layout.add_question_block(
-        "Mes Victoires Passées (Mon Socle de Confiance)",
+        "Mes réussites passées (mon socle de confiance)",
         "livret_p6_confiance",
         config=QuestionConfig(
             box_height=5.2 * cm,

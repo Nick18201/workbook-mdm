@@ -14,8 +14,8 @@ def create_cartographie_metier_page(c):
     """
     layout = PageLayout(
         c,
-        "P3.1 : SAVOIR-FAIRE MÉTIER & MÉTHODES",
-        config=LayoutConfig(part_title="3. MA CARTOGRAPHIE DES COMPÉTENCES"),
+        "Savoir-faire *et méthodes.*",
+        config=LayoutConfig(part_title="Thème 3 · Compétences en action"),
     )
 
     layout.add_text(
@@ -26,7 +26,7 @@ def create_cartographie_metier_page(c):
     )
 
     layout.add_question_block(
-        "Mes Savoir-Faire Techniques & Cœur de Métier",
+        "Mes savoir-faire techniques et mon cœur de métier",
         "livret_p3_techniques",
         config=QuestionConfig(
             box_height=5.0 * cm,
@@ -39,7 +39,7 @@ def create_cartographie_metier_page(c):
     )
 
     layout.add_question_block(
-        "Mes Méthodes pour Structurer, Chiffrer & Résoudre",
+        "Mes méthodes pour structurer, chiffrer et résoudre",
         "livret_p3_methodes",
         config=QuestionConfig(
             box_height=5.0 * cm,
@@ -60,8 +60,8 @@ def create_cartographie_humain_page(c):
     """
     layout = PageLayout(
         c,
-        "P3.2 : COOPÉRATION & AGILITÉ D'APPRENTISSAGE",
-        config=LayoutConfig(part_title="3. MA CARTOGRAPHIE DES COMPÉTENCES"),
+        "Coopération *et apprentissage.*",
+        config=LayoutConfig(part_title="Thème 3 · Compétences en action"),
     )
 
     layout.add_text(
@@ -72,7 +72,7 @@ def create_cartographie_humain_page(c):
     )
 
     layout.add_question_block(
-        "Ma Coopération, Écoute & Transmission",
+        "Coopérer, écouter, transmettre",
         "livret_p3_relation",
         config=QuestionConfig(
             box_height=5.2 * cm,
@@ -85,7 +85,7 @@ def create_cartographie_humain_page(c):
     )
 
     layout.add_question_block(
-        "Mon Agilité & ma Curiosité d'Apprendre",
+        "Mon agilité et mon envie d'apprendre",
         "livret_p3_apprentissage",
         config=QuestionConfig(
             box_height=5.2 * cm,

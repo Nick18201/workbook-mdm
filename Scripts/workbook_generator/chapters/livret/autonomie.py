@@ -14,8 +14,8 @@ def create_autonomie_paliers_page(c):
     """
     layout = PageLayout(
         c,
-        "P4.1 : MES DEGRÉS D'AUTONOMIE EXPLIQUÉS",
-        config=LayoutConfig(part_title="4. AUTONOMIE & TRANSFÉRABILITÉ"),
+        "Vos degrés *d'autonomie.*",
+        config=LayoutConfig(part_title="Thème 4 · Autonomie et transférabilité"),
     )
 
     layout.add_text(
@@ -28,7 +28,7 @@ def create_autonomie_paliers_page(c):
     )
 
     layout.add_question_block(
-        "Où se situent mes Compétences Clés ?",
+        "Où se situent mes compétences clés ?",
         "livret_p4_paliers",
         config=QuestionConfig(
             box_height=4.5 * cm,
@@ -40,7 +40,7 @@ def create_autonomie_paliers_page(c):
     )
 
     layout.add_question_block(
-        "L'Épreuve du Miroir (Ce qui me paraît évident)",
+        "L'épreuve du miroir (ce qui me paraît évident)",
         "livret_p4_miroir",
         config=QuestionConfig(
             box_height=4.5 * cm,
@@ -60,8 +60,8 @@ def create_autonomie_transfert_page(c):
     """
     layout = PageLayout(
         c,
-        "P4.2 : MON PASSEPORT DE TRANSFÉRABILITÉ",
-        config=LayoutConfig(part_title="4. AUTONOMIE & TRANSFÉRABILITÉ"),
+        "Vos compétences *transférables.*",
+        config=LayoutConfig(part_title="Thème 4 · Autonomie et transférabilité"),
     )
 
     layout.add_text(
@@ -72,7 +72,7 @@ def create_autonomie_transfert_page(c):
     )
 
     layout.add_question_block(
-        "Mes Savoir-Faire Tout-Terrain",
+        "Mes savoir-faire tout-terrain",
         "livret_p4_transferabilite",
         config=QuestionConfig(
             box_height=5.0 * cm,
@@ -85,7 +85,7 @@ def create_autonomie_transfert_page(c):
     )
 
     layout.add_question_block(
-        "Dans Quels Nouveaux Métiers Pourraient-elles Servir ?",
+        "Dans quels nouveaux métiers pourraient-ils servir ?",
         "livret_p4_metiers_cibles",
         config=QuestionConfig(
             box_height=5.0 * cm,

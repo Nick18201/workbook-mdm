@@ -25,6 +25,7 @@ from workbook_generator.chapters.livret import (
     create_boussole_confiance_page,
     create_plan_securite_page,
     create_plan_pas_proximal_page,
+    create_livret_livrable_page,
 )
 
 
@@ -67,6 +68,7 @@ def build_livret_competences(output_filename="Livret_Competences.pdf"):
     # --- THÈME 7 : MON PLAN D'ÉMANCIPATION & MON PROCHAIN PETIT PAS ---
     builder.add_page(create_plan_securite_page)
     builder.add_page(create_plan_pas_proximal_page)
+    builder.add_page(create_livret_livrable_page)
 
     # --- CLOSING PAGE OFFICIELLE MDM ---
     builder.add_page(create_closing_page)
