@@ -30,7 +30,7 @@ def create_positionnement_identite_page(c):
             "title": "1. Si mon Projet était une Personne",
             "subtitle": "Comment serait-elle ? Quel ton ? Quelle énergie ? Quels traits ?",
             "field_id": "bp_p14_personnalite",
-            "placeholder": "Ex : Bienveillante mais sans complaisance, structurée, rassurante, pétillante...",
+            "placeholder": "Ex : Chaleureuse mais sans complaisance, structurée, rassurante, pétillante...",
         },
         {
             "title": "2. 3 à 5 Mots décrivant mon Univers",

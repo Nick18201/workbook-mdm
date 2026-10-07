@@ -16,6 +16,7 @@ from .components import (
     question_text_height,
 )
 from .forms import create_checkbox, reserve_field_name
+from .utils import french_typography
 from .primitives import (
     content_frame,
     draw_folio,
@@ -478,7 +479,7 @@ class PageLayout:
         th_paragraphs = []
         max_th_h = 0
         for i, h_text in enumerate(headers):
-            p_th = Paragraph(escape(str(h_text)).upper(), style_th)
+            p_th = Paragraph(escape(french_typography(str(h_text)).upper()), style_th)
             _, ph = p_th.wrap(widths[i] - 2 * cell_pad, 200)
             th_paragraphs.append((p_th, ph))
             max_th_h = max(max_th_h, ph)
@@ -515,7 +516,7 @@ class PageLayout:
                     if not c_str:
                         cell_items.append(("empty", "", 0))
                     else:
-                        p_cell = Paragraph(escape(c_str), style_cell)
+                        p_cell = Paragraph(escape(french_typography(c_str)), style_cell)
                         _, ch = p_cell.wrap(w - 2 * cell_pad, 300)
                         cell_items.append(("text", p_cell, ch))
                         row_h = max(row_h, ch + 0.4 * cm)

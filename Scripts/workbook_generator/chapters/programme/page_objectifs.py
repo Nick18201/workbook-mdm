@@ -35,8 +35,8 @@ def create_programme_page_objectifs(c):
         "L'enjeu du bilan de compétences est de déterminer <b>quelle place accorder au travail dans votre existence</b> "
         "afin de réaligner ce que vous faites au quotidien avec qui vous êtes vraiment. "
         "En explorant votre fonctionnement, vos choix passés et vos valeurs, la démarche permet de déconstruire "
-        "les schémas inconscients pour <b>remettre du sens dans vos décisions</b>, reprendre votre pouvoir d'agir "
-        "et concrétiser un projet professionnel réaliste et épanouissant."
+        "les schémas inconscients pour <b>décider en connaissance de cause</b>, reprendre votre pouvoir d'agir "
+        "et concrétiser un projet professionnel réaliste et durable."
     )
     style_intro = ParagraphStyle(
         "ObjIntro",

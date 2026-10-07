@@ -115,7 +115,7 @@ def create_programme_page_deroule_1(c):
         },
         {
             "badge": "S3",
-            "title": "Analyser et donner du sens à votre parcours",
+            "title": "Analyser et comprendre votre parcours",
             "description": (
                 "Vous avez déjà des expériences, des compétences, des intuitions. On regarde votre travail réel, "
                 "au-delà de la fiche de poste, pour identifier : ce que vous savez faire, ce que vous aimez réellement, "

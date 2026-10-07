@@ -12,11 +12,100 @@ from .config import PDFStyle
 reportlab.rl_config.useA85 = 0
 
 
-# Cache the simpleSplit function to avoid redundant text wrapping calculations
-# which are heavily used across chapters.
+# --- French typography (DA-workbook.md, section 7) --------------------------------
+
+NBSP = " "  # no font has the narrow no-break space U+202F
+
+# Whitespace a line may break at: every whitespace but the no-break space
+_BREAKABLE_SPACE = re.compile(r"[^\S ]+")
+
+
+def split_words(text):
+    """Words of a line, split at breakable spaces only (str.split() also splits at U+00A0)."""
+    return [w for w in _BREAKABLE_SPACE.split(str(text)) if w]
+
+
+def _split_line(text, font_name, size, max_width):
+    """simpleSplit for one line, without breaking at (nor dropping) no-break spaces."""
+    space = pdfmetrics.stringWidth(" ", font_name, size)
+    lines, line, width = [], [], 0.0
+    for word in split_words(text):
+        word_w = pdfmetrics.stringWidth(word, font_name, size)
+        if line and width + space + word_w > max_width:
+            lines.append(" ".join(line))
+            line, width = [word], word_w
+        else:
+            width += (space if line else 0) + word_w
+            line.append(word)
+    if line:
+        lines.append(" ".join(line))
+    return lines
+
+
+# Cache the line splitting, heavily used across chapters
 @functools.lru_cache(maxsize=2048)
 def cached_simpleSplit(text, fontName, fontSize, maxWidth):
-    return simpleSplit(text, fontName, fontSize, maxWidth)
+    """reportlab's simpleSplit, except that a no-break space never breaks a line."""
+    if NBSP not in text:
+        return simpleSplit(text, fontName, fontSize, maxWidth)
+    return [line for part in str(text).split("\n") for line in (_split_line(part, fontName, fontSize, maxWidth) or [""])]
+
+
+cached_simple_split = cached_simpleSplit
+
+# Text runs left alone: markup tags, entities, e-mail addresses and URLs or domain names
+_PROTECTED = re.compile(
+    r"(<[^>]*>|&#?\w+;|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|(?:https?://|www\.)\S+"
+    r"|\b[\w-]+(?:\.[\w-]+)*\.(?:fr|com|org|net|io|so|eu)\b\S*)"
+)
+_TYPO_RULES = [
+    # « » with a no-break space inside
+    (re.compile(r"«\s*"), "«" + NBSP),
+    (re.compile(r"\s*»"), NBSP + "»"),
+    # A no-break space before ; : ! ? (a missing one is added after a word)
+    (re.compile(r"[ \t]+([;:!?])"), NBSP + r"\1"),
+    (re.compile(r"(?<=[\w)…])([;!?])"), NBSP + r"\1"),
+    (re.compile(r"(?<=[^\W\d_])(:)(?=\s|$)"), NBSP + r"\1"),
+    # Between a number and its unit or the next group of digits (« 8 domaines », « 1 800 € »)
+    (re.compile(r"(?<=\d) (?=\d{3}\b|[^\W\d_]|[%€$°])"), NBSP),
+    # œ in cœur, œuvre, manœuvre, sœur, vœu, œil…
+    (re.compile(r"[Oo][Ee](?=[Uu])|\b[Oo]e(?=il)"), lambda m: "Œ" if m.group(0)[0] == "O" else "œ"),
+    (re.compile(r"\bMBTI\b(?!®)"), "MBTI®"),
+]
+
+
+def _typo_segment(text, state):
+    """Applies the rules to text without markup; `state` tracks open straight quotes."""
+    out = []
+    for ch in text:
+        if ch in '"“”':
+            opening = ch == "“" or (ch == '"' and not state["open"])
+            state["open"] = opening
+            out.append("«" + NBSP if opening else NBSP + "»")
+        else:
+            out.append(ch)
+    text = "".join(out)
+    for pattern, repl in _TYPO_RULES:
+        text = pattern.sub(repl, text)
+    return text
+
+
+@functools.lru_cache(maxsize=4096)
+def french_typography(text):
+    """
+    French typography of a text, plain or in ReportLab paragraph markup (tags, entities
+    and URLs are left alone): no-break spaces before ; : ! ?, inside « », between a number
+    and its unit; "…" quotes become « … »; oe becomes œ in cœur, œuvre…; MBTI gets its ®.
+    Idempotent, so text may go through it several times.
+    """
+    if not text or not isinstance(text, str):
+        return text
+    state = {"open": False}
+    parts = _PROTECTED.split(text)
+    for i in range(0, len(parts), 2):
+        parts[i] = _typo_segment(parts[i], state)
+    # Collapse the spaces a rule may have doubled (« with an existing space…)
+    return re.sub(NBSP + r"[ " + NBSP + "]+", NBSP, "".join(parts))
 
 
 def fit_font_size(text, font_name, size, max_width, min_size=6):

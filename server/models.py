@@ -168,7 +168,7 @@ class ParseRequest(BaseModel):
     raw_notes: str = Field(..., max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes ou texte au kilomètre")
     chapter_num: int = Field(1, description="Numéro du chapitre")
     chapter_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre souhaité (optionnel, inféré si omis)")
-    beneficiary_name: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Prénom ou nom du coaché")
+    beneficiary_name: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Prénom ou nom du bénéficiaire")
     meteo_option: Optional[
         Literal["auto", "none", "classic", "clarity", "mental_load"]
     ] = Field(

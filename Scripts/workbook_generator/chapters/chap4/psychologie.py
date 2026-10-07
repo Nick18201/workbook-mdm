@@ -134,7 +134,7 @@ def create_premieres_experiences_page(c):
     )
 
     layout.add_text(
-        "Exemples de croyances possibles :",
+        "Exemples d'idées reçues :",
         config=TextConfig(
             style_choice="subtitle",
             color=PDFStyle.COLOR_ACCENT_BLUE,

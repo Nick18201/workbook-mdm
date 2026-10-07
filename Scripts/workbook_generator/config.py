@@ -12,6 +12,7 @@ class PDFStyle:
     # A. Colors
     # Neutrals
     COLOR_SURFACE = colors.HexColor("#FAF8F5")  # cream
+    COLOR_PAGE = COLOR_SURFACE  # every page is tinted cream (DocumentBuilder); white is for cards and fields
     COLOR_SURFACE_CARD = colors.HexColor("#FFFFFF")  # white: pages, white cards, fields to fill in
     COLOR_SURFACE_ALT = colors.HexColor("#F1EBE6")  # linen
     COLOR_INK = colors.HexColor("#111111")  # main text, drawn strokes
@@ -45,7 +46,7 @@ class PDFStyle:
     DEFAULT_PASTEL = "lilac"
 
     # Former names, kept for the hand-drawn chapter pages until they are redone (lot E5)
-    COLOR_BG_NUDE = COLOR_SURFACE_CARD
+    COLOR_BG_NUDE = COLOR_PAGE
     COLOR_WHITE = COLOR_SURFACE_CARD
     COLOR_FIELD_BG = COLOR_SURFACE_CARD
     COLOR_ACCENT_BLUE = COLOR_BLUE

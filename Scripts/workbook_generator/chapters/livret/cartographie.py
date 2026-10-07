@@ -77,7 +77,7 @@ def create_cartographie_humain_page(c):
         config=QuestionConfig(
             box_height=5.2 * cm,
             subtitle="Comment interagissez-vous au quotidien ? (Vulgariser des notions complexes pour des novices, "
-            "apaiser des tensions, négocier avec bienveillance, transmettre).",
+            "apaiser des tensions, négocier avec tact, transmettre).",
             example="Ex : Expliquer des contraintes thermiques avec des mots simples aux artisans sur le chantier, former un nouveau collègue.",
             color_alternation=False,
             color=PDFStyle.COLOR_ACCENT_RED,

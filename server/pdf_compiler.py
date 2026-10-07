@@ -62,9 +62,13 @@ def _scale_bounds(b_data):
 
 
 def _title(text, default=""):
-    """A page title as shown: an all-caps title from the spec is set in sentence case."""
-    text = " ".join(str(text or default).split())
-    return text[:1] + text[1:].lower() if text.isupper() else text
+    """A page title as shown: punctuated, an all-caps title from the spec in sentence case."""
+    return as_title(str(text or default))
+
+
+def _eyebrow(number, title, default=""):
+    """Default eyebrow of a page: « 2. MON TITRE » (no final punctuation nor accent marks)."""
+    return f"{number}. {plain_title(title or default).rstrip('.!?… ').upper()}"
 
 
 def _without_unsupported_glyphs(spec: WorkbookSpec) -> WorkbookSpec:
@@ -86,12 +90,13 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
     """
     Compiles a WorkbookSpec object into in-memory PDF bytes.
     """
-    # Gemini or the coach may write emojis: ReportLab would drop them and leave gaps
+    # Gemini or the consultant may write emojis: ReportLab would drop them and leave gaps
     spec = _without_unsupported_glyphs(spec)
     buffer = io.BytesIO()
     # Generated workbooks are not numbered core workbooks: the folio shows their title
-    builder = DocumentBuilder(output_path=buffer, folio=plain_title(spec.chapter_title))
-    builder.set_title(f"{spec.chapter_title} - {spec.subtitle}")
+    short_title = plain_title(spec.chapter_title).rstrip(".!?… ")
+    builder = DocumentBuilder(output_path=buffer, folio=short_title)
+    builder.set_title(f"{short_title} - {spec.subtitle}")
 
     # Helper factories to avoid late-binding closure issues in loops
     def make_cover_renderer(page_obj):
@@ -156,8 +161,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                 c,
                 _title(page_obj.title, "Questions d'approfondissement"),
                 config=LayoutConfig(
-                    part_title=page_obj.part_title
-                    or f"{spec.chapter_num}. {(page_obj.title or 'QUESTIONS').upper()}"
+                    part_title=page_obj.part_title or _eyebrow(spec.chapter_num, page_obj.title, "Questions")
                 ),
             )
             intro = page_obj.params.get("intro_text") or page_obj.params.get("intro")
@@ -384,8 +388,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                 c,
                 _title(page_obj.title),
                 config=LayoutConfig(
-                    part_title=page_obj.part_title
-                    or f"{spec.chapter_num}. {page_obj.title.upper()}"
+                    part_title=page_obj.part_title or _eyebrow(spec.chapter_num, page_obj.title)
                 ),
             )
             raw_blocks = getattr(page_obj, "blocks", None) or page_obj.params.get("blocks", [])

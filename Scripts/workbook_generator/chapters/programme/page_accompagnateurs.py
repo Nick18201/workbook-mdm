@@ -25,7 +25,7 @@ def create_programme_page_accompagnateurs(c):
     card_inner_w = content_w - 2 * pad_x
 
     style_desc_lysiane = ParagraphStyle(
-        "CoachDescLysiane",
+        "ConsultantDescLysiane",
         fontName=PDFStyle.FONT_BODY,
         fontSize=8.5,
         leading=12.5,
@@ -33,7 +33,7 @@ def create_programme_page_accompagnateurs(c):
     )
 
     style_desc_nicolas = ParagraphStyle(
-        "CoachDescNicolas",
+        "ConsultantDescNicolas",
         fontName=PDFStyle.FONT_BODY,
         fontSize=8.2,
         leading=11.8,
@@ -93,11 +93,11 @@ def create_programme_page_accompagnateurs(c):
     txt_lysiane = (
         "• <b>Déontologie & Confidentialité :</b> Soumise au code de déontologie des psychologues, "
         "Lysiane garantit une stricte confidentialité des échanges et documents produits, "
-        "dans une posture de neutralité bienveillante tout au long de votre accompagnement.<br/><br/>"
+        "dans une posture de neutralité tout au long de votre accompagnement.<br/><br/>"
         "• <b>Expertise recrutement & marché :</b> 4 années d'expérience dans le secteur du recrutement "
         "(en entreprise et en cabinet) lui confèrent une solide connaissance du marché de l'emploi, de ses exigences et de ses opportunités réelles.<br/><br/>"
         "• <b>Outils & Certifications :</b> Rompue aux techniques d'entretien approfondi, elle maîtrise les approches cliniques "
-        "propres à sa formation. Elle est certifiée au questionnaire <b>MBTI®</b> officiel par The Myers-Briggs Company et formée à l’<b>Ennéagramme</b> au CEE."
+        "propres à sa formation. Elle est certifiée au questionnaire <b>MBTI®</b> officiel par The Myers-Briggs Company."
     )
     p_lysiane = Paragraph(txt_lysiane, style_desc_lysiane)
     p_lysiane.wrap(card_inner_w, 7.5 * cm)

@@ -258,7 +258,7 @@ def create_engagement_signature_page(c):
     lignes_engagement = [
         "Je m'engage à faire confiance à mon intuition tout en confrontant mes hypothèses au terrain avec lucidité.",
         "À regarder mes chiffres, mes devis et mes finances avec honnêteté, sans fuite ni déni.",
-        "À accepter l'imperfection des débuts et à tester vite pour apprendre avec bienveillance.",
+        "À accepter l'imperfection des débuts et à tester vite pour apprendre.",
         "À poser des limites saines pour préserver mon énergie vitale, ma santé et mon équilibre de vie.",
         "À incarner fièrement la valeur de mon travail et à faire grandir mon projet pas à pas avec audace.",
     ]

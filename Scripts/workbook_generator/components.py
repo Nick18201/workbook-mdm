@@ -49,7 +49,7 @@ from .primitives import (
     star_list_height,
     text_width,
 )
-from .utils import fit_font_size, ellipsize
+from .utils import cached_simpleSplit, ellipsize, fit_font_size, french_typography
 
 WIDTH, HEIGHT = A4
 
@@ -125,8 +125,9 @@ def draw_fitted_text(c, text, x, y, max_width, font_name, size, min_size=None,
     a visible '…' if it is still too long. y is the first baseline (lines go downward);
     the fill color is the caller's. Returns (number of lines drawn, font size used).
     """
+    text = french_typography(str(text))
     size = fit_font_size(text, font_name, size, max_width, min_size or size)
-    lines = simpleSplit(text, font_name, size, max_width) or [text]
+    lines = cached_simpleSplit(text, font_name, size, max_width) or [text]
     if len(lines) > max_lines:
         lines = lines[:max_lines - 1] + [" ".join(lines[max_lines - 1:])]
     lines = [ellipsize(line, font_name, size, max_width) for line in lines]
@@ -314,12 +315,16 @@ def split_chapter_label(label):
 
 
 def as_title(text):
-    """A former all-caps chapter name as a punctuated title: 'MON PARCOURS' -> 'Mon parcours.'"""
-    text = " ".join(str(text).split())
+    """
+    A title as the art direction wants it, punctuated and in sentence case: 'MON PARCOURS'
+    -> 'Mon parcours.', 'Mon rapport *à l'argent*' -> 'Mon rapport *à l'argent.*'.
+    """
+    text = " ".join(str(text).split()).rstrip(" :;,")
     if text.isupper():
         text = text[:1] + text[1:].lower()
-    if text and text[-1] not in ".!?…":
-        text += "."
+    core = text.rstrip("*")
+    if core and core[-1] not in ".!?…":
+        text = core + "." + text[len(core):]
     return text
 
 
@@ -411,7 +416,7 @@ def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, 
             "OpenerIntro", fontName=PDFStyle.FONT_BODY, fontSize=PDFStyle.SIZE_LEAD,
             leading=PDFStyle.SIZE_LEAD * 1.5, textColor=PDFStyle.COLOR_INK_MUTED,
         )
-        intro = Paragraph(intro_text, style)
+        intro = Paragraph(french_typography(intro_text), style)
         _, intro_h = intro.wrap(width * 0.88, HEIGHT)
 
     # Like a magazine opener: the eyebrow and the big number at the top beside a pastel

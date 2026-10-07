@@ -54,46 +54,46 @@ def create_psycho_edu_pages(c):
     draw_page_background(c, width, height)
     draw_side_panel(c, card_margin, width, height)
     new_y = draw_title(
-        c, "Comprendre ses Racines", pos=(text_x, text_top)
+        c, "Comprendre ses racines.", pos=(text_x, text_top)
     )
     c.setFont(PDFStyle.FONT_SUBTITLE, 12)
     c.setFillColor(PDFStyle.COLOR_ACCENT_BLUE)
-    c.drawString(text_x, new_y - 0.2 * cm, "Pour choisir son avenir")
+    c.drawString(text_x, new_y - 0.2 * cm, "Pour choisir la suite en connaissance de cause")
 
     text_y = new_y - 1.2 * cm
 
     # Introduction
     intro_lines = [
-        "Dans un bilan de compétences, on pense souvent qu'il suffit de lister ses savoir-faire pour trouver sa voie. C'est une erreur. Vous n'êtes pas seulement une somme de compétences techniques ; vous êtes le résultat d'une histoire.",
+        "Lister vos savoir-faire ne suffit pas pour décider de la suite. Vous n'êtes pas une somme de compétences techniques : vous êtes aussi le résultat d'une histoire.",
         "",
-        "Votre façon de travailler, votre rapport à l'argent, à l'autorité ou à la réussite ne viennent pas de nulle part. Ils ont été façonnés par votre famille et votre milieu d'origine. Ce document a pour but de vous aider à repérer ces « bagages invisibles » pour faire le tri : que voulez-vous garder ? Que devez-vous laisser au vestiaire pour enfin vous épanouir professionnellement ?",
+        "Votre façon de travailler, votre rapport à l'argent, à l'autorité ou à la réussite ont été façonnés par votre famille et votre milieu d'origine. Ces pages vous aident à repérer ces « bagages invisibles » et à faire le tri : ce que vous gardez, et ce que vous laissez de côté pour votre projet.",
     ]
     text_y = draw_paragraph_block(
-        c, "Introduction : Pourquoi regarder en arrière ?", intro_lines, text_y
+        c, "Pourquoi regarder en arrière ?", intro_lines, text_y
     )
 
     habitus_lines = [
-        "Imaginez que vous avez un logiciel installé en vous depuis l'enfance. Ce logiciel, c'est l'Habitus : votre manière spontanée de réagir, de parler, de vous tenir, héritée de vos parents et de votre milieu social.",
+        "L'habitus, c'est votre manière spontanée de réagir, de parler, de vous tenir, héritée de vos parents et de votre milieu social. Il agit comme un logiciel installé depuis l'enfance.",
         "",
-        "Pourquoi c'est important ? Si vous changez de milieu professionnel (exemple : d'une famille d'ouvriers vers un poste de cadre, ou l'inverse), ce logiciel peut bugger. Vous pouvez ressentir un décalage permanent, une gêne, comme si vous portiez un costume mal taillé.",
+        "Quand vous changez de milieu professionnel (d'une famille d'ouvriers à un poste de cadre, ou l'inverse), ce logiciel peut créer un décalage : une gêne diffuse, l'impression de porter un costume mal taillé.",
     ]
     text_y = draw_paragraph_block(
-        c, "1. Le « Sac à Dos » Social (L'Habitus)", habitus_lines, text_y
+        c, "1. Le « sac à dos » social (l'habitus)", habitus_lines, text_y
     )
 
     # Sentiment d'illégitimité
-    imposteur_lines = [
-        "« Un jour, ils vont se rendre compte que je ne suis pas à la hauteur »... C'est souvent le signe d'une Névrose de Classe. Ce n'est pas une maladie, mais un conflit intérieur.",
+    illegitimite_lines = [
+        "« Un jour, ils vont se rendre compte que je ne suis pas à la hauteur. » Cette pensée signale souvent un conflit lié au changement de milieu social, ce que la sociologie appelle la névrose de classe. Ce n'est pas une maladie.",
         "",
-        "• Le Parvenu : Si vous réussissez mieux que vos parents, vous pouvez ressentir une culpabilité (peur de les abandonner).",
-        "• Le Déclassé : Si votre situation est moins prestigieuse, vous pouvez ressentir de la honte.",
+        "• Vous réussissez mieux que vos parents : vous pouvez ressentir de la culpabilité, la peur de vous éloigner d'eux.",
+        "• Votre situation est moins prestigieuse que la leur : vous pouvez ressentir de la honte.",
         "",
-        "Ce sentiment freine : il peut empêcher de demander une augmentation ou pousser à l'épuisement.",
+        "Ce sentiment a des effets concrets : il peut vous retenir de demander une augmentation, ou vous pousser au surmenage.",
     ]
     text_y = draw_paragraph_block(
         c,
-        "Le sentiment d'illégitimité (Syndrome de l'Imposteur)",
-        imposteur_lines,
+        "Le sentiment d'illégitimité",
+        illegitimite_lines,
         text_y,
         color_title=PDFStyle.COLOR_TEXT_MAIN,
     )
@@ -107,30 +107,30 @@ def create_psycho_edu_pages(c):
     draw_page_background(c, width, height)
     draw_side_panel(c, card_margin, width, height)
     new_y = draw_title(
-        c, "Comprendre ses Racines (suite)", pos=(text_x, text_top)
+        c, "Comprendre ses racines. (suite)", pos=(text_x, text_top)
     )
     text_y = new_y - 1.0 * cm
 
     contrat_lines = [
-        "Chaque famille possède un « Grand Livre de Comptes » invisible. On y inscrit ce que l'on doit à ses parents.",
+        "Chaque famille tient un « livre de comptes » invisible : ce que l'on pense devoir à ses parents.",
         "",
-        "• Les Loyautés Invisibles (Le « Pilote Automatique ») :\n  Parfois, on s'auto-sabote juste avant le but. Pourquoi ? Peut-être pour ne pas dépasser inconsciemment ses parents. L'échec devient une façon de dire « Je reste comme vous ».",
+        "• Les loyautés invisibles :\n  il arrive de s'arrêter juste avant le but, pour ne pas dépasser ses parents. L'échec devient une façon de leur rester fidèle.",
         "",
-        "• La Réparation :\n  Avez-vous choisi votre métier par passion ou pour réparer un drame familial (injustice, maladie) ?",
+        "• La réparation :\n  avez-vous choisi votre métier par goût, ou pour réparer une histoire familiale (injustice, maladie) ?",
         "",
-        "• Le Mythe Familial :\n  « Chez nous, on est des intellectuels », « Chez nous, on est solidaires... ».\n  Si votre projet contredit ce mythe, vous rencontrerez une résistance interne.",
+        "• Le mythe familial :\n  « Chez nous, on est des intellectuels », « Chez nous, on est solidaires… ».\n  Un projet qui contredit ce mythe rencontre des résistances, chez vous comme autour de vous.",
     ]
     text_y = draw_paragraph_block(
-        c, "2. Le Contrat Familial Secret", contrat_lines, text_y
+        c, "2. Le contrat familial implicite", contrat_lines, text_y
     )
 
     souffrance_lines = [
-        "Le travail, ce n'est pas juste exécuter une tâche. C'est y mettre du sien. Quand on ne peut pas faire son travail « bien » (selon ses propres critères), on souffre. C'est l'activité empêchée.",
+        "Travailler, ce n'est pas seulement exécuter une tâche : c'est y mettre du sien. Quand vous ne pouvez pas faire votre travail « bien », selon vos propres critères, vous en souffrez. La psychologie du travail parle d'activité empêchée.",
         "",
-        "Votre souffrance n'est pas une faiblesse. C'est un signal d'intelligence : elle montre que vous tenez à ce que vous faites. Le but est de transformer cette plainte en pouvoir d'agir : retrouver une marge de manœuvre.",
+        "Cette souffrance n'est pas une faiblesse : elle montre que vous tenez à la qualité de votre travail. L'enjeu est de la transformer en pouvoir d'agir, c'est-à-dire de retrouver une marge de manœuvre.",
     ]
     text_y = draw_paragraph_block(
-        c, "3. La Souffrance et le Plaisir au Travail", souffrance_lines, text_y
+        c, "3. Souffrance et plaisir au travail", souffrance_lines, text_y
     )
 
     draw_page_decorations(
@@ -141,21 +141,21 @@ def create_psycho_edu_pages(c):
     # --- PAGE 3: PISTES ET OUTILS ---
     draw_page_background(c, width, height)
     draw_side_panel(c, card_margin, width, height)
-    new_y = draw_title(c, "Les Outils pour Avancer", pos=(text_x, text_top))
+    new_y = draw_title(c, "Trois outils pour avancer.", pos=(text_x, text_top))
     text_y = new_y - 1.0 * cm
 
     pistes_lines = [
-        "Voici trois pistes pour débloquer votre situation et transformer votre héritage :",
+        "Trois outils pour faire le tri dans votre héritage et décider en connaissance de cause :",
     ]
-    text_y = draw_paragraph_block(c, "4. Pistes pour votre Bilan", pistes_lines, text_y)
+    text_y = draw_paragraph_block(c, "4. Pistes pour votre bilan", pistes_lines, text_y)
 
-    # A. Génogramme du Coeur
+    # A. Supports in the family history
     geno_lines = [
-        "Ne restez pas seul avec votre arbre généalogique officiel. Identifiez vos « tuteurs de résilience ». Qui vous a donné confiance ? Qui vous a transmis des valeurs positives ? Appuyez-vous sur eux plutôt que sur les figures qui vous ont jugé.",
+        "Au-delà de l'arbre généalogique officiel, repérez les personnes qui vous ont donné confiance ou transmis des repères solides. Appuyez-vous sur elles plutôt que sur celles qui vous ont jugé.",
     ]
     text_y = draw_paragraph_block(
         c,
-        "A. Le Génogramme du Cœur",
+        "A. Vos appuis dans l'histoire familiale",
         geno_lines,
         text_y,
         color_title=PDFStyle.COLOR_ACCENT_BLUE,
@@ -163,11 +163,11 @@ def create_psycho_edu_pages(c):
 
     # B. Roman Familial
     roman_lines = [
-        "Repérez les répétitions et les « phrases poisons » (« Il faut souffrir pour réussir »). Prendre conscience de ces phrases, c'est ne plus les laisser diriger votre vie.",
+        "Repérez les répétitions et les phrases qui reviennent (« Il faut souffrir pour réussir »). Les identifier, c'est les empêcher de décider à votre place.",
     ]
     text_y = draw_paragraph_block(
         c,
-        "B. Le Roman Familial",
+        "B. Le roman familial",
         roman_lines,
         text_y,
         color_title=PDFStyle.COLOR_ACCENT_BLUE,
@@ -175,11 +175,11 @@ def create_psycho_edu_pages(c):
 
     # C. Objectif
     obj_lines = [
-        "L'objectif est de Réussir sans Trahir. Vous avez le droit de changer, de réussir, de gagner de l'argent, sans que cela soit une insulte à votre famille. Comment honorer les valeurs familiales (courage, honnêteté) sous une forme qui VOUS appartient ? C'est la différenciation : rester en lien, tout en étant libre d'être soi-même.",
+        "Vous avez le droit de changer, de réussir, de gagner de l'argent, sans renier votre famille. La question devient : comment garder ses valeurs (courage, honnêteté) sous une forme qui vous appartient ? C'est la différenciation : rester en lien, tout en décidant pour vous-même.",
     ]
     text_y = draw_paragraph_block(
         c,
-        "C. L'Objectif : La Différenciation",
+        "C. L'objectif : réussir sans trahir",
         obj_lines,
         text_y,
         color_title=PDFStyle.COLOR_ACCENT_BLUE,
@@ -194,10 +194,10 @@ def create_psycho_edu_pages(c):
     c.setFillColor(PDFStyle.COLOR_TEXT_MAIN)
     center_x = text_x + card_w / 2.0
     c.drawCentredString(
-        center_x, card_y + 1.4 * cm, "En éclairant ces zones d'ombre, vous transformez"
+        center_x, card_y + 1.4 * cm, "Repérer ces héritages,"
     )
     c.drawCentredString(
-        center_x, card_y + 0.8 * cm, "des chaînes invisibles en tremplins."
+        center_x, card_y + 0.8 * cm, "c'est reprendre la main sur vos choix."
     )
 
     draw_page_decorations(

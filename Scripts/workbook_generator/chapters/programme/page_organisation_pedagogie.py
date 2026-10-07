@@ -164,7 +164,7 @@ def create_programme_page_organisation_pedagogie(c):
     txt_cadre = (
         "• <b>Assistance pédagogique & technique réactive :</b> Tout au long du parcours, vous n'êtes jamais seul(e). "
         "Votre accompagnateur référent répond à vos questions par email ou par téléphone dans un délai garanti de <b>48h ouvrées</b>.<br/><br/>"
-        "• <b>Cadre de confiance absolu :</b> Respect strict du secret professionnel, posture de neutralité bienveillante, "
+        "• <b>Cadre de confiance absolu :</b> Respect strict du secret professionnel, posture de neutralité, "
         "adhésion au code de déontologie des psychologues et protection intégrale de vos données personnelles."
     )
     p_cadre = Paragraph(txt_cadre, style_cadre)

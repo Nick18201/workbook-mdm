@@ -65,7 +65,8 @@ def test_overflowing_content_continues_on_new_pages():
 
     titles = _page_titles(doc)
     for title in ("Questions", "Colonnes", "Enquête", "Piliers", "Composite"):
-        assert title in titles and f"{title} (suite)" in titles
+        # Titles are punctuated (DA): « Questions. »
+        assert f"{title}." in titles and f"{title}. (suite)" in titles
     _assert_nothing_off_page(doc)
 
     text = "".join(page.get_text() for page in doc)
@@ -117,7 +118,7 @@ def test_spec_emojis_are_removed_without_leaving_gaps():
     }))
 
     text = doc[0].get_text()
-    assert "Mes questions\n" in text
+    assert "Mes questions.\n" in text
     assert "Quelle est votre priorité ?" in text
     assert "Exemple : Lancer mon activité\n" in text
 
@@ -129,3 +130,12 @@ def test_strip_unsupported_glyphs():
     assert strip_unsupported_glyphs("Être « sûr » · 1 800 € → œ") == "Être « sûr » · 1 800 € → œ"
     # Shapes the art direction fonts lack are dropped (pictograms are drawn as icons instead)
     assert strip_unsupported_glyphs("Avant ◀ ▶ après ✓") == "Avant après"
+
+
+def test_pages_are_tinted_cream_under_their_content():
+    doc = _open(PageSpec(template="questions", title="Questions", params={"questions": [{"question": "Pourquoi ?"}]}))
+
+    assert len(doc) == 1  # the tint does not create an extra page
+    first = doc[0].get_drawings()[0]
+    assert first["rect"] == doc[0].rect
+    assert [round(v * 255) for v in first["fill"]] == [0xFA, 0xF8, 0xF5]
