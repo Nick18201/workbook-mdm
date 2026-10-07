@@ -600,7 +600,7 @@ class PageLayout:
 
     def add_frise(self, steps, start_label="", end_label=""):
         """The art direction's timeline: steps are (icon, title, marker) on a dotted line."""
-        above = 28 if (start_label or end_label) else 18
+        above = 40 if (start_label or end_label) else 22
         below = 15 + 10 + 3 * 12.5 + 14
         self._ensure_space(above + below)
         line_y = self.y_cursor - above

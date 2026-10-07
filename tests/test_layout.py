@@ -31,6 +31,8 @@ def _assert_nothing_off_page(doc):
     for page in doc:
         width, height = page.rect.width, page.rect.height
         for w in page.widgets():
+            if w.rect.is_empty:  # hidden metadata fields (chapter 0)
+                continue
             assert w.rect.y1 <= height - 1.6 * CM, (page.number, w.field_name)
         for block in page.get_text("dict")["blocks"]:
             for line in block.get("lines", []):

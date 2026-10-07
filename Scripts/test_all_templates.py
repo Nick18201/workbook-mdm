@@ -239,6 +239,48 @@ def page_composite_2(c):
     layout.render()
 
 
+def page_reading(c):
+    layout = PageLayout(c, "Une page *de lecture.*", config=LayoutConfig(part_title="À lire"))
+    layout.add_paragraphs([
+        "Les pages de lecture enchaînent intertitres, paragraphes et listes à puces étoile.",
+        "• Une puce étoile par idée.",
+        "• Un item ne se coupe jamais entre deux pages.",
+    ])
+    layout.add_heading("Un intertitre")
+    layout.add_frise(
+        [("history", "Prendre du recul", "Choix passés"), ("psychology", "Explorer", "Forces, envies"),
+         ("travel_explore", "Le terrain", "Métiers"), ("flag", "Décider", "Plan d'action")],
+        start_label="Aujourd'hui", end_label="Fin du bilan",
+    )
+    layout.add_info_cards([
+        {"title": "Le sécuritaire", "subtitle": "l'argent comme protection",
+         "text": "L'argent sert d'abord à se sentir à l'abri.", "note": "Question clé : de quelle sécurité ai-je besoin ?",
+         "field_id": "demo_info_1"},
+        {"title": "L'indépendant", "subtitle": "l'argent comme liberté",
+         "text": "L'argent permet de choisir et de ne pas dépendre.", "note": "Question clé : comment rester libre ?",
+         "field_id": "demo_info_2"},
+    ], check_label="Me correspond")
+    layout.add_annotation("Une seule touche faite main par page.")
+    layout.render()
+
+
+def page_form_blocks(c):
+    layout = PageLayout(c, "Des blocs *de formulaire.*", config=LayoutConfig(part_title="Formulaires"))
+    layout.add_fields_card([
+        [("Titre du poste et entreprise", "demo_fc_titre", None, 3), ("Année(s)", "demo_fc_annee", None, 1)],
+        [("Ce que j'ai aimé", "demo_fc_aime", 1.6), ("Ce que je n'ai pas aimé", "demo_fc_paime", 1.6)],
+    ], title="Expérience 1")
+    layout.add_rating_grid(["Argent, finances", "Santé, énergie", "Travail, carrière"], "demo_rating",
+                           min_label="1 · Très peu satisfait·e", max_label="10 · Pleinement satisfait·e")
+    layout.add_numbered_lines([("3 métiers « no limit »", "demo_nl"), ("3 métiers réalistes", "demo_r")], count=3)
+    layout.add_checklist_cards([("Liberté", ["Autonomie", "Choix", "Initiative"]),
+                                ("Sécurité", ["Stabilité", "Cadre clair", "Sérénité"]),
+                                ("Réussite", ["Progression", "Impact", "Fierté"])], columns=3, field_prefix="demo_cc")
+    layout.add_link_card("Des ressources", [("ONISEP", "https://www.onisep.fr/decouvrir-les-metiers",
+                                             "les formations, les secteurs et les débouchés.")])
+    layout.render()
+
+
 def page_meteo(c):
     create_standard_meteo_page(c, title="Votre météo *du jour.*", part_title="Ouverture de séance",
                                field_prefix="demo_meteo")
@@ -299,7 +341,8 @@ def build_test_suite_pdf(output_filename="Test_All_Templates.pdf"):
     builder.set_title("Planche de démonstration - DA Éditorial & Affirmé")
 
     for page in (page_elements_1, page_elements_2, page_cover, page_opener, page_questions,
-                 page_composite_1, page_composite_2, page_meteo, page_quadrants, page_two_columns,
+                 page_composite_1, page_composite_2, page_reading, page_form_blocks, page_meteo, page_quadrants,
+                 page_two_columns,
                  page_enquete, page_roadmap, page_livrable, create_closing_page):
         builder.add_page(page)
 
