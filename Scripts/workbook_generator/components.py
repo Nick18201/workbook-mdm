@@ -20,6 +20,7 @@ from .document_builder import document_pastel
 from .forms import create_input_field, create_checkbox, create_radio, reserve_field_name
 from .primitives import (
     content_frame,
+    draw_cover_illustration,
     draw_disc,
     draw_eyebrow,
     draw_field_box,
@@ -248,21 +249,19 @@ def as_title(text):
 
 def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise=None):
     """
-    Cover of a workbook: logotype, a pastel disc cut by the corner, the eyebrow, the big
-    chapter number in PT Mono blue, the title with its coral accent (see primitives.title_runs),
-    and the workbook's promise on a post-it.
+    Cover of a workbook: logotype, the cover illustration in the document pastel, the
+    eyebrow, the big chapter number in PT Mono blue, the title with its coral accent (see
+    primitives.title_runs), and the workbook's promise on a post-it stuck on the closed
+    notebooks of the illustration.
     """
     x, width = content_frame()
-    disc_cx, disc_cy, disc_r = WIDTH - 1.0 * cm, HEIGHT * 0.62, 9.5 * cm
-    draw_disc(c, disc_cx, disc_cy, disc_r, document_pastel(c))
-    # Small coral disc riding the edge of the big one, like a punctuation mark
-    draw_disc(c, disc_cx - disc_r * 0.72, disc_cy + disc_r * 0.69, 0.55 * cm, PDFStyle.COLOR_CORAL)
+    draw_cover_illustration(c)
     draw_logotype(c, x, HEIGHT - 2.6 * cm, size=16)
 
     if promise:
-        note_w, note_size = 6.6 * cm, PDFStyle.SIZE_POSTIT
+        note_w, note_size = 6.0 * cm, PDFStyle.SIZE_POSTIT
         note_h = paragraph_height(promise, note_w - 1.2 * cm, PDFStyle.FONT_SERIF, note_size, note_size * 1.3) + 1.3 * cm
-        note_x, note_y = WIDTH - PDFStyle.MARGIN_MAIN - note_w - 0.6 * cm, HEIGHT * 0.5
+        note_x, note_y = x - 0.3 * cm, HEIGHT - 11.7 * cm - note_h
         with postit(c, note_x, note_y, note_w, note_h, angle=-3):
             draw_paragraph(c, promise, 0.6 * cm, note_h - 0.65 * cm, note_w - 1.2 * cm,
                            PDFStyle.FONT_SERIF, note_size, PDFStyle.COLOR_INK, note_size * 1.3)

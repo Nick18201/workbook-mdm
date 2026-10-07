@@ -50,7 +50,7 @@ L'agent DOIT respecter scrupuleusement les directives de [`Agent.md`](file:///c:
 
 | N° | Gabarit | Appel API (`workbook_generator`) | Usage |
 |:---|:---|:---|:---|
-| **1** | **Couverture** | `create_cover_page(c, title, number, tagline, promise)` | Logotype, gros numéro PT Mono, titre avec mot d'accent, disque pastel, promesse sur un post-it |
+| **1** | **Couverture** | `create_cover_page(c, title, number, tagline, promise)` | Logotype, illustration de la table de travail (au pastel du carnet), gros numéro PT Mono, titre avec mot d'accent, promesse sur un post-it |
 | **2** | **Ouverture de chapitre** | `create_standard_summary_page(c, num, title, intro, points)` | Sourcil, gros numéro, titre, objectif, encadré EXERCICES & PROTOCOLES à puces étoile |
 | **3** | **Questions Auto-Fit** | `PageLayout.add_questions_group(questions)` | 1 à 4 questions sur cartes pastel, boîtes auto-dimensionnées |
 | **4** | **Météo Intérieure** | `create_standard_meteo_page(c, title, part_title, ...)` | Humeur et pictogrammes météo, jauge d'énergie 0-10 en pastilles, réflexion |

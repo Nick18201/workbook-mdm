@@ -17,7 +17,7 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
   - **`chapters/`** : L'arborescence des chapitres. **Règle stricte et absolue : Le paradigme "1 fichier = 1 chapitre" est formellement interdit. La norme architecturale exclusive est : 1 dossier modulaire = 1 chapitre.** Tout nouveau développement devra respecter cette règle de découplage (avec un `__init__.py` jouant le rôle de routeur léger qui exporte l'API publique).
     - Exemples : `chap0/` à `chap6/` (les 7 carnets), `livret/`, `business_plan/`, `programme/` (la brochure publiée sur le site).
     - La logique de positionnement et de génération pour chaque page ou groupe d'exercices doit être scindée en sous-fichiers (ex: `intro.py`, `exercices.py`, `cloture.py`).
-- **`assets/`** : Contient les `fonts/` (DM Sans, Manrope, PT Mono, Instrument Serif, Material Symbols Outlined, avec leurs licences) et `illustrations/` (logos CPF, France Travail, Qualiopi).
+- **`assets/`** : Contient les `fonts/` (DM Sans, Manrope, PT Mono, Instrument Serif, Material Symbols Outlined, avec leurs licences) et `illustrations/` (`couverture.svg`, l'illustration des couvertures, et les logos CPF, France Travail, Qualiopi).
 - **`DA-workbook.md` et `design-system/`** : La direction artistique « Éditorial & Affirmé » (couleurs, typographie, éléments signature, ton et vocabulaire). Toute page doit s'y conformer.
 - **Fichiers racines** : Entrées PDF statiques (ex: `Workbook_Chapitre_1.pdf`) ou temporaires, ignorées par git.
 

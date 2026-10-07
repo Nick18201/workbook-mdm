@@ -2,6 +2,7 @@
 # Après une modification, régénérer requirements.txt et requirements-dev.txt
 # avec les commandes indiquées en tête de ces fichiers.
 reportlab>=5.0,<6
+svglib>=2.3,<3  # illustration SVG des couvertures
 fastapi>=0.110
 uvicorn[standard]>=0.28
 pydantic>=2.6,<3

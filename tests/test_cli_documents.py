@@ -5,6 +5,9 @@ import pymupdf
 import pytest
 
 from test_layout import _assert_nothing_off_page
+from workbook_generator.components import create_cover_page
+from workbook_generator.config import PDFStyle
+from workbook_generator.document_builder import DocumentBuilder
 
 # (script module, generator function) of the 10 CLI documents
 DOCUMENTS = [
@@ -30,3 +33,21 @@ def test_cli_document_stays_on_its_pages(module, function):
     # Every inner page carries the folio; the cover and the back cover do not
     for page in list(doc)[1:-1]:
         assert "MARGE DE MANŒUVRE" in page.get_text(), page.number
+
+
+def _rgb(color):
+    return tuple(round(v * 255) for v in color.rgb())
+
+
+def test_cover_illustration_takes_the_document_pastel():
+    buffer = io.BytesIO()
+    builder = DocumentBuilder(buffer, carnet=4)
+    builder.add_page(create_cover_page, "Mon rapport *à l'argent.*", 4, None, None, "Un salaire et un rythme de vie.")
+    builder.save()
+    page = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")[0]
+
+    fills = {tuple(round(v * 255) for v in d["fill"]) for d in page.get_drawings() if d.get("fill")}
+    assert _rgb(PDFStyle.COLOR_BLUE) in fills  # the open notebook of the illustration
+    assert _rgb(PDFStyle.PASTELS["blush"]) in fills  # carnet 4's pastel...
+    assert _rgb(PDFStyle.PASTELS["lilac"]) not in fills  # ...in place of the SVG's placeholder
+    assert "Un salaire et un rythme de vie." in " ".join(page.get_text().split())

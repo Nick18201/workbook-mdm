@@ -25,6 +25,7 @@ from .components import (
 from .primitives import (
     draw_annotation,
     draw_card_title,
+    draw_cover_illustration,
     draw_drawn_arrow,
     draw_eyebrow,
     draw_field_box,
@@ -69,6 +70,7 @@ __all__ = [
     "draw_choice_scale",
     "draw_annotation",
     "draw_card_title",
+    "draw_cover_illustration",
     "draw_drawn_arrow",
     "draw_eyebrow",
     "draw_field_box",
