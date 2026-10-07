@@ -216,7 +216,7 @@ def draw_heading(c, title, x, top, max_width, size=None, font=None, color=None, 
     """
     Draws a title in ink with its accent run (see title_runs) in coral, balanced over its
     lines. Bright coral text is only legible from 18 pt on cream or white: the default
-    accent is PDFStyle.COLOR_TITLE_ACCENT (bright coral on the off-white pages) and coral-strong
+    accent is PDFStyle.COLOR_TITLE_ACCENT (bright coral on the cream pages) and coral-strong
     below 18 pt. `suffix` is appended without accent, e.g. " (suite)". Returns the bottom y
     of the block.
     """
