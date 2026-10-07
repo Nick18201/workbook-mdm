@@ -5,16 +5,26 @@ import server.gemini_service as gemini_service
 from server.app import app
 
 
-def _fake_genai_client(generate):
+def _fake_genai_client(generate, created=None):
     class Models:
         def generate_content(self, **kwargs):
             return generate()
 
     class Client:
         def __init__(self, **kwargs):
+            if created is not None:
+                created.append(kwargs)
             self.models = Models()
 
     return Client
+
+
+@pytest.fixture(autouse=True)
+def fresh_gemini_clients():
+    # Clients are cached per API key: each test must see its own fake
+    gemini_service._get_client.cache_clear()
+    yield
+    gemini_service._get_client.cache_clear()
 
 
 @pytest.fixture
@@ -60,6 +70,22 @@ def test_parse_is_flagged_as_ai_when_gemini_answers(client, monkeypatch):
     assert r.headers["X-MDM-Generation"] == "ai"
     assert "X-MDM-Fallback-Reason" not in r.headers
     assert r.json()["chapter_title"] == "Titre IA"
+
+
+def test_gemini_client_is_reused_and_has_a_timeout(client, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    created = []
+
+    class Response:
+        text = '{"chapter_title": "Titre IA", "pages": []}'
+
+    monkeypatch.setattr(gemini_service.genai, "Client", _fake_genai_client(Response, created))
+
+    for _ in range(2):
+        assert client.post("/api/parse", json={"raw_notes": "Notes"}).status_code == 200
+
+    assert len(created) == 1
+    assert created[0]["http_options"].timeout == gemini_service.GEMINI_TIMEOUT_S * 1000
 
 
 def test_iterate_and_customize_flag_fallback(client, monkeypatch):

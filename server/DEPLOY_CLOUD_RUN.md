@@ -46,7 +46,9 @@ gcloud run deploy mdm-workbook-generator \
 
 > ⚠️ **Ne jamais ajouter `--allow-unauthenticated`** : ce flag donne le rôle d'invocation à `allUsers`, ce qui rend l'adresse `*.run.app` publique et contourne l'IAP. L'application n'a aucune authentification propre : toute la protection vient de l'IAP (section 3).
 
-Variable d'environnement facultative : `GEMINI_MODELS` (liste séparée par des virgules) pour changer les modèles Gemini essayés dans l'ordre, sans modifier le code.
+Variables d'environnement facultatives, modifiables sans toucher au code :
+- `GEMINI_MODELS` : modèle Gemini utilisé (`gemini-3.8-flash` par défaut). Une liste séparée par des virgules fait essayer les modèles dans l'ordre.
+- `GEMINI_TIMEOUT_S` : délai maximal d'un appel Gemini, en secondes (120 par défaut ; une analyse prend environ 30 s). Au-delà, l'application passe au modèle de secours heuristique et l'interface affiche le bandeau orange.
 
 ### Ce que fait cette commande automatiquement :
 1. Envoie le code vers Google Cloud Build.

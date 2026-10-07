@@ -31,7 +31,32 @@ from workbook_generator import (
     create_closing_page,
 )
 from workbook_generator.utils import strip_unsupported_glyphs
-from .models import WorkbookSpec
+from .models import MAX_SCALE_STEPS, WorkbookSpec
+
+MAX_BLOCK_HEIGHT_CM = 20
+
+
+def _as_number(value, default, cast=float):
+    """Numeric block value, or default: blocks given in params['blocks'] are not validated by BlockSpec."""
+    try:
+        return cast(value)
+    except (TypeError, ValueError, OverflowError):
+        return default
+
+
+def _height_pt(height_cm, default=None):
+    height_cm = _as_number(height_cm, None)
+    if height_cm is None or not height_cm > 0:
+        return default
+    return min(height_cm, MAX_BLOCK_HEIGHT_CM) * 28.3465
+
+
+def _scale_bounds(b_data):
+    low = _as_number(b_data.get("min_val"), 0, int)
+    high = _as_number(b_data.get("max_val"), 10, int)
+    if not 0 < high - low <= MAX_SCALE_STEPS:
+        return 0, 10
+    return low, high
 
 
 def _without_unsupported_glyphs(spec: WorkbookSpec) -> WorkbookSpec:
@@ -374,21 +399,18 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                             {"title": "1. Constat ou Observation clé", "subtitle": "Ce que vous avez perçu ou appris"},
                             {"title": "2. Décision ou Piste d'action", "subtitle": "Ce que vous choisissez de poser"},
                         ]
-                    cols = b_data.get("columns", 2)
-                    c_h = (
-                        (b_data.get("card_height_cm") * 28.3465)
-                        if b_data.get("card_height_cm")
-                        else None
-                    )
+                    cols = _as_number(b_data.get("columns"), 2, int)
+                    c_h = _height_pt(b_data.get("card_height_cm"))
                     prefix = b_data.get("field_prefix") or f"p{page_idx}_g{b_idx}"
                     layout.add_cards_grid(
                         cards, columns=cols, card_height=c_h, field_prefix=prefix
                     )
                 elif b_type == "scale":
+                    min_val, max_val = _scale_bounds(b_data)
                     layout.add_scale_gauge(
                         label=b_data.get("label") or b_data.get("title") or "Évaluation :",
-                        min_val=b_data.get("min_val", 0),
-                        max_val=b_data.get("max_val", 10),
+                        min_val=min_val,
+                        max_val=max_val,
                         min_label=b_data.get("min_label", ""),
                         max_label=b_data.get("max_label", ""),
                         field_id=b_data.get("field_id") or f"p{page_idx}_scale_{b_idx}",
@@ -399,7 +421,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                         "Échange ou confirmation planifié",
                         "Alignement personnel validé"
                     ]
-                    cols = b_data.get("columns", 1)
+                    cols = _as_number(b_data.get("columns"), 1, int)
                     title = b_data.get("title")
                     prefix = b_data.get("field_prefix") or f"p{page_idx}_chk_{b_idx}"
                     layout.add_checklist(
@@ -427,11 +449,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec) -> bytes:
                 elif b_type == "question":
                     q_text = b_data.get("question") or b_data.get("text", "")
                     f_id = b_data.get("field_id") or f"p{page_idx}_q_{b_idx}"
-                    b_h = (
-                        (b_data.get("box_height_cm") * 28.3465)
-                        if b_data.get("box_height_cm")
-                        else (3.0 * 28.3465)
-                    )
+                    b_h = _height_pt(b_data.get("box_height_cm"), default=3.0 * 28.3465)
                     cfg = QuestionConfig(
                         subtitle=b_data.get("subtitle"),
                         example=b_data.get("example"),

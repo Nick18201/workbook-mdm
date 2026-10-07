@@ -6,9 +6,9 @@ import io
 import os
 import sys
 import logging
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, StreamingResponse, Response
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse, Response
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -55,14 +55,57 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS configuration
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Pas de CORS : l'interface est servie par cette même application (même origine).
+
+_FIELD_LABELS = {
+    "raw_notes": "Notes de séance",
+    "feedback": "Consigne d'ajustement",
+    "chapter_title": "Titre du chapitre",
+    "beneficiary_name": "Nom du bénéficiaire",
+    "beneficiary_context": "Contexte du bénéficiaire",
+    "custom_instructions": "Consignes spécifiques",
+}
+
+
+_ERROR_MESSAGES = {
+    "string_too_long": "texte trop long (maximum {max_length} caractères)",
+    "too_long": "trop d'éléments (maximum {max_length})",
+    "missing": "champ obligatoire",
+    "less_than_equal": "doit être inférieur ou égal à {le}",
+    "greater_than_equal": "doit être supérieur ou égal à {ge}",
+    "greater_than": "doit être supérieur à {gt}",
+    "literal_error": "valeur non reconnue (attendu : {expected})",
+    "value_error": "{error}",
+}
+
+
+def _describe_validation_error(err):
+    """Traduit une erreur Pydantic en une phrase lisible pour l'alerte de l'interface."""
+    path = ".".join(str(p) for p in err.get("loc", ()) if p != "body")
+    try:
+        message = _ERROR_MESSAGES[err["type"]].format(**(err.get("ctx") or {}))
+    except (KeyError, IndexError):
+        message = err.get("msg", "valeur invalide")
+    label = _FIELD_LABELS.get(path, path)
+    return f"{label} : {message}" if label else message
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_error_handler(request: Request, exc: RequestValidationError):
+    """422 avec un 'detail' textuel (l'interface l'affiche tel quel), sans renvoyer la saisie."""
+    messages = [_describe_validation_error(err) for err in exc.errors()[:3]]
+    return JSONResponse(
+        status_code=422,
+        content={"detail": "Requête invalide. " + " ; ".join(messages)},
+    )
+
+
+def _internal_error(action):
+    """500 sans détail technique : l'exception est journalisée par l'appelant, pas renvoyée au client."""
+    return HTTPException(
+        status_code=500,
+        detail=f"{action} a échoué (erreur interne, détails dans les journaux du serveur).",
+    )
 
 
 def _generation_headers(fallback_reason):
@@ -112,9 +155,7 @@ def api_parse_notes(request: ParseRequest, response: Response):
         return spec
     except Exception as e:
         logger.error("Erreur lors de l'analyse IA : %s", e, exc_info=True)
-        raise HTTPException(
-            status_code=500, detail=f"Erreur lors de l'analyse IA : {str(e)}"
-        )
+        raise _internal_error("L'analyse des notes")
 
 
 @app.post("/api/iterate", response_model=IterateResponse)
@@ -128,9 +169,7 @@ def api_iterate_spec(request: IterateRequest, response: Response):
         return result
     except Exception as e:
         logger.error("Erreur lors de l'itération IA : %s", e, exc_info=True)
-        raise HTTPException(
-            status_code=500, detail=f"Erreur lors de l'ajustement IA : {str(e)}"
-        )
+        raise _internal_error("L'ajustement du livret")
 
 
 @app.get("/api/templates", response_model=list[TemplateInfo])
@@ -160,20 +199,21 @@ def api_customize_workbook(request: CustomizeRequest, response: Response):
     """
     Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du coach.
     """
+    if request.base_spec is None and not get_predefined_spec(request.template_id):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Modèle de livret '{request.template_id}' introuvable.",
+        )
     try:
         result, fallback_reason = customize_spec_with_gemini(request)
         response.headers.update(_generation_headers(fallback_reason))
         return result
     except Exception as e:
         logger.error("Erreur lors de la personnalisation IA : %s", e, exc_info=True)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Erreur lors de la personnalisation : {str(e)}",
-        )
+        raise _internal_error("La personnalisation")
 
 
 @app.post("/api/compile")
-
 def api_compile_pdf(spec: WorkbookSpec):
     """
     Compiles a WorkbookSpec JSON into a PDF file stream.
@@ -192,10 +232,7 @@ def api_compile_pdf(spec: WorkbookSpec):
         )
     except Exception as e:
         logger.error("Erreur lors de la compilation du PDF : %s", e, exc_info=True)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Erreur lors de la compilation du PDF : {str(e)}",
-        )
+        raise _internal_error("La compilation du PDF")
 
 
 @app.post("/api/quick-generate")
@@ -217,9 +254,7 @@ def api_quick_generate(request: ParseRequest):
         )
     except Exception as e:
         logger.error("Erreur lors de la génération rapide : %s", e, exc_info=True)
-        raise HTTPException(
-            status_code=500, detail=f"Erreur lors de la génération : {str(e)}"
-        )
+        raise _internal_error("La génération")
 
 
 if __name__ == "__main__":
