@@ -65,6 +65,13 @@ app.add_middleware(
 )
 
 
+def _generation_headers(fallback_reason):
+    """Signals to the UI whether Gemini answered or the heuristic fallback was used."""
+    if not fallback_reason:
+        return {"X-MDM-Generation": "ai"}
+    return {"X-MDM-Generation": "fallback", "X-MDM-Fallback-Reason": fallback_reason}
+
+
 @app.get("/health")
 def health_check():
     """Cloud Run health check."""
@@ -95,12 +102,13 @@ def get_index():
 
 
 @app.post("/api/parse", response_model=WorkbookSpec)
-def api_parse_notes(request: ParseRequest):
+def api_parse_notes(request: ParseRequest, response: Response):
     """
     Transforms raw notes into a structured WorkbookSpec using Gemini Flash.
     """
     try:
-        spec = parse_notes_with_gemini(request)
+        spec, fallback_reason = parse_notes_with_gemini(request)
+        response.headers.update(_generation_headers(fallback_reason))
         return spec
     except Exception as e:
         logger.error("Erreur lors de l'analyse IA : %s", e, exc_info=True)
@@ -110,13 +118,14 @@ def api_parse_notes(request: ParseRequest):
 
 
 @app.post("/api/iterate", response_model=IterateResponse)
-def api_iterate_spec(request: IterateRequest):
+def api_iterate_spec(request: IterateRequest, response: Response):
     """
     Refines an existing WorkbookSpec iteratively based on user feedback.
     """
     try:
-        response = refine_spec_with_gemini(request)
-        return response
+        result, fallback_reason = refine_spec_with_gemini(request)
+        response.headers.update(_generation_headers(fallback_reason))
+        return result
     except Exception as e:
         logger.error("Erreur lors de l'itération IA : %s", e, exc_info=True)
         raise HTTPException(
@@ -147,13 +156,14 @@ def api_get_template_spec(template_id: str):
 
 
 @app.post("/api/customize", response_model=CustomizeResponse)
-def api_customize_workbook(request: CustomizeRequest):
+def api_customize_workbook(request: CustomizeRequest, response: Response):
     """
     Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du coach.
     """
     try:
-        response = customize_spec_with_gemini(request)
-        return response
+        result, fallback_reason = customize_spec_with_gemini(request)
+        response.headers.update(_generation_headers(fallback_reason))
+        return result
     except Exception as e:
         logger.error("Erreur lors de la personnalisation IA : %s", e, exc_info=True)
         raise HTTPException(
@@ -194,13 +204,16 @@ def api_quick_generate(request: ParseRequest):
     One-shot: Parses raw notes with Gemini and compiles the PDF directly in a single call.
     """
     try:
-        spec = parse_notes_with_gemini(request)
+        spec, fallback_reason = parse_notes_with_gemini(request)
         pdf_bytes = compile_workbook_from_spec(spec)
         filename = f"Workbook_Chapitre_{spec.chapter_num}.pdf"
         return StreamingResponse(
             io.BytesIO(pdf_bytes),
             media_type="application/pdf",
-            headers={"Content-Disposition": f"attachment; filename={filename}"},
+            headers={
+                "Content-Disposition": f"attachment; filename={filename}",
+                **_generation_headers(fallback_reason),
+            },
         )
     except Exception as e:
         logger.error("Erreur lors de la génération rapide : %s", e, exc_info=True)

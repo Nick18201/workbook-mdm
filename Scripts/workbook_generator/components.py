@@ -486,6 +486,8 @@ def create_standard_summary_page(
 ):
     """
     Standard Summary Page: Blue Background, large watermark number, and list of points.
+    intro_text is rendered as ReportLab paragraph markup (<b>, <br/>...): callers passing
+    untrusted text must escape it first, as server/pdf_compiler.py does.
     """
     width, height = A4
 
@@ -576,6 +578,7 @@ def create_standard_engagement_page(
     custom_lines=None,
     title="Pacte d'Action & d'Engagement",
     signature_label="Date et Signature :",
+    field_prefix="engagement",
 ):
     """
     Standard Engagement Page: Balanced commitment card with checkmarks and an anchored signature card.
@@ -667,7 +670,7 @@ def create_standard_engagement_page(
     form = c.acroForm
     create_input_field(
         form,
-        "date_lieu_engagement",
+        f"date_lieu_{field_prefix}",
         pos=(text_x + 0.6 * cm, sig_block_y + 0.55 * cm),
         size=(half_w, 1.7 * cm),
         tooltip="Fait à ..., le ...",
@@ -684,7 +687,7 @@ def create_standard_engagement_page(
 
     create_input_field(
         form,
-        "signature_engagement",
+        f"signature_{field_prefix}",
         pos=(sig_x, sig_block_y + 0.55 * cm),
         size=(half_w, 1.7 * cm),
         tooltip="Votre Signature",

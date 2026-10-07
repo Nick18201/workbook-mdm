@@ -2,6 +2,25 @@ from reportlab.lib import colors
 from .config import PDFStyle
 
 
+def _unique_field_name(form, name):
+    """
+    Returns a field name not yet used in this document. PDF viewers link widgets that
+    share a name (typing in one fills the other), so a repeated name gets a numeric suffix.
+    Dots are replaced because they denote parent/child fields in AcroForm names.
+    """
+    used = getattr(form, "_mdm_field_names", None)
+    if used is None:
+        used = form._mdm_field_names = set()
+
+    base = str(name).replace(".", "_")
+    unique, n = base, 2
+    while unique in used:
+        unique = f"{base}_{n}"
+        n += 1
+    used.add(unique)
+    return unique
+
+
 def create_input_field(
     form,
     name,
@@ -40,7 +59,7 @@ def create_input_field(
             font_size = 0 if height <= 28 else 11
 
     form.textfield(
-        name=name,
+        name=_unique_field_name(form, name),
         tooltip=tooltip,
         value=value,
         x=x,
@@ -62,7 +81,7 @@ def create_checkbox(form, name, pos, size=18, tooltip=""):
     """Helper to create consistent checkboxes."""
     x, y = pos
     form.checkbox(
-        name=name,
+        name=_unique_field_name(form, name),
         tooltip=tooltip,
         x=x,
         y=y,
