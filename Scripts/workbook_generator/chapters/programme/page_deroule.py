@@ -17,7 +17,8 @@ def create_programme_page_deroule_1(c):
     layout = programme_layout(c, TITLE, "Déroulé · temps 1", lead=LEAD)
     add_card(
         layout,
-        body="<b>10 séances individuelles en visio et un entretien de suivi à 6 mois (45 min)</b>, soit <b>13 h "
+        body="<b>10 séances individuelles de 1 h 20 en visio et un entretien de suivi à 6 mois (40 min)</b>, soit "
+             "<b>14 h "
              "d'accompagnement</b> avec la personne qui vous accompagne, choisie lors du premier échange. Entre les "
              "séances, <b>7 carnets de bord guidés</b>.",
         color=PDFStyle.COLOR_SKY,
@@ -177,9 +178,9 @@ def create_programme_page_deroule_4(c):
         },
         {
             "badge": "Suivi",
-            "title": "On se revoit 6 mois après pour faire le point sur votre projet (45 min)",
+            "title": "On se revoit 6 mois après pour faire le point sur votre projet (40 min)",
             "description": (
-                "Un entretien individuel de 45 min pour analyser vos avancées réelles, ajuster les démarches si "
+                "Un entretien individuel de 40 min pour analyser vos avancées réelles, ajuster les démarches si "
                 "besoin, lever les nouveaux blocages et consolider durablement la dynamique engagée."
             ),
             "objective": "consolider la dynamique et ajuster la trajectoire si nécessaire.",

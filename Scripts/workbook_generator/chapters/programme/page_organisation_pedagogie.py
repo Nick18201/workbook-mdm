@@ -11,7 +11,7 @@ def create_programme_page_organisation_pedagogie(c):
         {
             "label": "Moyens et outils",
             "items": [
-                "<b>Entretiens 100 % en visio :</b> séances individuelles de 1 h à 1 h 30, espacées de 1 à 2 semaines, "
+                "<b>Entretiens 100 % en visio :</b> séances individuelles de 1 h 20, espacées de 1 à 2 semaines, "
                 "avec le même accompagnateur tout au long du bilan.",
                 "<b>7 carnets de bord guidés :</b> supports structurés pas à pas pour mener votre travail personnel "
                 "en toute autonomie (conservés à vie).",
