@@ -429,7 +429,7 @@
           "rows": [
             [
               [
-                "Le choix, et ses deux options",
+                "Le choix, en quelques mots",
                 "c5_choix",
                 1.6,
                 1.4
@@ -443,12 +443,12 @@
             ],
             [
               [
-                "Ce que la première option me permettait de garder",
+                "J'ai choisi…, qui me permettait de garder…",
                 "c5_choix_option_1",
                 1.6
               ],
               [
-                "Ce que la seconde me permettait de garder",
+                "J'ai renoncé à…, qui me permettait de garder…",
                 "c5_choix_option_2",
                 1.6
               ]
@@ -460,7 +460,7 @@
           "type": "contrast_example",
           "title": "Vétérinaire",
           "surface": "J'ai choisi la sécurité.",
-          "exploitable": "Rester à la clinique ou ouvrir mon cabinet. Rester gardait l'équipe et les gardes partagées ; partir, le choix de mes soins. L'entraide l'a emporté."
+          "exploitable": "J'ai choisi de rester à la clinique, qui me gardait l'équipe et les gardes partagées. J'ai renoncé à mon cabinet, qui me laissait choisir mes soins. L'entraide l'a emporté."
         },
         {
           "type": "fields_card",
@@ -831,7 +831,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Votre grille rassemble ce que vous avez déjà écrit : on le relit, on ne repose pas la question. Reportez vos moteurs, vos critères et ce que vous ne voulez plus subir, puis relisez vos anti-modèles (carnet 1, exercice 5) et vos besoins de l'exercice 2."
+            "Votre grille rassemble ce que vous avez déjà écrit : on le relit, on ne repose pas la question. Reportez vos moteurs et les irritants que vous avez retournés en critères. Relisez aussi ce qui tient encore, vos modèles et anti-modèles (carnet 1, exercices 1 et 5), puis vos besoins de l'exercice 2."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -846,19 +846,19 @@
               1.6
             ],
             [
-              "Mes critères de poste",
+              "Mes critères : mon poste devra…",
               "c2.criteres",
               "c5_rappel_criteres",
               1.6
             ],
             [
-              "Ce que je ne veux plus subir",
+              "Ne plus subir… donc mon poste devra…",
               "c1.sac_a_dos",
               "c5_rappel_subir",
               1.6
             ],
             [
-              "Mon besoin pour garder l'énergie",
+              "Pour mon énergie, mon poste devra…",
               "c3.energies",
               "c5_rappel_energie",
               1.6
@@ -909,7 +909,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Parmi vos cinq valeurs prioritaires, gardez les trois qui passent le test des six mois (exercice 5). Écrivez-les ici, une seule fois : cette grille servira à juger chaque piste, puis à préparer vos enquêtes. Pour savoir d'où vient une valeur, relisez ce que vous avez reçu (carnet 1, exercice 4)."
+            "Parmi vos cinq valeurs prioritaires, gardez les trois qui passent le test des six mois (exercice 5). Écrivez-les ici, une seule fois : cette grille servira à juger chaque piste, puis à préparer vos enquêtes. Pour savoir d'où vient une valeur, relisez ce que vous avez reçu (carnet 1, exercice 4) et l'« À lire » du carnet 2."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -1030,22 +1030,6 @@
           "spacing_after_cm": 0.45
         },
         {
-          "type": "numbered_lines",
-          "cards": [
-            [
-              "Mes soutiens",
-              "c5_soutien",
-              "Qui, et ce que cette personne peut m'apporter"
-            ],
-            [
-              "Les regards critiques",
-              "c5_regard_critique",
-              "Qui, et ce que cette personne craint"
-            ]
-          ],
-          "count": 3
-        },
-        {
           "type": "callout",
           "text": "« Si tu ne connaissais pas mon métier actuel, à quel métier penserais-tu pour moi ? Qu'est-ce qui, chez moi, t'y fait penser ? »",
           "title": "La question à envoyer",
@@ -1053,53 +1037,120 @@
           "fixed": true
         },
         {
-          "type": "fields_card",
+          "type": "table",
+          "headers": [
+            "Mes soutiens",
+            "Ce que cette personne peut m'apporter",
+            "Question envoyée le"
+          ],
           "rows": [
             [
-              [
-                "Proche 1 : son prénom",
-                "c5_proche_1",
-                0.85,
-                1.4
-              ],
-              [
-                "Question envoyée le",
-                "c5_proche_1_envoi",
-                0.85,
-                0.6
-              ]
+              {
+                "field_id": "c5_soutien_1",
+                "placeholder": "Soutien 1 : son prénom"
+              },
+              {
+                "field_id": "c5_soutien_1_apport",
+                "placeholder": "Soutien 1 : ce que cette personne peut m'apporter"
+              },
+              {
+                "field_id": "c5_soutien_1_envoi",
+                "placeholder": "Soutien 1 : question envoyée le"
+              }
             ],
             [
-              [
-                "Proche 2 : son prénom",
-                "c5_proche_2",
-                0.85,
-                1.4
-              ],
-              [
-                "Question envoyée le",
-                "c5_proche_2_envoi",
-                0.85,
-                0.6
-              ]
+              {
+                "field_id": "c5_soutien_2",
+                "placeholder": "Soutien 2 : son prénom"
+              },
+              {
+                "field_id": "c5_soutien_2_apport",
+                "placeholder": "Soutien 2 : ce que cette personne peut m'apporter"
+              },
+              {
+                "field_id": "c5_soutien_2_envoi",
+                "placeholder": "Soutien 2 : question envoyée le"
+              }
             ],
             [
-              [
-                "Proche 3 : son prénom",
-                "c5_proche_3",
-                0.85,
-                1.4
-              ],
-              [
-                "Question envoyée le",
-                "c5_proche_3_envoi",
-                0.85,
-                0.6
-              ]
+              {
+                "field_id": "c5_soutien_3",
+                "placeholder": "Soutien 3 : son prénom"
+              },
+              {
+                "field_id": "c5_soutien_3_apport",
+                "placeholder": "Soutien 3 : ce que cette personne peut m'apporter"
+              },
+              {
+                "field_id": "c5_soutien_3_envoi",
+                "placeholder": "Soutien 3 : question envoyée le"
+              }
+            ],
+            [
+              {
+                "field_id": "c5_soutien_4",
+                "placeholder": "Soutien 4 : son prénom"
+              },
+              {
+                "field_id": "c5_soutien_4_apport",
+                "placeholder": "Soutien 4 : ce que cette personne peut m'apporter"
+              },
+              {
+                "field_id": "c5_soutien_4_envoi",
+                "placeholder": "Soutien 4 : question envoyée le"
+              }
             ]
           ],
-          "title": "Mes trois proches",
-          "question_labels": true
+          "col_widths_cm": [
+            4.6,
+            8.5,
+            4.0
+          ],
+          "field_height_cm": 0.85
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Les regards critiques",
+            "Ce que cette personne craint",
+            "Ce que je choisis de lui dire"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "c5_critique_1",
+                "placeholder": "Regard critique 1 : son prénom"
+              },
+              {
+                "field_id": "c5_critique_1_crainte",
+                "placeholder": "Regard critique 1 : ce que cette personne craint"
+              },
+              {
+                "field_id": "c5_critique_1_dire",
+                "placeholder": "Regard critique 1 : ce que je choisis de lui dire"
+              }
+            ],
+            [
+              {
+                "field_id": "c5_critique_2",
+                "placeholder": "Regard critique 2 : son prénom"
+              },
+              {
+                "field_id": "c5_critique_2_crainte",
+                "placeholder": "Regard critique 2 : ce que cette personne craint"
+              },
+              {
+                "field_id": "c5_critique_2_dire",
+                "placeholder": "Regard critique 2 : ce que je choisis de lui dire"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.6,
+            6.25,
+            6.25
+          ],
+          "field_height_cm": 0.85
         },
         {
           "type": "contrast_example",
