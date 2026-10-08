@@ -17,7 +17,7 @@ Ce récapitulatif s'adresse à l'agent qui s'occupe du site (dépôt `marge-de-m
    - temps 3 (Décider et agir) : 2 séances.
 4. **L'option « Initiation à l'IA » ouvre la séance 6**, puisque l'exploration passe de S7 à S6.
 5. **Le document du temps 3 s'appelle « carnet de route »**, comme le site le dit déjà. Le nom « livret de compétences » disparaît : son contenu entre dans le carnet de route.
-6. **Le MBTI disparaît du site.** On parle désormais d'un « test des fonctionnements cognitifs », une version maison conçue et éprouvée par Lysiane Brand, psychologue du travail. « MBTI » est une marque soumise à licence : plus aucune mention nulle part, y compris les codes de type (ISFJ…) et la certification de Lysiane. Voir la section dédiée plus bas.
+6. **Le MBTI disparaît du site.** On parle désormais d'un « test des fonctionnements cognitifs », une version maison conçue et éprouvée par Lysiane Brand, psychologue du travail. « MBTI » est une marque soumise à licence : plus aucune mention de l'outil, y compris les codes de type (ISFJ…). Seule exception : la certification MBTI® de Lysiane reste sur sa présentation. Voir la section dédiée plus bas.
 7. **Hexa3D est abandonné.** Le site n'en parle pas (vérifié) : ne pas l'ajouter.
 
 ## Ce qui ne change pas
@@ -188,7 +188,9 @@ Le champ `chapter` passe de 0 à 6 à **1 à 7**. Les textes ci-dessous décrive
 
 ## Le MBTI : supprimer toute mention
 
-**La règle** : « MBTI » est une marque soumise à licence. Le bilan utilise un **test des fonctionnements cognitifs**, une version maison conçue et éprouvée par Lysiane Brand, psychologue du travail. Le site ne doit plus mentionner le MBTI nulle part : ni « MBTI® », ni « test MBTI », ni codes de type (ISFJ, ESFJ, ISTP…), ni « certifiée MBTI® ».
+**La règle** : « MBTI » est une marque soumise à licence. Le bilan utilise un **test des fonctionnements cognitifs**, une version maison conçue et éprouvée par Lysiane Brand, psychologue du travail. Le site ne doit plus mentionner le MBTI nulle part : ni « MBTI® », ni « test MBTI », ni codes de type (ISFJ, ESFJ, ISTP…).
+
+**Une exception** : la certification de Lysiane (« Certifiée MBTI® ») reste dans ses titres et qualifications (`BilanDuo.astro` l. 33, `l-equipe.astro` l. 24 et 29). Elle décrit sa qualification, pas l'outil du bilan. La garder à l'écart de la description du test, pour ne pas laisser croire que celui-ci dérive du MBTI.
 
 Mentions visibles (relevé du 8 octobre 2026, hors tests) :
 
@@ -200,8 +202,8 @@ Mentions visibles (relevé du 8 octobre 2026, hors tests) :
 | `src/data/bilanNotebooks.ts` (l. 88, 89, 91, 98) | « L'écologie d'énergie (MBTI®) », « Passation et restitution du MBTI® officiel… », « Passation officielle du MBTI® (93 questions) », « Rapport officiel complet MBTI®… » | Le nouveau carnet 3 (section « Les sept carnets ») |
 | `src/data/bilanKit.ts` (l. 30-31) | « Questionnaire officiel MBTI® » — « et son rapport complet » | « Test des fonctionnements cognitifs » — « et sa restitution ». L'identifiant interne `mbti` peut devenir `fonctionnements`. |
 | `src/components/bilan/BilanStance.astro` (l. 19) | « Le MBTI® éclaire votre façon de fonctionner, il ne tranche pas. » | « Le test des fonctionnements cognitifs éclaire votre façon de fonctionner, il ne tranche pas. » |
-| `src/components/bilan/BilanDuo.astro` (l. 33 et 37) | « Certifiée MBTI® » ; « la passation officielle du MBTI® » | Retirer la mention de certification ; « le test des fonctionnements cognitifs et sa restitution » |
-| `src/pages/l-equipe.astro` (l. 24, 25, 29) | « Certifiée MBTI® » (deux fois) ; « la lecture de votre fonctionnement (MBTI®) » | Retirer « Certifiée MBTI® » ; « la lecture de votre fonctionnement » |
+| `src/components/bilan/BilanDuo.astro` (l. 33 et 37) | « Certifiée MBTI® » ; « la passation officielle du MBTI® » | Garder « Certifiée MBTI® » ; « le test des fonctionnements cognitifs et sa restitution » |
+| `src/pages/l-equipe.astro` (l. 24, 25, 29) | « Certifiée MBTI® » (deux fois) ; « la lecture de votre fonctionnement (MBTI®) » | Garder « Certifiée MBTI® » ; « la lecture de votre fonctionnement » |
 | `src/pages/l-equipe.astro` (l. 35) | « j'assure la passation et l'interprétation du questionnaire officiel MBTI® » | « j'ai conçu le test des fonctionnements cognitifs du bilan, et j'en assure la passation et la restitution » |
 | `src/pages/l-equipe.astro` (l. 38-39) | commentaire ; lien « Découvrir le test MBTI® officiel avec Lysiane » | « Découvrir le test des fonctionnements cognitifs » |
 | `src/data/team.ts` (l. 41) | `knowsAbout` : « MBTI » | Retirer |

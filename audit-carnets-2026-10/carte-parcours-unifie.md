@@ -314,7 +314,7 @@ Deux règles valent partout :
 
 - Pas de date de bascule : le nouveau parcours vaut pour les futurs bénéficiaires.
 - L'option « Initiation à l'IA » ouvre la séance 6.
-- On parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand. La mention « MBTI » disparaît de tous les supports (carnets, programme, site, app, prompts), y compris les codes de type (ISFJ…) et la certification de Lysiane : c'est une marque soumise à licence.
+- On parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand. La mention « MBTI » disparaît de tous les supports (carnets, programme, site, app, prompts), y compris les codes de type (ISFJ…) : c'est une marque soumise à licence. Seule exception : la certification MBTI® de Lysiane reste dans sa présentation.
 - Hexa3D est abandonné et disparaît de tous les supports.
 
 **À prendre**
