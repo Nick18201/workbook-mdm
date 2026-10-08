@@ -19,7 +19,7 @@
       "title": "L'argent *dans vos choix.*",
       "params": {
         "num": "4",
-        "intro_text": "Ce carnet prépare la séance 4. Il regarde ce que l'argent pèse dans vos choix professionnels : votre situation, votre histoire, ce que vous osez demander. Il ne juge pas votre gestion : il repère ce qui peut soutenir ou freiner votre projet. Vous en tirez votre seuil de sécurité financière, en quatre seuils.<br/><br/><b>Des ordres de grandeur suffisent. N'indiquez ni vos comptes, ni vos dettes, ni les revenus de vos proches.</b>",
+        "intro_text": "Ce carnet prépare la séance 4. Il regarde ce que l'argent pèse dans vos choix professionnels : votre situation, votre histoire, ce que vous osez demander. Il touche à votre famille et à vos revenus, sans juger votre gestion : il repère ce qui peut soutenir ou freiner votre projet. Vous en tirez votre seuil de sécurité financière, en quatre seuils.<br/><br/><b>Des ordres de grandeur suffisent. N'indiquez ni vos comptes, ni vos dettes, ni les revenus de vos proches.</b>",
         "points": [
           "Avant de commencer · Météo et récapitulatif · 10 min",
           "Exercice 1 · Votre situation · 10 min",
@@ -52,35 +52,40 @@
               "Ce qui me donne de l'énergie au travail",
               "c3.energies",
               "c4_rappel_energie",
-              1.6
+              0.85
             ],
             [
               "Pour garder mon énergie, j'ai besoin de…",
               "c3.energies",
               "c4_rappel_besoin",
-              1.6
+              0.85
             ]
           ],
           "columns": 2
-        },
-        {
-          "type": "question",
-          "question": "Le profil de fonctionnement que j'ai validé en séance 3 :",
-          "field_id": "c4_profil",
-          "subtitle": "En quelques phrases, avec vos mots : où vous puisez votre énergie, ce que vous remarquez d'abord, comment vous décidez, comment vous vous organisez.",
-          "box_height_cm": 2.4,
-          "fixed": true,
-          "data_id": "c4.profil"
         },
         {
           "type": "fields_card",
           "rows": [
             [
               [
+                "Le profil de fonctionnement que j'ai validé en séance 3",
+                "c4_profil",
+                1.8
+              ]
+            ],
+            [
+              [
+                "Les deux forces de mon profil où je me reconnais le plus",
+                "c4_forces",
+                1.6
+              ],
+              [
                 "En séance 3, j'ai vu que…",
                 "c4_seance_3",
                 1.6
-              ],
+              ]
+            ],
+            [
               [
                 "Mon profil se voit dans mes choix d'argent (dépenser, épargner, négocier) quand…",
                 "c4_pont",
@@ -88,7 +93,11 @@
               ]
             ]
           ],
-          "question_labels": true
+          "hint": "Avec vos mots : où vous puisez votre énergie, ce que vous remarquez d'abord, comment vous décidez, comment vous vous organisez.",
+          "question_labels": true,
+          "fixed": true,
+          "data_id": "c4.profil",
+          "title": "Après la restitution"
         }
       ]
     },
@@ -180,7 +189,7 @@
             {
               "question": "Chez moi, enfant, l'argent c'était…",
               "field_id": "c4_hist_enfance",
-              "subtitle": "Le milieu où vous avez grandi : aviez-vous le sentiment d'avoir assez, pas assez, ou de devoir faire attention ?"
+              "subtitle": "Le milieu où vous avez grandi : assez, pas assez, devoir faire attention ? Ce que l'argent a coûté à votre famille, ou ce qu'il lui a permis."
             },
             {
               "question": "Ce qu'on en disait, et ce qu'on en taisait :",
@@ -200,7 +209,7 @@
           "type": "question",
           "question": "Qui gagnait, qui gérait, qui décidait ?",
           "field_id": "c4_hist_decidait",
-          "subtitle": "Les femmes et les hommes de votre famille avaient-ils la même liberté avec l'argent ? Qu'avez-vous entendu sur ce que vous pourriez demander, gagner ou dépenser ?",
+          "subtitle": "Quelle liberté avaient les femmes et les hommes de votre famille avec l'argent ? Qu'avez-vous entendu sur ce que vous pourriez demander, gagner ou dépenser ?",
           "box_height_cm": 3.5
         },
         {
@@ -252,14 +261,25 @@
           "question": "Mon premier argent, reçu ou gagné, et ce qu'il représentait :",
           "field_id": "c4_exp_premier",
           "subtitle": "De l'argent de poche donné librement ou à mériter, un premier salaire : liberté, fierté, sécurité, nécessité ?",
-          "box_height_cm": 3.6
+          "box_height_cm": 4.0
         },
         {
-          "type": "question",
-          "question": "Ce que j'en faisais, et ce que j'en fais aujourd'hui :",
-          "field_id": "c4_exp_usage",
-          "subtitle": "Dépenser, économiser, partager, cacher, offrir ?",
-          "box_height_cm": 3.6
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que j'en faisais : dépenser, économiser, partager, cacher, offrir ?",
+                "c4_exp_usage",
+                2.8
+              ],
+              [
+                "Ce que j'en fais aujourd'hui",
+                "c4_exp_usage_aujourdhui",
+                2.8
+              ]
+            ]
+          ],
+          "question_labels": true
         },
         {
           "type": "question",
@@ -354,9 +374,10 @@
         {
           "type": "paragraphs",
           "items": [
-            "L'argent pèse aussi sur la façon dont vous défendez votre travail. Notez votre aisance dans chaque situation."
+            "L'argent pèse aussi sur la façon dont vous défendez votre travail. Au carnet 2, l'« À lire » sur le bagage social le disait : un malaise venu de son milieu peut retenir de demander. Notez votre aisance dans chaque situation."
           ],
-          "spacing_after_cm": 0.45
+          "spacing_after_cm": 0.45,
+          "fixed": true
         },
         {
           "type": "rating_grid",
@@ -395,10 +416,22 @@
           ]
         },
         {
-          "type": "question",
-          "question": "Ce que je n'ose pas demander, viser ou négocier aujourd'hui :",
-          "field_id": "c4_nose_pas",
-          "box_height_cm": 2.4,
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation la plus difficile pour moi, et pourquoi",
+                "c4_aisance_difficile",
+                1.6
+              ],
+              [
+                "Ce que je n'ose pas demander, viser ou négocier aujourd'hui",
+                "c4_nose_pas",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
           "fixed": true
         },
         {
@@ -512,10 +545,18 @@
         {
           "type": "paragraphs",
           "items": [
-            "L'argent n'a pas le même sens pour tout le monde. Ces huit tendances ne sont pas des cases : chacune peut vous aider ou vous freiner, selon les moments.",
-            "Cochez-en deux ou trois au plus, celles qui vous ressemblent le plus aujourd'hui."
+            "L'argent n'a pas le même sens pour tout le monde. Ces huit tendances ne sont pas des cases : chacune peut vous aider ou vous freiner, selon les moments."
           ],
           "spacing_after_cm": 0.45
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez vos moteurs du carnet 2 : la sécurité ou la reconnaissance y figurent peut-être. Vous relirez vos tendances au carnet 5, face à vos valeurs.",
+            "Cochez-en deux ou trois au plus, celles qui vous ressemblent le plus aujourd'hui."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
         },
         {
           "type": "info_cards",
@@ -661,14 +702,14 @@
                 1.6
               ],
               [
-                "Gagner davantage me gênerait parce que…",
+                "Gagner davantage, ou plus que mes parents, me gênerait parce que…",
                 "c4_synth_gene",
                 1.6
               ]
             ],
             [
               [
-                "Je me sens assez en sécurité à partir de…",
+                "Mon « assez » est plutôt un chiffre, ou une sensation difficile à atteindre :",
                 "c4_synth_assez",
                 1.6
               ],
@@ -707,7 +748,7 @@
       "part_title": "Fin de carnet · 10 min",
       "params": {
         "lines": [
-          "Je garde mes seuils pour moi, et je les apporte en séance.",
+          "Je garde mes seuils en tête : ils serviront à juger chaque piste.",
           "Je parle de rémunération sans m'en excuser.",
           "J'apporte ce carnet à la séance 4."
         ],
@@ -716,7 +757,7 @@
         "livrable_text": "Vos quatre seuils (exercice 5) et votre tendance dominante (exercice 6). Relus ensemble en séance 4, ils serviront à juger chaque piste, jusqu'au carnet de route.",
         "zones": [
           "Ce qui m'étonne en relisant mes réponses",
-          "Ce que je préfère aborder en séance plutôt que par écrit",
+          "À aborder en séance : ce que je préfère dire de vive voix, une question non tranchée",
           "Ce que j'ai laissé vierge, à reprendre ensemble"
         ],
         "pistes": true
