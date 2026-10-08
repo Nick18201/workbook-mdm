@@ -30,3 +30,5 @@ Chaque rapport suit la même structure : synthèse, exercice par exercice, charg
 - Les durées sont estimées exercice par exercice, ce ne sont pas des mesures. La saisie n'a pas été testée dans de vrais logiciels PDF.
 - La formule « Ce qui m'a surpris » impose un genre : le participe s'accorde avec « m' ». Elle a été remplacée par « Ce qui m'étonne » dans tous les rapports.
 - Le livret de compétences contient 28 exemples qui décrivent un seul profil très précis. Il faut vérifier qu'ils ne viennent pas d'un dossier réel.
+- **Hexa3D est abandonné** (décision du 8 octobre 2026). Toute mention doit disparaître, et les recommandations des rapports qui l'ajoutent sont sans objet. Il reste deux mentions dans le programme : `chapters/programme/page_organisation_pedagogie.py:30` et `page_indicateurs_satisfaction.py:23`.
+- **Le questionnaire de préférences est une version maison**, éprouvée par Lysiane Brand, praticienne certifiée MBTI®. Aucun support ne doit parler de « questionnaire officiel », de « passation officielle » ou de « rapport officiel ».

@@ -5,7 +5,11 @@ Version du 8 octobre 2026. Elle intègre les décisions de Nicolas :
 - un carnet 1 qui réunit un état des lieux rapide et les héritages ;
 - le carnet N prépare la séance N ;
 - la séance libérée va au temps 2 ;
-- le document du temps 3 s'appelle « carnet de route ».
+- le document du temps 3 s'appelle « carnet de route » ;
+- le nouveau parcours vaut pour les futurs bénéficiaires, sans date de bascule ;
+- l'option « Initiation à l'IA » ouvre la séance 6 ;
+- le questionnaire de préférences est une version maison, éprouvée par Lysiane Brand, praticienne certifiée MBTI® : ce n'est pas la passation officielle ;
+- Hexa3D est abandonné.
 
 Elle fixe, pour les PDF comme pour l'app, une seule liste de carnets, un seul ordre et un seul contenu. Elle s'appuie sur :
 - le programme du bilan (`chapters/programme/`) ;
@@ -49,7 +53,7 @@ Toujours 10 séances de 1 h 20 et un suivi de 40 min à 6 mois. La répartition 
 | | S10 | Synthèse, piste A (projet d'élan) et piste B (refuge et tremplin), premières actions | Carnet de route, partie 2 | |
 | | Suivi | Point à 6 mois (40 min) | — | |
 
-L'option « Initiation à l'IA », présentée sur le site comme l'ouverture de la séance d'exploration, ouvre désormais **la séance 6**.
+L'option « Initiation à l'IA » ouvre **la séance 6**, celle de l'exploration.
 
 ## 3. Les règles du parcours
 
@@ -128,7 +132,7 @@ Récapitule S2 et prépare S3, la restitution du MBTI®.
 | Exercice | Source | Décision |
 |---|---|---|
 | Récapitulatif de la séance 2 | PDF C3 ex. 1 | Il relit le fil rouge et les quatre zones. |
-| À savoir sur le MBTI® | Audit | Nouveau. Quatre préférences, pas « cinq dimensions ». Ces questions ne calculent pas le type. Le type est restitué en séance, et c'est la personne qui le valide. |
+| À savoir sur le questionnaire | Audit | Nouveau. Le questionnaire de préférences est une version maison, conçue et éprouvée par Lysiane Brand, praticienne certifiée MBTI®. Quatre préférences, pas « cinq dimensions ». Les mises en situation du carnet ne calculent pas le type. Le type est restitué en séance, et c'est la personne qui le valide. |
 | Les 17 mises en situation | PDF C3 ex. 2 à 5 | Garder, avec les réécritures de l'audit (Q1, Q4, Q7, Q8, Q13). Q14 et Q15 passent en échelle suivie d'un « pourquoi ». |
 | Sous pression | PDF C3 ex. 6 | Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs. Protocole complet. |
 | Ce que j'en retiens pour mon travail | Audit | Nouveau : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… ». |
@@ -175,7 +179,7 @@ Récapitule S5 et prépare S6 « Explorer ».
 | Exercice | Source | Décision |
 |---|---|---|
 | Récapitulatif de la séance 5 | PDF C6 ex. 1 | Une ligne par valeur, reportée du carnet 5, et « ce que la séance a confirmé, ce qu'elle a déplacé ». |
-| Votre cartographie | PDF C6 ex. 2 | Une seule page de reports : type MBTI®, cartographie des énergies, moteurs, seuils, grille anti-compromis, intérêts Hexa3D. Les seuils restent dans une zone « à garder pour vous ». |
+| Votre cartographie | PDF C6 ex. 2 | Une seule page de reports : type, cartographie des énergies, moteurs, seuils, grille anti-compromis. Les seuils restent dans une zone « à garder pour vous ». |
 | Le retour de vos proches | PDF C6 ex. 3 | Recueil des réponses : trois cartes, une par personne, puis « ce qui me parle vraiment / ce qui ressemble plutôt à ce qu'on attend de moi ». Protocole. |
 | Les ressources | PDF C6 | Placées avant les pistes. Liens à jour. |
 | Dix pistes | PDF C6 ex. 4 | 5 réalistes et 5 audacieuses. Elles partent du fil des pistes, des suggestions des proches et de « Je m'autorise à » (carnet 1). Une colonne « d'où vient cette piste ». |
@@ -275,7 +279,6 @@ Pour chaque donnée : où elle est écrite (une seule fois), et où elle est rep
 | 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création |
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création |
 | Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) |
-| Intérêts Hexa3D | Séance (à préciser) | Carnet 6 (cartographie) |
 | 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 |
 | Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route |
 | Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · module évolution interne |
@@ -309,15 +312,16 @@ Deux règles valent partout :
 - Le document du temps 3 s'appelle « carnet de route ».
 - Les ajustements d'équilibre : fil des pistes, interview dès le carnet 2, proches sollicités en fin de carnet 5, deux semaines pour chaque intervalle de terrain, synthèse préparée au fil de l'eau, travail réel au carnet 2.
 
+- Pas de date de bascule : le nouveau parcours vaut pour les futurs bénéficiaires.
+- L'option « Initiation à l'IA » ouvre la séance 6.
+- Le questionnaire de préférences est une version maison, éprouvée par Lysiane Brand, praticienne certifiée MBTI®. Aucun support ne doit parler de « questionnaire officiel », de « passation officielle » ni de « rapport officiel ».
+- Hexa3D est abandonné et disparaît de tous les supports.
+
 **À prendre**
-1. **La date de bascule** : les bilans en cours gardent l'ancien déroulé. Le nouveau vaut à partir de quelle date ? Le programme, le site et les carnets doivent changer le même jour.
-2. **L'option « Initiation à l'IA »** ouvre désormais la séance 6 (exploration) : à confirmer.
-3. **Hexa3D** : à quelle séance le test est-il passé et restitué ? Aucun carnet n'en parle aujourd'hui. La séance 5 ou 6 semble la plus logique.
-4. **La passation du MBTI®** : le site la place dans le carnet 3 (« 93 questions »). Or le carnet 3 contient 17 mises en situation, pas le questionnaire officiel. Où et quand le questionnaire est-il passé ?
-5. **Le business plan en deux formats** : un module court dans le bilan et un livret complet autonome.
-6. **Les retraits** : vision à 360°, questions de « Faire le point », arbre de vie facultatif, 3 fiches métiers obligatoires au lieu de 10.
-7. **Les deux modules à créer** : formation et financement (reconversion), argumentaire (évolution interne). Faut-il les créer avec l'app ?
-8. **Le nom affiché** : « carnet 1 » à « carnet 7 » partout (PDF, app, site), à la place de « chapitre 0 » à « chapitre 6 ».
+1. **Le business plan en deux formats** : un module court dans le bilan et un livret complet autonome.
+2. **Les retraits** : vision à 360°, questions de « Faire le point », arbre de vie facultatif, 3 fiches métiers obligatoires au lieu de 10.
+3. **Les deux modules à créer** : formation et financement (reconversion), argumentaire (évolution interne). Faut-il les créer avec l'app ?
+4. **Le nom affiché** : « carnet 1 » à « carnet 7 » partout (PDF, app, site), à la place de « chapitre 0 » à « chapitre 6 ».
 
 ## 10. Ce que cela implique pour le format technique
 
@@ -334,6 +338,6 @@ Ce que Gemini a le droit de produire reste un sous-ensemble de ce que le moteur 
 
 | Où | Quoi | Quand |
 |---|---|---|
-| Programme du bilan (`chapters/programme/`, texte réglementaire) | Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. | À la date de bascule, en même temps que le site, sur demande de Nicolas |
-| Site (dépôt `marge-de-manoeuvre`) | Voir `recap-site-parcours.md` | À la date de bascule |
-| Carnets PDF et app | Unification et renumérotation | Lot d'unification |
+| Programme du bilan (`chapters/programme/`, texte réglementaire) | Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. Le « questionnaire officiel MBTI® » devient le questionnaire de préférences maison (`page_deroule.py:75`, `page_organisation_pedagogie.py:29`, `page_tarifs_financement.py:23`). Hexa3D disparaît (`page_organisation_pedagogie.py:30`). Le libellé de l'indicateur de satisfaction « Pertinence des outils utilisés (MBTI®, Hexa3D, exercices) » (`page_indicateurs_satisfaction.py:23`) mesure des enquêtes passées : à reformuler sans fausser ce qui a été mesuré. | Lot dédié, en même temps que le site |
+| Site (dépôt `marge-de-manoeuvre`) | Voir `recap-site-parcours.md` | Dès que prêt, en même temps que le programme |
+| Carnets PDF et app | Unification et renumérotation. « MBTI® » à reformuler dans les carnets selon la même règle. | Lot d'unification |
