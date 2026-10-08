@@ -1,0 +1,779 @@
+{
+  "chapter_num": 4,
+  "chapter_title": "Mon rapport à l'argent",
+  "subtitle": "Bilan de compétences",
+  "carnet": 4,
+  "pdf_title": "Marge de Manœuvre · Carnet 4 : Mon rapport à l'argent",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mon rapport *à l'argent.*",
+        "number": 4,
+        "tagline": "Bilan de compétences",
+        "promise": "Vos seuils posés, pour choisir sans vous mettre en danger."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "L'argent *dans vos choix.*",
+      "params": {
+        "num": "4",
+        "intro_text": "Ce carnet prépare la séance 4. Il regarde ce que l'argent pèse dans vos choix professionnels : votre situation, votre histoire, ce que vous osez demander. Il touche à votre famille et à vos revenus, sans juger votre gestion : il repère ce qui peut soutenir ou freiner votre projet. Vous en tirez votre seuil de sécurité financière, en quatre seuils.<br/><br/><b>Des ordres de grandeur suffisent. N'indiquez ni vos comptes, ni vos dettes, ni les revenus de vos proches.</b>",
+        "points": [
+          "Avant de commencer · Météo et récapitulatif · 10 min",
+          "Exercice 1 · Votre situation · 10 min",
+          "Exercice 2 · Votre histoire avec l'argent · 20 min",
+          "Exercice 3 · Premières expériences, idées reçues · 15 min",
+          "Exercice 4 · L'argent et votre projet · 10 min",
+          "Exercice 5 · Vos quatre seuils · 20 min",
+          "Exercice 6 · Vos tendances · 15 min",
+          "Exercice 7 · Synthèse · 10 min",
+          "Fin de carnet · Votre seuil de sécurité financière · 10 min"
+        ],
+        "duration": "2 h",
+        "split": "En trois fois : jusqu'à l'exercice 2 (40 min), les exercices 3 à 5 (45 min), puis la fin du carnet (35 min)."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Météo et récapitulatif · 10 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c4_meteo",
+          "data_id": "c4.meteo"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ce qui me donne de l'énergie au travail",
+              "c3.energies",
+              "c4_rappel_energie",
+              0.85
+            ],
+            [
+              "Pour garder mon énergie, j'ai besoin de…",
+              "c3.energies",
+              "c4_rappel_besoin",
+              0.85
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le profil de fonctionnement que j'ai validé en séance 3",
+                "c4_profil",
+                1.8
+              ]
+            ],
+            [
+              [
+                "Les deux forces de mon profil où je me reconnais le plus",
+                "c4_forces",
+                1.6
+              ],
+              [
+                "En séance 3, j'ai vu que…",
+                "c4_seance_3",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Mon profil se voit dans mes choix d'argent (dépenser, épargner, négocier) quand…",
+                "c4_pont",
+                1.6
+              ]
+            ]
+          ],
+          "hint": "Avec vos mots : où vous puisez votre énergie, ce que vous remarquez d'abord, comment vous décidez, comment vous vous organisez.",
+          "question_labels": true,
+          "fixed": true,
+          "data_id": "c4.profil",
+          "title": "Après la restitution"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre *situation.*",
+      "part_title": "Exercice 1 · Votre situation · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Commencez par aujourd'hui, simplement. Votre situation dit de quelle marge vous disposez pour changer de travail."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ma situation financière",
+          "field_prefix": "c4_situation",
+          "values": [
+            "En sécurité",
+            "En tension",
+            "En vigilance"
+          ],
+          "items": [
+            [
+              "Aujourd'hui, je suis plutôt…",
+              "c4_situation"
+            ]
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Parce que…",
+          "field_id": "c4_situation_pourquoi",
+          "subtitle": "Ce qui l'explique, et la marge que cela vous laisse pour changer de travail.",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma note « Argent, finances », sur 10",
+              "c1.domaines",
+              "c4_rappel_argent"
+            ]
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Ma note aujourd'hui, et ce qui l'a fait bouger, ou non :",
+          "field_id": "c4_note_argent",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "contrast_example",
+          "title": "Libraire",
+          "surface": "Ça va, je m'en sors.",
+          "exploitable": "En tension : le loyer passe, mais je repousse chaque réparation. Je peux changer de poste, pas me passer de salaire."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre histoire *avec l'argent.*",
+      "part_title": "Exercice 2 · Votre histoire avec l'argent · 10 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cet exercice, sur deux pages, parle de votre famille et de souvenirs parfois lourds : le manque, la gêne, les rapports de pouvoir. Avancez à votre rythme."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre rapport à l'argent s'est construit dans votre histoire : la regarder aide à repérer ce qui décide encore à votre place. Au carnet 1 (exercice 4), vous avez trié ce que vous avez reçu sur le travail et la réussite : relisez-le avant de commencer."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Photographe",
+          "surface": "L'argent n'était pas un problème chez nous.",
+          "exploitable": "On ne parlait jamais d'argent à table, mais on éteignait chaque lumière derrière soi. J'en garde la peur de manquer, même quand tout va bien."
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Chez moi, enfant, l'argent c'était…",
+              "field_id": "c4_hist_enfance",
+              "subtitle": "Le milieu où vous avez grandi : assez, pas assez, devoir faire attention ? Ce que l'argent a coûté à votre famille, ou ce qu'il lui a permis."
+            },
+            {
+              "question": "Ce qu'on en disait, et ce qu'on en taisait :",
+              "field_id": "c4_hist_dit",
+              "subtitle": "L'argent allait-il avec la sécurité, le stress, la réussite, le mérite, le conflit, le plaisir ? En parlait-on ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Qui gagnait, *qui décidait ?*",
+      "part_title": "Exercice 2 · Qui décidait · 10 min",
+      "blocks": [
+        {
+          "type": "question",
+          "question": "Qui gagnait, qui gérait, qui décidait ?",
+          "field_id": "c4_hist_decidait",
+          "subtitle": "Quelle liberté avaient les femmes et les hommes de votre famille avec l'argent ? Qu'avez-vous entendu sur ce que vous pourriez demander, gagner ou dépenser ?",
+          "box_height_cm": 3.5
+        },
+        {
+          "type": "question",
+          "question": "Dans la famille où vous avez grandi, l'argent créait-il des rapports de pouvoir, de protection ou de dépendance ?",
+          "field_id": "c4_hist_pouvoir",
+          "subtitle": "Si cette question touche votre situation actuelle, gardez-la pour la séance : nous en parlerons de vive voix.",
+          "box_height_cm": 3.5,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "De cette histoire, je garde…",
+                "c4_hist_garde",
+                1.6
+              ],
+              [
+                "Je laisse…",
+                "c4_hist_laisse",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "anchor",
+          "field_id": "c4_hist_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos premières *expériences.*",
+      "part_title": "Exercice 3 · Vos premières expériences · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Les premières expériences laissent une empreinte durable sur la façon de gagner, de dépenser et de demander."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "question",
+          "question": "Mon premier argent, reçu ou gagné, et ce qu'il représentait :",
+          "field_id": "c4_exp_premier",
+          "subtitle": "De l'argent de poche donné librement ou à mériter, un premier salaire : liberté, fierté, sécurité, nécessité ?",
+          "box_height_cm": 4.0
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que j'en faisais : dépenser, économiser, partager, cacher, offrir ?",
+                "c4_exp_usage",
+                2.8
+              ],
+              [
+                "Ce que j'en fais aujourd'hui",
+                "c4_exp_usage_aujourdhui",
+                2.8
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "question",
+          "question": "Un souvenir d'argent qui me reste :",
+          "field_id": "c4_exp_souvenir",
+          "subtitle": "Un manque, une fierté, une comparaison, une gêne. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "box_height_cm": 1.6,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Avec le recul, ce souvenir m'apprend que…",
+          "field_id": "c4_exp_recul",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos idées reçues *face aux faits.*",
+      "part_title": "Exercice 3 · Vos idées reçues · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Certaines phrases entendues tôt décident encore à votre place. Notez celles que vous vous dites, puis ce que montrent les faits : ce que vous avez vu, vécu ou vérifié."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "callout",
+          "text": "« Il faut travailler dur pour mériter son argent. » « Il ne faut dépendre de personne. » « L'argent crée des conflits. » « Je dois assurer pour les autres. » « Je ne suis pas légitime à demander plus. »",
+          "title": "Idées reçues fréquentes",
+          "variant": "quote"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que je me dis",
+                "c4_idee_1",
+                2.4
+              ],
+              [
+                "Ce que montrent les faits",
+                "c4_fait_1",
+                2.4
+              ]
+            ],
+            [
+              [
+                "Ce que je me dis",
+                "c4_idee_2",
+                2.4
+              ],
+              [
+                "Ce que montrent les faits",
+                "c4_fait_2",
+                2.4
+              ]
+            ],
+            [
+              [
+                "Ce que je me dis",
+                "c4_idee_3",
+                2.4
+              ],
+              [
+                "Ce que montrent les faits",
+                "c4_fait_3",
+                2.4
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Bibliothécaire",
+          "surface": "L'argent, ce n'est pas mon sujet.",
+          "exploitable": "Je me dis : vouloir gagner plus, c'est trahir le service public. Les faits : ma collègue a négocié son échelon, et personne ne doute de son engagement."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "L'argent *et votre projet.*",
+      "part_title": "Exercice 4 · L'argent et votre projet · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "L'argent pèse aussi sur la façon dont vous défendez votre travail. Au carnet 2, l'« À lire » sur le bagage social le disait : un malaise venu de son milieu peut retenir de demander. Notez votre aisance dans chaque situation."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "rating_grid",
+          "title": "Mon aisance",
+          "field_prefix": "c4_aisance",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "min_label": "1 · Très difficile",
+          "max_label": "5 · À l'aise",
+          "items": [
+            [
+              "Demander une augmentation",
+              "c4_aisance_augmentation"
+            ],
+            [
+              "Négocier un salaire à l'embauche",
+              "c4_aisance_embauche"
+            ],
+            [
+              "Fixer un prix, un tarif",
+              "c4_aisance_prix"
+            ],
+            [
+              "Parler de mon salaire à un proche",
+              "c4_aisance_proche"
+            ],
+            [
+              "Réclamer ce qu'on me doit",
+              "c4_aisance_reclamer"
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation la plus difficile pour moi, et pourquoi",
+                "c4_aisance_difficile",
+                1.6
+              ],
+              [
+                "Ce que je n'ose pas demander, viser ou négocier aujourd'hui",
+                "c4_nose_pas",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Une envie à laquelle j'ai renoncé pour des raisons d'argent",
+                "c4_renoncement",
+                1.6
+              ],
+              [
+                "Je ne veux plus accepter un poste seulement pour…",
+                "c4_retournement",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Interprète",
+          "surface": "Je n'ose pas trop négocier.",
+          "exploitable": "J'ai accepté le premier tarif de l'agence. Je n'ose pas demander le prix d'une mission avant de dire oui, de peur de passer pour quelqu'un d'intéressé."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos quatre *seuils.*",
+      "part_title": "Exercice 5 · Vos quatre seuils · 20 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Quatre repères pour juger chaque piste, de la séance 6 au carnet de route. Faites le calcul sur une feuille à part (logement, transport, enfants, assurances, remboursements), puis ne reportez ici que le total."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Minimum vital : vos charges essentielles couvertes, sans marge",
+                "c4_seuil_vital",
+                0.85
+              ],
+              [
+                "Minimum sécurisant : ces charges, plus une marge pour les imprévus",
+                "c4_seuil_securisant",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Revenu cible : ce que vous visez à terme",
+                "c4_seuil_cible",
+                0.85
+              ],
+              [
+                "Durée acceptable d'une baisse : combien de temps vivre avec moins qu'aujourd'hui, sans passer sous votre minimum vital",
+                "c4_seuil_duree",
+                0.85
+              ]
+            ]
+          ],
+          "title": "Mes quatre seuils",
+          "hint": "En euros nets par mois, pour vous : votre part des charges du foyer. Une fourchette suffit. La durée, en mois.",
+          "question_labels": true,
+          "fixed": true,
+          "data_id": "c4.seuils"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que j'accepte pendant la transition",
+                "c4_transition_accepte",
+                2.0
+              ],
+              [
+                "Ce que je n'accepte pas",
+                "c4_transition_refuse",
+                2.0
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Peintre en bâtiment",
+          "surface": "Le plus possible.",
+          "exploitable": "Minimum vital : le loyer, la voiture et la cantine, sans sorties. Je l'ai calculé sur une feuille à part : une fourchette me suffit."
+        },
+        {
+          "type": "annotation",
+          "text": "Un chiffre concret rassure plus qu'une impression."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que l'argent *représente pour vous.*",
+      "part_title": "Exercice 6 · Vos tendances · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "L'argent n'a pas le même sens pour tout le monde. Ces huit tendances ne sont pas des cases : chacune peut vous aider ou vous freiner, selon les moments."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez vos moteurs du carnet 2 : la sécurité ou la reconnaissance y figurent peut-être. Vous relirez vos tendances au carnet 5, face à vos valeurs.",
+            "Cochez-en deux ou trois au plus, celles qui vous ressemblent le plus aujourd'hui."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "La sécurité",
+              "subtitle": "l'argent comme protection",
+              "text": "L'argent sert d'abord à se sentir à l'abri, à anticiper et à éviter le manque.",
+              "note": "Question clé : de quelle sécurité ai-je vraiment besoin pour avancer sans me figer ?",
+              "field_id": "c4_tendance_securite"
+            },
+            {
+              "title": "Le mérite",
+              "subtitle": "l'argent comme preuve d'effort",
+              "text": "L'argent doit être gagné, justifié, mérité. Il va avec le travail, l'effort ou le sacrifice.",
+              "note": "Question clé : est-ce que je confonds ma valeur avec mon niveau d'effort ?",
+              "field_id": "c4_tendance_merite"
+            },
+            {
+              "title": "L'indépendance",
+              "subtitle": "l'argent comme liberté d'action",
+              "text": "L'argent donne l'autonomie : choisir, partir, décider, ne dépendre de personne.",
+              "note": "Question clé : comment construire mon autonomie sans tout vouloir contrôler ?",
+              "field_id": "c4_tendance_independance"
+            },
+            {
+              "title": "La générosité",
+              "subtitle": "l'argent comme lien",
+              "text": "L'argent sert à aider, offrir, soutenir, faire plaisir ou prendre soin des autres.",
+              "note": "Question clé : ma générosité respecte-t-elle aussi mes propres limites ?",
+              "field_id": "c4_tendance_generosite"
+            },
+            {
+              "title": "L'évitement",
+              "subtitle": "l'argent comme inconfort",
+              "text": "L'argent est un sujet pénible : on en parle peu, on remet les comptes à plus tard.",
+              "note": "Question clé : qu'est-ce que j'évite de ressentir quand j'évite l'argent ?",
+              "field_id": "c4_tendance_evitement"
+            },
+            {
+              "title": "L'ambition",
+              "subtitle": "l'argent comme réussite",
+              "text": "L'argent dit la progression, la réussite, l'impact ou la reconnaissance.",
+              "note": "Question clé : mon ambition sert-elle ma vie, ou ma vie sert-elle mon ambition ?",
+              "field_id": "c4_tendance_ambition"
+            }
+          ],
+          "columns": 2,
+          "check_label": "Me correspond"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre tendance *dominante.*",
+      "part_title": "Exercice 6 · Votre tendance dominante · 10 min",
+      "blocks": [
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "Le plaisir",
+              "subtitle": "l'argent comme expérience",
+              "text": "L'argent permet de vivre, de profiter, d'essayer, de se faire plaisir.",
+              "note": "Question clé : comment garder le plaisir sans fragiliser ma sécurité future ?",
+              "field_id": "c4_tendance_plaisir"
+            },
+            {
+              "title": "La réparation",
+              "subtitle": "l'argent qui répare",
+              "text": "L'argent répond à une ancienne insécurité ou à une injustice vécue, dans la famille ou ailleurs.",
+              "note": "Question clé : quelle histoire mon rapport à l'argent cherche-t-il encore à réparer ?",
+              "field_id": "c4_tendance_reparation"
+            }
+          ],
+          "columns": 2,
+          "check_label": "Me correspond"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ma tendance dominante",
+                "c4_tendance_dominante",
+                2.0,
+                1
+              ],
+              [
+                "Ma réponse à sa question clé",
+                "c4_tendance_reponse",
+                2.0,
+                2
+              ]
+            ],
+            [
+              [
+                "Elle m'aide quand…",
+                "c4_tendance_aide",
+                2.0
+              ],
+              [
+                "Elle me freine quand…",
+                "c4_tendance_frein",
+                2.0
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "data_id": "c4.tendance"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Journaliste",
+          "surface": "Je suis plutôt la sécurité.",
+          "exploitable": "La sécurité : elle m'aide à préparer une transition sans dette. Elle me freine quand je refuse un poste plus intéressant pour garder mon ancienneté."
+        },
+        {
+          "type": "annotation",
+          "text": "Une tendance n'est ni un défaut ni une qualité : c'est un réflexe, qu'il vaut mieux connaître."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre *synthèse.*",
+      "part_title": "Exercice 7 · Synthèse · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Rassemblez ce que l'argent pèse dans vos choix. Une phrase par case suffit."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Si j'avais plus d'argent, je m'autoriserais à…",
+                "c4_synth_autoriser",
+                1.6
+              ],
+              [
+                "Gagner davantage, ou plus que mes parents, me gênerait parce que…",
+                "c4_synth_gene",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Mon « assez » est plutôt un chiffre, ou une sensation difficile à atteindre :",
+                "c4_synth_assez",
+                1.6
+              ],
+              [
+                "Pour ma prochaine piste, l'argent doit me permettre de…",
+                "c4_synth_piste",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Orthophoniste",
+          "surface": "Être à l'aise.",
+          "exploitable": "Pour ma prochaine piste, l'argent doit me permettre de garder mes mercredis libres et d'arrêter de compter en fin de mois."
+        },
+        {
+          "type": "question",
+          "question": "Ce qui me fait le plus peur dans le manque d'argent, c'est…",
+          "field_id": "c4_synth_peur",
+          "subtitle": "Un mot suffit, ou laissez la case vierge pour la séance.",
+          "box_height_cm": 1.6,
+          "fixed": true
+        },
+        {
+          "type": "anchor",
+          "field_id": "c4_synth_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 10 min",
+      "params": {
+        "lines": [
+          "Je garde mes seuils en tête : ils serviront à juger chaque piste.",
+          "Je parle de rémunération sans m'en excuser.",
+          "J'apporte ce carnet à la séance 4."
+        ],
+        "field_prefix": "c4_livrable",
+        "livrable_title": "Votre seuil de sécurité financière",
+        "livrable_text": "Vos quatre seuils (exercice 5) et votre tendance dominante (exercice 6). Relus ensemble en séance 4, ils serviront à juger chaque piste, jusqu'au carnet de route.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "À aborder en séance : ce que je préfère dire de vive voix, une question non tranchée",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ],
+        "pistes": true
+      },
+      "data_id": "c4.livrable"
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Votre seuil de sécurité financière est posé.",
+          "Prochaine étape : la séance 4. Apportez ce carnet.",
+          "Ensuite, le carnet 5 : vos valeurs et vos moteurs profonds."
+        ]
+      },
+      "fixed": true
+    }
+  ]
+}

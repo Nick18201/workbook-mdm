@@ -27,7 +27,12 @@ CATALOGUE = [
      "Préparer la séance 3, la restitution du test : énergie, information, décisions, temps et action, réactions "
      "sous pression, puis ce qui donne de l'énergie et ce qui use au travail.",
      "psychology", BILAN),
-    # Former carnets 0 to 3, until the clean-up of the restructuring (R11)
+    ("carnet-4", 4, "Carnet 4 · Mon rapport à l'argent",
+     "Profil validé, histoire avec l'argent, idées reçues et quatre seuils",
+     "Préparer la séance 4 : le profil validé en séance 3, la situation et l'histoire avec l'argent, les idées "
+     "reçues face aux faits, l'aisance à demander, les quatre seuils et la tendance dominante.",
+     "balance", BILAN),
+    # Former carnets 0 to 4, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
      "flag", BILAN),
@@ -43,7 +48,7 @@ CATALOGUE = [
      "Énergie, information, décisions et rapport au temps",
      "Préparer la restitution du test des fonctionnements cognitifs : énergie, information, décisions, zone d'ombre.",
      "psychology", BILAN),
-    ("chap4", 4, "Carnet 4 · Mon rapport à l'argent", "Histoire avec l'argent, seuils et tensions",
+    ("chap4", 4, "Carnet 4 · Mon rapport à l'argent (ancien parcours)", "Histoire avec l'argent, seuils et tensions",
      "Situation actuelle, histoire avec l'argent, minimum financier acceptable et ce que l'argent représente.",
      "balance", BILAN),
     ("chap5", 5, "Carnet 5 · Valeurs et moteurs profonds", "Alignement, liste de valeurs et conditions de travail",

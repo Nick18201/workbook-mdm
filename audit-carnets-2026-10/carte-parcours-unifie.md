@@ -246,7 +246,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | avant S1 | Carnet 1 | 1 h 45 | `carnet-1.json` (R1), issu du carnet 0 et d'une partie du carnet 1 | 1 h 45, affiché exercice par exercice (avant : ≈ 1 h 15, plus 1 h 50 – 2 h 30) |
 | S1 → S2 | Carnet 2 | 2 h 45 | `carnet-2.json` (R2), issu du carnet 2 et du travail réel du livret | 2 h 45, affiché exercice par exercice, plus l'arbre de vie (15 min) et l'interview, facultatifs (avant : 2 h 35 – 3 h 35, plus le bonus) |
 | S2 → S3 | Carnet 3 | 1 h 45 | `carnet-3.json` (R3), issu du carnet 3 | 1 h 45, affiché exercice par exercice (avant : 1 h 40 – 2 h 30) |
-| S3 → S4 | Carnet 4 | 2 h | Carnet 4 | ≈ 2 h 30 |
+| S3 → S4 | Carnet 4 | 2 h | `carnet-4.json` (R4), issu du carnet 4 et des idées reçues de l'app | 2 h, affiché exercice par exercice (avant : ≈ 2 h 30) |
 | S4 → S5 | Carnet 5 | 2 h 15 | Carnet 5 | 2 h 30 – 3 h |
 | S5 → S6 | Carnet 6 | 2 h | Carnet 6, partie exploration | 5 – 7 h pour tout le carnet 6 |
 | S6 → S7 | Carnet 7, partie 1 | 1 h 45 | Carnet 6, fiches | |
