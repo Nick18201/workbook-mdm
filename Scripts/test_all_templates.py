@@ -197,6 +197,19 @@ def page_weather_recap(c):
     layout.render()
 
 
+def page_reports(c):
+    layout = PageLayout(c, "Ce que vous *savez déjà.*", config=LayoutConfig(part_title="Exercice 2 · Cartographie · 20 min"))
+    layout.add_text("Une donnée, une saisie : reportez ce que vous avez écrit dans les carnets précédents, "
+                    "sans le réécrire.", config=TextConfig(spacing_after=0.5 * cm))
+    layout.add_report([
+        ("Le profil de fonctionnement que vous avez validé", "carnet 4 · p. 3", "demo_report_profil", None),
+        ("Vos quatre seuils", "carnet 4 · p. 12", "demo_report_seuils", 1.6),
+        ("Vos trois valeurs et leur condition observable", "carnet 5 · p. 14", "demo_report_valeurs", 2.2),
+        ("Vos quatre zones", "carnet 2", "demo_report_zones", 1.6),
+    ])
+    layout.render()
+
+
 def page_heavy_exercise(c):
     layout = PageLayout(c, "Votre histoire *avec l'argent.*",
                         config=LayoutConfig(part_title="Exercice 3 · Histoire · 25 min"))
@@ -395,7 +408,7 @@ def build_test_suite_pdf(output_filename="Test_All_Templates.pdf"):
     builder.set_title("Planche de démonstration - DA Éditorial & Affirmé")
 
     for page in (page_elements_1, page_elements_2, page_cover, page_opener, page_weather_recap, page_questions,
-                 page_heavy_exercise,
+                 page_heavy_exercise, page_reports,
                  page_composite_1, page_composite_2, page_reading, page_form_blocks, page_drawn_blocks,
                  page_tree_of_life, page_meteo, page_quadrants,
                  page_two_columns,

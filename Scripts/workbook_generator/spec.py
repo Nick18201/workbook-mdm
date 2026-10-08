@@ -4,8 +4,10 @@ web app: the reference workbooks are JSON files in workbooks/, the app produces 
 format (Gemini, customization, JSON import and export), and compiler.py renders both.
 """
 
+import copy
 import json
 import os
+import re
 from typing import Annotated, Any, Dict, List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field, model_validator
@@ -23,6 +25,19 @@ MAX_NESTING_DEPTH = 10
 MAX_SCALE_STEPS = 10
 
 WORKBOOKS_DIR = os.path.join(PDFStyle.PROJECT_DIR, "workbooks")
+
+# Stable id of a piece of data written in a carnet (« c4.seuils »), so that another carnet
+# reports it with its origin: the carnet it comes from (c1 to c7, or route), then a name
+DATA_ID_PATTERN = r"^(c[1-7]|route)\.[a-z0-9_]+$"
+# Blocks customization never changes, wherever they are: the safety protocol, the weather
+# of the day (the same in every carnet) and the reports between carnets
+FIXED_BLOCK_TYPES = ("protocol", "anchor", "energy", "report")
+
+
+def data_carnet(data_id):
+    """The carnet a data id comes from: 'c4.seuils' -> 4, 'route.pistes' -> 'route'."""
+    prefix = str(data_id).split(".", 1)[0]
+    return PDFStyle.CARNET_ROUTE if prefix == "route" else int(prefix[1:])
 
 
 def _check_bounded(value: Any, path: str = "", depth: int = 0) -> None:
@@ -91,6 +106,10 @@ class BlockSpec(BaseModel):
     'contrast_example' ('title' names the neighbouring trade, 'surface' and 'exploitable'
     the two versions of an answer) and 'energy' (the weather of the day, 'field_prefix').
     Their fixed texts live in templates.py, so a customization cannot change them.
+    A 'report' line copies a piece of data written in another carnet: its items are
+    [label, data_id, field_id, height_cm], and the origin (« carnet 4 · p. 12 ») is
+    resolved when the PDF is built. 'data_id' names the data a block produces, 'fixed'
+    keeps a block out of customization (see keep_fixed).
     """
     type: Literal[
         "callout",
@@ -120,6 +139,7 @@ class BlockSpec(BaseModel):
         "anchor",
         "contrast_example",
         "energy",
+        "report",
         "space",
         "page_break",
     ] = Field(..., description="Type de composant atomique")
@@ -176,6 +196,20 @@ class BlockSpec(BaseModel):
     item_columns: Optional[int] = Field(None, ge=1, le=4, description="Colonnes de cases dans chaque carte")
     surface: Optional[str] = Field(None, description="Réponse « En surface » de l'exemple contrasté")
     exploitable: Optional[str] = Field(None, description="Réponse « Exploitable » de l'exemple contrasté")
+    fixed: Optional[bool] = Field(None, description="Bloc fixe : la personnalisation ne le modifie jamais")
+    data_id: Optional[str] = Field(
+        None, pattern=DATA_ID_PATTERN, description="Identifiant de la donnée écrite dans ce bloc (ex : 'c4.seuils')"
+    )
+
+    @model_validator(mode="after")
+    def check_reports(self):
+        """Chaque ligne d'un report renvoie à une donnée d'un carnet : [libellé, 'c4.seuils', field_id]."""
+        if self.type == "report":
+            for item in self.items or []:
+                data_id = item[1] if isinstance(item, (list, tuple)) and len(item) > 1 else None
+                if not isinstance(data_id, str) or not re.match(DATA_ID_PATTERN, data_id):
+                    raise ValueError(f"report : {item!r} doit être [libellé, identifiant de donnée, field_id]")
+        return self
 
     @model_validator(mode="after")
     def check_scale_range(self):
@@ -217,6 +251,10 @@ class PageSpec(BaseModel):
         max_length=MAX_BLOCKS_PER_PAGE,
         description="Liste des composants atomiques si template == 'composite'",
     )
+    fixed: Optional[bool] = Field(None, description="Page fixe : la personnalisation ne la modifie jamais")
+    data_id: Optional[str] = Field(
+        None, pattern=DATA_ID_PATTERN, description="Identifiant de la donnée écrite sur cette page (ex : 'c4.livrable')"
+    )
 
 
 # A carnet of the bilan: 1 to 7, or the carnet de route
@@ -254,6 +292,111 @@ class WorkbookSpec(BaseModel):
             elif "chapter_title" in data and ("title" not in data or not data["title"]):
                 data["title"] = data["chapter_title"]
         return data
+
+
+# --- Customization: what is fixed stays fixed -------------------------------------
+
+REF_KEY = "_ref"  # position of a page (« p3 ») or a block (« p3.b2 ») in the spec sent to Gemini
+IDENTITY_KEYS = ("carnet", "folio", "pastel", "chapter_num")
+
+
+def _page_is_fixed(page):
+    return bool(page.get("fixed"))
+
+
+def _block_is_fixed(block):
+    return bool(block.get("fixed")) or block.get("type") in FIXED_BLOCK_TYPES
+
+
+def _page_holds_fixed(page):
+    return _page_is_fixed(page) or any(_block_is_fixed(b) for b in page.get("blocks") or [])
+
+
+def tag_refs(spec: WorkbookSpec) -> dict:
+    """The spec as a dict (set fields only) whose pages and blocks carry a '_ref', for keep_fixed."""
+    data = spec.model_dump(exclude_unset=True, exclude_none=True)
+    for i, page in enumerate(data.get("pages") or [], start=1):
+        page[REF_KEY] = f"p{i}"
+        for k, block in enumerate(page.get("blocks") or [], start=1):
+            block[REF_KEY] = f"p{i}.b{k}"
+    return data
+
+
+def _strip_refs(value):
+    if isinstance(value, dict):
+        return {k: _strip_refs(v) for k, v in value.items() if k != REF_KEY}
+    if isinstance(value, list):
+        return [_strip_refs(v) for v in value]
+    return value
+
+
+def _merge(base_items, out_items, kind, is_fixed, merge_item, holds_fixed):
+    """
+    The output items, with each fixed base item back as it was: matched by '_ref', or by
+    position when nothing was added nor removed; a fixed item that went missing comes back
+    after the nearest item that precedes it in base.
+    """
+    by_ref = {b[REF_KEY]: b for b in base_items}
+    out_items = [dict(o) for o in out_items if isinstance(o, dict)]
+    if len(out_items) == len(base_items):
+        for b, o in zip(base_items, out_items):
+            if o.get(REF_KEY) not in by_ref and o.get(kind) == b.get(kind):
+                o[REF_KEY] = b[REF_KEY]
+    if out_items and any(holds_fixed(b) for b in base_items) and not any(o.get(REF_KEY) in by_ref for o in out_items):
+        raise ValueError("la personnalisation a perdu la structure du livret")
+
+    result, placed = [], {}
+    for o in out_items:
+        b = by_ref.get(o.get(REF_KEY))
+        if b is None or b[REF_KEY] in placed:
+            o.pop(REF_KEY, None)  # an item the customization added
+            result.append(o)
+            continue
+        placed[b[REF_KEY]] = len(result)
+        result.append(copy.deepcopy(b) if is_fixed(b) else merge_item(b, o))
+    for i, b in enumerate(base_items):
+        if b[REF_KEY] in placed or not is_fixed(b):
+            continue
+        pos = next((placed[p[REF_KEY]] + 1 for p in reversed(base_items[:i]) if p[REF_KEY] in placed), 0)
+        placed = {ref: j + 1 if j >= pos else j for ref, j in placed.items()}
+        placed[b[REF_KEY]] = pos
+        result.insert(pos, copy.deepcopy(b))
+    return result
+
+
+def _merge_block(base, out):
+    if base.get("data_id"):
+        out["data_id"] = base["data_id"]
+    return out
+
+
+def _merge_page(base, out):
+    if base.get("data_id"):
+        out["data_id"] = base["data_id"]
+    if base.get("blocks") is not None or out.get("blocks") is not None:
+        out["blocks"] = _merge(base.get("blocks") or [], out.get("blocks") or [], "type", _block_is_fixed,
+                               _merge_block, _block_is_fixed)
+    return out
+
+
+def keep_fixed(base: dict, out: dict) -> dict:
+    """
+    The customization rule, enforced: Gemini only changes what is adaptable. In `out` (the
+    customized spec, as a dict), every page marked 'fixed', every block marked 'fixed' or of
+    FIXED_BLOCK_TYPES comes back as in `base` (from tag_refs), even if it was changed or
+    dropped. The identity of the document (carnet, folio, pastel, number) and the data ids
+    stay as in base. Raises ValueError when the output lost both its references and its
+    structure. Returns the merged spec without the '_ref' keys.
+    """
+    out = dict(out)
+    for key in IDENTITY_KEYS:
+        if key in base:
+            out[key] = base[key]
+        elif key != "chapter_num":
+            out.pop(key, None)
+    out["pages"] = _merge(base.get("pages") or [], out.get("pages") or [], "template", _page_is_fixed, _merge_page,
+                          _page_holds_fixed)
+    return _strip_refs(out)
 
 
 def workbook_path(workbook_id: str) -> str:

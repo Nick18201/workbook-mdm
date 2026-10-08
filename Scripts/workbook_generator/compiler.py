@@ -3,7 +3,10 @@ Compiles a WorkbookSpec (spec.py) into a PDF: the single engine of the CLI docum
 (the reference workbooks of workbooks/) and of the web app (Gemini, customization).
 """
 
+import functools
 import io
+import json
+import os
 from xml.sax.saxutils import escape
 
 from reportlab.lib.units import cm
@@ -25,7 +28,8 @@ from .components import (
 from .config import PDFStyle
 from .document_builder import DocumentBuilder
 from .primitives import plain_title
-from .spec import MAX_SCALE_STEPS, WorkbookSpec, load_workbook
+from . import spec as spec_module
+from .spec import MAX_SCALE_STEPS, WorkbookSpec, data_carnet, load_workbook
 from .templates import LayoutConfig, PageLayout, QuestionConfig, QuestionItem, TextConfig
 from .utils import strip_unsupported_glyphs
 
@@ -130,8 +134,69 @@ def _question_items(raw_questions, prefix):
     return items
 
 
-def _add_block(layout, b_data, page_idx, b_idx):
-    """Adds one spec block to the page: one PageLayout.add_* call (see BlockSpec)."""
+# --- Reports between carnets ---------------------------------------------------------
+
+def _carnet_name(carnet):
+    return "carnet de route" if carnet == PDFStyle.CARNET_ROUTE else f"carnet {carnet}"
+
+
+@functools.lru_cache(maxsize=64)
+def _file_carnet(path, mtime):
+    with open(path, encoding="utf-8") as f:
+        return json.load(f).get("carnet")
+
+
+@functools.lru_cache(maxsize=16)
+def _file_data_pages(path, mtime):
+    with open(path, encoding="utf-8") as f:
+        return workbook_data_pages(WorkbookSpec.model_validate(json.load(f)))
+
+
+def reference_data_pages(carnet):
+    """
+    Where each data id of a carnet's reference workbook (workbooks/, the file whose
+    'carnet' is this one) is written: {data_id: page}. Empty when there is no such file.
+    Cached until the file changes.
+    """
+    folder = spec_module.WORKBOOKS_DIR
+    for name in sorted(os.listdir(folder)):
+        path = os.path.join(folder, name)
+        if name.endswith(".json") and _file_carnet(path, os.path.getmtime(path)) == carnet:
+            return _file_data_pages(path, os.path.getmtime(path))
+    return {}
+
+
+def _origin(data_id, pages_of=None):
+    """« carnet 4 · p. 12 », or « carnet 4 » when the page is unknown (pages_of: carnet -> {data_id: page})."""
+    try:
+        carnet = data_carnet(data_id)
+    except (ValueError, IndexError):
+        return ""
+    page = (pages_of(carnet) if pages_of else {}).get(data_id)
+    return f"{_carnet_name(carnet)} · p. {page}" if page else _carnet_name(carnet)
+
+
+def _report_lines(items, page_idx, b_idx, pages_of):
+    lines = []
+    for k, item in enumerate(items or [], start=1):
+        item = list(item) if isinstance(item, (list, tuple)) else [str(item)]
+        item += [None] * (4 - len(item))
+        label, data_id, field_id, height_cm = item[:4]
+        lines.append((
+            str(label or ""),
+            _origin(data_id, pages_of) if data_id else "",
+            str(field_id or f"p{page_idx}_report_{b_idx}_{k}"),
+            min(_as_number(height_cm, 0), MAX_BLOCK_HEIGHT_CM) or None,
+        ))
+    return lines
+
+
+def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
+    """
+    Adds one spec block to the page: one PageLayout.add_* call (see BlockSpec). pages_of
+    resolves the origin of reports (carnet -> {data_id: page}); without it, a report
+    names the carnet only.
+    """
     b_type = b_data.get("type", "")
 
     def given(*keys):
@@ -294,6 +359,8 @@ def _add_block(layout, b_data, page_idx, b_idx):
         )
     elif b_type == "energy":
         layout.add_energy_check(b_data.get("field_prefix") or f"p{page_idx}_meteo_{b_idx}")
+    elif b_type == "report":
+        layout.add_report(_report_lines(b_data.get("items"), page_idx, b_idx, pages_of), title=b_data.get("title"))
     elif b_type == "space":
         layout.add_space(_length_pt(b_data.get("height_cm"), 0))
     elif b_type == "page_break":
@@ -303,10 +370,33 @@ def _add_block(layout, b_data, page_idx, b_idx):
 def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
     """
     Compiles a WorkbookSpec into a PDF: returns its bytes, or writes it to output_path
-    (a file path) and returns None.
+    (a file path) and returns None. Reports name the page of their data: in the reference
+    workbook of the carnet it comes from, or in this document for its own data.
     """
+    own = {}
+    if spec.carnet is not None and any(
+        data_carnet(item[1]) == spec.carnet
+        for page in spec.pages for block in page.blocks or [] if block.type == "report"
+        for item in block.items or []
+    ):
+        own = workbook_data_pages(spec)
+
+    def pages_of(carnet):
+        return own if carnet == spec.carnet else reference_data_pages(carnet)
+
+    return _compile(spec, output_path, pages_of)[0]
+
+
+def workbook_data_pages(spec: WorkbookSpec) -> dict:
+    """Where each data id of the spec is written once compiled: {data_id: page}."""
+    return _compile(spec, io.BytesIO(), None)[1]
+
+
+def _compile(spec: WorkbookSpec, output_path, pages_of):
+    """Compiles the spec; returns (PDF bytes or None, {data_id: page})."""
     # Gemini or the consultant may write emojis: ReportLab would drop them and leave gaps
     spec = _without_unsupported_glyphs(spec)
+    data_pages = {}
     buffer = io.BytesIO() if output_path is None else None
     short_title = plain_title(spec.chapter_title).rstrip(".!?… ")
     # A carnet of the bilan shows « carnet N/7 »; other workbooks their folio, or their title
@@ -605,7 +695,10 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
                     b_data.setdefault("type", block.type)
                 else:
                     b_data = block if isinstance(block, dict) else {}
-                _add_block(layout, b_data, page_idx, b_idx)
+                layout.block_page = None
+                _add_block(layout, b_data, page_idx, b_idx, pages_of)
+                if b_data.get("data_id"):
+                    data_pages.setdefault(b_data["data_id"], layout.block_page or c.getPageNumber())
             layout.render()
 
         return _render
@@ -625,15 +718,17 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
         "composite": make_composite_renderer,
     }
     for page_idx, page in enumerate(spec.pages, start=1):
+        if page.data_id:
+            data_pages.setdefault(page.data_id, builder.canvas.getPageNumber())
         # Unknown templates fall back to a page of questions
         builder.add_page(renderers.get(page.template, make_questions_renderer)(page, page_idx))
 
     builder.save()
     if buffer is None:
-        return None
+        return None, data_pages
     pdf_bytes = buffer.getvalue()
     buffer.close()
-    return pdf_bytes
+    return pdf_bytes, data_pages
 
 
 def build_reference_workbook(workbook_id, output_path):

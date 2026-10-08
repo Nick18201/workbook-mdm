@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -114,3 +116,31 @@ def test_iterate_and_customize_flag_fallback(client, monkeypatch):
     for r in (iterate, customize):
         assert r.status_code == 200
         assert r.headers["X-MDM-Generation"] == "fallback"
+
+
+def test_customize_never_changes_what_is_fixed(client, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    base = {"carnet": 3, "pages": [{"template": "composite", "title": "Sous pression.", "blocks": [
+        {"type": "protocol", "text": "Avertissement."},
+        {"type": "question", "question": "Q ?", "field_id": "q", "subtitle": "À adapter."},
+    ]}]}
+    # Gemini rewrites everything, the protocol included, and keeps the references
+    answer = {"spec": {"carnet": 3, "pages": [{"template": "composite", "title": "Sous pression.", "_ref": "p1",
+                                               "blocks": [
+        {"type": "protocol", "text": "Autre avertissement.", "_ref": "p1.b1"},
+        {"type": "question", "question": "Q ?", "field_id": "q", "subtitle": "Adapté.", "_ref": "p1.b2"},
+    ]}]}}
+
+    class Response:
+        text = json.dumps(answer)
+
+    monkeypatch.setattr(gemini_service.genai, "Client", _fake_genai_client(Response))
+
+    r = client.post("/api/customize", json={"base_spec": base, "beneficiary_name": "Alex",
+                                            "beneficiary_context": "Libraire"})
+    blocks = r.json()["spec"]["pages"][0]["blocks"]
+
+    assert r.headers["X-MDM-Generation"] == "ai"
+    assert blocks[0]["text"] == "Avertissement."
+    assert blocks[1]["subtitle"] == "Adapté."
+    assert "_ref" not in r.text

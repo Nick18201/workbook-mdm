@@ -1384,7 +1384,7 @@ Notes de la séance :
           const blocks = page.blocks || (p && p.blocks) || [];
           contentHtml = `
             <div class="space-y-3 text-xs">
-              ${blocks.map((b) => {
+              ${blocks.map((b) => fixedMark(b) + ((b) => {
                 const bType = b.type || '';
                 if (bType === 'callout') {
                   return `
@@ -1505,7 +1505,7 @@ Notes de la séance :
                 } else {
                   return referenceBlockHtml(b) ?? `<p class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-lg">${escapeHtml(b.text || '')}</p>`;
                 }
-              }).join('')}
+              })(b)).join('')}
             </div>`;
         }
 
@@ -1534,6 +1534,7 @@ Notes de la séance :
               <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${badgeColor}">
                 ${escapeHtml(pageLabel)}
               </span>
+              ${page.fixed ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-100 text-slate-600" title="Page fixe : la personnalisation ne la modifie pas"><span class="mi">lock</span> Fixe</span>' : ''}
             </div>
             ${page.part_title ? `<span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">${escapeHtml(page.part_title)}</span>` : ''}
           </div>
@@ -1605,6 +1606,13 @@ Notes de la séance :
     }
 
     // Preview of the blocks the reference workbooks use besides the 8 base blocks (BlockSpec)
+    // Blocks customization never changes: marked "fixed", or fixed by nature (spec.FIXED_BLOCK_TYPES)
+    const FIXED_BLOCK_TYPES = ['protocol', 'anchor', 'energy', 'report'];
+    function fixedMark(b) {
+      if (!(b.fixed || FIXED_BLOCK_TYPES.includes(b.type))) return '';
+      return '<div class="text-[10px] uppercase tracking-wider text-slate-400" title="Bloc fixe : la personnalisation ne le modifie pas"><span class="mi">lock</span> Fixe</div>';
+    }
+
     function referenceBlockHtml(b) {
       const text = (v) => escapeHtml(typeof v === 'object' && v ? (v.title || v.text || v.label || '') : v);
       const box = (inner) => `<div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">${inner}</div>`;
@@ -1662,6 +1670,9 @@ Notes de la séance :
         case 'energy':
           return box(`<div class="font-bold text-slate-900 text-xs">Météo du jour</div>
             <div class="text-[11px] text-slate-700">Énergie de 0 à 10, puis « Ce chiffre s'explique surtout par… » ${field}</div>`);
+        case 'report':
+          return box(`<div class="font-bold text-slate-900 text-xs">${escapeHtml(b.title || 'À reporter')}</div>
+            ${list(items.map(r => Array.isArray(r) ? `${escapeHtml(r[0])} <span class="font-mono text-[10px] text-slate-500">· ${escapeHtml(r[1])}</span> ${field}` : escapeHtml(r)))}`);
         case 'space':
           return '';
         case 'page_break':

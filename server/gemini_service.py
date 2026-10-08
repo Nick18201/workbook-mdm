@@ -22,6 +22,7 @@ from .models import (
     CustomizeResponse,
 )
 from .predefined_workbooks import get_predefined_spec
+from workbook_generator.spec import keep_fixed, tag_refs
 
 logger = logging.getLogger(__name__)
 
@@ -109,9 +110,9 @@ TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les 
 
 # Iterate and customize receive whole workbooks, the reference ones included
 REFERENCE_BLOCKS_RULES = """BLOCS DES CARNETS DE RÉFÉRENCE :
-- Les carnets de référence utilisent aussi le gabarit 'recap' et des blocs que tu ne crées jamais toi-même : 'questions_group', 'heading', 'paragraphs', 'star_list', 'annotation', 'frise', 'fields_card', 'numbered_lines', 'rating_grid', 'info_cards', 'link_card', 'checklist_cards', 'fill_in_card', 'life_line', 'tree_of_life', 'protocol', 'anchor', 'contrast_example', 'energy', 'space', 'page_break'.
+- Les carnets de référence utilisent aussi le gabarit 'recap' et des blocs que tu ne crées jamais toi-même : 'questions_group', 'heading', 'paragraphs', 'star_list', 'annotation', 'frise', 'fields_card', 'numbered_lines', 'rating_grid', 'info_cards', 'link_card', 'checklist_cards', 'fill_in_card', 'life_line', 'tree_of_life', 'protocol', 'anchor', 'contrast_example', 'energy', 'report', 'space', 'page_break'.
 - Quand tu en rencontres un, garde son type, ses clés, l'ordre de ses éléments et tous ses identifiants ('field_id', 'field_prefix', identifiants dans les listes) ; adapte seulement ses textes, sans les allonger.
-- Ne modifie jamais les blocs 'protocol' (avertissement avant un exercice à forte charge), 'anchor' (phrase d'ancrage qui le clôt) et 'energy' (météo du jour) : ils font partie du cadre et du protocole de sécurité. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
+- Ne modifie jamais les blocs 'protocol' (avertissement avant un exercice à forte charge), 'anchor' (phrase d'ancrage qui le clôt), 'energy' (météo du jour) et 'report' (report d'une donnée écrite dans un autre carnet) : ils font partie du cadre, du protocole de sécurité et des renvois entre carnets. Garde les clés 'data_id' et 'fixed' là où elles sont. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
 - Dans une page 'summary', garde 'duration' et 'split' ; dans une page 'engagement', garde 'zones' et 'pistes'.
 - Pour ajouter du contenu, utilise uniquement les 8 blocs de base ('callout', 'cards_grid', 'scale', 'checklist', 'table', 'stat_boxes', 'question', 'text').
 """
@@ -674,6 +675,7 @@ TON RÔLE :
    - Aération maximale : 2 à 3 composants maximum par page composite. Ne JAMAIS empiler un tableau de 3-4 lignes et une grille de cartes sur la même page (séparer en 2 pages si besoin).
    - Textes courts et percutants : titres 25-45 caractères max, questions 120 caractères max, exemples concrets sans préfixe de 90 caractères max, points de sommaire max 85 caractères.
    - Toujours conserver 'cover' en page 1, 'summary' en page 2, 'engagement' en avant-dernière page et 'closing' en dernière page (sauf demande explicite contraire).
+   - Une page ou un bloc qui porte "fixed": true ne change que si la consigne le demande expressément.
    - Sur les pages composites ('composite') : ne JAMAIS créer de bloc vide ! Toujours remplir 'cards' (titre, sous-titre) pour 'cards_grid', 'headers' et 'rows' pour 'table', 'text' pour 'callout'.
    - Les textes ajoutés ou modifiés suivent le ton et le vocabulaire ci-dessous.
 5. Rédiger un résumé clair, synthétique et courtois des modifications apportées (en 1 à 3 phrases percutantes en français).
@@ -761,6 +763,8 @@ RÈGLES D'OR DE PERSONNALISATION :
 1. PRÉSERVER L'OSSATURE PÉDAGOGIQUE ET LE DESIGN SYSTEM :
    - Conserve scrupuleusement l'ordre logique, les gabarits prévus (cover, summary, recap, questions, meteo, quadrants, two_columns, enquete, roadmap, engagement, closing, composite) et le nombre de pages du livret modèle.
    - Ne modifie JAMAIS la structure des clés de paramètres ('params', 'blocks', 'quadrants', 'rows', 'questions', 'stages', 'lines', 'messages').
+   - Une page ou un bloc qui porte "fixed": true est fixe : ne le modifie pas (il sera rétabli tel quel de toute façon). Tu ne personnalises que le reste.
+   - Chaque page et chaque bloc porte une clé '_ref' (ex : "p3", "p3.b2") : recopie-la telle quelle sur la page ou le bloc correspondant.
 2. CONTEXTUALISER EN PROFONDEUR POUR LE BÉNÉFICIAIRE :
    - Renseigne `beneficiary_name` avec le prénom et nom du bénéficiaire.
    - Adapte les **exemples concrets** (`example` dans les questions et blocs) : prends-les dans un métier voisin de celui du bénéficiaire, jamais dans son propre métier (il les recopierait), et dans un métier différent à chaque fois (ex : pour un consultant IT qui veut créer une marque de mobilier éco-conçu, des exemples tirés du conseil en organisation, de la menuiserie ou du design produit).
@@ -804,7 +808,9 @@ def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
         logger.warning("GEMINI_API_KEY non configurée. Utilisation du fallback.")
         return GenerationResult(_build_fallback_customization(request, base_spec), "no_api_key")
 
-    base_spec_json = _spec_json(base_spec)
+    # Pages and blocks carry a '_ref', so that what is fixed comes back as it was (keep_fixed)
+    base_tagged = tag_refs(base_spec)
+    base_spec_json = json.dumps(base_tagged, ensure_ascii=False)
     user_prompt = f"""Voici le livret pédagogique de référence (modèle existant) à personnaliser :
 ---
 {base_spec_json}
@@ -823,7 +829,7 @@ Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_n
 
     def build(data: dict) -> CustomizeResponse:
         return CustomizeResponse(
-            spec=WorkbookSpec(**data.get("spec", data)),
+            spec=WorkbookSpec(**keep_fixed(base_tagged, data.get("spec", data))),
             customizations_summary=data.get(
                 "customizations_summary",
                 f"Livret adapté avec succès pour {request.beneficiary_name} ({request.beneficiary_context}).",
@@ -842,8 +848,9 @@ def _build_fallback_customization(
 ) -> CustomizeResponse:
     """
     Personnalisation déterministe hors-ligne lorsque l'API Gemini est indisponible.
+    Comme celle de Gemini, elle ne touche pas à ce qui est fixe.
     """
-    spec_dict = base_spec.model_dump(exclude_unset=True)
+    spec_dict = tag_refs(base_spec)
     spec_dict["beneficiary_name"] = request.beneficiary_name
 
     # Contextualiser la couverture
@@ -870,7 +877,7 @@ def _build_fallback_customization(
             if qs and isinstance(qs[0], dict):
                 qs[0]["example"] = f"Projet {request.beneficiary_context[:45]}..." if request.beneficiary_context else qs[0].get("example")
 
-    new_spec = WorkbookSpec(**spec_dict)
+    new_spec = WorkbookSpec(**keep_fixed(tag_refs(base_spec), spec_dict))
     summary = (
         f"Version personnalisée pour {request.beneficiary_name} générée avec succès. "
         f"Profil intégré ({request.beneficiary_context})."

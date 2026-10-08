@@ -39,6 +39,7 @@ from .primitives import (
     draw_star_list,
     draw_text,
     draw_white_card,
+    first_baseline,
     label_pill_size,
     paragraph_height,
     text_width,
@@ -119,6 +120,9 @@ class PageLayout:
 
         self.question_index = 0
         self.form = self.c.acroForm
+        # Page where the current block starts: set to None before a block, it takes the page
+        # of its first _ensure_space (compiler.py records it for the block's data id)
+        self.block_page = None
 
         self._start_page(title)
         if config.y_start is not None:
@@ -144,8 +148,12 @@ class PageLayout:
         """
         if self.y_cursor - height < self.bottom_limit and self.y_cursor < self._page_top:
             self._new_page()
-            return True
-        return False
+            started = True
+        else:
+            started = False
+        if self.block_page is None:
+            self.block_page = self.c.getPageNumber()
+        return started
 
     def _question_text_height(self, question, subtitle=None, example=None):
         """Vertical space taken by a question block, input box excluded (matches add_question_block)."""
@@ -1161,6 +1169,74 @@ class PageLayout:
                             PDFStyle.COLOR_INK, QUESTION_LEADING) + 0.15 * cm
         draw_answer_box(self.c, x, t - box_h, inner, box_h, f"{field_prefix}_raison", tooltip=ENERGY_REASON)
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    REPORT_LABEL_SIZE = 10
+    REPORT_LABEL_LEADING = 13
+    REPORT_ORIGIN_MAX = "CARNET DE ROUTE · P. 00"
+
+    def add_report(self, lines, title=None):
+        """
+        Data written in another carnet, copied here with its origin (« one piece of data,
+        one entry »): a pastel card titled « À reporter », then per line its label, the
+        origin on the right (« carnet 4 · p. 12 ») and a box; boxes taller than 1.2 cm are
+        multiline. lines: (label, origin, field_id, height_cm or None). A card that does not
+        fit continues on the next page.
+        """
+        pad = PDFStyle.CARD_PADDING
+        inner = self.target_width - 2 * pad
+        title = title or "À reporter"
+        _, pill_h = label_pill_size(title)
+        row_gap = 0.35 * cm
+
+        # The origin column is as wide as the longest origin, resolved or not, so that a
+        # page number never changes how the labels wrap (nor the pages of the document)
+        origin_w = text_width(self.REPORT_ORIGIN_MAX, PDFStyle.FONT_LABEL, PDFStyle.SIZE_FOLIO, PDFStyle.TRACKING_LABEL)
+        label_w = inner - origin_w - 0.4 * cm
+        rows = []
+        for label, origin, field_id, height in lines:
+            origin = str(origin or "").upper()
+            label_h = paragraph_height(str(label), label_w, PDFStyle.FONT_HEADING_BOLD, self.REPORT_LABEL_SIZE,
+                                       self.REPORT_LABEL_LEADING)
+            box_h = height * cm if height else 0.85 * cm
+            rows.append((str(label), origin, field_id, label_w, label_h + 3 + box_h, box_h))
+
+        first = True
+        while rows:
+            head = pill_h + 0.3 * cm if first else 0
+            self._ensure_space(2 * pad + head + rows[0][4])
+            available = self.y_cursor - self.bottom_limit - 2 * pad - head
+            count, used = 0, 0
+            for row in rows:
+                need = row[4] + (row_gap if count else 0)
+                if count and used + need > available:
+                    break
+                used += need
+                count += 1
+            chunk, rows = rows[:count], rows[count:]
+            h = 2 * pad + head + used
+            top = self.y_cursor
+            draw_pastel_card(self.c, self.text_x, top - h, self.target_width, h)
+            t = top - pad
+            if first:
+                draw_label_pill(self.c, self.text_x + pad, t - pill_h, title, variant="on_pastel", max_width=inner)
+                t -= head
+            for k, (label, origin, field_id, label_w, row_h, box_h) in enumerate(chunk):
+                x = self.text_x + pad
+                draw_paragraph(self.c, label, x, t, label_w, PDFStyle.FONT_HEADING_BOLD, self.REPORT_LABEL_SIZE,
+                               PDFStyle.COLOR_INK, self.REPORT_LABEL_LEADING)
+                if origin:
+                    draw_text(self.c, x + inner, first_baseline(t, PDFStyle.SIZE_FOLIO, self.REPORT_LABEL_LEADING),
+                              origin, PDFStyle.FONT_LABEL, PDFStyle.SIZE_FOLIO, PDFStyle.COLOR_INK_MUTED,
+                              PDFStyle.TRACKING_LABEL, align="right")
+                box_top = t - (row_h - box_h)
+                draw_answer_box(self.c, x, box_top - box_h, inner, box_h, field_id, tooltip=label,
+                                multiline=box_h > 1.2 * cm)
+                t -= row_h + row_gap
+            self.y_cursor = top - h - PDFStyle.GAP_BLOCK
+            first = False
+            if rows:
+                self._new_page()
         return self.y_cursor
 
     def add_life_line(self, nodes, headers=None, field_prefix="timeline_node"):
