@@ -11,7 +11,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | Unification : une seule source, `workbooks/*.json`, un seul moteur, MBTI retiré des carnets | Fusionné (PR #51) |
 | R0 · Socle : nommage, palette, gabarit commun, langue du PDF | Fusionné (PR #52) |
 | R0 bis · Format : fixe / adaptable, identifiants de données, reports | Fusionné (PR #53) |
-| R1 · Carnet 1 · L'état des lieux (`carnet-1.json`) | PR en cours |
+| R1 · Carnet 1 · L'état des lieux (`carnet-1.json`) | Fusionné (PR #54) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
 **Avant chaque PR : vérifier que la précédente est fusionnée**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
