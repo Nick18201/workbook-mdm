@@ -248,7 +248,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | S2 → S3 | Carnet 3 | 1 h 45 | `carnet-3.json` (R3), issu du carnet 3 | 1 h 45, affiché exercice par exercice (avant : 1 h 40 – 2 h 30) |
 | S3 → S4 | Carnet 4 | 2 h | `carnet-4.json` (R4), issu du carnet 4 et des idées reçues de l'app | 2 h, affiché exercice par exercice (avant : ≈ 2 h 30) |
 | S4 → S5 | Carnet 5 | 2 h 15 | `carnet-5.json` (R5), issu du carnet 5 et des limites hors argent de l'app | 2 h 15, affiché exercice par exercice (avant : 2 h 30 – 3 h, affiché 95 min) |
-| S5 → S6 | Carnet 6 | 2 h | Carnet 6, partie exploration | 5 – 7 h pour tout le carnet 6 |
+| S5 → S6 | Carnet 6 | 2 h | `carnet-6.json` (R6), issu de la partie exploration du carnet 6 | 2 h, affiché exercice par exercice (avant : 5 – 7 h pour tout le carnet 6) |
 | S6 → S7 | Carnet 7, partie 1 | 1 h 45 | Carnet 6, fiches | |
 | S7 → S8 | Carnet 7, partie 2 | 2 h | (n'existe pas) | |
 | S8 → S9 | Carnet de route, partie 1 | 1 h 30 | Livret | 3 h 30 – 4 h 30 pour tout le livret |
@@ -280,6 +280,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création | `c5.grille` |
 | Limites hors argent (travail, demandes urgentes, santé, proches) | Carnet 5, avant la grille | Carnet 6 (cartographie) · carnet de route (garde-fous) | `c5.limites` |
 | Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) | `c5.entourage` |
+| Retour des proches (métiers suggérés, et pourquoi) | Carnet 6 | Carnet de route (preuve extérieure) | `c6.proches` |
 | 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 | `c6.pistes` |
 | Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route | `c7.fiches`, `c7.enquetes`, `c7.matrice` |
 | Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · module évolution interne | `route.competences`, `route.recits` |

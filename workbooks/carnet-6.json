@@ -1,0 +1,826 @@
+{
+  "chapter_num": 6,
+  "chapter_title": "L'exploration",
+  "subtitle": "Bilan de compétences",
+  "carnet": 6,
+  "pdf_title": "Marge de Manœuvre · Carnet 6 : L'exploration",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "*L'exploration.*",
+        "number": 6,
+        "tagline": "Bilan de compétences",
+        "promise": "Dix pistes, avant d'en choisir trois."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Ouvrir *le champ.*",
+      "params": {
+        "num": "6",
+        "intro_text": "Ce carnet prépare la séance 6. Il rassemble sur une page ce que vous savez de vous, recueille les réponses de vos proches, puis ouvre dix pistes : cinq réalistes, cinq audacieuses. En séance 6, vous en retiendrez trois à confronter au terrain.<br/><br/><b>Une piste n'est pas une décision : notez-la, même si elle vous semble improbable.</b>",
+        "points": [
+          "Avant de commencer · Météo et récapitulatif · 10 min",
+          "Exercice 1 · Votre cartographie · 20 min",
+          "Exercice 2 · Le retour de vos proches · 20 min",
+          "Exercice 3 · Explorer les ressources · 10 min",
+          "Exercice 4 · Dix pistes · 40 min",
+          "Exercice 5 · Avant de choisir · 10 min",
+          "Fin de carnet · Vos dix pistes · 10 min"
+        ],
+        "duration": "2 h",
+        "split": "En trois fois : le récapitulatif et votre cartographie (30 min), vos proches et les ressources (30 min), puis vos pistes et la fin (1 h)."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Météo et récapitulatif · 10 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c6_meteo",
+          "data_id": "c6.meteo"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma valeur 1",
+              "c5.grille",
+              "c6_rappel_valeur_1"
+            ],
+            [
+              "Ma valeur 2",
+              "c5.grille",
+              "c6_rappel_valeur_2"
+            ],
+            [
+              "Ma valeur 3",
+              "c5.grille",
+              "c6_rappel_valeur_3"
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que la séance a confirmé",
+                "c6_seance_confirme",
+                1.6
+              ],
+              [
+                "Ce qu'elle a déplacé",
+                "c6_seance_deplace",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Après la séance 5",
+          "hint": "Une valeur qui a changé de rang, une condition reformulée, une tension apparue en séance…",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre *cartographie.*",
+      "part_title": "Exercice 1 · Votre cartographie · 20 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce que vous savez de vous, sur une page à garder sous les yeux pour chercher vos pistes : reportez-le, sans le réécrire. Si vous montrez cette page, masquez vos seuils."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mon profil, en mots",
+              "c4.profil",
+              "c6_carto_profil"
+            ],
+            [
+              "Mes deux forces",
+              "c4.profil",
+              "c6_carto_forces"
+            ],
+            [
+              "Ce qui me recharge",
+              "c3.energies",
+              "c6_carto_energie"
+            ],
+            [
+              "Ce qui me coûte",
+              "c3.energies",
+              "c6_carto_cout"
+            ],
+            [
+              "Mes moteurs à moi",
+              "c2.moteurs",
+              "c6_carto_moteurs"
+            ],
+            [
+              "Mon objectif boussole",
+              "c2.boussole",
+              "c6_carto_boussole"
+            ],
+            [
+              "Mes trois conditions",
+              "c5.grille",
+              "c6_carto_conditions",
+              1.6
+            ],
+            [
+              "Mes limites, hors argent",
+              "c5.limites",
+              "c6_carto_limites",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "report",
+          "title": "À garder pour vous",
+          "items": [
+            [
+              "Minimum vital",
+              "c4.seuils",
+              "c6_carto_vital"
+            ],
+            [
+              "Minimum sécurisant",
+              "c4.seuils",
+              "c6_carto_securisant"
+            ],
+            [
+              "Revenu cible",
+              "c4.seuils",
+              "c6_carto_cible"
+            ],
+            [
+              "Durée acceptable d'une baisse",
+              "c4.seuils",
+              "c6_carto_duree"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "question",
+          "question": "Le travail qui me ressemble, quel que soit le métier, c'est…",
+          "field_id": "c6_carto_portrait",
+          "subtitle": "Relisez cette page, et votre journée dans cinq ans (carnet 3, question 7).",
+          "example": "un travail où j'organise mes journées, au contact du public, avec des échéances connues.",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le retour *de vos proches.*",
+      "part_title": "Exercice 2 · Le retour de vos proches · 10 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cet exercice, sur deux pages, recueille le regard de vos proches. Il peut toucher, surtout quand une réponse reprend ce qu'on attend de vous depuis longtemps. Ces pages vous appartiennent : vous choisissez ce que vous y notez, et ce que vous en partagez."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Reprenez les trois soutiens à qui vous avez envoyé la question (carnet 5, exercice 8) : « Si tu ne connaissais pas mon métier actuel, à quel métier penserais-tu pour moi ? Qu'est-ce qui, chez moi, t'y fait penser ? » Notez leurs réponses telles quelles, sans les trier. Une réponse n'est pas arrivée ? Laissez sa ligne vierge."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Mon proche",
+            "Les métiers suggérés",
+            "Ce qui, chez moi, l'y fait penser"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "c6_proche_1",
+                "placeholder": "Proche 1 : son prénom"
+              },
+              {
+                "field_id": "c6_proche_1_metiers",
+                "placeholder": "Proche 1 : les métiers suggérés"
+              },
+              {
+                "field_id": "c6_proche_1_raison",
+                "placeholder": "Proche 1 : ce qui, chez moi, l'y fait penser"
+              }
+            ],
+            [
+              {
+                "field_id": "c6_proche_2",
+                "placeholder": "Proche 2 : son prénom"
+              },
+              {
+                "field_id": "c6_proche_2_metiers",
+                "placeholder": "Proche 2 : les métiers suggérés"
+              },
+              {
+                "field_id": "c6_proche_2_raison",
+                "placeholder": "Proche 2 : ce qui, chez moi, l'y fait penser"
+              }
+            ],
+            [
+              {
+                "field_id": "c6_proche_3",
+                "placeholder": "Proche 3 : son prénom"
+              },
+              {
+                "field_id": "c6_proche_3_metiers",
+                "placeholder": "Proche 3 : les métiers suggérés"
+              },
+              {
+                "field_id": "c6_proche_3_raison",
+                "placeholder": "Proche 3 : ce qui, chez moi, l'y fait penser"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.6,
+            6.0,
+            7.5
+          ],
+          "field_height_cm": 1.6,
+          "data_id": "c6.proches"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Archiviste",
+          "surface": "Mon frère : commercial.",
+          "exploitable": "Mon frère pense à la vente en magasin de sport, parce que je conseille tout le monde avant un achat. Ce qui me parle : conseiller. Vendre, beaucoup moins."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vous *en retenez.*",
+      "part_title": "Exercice 2 · Ce que j'en retiens · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez leurs réponses. Certaines disent ce que vous cherchez, d'autres ce qu'on attend de vous : les deux comptent, pas de la même façon. Les métiers qui vous parlent iront dans vos pistes (exercice 4)."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui me parle vraiment",
+                "c6_proches_parle",
+                2.8
+              ],
+              [
+                "Ce qui ressemble plutôt à ce qu'on attend de moi",
+                "c6_proches_attendu",
+                2.8
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Une suggestion qui vous agace dit aussi quelque chose : notez-la."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La suggestion qui m'a le plus fait réagir",
+                "c6_proches_reaction",
+                1.6
+              ],
+              [
+                "Ce qu'elle a touché chez moi",
+                "c6_proches_touche",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "anchor",
+          "field_id": "c6_proches_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Explorer *les métiers.*",
+      "part_title": "Exercice 3 · Explorer les ressources · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Parcourez au moins deux de ces ressources, sans chercher à conclure. Notez au passage les métiers qui vous arrêtent, même de loin : ils nourriront vos pistes. Le temps passé à explorer ne compte pas dans celui du carnet."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "link_card",
+          "title": "Le quotidien des métiers, en audio et en vidéo",
+          "links": [
+            [
+              "Sur le métier",
+              "https://podcast.ausha.co/sur-le-metier",
+              "podcast, des personnes racontent leur métier, leur parcours et leur quotidien (podcast.ausha.co)."
+            ],
+            [
+              "Maintenant j'aime le lundi",
+              "https://www.youtube.com/@Maintenantjaimelelundi",
+              "YouTube, un métier testé chaque semaine, avec celles et ceux qui l'exercent (youtube.com)."
+            ]
+          ]
+        },
+        {
+          "type": "link_card",
+          "title": "Des fiches métiers complètes",
+          "links": [
+            [
+              "APEC",
+              "https://www.apec.fr/tous-nos-metiers.html",
+              "les métiers cadres, les fonctions support et le management (apec.fr)."
+            ],
+            [
+              "Cadremploi",
+              "https://www.cadremploi.fr/editorial/conseils/fiches-metiers.html",
+              "les missions, les compétences et les salaires, en bref (cadremploi.fr)."
+            ],
+            [
+              "ONISEP",
+              "https://www.onisep.fr/metier",
+              "les formations, les secteurs et les débouchés (onisep.fr)."
+            ],
+            [
+              "CIDJ",
+              "https://www.cidj.com/tous-les-metiers/metiers-par-centres-d-interet",
+              "des métiers classés par centres d'intérêt (cidj.com)."
+            ],
+            [
+              "MétierScope (France Travail)",
+              "https://candidat.francetravail.fr/metierscope/centres-interet",
+              "des métiers par centres d'intérêt, avec l'état du marché (francetravail.fr)."
+            ]
+          ],
+          "color": "mint"
+        },
+        {
+          "type": "link_card",
+          "title": "Votre espace Notion",
+          "links": [
+            [
+              "Vos ressources Notion",
+              "https://www.notion.so/Vos-ressources-aca96b6474d04acd9eaafa92523df7a6",
+              "toutes les ressources et les guides pratiques du bilan."
+            ]
+          ],
+          "color": "jasmine"
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "Les métiers que je repère",
+              "c6_repere",
+              "Un métier par ligne"
+            ],
+            [
+              "Et ceux qui suivent",
+              "c6_repere",
+              "Même de loin",
+              4
+            ]
+          ],
+          "count": 3,
+          "line_height_cm": 0.85
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Dix pistes : *cinq réalistes.*",
+      "part_title": "Exercice 4 · Cinq pistes réalistes · 20 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une piste, c'est un métier, un secteur ou une façon de travailler à explorer : rien ne vous engage encore. Partez de ce que vous avez déjà noté : vos idées de piste et votre « Je m'autorise à », ci-dessous, les métiers de vos modèles (carnet 1, exercice 5) et de votre interview (carnet 2), ceux que suggèrent vos proches (exercice 2) et ceux repérés dans les ressources (exercice 3)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mon idée de piste",
+              "c2.livrable",
+              "c6_rappel_piste_2"
+            ],
+            [
+              "Mon idée de piste",
+              "c3.livrable",
+              "c6_rappel_piste_3"
+            ],
+            [
+              "Mon idée de piste",
+              "c4.livrable",
+              "c6_rappel_piste_4"
+            ],
+            [
+              "Mon idée de piste",
+              "c5.livrable",
+              "c6_rappel_piste_5"
+            ],
+            [
+              "Je m'autorise à…",
+              "c1.autorisation",
+              "c6_rappel_autorisation",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Cinq pistes réalistes : accessibles avec vos compétences actuelles, ou après une formation courte."
+          ],
+          "spacing_after_cm": 0.3
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Piste réaliste",
+            "D'où elle vient",
+            "Ce qui m'attire"
+          ],
+          "rows": [
+            [
+              "R1",
+              {
+                "field_id": "c6_piste_r_1",
+                "placeholder": "Piste réaliste 1 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_r_1_origine",
+                "placeholder": "Piste réaliste 1 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_r_1_attire",
+                "placeholder": "Piste réaliste 1 : ce qui m'attire"
+              }
+            ],
+            [
+              "R2",
+              {
+                "field_id": "c6_piste_r_2",
+                "placeholder": "Piste réaliste 2 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_r_2_origine",
+                "placeholder": "Piste réaliste 2 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_r_2_attire",
+                "placeholder": "Piste réaliste 2 : ce qui m'attire"
+              }
+            ],
+            [
+              "R3",
+              {
+                "field_id": "c6_piste_r_3",
+                "placeholder": "Piste réaliste 3 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_r_3_origine",
+                "placeholder": "Piste réaliste 3 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_r_3_attire",
+                "placeholder": "Piste réaliste 3 : ce qui m'attire"
+              }
+            ],
+            [
+              "R4",
+              {
+                "field_id": "c6_piste_r_4",
+                "placeholder": "Piste réaliste 4 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_r_4_origine",
+                "placeholder": "Piste réaliste 4 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_r_4_attire",
+                "placeholder": "Piste réaliste 4 : ce qui m'attire"
+              }
+            ],
+            [
+              "R5",
+              {
+                "field_id": "c6_piste_r_5",
+                "placeholder": "Piste réaliste 5 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_r_5_origine",
+                "placeholder": "Piste réaliste 5 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_r_5_attire",
+                "placeholder": "Piste réaliste 5 : ce qui m'attire"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            1.0,
+            5.0,
+            3.6,
+            7.5
+          ],
+          "field_height_cm": 1.6,
+          "data_id": "c6.pistes"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Dix pistes : *cinq audacieuses.*",
+      "part_title": "Exercice 4 · Cinq pistes audacieuses · 20 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Cinq pistes audacieuses : sans tenir compte des contraintes, ni diplôme, ni âge, ni argent, ni regard des autres. Votre « Je m'autorise à » en contient souvent une."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Piste audacieuse",
+            "D'où elle vient",
+            "Ce qu'elle dit de ce que je cherche"
+          ],
+          "rows": [
+            [
+              "A1",
+              {
+                "field_id": "c6_piste_a_1",
+                "placeholder": "Piste audacieuse 1 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_a_1_origine",
+                "placeholder": "Piste audacieuse 1 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_a_1_cherche",
+                "placeholder": "Piste audacieuse 1 : ce qu'elle dit de ce que je cherche"
+              }
+            ],
+            [
+              "A2",
+              {
+                "field_id": "c6_piste_a_2",
+                "placeholder": "Piste audacieuse 2 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_a_2_origine",
+                "placeholder": "Piste audacieuse 2 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_a_2_cherche",
+                "placeholder": "Piste audacieuse 2 : ce qu'elle dit de ce que je cherche"
+              }
+            ],
+            [
+              "A3",
+              {
+                "field_id": "c6_piste_a_3",
+                "placeholder": "Piste audacieuse 3 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_a_3_origine",
+                "placeholder": "Piste audacieuse 3 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_a_3_cherche",
+                "placeholder": "Piste audacieuse 3 : ce qu'elle dit de ce que je cherche"
+              }
+            ],
+            [
+              "A4",
+              {
+                "field_id": "c6_piste_a_4",
+                "placeholder": "Piste audacieuse 4 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_a_4_origine",
+                "placeholder": "Piste audacieuse 4 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_a_4_cherche",
+                "placeholder": "Piste audacieuse 4 : ce qu'elle dit de ce que je cherche"
+              }
+            ],
+            [
+              "A5",
+              {
+                "field_id": "c6_piste_a_5",
+                "placeholder": "Piste audacieuse 5 : le métier, le secteur ou l'activité"
+              },
+              {
+                "field_id": "c6_piste_a_5_origine",
+                "placeholder": "Piste audacieuse 5 : d'où elle vient"
+              },
+              {
+                "field_id": "c6_piste_a_5_cherche",
+                "placeholder": "Piste audacieuse 5 : ce qu'elle dit de ce que je cherche"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            1.0,
+            5.0,
+            3.6,
+            7.5
+          ],
+          "field_height_cm": 1.6
+        },
+        {
+          "type": "annotation",
+          "text": "Les pistes audacieuses disent souvent ce que vous cherchez vraiment."
+        },
+        {
+          "type": "contrast_example",
+          "title": "Économiste",
+          "surface": "Artiste.",
+          "exploitable": "Restaurer des instruments de musique, une idée de piste du carnet 2 : travailler de mes mains, sur un objet qui dure, à mon rythme."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *choisir.*",
+      "part_title": "Exercice 5 · Avant de choisir · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "En séance 6, vous retiendrez trois pistes à confronter au terrain. Relisez les dix, puis notez vos trois favorites, réalistes ou audacieuses : elles se discutent."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Ma piste",
+            "Pourquoi elle",
+            "Ce qui m'en fait douter"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "c6_favorite_1",
+                "placeholder": "Favorite 1 : le numéro et le nom de la piste"
+              },
+              {
+                "field_id": "c6_favorite_1_pourquoi",
+                "placeholder": "Favorite 1 : pourquoi elle"
+              },
+              {
+                "field_id": "c6_favorite_1_doute",
+                "placeholder": "Favorite 1 : ce qui m'en fait douter"
+              }
+            ],
+            [
+              {
+                "field_id": "c6_favorite_2",
+                "placeholder": "Favorite 2 : le numéro et le nom de la piste"
+              },
+              {
+                "field_id": "c6_favorite_2_pourquoi",
+                "placeholder": "Favorite 2 : pourquoi elle"
+              },
+              {
+                "field_id": "c6_favorite_2_doute",
+                "placeholder": "Favorite 2 : ce qui m'en fait douter"
+              }
+            ],
+            [
+              {
+                "field_id": "c6_favorite_3",
+                "placeholder": "Favorite 3 : le numéro et le nom de la piste"
+              },
+              {
+                "field_id": "c6_favorite_3_pourquoi",
+                "placeholder": "Favorite 3 : pourquoi elle"
+              },
+              {
+                "field_id": "c6_favorite_3_doute",
+                "placeholder": "Favorite 3 : ce qui m'en fait douter"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.6,
+            6.25,
+            6.25
+          ],
+          "field_height_cm": 1.6
+        },
+        {
+          "type": "contrast_example",
+          "title": "Topographe",
+          "surface": "R2, A1 et A4 : elles me plaisent.",
+          "exploitable": "A1, la médiation culturelle : expliquer, au contact du public. Mon doute : les débouchés près de chez moi."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le métier que je n'ai jamais osé envisager",
+                "c6_jamais_ose",
+                1.6
+              ],
+              [
+                "Ce qui m'en empêche",
+                "c6_jamais_ose_frein",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Si vous le souhaitez",
+          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Ce que je garde de mes pistes audacieuses, même si je ne les exerce pas…",
+          "field_id": "c6_audace_garde",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 10 min",
+      "params": {
+        "lines": [
+          "Pour chacune de mes trois favorites, je repère une personne qui exerce ce métier, ou qui en connaît une.",
+          "Si ma séance 6 s'ouvre par l'initiation à l'IA, j'apporte deux tâches de mon travail à essayer ensemble.",
+          "J'apporte ce carnet à la séance 6."
+        ],
+        "field_prefix": "c6_livrable",
+        "livrable_title": "Vos dix pistes",
+        "livrable_text": "Cinq pistes réalistes et cinq audacieuses, avec leur origine et ce qu'elles disent de ce que vous cherchez (exercice 4), et vos trois favorites. En séance 6, vous en retiendrez trois à confronter au terrain.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "À aborder en séance : une piste que je n'ose pas défendre, une suggestion qui me gêne",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ]
+      },
+      "data_id": "c6.livrable"
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Vos dix pistes sont prêtes.",
+          "Prochaine étape : la séance 6. Apportez ce carnet.",
+          "Ensuite, le carnet 7 : confronter trois pistes au terrain."
+        ]
+      },
+      "fixed": true
+    }
+  ]
+}

@@ -38,7 +38,12 @@ CATALOGUE = [
      "les tensions, la grille anti-compromis (trois valeurs traduites en conditions), l'entourage et la question "
      "aux proches.",
      "favorite", BILAN),
-    # Former carnets 0 to 5, until the clean-up of the restructuring (R11)
+    ("carnet-6", 6, "Carnet 6 · L'exploration",
+     "Cartographie en reports, retour des proches, ressources et dix pistes",
+     "Préparer la séance 6 : ce que la personne sait d'elle sur une page, les métiers suggérés par ses proches, "
+     "les ressources pour explorer, puis dix pistes, cinq réalistes et cinq audacieuses, et ses trois favorites.",
+     "travel_explore", BILAN),
+    # Former carnets 0 to 6, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
      "flag", BILAN),
@@ -61,7 +66,7 @@ CATALOGUE = [
      "Alignement, liste de valeurs et conditions de travail",
      "Expériences d'alignement et de désalignement, valeurs hiérarchisées, incarnées et traduites en conditions.",
      "favorite", BILAN),
-    ("chap6", 6, "Carnet 6 · Phase d'exploration", "Cartographie, retour des proches et fiches métiers",
+    ("chap6", 6, "Carnet 6 · Phase d'exploration (ancien parcours)", "Cartographie, retour des proches et fiches métiers",
      "Cartographie personnelle, retour des proches, dix métiers à explorer et fiches métiers à confronter au réel.",
      "travel_explore", BILAN),
     ("livret", 7, "Livret de compétences", "Portfolio de compétences prouvées par des faits",
