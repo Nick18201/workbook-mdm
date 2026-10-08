@@ -17,7 +17,7 @@ Ce récapitulatif s'adresse à l'agent qui s'occupe du site (dépôt `marge-de-m
    - temps 3 (Décider et agir) : 2 séances.
 4. **L'option « Initiation à l'IA » ouvre la séance 6**, puisque l'exploration passe de S7 à S6.
 5. **Le document du temps 3 s'appelle « carnet de route »**, comme le site le dit déjà. Le nom « livret de compétences » disparaît : son contenu entre dans le carnet de route.
-6. **Le questionnaire de préférences n'est pas le questionnaire officiel MBTI®.** C'est une version maison, conçue et éprouvée par Lysiane Brand, qui est praticienne certifiée MBTI®. Le site ne doit plus parler nulle part de « questionnaire officiel », de « passation officielle », de « test MBTI® officiel » ni de « rapport officiel complet ». Voir la section dédiée plus bas.
+6. **Le MBTI disparaît du site.** On parle désormais d'un « test des fonctionnements cognitifs », une version maison conçue et éprouvée par Lysiane Brand, psychologue du travail. « MBTI » est une marque soumise à licence : plus aucune mention nulle part, y compris les codes de type (ISFJ…) et la certification de Lysiane. Voir la section dédiée plus bas.
 7. **Hexa3D est abandonné.** Le site n'en parle pas (vérifié) : ne pas l'ajouter.
 
 ## Ce qui ne change pas
@@ -25,7 +25,7 @@ Ce récapitulatif s'adresse à l'agent qui s'occupe du site (dépôt `marge-de-m
 - 10 séances de 1 h 20 en visio, un suivi de 40 min à 6 mois, 14 h d'accompagnement : `bilanOffer.ts` ne bouge pas.
 - 10 à 20 h de travail personnel sur les carnets (`notebookHours`).
 - « 7 carnets de bord guidés », puis « le carnet de route de votre projet ».
-- Les trois temps : leurs noms, leurs postures et leurs livrables. Seule la répartition des séances change, et le libellé « Profil MBTI® complet » (voir plus bas).
+- Les trois temps : leurs noms, leurs postures et leurs livrables. Seule la répartition des séances change, et le libellé « Profil MBTI® complet » devient « Profil de fonctionnement cognitif ».
 - Le prix, le copilote IA, le suivi.
 
 ## Le nouveau déroulé (`src/data/bilanMethod.ts`)
@@ -36,7 +36,7 @@ Les champs suivent l'ordre du type `BilanSession` : `label`, `chapter`, `title`,
 
 Proposition pour l'intro du temps 1 : « Comprendre ce qui vous fait avancer : votre point de départ et vos héritages, votre parcours réel, votre fonctionnement, votre rapport à l'argent et vos valeurs. »
 
-Livrables du temps 1 : remplacer « Profil MBTI® complet » par « Votre profil de préférences ». Les deux autres livrables ne changent pas.
+Livrables du temps 1 : remplacer « Profil MBTI® complet » par « Profil de fonctionnement cognitif » (dans `bilanMethod.ts` l. 69 et `BilanHero.astro` l. 58). Les deux autres livrables ne changent pas.
 
 **S1**
 - label : « État des lieux et héritages »
@@ -51,10 +51,10 @@ Livrables du temps 1 : remplacer « Profil MBTI® complet » par « Votre profil
 - title, description et objective : inchangés.
 
 **S3** (actuelle S4, description modifiée)
-- label : « Mes fonctionnements (MBTI®) »
+- label : « Mes fonctionnements cognitifs »
 - chapter : « Carnet 3 »
 - title : inchangé.
-- description : « On travaille votre fonctionnement en profondeur, avec un questionnaire de préférences conçu et éprouvé par Lysiane Brand, praticienne certifiée MBTI®. Vous comprenez comment vous prenez des décisions, ce qui vous stimule, ce qui vous fatigue, votre manière d'interagir. On le met en regard de votre vécu : les environnements qui vous conviennent, ceux qui vous épuisent. »
+- description : « On travaille votre fonctionnement en profondeur, avec un test des fonctionnements cognitifs conçu et éprouvé par Lysiane Brand, psychologue du travail. Vous comprenez comment vous prenez des décisions, ce qui vous stimule, ce qui vous fatigue, votre manière d'interagir. On le met en regard de votre vécu : les environnements qui vous conviennent, ceux qui vous épuisent. »
 - objective : inchangé.
 
 **S4** (texte de l'actuelle S5)
@@ -132,9 +132,9 @@ Le champ `chapter` passe de 0 à 6 à **1 à 7**. Les textes ci-dessous décrive
 
 **Carnet 3 · Mes fonctionnements propres**
 - Sous-titre : « Votre façon de fonctionner »
-- Objectif : « Préparer la restitution de votre profil de préférences : où vous puisez votre énergie, comment vous décidez, comment vous réagissez sous pression. »
+- Objectif : « Préparer la restitution de votre test des fonctionnements cognitifs : où vous puisez votre énergie, comment vous décidez, comment vous réagissez sous pression. »
 - Exercices :
-  - « Questionnaire de préférences, conçu par une praticienne certifiée MBTI® »
+  - « Test des fonctionnements cognitifs »
   - « 17 mises en situation »
   - « Sous pression : vos réactions »
   - « Ce que j'en retiens pour mon travail »
@@ -186,24 +186,36 @@ Le champ `chapter` passe de 0 à 6 à **1 à 7**. Les textes ci-dessous décrive
 - Un module selon le projet : création (business plan), reconversion (formation et financement), évolution interne (argumentaire de repositionnement).
 - Le site présente déjà « le carnet de route de votre projet » (section « Trois projets possibles ») : ce cadre reste juste.
 
-## Le MBTI® : retirer « officiel » partout
+## Le MBTI : supprimer toute mention
 
-**La règle** : le questionnaire est une version maison. On peut dire qu'il a été conçu et éprouvé par Lysiane Brand, praticienne certifiée MBTI®, et que le profil est restitué par elle. On ne peut pas dire « officiel ».
+**La règle** : « MBTI » est une marque soumise à licence. Le bilan utilise un **test des fonctionnements cognitifs**, une version maison conçue et éprouvée par Lysiane Brand, psychologue du travail. Le site ne doit plus mentionner le MBTI nulle part : ni « MBTI® », ni « test MBTI », ni codes de type (ISFJ, ESFJ, ISTP…), ni « certifiée MBTI® ».
+
+Mentions visibles (relevé du 8 octobre 2026, hors tests) :
 
 | Fichier | Texte actuel | Proposition |
 |---|---|---|
-| `src/data/bilanMethod.ts` (l. 103) | « Avec le questionnaire officiel MBTI®, vous comprenez… » | La nouvelle description de S3 (section précédente). |
-| `src/data/bilanMethod.ts` (livrables du temps 1) | « Profil MBTI® complet » | « Votre profil de préférences » |
-| `src/data/bilanNotebooks.ts` (l. 89, 91, 98) | « Passation et restitution du MBTI® officiel… », « Passation officielle du MBTI® (93 questions) », « Rapport officiel complet MBTI®… » | Le nouveau carnet 3 (section précédente). Ne pas reprendre le nombre de questions sans confirmation. |
-| `src/data/bilanKit.ts` (l. 30-31) | « Questionnaire officiel MBTI® » — « et son rapport complet » | « Questionnaire de préférences » — « conçu et restitué par une praticienne certifiée MBTI® » |
-| `src/components/bilan/BilanDuo.astro` (l. 37) | « la passation officielle du MBTI® » | « le questionnaire de préférences et sa restitution » |
-| `src/pages/l-equipe.astro` (l. 35) | « j'assure la passation et l'interprétation du questionnaire officiel MBTI® » | « j'ai conçu le questionnaire de préférences du bilan, et j'en assure la passation et la restitution, en tant que praticienne certifiée MBTI® » |
-| `src/pages/l-equipe.astro` (l. 39) | lien « Découvrir le test MBTI® officiel avec Lysiane » | « Découvrir le questionnaire de préférences » |
-| `src/content/faq/questions.json` (l. 144, et l. 206 si concernée) | « le questionnaire MBTI® officiel est inclus, restitution comprise » | « un questionnaire de préférences, conçu par une praticienne certifiée MBTI®, est inclus, restitution comprise » |
-| `src/data/villeFaqs.ts` (l. 29) | « le même questionnaire MBTI® officiel » | « le même questionnaire de préférences » |
-| Tests | `bilanNotebooks.test.ts` (l. 143, 145, 152), `bilanKit.test.ts` (l. 43), `BilanDuo.test.ts` (l. 86), `Expertise.test.ts` (l. 159) | À aligner sur les nouveaux textes. |
-
-**Point de vigilance, à vérifier avec Lysiane** : « MBTI® » est une marque déposée qui désigne l'instrument officiel. Pour une version maison, la mention la plus prudente décrit la certification de la personne (« praticienne certifiée MBTI® ») plutôt que le questionnaire. Les conditions de sa certification disent précisément ce qui est permis.
+| `src/data/bilanMethod.ts` (l. 69) | « Profil MBTI® complet » | « Profil de fonctionnement cognitif » |
+| `src/data/bilanMethod.ts` (l. 99 et 103) | label « Mes fonctionnements (MBTI®) » ; « Avec le questionnaire officiel MBTI®, vous comprenez… » | La nouvelle S3 (section « Le nouveau déroulé ») |
+| `src/components/bilan/BilanHero.astro` (l. 58) | « Profil MBTI® complet » | « Profil de fonctionnement cognitif » |
+| `src/data/bilanNotebooks.ts` (l. 88, 89, 91, 98) | « L'écologie d'énergie (MBTI®) », « Passation et restitution du MBTI® officiel… », « Passation officielle du MBTI® (93 questions) », « Rapport officiel complet MBTI®… » | Le nouveau carnet 3 (section « Les sept carnets ») |
+| `src/data/bilanKit.ts` (l. 30-31) | « Questionnaire officiel MBTI® » — « et son rapport complet » | « Test des fonctionnements cognitifs » — « et sa restitution ». L'identifiant interne `mbti` peut devenir `fonctionnements`. |
+| `src/components/bilan/BilanStance.astro` (l. 19) | « Le MBTI® éclaire votre façon de fonctionner, il ne tranche pas. » | « Le test des fonctionnements cognitifs éclaire votre façon de fonctionner, il ne tranche pas. » |
+| `src/components/bilan/BilanDuo.astro` (l. 33 et 37) | « Certifiée MBTI® » ; « la passation officielle du MBTI® » | Retirer la mention de certification ; « le test des fonctionnements cognitifs et sa restitution » |
+| `src/pages/l-equipe.astro` (l. 24, 25, 29) | « Certifiée MBTI® » (deux fois) ; « la lecture de votre fonctionnement (MBTI®) » | Retirer « Certifiée MBTI® » ; « la lecture de votre fonctionnement » |
+| `src/pages/l-equipe.astro` (l. 35) | « j'assure la passation et l'interprétation du questionnaire officiel MBTI® » | « j'ai conçu le test des fonctionnements cognitifs du bilan, et j'en assure la passation et la restitution » |
+| `src/pages/l-equipe.astro` (l. 38-39) | commentaire ; lien « Découvrir le test MBTI® officiel avec Lysiane » | « Découvrir le test des fonctionnements cognitifs » |
+| `src/data/team.ts` (l. 41) | `knowsAbout` : « MBTI » | Retirer |
+| `src/components/villes/CityFinancing.astro` (l. 61) | « le questionnaire MBTI® » | « le test des fonctionnements cognitifs » |
+| `src/data/villeFaqs.ts` (l. 29) | « le même questionnaire MBTI® officiel » | « le même test des fonctionnements cognitifs » |
+| `src/content/faq/questions.json` (l. 144, 206 et 218) | « le questionnaire MBTI® officiel est inclus, restitution comprise » ; « inventaire certifié MBTI® » | « un test des fonctionnements cognitifs est inclus, restitution comprise » ; « test des fonctionnements cognitifs » |
+| `src/components/sections/Trajectory.astro` (l. 55) | « Des repères solides sur votre personnalité et vos valeurs (MBTI) » | « Des repères solides sur votre fonctionnement et vos valeurs » |
+| `src/data/bilanResults.ts` (l. 73) | indicateur « Pertinence des outils utilisés (questionnaire MBTI®, exercices) » | « Pertinence des outils utilisés ». Le score vient d'enquêtes passées : retirer la parenthèse plutôt que de renommer l'outil. |
+| `src/data/comparisons/chance.ts` (l. 586, et le commentaire l. 11) | « le questionnaire MBTI® sert de support de dialogue, jamais de verdict » | « le test des fonctionnements cognitifs sert de support de dialogue, jamais de verdict » |
+| `src/content/articles/le-cout-du-masque-social/index.md` (l. 23) | « (comme les types MBTI ISFJ et ESFJ) » | Retirer la parenthèse |
+| `src/content/articles/introversion-bulle-professionnelle/index.md` (l. 12) | « (très fréquent chez les profils MBTI ISFJ ou ISTP) » | Retirer la parenthèse |
+| `src/data/legacyRedirects.ts` (l. 58-59) | redirection de `/outil-de-personnalite-mbti/` | Garder la redirection (c'est une ancienne adresse), reformuler le commentaire et le champ `topic` |
+| Commentaires (`ComparisonGuides.astro` l. 4, `Approach.astro` l. 44, `bilanKit.ts` l. 30, `l-equipe.astro` l. 38) | mentions du MBTI | À reformuler |
+| Tests | `bilanNotebooks.test.ts`, `bilanKit.test.ts`, `bilanMethod.test.ts`, `bilanResults.test.ts`, `BilanDuo.test.ts`, `BilanHero.test.ts`, `BilanPricing.test.ts`, `BilanMethod.test.ts`, `BilanResults.test.ts`, `BilanBetweenSessions.test.ts`, `ComparisonGuides.test.ts`, `FAQ.test.ts`, `Expertise.test.ts`, `chance.test.ts` | À aligner sur les nouveaux textes |
 
 ## Les autres endroits à modifier
 
@@ -222,4 +234,4 @@ Relevé fait en lecture seule le 8 octobre 2026, au commit `89967a1`.
 | `src/content/faq/questions.json` (l. 138 et 154) | « livret individuel » et « livret de bord » deviennent « carnets de bord ». |
 | `src/data/comparisons/chance.ts` | Rien à changer si le titre « Mon rapport à l'argent » est gardé. |
 
-Pour être exhaustif, chercher aussi dans `src/` : « chapitre 0 », « Chapitre », « prélude », « séance 7 », « septième séance », « livret de compétences », « officiel », « Hexa3D », et le champ `chapter:`.
+Pour être exhaustif, chercher aussi dans `src/` : « chapitre 0 », « Chapitre », « prélude », « séance 7 », « septième séance », « livret de compétences », « MBTI », « ISFJ », « officiel », « Hexa3D », et le champ `chapter:`.

@@ -8,7 +8,7 @@ Version du 8 octobre 2026. Elle intègre les décisions de Nicolas :
 - le document du temps 3 s'appelle « carnet de route » ;
 - le nouveau parcours vaut pour les futurs bénéficiaires, sans date de bascule ;
 - l'option « Initiation à l'IA » ouvre la séance 6 ;
-- le questionnaire de préférences est une version maison, éprouvée par Lysiane Brand, praticienne certifiée MBTI® : ce n'est pas la passation officielle ;
+- on parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand, et plus jamais du MBTI, marque soumise à licence ;
 - Hexa3D est abandonné.
 
 Elle fixe, pour les PDF comme pour l'app, une seule liste de carnets, un seul ordre et un seul contenu. Elle s'appuie sur :
@@ -25,7 +25,7 @@ Le programme actuel organise le bilan en 10 séances, en 3 temps : comprendre (S
 
 Les deux chaînes couvrent ce parcours de façon inverse :
 - **les PDF** couvrent bien le temps 1, puis s'essoufflent : rien pour les enquêtes, la matrice, les scénarios ni la feuille de route datée ;
-- **l'app** comprime le temps 1 (ni MBTI®, ni liste de valeurs, ni ligne de vie), mais développe le terrain et le plan d'action.
+- **l'app** comprime le temps 1 (ni test des fonctionnements cognitifs, ni liste de valeurs, ni ligne de vie), mais développe le terrain et le plan d'action.
 
 L'audit a aussi relevé un déséquilibre :
 - six séances d'introspection pour deux de terrain ;
@@ -41,9 +41,9 @@ Toujours 10 séances de 1 h 20 et un suivi de 40 min à 6 mois. La répartition 
 
 | Temps | Séance | Sujet | Carnet qui la prépare | Livrables du temps |
 |---|---|---|---|---|
-| 1 · Comprendre | S1 | État des lieux et héritages : votre situation, ce qui vous pèse, ce qui tient encore, ce que vous avez reçu de votre milieu. Le cadre de travail. | Carnet 1 | Profil MBTI® et analyse d'impact de l'environnement · Cartographie des énergies de travail et des facteurs d'usure · Seuil de sécurité financière (4 seuils) |
+| 1 · Comprendre | S1 | État des lieux et héritages : votre situation, ce qui vous pèse, ce qui tient encore, ce que vous avez reçu de votre milieu. Le cadre de travail. | Carnet 1 | Profil de fonctionnement cognitif et analyse d'impact de l'environnement · Cartographie des énergies de travail et des facteurs d'usure · Seuil de sécurité financière (4 seuils) |
 | | S2 | Votre parcours réel | Carnet 2 | |
-| | S3 | Votre fonctionnement (MBTI®) | Carnet 3 | |
+| | S3 | Votre fonctionnement cognitif | Carnet 3 | |
 | | S4 | Votre rapport à l'argent | Carnet 4 | |
 | | S5 | Vos valeurs et vos moteurs | Carnet 5 | |
 | 2 · Confronter | S6 | Explorer : 10 pistes, 5 réalistes et 5 audacieuses ; choix des 3 pistes à confronter | Carnet 6 | Matrice de faisabilité · 3 scénarios comparés · Retours d'enquêtes terrain |
@@ -127,12 +127,12 @@ Récapitule S1 et prépare S2, qui porte sur le parcours réel : ce que vous sav
 
 ### Carnet 3 · Mes fonctionnements propres · S2 → S3 · cible 1 h 45
 
-Récapitule S2 et prépare S3, la restitution du MBTI®.
+Récapitule S2 et prépare S3, la restitution du test des fonctionnements cognitifs.
 
 | Exercice | Source | Décision |
 |---|---|---|
 | Récapitulatif de la séance 2 | PDF C3 ex. 1 | Il relit le fil rouge et les quatre zones. |
-| À savoir sur le questionnaire | Audit | Nouveau. Le questionnaire de préférences est une version maison, conçue et éprouvée par Lysiane Brand, praticienne certifiée MBTI®. Quatre préférences, pas « cinq dimensions ». Les mises en situation du carnet ne calculent pas le type. Le type est restitué en séance, et c'est la personne qui le valide. |
+| À savoir sur le test | Audit | Nouveau. Le test des fonctionnements cognitifs est une version maison, conçue et éprouvée par Lysiane Brand, psychologue du travail. Quatre préférences, pas « cinq dimensions ». Les mises en situation du carnet ne calculent pas le profil. Le profil est restitué en séance, et c'est la personne qui le valide. Aucune mention du MBTI. |
 | Les 17 mises en situation | PDF C3 ex. 2 à 5 | Garder, avec les réécritures de l'audit (Q1, Q4, Q7, Q8, Q13). Q14 et Q15 passent en échelle suivie d'un « pourquoi ». |
 | Sous pression | PDF C3 ex. 6 | Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs. Protocole complet. |
 | Ce que j'en retiens pour mon travail | Audit | Nouveau : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… ». |
@@ -145,7 +145,7 @@ Récapitule S3 et prépare S4.
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Récapitulatif de la restitution MBTI® | PDF C4 ex. 1 | Avec le champ « le type que j'ai validé » : c'est la seule saisie du type, reportée ensuite. |
+| Récapitulatif de la restitution du test | PDF C4 ex. 1 | Avec le champ « le profil de fonctionnement que j'ai validé » : c'est la seule saisie du profil, reportée ensuite. |
 | Votre situation | PDF C4 ex. 2 | Choix exclusif en boutons radio, puis un « pourquoi ». Reprend la note « Argent » des domaines de vie (carnet 1). |
 | Votre histoire avec l'argent | PDF C4 ex. 3 | 4 questions ouvertes au lieu de 7. Protocole complet. La question sur le couple est posée au passé, avec un renvoi vers la séance. Renvoi à l'héritage du carnet 1. |
 | Vos premières expériences, vos idées reçues | PDF C4 ex. 4 + App | L'encadré passif devient le format de l'app : « Ce que je me dis → Ce que montrent les faits ». |
@@ -179,7 +179,7 @@ Récapitule S5 et prépare S6 « Explorer ».
 | Exercice | Source | Décision |
 |---|---|---|
 | Récapitulatif de la séance 5 | PDF C6 ex. 1 | Une ligne par valeur, reportée du carnet 5, et « ce que la séance a confirmé, ce qu'elle a déplacé ». |
-| Votre cartographie | PDF C6 ex. 2 | Une seule page de reports : type, cartographie des énergies, moteurs, seuils, grille anti-compromis. Les seuils restent dans une zone « à garder pour vous ». |
+| Votre cartographie | PDF C6 ex. 2 | Une seule page de reports : profil de fonctionnement, cartographie des énergies, moteurs, seuils, grille anti-compromis. Les seuils restent dans une zone « à garder pour vous ». |
 | Le retour de vos proches | PDF C6 ex. 3 | Recueil des réponses : trois cartes, une par personne, puis « ce qui me parle vraiment / ce qui ressemble plutôt à ce qu'on attend de moi ». Protocole. |
 | Les ressources | PDF C6 | Placées avant les pistes. Liens à jour. |
 | Dix pistes | PDF C6 ex. 4 | 5 réalistes et 5 audacieuses. Elles partent du fil des pistes, des suggestions des proches et de « Je m'autorise à » (carnet 1). Une colonne « d'où vient cette piste ». |
@@ -216,7 +216,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | Exercice | Source | Décision |
 |---|---|---|
 | Récapitulatif de la séance 8 | Audit | Les 3 scénarios, et vers lequel vous penchez. |
-| Votre profil, en une page | Livret thème 1 | Reports seulement : type, forces, cartographie des énergies. On ne refait plus rien. |
+| Votre profil, en une page | Livret thème 1 | Reports seulement : profil de fonctionnement, forces, cartographie des énergies. On ne refait plus rien. Sans l'exemple « ISFJ » ni aucun code de type. |
 | Vos compétences prouvées | Livret thèmes 3 et 4 | Un tableau : compétence, où je l'ai prouvée, résultat ou trace, niveau d'autonomie de 1 à 4, envie de l'utiliser. Il part des expériences, du travail réel et des compétences de vie du carnet 2. |
 | Deux récits d'action | Livret thème 5 | Deux récits au lieu d'un, « Ce récit prouve que je sais… », et une version orale en trois phrases. |
 
@@ -275,7 +275,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), et où elle est rep
 | Première interview | Carnet 2 (facultatif) | Carnet 7 (grille d'entretien, contacts) |
 | Fil des pistes | Livrables des carnets 2 à 5 | Carnet 6 (dix pistes) |
 | Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route |
-| Type MBTI® validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route |
+| Profil de fonctionnement validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route |
 | 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création |
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création |
 | Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) |
@@ -297,7 +297,7 @@ L'app a deux usages : créer un livret de toutes pièces, puis exporter son JSON
 |---|---|---|---|
 | Forte | Carnets 6 et 7, carnet de route et ses modules, business plan | Pistes pré-intitulées, ressources du secteur, nombre de fiches, contacts suggérés, exemples, module de projet | Gabarit, protocole, critères des fiches, définitions des seuils |
 | Moyenne | Carnets 2 et 4 | Vocabulaire du secteur, situation (reconversion, évolution, retour à l'emploi), nombre de fiches d'expérience, exemples. Au carnet 4, le statut (salarié, indépendant, demandeur d'emploi), jamais de chiffres personnels | Protocole, questions franches, carte des seuils |
-| Faible | Carnets 1, 3 et 5 | Au plus le prénom et les exemples. Avant la séance 1, on connaît peu la personne | Le cadre et les héritages (carnet 1), les questions MBTI® (carnet 3 : les personnaliser biaiserait la restitution), la liste de valeurs et l'entonnoir (carnet 5) |
+| Faible | Carnets 1, 3 et 5 | Au plus le prénom et les exemples. Avant la séance 1, on connaît peu la personne | Le cadre et les héritages (carnet 1), les questions du test des fonctionnements cognitifs (carnet 3 : les personnaliser biaiserait la restitution), la liste de valeurs et l'entonnoir (carnet 5) |
 
 Deux règles valent partout :
 - **les exemples viennent d'un métier voisin**, jamais du métier de la personne, sinon ils sont recopiés ;
@@ -314,7 +314,7 @@ Deux règles valent partout :
 
 - Pas de date de bascule : le nouveau parcours vaut pour les futurs bénéficiaires.
 - L'option « Initiation à l'IA » ouvre la séance 6.
-- Le questionnaire de préférences est une version maison, éprouvée par Lysiane Brand, praticienne certifiée MBTI®. Aucun support ne doit parler de « questionnaire officiel », de « passation officielle » ni de « rapport officiel ».
+- On parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand. La mention « MBTI » disparaît de tous les supports (carnets, programme, site, app, prompts), y compris les codes de type (ISFJ…) et la certification de Lysiane : c'est une marque soumise à licence.
 - Hexa3D est abandonné et disparaît de tous les supports.
 
 **À prendre**
@@ -338,6 +338,6 @@ Ce que Gemini a le droit de produire reste un sous-ensemble de ce que le moteur 
 
 | Où | Quoi | Quand |
 |---|---|---|
-| Programme du bilan (`chapters/programme/`, texte réglementaire) | Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. Le « questionnaire officiel MBTI® » devient le questionnaire de préférences maison (`page_deroule.py:75`, `page_organisation_pedagogie.py:29`, `page_tarifs_financement.py:23`). Hexa3D disparaît (`page_organisation_pedagogie.py:30`). Le libellé de l'indicateur de satisfaction « Pertinence des outils utilisés (MBTI®, Hexa3D, exercices) » (`page_indicateurs_satisfaction.py:23`) mesure des enquêtes passées : à reformuler sans fausser ce qui a été mesuré. | Lot dédié, en même temps que le site |
+| Programme du bilan (`chapters/programme/`, texte réglementaire) | Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. Toute mention du MBTI disparaît : « test des fonctionnements cognitifs » à la place (`page_deroule.py`, `page_organisation_pedagogie.py`, `page_tarifs_financement.py`, `page_accompagnateurs.py`). Hexa3D disparaît aussi (`page_organisation_pedagogie.py:30`). L'indicateur de satisfaction « Pertinence des outils utilisés (MBTI®, Hexa3D, exercices) » (`page_indicateurs_satisfaction.py:23`) résume des enquêtes passées : retirer la parenthèse plutôt que de renommer les outils, pour ne pas fausser ce qui a été mesuré. | Lot dédié, en même temps que le site |
 | Site (dépôt `marge-de-manoeuvre`) | Voir `recap-site-parcours.md` | Dès que prêt, en même temps que le programme |
-| Carnets PDF et app | Unification et renumérotation. « MBTI® » à reformuler dans les carnets selon la même règle. | Lot d'unification |
+| Carnets PDF et app | Unification et renumérotation. Toute mention du MBTI disparaît des carnets 3, 4 et 6, du livret (`profil.py`, exemple « ISFJ ») et du prompt Gemini (`server/gemini_service.py`). La règle typographique qui ajoute « ® » après MBTI (`utils.french_typography`, `tests/test_typography.py`) et les mentions de la documentation (`CLAUDE.md`, `DA-workbook.md`, `Agent.md`, `design-system/`) sont à retirer. | Lot d'unification |
