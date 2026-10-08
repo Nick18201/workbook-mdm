@@ -243,7 +243,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 
 | Intervalle | Carnet | Cible | Correspond aujourd'hui à | Estimation actuelle |
 |---|---|---|---|---|
-| avant S1 | Carnet 1 | 1 h 45 | Carnet 0 et une partie du carnet 1 | ≈ 1 h 15, plus 1 h 50 – 2 h 30 |
+| avant S1 | Carnet 1 | 1 h 45 | `carnet-1.json` (R1), issu du carnet 0 et d'une partie du carnet 1 | 1 h 45, affiché exercice par exercice (avant : ≈ 1 h 15, plus 1 h 50 – 2 h 30) |
 | S1 → S2 | Carnet 2 | 2 h 45 | Carnet 2, plus le travail réel du livret | 2 h 35 – 3 h 35 |
 | S2 → S3 | Carnet 3 | 1 h 45 | Carnet 3 | 1 h 40 – 2 h 30 |
 | S3 → S4 | Carnet 4 | 2 h | Carnet 4 | ≈ 2 h 30 |

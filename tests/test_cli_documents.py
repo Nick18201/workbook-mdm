@@ -10,8 +10,9 @@ from workbook_generator.config import PDFStyle
 from workbook_generator.document_builder import DocumentBuilder
 from workbook_generator.primitives import draw_folio
 
-# (script module, generator function) of the 10 CLI documents
+# (script module, generator function) of the CLI documents built from workbooks/
 DOCUMENTS = [
+    ("main_generate_carnet_1", "generate_workbook_carnet_1"),
     ("main_generate_chap0", "generate_workbook_chap0"),
     ("main_generate_chap1", "generate_workbook_chap1"),
     ("main_generate_chap2", "generate_workbook_chap2"),

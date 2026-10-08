@@ -1,0 +1,693 @@
+{
+  "chapter_num": 1,
+  "chapter_title": "L'état des lieux",
+  "subtitle": "Bilan de compétences",
+  "carnet": 1,
+  "pdf_title": "Marge de Manœuvre · Carnet 1 : L'état des lieux",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "L'état *des lieux.*",
+        "number": 1,
+        "tagline": "Bilan de compétences",
+        "promise": "Savoir d'où vous partez."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Fixer votre point *de départ.*",
+      "params": {
+        "num": "1",
+        "intro_text": "Ce carnet prépare la séance 1. Il fait un état des lieux rapide de votre situation, puis regarde ce que vous avez reçu de votre milieu sur le travail. Il servira de référence pour mesurer le chemin parcouru.<br/><br/>La question centrale de votre bilan : <b>quelle place voulez-vous donner au travail dans votre vie, et sous quelle forme ?</b>",
+        "points": [
+          "À lire · Bienvenue et cadre de travail · 5 min",
+          "Avant de commencer · Météo et engagement · 10 min",
+          "Exercice 1 · Faire le point, rapidement · 20 min",
+          "Exercice 2 · Vos domaines de vie · 15 min",
+          "Exercice 3 · Votre objectif, première version · 10 min",
+          "Exercice 4 · Ce que vous avez reçu · 25 min",
+          "Exercice 5 · Vos modèles et anti-modèles · 10 min",
+          "Fin de carnet · Votre point de départ · 10 min"
+        ],
+        "duration": "1 h 45",
+        "split": "En deux fois : votre situation (exercices 1 à 3), puis ce que vous avez reçu (exercices 4 et 5)."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Bienvenue dans *votre bilan.*",
+      "part_title": "À lire · Bienvenue · 2 min",
+      "fixed": true,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vous commencez un bilan de compétences : vous avez décidé de faire le point sur votre parcours, puis de passer à l'action.",
+            "Sept carnets de bord, puis un carnet de route, accompagnent vos dix séances. Chaque carnet prépare la séance qui suit : celui-ci prépare la séance 1.",
+            "Vous les remplissez entre les séances, et nous les relisons ensemble. Ils gardent la trace de vos idées, de vos constats et de vos décisions."
+          ],
+          "size": 12
+        },
+        {
+          "type": "heading",
+          "text": "Les trois temps du bilan"
+        },
+        {
+          "type": "frise",
+          "steps": [
+            [
+              "psychology",
+              "Comprendre",
+              "Carnets 1 à 5"
+            ],
+            [
+              "travel_explore",
+              "Confronter",
+              "Carnets 6 et 7"
+            ],
+            [
+              "flag",
+              "Décider et agir",
+              "Carnet de route"
+            ]
+          ],
+          "start_label": "Aujourd'hui",
+          "end_label": "Suivi à 6 mois"
+        },
+        {
+          "type": "link_card",
+          "title": "Entre les séances",
+          "links": [
+            [
+              "Vos ressources Notion",
+              "https://www.notion.so/Vos-ressources-aca96b6474d04acd9eaafa92523df7a6",
+              "des sites, des podcasts et des articles, accessibles pendant tout le bilan."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le cadre *de travail.*",
+      "part_title": "À lire · Le cadre · 3 min",
+      "fixed": true,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Trois règles encadrent nos échanges, pendant tout le bilan."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "1. Confidentialité",
+              "subtitle": "Vos réponses vous appartiennent.",
+              "text": "Seule la personne qui vous accompagne les lit, avec vous. Rien n'est transmis à un employeur ou à un financeur sans votre accord explicite."
+            },
+            {
+              "title": "2. Franchise",
+              "subtitle": "Vos vrais doutes comptent.",
+              "text": "Ce sont vos vraies contraintes qui rendent un projet réaliste. Vous pouvez aussi passer une question : laissez-la vierge, nous en parlerons en séance."
+            },
+            {
+              "title": "3. Action",
+              "subtitle": "Tester sur le terrain.",
+              "text": "Une décision se construit en testant, pas seulement en réfléchissant. Dès le carnet 2, une rencontre avec une personne de terrain vous est proposée."
+            }
+          ],
+          "columns": 1
+        },
+        {
+          "type": "heading",
+          "text": "En pratique"
+        },
+        {
+          "type": "star_list",
+          "items": [
+            "Une question vous pèse ? Notez-la en fin de carnet, dans « À aborder en séance » : nous la traiterons ensemble.",
+            "Remplissez chaque carnet en plusieurs fois, entre deux séances : 1 h 30 à 3 h d'écriture selon les carnets.",
+            "Enregistrez ce fichier sur votre ordinateur avant de le remplir, puis ouvrez-le avec Acrobat Reader (gratuit) ou votre navigateur. Sur téléphone ou tablette, utilisez l'application Acrobat Reader. Enregistrez après chaque session de travail.",
+            "Vous préférez écrire à la main ? Imprimez-le : chaque case a la place nécessaire.",
+            "Apportez votre carnet à chaque séance : nous le relisons ensemble."
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Météo et engagement · 10 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c1_meteo",
+          "data_id": "c1.meteo"
+        },
+        {
+          "type": "heading",
+          "text": "Mon engagement"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un bilan avance au rythme du temps que vous lui donnez. Fixez ce temps : nous relisons cet engagement en séance, et il peut évoluer."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Moi,",
+              [
+                "c1_nom",
+                null,
+                "Prénom Nom"
+              ]
+            ],
+            [
+              "je décide d'investir",
+              [
+                "c1_heures",
+                1.6,
+                "Nombre d'heures"
+              ],
+              "heures par semaine dans mon bilan."
+            ],
+            [
+              "Mes créneaux :",
+              [
+                "c1_creneaux",
+                null,
+                "Jours et moments de la semaine"
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "text": "Un carnet demande 1 h 30 à 3 h d'écriture, et les séances sont espacées d'une à deux semaines.",
+          "title": "Repère"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Faire le point, *rapidement.*",
+      "part_title": "Exercice 1 · Faire le point · 10 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cet exercice, sur deux pages, parle de votre situation, de ce qui vous pèse et de votre plus grande peur face au changement. Il peut remuer. Prenez-le à votre rythme."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Le début d'un bilan est le bon moment pour appuyer sur pause. Trois questions sur votre situation, puis une page sur ce qui vous pèse. Il n'y a pas de bonne réponse."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "En ce moment, je me sens… surtout quand…",
+              "field_id": "c1_point_ressenti",
+              "subtitle": "Votre état du moment, au travail et en dehors."
+            },
+            {
+              "question": "Ce qui a déclenché ce bilan :",
+              "field_id": "c1_point_declencheur",
+              "subtitle": "Vient-il d'abord de vous, ou d'une demande extérieure (employeur, proche, conseiller) ?"
+            },
+            {
+              "question": "Ce qui tient encore, et que je veux garder :",
+              "field_id": "c1_point_tient",
+              "subtitle": "Chaque situation, même pesante, apporte quelque chose. Le repérer dit ce que votre projet devra préserver.",
+              "example": "Un salaire régulier, une équipe que j'apprécie, le confort de ne pas tout réapprendre."
+            }
+          ],
+          "max_box_height_cm": 4.5
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce qui pèse, *ce que je décide.*",
+      "part_title": "Exercice 1 · Ce qui pèse · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce qui pèse dit aussi ce dont vous aurez besoin. À chaque ligne, passez de l'un à l'autre."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Une phrase que je me répète (« il faut… »)",
+                "c1_sac_phrase",
+                2.0
+              ],
+              [
+                "Ce que je veux, moi",
+                "c1_sac_veux",
+                2.0
+              ]
+            ],
+            [
+              [
+                "Ce que je ne veux plus subir",
+                "c1_sac_subir",
+                2.0
+              ],
+              [
+                "Donc, mon prochain poste devra…",
+                "c1_sac_besoin",
+                2.0
+              ]
+            ],
+            [
+              [
+                "Ma plus grande peur face à ce changement",
+                "c1_sac_peur",
+                2.0
+              ],
+              [
+                "Ce que je ferais si elle se réalisait",
+                "c1_sac_parade",
+                2.0
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "data_id": "c1.sac_a_dos"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Juriste",
+          "surface": "Le stress.",
+          "exploitable": "Je ne veux plus subir les réunions qui finissent à 20 h. Donc, mon prochain poste devra me laisser finir à heure fixe quatre soirs sur cinq."
+        },
+        {
+          "type": "anchor",
+          "field_id": "c1_sac_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos domaines *de vie.*",
+      "part_title": "Exercice 2 · Vos domaines de vie · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre vie se compose de domaines qui pèsent les uns sur les autres. Notez votre satisfaction dans chacun, de 1 à 10. Cette photographie sert de référence : vous la referez à la fin du bilan."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "rating_grid",
+          "min_label": "1 · Pas du tout satisfaisant",
+          "max_label": "10 · Pleinement satisfaisant",
+          "items": [
+            [
+              "1. Travail, carrière",
+              "c1_domaine_travail"
+            ],
+            [
+              "2. Argent, finances",
+              "c1_domaine_argent"
+            ],
+            [
+              "3. Santé, énergie",
+              "c1_domaine_sante"
+            ],
+            [
+              "4. Famille",
+              "c1_domaine_famille"
+            ],
+            [
+              "5. Amis, vie sociale",
+              "c1_domaine_social"
+            ],
+            [
+              "6. Temps pour soi, loisirs",
+              "c1_domaine_loisirs"
+            ],
+            [
+              "7. Lieu de vie, environnement",
+              "c1_domaine_lieu"
+            ],
+            [
+              "8. Utilité, engagements",
+              "c1_domaine_utilite"
+            ]
+          ],
+          "field_prefix": "c1_domaine",
+          "fixed": true,
+          "data_id": "c1.domaines"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mes deux domaines les plus solides",
+                "c1_domaines_solides"
+              ],
+              [
+                "Les deux qui me pèsent le plus",
+                "c1_domaines_pesent"
+              ]
+            ],
+            [
+              [
+                "Mon travail actuel, ou le dernier, nourrit…",
+                "c1_domaines_nourrit",
+                1.6
+              ],
+              [
+                "… et il abîme…",
+                "c1_domaines_abime",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Donc, mon prochain projet devra…",
+                "c1_domaines_donc",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Cariste",
+          "surface": "Ça va à peu près partout.",
+          "exploitable": "Santé : 3. Les horaires décalés m'épuisent. Donc, mon prochain poste devra suivre un rythme de journée."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre objectif, *première version.*",
+      "part_title": "Exercice 3 · Votre objectif · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre objectif oriente tout le bilan. Une première version suffit : vous la préciserez au carnet 2, après la séance 1."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "D'ici la fin de mon bilan, je veux savoir si… et pouvoir…",
+          "field_id": "c1_objectif",
+          "subtitle": "Ce que vous voulez avoir tranché, et ce que cela vous permettra de faire.",
+          "box_height_cm": 2.8,
+          "data_id": "c1.objectif"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Commis de cuisine",
+          "surface": "Trouver ma voie.",
+          "exploitable": "D'ici la fin de mon bilan, je veux savoir si je reste en restauration en changeant de poste, ou si je me forme à un métier de bureau, et pouvoir annoncer une première démarche datée."
+        },
+        {
+          "type": "question",
+          "question": "Je m'autorise à explorer… même si…",
+          "field_id": "c1_autorisation",
+          "subtitle": "Une piste ou une question que vous écartez d'habitude, et que vous décidez d'étudier.",
+          "example": "Je m'autorise à explorer un métier manuel, même si ma famille me voit dans un bureau.",
+          "box_height_cm": 2.8,
+          "data_id": "c1.autorisation"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vous *avez vu.*",
+      "part_title": "Exercice 4 · Ce que vous avez reçu · 10 min",
+      "fixed": true,
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cet exercice, sur deux pages, parle de votre famille et du travail des adultes qui ont pris soin de vous. Il peut réveiller des souvenirs forts. Si votre histoire familiale est absente ou douloureuse, pensez aux adultes qui ont compté dans votre enfance, ou passez à l'exercice suivant."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre milieu vous a transmis des modèles, des messages et des attentes sur le travail. Ils orientent encore vos choix, parfois sans que vous le sachiez.",
+            "Pensez au travail de vos parents, ou des adultes qui ont pris soin de vous. Lisez les quatre questions, puis fermez les yeux une minute avant d'écrire."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Leur lieu de travail : les bruits, les odeurs, la lumière, l'ambiance",
+                "c1_vu_lieu"
+              ],
+              [
+                "Leur métier, et leur relation au travail (fierté, plaisir, ennui, souffrance…)",
+                "c1_vu_metier"
+              ]
+            ],
+            [
+              [
+                "Ce que leur travail a pris ou apporté à la vie de famille (absences, stress, argent…)",
+                "c1_vu_famille"
+              ],
+              [
+                "Ce qu'on m'a dit, ou laissé entendre, sur les métiers à choisir ou à éviter",
+                "c1_vu_messages"
+              ]
+            ]
+          ],
+          "field_height_cm": 2.2,
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Comptable",
+          "surface": "Le courage.",
+          "exploitable": "Ma grand-mère tenait une épicerie : elle comptait chaque centime, sans se plaindre. J'en garde l'habitude de compter juste."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vous *en faites.*",
+      "part_title": "Exercice 4 · Ce que vous en faites · 15 min",
+      "fixed": true,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce que vous avez reçu n'est ni bon ni mauvais. À vous de trier ce que vous gardez, laissez ou transformez."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que l'on m'a transmis sur la réussite",
+                "c1_recu_reussite",
+                1.6
+              ],
+              [
+                "Ce que je choisis aujourd'hui",
+                "c1_choisi_reussite",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce que l'on m'a transmis sur le travail",
+                "c1_recu_travail",
+                1.6
+              ],
+              [
+                "Ce que je choisis aujourd'hui",
+                "c1_choisi_travail",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce que l'on attendait de moi",
+                "c1_recu_attentes",
+                1.6
+              ],
+              [
+                "Ce que je veux, moi",
+                "c1_choisi_veux",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "data_id": "c1.heritage"
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "Cinq mots reçus sur le travail",
+              "c1_mots_recus"
+            ],
+            [
+              "Cinq mots pour mon futur travail",
+              "c1_mots_choisis"
+            ]
+          ],
+          "count": 5,
+          "line_height_cm": 0.8
+        },
+        {
+          "type": "anchor",
+          "field_id": "c1_heritage_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos modèles *et anti-modèles.*",
+      "part_title": "Exercice 5 · Vos modèles · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Les personnes que vous admirez, et celles que vous refusez d'imiter, disent beaucoup de ce que vous cherchez. Elles peuvent être réelles ou de fiction. Les personnes réelles pourront devenir vos premiers contacts sur le terrain, aux carnets 2 et 7."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Modèle 1 : la personne",
+                "c1_modele_1",
+                1.6
+              ],
+              [
+                "Ce que j'admire",
+                "c1_modele_1_admire",
+                1.6
+              ],
+              [
+                "Ce que je veux retrouver",
+                "c1_modele_1_retrouver",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Modèle 2 : la personne",
+                "c1_modele_2",
+                1.6
+              ],
+              [
+                "Ce que j'admire",
+                "c1_modele_2_admire",
+                1.6
+              ],
+              [
+                "Ce que je veux retrouver",
+                "c1_modele_2_retrouver",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Mes modèles",
+          "question_labels": true,
+          "data_id": "c1.modeles"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que je refuse de reproduire (une personne, une situation)",
+                "c1_antimodele_1",
+                1.6
+              ],
+              [
+                "Donc, dans mon prochain poste, je veux…",
+                "c1_antimodele_1_donc",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce que je refuse de reproduire (une personne, une situation)",
+                "c1_antimodele_2",
+                1.6
+              ],
+              [
+                "Donc, dans mon prochain poste, je veux…",
+                "c1_antimodele_2_donc",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Mes anti-modèles",
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Ébéniste",
+          "surface": "J'admire les entrepreneurs.",
+          "exploitable": "J'admire mon ancienne responsable d'atelier pour sa façon de dire non à un client sans le perdre. Je veux retrouver ça : poser mes limites tôt."
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 10 min",
+      "params": {
+        "lines": [
+          "Je réserve chaque semaine les créneaux que j'ai notés.",
+          "Je réponds sans me censurer : le tri se fait en séance.",
+          "J'apporte ce carnet à la séance 1."
+        ],
+        "field_prefix": "c1_livrable",
+        "livrable_title": "Votre point de départ",
+        "livrable_text": "Votre situation, ce qui pèse et ce qui tient, vos domaines de vie notés, votre objectif et ce que vous vous autorisez, votre héritage, vos modèles. Relus ensemble en séance 1."
+      },
+      "data_id": "c1.livrable"
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Votre point de départ est posé.",
+          "Prochaine étape : la séance 1. Apportez ce carnet.",
+          "Ensuite, le carnet 2 : votre parcours."
+        ]
+      },
+      "fixed": true
+    }
+  ]
+}
