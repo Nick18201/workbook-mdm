@@ -98,7 +98,8 @@ class BlockSpec(BaseModel):
     Lengths are in centimetres (*_cm), colors are PDFStyle color or pastel names ('sky').
     Tuples of the Python API are lists: a fields_card field is [label, field_id, height_cm,
     weight], a frise step [icon, title, marker], a link [name, url, description], a
-    checklist_cards group [title, items], a numbered_lines card [title, field_prefix, hint],
+    checklist_cards group [title, items], a numbered_lines card [title, field_prefix, hint,
+    first number (optional: one list over two cards, 1 then 6)],
     a fill_in_card line a list of texts and boxes [field_id, width_cm, tooltip], a life_line
     node [label, 'summit' | 'valley', label of its box (optional)], a tree_of_life zone
     [title, hint, field_id] (roots, soil, trunk, branches, leaves, fruits).

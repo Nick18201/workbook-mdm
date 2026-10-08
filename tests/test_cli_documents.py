@@ -16,6 +16,7 @@ DOCUMENTS = [
     ("main_generate_carnet_2", "generate_workbook_carnet_2"),
     ("main_generate_carnet_3", "generate_workbook_carnet_3"),
     ("main_generate_carnet_4", "generate_workbook_carnet_4"),
+    ("main_generate_carnet_5", "generate_workbook_carnet_5"),
     ("main_generate_chap0", "generate_workbook_chap0"),
     ("main_generate_chap1", "generate_workbook_chap1"),
     ("main_generate_chap2", "generate_workbook_chap2"),

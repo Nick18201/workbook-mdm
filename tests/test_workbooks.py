@@ -108,7 +108,7 @@ BLOCKS = {
     "annotation": {"text": "À la main."},
     "frise": {"steps": [["flag", "Départ", "Repère"], ["route", "Arrivée", "Repère"]]},
     "fields_card": {"rows": [[["Nom", "nom"], ["Date", "date", 0.85, 0.5]]], "color": "mint"},
-    "numbered_lines": {"cards": [["Pistes", "piste"]], "count": 2},
+    "numbered_lines": {"cards": [["Pistes", "piste"], ["Les suivantes", "piste", "", 3]], "count": 2},
     "rating_grid": {"items": [["Domaine", "note"]], "field_prefix": "grille"},
     "info_cards": {"cards": [{"title": "Profil", "text": "Texte.", "field_id": "profil"}], "check_label": "Me correspond"},
     "link_card": {"title": "Ressources", "links": [["Site", "https://example.org", "description"]]},
@@ -134,6 +134,16 @@ def test_every_block_type_compiles():
              for t, data in BLOCKS.items()]
     doc = pymupdf.open(stream=compile_workbook_from_spec(WorkbookSpec(pages=pages)), filetype="pdf")
     assert doc.page_count >= len(BLOCKS)
+
+
+def test_numbered_lines_run_one_list_over_two_cards():
+    """A card may give its first number: ten ranked lines, 01 to 05 then 06 to 10."""
+    block = BlockSpec(type="numbered_lines", count=5,
+                      cards=[["Les cinq premières", "rang"], ["Les cinq suivantes", "rang", "", 6]])
+    pages = [PageSpec(template="composite", title="Classer", part_title="", blocks=[block])]
+    page = pymupdf.open(stream=compile_workbook_from_spec(WorkbookSpec(pages=pages)), filetype="pdf")[0]
+    assert sorted(w.field_name for w in page.widgets()) == sorted(f"rang_{n}" for n in range(1, 11))
+    assert "06" in page.get_text() and "10" in page.get_text()
 
 
 def _declared_data_ids(raw):

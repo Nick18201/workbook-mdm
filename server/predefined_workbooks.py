@@ -32,7 +32,13 @@ CATALOGUE = [
      "Préparer la séance 4 : le profil validé en séance 3, la situation et l'histoire avec l'argent, les idées "
      "reçues face aux faits, l'aisance à demander, les quatre seuils et la tendance dominante.",
      "balance", BILAN),
-    # Former carnets 0 to 4, until the clean-up of the restructuring (R11)
+    ("carnet-5", 5, "Carnet 5 · Valeurs et moteurs profonds",
+     "Situations vécues, liste de valeurs, tensions et grille anti-compromis",
+     "Préparer la séance 5 : alignement, désalignement et choix difficiles, la liste de valeurs, la hiérarchie, "
+     "les tensions, la grille anti-compromis (trois valeurs traduites en conditions), l'entourage et la question "
+     "aux proches.",
+     "favorite", BILAN),
+    # Former carnets 0 to 5, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
      "flag", BILAN),
@@ -51,7 +57,8 @@ CATALOGUE = [
     ("chap4", 4, "Carnet 4 · Mon rapport à l'argent (ancien parcours)", "Histoire avec l'argent, seuils et tensions",
      "Situation actuelle, histoire avec l'argent, minimum financier acceptable et ce que l'argent représente.",
      "balance", BILAN),
-    ("chap5", 5, "Carnet 5 · Valeurs et moteurs profonds", "Alignement, liste de valeurs et conditions de travail",
+    ("chap5", 5, "Carnet 5 · Valeurs et moteurs profonds (ancien parcours)",
+     "Alignement, liste de valeurs et conditions de travail",
      "Expériences d'alignement et de désalignement, valeurs hiérarchisées, incarnées et traduites en conditions.",
      "favorite", BILAN),
     ("chap6", 6, "Carnet 6 · Phase d'exploration", "Cartographie, retour des proches et fiches métiers",

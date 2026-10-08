@@ -247,7 +247,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | S1 → S2 | Carnet 2 | 2 h 45 | `carnet-2.json` (R2), issu du carnet 2 et du travail réel du livret | 2 h 45, affiché exercice par exercice, plus l'arbre de vie (15 min) et l'interview, facultatifs (avant : 2 h 35 – 3 h 35, plus le bonus) |
 | S2 → S3 | Carnet 3 | 1 h 45 | `carnet-3.json` (R3), issu du carnet 3 | 1 h 45, affiché exercice par exercice (avant : 1 h 40 – 2 h 30) |
 | S3 → S4 | Carnet 4 | 2 h | `carnet-4.json` (R4), issu du carnet 4 et des idées reçues de l'app | 2 h, affiché exercice par exercice (avant : ≈ 2 h 30) |
-| S4 → S5 | Carnet 5 | 2 h 15 | Carnet 5 | 2 h 30 – 3 h |
+| S4 → S5 | Carnet 5 | 2 h 15 | `carnet-5.json` (R5), issu du carnet 5 et des limites hors argent de l'app | 2 h 15, affiché exercice par exercice (avant : 2 h 30 – 3 h, affiché 95 min) |
 | S5 → S6 | Carnet 6 | 2 h | Carnet 6, partie exploration | 5 – 7 h pour tout le carnet 6 |
 | S6 → S7 | Carnet 7, partie 1 | 1 h 45 | Carnet 6, fiches | |
 | S7 → S8 | Carnet 7, partie 2 | 2 h | (n'existe pas) | |
@@ -278,6 +278,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | Profil de fonctionnement validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route | `c4.profil` |
 | 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création | `c4.seuils`, `c4.tendance` |
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création | `c5.grille` |
+| Limites hors argent (travail, demandes urgentes, santé, proches) | Carnet 5, avant la grille | Carnet 6 (cartographie) · carnet de route (garde-fous) | `c5.limites` |
 | Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) | `c5.entourage` |
 | 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 | `c6.pistes` |
 | Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route | `c7.fiches`, `c7.enquetes`, `c7.matrice` |
