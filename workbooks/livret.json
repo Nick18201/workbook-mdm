@@ -27,11 +27,11 @@
         },
         {
           "type": "question",
-          "question": "Mes préférences spontanées (ou mon type MBTI)",
-          "field_id": "livret_p1_mbti",
+          "question": "Mes préférences spontanées",
+          "field_id": "livret_p1_preferences",
           "box_height_cm": 4.7,
-          "subtitle": "Vos 4 lettres (si exploré : ex. ISFJ, ENFP...) ou vos dominantes : Plutôt calme ou action partagée ? Détails concrets ou vision globale ? Logique rationnelle ou harmonie humaine ? Organisation posée ou flexibilité ?",
-          "example": "Ex : ISFJ — Réfléchi, rigoureux, attentif aux personnes et aux faits concrets, besoin de calme pour préparer l'action."
+          "subtitle": "Vos dominantes : plutôt calme ou action partagée ? Détails concrets ou vision globale ? Logique rationnelle ou harmonie humaine ? Organisation posée ou flexibilité ?",
+          "example": "Ex : réfléchi, rigoureux, attentif aux personnes et aux faits concrets, besoin de calme pour préparer l'action."
         },
         {
           "type": "question",

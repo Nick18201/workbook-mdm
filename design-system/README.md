@@ -20,7 +20,7 @@ Quatre registres, chacun porté par une police :
 - **« Binôme »** : seulement pour la conception de la méthode (« une méthode à quatre mains »), jamais d'une façon qui laisse croire à deux personnes en séance.
 - **Jamais « présentiel »** : tout se fait à distance.
 - **Aucune statistique sans source**, aucun partenariat ni témoignage inventé.
-- **Typographie française** : guillemets « » avec espaces insécables, espace insécable avant : ; ! ? et entre un nombre et son unité (« 93 questions »), « œ », « MBTI® ».
+- **Typographie française** : guillemets « » avec espaces insécables, espace insécable avant : ; ! ? et entre un nombre et son unité (« 93 questions »), « œ ».
 - **Libellés des boutons 3D** : en minuscules (« réserver un 1er échange gratuit »). Pas d'émoji.
 
 ## Couleur

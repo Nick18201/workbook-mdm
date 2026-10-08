@@ -19,7 +19,7 @@
       "title": "Explorer *des pistes.*",
       "params": {
         "num": "6",
-        "intro_text": "Ce carnet rassemble vos pistes professionnelles, résume ce que vous savez de vous (profil MBTI®, valeurs, moteurs) et le confronte aux idées de votre entourage, pour ouvrir et tester des pistes de métiers.",
+        "intro_text": "Ce carnet rassemble vos pistes professionnelles, résume ce que vous savez de vous (profil de fonctionnement cognitif, valeurs, moteurs) et le confronte aux idées de votre entourage, pour ouvrir et tester des pistes de métiers.",
         "points": [
           "Exercice 1 · Récapitulatif : vos valeurs.",
           "Exercice 2 · Votre cartographie personnelle.",
@@ -60,8 +60,8 @@
           "rows": [
             [
               [
-                "Type MBTI®",
-                "carto_mbti",
+                "Mon profil de fonctionnement cognitif",
+                "carto_profil",
                 0.85
               ]
             ],

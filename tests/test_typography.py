@@ -13,7 +13,6 @@ from workbook_generator.utils import NBSP, cached_simpleSplit, french_typography
         ("“Prenez de la marge”", f"«{NBSP}Prenez de la marge{NBSP}»"),
         ("93 questions, 1 800 € et 10 %", f"93{NBSP}questions, 1{NBSP}800{NBSP}€ et 10{NBSP}%"),
         ("Le coeur de l'oeuvre, un oeil. COEUR.", "Le cœur de l'œuvre, un œil. CŒUR."),
-        ("Profil MBTI et MBTI®", "Profil MBTI® et MBTI®"),
     ],
 )
 def test_french_typography(text, expected):

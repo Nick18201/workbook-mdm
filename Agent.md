@@ -34,7 +34,7 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
 - **Une seule palette** : fond ivoire, cartes pastel, zones à remplir blanches bordées en `line-strong`, titres à l'encre dont le dernier mot (ou les `*mots marqués*`) est en corail, repères en PT Mono. Jamais de couleur codée en dur : toujours `PDFStyle`.
 - **Chaque carnet** : couverture avec sa promesse sur un post-it, ouverture (objectif et liste « Exercice N · … »), pages d'exercice, puis la fin de carnet (post-it LIVRABLE et tampon « Validé en séance ») avant la 4e de couverture.
 - **Ton (section 7 de la DA)** : vouvoiement, phrases courtes et concrètes, titres ponctués en casse de phrase. Jamais « coach » (dire « consultant en transformation » ou « la personne qui vous accompagne »), pas de registre de développement personnel, jamais « présentiel », aucun chiffre sans source.
-- **Typographie française** : automatique au rendu (espaces insécables, guillemets « », œ, MBTI®), via `utils.french_typography`.
+- **Typographie française** : automatique au rendu (espaces insécables, guillemets « », œ), via `utils.french_typography`.
 
 ## 🛠️ Instructions de Build et d'Exécution
 1. **Environnement virtuel** : Travaillez dans le `.venv` existant (`.venv\Scripts\activate` sous Windows), installé depuis `requirements-dev.txt`.

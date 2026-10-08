@@ -102,7 +102,8 @@ TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les 
 - Tout l'accompagnement se fait à distance : jamais « présentiel ».
 - N'invente aucun chiffre, témoignage ou partenariat ; aucune statistique sans source.
 - Titres de page : une affirmation ponctuée, en minuscules sauf la première lettre et les noms propres (jamais de Majuscule À Chaque Mot), terminée par un point, un « ? » ou un « ! » (ex : « Votre situation actuelle. », « Mon rapport *à l'argent.* »).
-- Typographie française : guillemets « », espace avant : ; ! ?, « œ » (cœur, manœuvre), « MBTI® » toujours avec ®.
+- Le test du bilan s'appelle « test des fonctionnements cognitifs » : jamais « MBTI » ni type en quatre lettres (ISFJ…).
+- Typographie française : guillemets « », espace avant : ; ! ?, « œ » (cœur, manœuvre).
 """
 
 

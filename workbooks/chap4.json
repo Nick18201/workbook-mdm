@@ -21,7 +21,7 @@
         "num": "4",
         "intro_text": "Ce carnet repère comment votre rapport à l'argent influence vos choix professionnels : besoin de sécurité, prise de risque, rémunération, négociation, ambition, liberté, peur du manque, légitimité. Il ne s'agit pas d'analyser votre gestion financière, mais d'identifier ce qui peut soutenir ou freiner votre projet.",
         "points": [
-          "Exercice 1 · Récapitulatif : votre profil MBTI®.",
+          "Exercice 1 · Récapitulatif : votre profil de fonctionnement cognitif.",
           "Exercice 2 · Votre situation actuelle.",
           "Exercice 3 · Votre histoire avec l'argent.",
           "Exercice 4 · Vos premières expériences financières.",
@@ -34,11 +34,11 @@
     },
     {
       "template": "recap",
-      "part_title": "Exercice 1 · Récapitulatif MBTI®",
+      "part_title": "Exercice 1 · Récapitulatif",
       "params": {
-        "intro_text": "Revenez sur la restitution de votre profil MBTI® lors de la dernière séance, pour consolider ce que vous en retenez avant d'explorer votre rapport à l'argent.",
+        "intro_text": "Revenez sur la restitution du test des fonctionnements cognitifs lors de la dernière séance, pour consolider ce que vous en retenez avant d'explorer votre rapport à l'argent.",
         "questions": [
-          "Dans quelles forces naturelles de votre profil MBTI® vous reconnaissez-vous le plus ?",
+          "Dans quelles forces naturelles de votre profil vous reconnaissez-vous le plus ?",
           "Comment ce mode de fonctionnement (énergie, information, décision, action) se voit-il dans votre quotidien ?",
           "En quoi la compréhension de votre profil change-t-elle votre regard sur vous-même ou sur vos relations ?"
         ]
