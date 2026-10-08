@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parcours unifié MDM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,700;0,9..40,800;1,9..40,400&family=Manrope:wght@400;600&family=PT+Mono&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* Layout : une colonne de lecture, comme un carnet MDM : sourcil, titre ponctué au dernier mot corail, cartes pastel. */
+:root {
+  --page: #FFF8EC; --card: #FFFFFF; --ink: #111111; --muted: #4A4844;
+  --line: #E5E5EE; --line-strong: #8A8680;
+  --coral: #FF3B3B; --coral-strong: #C22626; --blue: #251FD3;
+  --lilac: #E7E0FF; --sky: #DDEAF9; --almond: #FFDDCB; --mint: #D7F2E3; --blush: #FFE2D9; --jasmine: #FFEA8C;
+  --p1: #C22626; --p2: #251FD3; --p3: #4A4844;
+  --font-display: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-label: "PT Mono", "Courier New", monospace;
+  --font-hand: "Instrument Serif", Georgia, serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #16151B; --card: #201E27; --ink: #F2EEE6; --muted: #B7B1A8;
+    --line: #2F2D38; --line-strong: #6F6B66;
+    --coral: #FF6B60; --coral-strong: #FF8A80; --blue: #ABA8FF;
+    --lilac: #2C2750; --sky: #1E2B3C; --almond: #3B2A21; --mint: #1D3328; --blush: #3B2623; --jasmine: #3A3418;
+    --p1: #FF8A80; --p2: #ABA8FF; --p3: #B7B1A8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #16151B; --card: #201E27; --ink: #F2EEE6; --muted: #B7B1A8;
+  --line: #2F2D38; --line-strong: #6F6B66;
+  --coral: #FF6B60; --coral-strong: #FF8A80; --blue: #ABA8FF;
+  --lilac: #2C2750; --sky: #1E2B3C; --almond: #3B2A21; --mint: #1D3328; --blush: #3B2623; --jasmine: #3A3418;
+  --p1: #FF8A80; --p2: #ABA8FF; --p3: #B7B1A8;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--page); color: var(--ink);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  margin: 0; padding-inline: 16px; padding-block: 0 64px;
+}
+.wrap { max-width: 880px; margin: 0 auto; display: grid; gap: 56px; }
+a { color: var(--blue); }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 4px; }
+code { font-family: var(--font-label); font-size: 0.86em; background: var(--card); border: 1px solid var(--line); padding: 0 4px; border-radius: 4px; overflow-wrap: anywhere; }
+
+.eyebrow { font-family: var(--font-label); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-weight: 800; font-size: clamp(34px, 6vw, 52px); line-height: 1.05; }
+h2 { font-weight: 800; font-size: clamp(26px, 4vw, 34px); line-height: 1.12; }
+h3 { font-weight: 700; font-size: 19px; line-height: 1.3; }
+.accent { color: var(--coral); }
+.lede { font-size: 18px; max-width: 65ch; margin: 0; }
+p { margin: 0; max-width: 68ch; }
+
+header.hero { padding-top: 48px; display: grid; gap: 18px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--font-label); font-size: 12px; letter-spacing: 0.06em; border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 10px; color: var(--muted); }
+nav.toc { display: flex; flex-wrap: wrap; gap: 8px 14px; font-family: var(--font-label); font-size: 13px; }
+nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+nav.toc a:hover { color: var(--blue); border-color: var(--blue); }
+
+section { display: grid; gap: 20px; scroll-margin-top: 16px; }
+.section-head { display: grid; gap: 8px; }
+
+.essentiel { display: grid; gap: 12px; counter-reset: ess; padding: 0; margin: 0; list-style: none; }
+.essentiel li { display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.essentiel li::before { counter-increment: ess; content: counter(ess, decimal-leading-zero); font-family: var(--font-label); font-size: 22px; color: var(--blue); line-height: 1.2; }
+.essentiel li > div { min-width: 0; display: grid; gap: 4px; }
+.essentiel strong { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
+
+.note { font-family: var(--font-hand); font-style: italic; font-size: 21px; line-height: 1.35; color: var(--muted); max-width: 60ch; }
+
+.constats { display: grid; gap: 14px; }
+.constat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; display: grid; gap: 10px; }
+.constat .top { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; justify-content: space-between; }
+.constat ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+.fix { background: var(--mint); border-radius: 10px; padding: 10px 14px; display: grid; gap: 4px; }
+.fix .eyebrow { color: var(--ink); }
+.prio { font-family: var(--font-label); font-size: 12px; letter-spacing: 0.06em; padding: 2px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.prio.p1 { color: var(--p1); }
+.prio.p2 { color: var(--p2); }
+.prio.p3 { color: var(--p3); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; line-height: 1.45; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-label); font-weight: 400; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--page); }
+tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.over { color: var(--coral-strong); font-weight: 600; }
+tfoot td { font-weight: 600; background: var(--page); }
+
+.docs { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+.doc { border-radius: 16px; padding: 18px 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.doc .head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.doc .num { font-family: var(--font-label); font-size: 13px; color: var(--muted); letter-spacing: 0.06em; }
+.doc ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 15px; }
+.doc .plus { font-size: 15px; }
+.doc .plus b { font-weight: 600; }
+.doc a.more { font-family: var(--font-label); font-size: 13px; }
+.bg-lilac { background: var(--lilac); } .bg-sky { background: var(--sky); } .bg-almond { background: var(--almond); }
+.bg-mint { background: var(--mint); } .bg-blush { background: var(--blush); } .bg-jasmine { background: var(--jasmine); }
+
+.two { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.panel ul, .panel ol { margin: 0; padding-left: 20px; display: grid; gap: 5px; }
+.quote { background: var(--jasmine); border-radius: 10px; padding: 14px 16px; font-size: 15px; display: grid; gap: 6px; }
+.option { border-left: 3px solid var(--line-strong); padding-left: 14px; display: grid; gap: 4px; }
+.option.reco { border-color: var(--coral); }
+
+.lots { display: grid; gap: 12px; }
+.lot { display: grid; grid-template-columns: 56px 1fr; gap: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.lot .n { font-family: var(--font-label); font-size: 28px; color: var(--coral); line-height: 1; }
+.lot > div { min-width: 0; display: grid; gap: 6px; }
+.lot ul { margin: 0; padding-left: 20px; display: grid; gap: 3px; font-size: 15px; }
+
+.decisions { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
+.decisions li::marker { font-family: var(--font-label); color: var(--blue); }
+
+.detail { background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.detail + .detail { margin-top: 10px; }
+.detail summary { cursor: pointer; padding: 14px 18px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; list-style: none; }
+.detail summary::-webkit-details-marker { display: none; }
+.summary-label { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
+.summary-hint { font-family: var(--font-label); font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+.detail[open] .summary-hint::after { content: " · ouvert"; }
+.prose { padding: 4px 18px 20px; display: grid; gap: 12px; min-width: 0; font-size: 15px; }
+.prose h2 { font-size: 21px; margin-top: 10px; }
+.prose h3 { font-size: 17px; margin-top: 6px; }
+.prose p, .prose li { max-width: 74ch; }
+.prose ul, .prose ol { margin: 0; padding-left: 22px; display: grid; gap: 4px; }
+.prose blockquote { margin: 0; padding: 8px 14px; background: var(--jasmine); border-radius: 8px; }
+.prose table { font-size: 13.5px; }
+
+footer { font-size: 14px; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 18px; }
+@media (max-width: 520px) {
+  .essentiel li { grid-template-columns: 1fr; }
+  .lot { grid-template-columns: 1fr; gap: 6px; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<style>
+.carte { display: grid; gap: 16px; font-size: 16px; }
+.carte > h2 { font-size: clamp(24px, 3.6vw, 30px); margin-top: 28px; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.carte > h3 { font-size: 20px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.sec-num { font-family: var(--font-label); font-weight: 400; font-size: 15px; color: var(--blue); letter-spacing: 0.06em; }
+.carte p, .carte li { max-width: 72ch; }
+.carte ul, .carte ol { margin: 0; padding-left: 22px; display: grid; gap: 5px; }
+.carte table { font-size: 14px; }
+.carte td:first-child { font-weight: 600; }
+.carte strong { font-weight: 700; }
+</style>
+<div class="wrap">
+<header class="hero">
+  <p class="eyebrow">Marge de Manœuvre · Version du 8 octobre 2026 · décisions de Nicolas intégrées</p>
+  <h1>Un seul parcours, pour les PDF et <span class="accent">l'app.</span></h1>
+  <p class="lede">Une seule liste de carnets, un seul ordre et un seul contenu. Le carnet N prépare la séance N, le terrain gagne une séance, et chaque livrable promis par le programme a un carnet qui le produit.</p>
+  <div class="hero-meta"><span class="chip">10 séances · 5 / 3 / 2</span><span class="chip">carnets 1 à 7 + carnet de route</span><span class="chip">≈ 19 h 30 d'écriture</span><span class="chip">4 décisions à prendre</span></div>
+</header>
+<article class="carte"><p>Version du 8 octobre 2026. Elle intègre les décisions de Nicolas :
+- plus de carnet 0 ;
+- un carnet 1 qui réunit un état des lieux rapide et les héritages ;
+- le carnet N prépare la séance N ;
+- la séance libérée va au temps 2 ;
+- le document du temps 3 s'appelle « carnet de route » ;
+- le nouveau parcours vaut pour les futurs bénéficiaires, sans date de bascule ;
+- l'option « Initiation à l'IA » ouvre la séance 6 ;
+- on parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand, et plus jamais du MBTI, marque soumise à licence ;
+- Hexa3D est abandonné.</p>
+<p>Elle fixe, pour les PDF comme pour l'app, une seule liste de carnets, un seul ordre et un seul contenu. Elle s'appuie sur :
+- le programme du bilan (<code>chapters/programme/</code>) ;
+- les carnets PDF (<code>chapters/chap0</code> à <code>chap6</code>, <code>livret</code>, <code>business_plan</code>) ;
+- les carnets de l'app (<code>server/predefined_workbooks.py</code>) ;
+- l'audit (<code>synthese.html</code> et <code>rapports/</code> dans ce dossier).</p>
+<p>Le récapitulatif destiné à l'agent du site est dans <code>recap-site-parcours.md</code>.</p>
+<h2><span class="sec-num">1</span>Le constat de <span class="accent">départ.</span></h2>
+<p>Le programme actuel organise le bilan en 10 séances, en 3 temps : comprendre (S1 à S6), confronter (S7 et S8), décider et agir (S9 et S10), plus un suivi à 6 mois.</p>
+<p>Les deux chaînes couvrent ce parcours de façon inverse :
+- <strong>les PDF</strong> couvrent bien le temps 1, puis s'essoufflent : rien pour les enquêtes, la matrice, les scénarios ni la feuille de route datée ;
+- <strong>l'app</strong> comprime le temps 1 (ni test des fonctionnements cognitifs, ni liste de valeurs, ni ligne de vie), mais développe le terrain et le plan d'action.</p>
+<p>L'audit a aussi relevé un déséquilibre :
+- six séances d'introspection pour deux de terrain ;
+- 1 à 2 semaines seulement pour obtenir des entretiens avec des professionnels ;
+- des pistes qui partent de zéro à la séance 7 ;
+- un doublon entre les carnets 0 et 1, qui demandent deux fois l'objectif, l'humeur et les domaines de vie.</p>
+<p>Le parcours unifié prend <strong>le temps 1 des PDF et les temps 2 et 3 de l'app</strong>. Il fusionne le début du parcours et donne au terrain la séance libérée.</p>
+<h2><span class="sec-num">2</span>Le nouveau découpage des <span class="accent">séances.</span></h2>
+<p>Toujours 10 séances de 1 h 20 et un suivi de 40 min à 6 mois. La répartition passe de 6 / 2 / 2 à <strong>5 / 3 / 2</strong>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Temps</th>
+<th>Séance</th>
+<th>Sujet</th>
+<th>Carnet qui la prépare</th>
+<th>Livrables du temps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 · Comprendre</td>
+<td>S1</td>
+<td>État des lieux et héritages : votre situation, ce qui vous pèse, ce qui tient encore, ce que vous avez reçu de votre milieu. Le cadre de travail.</td>
+<td>Carnet 1</td>
+<td>Profil de fonctionnement cognitif et analyse d'impact de l'environnement · Cartographie des énergies de travail et des facteurs d'usure · Seuil de sécurité financière (4 seuils)</td>
+</tr>
+<tr>
+<td></td>
+<td>S2</td>
+<td>Votre parcours réel</td>
+<td>Carnet 2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>S3</td>
+<td>Votre fonctionnement cognitif</td>
+<td>Carnet 3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>S4</td>
+<td>Votre rapport à l'argent</td>
+<td>Carnet 4</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>S5</td>
+<td>Vos valeurs et vos moteurs</td>
+<td>Carnet 5</td>
+<td></td>
+</tr>
+<tr>
+<td>2 · Confronter</td>
+<td>S6</td>
+<td>Explorer : 10 pistes, 5 réalistes et 5 audacieuses ; choix des 3 pistes à confronter</td>
+<td>Carnet 6</td>
+<td>Matrice de faisabilité · 3 scénarios comparés · Retours d'enquêtes terrain</td>
+</tr>
+<tr>
+<td></td>
+<td>S7</td>
+<td>Confronter : les 3 pistes passées au crible de vos critères, enquêtes préparées et lancées, salaires et débouchés</td>
+<td>Carnet 7, partie 1</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>S8</td>
+<td>Tirer les leçons du terrain : ce que les enquêtes confirment ou contredisent, matrice de faisabilité, 3 familles de scénarios (pistes directes, passerelles courtes, angles morts)</td>
+<td>Carnet 7, partie 2</td>
+<td></td>
+</tr>
+<tr>
+<td>3 · Décider et agir</td>
+<td>S9</td>
+<td>Choisir, et adapter le carnet de route au projet (formation pour une reconversion, modèle économique pour une création, argumentaire pour une évolution interne)</td>
+<td>Carnet de route, partie 1</td>
+<td>Feuilles de route A et B · Premières actions sous 7 jours · Document de synthèse co-rédigé · Suivi à 6 mois</td>
+</tr>
+<tr>
+<td></td>
+<td>S10</td>
+<td>Synthèse, piste A (projet d'élan) et piste B (refuge et tremplin), premières actions</td>
+<td>Carnet de route, partie 2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Suivi</td>
+<td>Point à 6 mois (40 min)</td>
+<td>—</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>L'option « Initiation à l'IA » ouvre <strong>la séance 6</strong>, celle de l'exploration.</p>
+<h2><span class="sec-num">3</span>Les règles du <span class="accent">parcours.</span></h2>
+<ol>
+<li><strong>Le carnet N prépare la séance N.</strong> Il se remplit entre la séance N−1 et la séance N. Le carnet 1 se remplit avant la séance 1, après le premier échange de 30 min.</li>
+<li><strong>Sept carnets de bord (1 à 7), comme le promet le programme, puis le carnet de route du temps 3.</strong> Le carnet 7 et le carnet de route ont chacun deux parties, une par intervalle entre deux séances.</li>
+<li><strong>1 h 30 à 3 h d'écriture par intervalle, 20 h au total au plus.</strong> Les entretiens, les échanges avec les proches et les recherches ne comptent pas dans ce temps, et le carnet le dit.</li>
+<li><strong>Une donnée, une saisie.</strong> Une information est écrite là où elle est produite, puis seulement reportée sur une ligne, avec son origine (« Reportez vos seuils · carnet 4 »).</li>
+<li><strong>Chaque livrable du programme a un carnet</strong> qui le produit (section 5).</li>
+<li><strong>Un gabarit commun</strong> à tous les carnets (section 4).</li>
+<li><strong>Le terrain commence avant le temps 2.</strong> Le fil des pistes démarre au carnet 2, l'interview d'un professionnel est proposée dès le carnet 2, et les proches sont sollicités en fin de carnet 5.</li>
+<li><strong>Deux semaines pour chaque intervalle de terrain</strong> (S6 → S7 et S7 → S8), la borne haute du programme, qui annonce des séances espacées de 1 à 2 semaines. Des séances plus rapprochées pendant le temps 1 si la personne le souhaite.</li>
+<li><strong>Le document de synthèse se prépare au fil de l'eau.</strong> Chaque livrable de carnet en est une brique. La séance 10 sert à le relire et à décider, pas à l'assembler.</li>
+</ol>
+<h2><span class="sec-num">4</span>Le gabarit commun d'un <span class="accent">carnet.</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Contenu</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Couverture</td>
+<td>Promesse du carnet.</td>
+<td>PDF</td>
+</tr>
+<tr>
+<td>Ouverture</td>
+<td>Le but du carnet, la liste des exercices avec leur durée, le total et le découpage conseillé. Un rappel du cadre en une ligne : « Vos réponses vous appartiennent. Vous pouvez passer une question. » Le mode d'emploi en une ligne.</td>
+<td>PDF, à compléter</td>
+</tr>
+<tr>
+<td>Météo</td>
+<td>Une échelle d'énergie de 0 à 10 et une ligne « Ce chiffre s'explique surtout par… ». Deux minutes. Reprise à chaque carnet, elle mesure le chemin parcouru.</td>
+<td>App</td>
+</tr>
+<tr>
+<td>Récapitulatif guidé</td>
+<td>À partir du carnet 2. Il relit le livrable du carnet précédent et la séance qui vient d'avoir lieu, avec des renvois explicites.</td>
+<td>PDF, à généraliser</td>
+</tr>
+<tr>
+<td>Exercices</td>
+<td>Sourcil « Exercice N · nom · durée », et une phrase qui dit à quoi sert l'exercice. Des amorces, et un exemple contrasté (« En surface / Exploitable ») tiré d'un métier voisin. Des formats variés. Les irritants retournés en critères (« donc mon prochain poste doit… »). Le protocole de sécurité quand la charge est forte : avertissement, optionnalité, phrase d'ancrage.</td>
+<td>Audit</td>
+</tr>
+<tr>
+<td>Livrable</td>
+<td>La sortie nommée du carnet : celle que le suivant reprend, et une brique du document de synthèse. Les engagements. Trois zones courtes : « Ce qui m'étonne en relisant ce carnet », « À aborder en séance », « Ce que j'ai laissé vierge, à reprendre ensemble ». À partir du carnet 2, une ligne de plus : « Une idée de piste qui m'est venue en remplissant ce carnet » (le fil des pistes).</td>
+<td>Audit</td>
+</tr>
+<tr>
+<td>Dos</td>
+<td>Prochaine étape.</td>
+<td>PDF</td>
+</tr>
+</tbody>
+</table></div>
+<h2><span class="sec-num">5</span>Le parcours, carnet par <span class="accent">carnet.</span></h2>
+<p>Légende des sources :
+- <strong>PDF C0 à C6</strong> : exercice des carnets actuels du code ;
+- <strong>Livret</strong> : l'actuel livret de compétences ;
+- <strong>App</strong> : page des carnets actuels de l'app ;
+- <strong>Audit</strong> : ajout ou réécriture proposé par l'audit.</p>
+<p>Les durées sont des cibles d'écriture.</p>
+<h3>Carnet 1 · L'état des lieux · avant S1 · cible 1 h 45</h3>
+<p>Prépare S1. Un état des lieux rapide, puis les héritages, qui en font partie.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Le cadre de travail</td>
+<td>App (trois règles) + Audit</td>
+<td>Les trois règles de l'app (confidentialité, franchise, action), complétées : qui lit les réponses, droit de passer une question, ce qui est trop lourd se note pour la séance, mode d'emploi du PDF.</td>
+</tr>
+<tr>
+<td>Mon engagement</td>
+<td>PDF C0 ex. 1</td>
+<td>Garder la formule « Moi, … je décide d'investir … heures », avec un repère sourcé.</td>
+</tr>
+<tr>
+<td>Faire le point, rapidement</td>
+<td>PDF C0 ex. 2 + PDF C1 ex. 4 + App</td>
+<td>Quatre questions au lieu de huit, environ 20 min. Où j'en suis (avec une amorce). Ce qui pèse et ce que je décide (le sac à dos, en deux colonnes comme dans l'app, avec le protocole sur la peur). Ce qui tient encore. Ce bilan vient-il de moi ou d'une demande extérieure ?</td>
+</tr>
+<tr>
+<td>Vos domaines de vie</td>
+<td>PDF C0 ex. 3</td>
+<td>Garder : c'est la notation de référence, reprise en fin de parcours. Ajouter « Donc, mon prochain projet devra… ».</td>
+</tr>
+<tr>
+<td>Votre objectif, première version</td>
+<td>PDF C0 + App</td>
+<td>Une seule question d'objectif, avec un exemple. Et « Je m'autorise à explorer… ». Horizon unique : « d'ici la fin de votre bilan ».</td>
+</tr>
+<tr>
+<td>Ce que vous avez reçu</td>
+<td>PDF C1 ex. 5 et 6 + App</td>
+<td>Fusion. D'abord « Ce que vous avez vu » (le travail des parents ou des adultes qui ont compté), puis « Ce que vous en faites », au format reçu / choisi de l'app. Remplace le « 3FVS » non expliqué. Protocole, et une alternative pour une famille absente ou douloureuse.</td>
+</tr>
+<tr>
+<td>Vos modèles et anti-modèles</td>
+<td>PDF C1 ex. 7 + App</td>
+<td>Garder, avec « Donc, dans mon prochain poste, je veux… ».</td>
+</tr>
+<tr>
+<td>Retirés</td>
+<td>PDF C0 et C1</td>
+<td>Les quatre autres questions de « Faire le point ». La vision à 360° (doublon des domaines de vie). La météo séparée (elle passe dans le gabarit). L'entourage (déplacé au carnet 5, où l'on choisit les proches à solliciter). L'objectif boussole (déplacé au carnet 2, après la séance 1).</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : votre point de départ. Il réunit la situation, ce qui pèse et ce qui tient, les domaines notés, l'objectif v1, « Je m'autorise à », l'héritage reçu et choisi, les modèles et anti-modèles.</p>
+<h3>Carnet 2 · Mon parcours · S1 → S2 · cible 2 h 45</h3>
+<p>Récapitule S1 et prépare S2, qui porte sur le parcours réel : ce que vous savez faire, ce que vous aimez, ce qui ne vous correspond plus.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Récapitulatif de la séance 1 et objectif boussole</td>
+<td>PDF C1 ex. 3 + App</td>
+<td>Précise l'objectif v1 après la séance 1. Trois amorces du PDF (« je veux avoir clarifié… pour pouvoir… je saurai que j'ai réussi quand… ») et l'exemple de l'app.</td>
+</tr>
+<tr>
+<td>À lire : comprendre ses racines</td>
+<td>PDF C2</td>
+<td>Garder, allégé : trois notions annoncées, pas neuf. Protocole. Retirer « névrose de classe », ou la citer avec sa source.</td>
+</tr>
+<tr>
+<td>Vos expériences et votre travail réel</td>
+<td>PDF C2 ex. 2 + Livret thème 2</td>
+<td>Une fiche par expérience, quatre au choix. Chaque fiche porte : les missions, ce que la fiche de poste ne dit pas, ce qui me donnait de l'énergie, ce qui me coûtait, comment le poste a commencé et pourquoi il s'est terminé. Le programme rattache le travail réel à cette séance.</td>
+</tr>
+<tr>
+<td>Le travail empêché</td>
+<td>Livret thème 2</td>
+<td>Une page, qui applique l'activité empêchée expliquée dans l'« À lire ». Un seul terme pour les deux. Protocole.</td>
+</tr>
+<tr>
+<td>Vos quatre zones</td>
+<td>App (carnet 3)</td>
+<td>Importer : zone d'excellence, zone à risque (je sais faire, mais cela m'épuise), etc.</td>
+</tr>
+<tr>
+<td>Votre fil rouge, vos moteurs</td>
+<td>PDF C2 ex. 3 + App</td>
+<td>Le fil rouge enfin écrit en une phrase. Les trois verbes d'action de l'app. Pour chaque moteur : « je le veux / on l'attend de moi ».</td>
+</tr>
+<tr>
+<td>Votre ligne de vie</td>
+<td>PDF C2 ex. 4</td>
+<td>Garder, avec le protocole sur les vallées.</td>
+</tr>
+<tr>
+<td>Vos compétences de vie</td>
+<td>PDF C2 ex. 5</td>
+<td>Garder. Ligne « épreuves » facultative. Entourer celles qu'on veut utiliser demain.</td>
+</tr>
+<tr>
+<td>L'arbre de vie</td>
+<td>PDF C2 ex. 6</td>
+<td>Facultatif : c'est une synthèse de ce qui précède.</td>
+</tr>
+<tr>
+<td>Interview d'une personne passionnée</td>
+<td>PDF C2 bonus</td>
+<td>Premier contact avec le terrain, facultatif, hors temps d'écriture. Si possible l'un des modèles du carnet 1. Le rendez-vous reste ouvert jusqu'au carnet 7.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : votre fil rouge. Il réunit les expériences avec énergie et coût, le travail réel et le travail empêché, les quatre zones, les moteurs et les verbes d'action, les compétences de vie, les irritants retournés en critères. Premières lignes du fil des pistes.</p>
+<h3>Carnet 3 · Mes fonctionnements propres · S2 → S3 · cible 1 h 45</h3>
+<p>Récapitule S2 et prépare S3, la restitution du test des fonctionnements cognitifs.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Récapitulatif de la séance 2</td>
+<td>PDF C3 ex. 1</td>
+<td>Il relit le fil rouge et les quatre zones.</td>
+</tr>
+<tr>
+<td>À savoir sur le test</td>
+<td>Audit</td>
+<td>Nouveau. Le test des fonctionnements cognitifs est une version maison, conçue et éprouvée par Lysiane Brand, psychologue du travail. Quatre préférences, pas « cinq dimensions ». Les mises en situation du carnet ne calculent pas le profil. Le profil est restitué en séance, et c'est la personne qui le valide. Aucune mention du MBTI.</td>
+</tr>
+<tr>
+<td>Les 17 mises en situation</td>
+<td>PDF C3 ex. 2 à 5</td>
+<td>Garder, avec les réécritures de l'audit (Q1, Q4, Q7, Q8, Q13). Q14 et Q15 passent en échelle suivie d'un « pourquoi ».</td>
+</tr>
+<tr>
+<td>Sous pression</td>
+<td>PDF C3 ex. 6</td>
+<td>Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs. Protocole complet.</td>
+</tr>
+<tr>
+<td>Ce que j'en retiens pour mon travail</td>
+<td>Audit</td>
+<td>Nouveau : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… ».</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : la <strong>cartographie des énergies de travail et des facteurs d'usure</strong> (livrable du programme). Elle assemble les quatre zones du carnet 2 et cette page.</p>
+<h3>Carnet 4 · Mon rapport à l'argent · S3 → S4 · cible 2 h</h3>
+<p>Récapitule S3 et prépare S4.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Récapitulatif de la restitution du test</td>
+<td>PDF C4 ex. 1</td>
+<td>Avec le champ « le profil de fonctionnement que j'ai validé » : c'est la seule saisie du profil, reportée ensuite.</td>
+</tr>
+<tr>
+<td>Votre situation</td>
+<td>PDF C4 ex. 2</td>
+<td>Choix exclusif en boutons radio, puis un « pourquoi ». Reprend la note « Argent » des domaines de vie (carnet 1).</td>
+</tr>
+<tr>
+<td>Votre histoire avec l'argent</td>
+<td>PDF C4 ex. 3</td>
+<td>4 questions ouvertes au lieu de 7. Protocole complet. La question sur le couple est posée au passé, avec un renvoi vers la séance. Renvoi à l'héritage du carnet 1.</td>
+</tr>
+<tr>
+<td>Vos premières expériences, vos idées reçues</td>
+<td>PDF C4 ex. 4 + App</td>
+<td>L'encadré passif devient le format de l'app : « Ce que je me dis → Ce que montrent les faits ».</td>
+</tr>
+<tr>
+<td>Argent et projet</td>
+<td>PDF C4 ex. 5</td>
+<td>Grille d'aisance de 1 à 5 (demander une augmentation, négocier, fixer un prix…). « Ce que je n'ose pas demander » a sa propre case.</td>
+</tr>
+<tr>
+<td>Vos quatre seuils</td>
+<td>PDF C4 ex. 6 + App</td>
+<td>Une carte unique, alignée sur le programme : minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. En € nets par mois, pour vous. Une fourchette suffit.</td>
+</tr>
+<tr>
+<td>Vos tendances</td>
+<td>PDF C4 ex. 7</td>
+<td>Deux ou trois au plus, avec des noms neutres (la sécurité, le mérite…).</td>
+</tr>
+<tr>
+<td>Synthèse</td>
+<td>PDF C4 ex. 8</td>
+<td>Garder la question franche sur la peur du manque, suivie de la phrase d'ancrage.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : le <strong>seuil de sécurité financière, en 4 seuils</strong> (livrable du programme), et la tendance dominante.</p>
+<h3>Carnet 5 · Valeurs et moteurs profonds · S4 → S5 · cible 2 h 15</h3>
+<p>Récapitule S4 et prépare S5.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Récapitulatif de la séance 4</td>
+<td>Audit</td>
+<td>Nouveau : seuils retenus, tendance dominante, ce que l'argent protège.</td>
+</tr>
+<tr>
+<td>Alignement, désalignement, choix difficiles</td>
+<td>PDF C5 ex. 1 à 3</td>
+<td>Renvois aux sommets et aux vallées du carnet 2. Protocole sur le désalignement. Chaque irritant devient une condition.</td>
+</tr>
+<tr>
+<td>La liste de valeurs</td>
+<td>PDF C5 ex. 4</td>
+<td>Liste corrigée : sans doublons, avec les pôles des tensions, 15 à 20 valeurs à cocher.</td>
+</tr>
+<tr>
+<td>Hiérarchiser</td>
+<td>PDF C5 ex. 5</td>
+<td>Lignes numérotées 10, 5 puis 3, et le test « si elle manquait six mois ». Une ligne « la valeur que je coche surtout parce qu'elle est attendue de moi ».</td>
+</tr>
+<tr>
+<td>Vos tensions</td>
+<td>PDF C5 ex. 8</td>
+<td>Placées avant la grille, avec un renvoi aux seuils du carnet 4.</td>
+</tr>
+<tr>
+<td>Votre grille anti-compromis</td>
+<td>PDF C5 ex. 6, 7 et 9 + App</td>
+<td>Une seule sortie. Pour chacune des 3 valeurs : d'où elle vient, la condition observable, le signal d'alerte, la question à poser en entretien. Les limites non financières de l'app y entrent. Les moteurs du carnet 2 y sont relus.</td>
+</tr>
+<tr>
+<td>Votre entourage, et le retour de vos proches</td>
+<td>PDF C0 ex. 4 + PDF C6 ex. 3</td>
+<td>Les soutiens et les regards critiques, en quelques lignes. Puis trois proches à qui envoyer la question : « Si tu ne connaissais pas mon métier actuel, à quel métier penserais-tu pour moi ? Qu'est-ce qui, chez moi, t'y fait penser ? ». Leurs réponses arriveront avant la séance 6.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : la <strong>grille anti-compromis</strong>, le seul endroit où les 3 valeurs sont écrites. La demande aux proches est partie.</p>
+<h3>Carnet 6 · L'exploration · S5 → S6 · cible 2 h</h3>
+<p>Récapitule S5 et prépare S6 « Explorer ».</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Récapitulatif de la séance 5</td>
+<td>PDF C6 ex. 1</td>
+<td>Une ligne par valeur, reportée du carnet 5, et « ce que la séance a confirmé, ce qu'elle a déplacé ».</td>
+</tr>
+<tr>
+<td>Votre cartographie</td>
+<td>PDF C6 ex. 2</td>
+<td>Une seule page de reports : profil de fonctionnement, cartographie des énergies, moteurs, seuils, grille anti-compromis. Les seuils restent dans une zone « à garder pour vous ».</td>
+</tr>
+<tr>
+<td>Le retour de vos proches</td>
+<td>PDF C6 ex. 3</td>
+<td>Recueil des réponses : trois cartes, une par personne, puis « ce qui me parle vraiment / ce qui ressemble plutôt à ce qu'on attend de moi ». Protocole.</td>
+</tr>
+<tr>
+<td>Les ressources</td>
+<td>PDF C6</td>
+<td>Placées avant les pistes. Liens à jour.</td>
+</tr>
+<tr>
+<td>Dix pistes</td>
+<td>PDF C6 ex. 4</td>
+<td>5 réalistes et 5 audacieuses. Elles partent du fil des pistes, des suggestions des proches et de « Je m'autorise à » (carnet 1). Une colonne « d'où vient cette piste ».</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : <strong>10 pistes qualifiées</strong>. La séance 6 en retient 3 à confronter.</p>
+<h3>Carnet 7 · Confronter au terrain · en deux parties · cible 1 h 45, puis 2 h</h3>
+<p><strong>Partie 1 · S6 → S7 · deux semaines.</strong> Prépare S7.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Récapitulatif de la séance 6</td>
+<td>Audit</td>
+<td>Les 3 pistes retenues, et pourquoi.</td>
+</tr>
+<tr>
+<td>Vos trois fiches</td>
+<td>PDF C6 ex. 5 et 6</td>
+<td>Une fiche par piste retenue, avec une rangée de critères : grille anti-compromis, seuils, énergie, « à vérifier auprès de qui ». La fiche audacieuse garde « ce que cette piste dit de ce que je cherche ». Les autres pistes restent en option.</td>
+</tr>
+<tr>
+<td>Préparer vos enquêtes</td>
+<td>App (carnet 5) + PDF C2 bonus</td>
+<td>La grille d'entretien de l'app, complétée par les questions de l'interview du carnet 2. Un message d'approche. Trois contacts à solliciter dans les 10 jours, si possible parmi les modèles du carnet 1.</td>
+</tr>
+<tr>
+<td>Salaires et débouchés</td>
+<td>Programme + Audit</td>
+<td>Où chercher, et ce qu'il faut noter pour son bassin d'emploi. Des liens officiels, pas de chiffres écrits dans le carnet.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Partie 2 · S7 → S8 · deux semaines.</strong> Prépare S8.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vos comptes rendus d'enquête</td>
+<td>Audit</td>
+<td>Un par entretien : ce qui confirme, ce qui contredit, la suite.</td>
+</tr>
+<tr>
+<td>Ce que le terrain vous a appris</td>
+<td>App (carnet 5)</td>
+<td>« Ce que j'imaginais → Ce que le terrain montre ».</td>
+</tr>
+<tr>
+<td>La matrice de faisabilité</td>
+<td>Audit</td>
+<td>Chaque piste face aux compétences, au marché et aux débouchés. Brouillon ici, finalisé en séance 8 avec le classement en trois familles : pistes directes, passerelles courtes, angles morts.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : les <strong>retours d'enquêtes</strong> et la <strong>matrice de faisabilité</strong> (livrables du programme). La séance 8 en tire les <strong>3 scénarios comparés</strong>.</p>
+<h3>Le carnet de route · temps 3 · en deux parties · cible 1 h 30, puis 1 h 45</h3>
+<p>C'est l'actuel livret de compétences, recentré et renommé.</p>
+<p><strong>Partie 1 · S8 → S9 · Prouver et préparer le choix.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Récapitulatif de la séance 8</td>
+<td>Audit</td>
+<td>Les 3 scénarios, et vers lequel vous penchez.</td>
+</tr>
+<tr>
+<td>Votre profil, en une page</td>
+<td>Livret thème 1</td>
+<td>Reports seulement : profil de fonctionnement, forces, cartographie des énergies. On ne refait plus rien. Sans l'exemple « ISFJ » ni aucun code de type.</td>
+</tr>
+<tr>
+<td>Vos compétences prouvées</td>
+<td>Livret thèmes 3 et 4</td>
+<td>Un tableau : compétence, où je l'ai prouvée, résultat ou trace, niveau d'autonomie de 1 à 4, envie de l'utiliser. Il part des expériences, du travail réel et des compétences de vie du carnet 2.</td>
+</tr>
+<tr>
+<td>Deux récits d'action</td>
+<td>Livret thème 5</td>
+<td>Deux récits au lieu d'un, « Ce récit prouve que je sais… », et une version orale en trois phrases.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Partie 2 · S9 → S10 · Décider et agir.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Exercice</th>
+<th>Source</th>
+<th>Décision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Piste A, piste B</td>
+<td>App (carnet 6) + Livret thème 7</td>
+<td>Le format de l'app : projet d'élan et refuge-tremplin, atouts, risques. Les pistes viennent des scénarios.</td>
+</tr>
+<tr>
+<td>Feuilles de route à 30, 60 et 90 jours</td>
+<td>App (carnet 6)</td>
+<td>Importer. Une par piste, comme le promet le programme.</td>
+</tr>
+<tr>
+<td>Vos premières actions sous 7 jours</td>
+<td>Livret thème 7</td>
+<td>Action, date, personne à prévenir.</td>
+</tr>
+<tr>
+<td>Garde-fous et alliés</td>
+<td>App (carnet 6)</td>
+<td>Importer. Les alliés viennent de l'entourage noté au carnet 5.</td>
+</tr>
+<tr>
+<td>Le chemin parcouru</td>
+<td>Audit</td>
+<td>Relire l'objectif boussole, renoter les domaines de vie du carnet 1, comparer les météos.</td>
+</tr>
+<tr>
+<td>Préparer le suivi à 6 mois</td>
+<td>Audit</td>
+<td>Ce qu'il faut relire et apporter à l'entretien de suivi.</td>
+</tr>
+<tr>
+<td>Le module de votre projet</td>
+<td>Programme (S9)</td>
+<td>Selon le projet : création (module court du business plan), reconversion (formation et financement, à créer), évolution interne (argumentaire, à créer).</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sortie</strong> : les <strong>feuilles de route A et B</strong> et les <strong>premières actions</strong> (livrables du programme). Le document de synthèse co-rédigé reste un document à part, mais ses briques sont prêtes (section 7).</p>
+<h3>Le business plan · deux formats</h3>
+<ul>
+<li><strong>Le module création du carnet de route</strong> (S9 → S10, environ 3 h). C'est le parcours court de 12 pages proposé par l'audit : fondations, problème, offre, prix, point mort, test, synthèse. Il reprend les seuils et la grille anti-compromis, ainsi que l'entretien prospects de l'app (objections, prix perçu, déclencheur d'achat).</li>
+<li><strong>Le livret projet complet</strong>, outil autonome pour l'accompagnement à la création après le bilan. Il s'ouvre par un mode d'emploi et des renvois « Si vous avez fait le bilan : … ». Il intègre les refontes de l'audit : finances guidées, page « Le risque, pour vous », reprise d'activité, informations réglementaires renvoyées vers les sources officielles.</li>
+</ul>
+<h2><span class="sec-num">6</span>Le budget de <span class="accent">temps.</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Intervalle</th>
+<th>Carnet</th>
+<th>Cible</th>
+<th>Correspond aujourd'hui à</th>
+<th>Estimation actuelle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>avant S1</td>
+<td>Carnet 1</td>
+<td>1 h 45</td>
+<td>Carnet 0 et une partie du carnet 1</td>
+<td>≈ 1 h 15, plus 1 h 50 – 2 h 30</td>
+</tr>
+<tr>
+<td>S1 → S2</td>
+<td>Carnet 2</td>
+<td>2 h 45</td>
+<td>Carnet 2, plus le travail réel du livret</td>
+<td>2 h 35 – 3 h 35</td>
+</tr>
+<tr>
+<td>S2 → S3</td>
+<td>Carnet 3</td>
+<td>1 h 45</td>
+<td>Carnet 3</td>
+<td>1 h 40 – 2 h 30</td>
+</tr>
+<tr>
+<td>S3 → S4</td>
+<td>Carnet 4</td>
+<td>2 h</td>
+<td>Carnet 4</td>
+<td>≈ 2 h 30</td>
+</tr>
+<tr>
+<td>S4 → S5</td>
+<td>Carnet 5</td>
+<td>2 h 15</td>
+<td>Carnet 5</td>
+<td>2 h 30 – 3 h</td>
+</tr>
+<tr>
+<td>S5 → S6</td>
+<td>Carnet 6</td>
+<td>2 h</td>
+<td>Carnet 6, partie exploration</td>
+<td>5 – 7 h pour tout le carnet 6</td>
+</tr>
+<tr>
+<td>S6 → S7</td>
+<td>Carnet 7, partie 1</td>
+<td>1 h 45</td>
+<td>Carnet 6, fiches</td>
+<td></td>
+</tr>
+<tr>
+<td>S7 → S8</td>
+<td>Carnet 7, partie 2</td>
+<td>2 h</td>
+<td>(n'existe pas)</td>
+<td></td>
+</tr>
+<tr>
+<td>S8 → S9</td>
+<td>Carnet de route, partie 1</td>
+<td>1 h 30</td>
+<td>Livret</td>
+<td>3 h 30 – 4 h 30 pour tout le livret</td>
+</tr>
+<tr>
+<td>S9 → S10</td>
+<td>Carnet de route, partie 2</td>
+<td>1 h 45 (+ module)</td>
+<td>Livret, thème 7</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>≈ 19 h 30</strong>, dans les 10-20 h du programme</td>
+<td></td>
+<td>≈ 21 – 27 h</td>
+</tr>
+</tbody>
+</table></div>
+<p>L'interview du carnet 2, les échanges avec les proches et les entretiens du carnet 7 se font hors temps d'écriture. Le module de projet s'ajoute pour les personnes concernées.</p>
+<h2><span class="sec-num">7</span>Les données qui <span class="accent">circulent.</span></h2>
+<p>Pour chaque donnée : où elle est écrite (une seule fois), et où elle est reportée.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Donnée</th>
+<th>Écrite dans</th>
+<th>Reportée dans</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Météo (énergie de 0 à 10)</td>
+<td>Ouverture de chaque carnet</td>
+<td>Carnet de route (le chemin parcouru) · suivi à 6 mois</td>
+</tr>
+<tr>
+<td>Domaines de vie notés</td>
+<td>Carnet 1</td>
+<td>Carnet 4 (note « Argent ») · carnet de route (nouvelle notation)</td>
+</tr>
+<tr>
+<td>Objectif v1, « Je m'autorise à »</td>
+<td>Carnet 1</td>
+<td>Carnet 2 (boussole) · carnet 6 (pistes audacieuses)</td>
+</tr>
+<tr>
+<td>Ce qui pèse, héritage reçu et choisi</td>
+<td>Carnet 1</td>
+<td>Carnet 2 (À lire) · carnet 4 (histoire avec l'argent)</td>
+</tr>
+<tr>
+<td>Modèles, anti-modèles</td>
+<td>Carnet 1</td>
+<td>Carnet 2 (interview) · carnet 7 (contacts d'enquête)</td>
+</tr>
+<tr>
+<td>Objectif boussole</td>
+<td>Carnet 2</td>
+<td>Carnet de route (le chemin parcouru)</td>
+</tr>
+<tr>
+<td>Expériences, travail réel, travail empêché, irritants retournés</td>
+<td>Carnet 2</td>
+<td>Carnet 5 (grille anti-compromis) · carnet de route (compétences prouvées)</td>
+</tr>
+<tr>
+<td>Quatre zones, fil rouge, moteurs, verbes d'action</td>
+<td>Carnet 2</td>
+<td>Carnet 3 (cartographie des énergies) · carnet 5 · carnet 6</td>
+</tr>
+<tr>
+<td>Compétences de vie</td>
+<td>Carnet 2</td>
+<td>Carnet de route (compétences prouvées)</td>
+</tr>
+<tr>
+<td>Première interview</td>
+<td>Carnet 2 (facultatif)</td>
+<td>Carnet 7 (grille d'entretien, contacts)</td>
+</tr>
+<tr>
+<td>Fil des pistes</td>
+<td>Livrables des carnets 2 à 5</td>
+<td>Carnet 6 (dix pistes)</td>
+</tr>
+<tr>
+<td>Cartographie des énergies</td>
+<td>Carnet 3</td>
+<td>Carnet 6 · carnet de route</td>
+</tr>
+<tr>
+<td>Profil de fonctionnement validé</td>
+<td>Carnet 4 (récapitulatif)</td>
+<td>Carnet 6 · carnet de route</td>
+</tr>
+<tr>
+<td>4 seuils, tendance dominante</td>
+<td>Carnet 4</td>
+<td>Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création</td>
+</tr>
+<tr>
+<td>Grille anti-compromis (3 valeurs)</td>
+<td>Carnet 5</td>
+<td>Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création</td>
+</tr>
+<tr>
+<td>Entourage, proches sollicités</td>
+<td>Carnet 5</td>
+<td>Carnet 6 (réponses) · carnet de route (alliés)</td>
+</tr>
+<tr>
+<td>10 pistes</td>
+<td>Carnet 6</td>
+<td>Séance 6 (3 pistes retenues) · carnet 7</td>
+</tr>
+<tr>
+<td>Fiches, comptes rendus, matrice</td>
+<td>Carnet 7</td>
+<td>Séance 8 (3 scénarios) · carnet de route</td>
+</tr>
+<tr>
+<td>Compétences prouvées, récits</td>
+<td>Carnet de route, partie 1</td>
+<td>Partie 2 · module évolution interne</td>
+</tr>
+<tr>
+<td>Pistes A et B, feuilles de route, actions</td>
+<td>Carnet de route, partie 2</td>
+<td>Document de synthèse · suivi à 6 mois</td>
+</tr>
+<tr>
+<td>Livrable de chaque carnet</td>
+<td>Fin de chaque carnet</td>
+<td>Document de synthèse, assemblé au fil du parcours</td>
+</tr>
+</tbody>
+</table></div>
+<h2><span class="sec-num">8</span>Personnalisation dans <span class="accent">l'app.</span></h2>
+<p>L'app a deux usages : créer un livret de toutes pièces, puis exporter son JSON pour l'intégrer à la base, et personnaliser un livret existant.</p>
+<p><strong>Créer de toutes pièces.</strong> Les candidats naturels sont les deux modules qui manquent au carnet de route : reconversion (formation et financement) et évolution interne (argumentaire de repositionnement). Une fois le format unifié, un livret exporté de l'app s'intègre en déposant son fichier JSON dans le dossier des carnets.</p>
+<p><strong>Personnaliser.</strong> Chaque bloc du format porte une marque « fixe » ou « adaptable ». La personnalisation ne touche que les blocs adaptables.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pertinence</th>
+<th>Carnets</th>
+<th>Ce qui s'adapte</th>
+<th>Ce qui reste fixe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Forte</td>
+<td>Carnets 6 et 7, carnet de route et ses modules, business plan</td>
+<td>Pistes pré-intitulées, ressources du secteur, nombre de fiches, contacts suggérés, exemples, module de projet</td>
+<td>Gabarit, protocole, critères des fiches, définitions des seuils</td>
+</tr>
+<tr>
+<td>Moyenne</td>
+<td>Carnets 2 et 4</td>
+<td>Vocabulaire du secteur, situation (reconversion, évolution, retour à l'emploi), nombre de fiches d'expérience, exemples. Au carnet 4, le statut (salarié, indépendant, demandeur d'emploi), jamais de chiffres personnels</td>
+<td>Protocole, questions franches, carte des seuils</td>
+</tr>
+<tr>
+<td>Faible</td>
+<td>Carnets 1, 3 et 5</td>
+<td>Au plus le prénom et les exemples. Avant la séance 1, on connaît peu la personne</td>
+<td>Le cadre et les héritages (carnet 1), les questions du test des fonctionnements cognitifs (carnet 3 : les personnaliser biaiserait la restitution), la liste de valeurs et l'entonnoir (carnet 5)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Deux règles valent partout :
+- <strong>les exemples viennent d'un métier voisin</strong>, jamais du métier de la personne, sinon ils sont recopiés ;
+- <strong>ne sont jamais modifiés</strong> : le cadre, le protocole de sécurité, les textes réglementaires et les renvois entre carnets.</p>
+<h2><span class="sec-num">9</span>Les <span class="accent">décisions.</span></h2>
+<p><strong>Prises le 8 octobre 2026</strong>
+- Plus de carnet 0. Le carnet 1 réunit un état des lieux rapide et les héritages. Les éléments facultatifs du carnet 0 sont retirés.
+- Le carnet N prépare la séance N.
+- La séance libérée va au temps 2 : répartition 5 / 3 / 2.
+- Le document du temps 3 s'appelle « carnet de route ».
+- Les ajustements d'équilibre : fil des pistes, interview dès le carnet 2, proches sollicités en fin de carnet 5, deux semaines pour chaque intervalle de terrain, synthèse préparée au fil de l'eau, travail réel au carnet 2.</p>
+<ul>
+<li>Pas de date de bascule : le nouveau parcours vaut pour les futurs bénéficiaires.</li>
+<li>L'option « Initiation à l'IA » ouvre la séance 6.</li>
+<li>On parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand. La mention « MBTI » disparaît de tous les supports (carnets, programme, site, app, prompts), y compris les codes de type (ISFJ…) et la certification de Lysiane : c'est une marque soumise à licence.</li>
+<li>Hexa3D est abandonné et disparaît de tous les supports.</li>
+</ul>
+<p><strong>À prendre</strong>
+1. <strong>Le business plan en deux formats</strong> : un module court dans le bilan et un livret complet autonome.
+2. <strong>Les retraits</strong> : vision à 360°, questions de « Faire le point », arbre de vie facultatif, 3 fiches métiers obligatoires au lieu de 10.
+3. <strong>Les deux modules à créer</strong> : formation et financement (reconversion), argumentaire (évolution interne). Faut-il les créer avec l'app ?
+4. <strong>Le nom affiché</strong> : « carnet 1 » à « carnet 7 » partout (PDF, app, site), à la place de « chapitre 0 » à « chapitre 6 ».</p>
+<h2><span class="sec-num">10</span>Ce que cela implique pour le format <span class="accent">technique.</span></h2>
+<p>Le format unifié doit savoir décrire :
+- <strong>les blocs des PDF</strong> que l'app ne connaît pas encore : heading, paragraphs, fields_card, annotation, link_card, numbered_lines, info_cards, frise, checklist_cards, rating_grid, star_list, page_break ;
+- <strong>les gabarits dessinés</strong> : ligne de vie, arbre de vie, cartographie, matrice ;
+- <strong>les composants du gabarit commun</strong> : météo, récapitulatif avec reports, protocole de sécurité, exemple contrasté, durée dans le sourcil, livrable à trois zones avec le fil des pistes ;
+- <strong>la marque « fixe / adaptable »</strong> de chaque bloc ;
+- <strong>des identifiants stables pour les données</strong> (par exemple <code>c4.seuils</code>). Un renvoi (« Reportez vos seuils ») pourrait alors être résolu au moment de la génération en « carnet 4, p. 12 », sans numéro de page écrit à la main.</p>
+<p>Ce que Gemini a le droit de produire reste un sous-ensemble de ce que le moteur sait dessiner. La numérotation passe de <code>chap0</code>…<code>chap6</code> à des carnets 1 à 7 et un carnet de route, avec des couleurs par carnet à réattribuer.</p>
+<h2><span class="sec-num">11</span>Ce qu'il faut mettre à jour <span class="accent">ailleurs.</span></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Où</th>
+<th>Quoi</th>
+<th>Quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Programme du bilan (<code>chapters/programme/</code>, texte réglementaire)</td>
+<td>Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. Toute mention du MBTI disparaît : « test des fonctionnements cognitifs » à la place (<code>page_deroule.py</code>, <code>page_organisation_pedagogie.py</code>, <code>page_tarifs_financement.py</code>, <code>page_accompagnateurs.py</code>). Hexa3D disparaît aussi (<code>page_organisation_pedagogie.py:30</code>). L'indicateur de satisfaction « Pertinence des outils utilisés (MBTI®, Hexa3D, exercices) » (<code>page_indicateurs_satisfaction.py:23</code>) résume des enquêtes passées : retirer la parenthèse plutôt que de renommer les outils, pour ne pas fausser ce qui a été mesuré.</td>
+<td>Lot dédié, en même temps que le site</td>
+</tr>
+<tr>
+<td>Site (dépôt <code>marge-de-manoeuvre</code>)</td>
+<td>Voir <code>recap-site-parcours.md</code></td>
+<td>Dès que prêt, en même temps que le programme</td>
+</tr>
+<tr>
+<td>Carnets PDF et app</td>
+<td>Unification et renumérotation. Toute mention du MBTI disparaît des carnets 3, 4 et 6, du livret (<code>profil.py</code>, exemple « ISFJ ») et du prompt Gemini (<code>server/gemini_service.py</code>). La règle typographique qui ajoute « ® » après MBTI (<code>utils.french_typography</code>, <code>tests/test_typography.py</code>) et les mentions de la documentation (<code>CLAUDE.md</code>, <code>DA-workbook.md</code>, <code>Agent.md</code>, <code>design-system/</code>) sont à retirer.</td>
+<td>Lot d'unification</td>
+</tr>
+</tbody>
+</table></div></article>
+<footer><p>Source : <code>audit-carnets-2026-10/carte-parcours-unifie.md</code> dans le dépôt. S'appuie sur le programme du bilan, les carnets PDF, les carnets de l'app et l'audit du 8 octobre 2026.</p></footer>
+</div>
+
+</html>

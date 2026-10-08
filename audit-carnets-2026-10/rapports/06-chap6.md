@@ -23,7 +23,7 @@ Carnet clair et aéré, avec de bonnes idées (pistes « no limit » / réaliste
 - **Recommandation** : trois lignes « Valeur 1, 2, 3 ». Remplacer la question 2 par « Qu'est-ce que la séance sur vos valeurs a confirmé, et qu'a-t-elle déplacé ? ».
 
 ### Exercice 2 · Cartographie (p. 4) · 30-45 min
-- **F/E** : la consigne « Résumez les éléments clés issus de vos séances de bilan. » (`exercices.py:11`) ne dit pas où chercher. Il manque le minimum financier (carnet 4, p. 12), les moteurs (carnet 2), les conditions de travail (carnet 5, ex. 7) et les intérêts Hexa3D annoncés par le programme (`programme/page_organisation_pedagogie.py:29-30`).
+- **F/E** : la consigne « Résumez les éléments clés issus de vos séances de bilan. » (`exercices.py:11`) ne dit pas où chercher. Il manque le minimum financier (carnet 4, p. 12), les moteurs (carnet 2), les conditions de travail (carnet 5, ex. 7) et les intérêts Hexa3D annoncés par le programme (`programme/page_organisation_pedagogie.py:29-30`). *Note du 8 octobre 2026 : Hexa3D est abandonné ; cette mention est sans objet, et toute mention de Hexa3D doit disparaître.*
 - **B** : « Mes sources de stress » reste un constat, jamais retourné en critère.
 - **H** : cette page est montrée aux proches (ex. 3), stress et besoins compris.
 - **I** : le champ MBTI® fait 0,64 cm de haut, trop peu à la main.
@@ -117,7 +117,7 @@ Carnet clair et aéré, avec de bonnes idées (pistes « no limit » / réaliste
 - carnet 3 : question 7 ;
 - carnet 4 : seuils de la p. 12 ;
 - carnet 5 : conditions de travail ;
-- programme : Hexa3D.
+- programme : Hexa3D (abandonné depuis le 8 octobre 2026 : sans objet).
 
 La cartographie ne reprend vraiment que le MBTI® et les valeurs. Point de départ et parcours n'y apparaissent qu'en intitulés génériques.
 
