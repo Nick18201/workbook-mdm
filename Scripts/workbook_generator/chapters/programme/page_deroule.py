@@ -25,32 +25,24 @@ def create_programme_page_deroule_1(c):
     )
     add_temps_band(
         layout, "01", "Temps 1 : comprendre", "Poser le sac à dos.",
-        "<i>Comprendre ce qui vous fait avancer : votre point de départ, votre parcours réel, votre fonctionnement, "
-        "votre rapport à l'argent et vos valeurs.</i>",
+        "<i>Comprendre ce qui vous fait avancer : votre point de départ et vos héritages, votre parcours réel, votre "
+        "fonctionnement, votre rapport à l'argent et vos valeurs.</i>",
     )
     _sessions(layout, [
         {
             "badge": "S1",
-            "title": "Faire le point sur votre situation actuelle",
+            "title": "Faire le point sur votre situation et ce qui vous a construit",
             "description": (
-                "On commence par revenir à l'essentiel. Votre état actuel, votre énergie, ce qui vous pèse, ce qui "
-                "tient encore. On pose aussi le cadre de travail : vos attentes, la confidentialité, la façon dont "
-                "nous avancerons ensemble."
+                "On commence par revenir à l'essentiel : votre état actuel, votre énergie, ce qui vous pèse, ce qui "
+                "tient encore. On regarde aussi ce que vous avez reçu de votre milieu sur le travail : les modèles, "
+                "les messages, les attentes qui orientent encore vos choix, parfois sans que vous en ayez conscience. "
+                "On pose enfin le cadre de travail : vos attentes, la confidentialité, la façon dont nous avancerons "
+                "ensemble."
             ),
-            "objective": "clarifier votre point de départ et sortir du flou.",
+            "objective": "clarifier votre point de départ et repérer les influences qui orientent encore vos choix.",
         },
         {
             "badge": "S2",
-            "title": "Comprendre ce qui vous a construit et l'impact de vos héritages",
-            "description": (
-                "Votre rapport au travail ne s'est pas fait au hasard. On explore votre environnement, les modèles "
-                "que vous avez eus, les messages reçus. Ce qui a influencé vos choix, parfois sans que vous en ayez "
-                "conscience. Cela permet de prendre du recul et de ne plus avancer en pilotage automatique."
-            ),
-            "objective": "identifier les influences qui orientent encore vos choix aujourd'hui.",
-        },
-        {
-            "badge": "S3",
             "title": "Analyser et comprendre votre parcours",
             "description": (
                 "Vous avez déjà des expériences, des compétences, des intuitions. On regarde votre travail réel, "
@@ -59,28 +51,28 @@ def create_programme_page_deroule_1(c):
             ),
             "objective": "faire émerger des lignes directrices et vos ressources réelles.",
         },
+        {
+            "badge": "S3",
+            "title": "Comprendre votre fonctionnement",
+            "description": (
+                "On travaille votre fonctionnement en profondeur, avec un test des fonctionnements cognitifs conçu et "
+                "éprouvé par Lysiane Brand, psychologue du travail. Vous comprenez comment vous prenez des décisions, "
+                "ce qui vous stimule, ce qui vous fatigue, votre manière d'interagir. On le met en regard de votre "
+                "vécu : les environnements qui vous conviennent, ceux qui vous épuisent."
+            ),
+            "objective": "obtenir une grille de lecture claire de votre fonctionnement et de vos facteurs d'usure.",
+        },
     ])
     layout.render()
 
 
 def create_programme_page_deroule_2(c):
-    """Stage 1 « Comprendre » (part 2, sessions 4 to 6) and its deliverables."""
+    """Stage 1 « Comprendre » (part 2, sessions 4 and 5) and its deliverables."""
     layout = programme_layout(c, TITLE, "Déroulé · temps 1 (suite)", lead=LEAD)
     add_temps_band(layout, "01", "Temps 1 : comprendre (suite)", "Approfondissement de l'introspection.")
     _sessions(layout, [
         {
             "badge": "S4",
-            "title": "Comprendre votre fonctionnement (MBTI®)",
-            "description": (
-                "On travaille votre fonctionnement en profondeur. Avec le questionnaire officiel MBTI®, vous "
-                "comprenez : comment vous prenez des décisions, ce qui vous stimule, ce qui vous fatigue, votre "
-                "manière d'interagir. On le met en regard de votre vécu : les environnements qui vous conviennent, "
-                "ceux qui vous épuisent."
-            ),
-            "objective": "obtenir une grille de lecture claire de votre fonctionnement et de vos facteurs d'usure.",
-        },
-        {
-            "badge": "S5",
             "title": "Poser sans tabou votre rapport à l'argent",
             "description": (
                 "On pose les chiffres de votre sécurité financière : vos 4 seuils financiers, le revenu vital et le "
@@ -90,7 +82,7 @@ def create_programme_page_deroule_2(c):
             "objective": "fixer le seuil de sécurité financière qui servira à arbitrer vos pistes.",
         },
         {
-            "badge": "S6",
+            "badge": "S5",
             "title": "Clarifier vos valeurs et vos moteurs",
             "description": (
                 "Vous définissez ce qui compte vraiment pour vous aujourd'hui : vos priorités, vos limites, vos "
@@ -101,7 +93,7 @@ def create_programme_page_deroule_2(c):
         },
     ])
     add_deliverables(layout, "À l'issue du temps 1 (comprendre)", [
-        "Profil MBTI® complet et analyse d'impact environnemental",
+        "Profil de fonctionnement cognitif et analyse d'impact environnemental",
         "Cartographie de vos énergies de travail et facteurs d'usure",
         "Seuil de sécurité financière (les 4 seuils clés pour arbitrer vos choix)",
     ])
@@ -109,7 +101,7 @@ def create_programme_page_deroule_2(c):
 
 
 def create_programme_page_deroule_3(c):
-    """Stage 2 « Confronter » (sessions 7 and 8) and its deliverables."""
+    """Stage 2 « Confronter » (sessions 6 to 8) and its deliverables."""
     layout = programme_layout(c, TITLE, "Déroulé · temps 2", lead=LEAD)
     add_temps_band(
         layout, "02", "Temps 2 : confronter", "Confronter l'idée au terrain.",
@@ -118,22 +110,33 @@ def create_programme_page_deroule_3(c):
     )
     _sessions(layout, [
         {
-            "badge": "S7",
+            "badge": "S6",
             "title": "Explorer des métiers et des secteurs",
             "description": (
                 "On ouvre le champ des possibles de manière structurée : 10 pistes qualifiées, 5 réalistes et 5 "
-                "audacieuses, cohérentes avec votre profil, vos compétences et vos aspirations. Vous préparez les "
-                "enquêtes terrain qui vont les mettre à l'épreuve."
+                "audacieuses, cohérentes avec votre profil, vos compétences et vos aspirations. Vous choisissez les "
+                "trois pistes que vous allez confronter au terrain."
             ),
             "objective": "faire émerger des pistes alignées avec votre profil.",
         },
         {
-            "badge": "S8",
-            "title": "Approfondir et confronter vos pistes",
+            "badge": "S7",
+            "title": "Confronter vos pistes au terrain",
             "description": (
-                "On passe à une phase concrète. Vos pistes sont classées en trois familles de scénarios : pistes "
-                "directes, passerelles courtes, angles morts. Vous lancez des enquêtes auprès de professionnels en "
-                "poste et vérifiez salaires et débouchés dans votre bassin d'emploi."
+                "On passe à une phase concrète. Vos trois pistes passent au crible de vos critères : valeurs, seuils "
+                "financiers, énergie. Vous préparez vos enquêtes auprès de professionnels en poste (grille "
+                "d'entretien, message d'approche, premiers contacts) et vous vérifiez salaires et débouchés dans "
+                "votre bassin d'emploi."
+            ),
+            "objective": "préparer une confrontation au réel qui vous apprend vraiment quelque chose.",
+        },
+        {
+            "badge": "S8",
+            "title": "Tirer les leçons du terrain",
+            "description": (
+                "On analyse ce que vos enquêtes confirment ou contredisent. La matrice de faisabilité croise vos "
+                "compétences, le marché et les débouchés. Vos pistes sont classées en trois familles de scénarios : "
+                "pistes directes, passerelles courtes, angles morts."
             ),
             "objective": "confronter vos idées à la réalité et affiner vos projections.",
         },

@@ -20,7 +20,7 @@ SATISFACTION = [
     ("Qualité des informations du 1er entretien d'accueil", "4,9 / 5", "flat"),
     ("Articulation et logique du déroulé des séances", "4,9 / 5", "up"),
     ("Pertinence des supports pédagogiques (carnets et Notion)", "4,8 / 5", "up"),
-    ("Pertinence des outils utilisés (MBTI®, Hexa3D, exercices)", "4,8 / 5", "flat"),
+    ("Pertinence des outils utilisés", "4,8 / 5", "flat"),
     ("Déroulement et organisation d'ensemble du bilan", "4,8 / 5", "flat"),
     ("Adéquation de la démarche à vos besoins et attentes", "4,7 / 5", "flat"),
 ]

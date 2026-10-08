@@ -26,8 +26,8 @@ def create_programme_page_organisation_pedagogie(c):
             "items": [
                 "<b>Espace Notion ressource :</b> bibliothèque exclusive d'articles, podcasts, vidéos et fiches "
                 "repères accessible jusqu'au suivi à 6 mois.",
-                "<b>Tests certifiés :</b> questionnaire officiel <b>MBTI®</b> (Myers-Briggs) et inventaire d'intérêts "
-                "professionnels (Hexa3D).",
+                "<b>Test des fonctionnements cognitifs :</b> conçu et éprouvé par Lysiane Brand, psychologue du "
+                "travail, avec sa restitution approfondie en séance.",
                 "<b>Exercices de créativité :</b> cartes projectives, matrices décisionnelles et grilles d'arbitrage "
                 "anti-compromis.",
                 "<b>Assistance pédagogique réactive :</b> suivi continu par email et téléphone, réponse garantie sous "
@@ -41,8 +41,8 @@ def create_programme_page_organisation_pedagogie(c):
         white=True,
         items=[
             "<b>Rythme et alternance :</b> Le bilan alterne des entretiens réguliers en visio et des temps dédiés de "
-            "travail personnel : 10 à 20 h en tout selon les personnes, soit environ 1 h 30 à 3 h par carnet, en plus "
-            "des 14 h d'accompagnement.",
+            "travail personnel : 10 à 20 h en tout selon les personnes, soit environ 1 h 30 à 3 h entre deux séances, "
+            "en plus des 14 h d'accompagnement.",
             "<b>Supports accessibles en continu :</b> Vos exercices s'appuient sur vos carnets guidés et l'espace "
             "Notion ressource, disponibles dès la formalisation de votre parcours.",
             "<b>Consignes personnalisées :</b> À l'issue de chaque séance, votre accompagnateur formule des consignes "
