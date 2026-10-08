@@ -13,7 +13,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R0 bis · Format : fixe / adaptable, identifiants de données, reports | Fusionné (PR #53) |
 | R1 · Carnet 1 · L'état des lieux (`carnet-1.json`) | Fusionné (PR #54) |
 | R2 · Carnet 2 · Mon parcours (`carnet-2.json`) | Fusionné (PR #57) |
-| R3 · Carnet 3 · Mes fonctionnements propres (`carnet-3.json`) | PR en cours |
+| R3 · Carnet 3 · Mes fonctionnements propres (`carnet-3.json`) | PR #58 en cours |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
@@ -211,13 +211,13 @@ Pour chaque PR de carnet :
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R3 (carnet 3) fusionnée :
+Message à coller, une fois la PR R3 (carnet 3, #58) fusionnée :
 
 ```text
 Reprends la restructuration des carnets avec la PR R4 : le carnet 4, « Mon rapport à l'argent ».
 
 1. Prérequis
-- Vérifie que la PR R3 (carnet 3, branche claude/restructuration-carnet-3-db02e9) est fusionnée dans main : gh pr list --state all --head claude/restructuration-carnet-3-db02e9.
+- Vérifie que la PR Nick18201/workbook-mdm#58 (R3, carnet 3) est fusionnée dans main.
 - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
 - D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch.
 
