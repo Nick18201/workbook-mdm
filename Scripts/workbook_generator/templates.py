@@ -774,7 +774,9 @@ class PageLayout:
     def add_numbered_lines(self, columns, count=5, line_height=0.8 * cm, start=1):
         """
         Side by side pastel cards, each with a title, an optional hint and `count` numbered
-        one-line answer boxes. columns: [(title, field_prefix) or (title, field_prefix, hint)].
+        one-line answer boxes. columns: [(title, field_prefix) or (title, field_prefix, hint)
+        or (title, field_prefix, hint, first)]: `first` numbers that card from another value
+        than `start`, so that one ranked list runs over two cards (01 to 05, then 06 to 10).
         """
         n = max(1, min(len(columns), 2))
         gap = 0.45 * cm
@@ -805,12 +807,13 @@ class PageLayout:
                 draw_paragraph(self.c, col[2], x + pad, t2 - 2, inner, PDFStyle.FONT_BODY, HINT_SIZE,
                                PDFStyle.COLOR_INK_MUTED, HINT_LEADING)
             t -= head_h
+            first = col[3] if len(col) > 3 and col[3] is not None else start
             for i in range(count):
                 box_y = t - line_height
-                draw_text(self.c, x + pad, box_y + line_height / 2 - 3, f"{start + i:02d}", PDFStyle.FONT_LABEL, 9,
+                draw_text(self.c, x + pad, box_y + line_height / 2 - 3, f"{first + i:02d}", PDFStyle.FONT_LABEL, 9,
                           PDFStyle.COLOR_BLUE)
                 draw_answer_box(self.c, x + pad + number_w, box_y, inner - number_w, line_height,
-                                f"{col[1]}_{start + i}", tooltip=f"{col[0]} {start + i}", multiline=False)
+                                f"{col[1]}_{first + i}", tooltip=f"{col[0]} {first + i}", multiline=False)
                 t -= line_height + line_gap
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor

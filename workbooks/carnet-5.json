@@ -1,0 +1,1147 @@
+{
+  "chapter_num": 5,
+  "chapter_title": "Valeurs et moteurs profonds",
+  "subtitle": "Bilan de compétences",
+  "carnet": 5,
+  "pdf_title": "Marge de Manœuvre · Carnet 5 : Valeurs et moteurs profonds",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Valeurs et moteurs *profonds.*",
+        "number": 5,
+        "tagline": "Bilan de compétences",
+        "promise": "Ce qui ne se négocie pas dans votre prochain poste."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Ce qui compte *vraiment.*",
+      "params": {
+        "num": "5",
+        "intro_text": "Ce carnet prépare la séance 5. Il part de situations vécues pour trouver ce qui compte vraiment pour vous au travail, puis traduit trois valeurs en conditions à vérifier sur chaque piste : votre grille anti-compromis.<br/><br/><b>Ne cherchez pas les valeurs les plus « belles » : cherchez celles qui décident de vos choix.</b>",
+        "points": [
+          "Avant de commencer · Météo et récapitulatif · 10 min",
+          "À lire · Valeur, moteur, besoin · 5 min",
+          "Exercice 1 · Alignement · 15 min",
+          "Exercice 2 · Désalignement · 20 min",
+          "Exercice 3 · Choix difficiles · 10 min",
+          "Exercice 4 · La liste de valeurs · 10 min",
+          "Exercice 5 · Hiérarchiser · 10 min",
+          "Exercice 6 · Vos tensions · 10 min",
+          "Exercice 7 · Votre grille anti-compromis · 25 min",
+          "Exercice 8 · Votre entourage, vos proches · 10 min",
+          "Fin de carnet · Votre grille anti-compromis · 10 min"
+        ],
+        "duration": "2 h 15",
+        "split": "En trois fois : vos situations (1 h), la liste, la hiérarchie et les tensions (30 min), puis la grille, vos proches et la fin (45 min). La question à vos proches peut partir dès le début."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Météo et récapitulatif · 10 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c5_meteo",
+          "data_id": "c5.meteo"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Minimum vital",
+              "c4.seuils",
+              "c5_rappel_vital"
+            ],
+            [
+              "Minimum sécurisant",
+              "c4.seuils",
+              "c5_rappel_securisant"
+            ],
+            [
+              "Revenu cible",
+              "c4.seuils",
+              "c5_rappel_cible"
+            ],
+            [
+              "Durée acceptable d'une baisse",
+              "c4.seuils",
+              "c5_rappel_duree"
+            ],
+            [
+              "Ma tendance dominante",
+              "c4.tendance",
+              "c5_rappel_tendance"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que l'argent protège pour moi",
+                "c5_argent_protege",
+                1.6
+              ],
+              [
+                "En séance 4, j'ai vu que…",
+                "c5_seance_4",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Après la séance 4",
+          "hint": "Ce que l'argent protège dit souvent une valeur : la sécurité, la liberté, du temps pour vos proches… Vous la retrouverez dans la liste (exercice 4).",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Valeur, moteur, *besoin.*",
+      "part_title": "À lire · Valeur, moteur, besoin · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos valeurs se repèrent dans vos moments de motivation, de fierté, d'utilité, de liberté, de reconnaissance, de confiance. Et aussi dans la frustration, la colère, l'épuisement ou le conflit intérieur. Trois mots reviennent dans ce carnet : une valeur sans besoin reste un mot."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "Une valeur",
+              "subtitle": "ce qui compte pour vous",
+              "text": "Elle vous suit d'un poste à l'autre et oriente vos choix.",
+              "note": "Exemple : l'autonomie."
+            },
+            {
+              "title": "Un moteur",
+              "subtitle": "ce qui vous fait avancer",
+              "text": "Il vous met en mouvement, durablement. Vous avez noté les vôtres au carnet 2.",
+              "note": "Exemple : apprendre."
+            },
+            {
+              "title": "Un besoin",
+              "subtitle": "ce qui permet de la vivre",
+              "text": "La condition concrète, observable, qui rend une valeur possible au travail.",
+              "note": "Exemple : choisir l'ordre de vos dossiers."
+            }
+          ],
+          "columns": 3
+        },
+        {
+          "type": "heading",
+          "text": "Le chemin de ce carnet"
+        },
+        {
+          "type": "frise",
+          "steps": [
+            [
+              "history",
+              "Vos situations",
+              "Ex. 1 à 3"
+            ],
+            [
+              "checklist",
+              "La liste",
+              "Ex. 4"
+            ],
+            [
+              "format_list_numbered",
+              "Hiérarchiser",
+              "Ex. 5"
+            ],
+            [
+              "balance",
+              "Vos tensions",
+              "Ex. 6"
+            ],
+            [
+              "grid_view",
+              "La grille",
+              "Ex. 7"
+            ]
+          ],
+          "start_label": "Vos expériences",
+          "end_label": "Vos critères de choix"
+        },
+        {
+          "type": "callout",
+          "text": "Ne cherchez pas les valeurs qui semblent les plus « belles » ou les plus attendues : cherchez celles qui décident vraiment de vos choix, de votre énergie et de votre rapport au travail.",
+          "title": "Une seule règle"
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Quand vous étiez *à votre place.*",
+      "part_title": "Exercice 1 · Alignement · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une valeur se voit dans ce que vous avez vécu. Repartez de vos sommets (carnet 2, exercice 5), ou d'autres moments, au travail ou ailleurs, où vous étiez à votre place. Pour chacun, cherchez la valeur qu'il respectait."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation, en quelques mots",
+                "c5_align_1",
+                1.6,
+                1.2
+              ],
+              [
+                "Ce que j'y trouvais",
+                "c5_align_1_trouvais",
+                1.6,
+                1.2
+              ],
+              [
+                "La valeur respectée",
+                "c5_align_1_valeur",
+                1.6,
+                0.7
+              ]
+            ],
+            [
+              [
+                "La situation, en quelques mots",
+                "c5_align_2",
+                1.6,
+                1.2
+              ],
+              [
+                "Ce que j'y trouvais",
+                "c5_align_2_trouvais",
+                1.6,
+                1.2
+              ],
+              [
+                "La valeur respectée",
+                "c5_align_2_valeur",
+                1.6,
+                0.7
+              ]
+            ],
+            [
+              [
+                "La situation, en quelques mots",
+                "c5_align_3",
+                1.6,
+                1.2
+              ],
+              [
+                "Ce que j'y trouvais",
+                "c5_align_3_trouvais",
+                1.6,
+                1.2
+              ],
+              [
+                "La valeur respectée",
+                "c5_align_3_valeur",
+                1.6,
+                0.7
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Kinésithérapeute",
+          "surface": "J'aimais bien ce cabinet.",
+          "exploitable": "On me laissait construire chaque rééducation de bout en bout, sans validation à chaque séance. Valeur respectée : l'autonomie."
+        },
+        {
+          "type": "question",
+          "question": "Je suis à ma place quand…",
+          "field_id": "c5_align_place",
+          "box_height_cm": 1.6
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Quand une valeur *a manqué.*",
+      "part_title": "Exercice 2 · Désalignement · 10 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cet exercice, sur deux pages, revient sur des moments pénibles : frustration, épuisement, conflit intérieur. Choisissez des situations dont vous pouvez parler sans qu'elles vous submergent : un mot-clé suffit."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une valeur se voit aussi quand elle manque. Repartez de ce qui vous coûtait dans vos expériences et de vos vallées (carnet 2, exercices 1 et 5), puis retournez chaque situation en besoin."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation, en quelques mots",
+                "c5_desalign_1",
+                1.6,
+                1.4
+              ],
+              [
+                "La valeur qui manquait",
+                "c5_desalign_1_valeur",
+                1.6,
+                0.6
+              ]
+            ],
+            [
+              [
+                "Donc, dans mon prochain poste, j'ai besoin de…",
+                "c5_desalign_1_besoin",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Situation 1",
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation, en quelques mots",
+                "c5_desalign_2",
+                1.6,
+                1.4
+              ],
+              [
+                "La valeur qui manquait",
+                "c5_desalign_2_valeur",
+                1.6,
+                0.6
+              ]
+            ],
+            [
+              [
+                "Donc, dans mon prochain poste, j'ai besoin de…",
+                "c5_desalign_2_besoin",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Situation 2",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "De l'irritant *au besoin.*",
+      "part_title": "Exercice 2 · Retourner en besoins · 10 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation, en quelques mots",
+                "c5_desalign_3",
+                1.6,
+                1.4
+              ],
+              [
+                "La valeur qui manquait",
+                "c5_desalign_3_valeur",
+                1.6,
+                0.6
+              ]
+            ],
+            [
+              [
+                "Donc, dans mon prochain poste, j'ai besoin de…",
+                "c5_desalign_3_besoin",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Situation 3",
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Une fois où j'ai agi contre l'une de mes valeurs",
+                "c5_desalign_contre",
+                1.6
+              ],
+              [
+                "Ce qui m'a fait agir ainsi",
+                "c5_desalign_pourquoi",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Biologiste",
+          "surface": "Mauvaise ambiance.",
+          "exploitable": "On me demandait de valider des résultats sans contrôle, pour tenir les délais. Valeur qui manquait : la rigueur. Donc j'ai besoin du temps de vérifier avant de signer."
+        },
+        {
+          "type": "anchor",
+          "field_id": "c5_desalign_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vos choix *ont tranché.*",
+      "part_title": "Exercice 3 · Choix difficiles · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Choisir, c'est renoncer : un choix difficile montre quelle valeur l'a emporté. Repensez à un choix entre deux options qui comptaient pour vous : rester ou partir, sécurité ou risque…"
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le choix, et ses deux options",
+                "c5_choix",
+                1.6,
+                1.4
+              ],
+              [
+                "La valeur qui l'a emporté",
+                "c5_choix_valeur",
+                1.6,
+                0.6
+              ]
+            ],
+            [
+              [
+                "Ce que la première option me permettait de garder",
+                "c5_choix_option_1",
+                1.6
+              ],
+              [
+                "Ce que la seconde me permettait de garder",
+                "c5_choix_option_2",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Vétérinaire",
+          "surface": "J'ai choisi la sécurité.",
+          "exploitable": "Rester à la clinique ou ouvrir mon cabinet. Rester gardait l'équipe et les gardes partagées ; partir, le choix de mes soins. L'entraide l'a emporté."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le choix que je regrette encore",
+                "c5_choix_regret",
+                1.6
+              ],
+              [
+                "Ce qu'il dit de ce qui compte pour moi",
+                "c5_choix_regret_dit",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Si vous le souhaitez",
+          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Avec le recul, ces choix m'apprennent que…",
+          "field_id": "c5_choix_recul",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Nommer *ce qui compte.*",
+      "part_title": "Exercice 4 · La liste de valeurs · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Cochez 15 à 20 valeurs, sans vous attarder. Repartez de vos exercices 1 à 3, de vos moteurs (carnet 2) et de vos cinq mots pour votre futur travail (carnet 1)."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "checklist_cards",
+          "groups": [
+            [
+              "Liberté et autonomie",
+              [
+                "Autonomie",
+                "Liberté",
+                "Indépendance",
+                "Latitude",
+                "Souplesse",
+                "Initiative",
+                "Authenticité",
+                "Affirmation de soi",
+                "Créativité"
+              ]
+            ],
+            [
+              "Sécurité et stabilité",
+              [
+                "Sécurité",
+                "Stabilité",
+                "Prévisibilité",
+                "Cadre clair",
+                "Fiabilité",
+                "Sérénité",
+                "Équilibre",
+                "Protection de soi",
+                "Rémunération juste"
+              ]
+            ],
+            [
+              "Réussite et ambition",
+              [
+                "Réussite",
+                "Progression",
+                "Ambition",
+                "Excellence",
+                "Reconnaissance",
+                "Statut",
+                "Légitimité",
+                "Impact",
+                "Fierté"
+              ]
+            ],
+            [
+              "Relation et coopération",
+              [
+                "Bienveillance",
+                "Entraide",
+                "Écoute",
+                "Loyauté",
+                "Respect",
+                "Coopération",
+                "Confiance",
+                "Harmonie",
+                "Appartenance"
+              ]
+            ],
+            [
+              "Justice et utilité sociale",
+              [
+                "Justice",
+                "Équité",
+                "Inclusion",
+                "Égalité",
+                "Utilité sociale",
+                "Sens",
+                "Contribution",
+                "Engagement",
+                "Éthique"
+              ]
+            ],
+            [
+              "Stimulation et défi",
+              [
+                "Nouveauté",
+                "Défi",
+                "Stimulation",
+                "Apprentissage",
+                "Curiosité",
+                "Exploration",
+                "Variété",
+                "Changement",
+                "Expérimentation"
+              ]
+            ],
+            [
+              "Plaisir et qualité de vie",
+              [
+                "Plaisir",
+                "Légèreté",
+                "Beauté",
+                "Qualité de vie",
+                "Temps pour soi",
+                "Santé",
+                "Vitalité",
+                "Spontanéité",
+                "Simplicité"
+              ]
+            ],
+            [
+              "Cadre et transmission",
+              [
+                "Rigueur",
+                "Discipline",
+                "Respect du cadre",
+                "Méthode",
+                "Sens du devoir",
+                "Constance",
+                "Tradition",
+                "Transmission",
+                "Discrétion"
+              ]
+            ],
+            [
+              "Influence, pouvoir d'agir",
+              [
+                "Influence",
+                "Leadership",
+                "Décision",
+                "Pouvoir d'agir",
+                "Autorité",
+                "Responsabilité",
+                "Pilotage",
+                "Capacité à transformer",
+                "Maîtrise"
+              ]
+            ]
+          ],
+          "columns": 3,
+          "field_prefix": "c5_valeur"
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Une valeur me manque :",
+              [
+                "c5_valeur_libre_1",
+                3.6,
+                "Une valeur qui manque à la liste"
+              ],
+              [
+                "c5_valeur_libre_2",
+                3.6,
+                "Une deuxième valeur qui manque"
+              ],
+              [
+                "c5_valeur_libre_3",
+                null,
+                "Une troisième valeur qui manque"
+              ]
+            ]
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Hiérarchiser *vos valeurs.*",
+      "part_title": "Exercice 5 · Hiérarchiser · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Parmi les valeurs cochées, gardez les dix qui reviennent le plus, puis classez-les : les cinq plus fortes à gauche, de la plus forte à la moins forte, les cinq suivantes à droite."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "Mes cinq valeurs prioritaires",
+              "c5_valeur_rang",
+              "De la plus forte à la moins forte"
+            ],
+            [
+              "Les cinq suivantes",
+              "c5_valeur_rang",
+              "Elles comptent, un peu moins",
+              6
+            ]
+          ],
+          "count": 5,
+          "fixed": true
+        },
+        {
+          "type": "callout",
+          "text": "Pour chacune de vos cinq valeurs prioritaires, demandez-vous ce qui se passerait si elle manquait six mois dans votre travail. Gardez les trois dont l'absence vous ferait partir : ce sont vos valeurs non négociables. Vous les écrirez une seule fois, dans votre grille (exercice 7).",
+          "title": "Le test des six mois",
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La valeur que je coche surtout parce qu'elle est attendue de moi",
+                "c5_valeur_attendue",
+                0.85,
+                1.4
+              ],
+              [
+                "Attendue par qui",
+                "c5_valeur_attendue_qui",
+                0.85,
+                0.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Urbaniste",
+          "surface": "L'autonomie, la reconnaissance, la sécurité, l'entraide, l'utilité.",
+          "exploitable": "Si l'utilité manquait six mois, je partirais : elle reste dans mes trois. La reconnaissance, je la coche surtout parce qu'on l'attend de moi."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos *tensions.*",
+      "part_title": "Exercice 6 · Vos tensions · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Deux valeurs qui comptent peuvent se contredire. Cochez les tensions qui vous parlent, puis détaillez la plus présente. Pour sens / rémunération, liberté / sécurité ou sécurité / utilité, relisez vos seuils et votre tendance dominante, reportés en début de carnet."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "checklist_cards",
+          "groups": [
+            [
+              "Tensions possibles",
+              [
+                "Liberté / sécurité",
+                "Réussite / équilibre",
+                "Bienveillance / affirmation de soi",
+                "Stimulation / stabilité",
+                "Autonomie / appartenance",
+                "Reconnaissance / discrétion",
+                "Sens / rémunération",
+                "Sécurité / utilité",
+                "Engagement / protection de soi",
+                "Créativité / cadre",
+                "Ambition / qualité de vie",
+                "Loyauté / changement",
+                "Responsabilité / légèreté"
+              ]
+            ]
+          ],
+          "columns": 1,
+          "field_prefix": "c5_tension",
+          "item_columns": 3,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La tension",
+                "c5_tension_nom",
+                1.6,
+                0.6
+              ],
+              [
+                "Une situation où elle est apparue",
+                "c5_tension_situation",
+                1.6,
+                1.4
+              ]
+            ],
+            [
+              [
+                "Jusqu'ici, je privilégie…",
+                "c5_tension_privilegie",
+                1.6
+              ],
+              [
+                "… au détriment de…",
+                "c5_tension_detriment",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Le compromis acceptable pour moi",
+                "c5_tension_compromis",
+                1.6
+              ],
+              [
+                "La valeur que j'affiche et que je ne m'accorde pas (facultatif)",
+                "c5_tension_affichee",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Ma tension la plus présente",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Documentaliste",
+          "surface": "Liberté contre sécurité, comme tout le monde.",
+          "exploitable": "Jusqu'ici, je privilégie la sécurité du poste au détriment de la liberté de choisir mes sujets. Compromis acceptable : un contrat stable, avec un projet à moi par an."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vous savez *déjà.*",
+      "part_title": "Exercice 7 · Relire avant d'écrire · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre grille rassemble ce que vous avez déjà écrit : on le relit, on ne repose pas la question. Reportez vos moteurs, vos critères et ce que vous ne voulez plus subir, puis relisez vos anti-modèles (carnet 1, exercice 5) et vos besoins de l'exercice 2."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes moteurs « je le veux »",
+              "c2.moteurs",
+              "c5_rappel_moteurs",
+              1.6
+            ],
+            [
+              "Mes critères de poste",
+              "c2.criteres",
+              "c5_rappel_criteres",
+              1.6
+            ],
+            [
+              "Ce que je ne veux plus subir",
+              "c1.sac_a_dos",
+              "c5_rappel_subir",
+              1.6
+            ],
+            [
+              "Mon besoin pour garder l'énergie",
+              "c3.energies",
+              "c5_rappel_energie",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Au travail : respect, éthique, charge de travail",
+                "c5_limite_travail",
+                1.6
+              ],
+              [
+                "Face aux demandes urgentes ou non rémunérées",
+                "c5_limite_demandes",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Pour ma santé : sommeil, sport, déconnexion le soir",
+                "c5_limite_sante",
+                1.6
+              ],
+              [
+                "Pour mes proches : du temps partagé, sans écran",
+                "c5_limite_proches",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Mes limites, hors argent",
+          "hint": "Vos seuils (carnet 4) fixent votre limite d'argent. Ici, domaine par domaine, la règle que vous décidez de ne plus négocier.",
+          "question_labels": true,
+          "data_id": "c5.limites"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre grille *anti-compromis.*",
+      "part_title": "Exercice 7 · Votre grille · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Parmi vos cinq valeurs prioritaires, gardez les trois qui passent le test des six mois (exercice 5). Écrivez-les ici, une seule fois : cette grille servira à juger chaque piste, puis à préparer vos enquêtes. Pour savoir d'où vient une valeur, relisez ce que vous avez reçu (carnet 1, exercice 4)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Valeur 1",
+            "Valeur 2",
+            "Valeur 3"
+          ],
+          "rows": [
+            [
+              "Ma valeur, en un ou deux mots",
+              {
+                "field_id": "c5_grille_1_valeur",
+                "placeholder": "Valeur 1 : la valeur"
+              },
+              {
+                "field_id": "c5_grille_2_valeur",
+                "placeholder": "Valeur 2 : la valeur"
+              },
+              {
+                "field_id": "c5_grille_3_valeur",
+                "placeholder": "Valeur 3 : la valeur"
+              }
+            ],
+            [
+              "D'où elle me vient : une personne, un milieu, une expérience",
+              {
+                "field_id": "c5_grille_1_origine",
+                "placeholder": "Valeur 1 : d'où elle me vient"
+              },
+              {
+                "field_id": "c5_grille_2_origine",
+                "placeholder": "Valeur 2 : d'où elle me vient"
+              },
+              {
+                "field_id": "c5_grille_3_origine",
+                "placeholder": "Valeur 3 : d'où elle me vient"
+              }
+            ],
+            [
+              "La condition observable : ce que je verrai dans le poste",
+              {
+                "field_id": "c5_grille_1_condition",
+                "placeholder": "Valeur 1 : la condition observable"
+              },
+              {
+                "field_id": "c5_grille_2_condition",
+                "placeholder": "Valeur 2 : la condition observable"
+              },
+              {
+                "field_id": "c5_grille_3_condition",
+                "placeholder": "Valeur 3 : la condition observable"
+              }
+            ],
+            [
+              "Le signal d'alerte : ce que je remarque quand elle manque",
+              {
+                "field_id": "c5_grille_1_alerte",
+                "placeholder": "Valeur 1 : le signal d'alerte"
+              },
+              {
+                "field_id": "c5_grille_2_alerte",
+                "placeholder": "Valeur 2 : le signal d'alerte"
+              },
+              {
+                "field_id": "c5_grille_3_alerte",
+                "placeholder": "Valeur 3 : le signal d'alerte"
+              }
+            ],
+            [
+              "La question à poser en entretien pour la vérifier",
+              {
+                "field_id": "c5_grille_1_question",
+                "placeholder": "Valeur 1 : la question d'entretien"
+              },
+              {
+                "field_id": "c5_grille_2_question",
+                "placeholder": "Valeur 2 : la question d'entretien"
+              },
+              {
+                "field_id": "c5_grille_3_question",
+                "placeholder": "Valeur 3 : la question d'entretien"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.2,
+            4.3,
+            4.3,
+            4.3
+          ],
+          "field_height_cm": 2.2,
+          "fixed": true,
+          "data_id": "c5.grille"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Ergothérapeute",
+          "surface": "L'utilité : un métier qui sert à quelque chose.",
+          "exploitable": "L'utilité. Condition : voir chaque patient deux fois avant de rendre mon avis. Alerte : je remplis plus de dossiers que je ne vois de patients. Question : quelle part du temps passe en administratif ?"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre entourage, *vos proches.*",
+      "part_title": "Exercice 8 · Votre entourage, vos proches · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos proches voient ce qui vous échappe. Notez qui vous soutient et qui doute, puis envoyez la question à trois de vos soutiens, sans parler de vos pistes, pour une réponse avant la séance 6."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "Mes soutiens",
+              "c5_soutien",
+              "Qui, et ce que cette personne peut m'apporter"
+            ],
+            [
+              "Les regards critiques",
+              "c5_regard_critique",
+              "Qui, et ce que cette personne craint"
+            ]
+          ],
+          "count": 3
+        },
+        {
+          "type": "callout",
+          "text": "« Si tu ne connaissais pas mon métier actuel, à quel métier penserais-tu pour moi ? Qu'est-ce qui, chez moi, t'y fait penser ? »",
+          "title": "La question à envoyer",
+          "variant": "quote",
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Proche 1 : son prénom",
+                "c5_proche_1",
+                0.85,
+                1.4
+              ],
+              [
+                "Question envoyée le",
+                "c5_proche_1_envoi",
+                0.85,
+                0.6
+              ]
+            ],
+            [
+              [
+                "Proche 2 : son prénom",
+                "c5_proche_2",
+                0.85,
+                1.4
+              ],
+              [
+                "Question envoyée le",
+                "c5_proche_2_envoi",
+                0.85,
+                0.6
+              ]
+            ],
+            [
+              [
+                "Proche 3 : son prénom",
+                "c5_proche_3",
+                0.85,
+                1.4
+              ],
+              [
+                "Question envoyée le",
+                "c5_proche_3_envoi",
+                0.85,
+                0.6
+              ]
+            ]
+          ],
+          "title": "Mes trois proches",
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Notaire",
+          "surface": "Ma famille.",
+          "exploitable": "Ma sœur, qui me connaît hors du travail, et un ancien client devenu ami."
+        }
+      ],
+      "data_id": "c5.entourage"
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 10 min",
+      "params": {
+        "lines": [
+          "J'envoie la question à mes trois proches avant la séance 5.",
+          "J'emporte ma grille à chaque échange sur une piste : ses questions servent à la vérifier.",
+          "J'apporte ce carnet à la séance 5."
+        ],
+        "field_prefix": "c5_livrable",
+        "livrable_title": "Votre grille anti-compromis",
+        "livrable_text": "Vos trois valeurs non négociables, traduites en conditions, signaux d'alerte et questions d'entretien (exercice 7), avec vos limites hors argent. Relue en séance 5, elle servira à juger chaque piste, jusqu'au carnet de route. La question à vos proches est partie.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "À aborder en séance : une tension que je n'arrive pas à trancher, une valeur dont je doute",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ],
+        "pistes": true
+      },
+      "data_id": "c5.livrable"
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Votre grille anti-compromis est prête.",
+          "Prochaine étape : la séance 5. Apportez ce carnet.",
+          "Ensuite, le carnet 6 : l'exploration, avec les réponses de vos proches."
+        ]
+      },
+      "fixed": true
+    }
+  ]
+}
