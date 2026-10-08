@@ -21,9 +21,9 @@ def create_programme_page_accompagnateurs(c):
             "<b>Expertise recrutement & marché :</b> 4 années d'expérience dans le secteur du recrutement (en "
             "entreprise et en cabinet) lui confèrent une solide connaissance du marché de l'emploi, de ses exigences "
             "et de ses opportunités réelles.",
-            "<b>Outils & Certifications :</b> Rompue aux techniques d'entretien approfondi, elle maîtrise les "
-            "approches cliniques propres à sa formation. Elle est certifiée au questionnaire <b>MBTI®</b> officiel "
-            "par The Myers-Briggs Company.",
+            "<b>Outils & Méthodes :</b> Rompue aux techniques d'entretien approfondi, elle maîtrise les "
+            "approches cliniques propres à sa formation. Elle a conçu et éprouvé le test des fonctionnements "
+            "cognitifs utilisé pendant le bilan.",
         ],
         color=PDFStyle.COLOR_LILAC,
     )

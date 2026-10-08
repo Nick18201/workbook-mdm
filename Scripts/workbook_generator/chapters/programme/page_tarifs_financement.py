@@ -20,7 +20,7 @@ INCLUS = [
     "<b>7 carnets de bord guidés</b> (vous les gardez définitivement)",
     "<b>L'espace Notion de ressources</b> accessible jusqu'au suivi à 6 mois",
     "<b>Le copilote IA</b> dédié pour challenger et nourrir vos réflexions",
-    "<b>Le questionnaire MBTI® officiel</b> et sa restitution approfondie",
+    "<b>Le test des fonctionnements cognitifs</b> et sa restitution approfondie",
 ]
 LOGOS = [
     (PDFStyle.PATH_LOGO_CPF, "CPF (MonCompteFormation)"),

@@ -49,10 +49,10 @@ def build_programme_pdf(
     # --- PAGE 3 : DÉROULÉ - TEMPS 1 : COMPRENDRE (PARTIE 1, S1 À S3) ---
     builder.add_page(create_programme_page_deroule_1)
 
-    # --- PAGE 4 : DÉROULÉ - TEMPS 1 : COMPRENDRE (PARTIE 2, S4 À S6 + LIVRABLES) ---
+    # --- PAGE 4 : DÉROULÉ - TEMPS 1 : COMPRENDRE (PARTIE 2, S4 ET S5 + LIVRABLES) ---
     builder.add_page(create_programme_page_deroule_2)
 
-    # --- PAGE 5 : DÉROULÉ - TEMPS 2 : CONFRONTER (S7 & S8 + LIVRABLES) ---
+    # --- PAGE 5 : DÉROULÉ - TEMPS 2 : CONFRONTER (S6 À S8 + LIVRABLES) ---
     builder.add_page(create_programme_page_deroule_3)
 
     # --- PAGE 6 : DÉROULÉ - TEMPS 3 : DÉCIDER ET AGIR (S9, S10, SUIVI + LIVRABLES) ---
