@@ -38,7 +38,7 @@
           "Partie 6 · Test et décision · 2 h 35 : le test, les risques, la feuille de route, la synthèse."
         ],
         "duration": "15 h",
-        "split": "Les exercices indispensables suffisent pour une première version : comptez 8 h, en plusieurs fois. Une reprise d'entreprise ajoute 45 min."
+        "split": "Les exercices indispensables suffisent pour une première version : comptez 7 h 20, en plusieurs fois. Une reprise d'entreprise ajoute 45 min."
       }
     },
     {
@@ -52,7 +52,8 @@
             "Ce livret se travaille par parties, dans l'ordre qui vous sert. Comptez une à cinq heures par partie, en plusieurs fois.",
             "• « Indispensable » : avec les autres exercices indispensables, il suffit pour une première version de votre projet.",
             "• « Si utile » : il approfondit un point. S'il ne concerne pas votre projet, passez-le.",
-            "Ce livret est à vous : la personne qui vous accompagne le lit avec vous en séance. Seule la synthèse (exercice 36) est faite pour être montrée à un financeur ou à une banque."
+            "Le parcours court tient en seize exercices : 1, 6 à 9, 19, puis 27 à 36.",
+            "Ce livret est à vous : la personne qui vous accompagne le lit avec vous en séance. Seule la synthèse (exercice 36) est faite pour être montrée à un financeur ou à une banque. Vous pouvez passer une question ; ce qui vous semble trop lourd se note pour la séance."
           ]
         },
         {
@@ -358,13 +359,13 @@
             6.0
           ],
           "field_prefix": "bp1_semaine",
-          "field_height_cm": 1.3
+          "field_height_cm": 1.5
         },
         {
-          "type": "question",
-          "question": "Ce que cette semaine me dit de mon projet",
-          "field_id": "bp1_semaine_bilan",
-          "box_height_cm": 3.4
+          "type": "callout",
+          "text": "Reprenez votre cartographie des énergies (carnet 3) : ce qui vous recharge et ce qui vous use au travail.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
         }
       ],
       "part": 1
@@ -691,9 +692,9 @@
               "subtitle": "Votre méthode, votre parcours, votre façon de faire, votre éthique."
             },
             {
-              "question": "Ce que mes clients perdent s'ils ne font rien",
-              "field_id": "bp2_inaction",
-              "subtitle": "Le coût du statu quo : c'est souvent votre vrai concurrent."
+              "question": "Ce qui prouve ce que j'avance",
+              "field_id": "bp2_preuve",
+              "subtitle": "Un essai, une garantie, un avis client, une démonstration, une réalisation à montrer."
             }
           ],
           "min_box_height_cm": 2.2,
@@ -966,7 +967,7 @@
             },
             {
               "title": "Ce que je défends, ce que je refuse, donc…",
-              "subtitle": "Vos lignes rouges, traduites en règles. Exemple : je refuse les promesses intenables, donc j'annonce mes délais réels.",
+              "subtitle": "Vos lignes rouges, traduites en règles : je refuse…, donc je…",
               "field_id": "bp3_univers_lignes"
             },
             {
@@ -1342,23 +1343,21 @@
                 "Le prix que mes calculs demandent"
               ],
               "€"
-            ],
-            [
-              "L'écart vient de…",
-              [
-                "bp4_prix_ecart",
-                null,
-                "L'écart vient de"
-              ]
             ]
           ],
           "size": 11
         },
         {
           "type": "question",
+          "question": "L'écart vient de…",
+          "field_id": "bp4_prix_ecart",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "question",
           "question": "Le prix que je n'ose pas annoncer, et ce que je crains d'entendre",
           "field_id": "bp4_prix_crainte",
-          "box_height_cm": 3.4
+          "box_height_cm": 2.0
         }
       ],
       "part": 4
@@ -1366,7 +1365,7 @@
     {
       "template": "composite",
       "title": "Trouver mes *premiers clients.*",
-      "part_title": "Partie 4 · Exercice 20 · 30 min · Indispensable",
+      "part_title": "Partie 4 · Exercice 20 · 30 min · Si utile",
       "blocks": [
         {
           "type": "text",
@@ -1547,9 +1546,9 @@
         },
         {
           "type": "question",
-          "question": "Mon ton et mes mots",
-          "field_id": "bp4_ton",
-          "subtitle": "Chaleureux, direct, pédagogue, technique… et les mots que vous évitez.",
+          "question": "Les mots que j'emploie, ceux que j'évite",
+          "field_id": "bp4_mots",
+          "subtitle": "Votre ton découle de l'univers de votre projet (exercice 14).",
           "box_height_cm": 1.8
         },
         {
@@ -1763,7 +1762,7 @@
         },
         {
           "type": "callout",
-          "text": "Reprenez vos compétences prouvées et vos deux récits (carnet de route) : ils montrent ce que vous savez déjà faire.",
+          "text": "Reprenez vos compétences prouvées et vos deux récits (carnet de route), et votre entourage (carnet 5) : ce que vous savez déjà faire, et sur qui compter.",
           "title": "Si vous avez fait le bilan",
           "fixed": true
         },
@@ -1808,42 +1807,42 @@
               [
                 "Pourquoi le cédant vend-il ?",
                 "bp5_reprise_cedant",
-                1.1
+                1.4
               ]
             ],
             [
               [
                 "Les trois derniers bilans : chiffre d'affaires, résultat, tendance",
                 "bp5_reprise_bilans",
-                1.1
+                1.4
               ]
             ],
             [
               [
                 "La clientèle : fidèle à l'entreprise, ou au cédant ?",
                 "bp5_reprise_clientele",
-                1.1
+                1.4
               ]
             ],
             [
               [
                 "Le bail : durée, loyer, conditions de cession",
                 "bp5_reprise_bail",
-                1.1
+                1.4
               ]
             ],
             [
               [
                 "Les salariés repris et leurs contrats",
                 "bp5_reprise_salaries",
-                1.1
+                1.4
               ]
             ],
             [
               [
                 "Le prix demandé, et ce qu'il comprend : stock, matériel, clientèle",
                 "bp5_reprise_prix",
-                1.1
+                1.4
               ]
             ]
           ],
@@ -1877,7 +1876,7 @@
     {
       "template": "composite",
       "title": "Mon cadre *juridique.*",
-      "part_title": "Partie 5 · Exercice 26 · 30 min · Indispensable",
+      "part_title": "Partie 5 · Exercice 26 · 30 min · Si utile",
       "blocks": [
         {
           "type": "text",
@@ -2765,7 +2764,8 @@
             4.7
           ],
           "field_prefix": "bp5_fin",
-          "field_height_cm": 1.3
+          "field_height_cm": 1.3,
+          "fixed": true
         },
         {
           "type": "link_card",
@@ -2774,7 +2774,7 @@
             [
               "France Travail",
               "https://www.francetravail.fr/candidat/je-creereprends-une-entreprise.html",
-              "vos droits si vous créez ou reprenez une entreprise (ARE, ARCE)."
+              "le maintien de votre allocation chômage (ARE) ou son versement en partie en capital (ARCE), si vous avez des droits."
             ],
             [
               "Initiative France",
@@ -2949,6 +2949,12 @@
           "spacing_after_cm": 0.4
         },
         {
+          "type": "callout",
+          "text": "Reprenez vos garde-fous et vos alliés (carnet de route) : ce sont déjà des parades.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        },
+        {
           "type": "table",
           "headers": [
             "Risque",
@@ -3055,7 +3061,7 @@
             4.2
           ],
           "field_prefix": "bp6_risques",
-          "field_height_cm": 2.3
+          "field_height_cm": 2.0
         },
         {
           "type": "question",
@@ -3063,7 +3069,7 @@
           "field_id": "bp6_signal",
           "subtitle": "Un fait observable, avec sa date.",
           "example": "moins de dix ventes à la fin du troisième mois.",
-          "box_height_cm": 3.0
+          "box_height_cm": 2.0
         }
       ],
       "part": 6
@@ -3092,29 +3098,29 @@
               [
                 "Objectif",
                 "bp6_palier1_objectif",
-                0.9
+                1.5
               ],
               [
                 "Résultat observable",
                 "bp6_palier1_resultat",
-                0.9
+                1.5
               ]
             ],
             [
               [
                 "Action 1",
                 "bp6_palier1_action1",
-                1.0
+                1.5
               ],
               [
                 "Action 2",
                 "bp6_palier1_action2",
-                1.0
+                1.5
               ],
               [
                 "Action 3",
                 "bp6_palier1_action3",
-                1.0
+                1.5
               ]
             ]
           ]
@@ -3127,32 +3133,35 @@
               [
                 "Objectif",
                 "bp6_palier2_objectif",
-                0.9
+                1.5
               ],
               [
                 "Résultat observable",
                 "bp6_palier2_resultat",
-                0.9
+                1.5
               ]
             ],
             [
               [
                 "Action 1",
                 "bp6_palier2_action1",
-                1.0
+                1.5
               ],
               [
                 "Action 2",
                 "bp6_palier2_action2",
-                1.0
+                1.5
               ],
               [
                 "Action 3",
                 "bp6_palier2_action3",
-                1.0
+                1.5
               ]
             ]
           ]
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "fields_card",
@@ -3162,32 +3171,54 @@
               [
                 "Objectif",
                 "bp6_palier3_objectif",
-                0.9
+                1.5
               ],
               [
                 "Résultat observable",
                 "bp6_palier3_resultat",
-                0.9
+                1.5
               ]
             ],
             [
               [
                 "Action 1",
                 "bp6_palier3_action1",
-                1.0
+                1.5
               ],
               [
                 "Action 2",
                 "bp6_palier3_action2",
-                1.0
+                1.5
               ],
               [
                 "Action 3",
                 "bp6_palier3_action3",
-                1.0
+                1.5
               ]
             ]
           ]
+        },
+        {
+          "type": "question",
+          "question": "Ce que je laisse de côté pour l'instant",
+          "field_id": "bp6_plus_tard",
+          "subtitle": "Les idées et les offres qui attendront : les noter évite de s'y disperser.",
+          "box_height_cm": 2.4
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Je fais le point sur cette feuille de route le",
+              [
+                "bp6_revue_date",
+                4.0,
+                "Date du point"
+              ],
+              "."
+            ]
+          ],
+          "size": 11
         }
       ],
       "part": 6
@@ -3227,7 +3258,24 @@
             }
           ],
           "columns": 2,
-          "card_height_cm": 9.6
+          "card_height_cm": 7.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Les prochaines étapes",
+              "subtitle": "Les objectifs de vos paliers (exercice 35).",
+              "field_id": "bp6_syn_etapes"
+            },
+            {
+              "title": "Le cadre",
+              "subtitle": "Le statut envisagé et la date de lancement visée.",
+              "field_id": "bp6_syn_cadre"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 4.6
         },
         {
           "type": "page_break"
@@ -3242,7 +3290,7 @@
             }
           ],
           "columns": 1,
-          "card_height_cm": 4.6
+          "card_height_cm": 4.0
         },
         {
           "type": "cards_grid",
@@ -3259,7 +3307,7 @@
             }
           ],
           "columns": 2,
-          "card_height_cm": 4.6
+          "card_height_cm": 4.4
         },
         {
           "type": "rating_grid",
