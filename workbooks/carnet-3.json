@@ -1,0 +1,558 @@
+{
+  "chapter_num": 3,
+  "chapter_title": "Mes fonctionnements propres",
+  "subtitle": "Bilan de compétences",
+  "carnet": 3,
+  "pdf_title": "Marge de Manœuvre · Carnet 3 : Mes fonctionnements propres",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mes fonctionnements *propres.*",
+        "number": 3,
+        "tagline": "Bilan de compétences",
+        "promise": "Comprendre ce qui vous donne de l'énergie, et ce qui vous use."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Comment vous *fonctionnez.*",
+      "params": {
+        "num": "3",
+        "intro_text": "Ce carnet prépare la séance 3, la restitution du test des fonctionnements cognitifs. Dix-sept mises en situation explorent où vous puisez votre énergie, ce que vous remarquez en premier, comment vous décidez et vous organisez, et ce qui se passe sous pression. Vous en tirez votre cartographie des énergies de travail et des facteurs d'usure.<br/><br/>Une consigne pour tout le carnet : <b>partez de situations vécues. Répondez comme vous êtes quand personne n'attend rien de vous, pas comme votre poste vous demande d'être.</b>",
+        "points": [
+          "Avant de commencer · Météo et récapitulatif · 10 min",
+          "À lire · À savoir sur le test · 5 min",
+          "Exercice 1 · Votre énergie (questions 1 à 3) · 15 min",
+          "Exercice 2 · L'information (questions 4 à 7) · 15 min",
+          "Exercice 3 · Vos décisions (questions 8 à 11) · 20 min",
+          "Exercice 4 · Le temps et l'action (questions 12 à 15) · 10 min",
+          "Exercice 5 · Sous pression (questions 16 et 17) · 10 min",
+          "Exercice 6 · Ce que j'en retiens pour mon travail · 10 min",
+          "Fin de carnet · Votre cartographie des énergies · 10 min"
+        ],
+        "duration": "1 h 45",
+        "split": "En trois fois : jusqu'à l'exercice 2 (45 min), les exercices 3 et 4 (30 min), puis la fin du carnet (30 min)."
+      },
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Météo et récapitulatif · 10 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c3_meteo",
+          "data_id": "c3.meteo"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mon fil rouge",
+              "c2.fil_rouge",
+              "c3_rappel_fil_rouge"
+            ],
+            [
+              "Parmi mes moteurs, celui qui se voit le plus dans ma façon de travailler",
+              "c2.moteurs",
+              "c3_rappel_moteur"
+            ]
+          ]
+        },
+        {
+          "type": "report",
+          "title": "Mes quatre zones",
+          "items": [
+            [
+              "Zone d'excellence",
+              "c2.zones",
+              "c3_rappel_zone_excellence"
+            ],
+            [
+              "Zone de compétence",
+              "c2.zones",
+              "c3_rappel_zone_competence"
+            ],
+            [
+              "Zone d'apprentissage",
+              "c2.zones",
+              "c3_rappel_zone_apprentissage"
+            ],
+            [
+              "Zone à risque",
+              "c2.zones",
+              "c3_rappel_zone_risque"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "question",
+          "question": "En séance 2, j'ai vu que…",
+          "field_id": "c3_seance_2",
+          "box_height_cm": 1.6
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "À savoir *sur le test.*",
+      "part_title": "À lire · À savoir sur le test · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "En séance 3, votre profil au test des fonctionnements cognitifs vous est restitué. Ce test est une version maison, conçue et éprouvée par Lysiane Brand, psychologue du travail.",
+            "Il décrit quatre préférences : votre façon de puiser votre énergie, de recueillir l'information, de décider et de vous organiser. Il ne mesure ni vos compétences ni votre valeur, et aucun profil n'est meilleur qu'un autre.",
+            "Les mises en situation de ce carnet ne calculent pas votre profil : elles nourrissent l'échange. C'est vous qui validez, en séance, le profil qui vous ressemble le plus. Vous l'écrirez au carnet 4.",
+            "Il n'y a ni bonne ni mauvaise réponse, ni question piège. Prenez vos exemples dans votre vie personnelle autant que professionnelle, et racontez le pourquoi et le comment."
+          ],
+          "size": 12
+        },
+        {
+          "type": "heading",
+          "text": "Quatre préférences, puis la pression"
+        },
+        {
+          "type": "frise",
+          "steps": [
+            [
+              "battery_charging_full",
+              "L'énergie",
+              "Q. 1 à 3"
+            ],
+            [
+              "visibility",
+              "L'information",
+              "Q. 4 à 7"
+            ],
+            [
+              "balance",
+              "Les décisions",
+              "Q. 8 à 11"
+            ],
+            [
+              "schedule",
+              "Le temps et l'action",
+              "Q. 12 à 15"
+            ],
+            [
+              "compress",
+              "Sous pression",
+              "Q. 16 et 17"
+            ]
+          ]
+        },
+        {
+          "type": "contrast_example",
+          "title": "Choisir un restaurant",
+          "surface": "Ça dépend.",
+          "exploitable": "Je lis les avis et je réserve la veille. Le soir où l'on a choisi au hasard, j'ai passé le repas à penser à l'autre adresse."
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Votre *énergie.*",
+      "part_title": "Exercice 1 · Votre énergie · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Comment vous vous rechargez, et ce que vous faites des sollicitations."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Le vendredi soir",
+              "field_id": "c3_q1",
+              "subtitle": "La semaine a été intense, pleine d'imprévus et d'échanges. Pensez à la dernière fois que c'est arrivé : qu'avez-vous fait de votre soirée, et vous a-t-elle vraiment rendu de l'énergie ?"
+            },
+            {
+              "question": "2. L'interruption",
+              "field_id": "c3_q2",
+              "subtitle": "Vous êtes en pleine concentration sur une tâche. Quelqu'un entre pour vous poser une question anodine. Que se passe-t-il en vous, et que faites-vous ? Pour commencer : « Quand on m'interrompt, la première chose qui se passe en moi, c'est… »"
+            }
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "En silence ou à voix *haute ?*",
+      "part_title": "Exercice 1 · Le processus de pensée · 5 min",
+      "blocks": [
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "3. Le processus de pensée",
+              "field_id": "c3_q3",
+              "subtitle": "Face à un problème complexe et nouveau, avez-vous besoin d'en parler à voix haute pour mettre vos idées en place, ou de vous isoler dans le silence pour structurer votre pensée avant d'en discuter ? Pour commencer : « Spontanément, je… »",
+              "box_height_cm": 4.5
+            },
+            {
+              "question": "La fois où j'ai dû faire l'inverse, et ce que cela m'a coûté :",
+              "field_id": "c3_q3_inverse",
+              "box_height_cm": 5.5
+            }
+          ]
+        },
+        {
+          "type": "annotation",
+          "text": "Ce qui vous coûte compte autant que ce que vous réussissez : vous le reprendrez à l'exercice 6."
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Votre regard *sur le réel.*",
+      "part_title": "Exercice 2 · L'information · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce que vous remarquez en premier, et comment vous apprenez."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "4. L'exercice de l'objet",
+              "field_id": "c3_q4",
+              "subtitle": "Choisissez un objet près de vous. Décrivez-le en quatre ou cinq phrases, dans l'ordre où les idées vous viennent. Ne relisez pas avant d'avoir fini."
+            },
+            {
+              "question": "5. Le grand saut",
+              "field_id": "c3_q5",
+              "subtitle": "On vous demande une tâche manuelle ou technique que vous n'avez jamais faite (monter un meuble complexe, cuisiner un plat étranger, utiliser un nouveau logiciel). Quel est votre premier réflexe ? Qu'est-ce qui vous frustre le plus dans l'apprentissage ?"
+            }
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Ce qui retient *votre attention.*",
+      "part_title": "Exercice 2 · Ce qui vous intéresse · 10 min",
+      "blocks": [
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "6. La conversation ennuyeuse",
+              "field_id": "c3_q6",
+              "subtitle": "Pensez à une discussion, lors d'un repas, qui vous a fait décrocher. De quoi parlaient les gens ? De quoi auriez-vous aimé parler ?"
+            },
+            {
+              "question": "7. La machine à voyager dans le temps",
+              "field_id": "c3_q7",
+              "subtitle": "Imaginez une journée ordinaire dans cinq ans. Décrivez le décor, les personnes, le rythme. Qu'est-ce qui vous donne de la fierté ce jour-là ?"
+            }
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Vos *décisions.*",
+      "part_title": "Exercice 3 · Vos décisions · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos critères pour trancher et juger une situation."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "8. La dernière place",
+              "field_id": "c3_q8",
+              "subtitle": "Vous organisez un événement aux places très limitées et devez exclure une personne de votre cercle, professionnel ou personnel. Sur quoi fondez-vous votre choix ? Qu'est-ce qui vous reste en tête une fois la décision prise ?"
+            },
+            {
+              "question": "9. Le cadeau embarrassant",
+              "field_id": "c3_q9",
+              "subtitle": "Une personne très proche vous offre un vêtement que vous trouvez vraiment laid, et vous demande avec enthousiasme s'il vous plaît. Que répondez-vous spontanément, et pourquoi ? Qu'est-ce qui compte le plus pour vous ?"
+            }
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Face aux *tensions.*",
+      "part_title": "Exercice 3 · Face aux tensions · 10 min",
+      "blocks": [
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "10. L'arbitre",
+              "field_id": "c3_q10",
+              "subtitle": "Deux collègues ou deux proches se disputent violemment, l'ambiance est gâchée. Qu'est-ce qui vous dérange le plus ? Comment intervenez-vous ?"
+            },
+            {
+              "question": "11. La critique",
+              "field_id": "c3_q11",
+              "subtitle": "Pensez à la dernière critique qui vous a fait mal. Qu'est-ce qui a été le plus dur à accepter ?"
+            },
+            {
+              "question": "Aujourd'hui, ce que j'en garde, c'est…",
+              "field_id": "c3_q11_garde",
+              "box_height_cm": 1.6
+            }
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Votre rapport au temps *et à l'action.*",
+      "part_title": "Exercice 4 · Le temps et l'action · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre besoin de structure face à l'inconnu."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "12. La page blanche",
+              "field_id": "c3_q12",
+              "subtitle": "Vous vous réveillez un samedi matin sans rien de prévu pour les deux prochains jours. Que ressentez-vous ? Pour commencer : « Ma première heure, ce samedi-là, ressemble à… »"
+            },
+            {
+              "question": "13. L'échéance",
+              "field_id": "c3_q13",
+              "subtitle": "Pensez au dernier projet important à rendre à date fixe. Racontez comment le travail s'est réparti entre le lancement et la date limite. À quel moment avez-vous été le plus efficace ?"
+            }
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Préparer *ou improviser ?*",
+      "part_title": "Exercice 4 · Deux échelles · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Placez-vous sur chaque échelle, puis dites pourquoi. Aucune position n'est meilleure qu'une autre."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "scale",
+          "label": "14. Vous partez deux semaines à l'étranger. Jusqu'où votre voyage est-il préparé ?",
+          "min_val": 1,
+          "max_val": 5,
+          "min_label": "Rien de prévu",
+          "max_label": "Tout est réservé",
+          "field_id": "c3_q14"
+        },
+        {
+          "type": "question",
+          "question": "Pourquoi ? Et si un imprévu annule le programme de la journée, est-ce stimulant ou agaçant ?",
+          "field_id": "c3_q14_pourquoi",
+          "box_height_cm": 3.0
+        },
+        {
+          "type": "scale",
+          "label": "15. Dans un projet, quel moment vous satisfait le plus ?",
+          "min_val": 1,
+          "max_val": 5,
+          "min_label": "Ouvrir les possibles",
+          "max_label": "Trancher, conclure",
+          "field_id": "c3_q15"
+        },
+        {
+          "type": "question",
+          "question": "Pourquoi ? Racontez un moment qui l'illustre.",
+          "field_id": "c3_q15_pourquoi",
+          "box_height_cm": 3.0
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Sous *pression.*",
+      "part_title": "Exercice 5 · Sous pression · 10 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Ces deux questions touchent à des moments difficiles. Vos réactions sous pression disent ce qui vous épuise, pas qui vous êtes. Partez d'un souvenir que vous regardez avec un peu de recul."
+        },
+        {
+          "type": "fields_card",
+          "title": "16. Sous pression",
+          "hint": "Sous l'effet d'un stress fort ou d'une grande fatigue, on réagit parfois d'une façon qui ne nous ressemble pas. Par exemple : vous devenez plus critique, plus à fleur de peau, vous vous perdez dans les détails, ou vous agissez sur un coup de tête.",
+          "rows": [
+            [
+              [
+                "Ce que voient alors mes proches ou mes collègues, et que je préférerais qu'ils ne voient pas",
+                "c3_q16",
+                2.4
+              ],
+              [
+                "Ce qui m'aide à revenir à moi",
+                "c3_q16_revenir",
+                2.4
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "17. L'insomnie",
+              "field_id": "c3_q17",
+              "subtitle": "Il est 3 heures du matin, le sommeil ne vient pas. Sur quoi votre esprit boucle-t-il ces temps-ci ? Quelques mots suffisent, sans développer : nous en parlerons en séance.",
+              "box_height_cm": 1.6
+            }
+          ]
+        },
+        {
+          "type": "anchor",
+          "field_id": "c3_pression_ancrage"
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Ce que j'en retiens *pour mon travail.*",
+      "part_title": "Exercice 6 · Ce que j'en retiens · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez vos réponses et vos quatre zones, reportées en début de carnet. Ce qui vous donne de l'énergie et ce qui vous use forment votre cartographie, le livrable de ce carnet."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui me donne de l'énergie au travail",
+                "c3_retiens_energie",
+                1.8
+              ],
+              [
+                "Je sais le faire, mais cela me coûte…",
+                "c3_retiens_coute",
+                1.8
+              ]
+            ],
+            [
+              [
+                "L'environnement où je travaille le mieux (rythme, cadre, entourage)",
+                "c3_retiens_cadre",
+                1.8
+              ],
+              [
+                "Pour garder mon énergie, j'ai besoin de…",
+                "c3_retiens_besoin",
+                1.8
+              ]
+            ],
+            [
+              [
+                "Ce que je ne veux plus subir (une interruption, un conflit, un imprévu…)",
+                "c3_retiens_irritant_1",
+                1.8
+              ],
+              [
+                "Donc, mon prochain poste devra…",
+                "c3_retiens_critere_1",
+                1.8
+              ]
+            ],
+            [
+              [
+                "Ce que je ne veux plus subir",
+                "c3_retiens_irritant_2",
+                1.8
+              ],
+              [
+                "Donc, mon prochain poste devra…",
+                "c3_retiens_critere_2",
+                1.8
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true,
+          "data_id": "c3.energies"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Architecte",
+          "surface": "J'aime le travail d'équipe.",
+          "exploitable": "Je sais animer une réunion de chantier, mais trois dans la journée me vident. Pour garder mon énergie, j'ai besoin de matinées sans rendez-vous."
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 10 min",
+      "params": {
+        "lines": [
+          "Je laisse vierge ce qui me pèse : nous en parlerons en séance.",
+          "Je note les exemples qui me reviennent d'ici la séance 3.",
+          "J'apporte ce carnet à la séance 3."
+        ],
+        "field_prefix": "c3_livrable",
+        "livrable_title": "Votre cartographie des énergies",
+        "livrable_text": "Ce qui vous donne de l'énergie et ce qui vous use : vos quatre zones (carnet 2) et ce que vous retenez de vos réponses (exercice 6). Avec vos dix-sept réponses, elle prépare la restitution du test en séance 3.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "Les questions où j'ai hésité, à aborder pendant la restitution",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ],
+        "pistes": true
+      },
+      "data_id": "c3.livrable"
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Votre cartographie des énergies est prête.",
+          "Prochaine étape : la séance 3, la restitution du test. Apportez ce carnet.",
+          "Ensuite, le carnet 4 : votre rapport à l'argent."
+        ]
+      },
+      "fixed": true
+    }
+  ]
+}

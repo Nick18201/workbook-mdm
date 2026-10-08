@@ -12,7 +12,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R0 · Socle : nommage, palette, gabarit commun, langue du PDF | Fusionné (PR #52) |
 | R0 bis · Format : fixe / adaptable, identifiants de données, reports | Fusionné (PR #53) |
 | R1 · Carnet 1 · L'état des lieux (`carnet-1.json`) | Fusionné (PR #54) |
-| R2 · Carnet 2 · Mon parcours (`carnet-2.json`) | PR en cours |
+| R2 · Carnet 2 · Mon parcours (`carnet-2.json`) | Fusionné (PR #57) |
+| R3 · Carnet 3 · Mes fonctionnements propres (`carnet-3.json`) | PR en cours |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
@@ -59,7 +60,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 8. **La page « Avant de commencer » porte la météo**, dans chaque carnet. Au carnet 1, elle porte aussi l'engagement ; à partir du carnet 2, le récapitulatif guidé. Elle n'est pas numérotée : les exercices numérotés sont ceux qu'on écrit (cinq au carnet 1).
 9. **Le carnet 1 s'ouvre par une page « Bienvenue »** : les trois temps du bilan sur une frise (carnets 1 à 5, 6 et 7, carnet de route) et le lien vers l'espace Notion. Puis le cadre de travail.
 10. **Les huit domaines de vie**, notation de référence du parcours, reprise au carnet de route : travail, carrière · argent, finances · santé, énergie · famille · amis, vie sociale · temps pour soi, loisirs · lieu de vie, environnement · utilité, engagements. Bornes « Pas du tout satisfaisant » et « Pleinement satisfaisant ». Le carnet 4 reprend la note « Argent, finances ».
-11. **Les anciens carnets restent dans l'app jusqu'à R11**, avec « (ancien parcours) » dans leur titre quand un nouveau carnet les remplace (`chap0` et `chap1` depuis R1, `chap2` depuis R2).
+11. **Les anciens carnets restent dans l'app jusqu'à R11**, avec « (ancien parcours) » dans leur titre quand un nouveau carnet les remplace (`chap0` et `chap1` depuis R1, `chap2` depuis R2, `chap3` depuis R3).
 
 **Prises pendant R2 (8 octobre 2026)**
 12. **Les parties facultatives sont hors du total d'écriture.** Au carnet 2 : l'arbre de vie (15 min) et l'interview. L'ouverture le dit, et leur sourcil porte « facultatif ».
@@ -70,6 +71,22 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 17. **Un seul terme, « travail empêché »**, dans l'« À lire » et dans l'exercice 2 (« activité empêchée » disparaît). Le carnet de route le reprendra tel quel.
 18. **L'interview tient sur deux pages**, hors temps d'écriture : préparer (report des modèles du carnet 1, un message type pour demander), puis les questions et ce que la personne en retient. Le rendez-vous reste ouvert jusqu'au carnet 7.
 19. **La ligne de vie compte six moments** (trois sommets, trois vallées), avec « Ce qui m'a donné de l'énergie » et « Ce qui m'a permis de traverser ».
+
+**Prises pendant R3 (8 octobre 2026)**
+20. **Le récapitulatif du carnet 3 reporte tout ce que la carte lui donne.** Le fil rouge et le moteur « qui se voit le plus dans ma façon de travailler » ont chacun une ligne. Les quatre zones tiennent en deux colonnes : le bloc `report` accepte désormais `"columns": 2`.
+21. **Six exercices.**
+    - Quatre pour les quatre préférences : l'énergie (Q1 à 3), l'information (Q4 à 7), les décisions (Q8 à 11), le temps et l'action (Q12 à 15).
+    - Puis « Sous pression » (Q16 et 17) et « Ce que j'en retiens pour mon travail ».
+    - La cartographie des énergies (`c3.energies`) est la page « Ce que j'en retiens ». Elle s'appuie sur les quatre zones relues au récapitulatif.
+22. **La consigne « Partez de situations vécues » ouvre le carnet**, en gras dans l'ouverture. L'ouverture est donc fixe, comme les pages du test.
+23. **L'encadré « À savoir sur le test » ne dit ni comment le test se passe, ni qui le restitue** : « En séance 3, votre profil vous est restitué ». Il est à compléter quand ces modalités seront précisées (section 7).
+24. **Q11 garde sa question d'origine, rendue épicène** (« la dernière critique qui vous a fait mal »). La version du rapport, « qu'y avait-il de juste, d'injuste ? », pousserait vers l'analyse, que cette partie du test observe. Charge moyenne : une clôture, « Aujourd'hui, ce que j'en garde, c'est… », sans le protocole complet.
+25. **Un seul exemple contrasté pour les 17 mises en situation**, sur un sujet absent du carnet : le choix d'un restaurant. Q16 n'a pas d'exemple, car ses quatre réactions équilibrées en tiennent lieu : un exemple de plus orienterait la réponse. « Ce que j'en retiens » a le sien (architecte).
+26. **Une question du test qui demande deux choses a deux cases.**
+    - Q3 : « Spontanément, je… », puis « La fois où j'ai dû faire l'inverse, et ce que cela m'a coûté ».
+    - Q14 et Q15 : une échelle de 1 à 5 aux bornes concrètes (« Rien de prévu / Tout est réservé », « Ouvrir les possibles / Trancher, conclure »), puis un « pourquoi ».
+    - Q16 : ce que voient les proches, puis « Ce qui m'aide à revenir à moi ».
+27. **La fin du carnet 3 adapte une zone** : « Les questions où j'ai hésité, à aborder pendant la restitution » remplace « À aborder en séance ». Le profil validé ne s'écrit pas au carnet 3, mais une seule fois, au récapitulatif du carnet 4 (`c4.profil`).
 
 ## 3. Les PR, dans l'ordre
 
@@ -150,7 +167,24 @@ Pour chaque PR de carnet :
   - une note manuscrite (`annotation`) peut occuper le blanc sous une fiche répétée ;
   - métiers déjà pris pour les exemples : juriste, cariste, commis de cuisine, comptable, ébéniste (carnet 1) ; gestionnaire de clientèle, aide à domicile, graphiste, géomètre, fleuriste, secrétaire, paysagiste (carnet 2) ;
   - la ligne de vie (`life_line`) accepte un troisième élément par moment, le libellé de sa case ; la ligne de vie et l'arbre de vie tiennent désormais les hauteurs du test.
-- **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm. Ordres de grandeur, écart compris : protocole et ancrage 5,1 cm chacun, météo 7,6 cm, exemple contrasté 4,8 cm (5,3 cm sur quatre lignes), report de deux lignes 6 cm, paragraphe d'une ligne 1 cm. La ligne de vie et l'arbre de vie demandent au moins 14 cm.
+- **Les conventions ajoutées par le carnet 3** (`workbooks/carnet-3.json`) :
+  - des lignes de report courtes (les quatre zones) se mettent en deux colonnes, avec `"columns": 2`. Chaque ligne réserve la place de son origine (« CARNET 2 · P. 00 »), si bien qu'un numéro de page ne change jamais la mise en page ;
+  - un texte dont la formulation ne doit pas bouger (un test, sa consigne) se marque `fixed` sur la page entière, ouverture comprise ;
+  - une question qui demande deux choses a deux cases, ou une échelle suivie d'un « pourquoi » (bloc `scale`, bornes de 20 caractères au plus, sinon elles sont tronquées) ;
+  - une réponse en quelques mots dans une carte de question prend 1,6 cm, car ces cases sont toujours multilignes ;
+  - quand un exemple pourrait orienter la réponse (un test), il porte sur un sujet absent du carnet ;
+  - métiers déjà pris pour les exemples : ceux des carnets 1 et 2, plus architecte (carnet 3).
+- **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm (1,1 cm de moins sous un titre de deux lignes). Ordres de grandeur, écart compris :
+  - protocole et ancrage : 5,1 cm chacun (5,6 cm pour un avertissement de trois lignes) ;
+  - météo : 7,6 cm ;
+  - exemple contrasté : 4,8 cm (5,3 cm sur quatre lignes) ;
+  - report : 6 cm pour deux lignes, et autant pour quatre lignes en deux colonnes, puis 1,75 cm par ligne de plus ;
+  - échelle de 1 à 5 : 4 à 4,5 cm ;
+  - carte de question : 2,1 cm de plus que sa case pour une question d'une ligne, puis environ 0,5 cm par ligne de plus (question ou consigne) ;
+  - paragraphe d'une ligne : 1 cm ;
+  - la ligne de vie et l'arbre de vie demandent au moins 14 cm.
+
+  Une ouverture de neuf lignes, avec une introduction de sept lignes, ne tient que sous un titre d'une ligne.
 - **Tester l'app en local** : `python -m uvicorn server.app:app --port 8080`. Sans clé Gemini, l'app fonctionne en mode de secours. Avec la vraie clé, tester la personnalisation des carnets 6, 7, du carnet de route et du module création, ceux qui s'y prêtent le plus (carte, section 8).
 
 ## 6. Les règles à garder en tête
@@ -168,65 +202,76 @@ Pour chaque PR de carnet :
 
 - **La politique des champs** : police fixe avec défilement, ou police automatique. À trancher après un test de saisie dans de vrais lecteurs PDF (Acrobat, Aperçu, navigateur).
 - **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm. Depuis R2, la ligne de vie et l'arbre de vie les tiennent aussi.
-- **Les reprises du carnet 2** se font dans les carnets suivants : le fil rouge et les quatre zones au récapitulatif du carnet 3, les moteurs et les critères à la grille anti-compromis du carnet 5, les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru.
+- **Les reprises du carnet 2** se font dans les carnets suivants : les moteurs et les critères à la grille anti-compromis du carnet 5, les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3).
+- **Les reprises du carnet 3.**
+  - La cartographie des énergies (`c3.energies`) se reporte au carnet 6 (cartographie) et au carnet de route (profil). Elle remplace « Ce qui vide mes batteries » et « Mes sources de stress » : on la reporte, on ne repose pas la question.
+  - Les réponses à « Sous pression » (Q16 et Q17) restent dans le carnet 3, sans report.
+- **Les modalités du test** (passation, personne qui fait la restitution) restent à préciser dans l'encadré « À savoir sur le test » du carnet 3.
 - **Les exemples du livret** décrivent peut-être une personne réelle. Ils disparaissent avec le carnet de route (R8), mais si c'est le cas, l'historique git les garde.
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R2 (carnet 2, #57) fusionnée :
+Message à coller, une fois la PR R3 (carnet 3) fusionnée :
 
 ```text
-Reprends la restructuration des carnets avec la PR R3 : le carnet 3, « Mes fonctionnements propres ».
+Reprends la restructuration des carnets avec la PR R4 : le carnet 4, « Mon rapport à l'argent ».
 
 1. Prérequis
-- Vérifie que la PR Nick18201/workbook-mdm#57 (R2, carnet 2) est fusionnée dans main.
+- Vérifie que la PR R3 (carnet 3, branche claude/restructuration-carnet-3-db02e9) est fusionnée dans main : gh pr list --state all --head claude/restructuration-carnet-3-db02e9.
 - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
 - D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch.
 
 2. À lire, dans cet ordre
-- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 et 2, et les mesures qui disent si une page tient.
+- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 à 3, et les mesures qui disent si une page tient.
 - audit-carnets-2026-10/carte-parcours-unifie.md :
   - section 4 (gabarit commun) ;
-  - section 5, carnet 3 ;
-  - sections 6 (budget), 7 (identifiants c3.*) et 8 (fixe ou adaptable : carnet 3 = pertinence faible, les questions du test ne sont jamais personnalisées).
-- audit-carnets-2026-10/rapports/03-chap3.md en entier.
+  - section 5, carnet 4 ;
+  - sections 6 (budget), 7 (identifiants c4.*) et 8 (fixe ou adaptable : carnet 4 = pertinence moyenne ; le statut s'adapte, jamais de chiffres personnels ; le protocole, les questions franches et la carte des seuils restent fixes).
+- audit-carnets-2026-10/rapports/04-chap4.md en entier.
 - La synthèse audit-carnets-2026-10/synthese.html, sections 02 (constats transversaux) et 06 (conditions de remplissage).
-- workbooks/carnet-1.json et workbooks/carnet-2.json, les modèles à suivre, et workbooks/chap3.json, le contenu actuel.
+- workbooks/carnet-1.json, workbooks/carnet-2.json et workbooks/carnet-3.json, les modèles à suivre, et workbooks/chap4.json, le contenu actuel.
+- Le format « Ce que je me dis → Ce que montrent les faits » de l'app : git show 1696357:server/predefined_workbooks.py.
 
 3. Ce qu'il faut construire
-workbooks/carnet-3.json, cible 1 h 45 d'écriture.
-- Une page « Avant de commencer » : la météo (c3.meteo) et le récapitulatif guidé de la séance 2. Il relit le fil rouge et les quatre zones par des blocs report vers c2.fil_rouge et c2.zones, et reprend les moteurs du carnet 2 (c2.moteurs).
+workbooks/carnet-4.json, cible 2 h d'écriture.
+- Une page « Avant de commencer » : la météo (c4.meteo) et le récapitulatif guidé de la restitution du test (séance 3).
+  - Le champ « Le profil de fonctionnement que j'ai validé » (c4.profil) : c'est la seule saisie du profil, reportée ensuite aux carnets 6 et de route. En mots, sans code de type : le champ « 4 lettres » du rapport est écarté.
+  - Une question pont entre ce profil et l'argent.
+  - Un report de la cartographie des énergies du carnet 3 (c3.energies).
 - Les exercices de la carte :
-  - l'encadré « À savoir sur le test » : un test des fonctionnements cognitifs, version maison conçue et éprouvée par Lysiane Brand, psychologue du travail ; quatre préférences, pas « cinq dimensions » ; les mises en situation ne calculent pas le profil ; il est restitué en séance, et c'est la personne qui le valide. La consigne « Partez de situations vécues » passe en tête du carnet ;
-  - les 17 mises en situation, avec les réécritures du rapport (Q1, Q4, Q7, Q8, Q13), Q3 en deux champs (« et ce que cela m'a coûté »), Q14 et Q15 en échelle suivie d'un « pourquoi », sans nommer de pôle ;
-  - la Q11 (critique blessante), avec sa phrase de clôture ;
-  - « Sous pression » (Q16 et Q17), avec le protocole complet : Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs ; Q17 (ce sur quoi l'esprit boucle) en quelques mots, sans le développer ;
-  - « Ce que j'en retiens pour mon travail » : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… », et les irritants retournés en critères.
-- Pas de champ pour le profil validé : il s'écrit une seule fois, au récapitulatif du carnet 4 (c4.profil). L'encadré « À compléter après la restitution » du rapport est donc écarté.
-- Une fin de carnet avec le fil des pistes (pistes: true) et c3.livrable. Le livrable est la cartographie des énergies de travail et des facteurs d'usure (c3.energies), livrable du programme : elle assemble les quatre zones du carnet 2 et la page « Ce que j'en retiens ».
-- Les marques fixed de la section 8 : les questions du test (les personnaliser biaiserait la restitution), le protocole, les questions franches et les renvois entre carnets.
+  - votre situation : un choix exclusif en boutons radio, puis un « pourquoi », et la note « Argent, finances » des domaines de vie reportée du carnet 1 (c1.domaines) ;
+  - votre histoire avec l'argent : 4 questions ouvertes au lieu de 7, avec le protocole complet. La question sur le couple est posée au passé, avec un renvoi vers la séance. Le renvoi à l'héritage du carnet 1 (c1.heritage) est écrit ;
+  - vos premières expériences et vos idées reçues, au format de l'app : « Ce que je me dis → Ce que montrent les faits » ;
+  - argent et projet : une grille d'aisance de 1 à 5 (demander une augmentation, négocier, fixer un prix…), puis « Ce que je n'ose pas demander » dans sa propre case ;
+  - vos quatre seuils (c4.seuils), une carte unique alignée sur le programme : minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. En euros nets par mois, pour vous ; une fourchette suffit. Les définitions sont fixes ;
+  - vos tendances (c4.tendance) : deux ou trois au plus, avec des noms neutres (la sécurité, le mérite…) ;
+  - la synthèse : la question franche sur la peur du manque, suivie de la phrase d'ancrage.
+- Une fin de carnet avec le fil des pistes (pistes: true) et c4.livrable. Le livrable est le seuil de sécurité financière en 4 seuils (livrable du programme), avec la tendance dominante.
+- Les marques fixed de la section 8 : le protocole, les questions franches, la carte des seuils et les renvois entre carnets.
 
 4. Les règles à tenir
 - Aucune mention du MBTI, ni de code de type (ISFJ…).
-- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel, aucun chiffre sans source.
-- Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je », ni point médian (« cassant·e »).
-- Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 et 2 (liste en section 5 de la feuille de route). Pour les mises en situation, un exemple sur un sujet absent du carnet, pour ne pas orienter une préférence (le rapport propose le choix d'un restaurant).
+- Aucun chiffre personnel dans un exemple, et aucun chiffre sans source (pas de salaire, pas de montant de référence).
+- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel.
+- Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je », ni point médian. Les tendances portent des noms, pas des adjectifs au masculin.
+- Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 à 3 (liste en section 5 de la feuille de route).
 - Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière.
 - Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. tests/test_workbooks.py le vérifie.
-- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court. Mesure la hauteur des blocs avant de rendre (repères en section 5 de la feuille de route).
+- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes (report compris, avec "columns": 2), un libellé ou un exemple plus court. Mesure la hauteur des blocs avant de rendre (repères en section 5 de la feuille de route).
 
 5. Méthode
-a. Commence par me montrer le plan du carnet 3, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
-b. Écris le JSON. Ajoute Scripts/main_generate_carnet_3.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-3 du catalogue (server/predefined_workbooks.py), avec « (ancien parcours) » sur chap3.
+a. Commence par me montrer le plan du carnet 4, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
+b. Écris le JSON. Ajoute Scripts/main_generate_carnet_4.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-4 du catalogue (server/predefined_workbooks.py), avec « (ancien parcours) » sur chap4. Ajoute carnet_4 à la liste des scripts de CLAUDE.md.
 c. Rends chaque page en PNG dans previews/ avec pymupdf et relis-les une à une.
 d. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py.
-e. Relis la synthèse et le rapport 03, recommandation par recommandation. Itère, puis dis-moi ce qui est traité et ce qui est écarté, avec la raison.
+e. Relis la synthèse et le rapport 04, recommandation par recommandation. Itère, puis dis-moi ce qui est traité et ce qui est écarté, avec la raison.
 f. Mets à jour la feuille de route :
    - section 1 (état des PR) ;
-   - section 2 (décisions prises pendant R3) ;
+   - section 2 (décisions prises pendant R4) ;
    - section 5 (nouvelles conventions, s'il y en a) ;
-   - section 8 (le prompt de reprise pour R4, rédigé sur ce modèle).
-   Mets aussi à jour la carte, section 6 (budget du carnet 3).
+   - section 7 (ce qui reste ouvert) ;
+   - section 8 (le prompt de reprise pour R5, rédigé sur ce modèle).
+   Mets aussi à jour la carte, section 6 (budget du carnet 4).
 g. Commite sur la branche. J'ouvrirai la PR avec le bouton.
 
 6. Environnement (Windows, dans un worktree)

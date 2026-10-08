@@ -120,7 +120,8 @@ BLOCKS = {
     "anchor": {"field_id": "ancrage"},
     "contrast_example": {"title": "Chef de rayon", "surface": "J'aime le contact.", "exploitable": "Je fidélise."},
     "energy": {"field_prefix": "meteo"},
-    "report": {"items": [["Vos quatre seuils", "c4.seuils", "report_seuils"]]},
+    "report": {"items": [["Vos quatre seuils", "c4.seuils", "report_seuils"],
+                         ["Votre zone à risque", "c2.zones", "report_zone"]], "columns": 2},
     "space": {"height_cm": 0.5},
     "page_break": {},
 }
