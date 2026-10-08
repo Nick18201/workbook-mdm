@@ -8,6 +8,7 @@ from test_layout import _assert_nothing_off_page
 from workbook_generator.components import create_cover_page
 from workbook_generator.config import PDFStyle
 from workbook_generator.document_builder import DocumentBuilder
+from workbook_generator.primitives import draw_folio
 
 # (script module, generator function) of the 10 CLI documents
 DOCUMENTS = [
@@ -41,13 +42,40 @@ def _rgb(color):
 
 def test_cover_illustration_takes_the_document_pastel():
     buffer = io.BytesIO()
-    builder = DocumentBuilder(buffer, carnet=4)
-    builder.add_page(create_cover_page, "Mon rapport *à l'argent.*", 4, None, None, "Un salaire et un rythme de vie.")
+    builder = DocumentBuilder(buffer, carnet=7)
+    builder.add_page(create_cover_page, "Confronter *au terrain.*", 7, None, None, "Un salaire et un rythme de vie.")
     builder.save()
     page = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")[0]
 
     fills = {tuple(round(v * 255) for v in d["fill"]) for d in page.get_drawings() if d.get("fill")}
     assert _rgb(PDFStyle.COLOR_BLUE) in fills  # the open notebook of the illustration
-    assert _rgb(PDFStyle.PASTELS["blush"]) in fills  # carnet 4's pastel...
+    assert _rgb(PDFStyle.PASTELS["blush"]) in fills  # carnet 7's pastel...
     assert _rgb(PDFStyle.PASTELS["lilac"]) not in fills  # ...in place of the SVG's placeholder
     assert "Un salaire et un rythme de vie." in " ".join(page.get_text().split())
+
+
+@pytest.mark.parametrize("carnet, eyebrow, folio", [
+    (3, "CARNETDEBORD·CARNET3", "CARNET3/7"),
+    ("route", "CARNETDEROUTE", "CARNETDEROUTE·P.2"),
+])
+def test_carnet_names_its_cover_and_folio(carnet, eyebrow, folio):
+    buffer = io.BytesIO()
+    builder = DocumentBuilder(buffer, carnet=carnet)
+    builder.add_page(create_cover_page, "Un *titre.*", None if carnet == "route" else carnet)
+    builder.add_page(lambda c: (draw_folio(c), c.showPage()))
+    builder.save()
+    doc = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")
+
+    # Tracked capitals come out letter by letter: compare without spaces
+    assert eyebrow in "".join(doc[0].get_text().split()).upper()
+    assert folio in "".join(doc[1].get_text().split()).upper()
+
+
+def test_pdf_declares_its_language():
+    buffer = io.BytesIO()
+    builder = DocumentBuilder(buffer)
+    builder.add_page(lambda c: c.showPage())
+    builder.save()
+    doc = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")
+
+    assert doc.xref_get_key(doc.pdf_catalog(), "Lang") == ("string", "fr-FR")

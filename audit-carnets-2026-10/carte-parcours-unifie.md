@@ -76,7 +76,7 @@ L'option « Initiation à l'IA » ouvre **la séance 6**, celle de l'exploration
 | Météo | Une échelle d'énergie de 0 à 10 et une ligne « Ce chiffre s'explique surtout par… ». Deux minutes. Reprise à chaque carnet, elle mesure le chemin parcouru. | App |
 | Récapitulatif guidé | À partir du carnet 2. Il relit le livrable du carnet précédent et la séance qui vient d'avoir lieu, avec des renvois explicites. | PDF, à généraliser |
 | Exercices | Sourcil « Exercice N · nom · durée », et une phrase qui dit à quoi sert l'exercice. Des amorces, et un exemple contrasté (« En surface / Exploitable ») tiré d'un métier voisin. Des formats variés. Les irritants retournés en critères (« donc mon prochain poste doit… »). Le protocole de sécurité quand la charge est forte : avertissement, optionnalité, phrase d'ancrage. | Audit |
-| Livrable | La sortie nommée du carnet : celle que le suivant reprend, et une brique du document de synthèse. Les engagements. Trois zones courtes : « Ce qui m'étonne en relisant ce carnet », « À aborder en séance », « Ce que j'ai laissé vierge, à reprendre ensemble ». À partir du carnet 2, une ligne de plus : « Une idée de piste qui m'est venue en remplissant ce carnet » (le fil des pistes). | Audit |
+| Livrable | La sortie nommée du carnet : celle que le suivant reprend, et une brique du document de synthèse. Les engagements. Trois zones courtes : « Ce qui m'étonne en relisant mes réponses », « À aborder en séance », « Ce que j'ai laissé vierge, à reprendre ensemble ». À partir du carnet 2, une ligne de plus : « Une idée de piste qui m'est venue en remplissant ce carnet » (le fil des pistes). | Audit |
 | Dos | Prochaine étape. | PDF |
 
 ## 5. Le parcours, carnet par carnet
@@ -317,11 +317,13 @@ Deux règles valent partout :
 - On parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand. La mention « MBTI » disparaît de tous les supports (carnets, programme, site, app, prompts), y compris les codes de type (ISFJ…) : c'est une marque soumise à licence. Seule exception : la certification MBTI® de Lysiane reste dans sa présentation.
 - Hexa3D est abandonné et disparaît de tous les supports.
 
-**À prendre**
-1. **Le business plan en deux formats** : un module court dans le bilan et un livret complet autonome.
-2. **Les retraits** : vision à 360°, questions de « Faire le point », arbre de vie facultatif, 3 fiches métiers obligatoires au lieu de 10.
-3. **Les deux modules à créer** : formation et financement (reconversion), argumentaire (évolution interne). Faut-il les créer avec l'app ?
-4. **Le nom affiché** : « carnet 1 » à « carnet 7 » partout (PDF, app, site), à la place de « chapitre 0 » à « chapitre 6 ».
+**Prises le 8 octobre 2026, suite** (détail dans `feuille-de-route-restructuration.md`, section 2)
+1. **Le business plan en deux formats** : le module création du carnet de route (environ 12 pages, personnalisé en une fois) et le livret complet autonome, pour l'accompagnement après le bilan (personnalisé partie par partie dans l'app).
+2. **Les retraits sont validés** : vision à 360°, quatre des huit questions de « Faire le point », arbre de vie facultatif, 3 fiches métiers obligatoires au lieu de 10.
+3. **Les modules reconversion et évolution interne viennent plus tard** (`chantier-modules-s9.md`). Le carnet de route leur garde une place, et la séance 9 traite le sujet à l'oral.
+4. **« Carnet 1 » à « carnet 7 » et « carnet de route » partout** (PDF, app, site), identifiants compris (`carnet-1.json`…). Le mot « chapitre » disparaît.
+5. **Les cinq pièces de l'app reviennent** aux places prévues en section 5.
+6. **Un pastel par temps du programme** : ciel, lilas, menthe, ciel, lilas pour les carnets 1 à 5 ; amande et rose poudré pour les carnets 6 et 7 ; jasmin pour le carnet de route.
 
 ## 10. Ce que cela implique pour le format technique
 

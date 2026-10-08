@@ -16,9 +16,9 @@ Elle est tirée du code du site (`tailwind.config.mjs`, `global.css`, composants
 - **Marge de Manœuvre** est un organisme de bilans de compétences, **100 % à distance**. La méthode a été conçue par une psychologue du travail et un consultant en transformation. Chaque bénéficiaire est accompagné par une seule personne.
 - **Positionnement** : le passage à l'action réaliste (un projet piloté, le marché du travail, l'IA, un salaire et un rythme de vie sécurisés). Il rompt avec les bilans « quête de sens » et le développement personnel.
 - **Les workbooks** sont les « carnets de bord », travaillés entre les séances :
-  - un tronc commun de 7 carnets (chapitres 0 à 6) : Le Prélude, L'État des lieux, Mon parcours, Mes fonctionnements propres, Mon rapport à l'argent, Valeurs & moteurs profonds, Phase d'exploration ;
-  - puis un carnet de route propre au projet : reconversion, création ou reprise, ou évolution interne.
-  - Chaque carnet contient un objectif, 4 exercices ou protocoles et **un livrable validé en séance**.
+  - sept carnets de bord, du carnet 1 au carnet 7 : le carnet N prépare la séance N (état des lieux et héritages, parcours, fonctionnements, argent, valeurs, exploration, confrontation au terrain) ;
+  - puis le carnet de route du temps 3, avec un module propre au projet : création ou reprise, reconversion, ou évolution interne.
+  - Chaque carnet contient un objectif, des exercices avec leur durée et **un livrable validé en séance**.
 - **Public** : des adultes en transition professionnelle, souvent fatigués ou inquiets. La priorité va à la lisibilité et au calme, sans tomber dans le mièvre.
 
 ## 2. L'esprit
@@ -143,7 +143,7 @@ Les quatre familles sont sur Google Fonts.
      <path d="M4 44 C 24 40, 52 30, 80 12" /><path d="M70 8 L81 11 L76 21" />
    </svg>
    ```
-5. **Gros numéro de chapitre** : PT Mono de 60 à 72 px, en bleu, interligne 1. À côté, un sous-titre en PT Mono 12 px, majuscules, `ink-muted`. Le titre du chapitre vient dessous, en DM Sans 800.
+5. **Gros numéro de carnet** : PT Mono de 60 à 72 px, en bleu, interligne 1. À côté, un sous-titre en PT Mono 12 px, majuscules, `ink-muted`. Le titre du carnet vient dessous, en DM Sans 800.
 6. **Puce étoile à 4 branches** : 14 px, en `brand-coral-strong`, pour les listes d'exercices :
    ```svg
    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0 C 8.6 5.2, 10.8 7.4, 16 8 C 10.8 8.6, 8.6 10.8, 8 16 C 7.4 10.8, 5.2 8.6, 0 8 C 5.2 7.4, 7.4 5.2, 8 0 Z"/></svg>
@@ -220,21 +220,25 @@ Les quatre familles sont sur Google Fonts.
   - un disque pastel coupé par le bord, et un post-it qui porte la promesse du carnet.
   - Illustration retenue le 2026-10-07 : la table de travail vue du dessus (`assets/illustrations/couverture.svg`), faite des formes de la DA (disques, pilules, traits à l'encre arrondis, étoiles). Le disque pastel prend la couleur du carnet, et le post-it de la promesse est collé sur les carnets fermés.
   - Ne pas reprendre l'illustration de l'ancien livret (voir section 9).
-- **Ouverture de chapitre** :
-  - un sourcil « CARNET DE BORD · CHAPITRE 3 », puis le gros numéro et le sous-titre en PT Mono ;
+- **Ouverture de carnet** :
+  - un sourcil « CARNET DE BORD · CARNET 3 » (« CARNET DE ROUTE » pour le carnet de route), puis le gros numéro et le sous-titre en PT Mono ;
   - le titre, puis l'objectif en Manrope ;
-  - un encadré « EXERCICES & PROTOCOLES » avec les puces étoile.
+  - un encadré « EXERCICES & PROTOCOLES » avec les puces étoile ;
+  - dessous, trois lignes à icône : la durée d'écriture et le découpage conseillé, le cadre (« Vos réponses vous appartiennent… Vous pouvez passer une question. ») et le mode d'emploi du PDF.
+- **Météo du jour**, au début de chaque carnet : l'énergie de 0 à 10 en pastilles, puis « Ce chiffre s'explique surtout par… ».
 - **Page d'exercice** :
-  - une étiquette PT Mono (« EXERCICE 2 · 20 MIN »), puis la consigne ;
+  - une étiquette PT Mono (« EXERCICE 2 · NOM · 20 MIN »), puis la consigne ;
   - des zones d'écriture sur fond blanc, avec une bordure `line-strong` de 1 px et un rayon de 16 px, ou des lignes pointillées à l'encre à 25 % ;
   - les échelles et les jauges sous forme de pastilles.
 - **Encadré** (conseil, rappel, exemple) : une carte pastel avec une étiquette.
-- **Fin de carnet** : le post-it jasmin « LIVRABLE » et le tampon « Validé en séance », avec la date et une case à cocher.
-- **Folio** : en PT Mono, en bas de page, par exemple « marge de manœuvre · carnet 3/7 · p. 12 ».
+- **Exemple contrasté** : sous un sourcil « EXEMPLE · MÉTIER VOISIN », la même réponse « En surface » (carte blanche, texte `ink-muted`) puis « Exploitable » (carte pastel), reliées par une flèche bleue.
+- **Exercice à forte charge** : avant, une carte blanche « AVANT DE COMMENCER » avec un bouclier (l'avertissement, puis le droit de laisser l'exercice vierge) ; après, une carte pastel « POUR CLORE » avec la phrase d'ancrage « Aujourd'hui, avec le recul, je sais que… ».
+- **Fin de carnet** : le post-it jasmin « LIVRABLE » et le tampon « Validé en séance », avec la date et une case à cocher, les engagements, puis trois zones courtes (ce qui m'étonne, à aborder en séance, ce que j'ai laissé vierge) et, des carnets 2 à 5, une idée de piste.
+- **Folio** : en PT Mono, en bas de page, par exemple « marge de manœuvre · carnet 3/7 · p. 12 » ou « marge de manœuvre · carnet de route · p. 4 ».
 
 **Dosage**
 - Une seule touche « faite main » par page : un post-it **ou** une annotation.
-- Un pastel dominant par carnet, pour s'y retrouver d'un carnet à l'autre. Le texte posé dessus reste toujours à l'encre.
+- Un pastel dominant par carnet, pour s'y retrouver d'un carnet à l'autre. Le texte posé dessus reste toujours à l'encre. Il suit les temps du programme (choix du 8 octobre 2026) : teintes froides pour le temps 1 (carnets 1 à 5 : ciel, lilas, menthe, ciel, lilas), teintes chaudes pour le temps 2 (carnet 6 amande, carnet 7 rose poudré), jasmin pour le carnet de route.
 
 ## 9. À ne pas faire
 

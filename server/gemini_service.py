@@ -109,8 +109,10 @@ TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les 
 
 # Iterate and customize receive whole workbooks, the reference ones included
 REFERENCE_BLOCKS_RULES = """BLOCS DES CARNETS DE RÉFÉRENCE :
-- Les carnets de référence utilisent aussi le gabarit 'recap' et des blocs que tu ne crées jamais toi-même : 'questions_group', 'heading', 'paragraphs', 'star_list', 'annotation', 'frise', 'fields_card', 'numbered_lines', 'rating_grid', 'info_cards', 'link_card', 'checklist_cards', 'fill_in_card', 'life_line', 'tree_of_life', 'space', 'page_break'.
+- Les carnets de référence utilisent aussi le gabarit 'recap' et des blocs que tu ne crées jamais toi-même : 'questions_group', 'heading', 'paragraphs', 'star_list', 'annotation', 'frise', 'fields_card', 'numbered_lines', 'rating_grid', 'info_cards', 'link_card', 'checklist_cards', 'fill_in_card', 'life_line', 'tree_of_life', 'protocol', 'anchor', 'contrast_example', 'energy', 'space', 'page_break'.
 - Quand tu en rencontres un, garde son type, ses clés, l'ordre de ses éléments et tous ses identifiants ('field_id', 'field_prefix', identifiants dans les listes) ; adapte seulement ses textes, sans les allonger.
+- Ne modifie jamais les blocs 'protocol' (avertissement avant un exercice à forte charge), 'anchor' (phrase d'ancrage qui le clôt) et 'energy' (météo du jour) : ils font partie du cadre et du protocole de sécurité. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
+- Dans une page 'summary', garde 'duration' et 'split' ; dans une page 'engagement', garde 'zones' et 'pistes'.
 - Pour ajouter du contenu, utilise uniquement les 8 blocs de base ('callout', 'cards_grid', 'scale', 'checklist', 'table', 'stat_boxes', 'question', 'text').
 """
 
@@ -133,7 +135,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - 'deep' (Complet) : STRICTEMENT PLUS DE 10 PAGES (11 à 14 pages).
      Parcours d'introspection approfondi et complet : Couverture, Sommaire, (Météo si demandée), Matrice 4 piliers, Passerelle freins/leviers, Enquête exploratoire terrain, Tableau d'évaluation / Crash test, Matrice d'arbitrage de cap, Feuille de route 30-60-90j, Questions d'ancrage, (Engagement si demandé), Clôture.
 3. Structure & Enchaînement des pages :
-   - Page 1 : 'cover' (Couverture : numéro et titre du chapitre, et la promesse du carnet sur un post-it)
+   - Page 1 : 'cover' (Couverture : numéro et titre du carnet, et la promesse du carnet sur un post-it)
    - Page 2 : 'summary' (Sommaire fidèle des étapes du livret avec numéros et courtes descriptions)
    - Page 3 (Conditionnelle selon l'option Page Météo demandée) :
      * Si Check-in = 'none' : NE METS AUCUNE PAGE MÉTÉO NI ICE-BREAKER ! Passe immédiatement aux exercices de fond après le sommaire.
@@ -172,7 +174,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - Sois synthétique, concret et orienté passage à l'action.
 
 5. STRUCTURE DES PARAMÈTRES PAR GABARIT (dans "params") :
-   - 'cover' : {"subtitle": "Chapitre 4 : Mon rapport à l'argent", "title": "BILAN DE COMPÉTENCES", "promise": "Phrase de 3 à 8 mots sur ce que le carnet apporte (post-it)"}
+   - 'cover' : {"subtitle": "Carnet 4 : Mon rapport à l'argent", "title": "BILAN DE COMPÉTENCES", "promise": "Phrase de 3 à 8 mots sur ce que le carnet apporte (post-it)"}
    - 'summary' : {"intro_text": "Court texte d'introduction...", "points": [{"label": "01", "desc": "Titre et résumé de l'étape"}]}
    - 'meteo' : {"emotion_prompt": "Aujourd'hui, je me sens :", "energy_prompt": "Mon niveau d'énergie :", "thought_prompt": "Ce qui prend le plus de place dans ma tête :"}
    - 'quadrants' : {"instruction": "Consigne...", "quadrants": [{"title": "Professionnel", "subtitle": "Sens, Mission"}, {"title": "Personnel", "subtitle": "Santé, Équilibre"}, {"title": "Social", "subtitle": "Relations"}, {"title": "Cadre", "subtitle": "Limites, Règles"}]}
@@ -229,7 +231,7 @@ def parse_notes_with_gemini(request: ParseRequest) -> GenerationResult:
 
     user_prompt = f"""Voici les notes de séance à transformer en livret pédagogique :
 ---
-Numéro de chapitre souhaité : {request.chapter_num}
+Numéro de carnet souhaité : {request.chapter_num}
 Titre suggéré : {request.chapter_title or 'À déterminer selon les notes'}
 Bénéficiaire : {request.beneficiary_name or 'Non spécifié'}
 
@@ -282,7 +284,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
             template="cover",
             title="BILAN DE COMPÉTENCES",
             params={
-                "subtitle": f"Chapitre {request.chapter_num} : {title}",
+                "subtitle": f"Carnet {request.chapter_num} : {title}",
                 "title": "BILAN DE COMPÉTENCES",
                 "promise": "De la réflexion à une décision concrète.",
             },
@@ -761,7 +763,7 @@ RÈGLES D'OR DE PERSONNALISATION :
    - Ne modifie JAMAIS la structure des clés de paramètres ('params', 'blocks', 'quadrants', 'rows', 'questions', 'stages', 'lines', 'messages').
 2. CONTEXTUALISER EN PROFONDEUR POUR LE BÉNÉFICIAIRE :
    - Renseigne `beneficiary_name` avec le prénom et nom du bénéficiaire.
-   - Adapte les **exemples concrets** (`example` dans les questions et blocs) pour qu'ils soient directement issus ou représentatifs de son métier, secteur d'activité ou projet cible (ex: si le bénéficiaire est consultant IT voulant créer une marque de mobilier éco-conçu, donne des exemples liés à l'artisanat, au passage du salariat à l'entrepreneuriat, etc.).
+   - Adapte les **exemples concrets** (`example` dans les questions et blocs) : prends-les dans un métier voisin de celui du bénéficiaire, jamais dans son propre métier (il les recopierait), et dans un métier différent à chaque fois (ex : pour un consultant IT qui veut créer une marque de mobilier éco-conçu, des exemples tirés du conseil en organisation, de la menuiserie ou du design produit).
    - Contextualise avec subtilité les consignes, les sous-titres et les questions pour qu'elles fassent directement écho à sa situation et à ses défis spécifiques.
    - Pour les matrices 4 quadrants, comparatifs 2 colonnes ou feuilles de route 30·60·90j, injecte des constats, leviers ou actions pertinents pour son profil.
    - Si des consignes spécifiques (`custom_instructions`) sont indiquées par le consultant, applique-les fidèlement.

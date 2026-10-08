@@ -89,6 +89,10 @@ BLOCKS = {
     "fill_in_card": {"rows": [["Moi,", ["nom_complet", None, "Prénom Nom"]]]},
     "life_line": {"items": [["Sommet", "summit"], ["Vallée", "valley"]], "headers": ["Haut", "Bas"]},
     "tree_of_life": {"items": [["1. Racines", "Votre histoire", "racines"]], "text": "Annotation."},
+    "protocol": {},
+    "anchor": {"field_id": "ancrage"},
+    "contrast_example": {"title": "Chef de rayon", "surface": "J'aime le contact.", "exploitable": "Je fidélise."},
+    "energy": {"field_prefix": "meteo"},
     "space": {"height_cm": 0.5},
     "page_break": {},
 }

@@ -11,7 +11,7 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
   - `document_builder.py` : Contient la classe `DocumentBuilder` qui est le standard exclusif pour l'orchestration des documents (instanciation du canvas, gestion des accès fichiers, enregistrement des polices, pastel dominant et folio du carnet, fond ivoire des pages).
   - `config.py` : `PDFStyle`, les tokens de la direction artistique (couleurs, polices, échelle typographique, marges).
   - `primitives.py` : Les briques de la DA (titre ponctué avec mot d'accent, sourcil, étiquette pilule, cartes, post-it, tampon, icônes, frise, folio…).
-  - `components.py` : Les gabarits pleine page (couverture, ouverture de chapitre, météo, quadrants, deux colonnes, enquête, feuille de route, fin de carnet, 4e de couverture) et les blocs partagés (question, zone de réponse, échelle).
+  - `components.py` : Les gabarits pleine page (couverture, ouverture de carnet, météo, quadrants, deux colonnes, enquête, feuille de route, fin de carnet, 4e de couverture) et les blocs partagés (question, zone de réponse, échelle).
   - `templates.py` : `PageLayout`, la mise en page en flux vertical et ses blocs empilables (questions, encarts, fiches de champs, listes, grilles…), avec pages « (suite) » automatiques.
   - `forms.py` : Champs AcroForm (texte, cases, boutons radio), aux noms uniques.
   - `drawn_blocks.py` : Les blocs dessinés comme des illustrations (ligne de vie, arbre de vie).

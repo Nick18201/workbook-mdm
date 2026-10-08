@@ -16,7 +16,7 @@ Ouvrez ensuite votre navigateur sur :
 👉 **`http://localhost:8080`**
 
 ### Fonctionnalités disponibles sur l'interface :
-1. **Bouton "Charger un exemple"** : Remplit instantanément les notes avec un cas concret (Julien, Chapitre 4).
+1. **Bouton "Charger un exemple"** : Remplit instantanément les notes avec un cas concret (Julien, carnet 5).
 2. **"1. Analyser & Structurer"** : Appelle Gemini Flash pour découper les notes en 7 ou 8 pages calibrées. Vous pouvez retoucher le titre d'une page directement sur l'écran si nécessaire. Sans `GEMINI_API_KEY` (variable d'environnement ou fichier `.env`), un livret générique de secours est produit et un bandeau orange le signale.
 3. **"Télécharger le Livret PDF"** : Compile et télécharge le livret PDF immédiatement en haute définition (AcroForm interactif, vectoriel, charte MDM).
 4. **"🚀 Génération directe 1-Click"** : Prend les notes et télécharge le livret en un seul clic sans étape intermédiaire.
