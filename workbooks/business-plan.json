@@ -1,0 +1,3338 @@
+{
+  "chapter_num": 0,
+  "chapter_title": "Mon business plan",
+  "subtitle": "Créer ou reprendre une activité",
+  "folio": "business plan",
+  "pdf_title": "Mon business plan — De l'idée au projet viable",
+  "parts": [
+    "Fondations et cible",
+    "Problème et offre",
+    "Marché et positionnement",
+    "Modèle économique et vente",
+    "Moyens, finances et cadre",
+    "Test et décision"
+  ],
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mon business *plan.*",
+        "number": null,
+        "eyebrow": "Livret projet · création d'activité",
+        "tagline": "Créer ou reprendre une activité",
+        "promise": "De l'idée au projet viable."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Construire votre *business plan.*",
+      "params": {
+        "num": "",
+        "intro_text": "Ce livret transforme une idée en projet que vous pouvez tester, chiffrer et décider. Il se travaille par parties, dans l'ordre qui vous sert, et se relit en séance avec la personne qui vous accompagne.",
+        "points": [
+          "Partie 1 · Fondations et cible · 1 h 50 : votre idée, votre cap, les personnes que vous servez.",
+          "Partie 2 · Problème et offre · 1 h 55 : le problème réel, vos hypothèses, votre offre.",
+          "Partie 3 · Marché et positionnement · 2 h 10 : le marché, ses règles, vos concurrents, votre place.",
+          "Partie 4 · Modèle économique et vente · 3 h 05 : qui paie, vos prix, vos premiers clients.",
+          "Partie 5 · Moyens, finances et cadre · 3 h 35 : statut, dépenses, point mort, risque, financement.",
+          "Partie 6 · Test et décision · 2 h 35 : le test, les risques, la feuille de route, la synthèse."
+        ],
+        "duration": "15 h",
+        "split": "Les exercices indispensables suffisent pour une première version : comptez 8 h, en plusieurs fois. Une reprise d'entreprise ajoute 45 min."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Comment utiliser *ce livret.*",
+      "part_title": "Mode d'emploi",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce livret se travaille par parties, dans l'ordre qui vous sert. Comptez une à cinq heures par partie, en plusieurs fois.",
+            "• « Indispensable » : avec les autres exercices indispensables, il suffit pour une première version de votre projet.",
+            "• « Si utile » : il approfondit un point. S'il ne concerne pas votre projet, passez-le.",
+            "Ce livret est à vous : la personne qui vous accompagne le lit avec vous en séance. Seule la synthèse (exercice 36) est faite pour être montrée à un financeur ou à une banque."
+          ]
+        },
+        {
+          "type": "info_cards",
+          "columns": 3,
+          "cards": [
+            {
+              "title": "Votre idée",
+              "subtitle": "est encore floue.",
+              "text": "Commencez par les parties 1 et 2, puis testez-la (exercice 32)."
+            },
+            {
+              "title": "Votre offre",
+              "subtitle": "est déjà claire.",
+              "text": "Allez aux parties 4 et 5 : le prix, la vente, les chiffres."
+            },
+            {
+              "title": "Vous reprenez",
+              "subtitle": "une activité.",
+              "text": "Commencez par l'exercice 25, « Reprendre une activité », puis la suite de la partie 5."
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "text": "Le livret renvoie à vos carnets quand ils servent : vos quatre seuils (carnet 4), votre grille anti-compromis (carnet 5), vos pistes (carnets 6 et 7), vos compétences prouvées (carnet de route). Reprenez-les : inutile de tout réécrire.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        },
+        {
+          "type": "annotation",
+          "text": "Commencez là où vous en êtes."
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Votre projet *en bref.*",
+      "part_title": "Fiche projet",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un livret de travail pour structurer, tester et faire évoluer votre projet. Commencez par l'identifier."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "title": "Informations du projet",
+          "rows": [
+            [
+              [
+                "Vos nom et prénom",
+                "bp0_nom"
+              ],
+              [
+                "Nom du projet",
+                "bp0_projet"
+              ]
+            ],
+            [
+              [
+                "Date de début",
+                "bp0_date"
+              ],
+              [
+                "Version du document",
+                "bp0_version"
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Mon projet en une phrase, première intuition",
+              "field_id": "bp0_intuition",
+              "subtitle": "Votre intuition de départ, en une ou deux phrases."
+            }
+          ],
+          "max_box_height_cm": 5.0
+        },
+        {
+          "type": "annotation",
+          "text": "Cette phrase évoluera : c'est voulu."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Mon idée *de projet.*",
+      "part_title": "Partie 1 · Exercice 1 · 20 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une idée devient un projet quand elle répond au besoin réel de personnes précises. Commencez par la dire avec vos mots, sans chercher la bonne formule.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "callout",
+          "text": "Si ce projet est l'une de vos pistes (carnet 6), reprenez sa fiche (carnet 7) : vos critères et vos enquêtes y sont déjà.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Mon idée aujourd'hui",
+              "field_id": "bp1_idee",
+              "subtitle": "Ce que vous voulez créer, proposer ou reprendre, décrit librement."
+            },
+            {
+              "question": "Ce que je veux vraiment, c'est…",
+              "field_id": "bp1_envie",
+              "subtitle": "Ce qui vous attire dans ce projet, pour vous."
+            },
+            {
+              "question": "Ce que je crois devoir faire, parce qu'on l'attend de moi, c'est…",
+              "field_id": "bp1_attendu",
+              "subtitle": "Les attentes de votre entourage, de votre milieu, ou celles que vous vous imposez."
+            },
+            {
+              "question": "Ce projet, je le fais pour moi, ou pour prouver quelque chose à quelqu'un : …",
+              "field_id": "bp1_pour_qui"
+            }
+          ],
+          "min_box_height_cm": 2.2,
+          "max_box_height_cm": 4.2
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Ma vision *à trois ans.*",
+      "part_title": "Partie 1 · Exercice 2 · 20 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Votre vision donne un cap avant les détails. Elle tient compte de votre équilibre de vie, pas seulement de votre ambition.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Mon activité dans trois ans",
+              "subtitle": "Une journée type, la taille de l'activité, vos clients.",
+              "field_id": "bp1_vision_activite"
+            },
+            {
+              "title": "Ce que j'aurai construit",
+              "subtitle": "Produits, services, réputation, résultats concrets.",
+              "field_id": "bp1_vision_construit"
+            },
+            {
+              "title": "La place dans ma vie",
+              "subtitle": "Temps de travail, revenu, liberté, équilibre avec vos proches.",
+              "field_id": "bp1_vision_vie"
+            },
+            {
+              "title": "Je refuse…, donc mon activité devra…",
+              "subtitle": "Exemple : je refuse de travailler le week-end, donc mon activité fonctionnera du lundi au vendredi.",
+              "field_id": "bp1_vision_refus"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 8.6
+        },
+        {
+          "type": "callout",
+          "text": "Reprenez votre grille anti-compromis (carnet 5) : vos trois valeurs et leurs conditions observables complètent « La place dans ma vie ».",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Ma semaine type *dans cette activité.*",
+      "part_title": "Partie 1 · Exercice 3 · 25 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une activité, ce sont d'abord des tâches, chaque semaine. Listez-les, estimez leur temps, et repérez celles qui vous rechargent et celles qui vous coûtent.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Paysagiste",
+          "surface": "J'aime le contact client.",
+          "exploitable": "Je passerai une journée par semaine à prospecter. Cela me coûte : je la coupe en deux demi-journées et je m'appuie sur deux prescripteurs."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Tâche",
+            "Heures par semaine",
+            "Me recharge ou me coûte",
+            "Donc je…"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp1_semaine_tache_1",
+                "placeholder": "Une tâche de la semaine"
+              },
+              {
+                "field_id": "bp1_semaine_heures_1",
+                "placeholder": "Heures"
+              },
+              {
+                "field_id": "bp1_semaine_effet_1",
+                "placeholder": "Me recharge, ou me coûte"
+              },
+              {
+                "field_id": "bp1_semaine_donc_1",
+                "placeholder": "Ce que j'en fais : garder, couper, déléguer, aménager"
+              }
+            ],
+            [
+              {
+                "field_id": "bp1_semaine_tache_2",
+                "placeholder": "Une tâche de la semaine"
+              },
+              {
+                "field_id": "bp1_semaine_heures_2",
+                "placeholder": "Heures"
+              },
+              {
+                "field_id": "bp1_semaine_effet_2",
+                "placeholder": "Me recharge, ou me coûte"
+              },
+              {
+                "field_id": "bp1_semaine_donc_2",
+                "placeholder": "Ce que j'en fais : garder, couper, déléguer, aménager"
+              }
+            ],
+            [
+              {
+                "field_id": "bp1_semaine_tache_3",
+                "placeholder": "Une tâche de la semaine"
+              },
+              {
+                "field_id": "bp1_semaine_heures_3",
+                "placeholder": "Heures"
+              },
+              {
+                "field_id": "bp1_semaine_effet_3",
+                "placeholder": "Me recharge, ou me coûte"
+              },
+              {
+                "field_id": "bp1_semaine_donc_3",
+                "placeholder": "Ce que j'en fais : garder, couper, déléguer, aménager"
+              }
+            ],
+            [
+              {
+                "field_id": "bp1_semaine_tache_4",
+                "placeholder": "Une tâche de la semaine"
+              },
+              {
+                "field_id": "bp1_semaine_heures_4",
+                "placeholder": "Heures"
+              },
+              {
+                "field_id": "bp1_semaine_effet_4",
+                "placeholder": "Me recharge, ou me coûte"
+              },
+              {
+                "field_id": "bp1_semaine_donc_4",
+                "placeholder": "Ce que j'en fais : garder, couper, déléguer, aménager"
+              }
+            ],
+            [
+              {
+                "field_id": "bp1_semaine_tache_5",
+                "placeholder": "Une tâche de la semaine"
+              },
+              {
+                "field_id": "bp1_semaine_heures_5",
+                "placeholder": "Heures"
+              },
+              {
+                "field_id": "bp1_semaine_effet_5",
+                "placeholder": "Me recharge, ou me coûte"
+              },
+              {
+                "field_id": "bp1_semaine_donc_5",
+                "placeholder": "Ce que j'en fais : garder, couper, déléguer, aménager"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            5.0,
+            2.6,
+            3.4,
+            6.0
+          ],
+          "field_prefix": "bp1_semaine",
+          "field_height_cm": 1.3
+        },
+        {
+          "type": "question",
+          "question": "Ce que cette semaine me dit de mon projet",
+          "field_id": "bp1_semaine_bilan",
+          "box_height_cm": 3.4
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Les personnes *que je veux servir.*",
+      "part_title": "Partie 1 · Exercice 4 · 20 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Commencez par les personnes, avant le produit. Pour qui voulez-vous créer de la valeur, et qu'est-ce qui leur pèse au quotidien ?",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Qui sont-elles ?",
+              "field_id": "bp1_cible_qui",
+              "subtitle": "Particuliers ou professionnels, situation, âge, lieu, habitudes.",
+              "example": "les familles avec de jeunes enfants, dans un rayon de dix kilomètres."
+            },
+            {
+              "question": "Qu'est-ce qui leur pèse aujourd'hui ?",
+              "field_id": "bp1_cible_difficultes",
+              "subtitle": "Leurs difficultés, leurs irritants, ce qu'elles cherchent en priorité."
+            },
+            {
+              "question": "Combien sont-elles, et comment les joindre ?",
+              "field_id": "bp1_cible_acces",
+              "subtitle": "Une estimation suffit : où elles se trouvent, qui les connaît, par quel canal les atteindre."
+            }
+          ],
+          "min_box_height_cm": 3.0,
+          "max_box_height_cm": 5.0
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Ce que je sais, *ce que je suppose.*",
+      "part_title": "Partie 1 · Exercice 5 · 25 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Donnez un visage à votre public : le portrait d'une personne type. Puis séparez ce que vous savez de ce que vous supposez encore. Ce sont ces suppositions que vous vérifierez.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Une personne type",
+              "subtitle": "Prénom fictif, âge, situation, habitudes. Exemple : Malik, 45 ans, gère un garage de trois salariés et fait ses devis le soir.",
+              "field_id": "bp1_persona_profil"
+            },
+            {
+              "title": "Ce qui la freine, ce qui la fait avancer",
+              "subtitle": "Ses craintes, ses contraintes, ce qu'elle espère.",
+              "field_id": "bp1_persona_freins"
+            },
+            {
+              "title": "Ce que je sais",
+              "subtitle": "Ce que vous avez observé ou entendu vous-même.",
+              "field_id": "bp1_lucidite_sais"
+            },
+            {
+              "title": "Ce que je suppose, à vérifier",
+              "subtitle": "Vos intuitions sur ses attentes, son budget, ses habitudes : elles deviendront vos hypothèses (exercice 7).",
+              "field_id": "bp1_lucidite_suppose"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 7.2
+        },
+        {
+          "type": "question",
+          "question": "À aborder en séance",
+          "field_id": "bp1_seance",
+          "subtitle": "Deux ou trois points de la partie 1 que vous n'avez pas tranchés.",
+          "box_height_cm": 1.8
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Quel problème *résoudre ?*",
+      "part_title": "Partie 2 · Exercice 6 · 20 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Un projet viable soulage un problème réel, ressenti et prioritaire. Plus le problème est fréquent et coûteux pour vos clients, plus votre solution a de valeur.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Outil de devis pour artisans",
+          "surface": "Les gens manquent de temps.",
+          "exploitable": "Trois des cinq artisans interrogés rédigent leurs devis le soir, après le chantier ; l'un a perdu un client faute de réponse rapide."
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Le problème que j'ai observé",
+              "field_id": "bp2_probleme",
+              "subtitle": "Ce qu'il coûte à vos clients : du temps, de l'argent, des tracas. Décrivez un cas précis."
+            },
+            {
+              "question": "Qui le vit, à quelle fréquence, avec quelle importance ?",
+              "field_id": "bp2_probleme_intensite",
+              "subtitle": "Un problème urgent et fréquent, ou secondaire et occasionnel ?"
+            },
+            {
+              "question": "Comment font vos clients aujourd'hui, et pourquoi cela ne suffit pas ?",
+              "field_id": "bp2_probleme_solutions",
+              "subtitle": "Les solutions existantes, les bricolages, et leurs limites : trop chères, trop lentes, trop compliquées."
+            }
+          ],
+          "min_box_height_cm": 2.4,
+          "max_box_height_cm": 4.2
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Mes hypothèses *à vérifier.*",
+      "part_title": "Partie 2 · Exercice 7 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une hypothèse est un pari sur vos clients, à vérifier avant d'engager des frais. Écrivez les trois paris dont dépend votre projet.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Traiteur",
+          "surface": "Les entreprises voudront mes plateaux-repas.",
+          "exploitable": "Les cabinets du quartier commandent leurs plateaux-repas la veille, pour huit à quinze personnes, et cherchent des produits frais."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Hypothèse",
+            "Ce que je crois",
+            "Pourquoi je le crois",
+            "Comment je la vérifie, auprès de qui"
+          ],
+          "rows": [
+            [
+              "Hypothèse 1",
+              {
+                "field_id": "bp2_hyp1_croyance",
+                "placeholder": "Ce que je crois"
+              },
+              {
+                "field_id": "bp2_hyp1_raison",
+                "placeholder": "Pourquoi je le crois"
+              },
+              {
+                "field_id": "bp2_hyp1_test",
+                "placeholder": "Comment je la vérifie"
+              }
+            ],
+            [
+              "Hypothèse 2",
+              {
+                "field_id": "bp2_hyp2_croyance",
+                "placeholder": "Ce que je crois"
+              },
+              {
+                "field_id": "bp2_hyp2_raison",
+                "placeholder": "Pourquoi je le crois"
+              },
+              {
+                "field_id": "bp2_hyp2_test",
+                "placeholder": "Comment je la vérifie"
+              }
+            ],
+            [
+              "Hypothèse 3",
+              {
+                "field_id": "bp2_hyp3_croyance",
+                "placeholder": "Ce que je crois"
+              },
+              {
+                "field_id": "bp2_hyp3_raison",
+                "placeholder": "Pourquoi je le crois"
+              },
+              {
+                "field_id": "bp2_hyp3_test",
+                "placeholder": "Comment je la vérifie"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            2.6,
+            5.4,
+            4.2,
+            4.8
+          ],
+          "field_prefix": "bp2_hyp",
+          "field_height_cm": 2.6
+        },
+        {
+          "type": "annotation",
+          "text": "Vous noterez ce que le terrain en dit à l'exercice 33."
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Mon guide *d'entretien.*",
+      "part_title": "Partie 2 · Exercice 8 · 20 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Avant de vendre, écoutez. Interrogez au moins cinq personnes de votre public, une à une. Le but : comprendre leur problème, pas présenter votre offre.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "heading",
+          "text": "Des questions neutres, sur des faits"
+        },
+        {
+          "type": "star_list",
+          "items": [
+            "« Racontez-moi la dernière fois que ce problème s'est posé. »",
+            "« Comment avez-vous fait ? Qu'est-ce que cela vous a coûté ? »",
+            "« Qu'avez-vous déjà essayé, et pourquoi avez-vous arrêté ? »",
+            "Si vous présentez déjà une offre : ce qui retient d'acheter, le prix jugé raisonnable, l'événement qui déciderait l'achat."
+          ]
+        },
+        {
+          "type": "numbered_lines",
+          "count": 8,
+          "line_height_cm": 0.9,
+          "cards": [
+            [
+              "Les personnes que j'interroge",
+              "bp2_entretien_contact",
+              "Nom, lien avec vous, date de l'entretien."
+            ],
+            [
+              "Mes questions à moi",
+              "bp2_entretien_question",
+              "Une ou deux par hypothèse (exercice 7)."
+            ]
+          ]
+        },
+        {
+          "type": "annotation",
+          "text": "Notez les mots exacts : ils serviront pour votre message."
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Ce que je propose *concrètement.*",
+      "part_title": "Partie 2 · Exercice 9 · 25 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Transformez le besoin observé en une offre concrète. Dire ce qui est inclus, et ce qui ne l'est pas, permet de vendre avec assurance et d'éviter le travail gratuit.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "Mon produit ou mon service",
+          "field_id": "bp2_offre",
+          "subtitle": "À quoi il sert, ce que la personne reçoit, comment cela se passe pour elle.",
+          "example": "un service de retouches à domicile : prise de mesures chez vous, retour sous huit jours, deux essayages compris.",
+          "box_height_cm": 4.0
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Ce qui est inclus",
+              "subtitle": "Temps, livrables, délais, garanties.",
+              "field_id": "bp2_offre_inclus"
+            },
+            {
+              "title": "Ce qui n'est pas inclus",
+              "subtitle": "Ce que vous ne faites pas, les conditions, les limites.",
+              "field_id": "bp2_offre_exclus"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 8.6
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Ma proposition *de valeur.*",
+      "part_title": "Partie 2 · Exercice 10 · 20 min · Si utile",
+      "blocks": [
+        {
+          "type": "callout",
+          "text": "Pourquoi une personne choisirait-elle votre offre plutôt qu'une autre, ou plutôt que de ne rien faire ?",
+          "title": "La question pivot",
+          "variant": "tip"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Ce que ma clientèle y gagne",
+              "field_id": "bp2_benefices",
+              "subtitle": "Le résultat concret, puis ce qu'elle ressent : du temps retrouvé, de la tranquillité, de la fierté.",
+              "example": "une épicerie de vrac : acheter la juste quantité, sans emballage, à deux rues de chez soi."
+            },
+            {
+              "question": "Ce qui rend mon offre différente",
+              "field_id": "bp2_difference",
+              "subtitle": "Votre méthode, votre parcours, votre façon de faire, votre éthique."
+            },
+            {
+              "question": "Ce que mes clients perdent s'ils ne font rien",
+              "field_id": "bp2_inaction",
+              "subtitle": "Le coût du statu quo : c'est souvent votre vrai concurrent."
+            }
+          ],
+          "min_box_height_cm": 2.2,
+          "max_box_height_cm": 3.8,
+          "safe_bottom_margin_cm": 6.8
+        },
+        {
+          "type": "question",
+          "question": "À aborder en séance",
+          "field_id": "bp2_seance",
+          "subtitle": "Deux ou trois points de la partie 2 que vous n'avez pas tranchés.",
+          "box_height_cm": 1.8
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Mon marché *et ses règles.*",
+      "part_title": "Partie 3 · Exercice 11 · 25 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Situez votre projet dans son environnement : les évolutions qui le portent, celles qui le fragilisent, et les règles qui encadrent votre activité.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "Mon marché, mon secteur",
+          "field_id": "bp3_marche",
+          "example": "la restauration rapide de quartier.",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Ce qui porte mon projet",
+              "subtitle": "Les évolutions des habitudes, des techniques, de la réglementation.",
+              "field_id": "bp3_tendances_pour"
+            },
+            {
+              "title": "Ce qui peut le fragiliser",
+              "subtitle": "Baisse du pouvoir d'achat, nouveaux acteurs, outils gratuits…",
+              "field_id": "bp3_tendances_contre"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 5.8
+        },
+        {
+          "type": "question",
+          "question": "Les règles de mon activité",
+          "field_id": "bp3_reglementation",
+          "subtitle": "Diplôme ou qualification exigés, normes d'un établissement recevant du public (ERP), protection des données personnelles (RGPD), assurance obligatoire…",
+          "box_height_cm": 2.6
+        },
+        {
+          "type": "link_card",
+          "title": "Où vérifier les règles de votre activité",
+          "links": [
+            [
+              "Bpifrance Création",
+              "https://bpifrance-creation.fr",
+              "les activités réglementées et leurs conditions d'accès."
+            ],
+            [
+              "Entreprendre.Service-Public",
+              "https://entreprendre.service-public.gouv.fr",
+              "le site officiel des démarches des entreprises."
+            ]
+          ],
+          "fixed": true
+        }
+      ],
+      "part": 3
+    },
+    {
+      "template": "composite",
+      "title": "Concurrents *et alternatives.*",
+      "part_title": "Partie 3 · Exercice 12 · 30 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Regardez au-delà des concurrents directs : les offres différentes qui répondent au même besoin, les solutions bricolées, et l'inaction. Vos clients peuvent aussi ne rien faire.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "checklist",
+          "title": "Cochez ce qui existe pour votre activité :",
+          "items": [
+            [
+              "Concurrents directs : même offre, même public",
+              "bp3_chk_directs"
+            ],
+            [
+              "Concurrents indirects : autre offre, même besoin",
+              "bp3_chk_indirects"
+            ],
+            [
+              "Solutions bricolées : faire soi-même, tutoriels, entraide",
+              "bp3_chk_bricolage"
+            ],
+            [
+              "L'inaction : ne rien changer",
+              "bp3_chk_inaction"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "text",
+          "text": "Exemple, pour une boulangerie : la boulangerie de la place (direct), le rayon pain du supermarché (indirect), le pain fait maison (bricolé), se passer de pain (l'inaction).",
+          "style": "italic",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Un concurrent direct",
+              "subtitle": "Nom, offre, prix, forces, ce que vous feriez autrement.",
+              "field_id": "bp3_concurrent_direct"
+            },
+            {
+              "title": "Un concurrent indirect",
+              "subtitle": "Nom, offre, prix, forces, ce que vous feriez autrement.",
+              "field_id": "bp3_concurrent_indirect"
+            },
+            {
+              "title": "Une solution bricolée",
+              "subtitle": "Ce que vos clients font par eux-mêmes, et ce que cela leur coûte.",
+              "field_id": "bp3_bricolage"
+            },
+            {
+              "title": "L'inaction",
+              "subtitle": "Ce que vos clients font s'ils ne font rien, et ce qui les ferait bouger.",
+              "field_id": "bp3_inaction"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 6.8
+        }
+      ],
+      "part": 3
+    },
+    {
+      "template": "composite",
+      "title": "Des projets *qui m'inspirent.*",
+      "part_title": "Partie 3 · Exercice 13 · 30 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Observez trois projets proches du vôtre, en France ou ailleurs. Il ne s'agit pas de copier, mais de comprendre ce qui fonctionne.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Projet et lieu",
+            "Concept et public",
+            "Modèle économique",
+            "Ce qui fait sa force"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp3_inspi1_projet",
+                "placeholder": "Nom du projet et lieu"
+              },
+              {
+                "field_id": "bp3_inspi1_concept",
+                "placeholder": "Ce qu'il propose, à qui"
+              },
+              {
+                "field_id": "bp3_inspi1_modele",
+                "placeholder": "Comment il gagne de l'argent"
+              },
+              {
+                "field_id": "bp3_inspi1_force",
+                "placeholder": "Ce qu'il fait mieux que les autres"
+              }
+            ],
+            [
+              {
+                "field_id": "bp3_inspi2_projet",
+                "placeholder": "Nom du projet et lieu"
+              },
+              {
+                "field_id": "bp3_inspi2_concept",
+                "placeholder": "Ce qu'il propose, à qui"
+              },
+              {
+                "field_id": "bp3_inspi2_modele",
+                "placeholder": "Comment il gagne de l'argent"
+              },
+              {
+                "field_id": "bp3_inspi2_force",
+                "placeholder": "Ce qu'il fait mieux que les autres"
+              }
+            ],
+            [
+              {
+                "field_id": "bp3_inspi3_projet",
+                "placeholder": "Nom du projet et lieu"
+              },
+              {
+                "field_id": "bp3_inspi3_concept",
+                "placeholder": "Ce qu'il propose, à qui"
+              },
+              {
+                "field_id": "bp3_inspi3_modele",
+                "placeholder": "Comment il gagne de l'argent"
+              },
+              {
+                "field_id": "bp3_inspi3_force",
+                "placeholder": "Ce qu'il fait mieux que les autres"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.0,
+            4.4,
+            4.2,
+            4.4
+          ],
+          "field_prefix": "bp3_inspi",
+          "field_height_cm": 2.2
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Ce que je retiens et pourrais adapter",
+              "field_id": "bp3_inspi_retenu"
+            },
+            {
+              "question": "Ce que je ne veux pas reproduire, donc ce que je ferai autrement",
+              "field_id": "bp3_inspi_refus"
+            }
+          ],
+          "min_box_height_cm": 2.4,
+          "max_box_height_cm": 4.4
+        }
+      ],
+      "part": 3
+    },
+    {
+      "template": "composite",
+      "title": "L'univers *de mon projet.*",
+      "part_title": "Partie 3 · Exercice 14 · 20 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Votre positionnement n'est pas un slogan : c'est la place nette que vous prenez dans l'esprit de vos clients. Il guide votre ton, votre prix et la relation que vous proposez.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Si mon projet était une personne",
+              "subtitle": "Son ton, son allure, ses manières. Exemple, pour une fromagerie : conviviale, précise, de saison.",
+              "field_id": "bp3_univers_personne"
+            },
+            {
+              "title": "Trois à cinq mots pour mon univers",
+              "subtitle": "Les mots qui disent l'ambiance de votre projet.",
+              "field_id": "bp3_univers_mots"
+            },
+            {
+              "title": "Ce que je défends, ce que je refuse, donc…",
+              "subtitle": "Vos lignes rouges, traduites en règles. Exemple : je refuse les promesses intenables, donc j'annonce mes délais réels.",
+              "field_id": "bp3_univers_lignes"
+            },
+            {
+              "title": "Mon niveau de gamme",
+              "subtitle": "Accessible, intermédiaire ou haut de gamme, et la relation qui va avec.",
+              "field_id": "bp3_univers_gamme"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 9.6
+        }
+      ],
+      "part": 3
+    },
+    {
+      "template": "composite",
+      "title": "Ma phrase *de présentation.*",
+      "part_title": "Partie 3 · Exercice 15 · 25 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une phrase claire se trouve rarement du premier coup. Essayez trois versions, puis gardez celle que vous direz à voix haute.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Version factuelle",
+              "subtitle": "Ce que vous faites, pour qui, comment.",
+              "field_id": "bp3_phrase_factuelle"
+            },
+            {
+              "title": "Version transformation",
+              "subtitle": "Le changement que vivent vos clients, d'un état à un autre.",
+              "field_id": "bp3_phrase_transformation"
+            },
+            {
+              "title": "Version audacieuse",
+              "subtitle": "Le parti pris qui vous distingue des habitudes du marché.",
+              "field_id": "bp3_phrase_audacieuse"
+            }
+          ],
+          "columns": 3,
+          "card_height_cm": 8.0
+        },
+        {
+          "type": "question",
+          "question": "La phrase que je retiens aujourd'hui",
+          "field_id": "bp3_phrase_retenue",
+          "subtitle": "Une trame possible : [mon activité] permet à [qui] de [résultat], sans [ce qui les gêne aujourd'hui].",
+          "example": "je révise et revends des vélos d'occasion, garantis six mois, aux étudiants de ma ville.",
+          "box_height_cm": 1.8
+        },
+        {
+          "type": "question",
+          "question": "À aborder en séance",
+          "field_id": "bp3_seance",
+          "subtitle": "Deux ou trois points de la partie 3 que vous n'avez pas tranchés.",
+          "box_height_cm": 1.8
+        }
+      ],
+      "part": 3
+    },
+    {
+      "template": "composite",
+      "title": "Qui paie, *et pour quoi.*",
+      "part_title": "Partie 4 · Exercice 16 · 20 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Votre modèle économique dit comment votre projet gagne de l'argent : qui paie, pour quoi, et à quel moment.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "checklist",
+          "title": "Cochez les sources de revenus envisagées :",
+          "items": [
+            [
+              "Vente à l'unité : produit ou prestation",
+              "bp4_chk_unite"
+            ],
+            [
+              "Abonnement ou forfait mensuel",
+              "bp4_chk_abonnement"
+            ],
+            [
+              "Prestation sur devis",
+              "bp4_chk_devis"
+            ],
+            [
+              "Vente aux entreprises",
+              "bp4_chk_entreprises"
+            ],
+            [
+              "Partenariats, commissions",
+              "bp4_chk_partenariats"
+            ],
+            [
+              "Aides ou subventions",
+              "bp4_chk_aides"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Mes revenus principaux et secondaires",
+              "field_id": "bp4_revenus",
+              "subtitle": "L'offre qui fait l'essentiel de vos revenus, et les rentrées complémentaires.",
+              "example": "un photographe : des séances pour les particuliers, des reportages pour les entreprises, des tirages vendus en ligne."
+            },
+            {
+              "question": "Qui paie concrètement ?",
+              "field_id": "bp4_payeur",
+              "subtitle": "La personne elle-même, son employeur, un organisme qui finance, une collectivité…"
+            },
+            {
+              "question": "Quand paie-t-on, et comment ?",
+              "field_id": "bp4_paiement",
+              "subtitle": "À la commande, à la livraison, chaque mois, en plusieurs fois, avec ou sans acompte."
+            }
+          ],
+          "min_box_height_cm": 2.2,
+          "max_box_height_cm": 3.6
+        }
+      ],
+      "part": 4
+    },
+    {
+      "template": "composite",
+      "title": "Mon modèle *sur une page.*",
+      "part_title": "Partie 4 · Exercice 17 · 30 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Le Business Model Canvas est une grille de neuf cases sur une page. Elle montre d'un coup d'œil à qui vous vendez, quoi, par quel chemin, avec quelles dépenses et quelles recettes. Reportez-y en quelques mots vos réponses aux exercices 4, 10, 16, 20, 23 et 27.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Clients",
+              "subtitle": "Pour qui créez-vous de la valeur ?",
+              "field_id": "bp4_canvas_clients"
+            },
+            {
+              "title": "2. Proposition de valeur",
+              "subtitle": "Ce que vous leur apportez.",
+              "field_id": "bp4_canvas_valeur"
+            },
+            {
+              "title": "3. Relation client",
+              "subtitle": "Le lien que vous entretenez.",
+              "field_id": "bp4_canvas_relation"
+            },
+            {
+              "title": "4. Canaux",
+              "subtitle": "Comment ils vous trouvent et achètent.",
+              "field_id": "bp4_canvas_canaux"
+            },
+            {
+              "title": "5. Activités clés",
+              "subtitle": "Ce que vous devez bien faire.",
+              "field_id": "bp4_canvas_activites"
+            },
+            {
+              "title": "6. Ressources clés",
+              "subtitle": "Ce dont vous avez besoin.",
+              "field_id": "bp4_canvas_ressources"
+            },
+            {
+              "title": "7. Partenaires clés",
+              "subtitle": "Vos alliés : fournisseurs, prescripteurs.",
+              "field_id": "bp4_canvas_partenaires"
+            },
+            {
+              "title": "8. Coûts",
+              "subtitle": "Vos principales dépenses.",
+              "field_id": "bp4_canvas_couts"
+            },
+            {
+              "title": "9. Revenus",
+              "subtitle": "Comment l'argent rentre.",
+              "field_id": "bp4_canvas_revenus"
+            }
+          ],
+          "columns": 3,
+          "card_height_cm": 6.8
+        }
+      ],
+      "part": 4
+    },
+    {
+      "template": "composite",
+      "title": "Mes offres *et formules.*",
+      "part_title": "Partie 4 · Exercice 18 · 25 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Organisez vos offres en une gamme simple : une offre principale, qui porte l'essentiel de vos efforts, et quelques offres complémentaires.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Offre",
+            "Pour qui",
+            "Contenu",
+            "Prix envisagé",
+            "Ce qu'il me reste"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp4_offre1_nom",
+                "placeholder": "Nom de l'offre"
+              },
+              {
+                "field_id": "bp4_offre1_public",
+                "placeholder": "Pour qui"
+              },
+              {
+                "field_id": "bp4_offre1_contenu",
+                "placeholder": "Ce qu'elle comprend"
+              },
+              {
+                "field_id": "bp4_offre1_prix",
+                "placeholder": "Prix envisagé"
+              },
+              {
+                "field_id": "bp4_offre1_marge",
+                "placeholder": "Prix moins ce que coûte la prestation"
+              }
+            ],
+            [
+              {
+                "field_id": "bp4_offre2_nom",
+                "placeholder": "Nom de l'offre"
+              },
+              {
+                "field_id": "bp4_offre2_public",
+                "placeholder": "Pour qui"
+              },
+              {
+                "field_id": "bp4_offre2_contenu",
+                "placeholder": "Ce qu'elle comprend"
+              },
+              {
+                "field_id": "bp4_offre2_prix",
+                "placeholder": "Prix envisagé"
+              },
+              {
+                "field_id": "bp4_offre2_marge",
+                "placeholder": "Prix moins ce que coûte la prestation"
+              }
+            ],
+            [
+              {
+                "field_id": "bp4_offre3_nom",
+                "placeholder": "Nom de l'offre"
+              },
+              {
+                "field_id": "bp4_offre3_public",
+                "placeholder": "Pour qui"
+              },
+              {
+                "field_id": "bp4_offre3_contenu",
+                "placeholder": "Ce qu'elle comprend"
+              },
+              {
+                "field_id": "bp4_offre3_prix",
+                "placeholder": "Prix envisagé"
+              },
+              {
+                "field_id": "bp4_offre3_marge",
+                "placeholder": "Prix moins ce que coûte la prestation"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.4,
+            3.2,
+            4.6,
+            2.8,
+            3.0
+          ],
+          "field_prefix": "bp4_offres",
+          "field_height_cm": 2.0
+        },
+        {
+          "type": "text",
+          "text": "Ce qu'il vous reste, c'est la marge : le prix, moins ce que coûte la prestation (matériel, sous-traitance, déplacement).",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Mon offre principale",
+              "subtitle": "Pourquoi elle, et à quel problème principal elle répond.",
+              "field_id": "bp4_offre_principale"
+            },
+            {
+              "title": "Mes offres complémentaires, plus tard",
+              "subtitle": "Ce que vous proposerez dans un second temps, sans vous disperser au départ.",
+              "field_id": "bp4_offres_futures"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 8.4
+        }
+      ],
+      "part": 4
+    },
+    {
+      "template": "composite",
+      "title": "Fixer *mon prix.*",
+      "part_title": "Partie 4 · Exercice 19 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Un prix juste se trouve au croisement de trois angles : vos coûts, la valeur pour vos clients, et les prix du marché. Revenez à cette page après l'exercice 29 : votre point mort dira si votre prix tient.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Mon prix plancher",
+              "subtitle": "En dessous, vous travaillez à perte.",
+              "field_id": "bp4_prix_plancher"
+            },
+            {
+              "title": "Mon prix cible",
+              "subtitle": "Celui qui paie votre travail et vos charges.",
+              "field_id": "bp4_prix_cible"
+            },
+            {
+              "title": "Mon prix haut",
+              "subtitle": "Pour une version plus complète de votre offre.",
+              "field_id": "bp4_prix_haut"
+            },
+            {
+              "title": "Les prix du marché",
+              "subtitle": "Les fourchettes observées chez des acteurs comparables (exercice 12).",
+              "field_id": "bp4_prix_marche"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 4.4
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Le prix que j'ose annoncer à voix haute :",
+              [
+                "bp4_prix_ose",
+                3.0,
+                "Le prix que j'ose annoncer"
+              ],
+              "€"
+            ],
+            [
+              "Le prix que mes calculs demandent :",
+              [
+                "bp4_prix_calcule",
+                3.0,
+                "Le prix que mes calculs demandent"
+              ],
+              "€"
+            ],
+            [
+              "L'écart vient de…",
+              [
+                "bp4_prix_ecart",
+                null,
+                "L'écart vient de"
+              ]
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "question",
+          "question": "Le prix que je n'ose pas annoncer, et ce que je crains d'entendre",
+          "field_id": "bp4_prix_crainte",
+          "box_height_cm": 3.4
+        }
+      ],
+      "part": 4
+    },
+    {
+      "template": "composite",
+      "title": "Trouver mes *premiers clients.*",
+      "part_title": "Partie 4 · Exercice 20 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Les premiers clients viennent rarement seuls. Choisissez peu de canaux, tenus dans la durée, et visez vos dix premiers clients.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "À l'idée de vendre, je ressens… et cela vient de…",
+          "field_id": "bp4_vendre",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "checklist",
+          "title": "Cochez les canaux envisagés :",
+          "items": [
+            [
+              "Bouche-à-oreille et réseau proche",
+              "bp4_chk_reseau"
+            ],
+            [
+              "Réseaux sociaux",
+              "bp4_chk_reseaux_sociaux"
+            ],
+            [
+              "Prescripteurs et partenaires qui recommandent",
+              "bp4_chk_prescripteurs"
+            ],
+            [
+              "Événements, marchés, salons",
+              "bp4_chk_evenements"
+            ],
+            [
+              "Site internet et référencement dans les moteurs de recherche",
+              "bp4_chk_site"
+            ],
+            [
+              "Prospection directe : appels, visites, courriels",
+              "bp4_chk_prospection"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Mes canaux prioritaires, et pourquoi",
+              "field_id": "bp4_canaux",
+              "subtitle": "Ceux qui correspondent aux habitudes de vos clients, et à votre façon d'être."
+            },
+            {
+              "question": "Comment j'obtiens mes dix premiers clients",
+              "field_id": "bp4_dix_clients",
+              "subtitle": "Des actions précises : qui contacter, quand, avec quelle proposition.",
+              "example": "un plombier : appeler les trois agences immobilières du quartier, qui cherchent un artisan disponible."
+            },
+            {
+              "question": "Comment un contact intéressé devient client",
+              "field_id": "bp4_conversion",
+              "subtitle": "Le premier échange, la proposition écrite, la relance."
+            }
+          ],
+          "min_box_height_cm": 1.8,
+          "max_box_height_cm": 3.4
+        }
+      ],
+      "part": 4
+    },
+    {
+      "template": "composite",
+      "title": "Le parcours client *en quatre temps.*",
+      "part_title": "Partie 4 · Exercice 21 · 20 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "La relation commence avant l'achat et continue après. Pour chaque temps, notez ce que vivent vos clients et ce que vous faites.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Temps",
+            "Ce que vivent vos clients",
+            "Ce que je fais"
+          ],
+          "rows": [
+            [
+              "1. La découverte",
+              {
+                "field_id": "bp4_parcours1_client",
+                "placeholder": "Ce qu'ils vivent, ce qu'ils attendent"
+              },
+              {
+                "field_id": "bp4_parcours1_action",
+                "placeholder": "Ce que je fais ou fournis"
+              }
+            ],
+            [
+              "2. Le contact et la décision",
+              {
+                "field_id": "bp4_parcours2_client",
+                "placeholder": "Ce qu'ils vivent, ce qu'ils attendent"
+              },
+              {
+                "field_id": "bp4_parcours2_action",
+                "placeholder": "Ce que je fais ou fournis"
+              }
+            ],
+            [
+              "3. L'achat et l'expérience",
+              {
+                "field_id": "bp4_parcours3_client",
+                "placeholder": "Ce qu'ils vivent, ce qu'ils attendent"
+              },
+              {
+                "field_id": "bp4_parcours3_action",
+                "placeholder": "Ce que je fais ou fournis"
+              }
+            ],
+            [
+              "4. Après la vente",
+              {
+                "field_id": "bp4_parcours4_client",
+                "placeholder": "Ce qu'ils vivent, ce qu'ils attendent"
+              },
+              {
+                "field_id": "bp4_parcours4_action",
+                "placeholder": "Ce que je fais ou fournis"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.2,
+            6.4,
+            6.4
+          ],
+          "field_prefix": "bp4_parcours",
+          "field_height_cm": 2.3
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "L'attention qui surprend",
+              "subtitle": "Un détail inattendu qui marque, à petit coût.",
+              "field_id": "bp4_attention"
+            },
+            {
+              "title": "Ce qui donne envie de vous recommander",
+              "subtitle": "Avis, parrainage, bouche-à-oreille : comment vos clients parlent de vous.",
+              "field_id": "bp4_recommandation"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 7.0
+        }
+      ],
+      "part": 4
+    },
+    {
+      "template": "composite",
+      "title": "Mon message *et mes canaux.*",
+      "part_title": "Partie 4 · Exercice 22 · 30 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Communiquer, c'est dire clairement ce que vous faites et pour qui. Mieux vaut un canal tenu avec régularité que cinq abandonnés. Cet exercice peut attendre votre test (exercice 32).",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "Mon message principal",
+          "field_id": "bp4_message",
+          "subtitle": "L'idée que vous voulez répéter, et l'action que vous proposez : appeler, réserver, passer à l'atelier.",
+          "example": "un caviste : des vins de petits domaines, choisis pour un repas précis.",
+          "box_height_cm": 1.8
+        },
+        {
+          "type": "question",
+          "question": "Mon ton et mes mots",
+          "field_id": "bp4_ton",
+          "subtitle": "Chaleureux, direct, pédagogue, technique… et les mots que vous évitez.",
+          "box_height_cm": 1.8
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Canal",
+            "Pour quoi faire",
+            "Contenu",
+            "Rythme",
+            "Temps par semaine"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp4_com1_canal",
+                "placeholder": "Canal"
+              },
+              {
+                "field_id": "bp4_com1_objectif",
+                "placeholder": "Se faire connaître, rassurer, vendre"
+              },
+              {
+                "field_id": "bp4_com1_contenu",
+                "placeholder": "Ce que vous publiez ou faites"
+              },
+              {
+                "field_id": "bp4_com1_rythme",
+                "placeholder": "Rythme"
+              },
+              {
+                "field_id": "bp4_com1_temps",
+                "placeholder": "Heures par semaine"
+              }
+            ],
+            [
+              {
+                "field_id": "bp4_com2_canal",
+                "placeholder": "Canal"
+              },
+              {
+                "field_id": "bp4_com2_objectif",
+                "placeholder": "Se faire connaître, rassurer, vendre"
+              },
+              {
+                "field_id": "bp4_com2_contenu",
+                "placeholder": "Ce que vous publiez ou faites"
+              },
+              {
+                "field_id": "bp4_com2_rythme",
+                "placeholder": "Rythme"
+              },
+              {
+                "field_id": "bp4_com2_temps",
+                "placeholder": "Heures par semaine"
+              }
+            ],
+            [
+              {
+                "field_id": "bp4_com3_canal",
+                "placeholder": "Canal"
+              },
+              {
+                "field_id": "bp4_com3_objectif",
+                "placeholder": "Se faire connaître, rassurer, vendre"
+              },
+              {
+                "field_id": "bp4_com3_contenu",
+                "placeholder": "Ce que vous publiez ou faites"
+              },
+              {
+                "field_id": "bp4_com3_rythme",
+                "placeholder": "Rythme"
+              },
+              {
+                "field_id": "bp4_com3_temps",
+                "placeholder": "Heures par semaine"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.2,
+            3.6,
+            4.6,
+            2.8,
+            2.8
+          ],
+          "field_prefix": "bp4_com",
+          "field_height_cm": 1.3
+        },
+        {
+          "type": "question",
+          "question": "À aborder en séance",
+          "field_id": "bp4_seance",
+          "subtitle": "Deux ou trois points de la partie 4 que vous n'avez pas tranchés.",
+          "box_height_cm": 1.8
+        }
+      ],
+      "part": 4
+    },
+    {
+      "template": "composite",
+      "title": "Mes ressources *et mes arbitrages.*",
+      "part_title": "Partie 5 · Exercice 23 · 20 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Faites l'inventaire de ce dont vous avez besoin pour exercer. Au démarrage, achetez l'indispensable ; louez ou partagez le reste.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "checklist",
+          "title": "Cochez ce qu'il vous faut pour démarrer :",
+          "items": [
+            [
+              "Matériel et outils de travail",
+              "bp5_chk_materiel"
+            ],
+            [
+              "Un lieu : bureau, atelier, local, boutique",
+              "bp5_chk_lieu"
+            ],
+            [
+              "Logiciels : facturation, agenda, comptabilité",
+              "bp5_chk_logiciels"
+            ],
+            [
+              "Fournisseurs ou matières premières",
+              "bp5_chk_fournisseurs"
+            ],
+            [
+              "Un expert-comptable ou un conseiller",
+              "bp5_chk_conseil"
+            ],
+            [
+              "Une compétence à acquérir",
+              "bp5_chk_competence"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Ce que j'ai déjà",
+              "subtitle": "Matériel, compétences, contacts.",
+              "field_id": "bp5_ressources_dispo"
+            },
+            {
+              "title": "Ce qui me manque",
+              "subtitle": "Les achats ou les démarches indispensables pour ouvrir.",
+              "field_id": "bp5_ressources_manque"
+            },
+            {
+              "title": "Acheter, louer ou partager ?",
+              "subtitle": "Les choix qui limitent vos charges fixes au départ.",
+              "field_id": "bp5_arbitrage"
+            },
+            {
+              "title": "Ce que je fais, ce que je délègue",
+              "subtitle": "Gardez votre énergie pour ce qui fait votre valeur.",
+              "field_id": "bp5_deleguer"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 8.2
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Mes forces *et mes appuis.*",
+      "part_title": "Partie 5 · Exercice 24 · 25 min · Si utile",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Situez vos compétences : 1 guidé, 2 autonome, 3 améliorateur, 4 référent.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "rating_grid",
+          "title": "Mon niveau aujourd'hui",
+          "field_prefix": "bp5_niveau",
+          "values": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "min_label": "Guidé",
+          "max_label": "Référent",
+          "items": [
+            [
+              "Mon cœur de métier",
+              "bp5_niveau_metier"
+            ],
+            [
+              "La vente et la communication",
+              "bp5_niveau_vente"
+            ],
+            [
+              "La gestion et les chiffres",
+              "bp5_niveau_gestion"
+            ],
+            [
+              "L'organisation de mon temps",
+              "bp5_niveau_organisation"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "text": "Reprenez vos compétences prouvées et vos deux récits (carnet de route) : ils montrent ce que vous savez déjà faire.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Les réussites qui montrent que je sais déjà faire une partie de ce métier",
+          "field_id": "bp5_reussites",
+          "box_height_cm": 1.5
+        },
+        {
+          "type": "question",
+          "question": "La compétence qui me manque et qui me fait douter de tout le projet",
+          "field_id": "bp5_doute",
+          "subtitle": "Et ce que vous pouvez faire : vous former, vous associer, déléguer.",
+          "box_height_cm": 1.5
+        },
+        {
+          "type": "question",
+          "question": "Les personnes dont j'ai besoin autour de moi",
+          "field_id": "bp5_entourage",
+          "subtitle": "Une personne du métier, un pair, un expert-comptable, des proches qui soutiennent.",
+          "box_height_cm": 1.5
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Reprendre *une activité.*",
+      "part_title": "Partie 5 · Exercice 25 · 45 min · Si vous reprenez",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Reprendre une entreprise, c'est acheter une activité qui tourne : sa clientèle, ses contrats, parfois ses salariés. Vérifiez chaque point avec un expert-comptable avant de vous engager.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "fields_card",
+          "title": "Les points à vérifier",
+          "rows": [
+            [
+              [
+                "Pourquoi le cédant vend-il ?",
+                "bp5_reprise_cedant",
+                1.1
+              ]
+            ],
+            [
+              [
+                "Les trois derniers bilans : chiffre d'affaires, résultat, tendance",
+                "bp5_reprise_bilans",
+                1.1
+              ]
+            ],
+            [
+              [
+                "La clientèle : fidèle à l'entreprise, ou au cédant ?",
+                "bp5_reprise_clientele",
+                1.1
+              ]
+            ],
+            [
+              [
+                "Le bail : durée, loyer, conditions de cession",
+                "bp5_reprise_bail",
+                1.1
+              ]
+            ],
+            [
+              [
+                "Les salariés repris et leurs contrats",
+                "bp5_reprise_salaries",
+                1.1
+              ]
+            ],
+            [
+              [
+                "Le prix demandé, et ce qu'il comprend : stock, matériel, clientèle",
+                "bp5_reprise_prix",
+                1.1
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "link_card",
+          "title": "Qui peut vous accompagner",
+          "links": [
+            [
+              "Chambres de commerce et d'industrie (CCI)",
+              "https://www.cci.fr",
+              "pour un commerce ou une activité de services."
+            ],
+            [
+              "Chambres de métiers et de l'artisanat",
+              "https://www.artisanat.fr",
+              "pour une entreprise artisanale."
+            ],
+            [
+              "Bpifrance Création",
+              "https://bpifrance-creation.fr",
+              "des guides sur la reprise et des annonces d'entreprises à reprendre."
+            ]
+          ],
+          "fixed": true
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Mon cadre *juridique.*",
+      "part_title": "Partie 5 · Exercice 26 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Le statut sert votre projet et votre sécurité, pas l'inverse. Voici les grandes familles : comparez-les avec un expert-comptable ou un conseiller avant de choisir.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "info_cards",
+          "columns": 3,
+          "fixed": true,
+          "cards": [
+            {
+              "title": "Entreprise individuelle",
+              "subtitle": "(EI)",
+              "text": "Vous exercez en votre nom. Depuis le 15 mai 2022, vos biens personnels sont séparés par défaut de vos biens professionnels. La micro-entreprise en est un régime simplifié, pas un statut à part."
+            },
+            {
+              "title": "Société",
+              "subtitle": "EURL, SASU, SARL, SAS…",
+              "text": "Une personne morale distincte de vous, avec des statuts et un capital. Plus de formalités, d'autres règles pour votre rémunération et votre protection sociale."
+            },
+            {
+              "title": "Coopérative",
+              "subtitle": "d'activité et d'emploi (CAE)",
+              "text": "Vous exercez au sein d'une coopérative, avec un statut d'entrepreneur salarié. Une façon de démarrer sans créer de structure."
+            }
+          ]
+        },
+        {
+          "type": "checklist",
+          "title": "À vérifier pour votre activité, à cocher une fois fait :",
+          "items": [
+            [
+              "Immatriculation sur le guichet unique des formalités des entreprises",
+              "bp5_chk_immatriculation"
+            ],
+            [
+              "Assurance : vérifier si elle est obligatoire pour votre activité (activités réglementées, bâtiment…) ; sinon, une responsabilité civile professionnelle reste recommandée",
+              "bp5_chk_assurance"
+            ],
+            [
+              "Compte bancaire : obligatoire en société ; en micro-entreprise, un compte dédié devient obligatoire selon votre chiffre d'affaires",
+              "bp5_chk_banque"
+            ],
+            [
+              "Conditions générales de vente rédigées",
+              "bp5_chk_cgv"
+            ],
+            [
+              "Mentions légales et protection des données personnelles (RGPD) sur votre site et vos documents",
+              "bp5_chk_rgpd"
+            ],
+            [
+              "Si vous vendez à des particuliers : adhésion à un médiateur de la consommation (Code de la consommation, art. L612-1)",
+              "bp5_chk_mediateur"
+            ]
+          ],
+          "columns": 1,
+          "fixed": true
+        },
+        {
+          "type": "link_card",
+          "title": "Sources officielles",
+          "links": [
+            [
+              "Guichet unique",
+              "https://formalites.entreprises.gouv.fr",
+              "pour immatriculer votre entreprise."
+            ],
+            [
+              "Bpifrance Création",
+              "https://bpifrance-creation.fr",
+              "pour comparer les statuts et les régimes."
+            ],
+            [
+              "Compte bancaire du micro-entrepreneur",
+              "https://entreprendre.service-public.gouv.fr/vosdroits/F35991",
+              "les règles du compte dédié."
+            ],
+            [
+              "Médiation de la consommation",
+              "https://www.economie.gouv.fr/mediation-conso",
+              "vos obligations et la liste des médiateurs."
+            ]
+          ],
+          "fixed": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Le statut que j'envisage, et pourquoi",
+              "field_id": "bp5_statut",
+              "subtitle": "Simplicité, protection de vos biens, cumul avec une allocation, image auprès de vos clients…"
+            },
+            {
+              "question": "Ce que j'ai déjà vérifié, et auprès de qui",
+              "field_id": "bp5_verifie",
+              "subtitle": "Expert-comptable, CCI, chambre de métiers, réseau d'accompagnement, France Travail."
+            },
+            {
+              "question": "Ce qu'il me reste à vérifier avant de m'immatriculer",
+              "field_id": "bp5_a_verifier"
+            }
+          ],
+          "min_box_height_cm": 3.0,
+          "max_box_height_cm": 5.0
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Mes dépenses *de démarrage.*",
+      "part_title": "Partie 5 · Exercice 27 · 25 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Les dépenses de démarrage se paient une fois, pour ouvrir. Appuyez chaque montant sur un devis ou une source.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Dépense",
+            "Montant (€)",
+            "Devis ou source",
+            "Indispensable dès le début ?"
+          ],
+          "rows": [
+            [
+              "Matériel et outils",
+              {
+                "field_id": "bp5_dep1_montant",
+                "placeholder": "Montant"
+              },
+              {
+                "field_id": "bp5_dep1_source",
+                "placeholder": "Devis, catalogue, tarif"
+              },
+              {
+                "field_id": "bp5_dep1_indispensable",
+                "placeholder": "Oui, ou plus tard"
+              }
+            ],
+            [
+              "Aménagement du lieu",
+              {
+                "field_id": "bp5_dep2_montant",
+                "placeholder": "Montant"
+              },
+              {
+                "field_id": "bp5_dep2_source",
+                "placeholder": "Devis, catalogue, tarif"
+              },
+              {
+                "field_id": "bp5_dep2_indispensable",
+                "placeholder": "Oui, ou plus tard"
+              }
+            ],
+            [
+              "Site internet et identité visuelle",
+              {
+                "field_id": "bp5_dep3_montant",
+                "placeholder": "Montant"
+              },
+              {
+                "field_id": "bp5_dep3_source",
+                "placeholder": "Devis, catalogue, tarif"
+              },
+              {
+                "field_id": "bp5_dep3_indispensable",
+                "placeholder": "Oui, ou plus tard"
+              }
+            ],
+            [
+              "Stock de départ",
+              {
+                "field_id": "bp5_dep4_montant",
+                "placeholder": "Montant"
+              },
+              {
+                "field_id": "bp5_dep4_source",
+                "placeholder": "Devis, catalogue, tarif"
+              },
+              {
+                "field_id": "bp5_dep4_indispensable",
+                "placeholder": "Oui, ou plus tard"
+              }
+            ],
+            [
+              "Formalités et conseils",
+              {
+                "field_id": "bp5_dep5_montant",
+                "placeholder": "Montant"
+              },
+              {
+                "field_id": "bp5_dep5_source",
+                "placeholder": "Devis, catalogue, tarif"
+              },
+              {
+                "field_id": "bp5_dep5_indispensable",
+                "placeholder": "Oui, ou plus tard"
+              }
+            ],
+            [
+              {
+                "field_id": "bp5_dep6_nom",
+                "placeholder": "Autre dépense"
+              },
+              {
+                "field_id": "bp5_dep6_montant",
+                "placeholder": "Montant"
+              },
+              {
+                "field_id": "bp5_dep6_source",
+                "placeholder": "Devis, catalogue, tarif"
+              },
+              {
+                "field_id": "bp5_dep6_indispensable",
+                "placeholder": "Oui, ou plus tard"
+              }
+            ],
+            [
+              {
+                "field_id": "bp5_dep7_nom",
+                "placeholder": "Autre dépense"
+              },
+              {
+                "field_id": "bp5_dep7_montant",
+                "placeholder": "Montant"
+              },
+              {
+                "field_id": "bp5_dep7_source",
+                "placeholder": "Devis, catalogue, tarif"
+              },
+              {
+                "field_id": "bp5_dep7_indispensable",
+                "placeholder": "Oui, ou plus tard"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            5.6,
+            3.0,
+            5.0,
+            3.4
+          ],
+          "field_prefix": "bp5_dep",
+          "field_height_cm": 1.2
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Total de mes dépenses de démarrage :",
+              [
+                "bp5_dep_total",
+                3.5,
+                "Total des dépenses de démarrage"
+              ],
+              "€"
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "callout",
+          "text": "Ajoutez une marge pour imprévus, à fixer avec votre expert-comptable ou votre conseiller.",
+          "title": "Imprévus",
+          "fixed": true
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Mes charges *de chaque mois.*",
+      "part_title": "Partie 5 · Exercice 28 · 20 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Les charges reviennent chaque mois, que vous vendiez ou non. Les achats liés aux ventes et les cotisations sociales se calculent à part, à l'exercice 29.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Charge",
+            "Par mois (€)",
+            "Fixe ou variable",
+            "Comment la réduire"
+          ],
+          "rows": [
+            [
+              "Assurances",
+              {
+                "field_id": "bp5_charge1_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge1_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge1_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ],
+            [
+              "Loyer ou espace de travail",
+              {
+                "field_id": "bp5_charge2_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge2_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge2_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ],
+            [
+              "Logiciels et abonnements",
+              {
+                "field_id": "bp5_charge3_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge3_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge3_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ],
+            [
+              "Expert-comptable",
+              {
+                "field_id": "bp5_charge4_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge4_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge4_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ],
+            [
+              "Banque et moyens de paiement",
+              {
+                "field_id": "bp5_charge5_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge5_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge5_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ],
+            [
+              "Déplacements",
+              {
+                "field_id": "bp5_charge6_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge6_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge6_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ],
+            [
+              "Communication",
+              {
+                "field_id": "bp5_charge7_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge7_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge7_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ],
+            [
+              {
+                "field_id": "bp5_charge8_nom",
+                "placeholder": "Autre charge"
+              },
+              {
+                "field_id": "bp5_charge8_montant",
+                "placeholder": "Montant par mois"
+              },
+              {
+                "field_id": "bp5_charge8_type",
+                "placeholder": "Fixe ou variable"
+              },
+              {
+                "field_id": "bp5_charge8_reduire",
+                "placeholder": "Une piste pour la réduire"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            5.6,
+            3.0,
+            3.2,
+            5.2
+          ],
+          "field_prefix": "bp5_charges",
+          "field_height_cm": 0.9
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Total de mes charges par mois :",
+              [
+                "bp5_charges_total",
+                3.5,
+                "Total des charges par mois"
+              ],
+              "€"
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "callout",
+          "text": "La TVA : sous un seuil de chiffre d'affaires, la franchise en base vous dispense de la facturer. La cotisation foncière des entreprises (CFE) : elle n'est pas due l'année de la création. Les seuils et les montants changent : vérifiez-les à la source.",
+          "title": "Deux points à vérifier",
+          "fixed": true
+        },
+        {
+          "type": "link_card",
+          "title": "Où vérifier",
+          "links": [
+            [
+              "Impots.gouv.fr, espace professionnel",
+              "https://www.impots.gouv.fr/professionnel",
+              "la TVA, la CFE et les impôts de l'entreprise."
+            ],
+            [
+              "Urssaf, micro-entreprise",
+              "https://www.autoentrepreneur.urssaf.fr",
+              "les taux de cotisation, selon votre activité."
+            ]
+          ],
+          "fixed": true
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Mon point mort, *pas à pas.*",
+      "part_title": "Partie 5 · Exercice 29 · 40 min · Indispensable",
+      "blocks": [
+        {
+          "type": "callout",
+          "text": "Le point mort est le chiffre d'affaires à partir duquel votre activité paie toutes ses charges. En dessous, elle vous coûte ; au-dessus, elle commence à vous payer. Ici, nous y ajoutons votre rémunération minimale : c'est le chiffre d'affaires dont vous avez besoin pour vivre de votre activité.",
+          "title": "Définition",
+          "fixed": true
+        },
+        {
+          "type": "text",
+          "text": "Exemple, pour une boutique de fleurs : 300 bouquets par mois × 35 € = 10 500 € de chiffre d'affaires.",
+          "style": "italic",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Par mois",
+            "Prudent",
+            "Réaliste",
+            "Ambitieux"
+          ],
+          "rows": [
+            [
+              "Nombre de ventes",
+              {
+                "field_id": "bp5_pm_ventes_prudent",
+                "placeholder": "Nombre de ventes : scénario prudent"
+              },
+              {
+                "field_id": "bp5_pm_ventes_realiste",
+                "placeholder": "Nombre de ventes : scénario réaliste"
+              },
+              {
+                "field_id": "bp5_pm_ventes_ambitieux",
+                "placeholder": "Nombre de ventes : scénario ambitieux"
+              }
+            ],
+            [
+              "× prix moyen (€, exercice 19)",
+              {
+                "field_id": "bp5_pm_prix_prudent",
+                "placeholder": "× prix moyen (€, exercice 19) : scénario prudent"
+              },
+              {
+                "field_id": "bp5_pm_prix_realiste",
+                "placeholder": "× prix moyen (€, exercice 19) : scénario réaliste"
+              },
+              {
+                "field_id": "bp5_pm_prix_ambitieux",
+                "placeholder": "× prix moyen (€, exercice 19) : scénario ambitieux"
+              }
+            ],
+            [
+              "= chiffre d'affaires (€)",
+              {
+                "field_id": "bp5_pm_ca_prudent",
+                "placeholder": "= chiffre d'affaires (€) : scénario prudent"
+              },
+              {
+                "field_id": "bp5_pm_ca_realiste",
+                "placeholder": "= chiffre d'affaires (€) : scénario réaliste"
+              },
+              {
+                "field_id": "bp5_pm_ca_ambitieux",
+                "placeholder": "= chiffre d'affaires (€) : scénario ambitieux"
+              }
+            ],
+            [
+              "− achats liés aux ventes : marchandises, matières (€)",
+              {
+                "field_id": "bp5_pm_achats_prudent",
+                "placeholder": "− achats liés aux ventes : marchandises, matières (€) : scénario prudent"
+              },
+              {
+                "field_id": "bp5_pm_achats_realiste",
+                "placeholder": "− achats liés aux ventes : marchandises, matières (€) : scénario réaliste"
+              },
+              {
+                "field_id": "bp5_pm_achats_ambitieux",
+                "placeholder": "− achats liés aux ventes : marchandises, matières (€) : scénario ambitieux"
+              }
+            ],
+            [
+              "− charges du mois (€, exercice 28)",
+              {
+                "field_id": "bp5_pm_charges_prudent",
+                "placeholder": "− charges du mois (€, exercice 28) : scénario prudent"
+              },
+              {
+                "field_id": "bp5_pm_charges_realiste",
+                "placeholder": "− charges du mois (€, exercice 28) : scénario réaliste"
+              },
+              {
+                "field_id": "bp5_pm_charges_ambitieux",
+                "placeholder": "− charges du mois (€, exercice 28) : scénario ambitieux"
+              }
+            ],
+            [
+              "− cotisations sociales : le taux de votre activité × le chiffre d'affaires (€)",
+              {
+                "field_id": "bp5_pm_cotisations_prudent",
+                "placeholder": "− cotisations sociales : le taux de votre activité × le chiffre d'affaires (€) : scénario prudent"
+              },
+              {
+                "field_id": "bp5_pm_cotisations_realiste",
+                "placeholder": "− cotisations sociales : le taux de votre activité × le chiffre d'affaires (€) : scénario réaliste"
+              },
+              {
+                "field_id": "bp5_pm_cotisations_ambitieux",
+                "placeholder": "− cotisations sociales : le taux de votre activité × le chiffre d'affaires (€) : scénario ambitieux"
+              }
+            ],
+            [
+              "= ce qui reste pour vous, avant impôt (€)",
+              {
+                "field_id": "bp5_pm_reste_prudent",
+                "placeholder": "= ce qui reste pour vous, avant impôt (€) : scénario prudent"
+              },
+              {
+                "field_id": "bp5_pm_reste_realiste",
+                "placeholder": "= ce qui reste pour vous, avant impôt (€) : scénario réaliste"
+              },
+              {
+                "field_id": "bp5_pm_reste_ambitieux",
+                "placeholder": "= ce qui reste pour vous, avant impôt (€) : scénario ambitieux"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            7.0,
+            3.3,
+            3.3,
+            3.4
+          ],
+          "field_prefix": "bp5_pm"
+        },
+        {
+          "type": "callout",
+          "text": "Le calcul change : vos cotisations portent sur la rémunération que vous vous versez, et l'entreprise paie ses propres impôts. Faites-le avec votre expert-comptable.",
+          "title": "En société",
+          "fixed": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "callout",
+          "text": "Votre minimum vital est l'un de vos quatre seuils (carnet 4). Votre point mort doit au moins le couvrir.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Mon minimum vital par mois :",
+              [
+                "bp5_pm_minimum",
+                3.0,
+                "Mon minimum vital par mois"
+              ],
+              "€"
+            ],
+            [
+              "Le chiffre d'affaires qu'il me faut par mois :",
+              [
+                "bp5_pm_ca_necessaire",
+                3.0,
+                "Le chiffre d'affaires qu'il me faut par mois"
+              ],
+              "€"
+            ],
+            [
+              "Soit",
+              [
+                "bp5_pm_ventes_necessaires",
+                2.0,
+                "Nombre de ventes par mois"
+              ],
+              "ventes par mois, au prix moyen."
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Si mon activité ne couvre pas mon minimum vital au bout de",
+              [
+                "bp5_pm_delai",
+                1.6,
+                "Nombre de mois"
+              ],
+              "mois,"
+            ],
+            [
+              "je",
+              [
+                "bp5_pm_alors",
+                null,
+                "Ce que je ferai alors"
+              ]
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "question",
+          "question": "Ce que ces chiffres me disent de mon projet",
+          "field_id": "bp5_pm_lecture",
+          "box_height_cm": 5.0
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Le risque, *pour vous.*",
+      "part_title": "Partie 5 · Exercice 30 · 25 min · Indispensable",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cette page parle de votre argent personnel, de votre foyer et de vos peurs. Elle est engageante."
+        },
+        {
+          "type": "callout",
+          "text": "Vos quatre seuils (carnet 4) donnent déjà la durée acceptable d'une baisse de revenus. Vos tensions (carnet 5) éclairent la dernière question.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "La somme que je peux perdre sans mettre mon foyer en difficulté",
+              "field_id": "bp5_risque_somme"
+            },
+            {
+              "question": "La durée pendant laquelle je peux accepter une baisse de revenus",
+              "field_id": "bp5_risque_duree"
+            },
+            {
+              "question": "Ce que la personne qui partage ma vie pense de ce projet, et ce qu'elle craint",
+              "field_id": "bp5_risque_proche",
+              "subtitle": "Si vous ne vivez pas en couple : ce qu'en pensent vos proches."
+            },
+            {
+              "question": "Ce qui me ferait le plus mal si le projet s'arrêtait",
+              "field_id": "bp5_risque_peur",
+              "subtitle": "L'argent, le regard des autres, autre chose."
+            },
+            {
+              "question": "La tension que ce projet réveille",
+              "field_id": "bp5_risque_tension",
+              "subtitle": "Liberté et sécurité, sens et rémunération, temps pour soi et temps pour le projet…"
+            }
+          ],
+          "min_box_height_cm": 2.0,
+          "max_box_height_cm": 3.4
+        },
+        {
+          "type": "anchor",
+          "field_id": "bp5_risque_ancrage"
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Mon plan *de financement.*",
+      "part_title": "Partie 5 · Exercice 31 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Le montant à financer couvre vos dépenses de démarrage et un matelas de trésorerie. Ce matelas paie vos charges pendant la durée que vous jugez acceptable (exercice 30).",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Dépenses de démarrage (exercice 27) :",
+              [
+                "bp5_fin_depenses",
+                3.0,
+                "Dépenses de démarrage"
+              ],
+              "€"
+            ],
+            [
+              "Matelas :",
+              [
+                "bp5_fin_mois",
+                1.5,
+                "Nombre de mois"
+              ],
+              "mois de charges, soit",
+              [
+                "bp5_fin_matelas",
+                3.0,
+                "Matelas de trésorerie"
+              ],
+              "€"
+            ],
+            [
+              "Total à financer :",
+              [
+                "bp5_fin_total",
+                3.0,
+                "Total à financer"
+              ],
+              "€"
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Source",
+            "Montant possible (€)",
+            "Conditions",
+            "Ce que j'en pense"
+          ],
+          "rows": [
+            [
+              "Apport personnel",
+              {
+                "field_id": "bp5_fin1_montant",
+                "placeholder": "Montant possible"
+              },
+              {
+                "field_id": "bp5_fin1_conditions",
+                "placeholder": "Conditions, délais"
+              },
+              {
+                "field_id": "bp5_fin1_avis",
+                "placeholder": "Avantages et contraintes"
+              }
+            ],
+            [
+              "Allocations de France Travail, si vous avez des droits",
+              {
+                "field_id": "bp5_fin2_montant",
+                "placeholder": "Montant possible"
+              },
+              {
+                "field_id": "bp5_fin2_conditions",
+                "placeholder": "Conditions, délais"
+              },
+              {
+                "field_id": "bp5_fin2_avis",
+                "placeholder": "Avantages et contraintes"
+              }
+            ],
+            [
+              "Prêt d'honneur : sans intérêt, sans garantie",
+              {
+                "field_id": "bp5_fin3_montant",
+                "placeholder": "Montant possible"
+              },
+              {
+                "field_id": "bp5_fin3_conditions",
+                "placeholder": "Conditions, délais"
+              },
+              {
+                "field_id": "bp5_fin3_avis",
+                "placeholder": "Avantages et contraintes"
+              }
+            ],
+            [
+              "Prêt bancaire",
+              {
+                "field_id": "bp5_fin4_montant",
+                "placeholder": "Montant possible"
+              },
+              {
+                "field_id": "bp5_fin4_conditions",
+                "placeholder": "Conditions, délais"
+              },
+              {
+                "field_id": "bp5_fin4_avis",
+                "placeholder": "Avantages et contraintes"
+              }
+            ],
+            [
+              {
+                "field_id": "bp5_fin5_source",
+                "placeholder": "Autre : financement participatif, aide locale…"
+              },
+              {
+                "field_id": "bp5_fin5_montant",
+                "placeholder": "Montant possible"
+              },
+              {
+                "field_id": "bp5_fin5_conditions",
+                "placeholder": "Conditions, délais"
+              },
+              {
+                "field_id": "bp5_fin5_avis",
+                "placeholder": "Avantages et contraintes"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.6,
+            3.0,
+            4.7,
+            4.7
+          ],
+          "field_prefix": "bp5_fin",
+          "field_height_cm": 1.3
+        },
+        {
+          "type": "link_card",
+          "title": "Où vous renseigner",
+          "links": [
+            [
+              "France Travail",
+              "https://www.francetravail.fr/candidat/je-creereprends-une-entreprise.html",
+              "vos droits si vous créez ou reprenez une entreprise (ARE, ARCE)."
+            ],
+            [
+              "Initiative France",
+              "https://www.initiative-france.fr",
+              "prêts d'honneur et accompagnement."
+            ],
+            [
+              "Réseau Entreprendre",
+              "https://www.reseau-entreprendre.org",
+              "prêts d'honneur et accompagnement par des chefs d'entreprise."
+            ],
+            [
+              "France Active",
+              "https://www.franceactive.org",
+              "financements et garanties."
+            ]
+          ],
+          "fixed": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "callout",
+          "text": "Votre tendance dominante face à l'argent (carnet 4) pèse-t-elle sur ce choix ? Relisez-la avant de décider.",
+          "title": "Si vous avez fait le bilan",
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Ma décision de financement",
+          "field_id": "bp5_fin_decision",
+          "subtitle": "La combinaison que vous retenez, et le risque que vous acceptez.",
+          "box_height_cm": 5.0
+        },
+        {
+          "type": "question",
+          "question": "À aborder en séance",
+          "field_id": "bp5_seance",
+          "subtitle": "Deux ou trois points de la partie 5 que vous n'avez pas tranchés.",
+          "box_height_cm": 1.8
+        }
+      ],
+      "part": 5
+    },
+    {
+      "template": "composite",
+      "title": "Tester *avant de me lancer.*",
+      "part_title": "Partie 6 · Exercice 32 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "callout",
+          "text": "Quelle est la plus petite version de votre projet que vous pouvez tester vite, à moindre coût ? On parle aussi de produit minimum viable (MVP, en anglais).",
+          "title": "Le principe du test",
+          "variant": "tip"
+        },
+        {
+          "type": "text",
+          "text": "Reprenez vos hypothèses (exercice 7) et votre guide d'entretien (exercice 8) : le test les vérifie.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Cours de cuisine à domicile",
+          "surface": "Si ça marche, je continue.",
+          "exploitable": "Je continue si trois des dix personnes contactées acceptent un essai payant. Je revois l'offre si personne ne paie."
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Mon test",
+              "subtitle": "Quoi, avec qui, quand, pour quel coût.",
+              "field_id": "bp6_test"
+            },
+            {
+              "title": "Mes critères de décision",
+              "subtitle": "Le résultat qui vous fait continuer, celui qui vous fait revoir l'offre.",
+              "field_id": "bp6_criteres"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 8.0
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Début du test",
+                "bp6_test_debut"
+              ],
+              [
+                "Fin du test",
+                "bp6_test_fin"
+              ],
+              [
+                "Personnes visées",
+                "bp6_test_personnes"
+              ]
+            ]
+          ]
+        }
+      ],
+      "part": 6
+    },
+    {
+      "template": "composite",
+      "title": "Ce que le terrain *m'a appris.*",
+      "part_title": "Partie 6 · Exercice 33 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Après vos entretiens et votre test, revenez à vos trois hypothèses (exercice 7). Pour chacune, notez ce que disent les faits.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "rating_grid",
+          "title": "Mes hypothèses face aux faits",
+          "field_prefix": "bp6_hyp",
+          "values": [
+            "Confirmée",
+            "À revoir",
+            "Fausse"
+          ],
+          "items": [
+            [
+              "Hypothèse 1",
+              "bp6_hyp1"
+            ],
+            [
+              "Hypothèse 2",
+              "bp6_hyp2"
+            ],
+            [
+              "Hypothèse 3",
+              "bp6_hyp3"
+            ]
+          ]
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Ce qui m'étonne dans ce que j'ai entendu",
+              "field_id": "bp6_etonne"
+            },
+            {
+              "question": "Ce que je change dans mon offre, mon prix ou mon public",
+              "field_id": "bp6_change"
+            },
+            {
+              "question": "Les mots exacts de mes clients, à garder",
+              "field_id": "bp6_mots",
+              "subtitle": "Ils serviront pour votre message (exercice 22)."
+            }
+          ],
+          "min_box_height_cm": 2.4,
+          "max_box_height_cm": 4.2
+        }
+      ],
+      "part": 6
+    },
+    {
+      "template": "composite",
+      "title": "Mes risques *et mes parades.*",
+      "part_title": "Partie 6 · Exercice 34 · 25 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Être lucide sur les risques, c'est se donner les moyens d'y faire face. Notez la gravité et la probabilité de 1 (faible) à 3 (forte), et gardez au moins un risque personnel : santé, fatigue, foyer. Reprenez vos hypothèses (exercice 7) : celle dont tout dépend est votre premier risque.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Risque",
+            "Gravité (1 à 3)",
+            "Probabilité (1 à 3)",
+            "Ce que je fais pour l'éviter",
+            "Mon plan B"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp6_risque1_nom",
+                "placeholder": "Le risque"
+              },
+              {
+                "field_id": "bp6_risque1_gravite",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque1_proba",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque1_prevention",
+                "placeholder": "Ce que je fais pour l'éviter"
+              },
+              {
+                "field_id": "bp6_risque1_planb",
+                "placeholder": "Ce que je fais s'il arrive"
+              }
+            ],
+            [
+              {
+                "field_id": "bp6_risque2_nom",
+                "placeholder": "Le risque"
+              },
+              {
+                "field_id": "bp6_risque2_gravite",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque2_proba",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque2_prevention",
+                "placeholder": "Ce que je fais pour l'éviter"
+              },
+              {
+                "field_id": "bp6_risque2_planb",
+                "placeholder": "Ce que je fais s'il arrive"
+              }
+            ],
+            [
+              {
+                "field_id": "bp6_risque3_nom",
+                "placeholder": "Le risque"
+              },
+              {
+                "field_id": "bp6_risque3_gravite",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque3_proba",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque3_prevention",
+                "placeholder": "Ce que je fais pour l'éviter"
+              },
+              {
+                "field_id": "bp6_risque3_planb",
+                "placeholder": "Ce que je fais s'il arrive"
+              }
+            ],
+            [
+              {
+                "field_id": "bp6_risque4_nom",
+                "placeholder": "Le risque"
+              },
+              {
+                "field_id": "bp6_risque4_gravite",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque4_proba",
+                "placeholder": "1, 2 ou 3"
+              },
+              {
+                "field_id": "bp6_risque4_prevention",
+                "placeholder": "Ce que je fais pour l'éviter"
+              },
+              {
+                "field_id": "bp6_risque4_planb",
+                "placeholder": "Ce que je fais s'il arrive"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.2,
+            2.1,
+            2.3,
+            4.2,
+            4.2
+          ],
+          "field_prefix": "bp6_risques",
+          "field_height_cm": 2.3
+        },
+        {
+          "type": "question",
+          "question": "Le signal qui me fera revoir mes plans",
+          "field_id": "bp6_signal",
+          "subtitle": "Un fait observable, avec sa date.",
+          "example": "moins de dix ventes à la fin du troisième mois.",
+          "box_height_cm": 3.0
+        }
+      ],
+      "part": 6
+    },
+    {
+      "template": "composite",
+      "title": "Ma feuille *de route.*",
+      "part_title": "Partie 6 · Exercice 35 · 30 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Découpez votre lancement en trois paliers, chacun avec un objectif, un résultat observable et trois actions. Appuyez-vous sur vos critères de décision (exercice 32) et votre point mort (exercice 29).",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Menuisier",
+          "surface": "Me lancer en septembre.",
+          "exploitable": "D'ici 30 jours : trois devis envoyés à des architectes d'intérieur et un premier chantier signé."
+        },
+        {
+          "type": "fields_card",
+          "title": "Palier 1 · les 30 premiers jours",
+          "rows": [
+            [
+              [
+                "Objectif",
+                "bp6_palier1_objectif",
+                0.9
+              ],
+              [
+                "Résultat observable",
+                "bp6_palier1_resultat",
+                0.9
+              ]
+            ],
+            [
+              [
+                "Action 1",
+                "bp6_palier1_action1",
+                1.0
+              ],
+              [
+                "Action 2",
+                "bp6_palier1_action2",
+                1.0
+              ],
+              [
+                "Action 3",
+                "bp6_palier1_action3",
+                1.0
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "title": "Palier 2 · le deuxième et le troisième mois",
+          "rows": [
+            [
+              [
+                "Objectif",
+                "bp6_palier2_objectif",
+                0.9
+              ],
+              [
+                "Résultat observable",
+                "bp6_palier2_resultat",
+                0.9
+              ]
+            ],
+            [
+              [
+                "Action 1",
+                "bp6_palier2_action1",
+                1.0
+              ],
+              [
+                "Action 2",
+                "bp6_palier2_action2",
+                1.0
+              ],
+              [
+                "Action 3",
+                "bp6_palier2_action3",
+                1.0
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "title": "Palier 3 · du quatrième au sixième mois",
+          "rows": [
+            [
+              [
+                "Objectif",
+                "bp6_palier3_objectif",
+                0.9
+              ],
+              [
+                "Résultat observable",
+                "bp6_palier3_resultat",
+                0.9
+              ]
+            ],
+            [
+              [
+                "Action 1",
+                "bp6_palier3_action1",
+                1.0
+              ],
+              [
+                "Action 2",
+                "bp6_palier3_action2",
+                1.0
+              ],
+              [
+                "Action 3",
+                "bp6_palier3_action3",
+                1.0
+              ]
+            ]
+          ]
+        }
+      ],
+      "part": 6
+    },
+    {
+      "template": "composite",
+      "title": "La synthèse *de mon projet.*",
+      "part_title": "Partie 6 · Exercice 36 · 40 min · Indispensable",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "La page à montrer à un partenaire, à un financeur ou à une banque. Reprenez vos réponses, en quelques lignes par case.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Le projet et son origine",
+              "subtitle": "Le nom, ce que vous faites, l'origine de votre décision.",
+              "field_id": "bp6_syn_projet"
+            },
+            {
+              "title": "Le public et son problème",
+              "subtitle": "Pour qui, et ce que vous réglez pour lui.",
+              "field_id": "bp6_syn_public"
+            },
+            {
+              "title": "L'offre et ce qui la distingue",
+              "subtitle": "Vos offres, votre prix, votre différence.",
+              "field_id": "bp6_syn_offre"
+            },
+            {
+              "title": "Le marché",
+              "subtitle": "Ses tendances, vos concurrents, votre place.",
+              "field_id": "bp6_syn_marche"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 9.6
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Les chiffres clés",
+              "subtitle": "Prix moyen, point mort, chiffre d'affaires visé la première année, montant à financer et apport.",
+              "field_id": "bp6_syn_chiffres"
+            }
+          ],
+          "columns": 1,
+          "card_height_cm": 4.6
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Le test et ses résultats",
+              "subtitle": "Ce que vous avez vérifié, ce qu'il reste à vérifier.",
+              "field_id": "bp6_syn_test"
+            },
+            {
+              "title": "Les risques et les parades",
+              "subtitle": "Les deux principaux, et votre plan B.",
+              "field_id": "bp6_syn_risques"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 4.6
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ma décision aujourd'hui",
+          "field_prefix": "bp6_decision",
+          "values": [
+            "Je lance",
+            "Je teste encore",
+            "Je modifie",
+            "En pause"
+          ],
+          "items": [
+            [
+              "Ma décision",
+              "bp6_decision"
+            ]
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Parce que…",
+          "field_id": "bp6_decision_raison",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ce projet respecte…",
+          "field_prefix": "bp6_viable",
+          "values": [
+            "Oui",
+            "En partie",
+            "Non"
+          ],
+          "items": [
+            [
+              "Mes trois valeurs non négociables",
+              "bp6_viable_valeurs"
+            ],
+            [
+              "Mon minimum vital",
+              "bp6_viable_minimum"
+            ]
+          ]
+        }
+      ],
+      "part": 6
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin du livret",
+      "params": {
+        "lines": [
+          "Je confronte mes hypothèses au terrain avant d'engager des frais.",
+          "Je regarde mes chiffres et mes devis avec honnêteté.",
+          "Je teste vite et j'accepte l'imperfection des débuts.",
+          "Je protège ma santé, mon foyer et mon rythme de vie.",
+          "J'assume la valeur de mon travail."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "bp_livrable",
+        "livrable_title": "Votre business plan",
+        "livrable_text": "Votre modèle, vos chiffres, votre test et votre feuille de route, validés partie par partie en séance."
+      }
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Ce livret reste le vôtre.",
+          "Reprenez-le à chaque étape de votre projet."
+        ]
+      }
+    }
+  ]
+}

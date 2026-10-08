@@ -58,6 +58,33 @@ def test_app_compiles_a_reference_workbook_like_the_cli():
     assert [p.get_text() for p in app_doc] == [p.get_text() for p in cli_doc]
 
 
+def test_parts_are_named_and_hold_consecutive_pages():
+    """A part is customized alone and put back where it was: its pages follow one another."""
+    for workbook_id, raw in _raw_workbooks():
+        pages_of_part = {}
+        for i, page in enumerate(raw["pages"]):
+            if "part" in page:
+                pages_of_part.setdefault(page["part"], []).append(i)
+        assert sorted(pages_of_part) == list(range(1, len(raw.get("parts", [])) + 1)), workbook_id
+        for part, indexes in pages_of_part.items():
+            assert indexes == list(range(indexes[0], indexes[-1] + 1)), (workbook_id, part)
+
+
+def test_business_plan_is_customized_part_by_part(monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    client = TestClient(app)
+    info = next(t for t in client.get("/api/templates").json() if t["id"] == "business-plan")
+    reference = client.get("/api/templates/business-plan").json()
+
+    r = client.post("/api/customize", json={"template_id": "business-plan", "part": 4,
+                                            "beneficiary_name": "Alex", "beneficiary_context": "Fleuriste"})
+
+    assert len(info["parts"]) == 6
+    assert r.status_code == 200
+    assert r.json()["spec"]["pages"] == reference["pages"]  # the fallback adapts nothing in a part
+    assert r.json()["spec"]["beneficiary_name"] == "Alex"
+
+
 def test_customized_copy_does_not_change_the_reference():
     copy = get_predefined_spec("chap1")
     copy.pages[0].params["promise"] = "Autre promesse."

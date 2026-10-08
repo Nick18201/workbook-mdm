@@ -38,7 +38,7 @@ CATALOGUE = [
     ("livret", 7, "Livret de compétences", "Portfolio de compétences prouvées par des faits",
      "Préférences, travail réel, cartographie du métier, autonomie, récits d'action et plan de sécurité.",
      "workspace_premium", BILAN),
-    ("business_plan", 99, "Mon business plan · De l'idée au projet viable",
+    ("business-plan", 99, "Mon business plan · De l'idée au projet viable",
      "Fondations, offre, marché, modèle économique, moyens et test",
      "Le livret complet pour structurer une création d'activité, tester son marché et obtenir ses premières ventes.",
      "business_center", "Entrepreneuriat"),
@@ -63,6 +63,7 @@ def get_predefined_info_list() -> List[TemplateInfo]:
     """Retourne la liste des résumés de tous les modèles pré-intégrés."""
     return [
         TemplateInfo(id=template_id, chapter_num=num, title=title, subtitle=subtitle, description=description,
-                     page_count=len(_reference_spec(template_id).pages), icon=icon, category=category)
+                     page_count=len(_reference_spec(template_id).pages), icon=icon, category=category,
+                     parts=_reference_spec(template_id).parts or [])
         for template_id, num, title, subtitle, description, icon, category in CATALOGUE
     ]

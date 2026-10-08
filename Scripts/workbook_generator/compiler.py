@@ -253,7 +253,8 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
         widths = b_data.get("col_widths_cm")
         col_widths = [_length_pt(w, 0) for w in widths] if isinstance(widths, list) else None
         prefix = b_data.get("field_prefix") or f"p{page_idx}_tbl_{b_idx}"
-        layout.add_table(headers, rows, col_widths=col_widths, field_prefix=prefix)
+        layout.add_table(headers, rows, col_widths=col_widths, field_prefix=prefix,
+                         field_height=_height_pt(b_data.get("field_height_cm")))
     elif b_type == "stat_boxes":
         layout.add_stat_boxes(b_data.get("stats") or [])
     elif b_type == "question":

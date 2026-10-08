@@ -3,8 +3,8 @@ from workbook_generator.utils import create_cli
 
 
 def generate_workbook_business_plan(output_filename="Workbook_Business_Plan.pdf"):
-    """Le livret « Mon business plan », compiled from workbooks/business_plan.json."""
-    build_reference_workbook("business_plan", output_filename)
+    """Le livret « Mon business plan », compiled from workbooks/business-plan.json."""
+    build_reference_workbook("business-plan", output_filename)
 
 
 build_workbook_business_plan = generate_workbook_business_plan

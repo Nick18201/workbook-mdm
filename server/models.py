@@ -5,7 +5,7 @@ BlockSpec) lives in Scripts/workbook_generator/spec.py, shared with the CLI docu
 
 import os
 import sys
-from typing import Optional, Literal
+from typing import List, Optional, Literal
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -20,6 +20,7 @@ from workbook_generator.spec import (  # noqa: E402  (re-exported for the server
     MAX_NAME_LENGTH,
     MAX_NESTING_DEPTH,
     MAX_PAGES,
+    MAX_PARTS,
     MAX_SCALE_STEPS,
     MAX_TEXT_LENGTH,
     BlockSpec,
@@ -87,6 +88,7 @@ class TemplateInfo(BaseModel):
     page_count: int = Field(..., description="Nombre de pages du livret")
     icon: str = Field(..., description="Nom d'une icône Material Symbols Outlined pour l'affichage")
     category: str = Field("Bilan de Compétences", description="Catégorie du modèle")
+    parts: List[str] = Field(default_factory=list, description="Parties d'un long livret, personnalisées une à une")
 
 
 class CustomizeRequest(BaseModel):
@@ -95,6 +97,9 @@ class CustomizeRequest(BaseModel):
     beneficiary_name: str = Field(..., max_length=MAX_NAME_LENGTH, description="Prénom ou nom complet du bénéficiaire")
     beneficiary_context: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Profil, métier actuel, projet visé, défis majeurs")
     custom_instructions: Optional[str] = Field(None, max_length=MAX_INSTRUCTION_LENGTH, description="Consignes spécifiques d'adaptation souhaitées")
+    part: Optional[int] = Field(
+        None, ge=1, le=MAX_PARTS, description="Partie à personnaliser d'un livret découpé en parties (tout le livret si omis)"
+    )
 
     @model_validator(mode="after")
     def check_base(self):

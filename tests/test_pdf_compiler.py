@@ -74,6 +74,21 @@ def test_table_block_without_headers_compiles_with_default_headers():
     assert "CRITÈRE" in text.upper()
 
 
+def test_table_answer_fields_take_several_lines_when_tall_enough():
+    def table(prefix, **kwargs):
+        return BlockSpec(type="table", headers=["Hypothèse", "Ce que je crois"], field_prefix=prefix,
+                         rows=[["Hypothèse 1", {"field_id": f"{prefix}_croyance"}]], **kwargs)
+
+    page = _open(WorkbookSpec(pages=[PageSpec(template="composite", title="Tableaux", blocks=[
+        table("haute", field_height_cm=2.0), table("basse"),
+    ])]))[0]
+    fields = {w.field_name: w for w in page.widgets()}
+
+    assert fields["haute_croyance"].rect.height > 2 * fields["basse_croyance"].rect.height
+    assert fields["haute_croyance"].field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE
+    assert not fields["basse_croyance"].field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE
+
+
 def test_predefined_workbook_pdf_stays_light():
     pdf = compile_workbook_from_spec(get_predefined_spec("chap1"))
 
