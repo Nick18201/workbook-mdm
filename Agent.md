@@ -5,7 +5,8 @@ Ce document sert de référence technique pour tout agent IA (ou développeur) i
 ## 🏗️ Architecture Actuelle
 Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carnets de bord) dynamiquement via Python et la librairie `reportlab`. L'architecture est modulaire, isolant les contenus de la structure visuelle.
 
-- **`Scripts/main_generate_*.py`** : Les scripts d'entrée orchestrant la création d'un PDF. Ils parsent les arguments en ligne de commande et orchestrent l'ordre de création de chaque page dans le chapitre en utilisant exclusivement `DocumentBuilder`.
+- **`workbooks/`** : Le contenu des carnets (`chap0.json` à `chap6.json`), du livret et du business plan, un fichier JSON par document au format `WorkbookSpec` (`spec.py`). C'est la **source unique** des PDF et de l'app web : l'app propose ces mêmes fichiers à la personnalisation, et un livret créé dans l'app s'exporte en JSON pour rejoindre ce dossier.
+- **`Scripts/main_generate_*.py`** : Les scripts d'entrée. Chacun compile un fichier de `workbooks/` avec `workbook_generator.compiler` ; seul le programme (`main_generate_programme.py`) assemble encore ses pages en Python avec `DocumentBuilder`.
 - **`Scripts/workbook_generator/`** : Le cœur graphique et applicatif :
   - `document_builder.py` : Contient la classe `DocumentBuilder` qui est le standard exclusif pour l'orchestration des documents (instanciation du canvas, gestion des accès fichiers, enregistrement des polices, pastel dominant et folio du carnet, fond ivoire des pages).
   - `config.py` : `PDFStyle`, les tokens de la direction artistique (couleurs, polices, échelle typographique, marges).
@@ -13,10 +14,11 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
   - `components.py` : Les gabarits pleine page (couverture, ouverture de chapitre, météo, quadrants, deux colonnes, enquête, feuille de route, fin de carnet, 4e de couverture) et les blocs partagés (question, zone de réponse, échelle).
   - `templates.py` : `PageLayout`, la mise en page en flux vertical et ses blocs empilables (questions, encarts, fiches de champs, listes, grilles…), avec pages « (suite) » automatiques.
   - `forms.py` : Champs AcroForm (texte, cases, boutons radio), aux noms uniques.
+  - `drawn_blocks.py` : Les blocs dessinés comme des illustrations (ligne de vie, arbre de vie).
+  - `spec.py` : Le format déclaratif d'un document (`WorkbookSpec`, `PageSpec`, `BlockSpec`) et la lecture des fichiers de `workbooks/`.
+  - `compiler.py` : Le moteur unique qui transforme une spécification en PDF, pour la ligne de commande comme pour l'app web.
   - `utils.py` : Utilitaires (typographie française automatique, `create_cli` pour parser les arguments CLI, caches).
-  - **`chapters/`** : L'arborescence des chapitres. **Règle stricte et absolue : Le paradigme "1 fichier = 1 chapitre" est formellement interdit. La norme architecturale exclusive est : 1 dossier modulaire = 1 chapitre.** Tout nouveau développement devra respecter cette règle de découplage (avec un `__init__.py` jouant le rôle de routeur léger qui exporte l'API publique).
-    - Exemples : `chap0/` à `chap6/` (les 7 carnets), `livret/`, `business_plan/`, `programme/` (la brochure publiée sur le site).
-    - La logique de positionnement et de génération pour chaque page ou groupe d'exercices doit être scindée en sous-fichiers (ex: `intro.py`, `exercices.py`, `cloture.py`).
+  - **`chapters/programme/`** : La brochure du programme publiée sur le site, seul document resté en Python (avec ses blocs propres dans `common.py`). Règle : un dossier par document, scindé en sous-fichiers, jamais un fichier unique.
 - **`assets/`** : Contient les `fonts/` (DM Sans, Manrope, PT Mono, Instrument Serif, Material Symbols Outlined, avec leurs licences) et `illustrations/` (`couverture.svg`, l'illustration des couvertures, et les logos CPF, France Travail, Qualiopi).
 - **`DA-workbook.md` et `design-system/`** : La direction artistique « Éditorial & Affirmé » (couleurs, typographie, éléments signature, ton et vocabulaire). Toute page doit s'y conformer.
 - **Fichiers racines** : Entrées PDF statiques (ex: `Workbook_Chapitre_1.pdf`) ou temporaires, ignorées par git.
@@ -46,6 +48,6 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
 5. **Vérifier** : `python -m pytest tests` (dont `tests/test_cli_documents.py`, qui construit les carnets et vérifie que rien ne sort de la page), et la planche `python Scripts/test_all_templates.py`.
 
 > **Directives IA :**
-> - Lors de la création d'une nouvelle page : créez la fonction dans le module de chapitre correspondant en respectant l'arborescence, mais importez/réutilisez au maximum les briques de `components.py`, `templates.py` et `primitives.py`.
+> - Lors de la création d'une nouvelle page d'un carnet : ajoutez-la au fichier JSON du document dans `workbooks/` (un gabarit, ou une page `composite` faite de blocs). Un composant inédit se code dans `templates.py` ou `components.py`, puis s'ajoute à `spec.py` et à `compiler.py`.
 > - N'ouvrez pas directement le canvas aux imports bas niveaux si ce n'est pas nécessaire, passez par les helpers.
 > - Aucune action destructrice ou écrasement de `assets/` sans validation utilisateur.

@@ -1,0 +1,591 @@
+{
+  "chapter_num": 2,
+  "chapter_title": "Mon parcours",
+  "subtitle": "Bilan de compétences",
+  "carnet": 2,
+  "pdf_title": "Marge de Manœuvre - Chapitre 2 : Mon parcours",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mon *parcours.*",
+        "number": 2,
+        "tagline": "Bilan de compétences",
+        "promise": "Comprendre vos choix passés pour mieux décider."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Relire *votre parcours.*",
+      "params": {
+        "num": "2",
+        "intro_text": "Ce carnet relit votre parcours pour en dégager le fil rouge : ce que vous avez reçu, ce que vous avez construit, ce qui vous fait avancer. C'est la base pour décider de la suite.",
+        "points": [
+          "À lire · Comprendre ses racines : l'habitus, le contrat familial, l'activité empêchée.",
+          "Exercice 1 · Récapitulatif de la séance précédente.",
+          "Exercice 2 · Analyse du parcours : vos expériences, une par une.",
+          "Exercice 3 · Votre fil rouge et vos moteurs.",
+          "Exercice 4 · Votre ligne de vie : sommets et vallées.",
+          "Exercice 5 · Vos compétences de vie.",
+          "Exercice 6 · Votre arbre de vie.",
+          "Bonus · Interview d'une personne passionnée."
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Comprendre *ses racines.*",
+      "part_title": "À lire · Mon parcours",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Lister vos savoir-faire ne suffit pas pour décider de la suite. Vous n'êtes pas une somme de compétences techniques : vous êtes aussi le résultat d'une histoire.",
+            "Votre façon de travailler, votre rapport à l'argent, à l'autorité ou à la réussite ont été façonnés par votre famille et votre milieu d'origine. Ces pages vous aident à repérer ces « bagages invisibles » et à faire le tri : ce que vous gardez, et ce que vous laissez de côté pour votre projet."
+          ],
+          "size": 12
+        },
+        {
+          "type": "heading",
+          "text": "1. Le « sac à dos » social (l'habitus)"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "L'habitus, c'est votre manière spontanée de réagir, de parler, de vous tenir, héritée de vos parents et de votre milieu social. Il agit comme un logiciel installé depuis l'enfance.",
+            "Quand vous changez de milieu professionnel (d'une famille d'ouvriers à un poste de cadre, ou l'inverse), ce logiciel peut créer un décalage : une gêne diffuse, l'impression de porter un costume mal taillé."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Le sentiment d'illégitimité"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "« Un jour, ils vont se rendre compte que je ne suis pas à la hauteur. » Cette pensée signale souvent un conflit lié au changement de milieu social, ce que la sociologie appelle la névrose de classe. Ce n'est pas une maladie.",
+            "• Vous réussissez mieux que vos parents : vous pouvez ressentir de la culpabilité, la peur de vous éloigner d'eux.",
+            "• Votre situation est moins prestigieuse que la leur : vous pouvez ressentir de la honte.",
+            "Ce sentiment a des effets concrets : il peut vous retenir de demander une augmentation, ou vous pousser au surmenage."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "2. Le contrat familial implicite"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Chaque famille tient un « livre de comptes » invisible : ce que l'on pense devoir à ses parents.",
+            "• Les loyautés invisibles : il arrive de s'arrêter juste avant le but, pour ne pas dépasser ses parents. L'échec devient une façon de leur rester fidèle.",
+            "• La réparation : avez-vous choisi votre métier par goût, ou pour réparer une histoire familiale (injustice, maladie) ?",
+            "• Le mythe familial : « Chez nous, on est des intellectuels », « Chez nous, on est solidaires… ». Un projet qui contredit ce mythe rencontre des résistances, chez vous comme autour de vous."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "3. Souffrance et plaisir au travail"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Travailler, ce n'est pas seulement exécuter une tâche : c'est y mettre du sien. Quand vous ne pouvez pas faire votre travail « bien », selon vos propres critères, vous en souffrez. La psychologie du travail parle d'activité empêchée.",
+            "Cette souffrance n'est pas une faiblesse : elle montre que vous tenez à la qualité de votre travail. L'enjeu est de la transformer en pouvoir d'agir, c'est-à-dire de retrouver une marge de manœuvre."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "4. Trois outils pour votre bilan"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Trois outils pour faire le tri dans votre héritage et décider en connaissance de cause."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "A. Vos appuis dans l'histoire familiale",
+          "size": 11.5
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Au-delà de l'arbre généalogique officiel, repérez les personnes qui vous ont donné confiance ou transmis des repères solides. Appuyez-vous sur elles plutôt que sur celles qui vous ont jugé."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "heading",
+          "text": "B. Le roman familial",
+          "size": 11.5
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Repérez les répétitions et les phrases qui reviennent (« Il faut souffrir pour réussir »). Les identifier, c'est les empêcher de décider à votre place."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "heading",
+          "text": "C. L'objectif : réussir sans trahir",
+          "size": 11.5
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vous avez le droit de changer, de réussir, de gagner de l'argent, sans renier votre famille. La question devient : comment garder ses valeurs (courage, honnêteté) sous une forme qui vous appartient ? C'est la différenciation : rester en lien, tout en décidant pour vous-même."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "callout",
+          "text": "Repérer ces héritages, c'est reprendre la main sur vos choix.",
+          "title": "À retenir"
+        }
+      ]
+    },
+    {
+      "template": "recap",
+      "part_title": "Exercice 1 · Récapitulatif",
+      "params": {
+        "intro_text": "Revenez sur la séance précédente pour consolider ce que vous en retenez avant d'ouvrir une nouvelle étape. Répondez spontanément.",
+        "questions": [
+          "Qu’est-ce que cette séance vous a permis de comprendre de plus sur vous-même ?",
+          "Quels héritages ou messages reçus influencent encore vos choix professionnels aujourd’hui ?",
+          "Parmi ces héritages, que voulez-vous garder, et que voulez-vous faire évoluer ?",
+          "En quoi cela éclaire-t-il la suite de votre bilan et vos pistes ?"
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Analyse *du parcours.*",
+      "part_title": "Exercice 2 · Analyse du parcours",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Détaillez chaque expérience significative (emploi, stage, bénévolat). Cet inventaire sert de socle pour repérer vos réussites et ce que vous voulez retrouver, ou éviter, à l’avenir."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Titre du poste et entreprise (ou sujet d'étude)",
+                "exp_1_titre",
+                null,
+                3
+              ],
+              [
+                "Année(s)",
+                "exp_1_annee",
+                null,
+                1
+              ]
+            ],
+            [
+              [
+                "Fiche de poste, missions principales",
+                "exp_1_missions",
+                1.9
+              ],
+              [
+                "Compétences développées (techniques, relationnelles)",
+                "exp_1_competences",
+                1.9
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai aimé",
+                "exp_1_aime",
+                1.9
+              ],
+              [
+                "Ce que je n'ai pas aimé",
+                "exp_1_paime",
+                1.9
+              ]
+            ]
+          ],
+          "title": "Expérience 1",
+          "color": "almond"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Titre du poste et entreprise (ou sujet d'étude)",
+                "exp_2_titre",
+                null,
+                3
+              ],
+              [
+                "Année(s)",
+                "exp_2_annee",
+                null,
+                1
+              ]
+            ],
+            [
+              [
+                "Fiche de poste, missions principales",
+                "exp_2_missions",
+                1.9
+              ],
+              [
+                "Compétences développées (techniques, relationnelles)",
+                "exp_2_competences",
+                1.9
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai aimé",
+                "exp_2_aime",
+                1.9
+              ],
+              [
+                "Ce que je n'ai pas aimé",
+                "exp_2_paime",
+                1.9
+              ]
+            ]
+          ],
+          "title": "Expérience 2",
+          "color": "sky"
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Titre du poste et entreprise (ou sujet d'étude)",
+                "exp_3_titre",
+                null,
+                3
+              ],
+              [
+                "Année(s)",
+                "exp_3_annee",
+                null,
+                1
+              ]
+            ],
+            [
+              [
+                "Fiche de poste, missions principales",
+                "exp_3_missions",
+                1.9
+              ],
+              [
+                "Compétences développées (techniques, relationnelles)",
+                "exp_3_competences",
+                1.9
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai aimé",
+                "exp_3_aime",
+                1.9
+              ],
+              [
+                "Ce que je n'ai pas aimé",
+                "exp_3_paime",
+                1.9
+              ]
+            ]
+          ],
+          "title": "Expérience 3",
+          "color": "almond"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Titre du poste et entreprise (ou sujet d'étude)",
+                "exp_4_titre",
+                null,
+                3
+              ],
+              [
+                "Année(s)",
+                "exp_4_annee",
+                null,
+                1
+              ]
+            ],
+            [
+              [
+                "Fiche de poste, missions principales",
+                "exp_4_missions",
+                1.9
+              ],
+              [
+                "Compétences développées (techniques, relationnelles)",
+                "exp_4_competences",
+                1.9
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai aimé",
+                "exp_4_aime",
+                1.9
+              ],
+              [
+                "Ce que je n'ai pas aimé",
+                "exp_4_paime",
+                1.9
+              ]
+            ]
+          ],
+          "title": "Expérience 4",
+          "color": "sky"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre fil *rouge.*",
+      "part_title": "Exercice 3 · Fil rouge et moteurs",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vous avez passé vos expériences en revue : prenez de la hauteur. L’objectif est de dépasser la chronologie pour comprendre votre logique, votre fil rouge."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "heading",
+          "text": "1. Vos schémas"
+        },
+        {
+          "type": "question",
+          "question": "En regardant votre parcours, quelles répétitions ou quels schémas observez-vous ?",
+          "field_id": "bilan_schemas",
+          "box_height_cm": 4.0,
+          "example": "Choisir souvent sous la pression, rechercher l’expertise, partir au bout d’un an…"
+        },
+        {
+          "type": "heading",
+          "text": "2. Vos moteurs fondamentaux"
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "Ce qui vous fait avancer durablement",
+              "moteur",
+              "Ex : indépendance, sécurité financière, apprendre, aider, compétition, rôle d’expert…"
+            ]
+          ],
+          "count": 5
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre ligne *de vie.*",
+      "part_title": "Exercice 4 · Ligne de vie",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Retracez votre parcours, professionnel et personnel. Notez les moments forts (les sommets) et les moments difficiles (les vallées) : ce qui vous donne de l’énergie, et ce que vous avez appris des épreuves."
+          ],
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "life_line",
+          "headers": [
+            "Les sommets · moments forts",
+            "Les vallées · apprentissages"
+          ],
+          "items": [
+            [
+              "Sommet 1",
+              "summit"
+            ],
+            [
+              "Vallée 1",
+              "valley"
+            ],
+            [
+              "Sommet 2",
+              "summit"
+            ],
+            [
+              "Vallée 2",
+              "valley"
+            ],
+            [
+              "Sommet 3",
+              "summit"
+            ]
+          ],
+          "field_prefix": "timeline_node"
+        }
+      ]
+    },
+    {
+      "template": "two_columns",
+      "title": "Vos compétences *de vie.*",
+      "part_title": "Exercice 5 · Compétences de vie",
+      "params": {
+        "intro_text": "Votre vécu est un capital : vous ne partez pas de zéro. Une expérience vécue (organiser un événement familial) cache souvent des compétences (planifier, gérer le stress). Ne négligez aucune expérience : même la gestion du quotidien en développe.",
+        "col1_header": "L'expérience vécue (ex : divorce, voyage, association…)",
+        "col2_header": "La compétence cachée (ex : négociation, logistique…)",
+        "rows": [
+          {
+            "label": "1. Vie familiale et personnelle (ex : organisation, aidant, parent…)"
+          },
+          {
+            "label": "2. Défis et épreuves (ex : santé, reconversion, chômage…)"
+          },
+          {
+            "label": "3. Engagements et loisirs (ex : sport, association, art, bénévolat…)"
+          },
+          {
+            "label": "4. Voyages et découvertes (ex : expatriation, année sabbatique…)"
+          },
+          {
+            "label": "5. Autre expérience marquante (au choix)"
+          }
+        ],
+        "field_prefix": "skill"
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Votre arbre *de vie.*",
+      "part_title": "Exercice 6 · Arbre de vie",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez votre parcours comme un tout. Renseignez les racines (votre histoire), le sol (vos besoins), le tronc (vos forces), les branches (vos projets), les feuilles (vos soutiens) et les fruits (vos réussites)."
+          ],
+          "spacing_after_cm": 0.2
+        },
+        {
+          "type": "tree_of_life",
+          "items": [
+            [
+              "1. Racines",
+              "Votre histoire, vos origines",
+              "arbre_racines"
+            ],
+            [
+              "2. Sol",
+              "Vos besoins actuels",
+              "arbre_sol"
+            ],
+            [
+              "3. Tronc",
+              "Vos compétences et vos valeurs",
+              "arbre_tronc"
+            ],
+            [
+              "4. Branches",
+              "Vos projets et vos envies",
+              "arbre_branches"
+            ],
+            [
+              "5. Feuilles",
+              "Vos soutiens, votre entourage",
+              "arbre_feuilles"
+            ],
+            [
+              "6. Fruits",
+              "Vos réussites, ce que vous avez reçu",
+              "arbre_fruits"
+            ]
+          ],
+          "text": "Les épreuves font partie de l’arbre, sans le résumer."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Interview d'une personne *passionnée.*",
+      "part_title": "Bonus · Interview",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Rencontrez une personne dont le métier ou la vie vous inspire."
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Personne interviewée",
+                "interview_nom"
+              ],
+              [
+                "Son métier, son activité",
+                "interview_metier"
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Qu'aimez-vous le plus dans ce que vous faites ?",
+              "field_id": "interview_q1"
+            },
+            {
+              "question": "Quelles sont les difficultés ou les contraintes cachées ?",
+              "field_id": "interview_q2"
+            },
+            {
+              "question": "Quel conseil donneriez-vous à quelqu'un qui veut se lancer ?",
+              "field_id": "interview_q3"
+            },
+            {
+              "question": "Ce que j'en retiens pour moi :",
+              "field_id": "interview_q4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet",
+      "params": {
+        "lines": [
+          "Je reconnais la valeur de chacune de mes expériences, y compris les plus difficiles.",
+          "Je garde mes moteurs en tête pour évaluer chaque piste.",
+          "Je décide de mes prochains choix en connaissance de cause."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "livrable_chap2",
+        "livrable_title": "Votre fil rouge professionnel",
+        "livrable_text": "Votre analyse de parcours, vos moteurs, votre ligne de vie et votre arbre de vie, validés en séance."
+      }
+    },
+    {
+      "template": "closing",
+      "params": {}
+    }
+  ]
+}

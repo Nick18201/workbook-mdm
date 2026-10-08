@@ -42,7 +42,7 @@ from server.gemini_service import (
     refine_spec_with_gemini,
     customize_spec_with_gemini,
 )
-from server.pdf_compiler import compile_workbook_from_spec
+from workbook_generator.compiler import compile_workbook_from_spec
 from server.predefined_workbooks import (
     get_predefined_info_list,
     get_predefined_spec,
@@ -144,7 +144,7 @@ def get_index():
     return HTMLResponse(content=html_content)
 
 
-@app.post("/api/parse", response_model=WorkbookSpec)
+@app.post("/api/parse", response_model=WorkbookSpec, response_model_exclude_unset=True)
 def api_parse_notes(request: ParseRequest, response: Response):
     """
     Transforms raw notes into a structured WorkbookSpec using Gemini Flash.
@@ -158,7 +158,7 @@ def api_parse_notes(request: ParseRequest, response: Response):
         raise _internal_error("L'analyse des notes")
 
 
-@app.post("/api/iterate", response_model=IterateResponse)
+@app.post("/api/iterate", response_model=IterateResponse, response_model_exclude_unset=True)
 def api_iterate_spec(request: IterateRequest, response: Response):
     """
     Refines an existing WorkbookSpec iteratively based on user feedback.
@@ -180,7 +180,7 @@ def api_list_templates():
     return get_predefined_info_list()
 
 
-@app.get("/api/templates/{template_id}", response_model=WorkbookSpec)
+@app.get("/api/templates/{template_id}", response_model=WorkbookSpec, response_model_exclude_unset=True)
 def api_get_template_spec(template_id: str):
     """
     Retourne la spécification canonique complète d'un livret modèle.
@@ -194,7 +194,7 @@ def api_get_template_spec(template_id: str):
     return spec
 
 
-@app.post("/api/customize", response_model=CustomizeResponse)
+@app.post("/api/customize", response_model=CustomizeResponse, response_model_exclude_unset=True)
 def api_customize_workbook(request: CustomizeRequest, response: Response):
     """
     Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du consultant.

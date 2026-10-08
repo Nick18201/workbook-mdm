@@ -15,6 +15,7 @@ from .components import (
     draw_question,
     question_text_height,
 )
+from .drawn_blocks import draw_life_line, draw_tree_of_life
 from .forms import create_checkbox, create_radio, reserve_field_name
 from .utils import french_typography
 from .primitives import (
@@ -994,6 +995,50 @@ class PageLayout:
                                              PDFStyle.COLOR_INK, leading) + 1
             self.y_cursor -= h + gap
         self.y_cursor -= PDFStyle.GAP_BLOCK - gap
+        return self.y_cursor
+
+    def add_fill_in_card(self, lines, size=None, field_height=0.85 * cm):
+        """
+        A pastel card of sentences to complete (« Moi, [nom], je décide d'investir [n] heures… »):
+        each line mixes texts and one-line answer boxes, (field_id, width, tooltip) with the
+        width in cm; a box without width takes the rest of its line.
+        """
+        size = size or PDFStyle.SIZE_LEAD
+        pad, row_gap, gap = PDFStyle.CARD_PADDING, 0.45 * cm, 0.25 * cm
+        h = 2 * pad + len(lines) * field_height + (len(lines) - 1) * row_gap
+        self._ensure_space(h)
+        x, width, top = self.text_x, self.target_width, self.y_cursor
+        draw_pastel_card(self.c, x, top - h, width, h)
+        row_y = top - pad - field_height
+        for line in lines:
+            baseline = row_y + field_height / 2 - 0.35 * size
+            cursor = x + pad
+            for part in line:
+                if isinstance(part, str):
+                    cursor += draw_text(self.c, cursor, baseline, part, PDFStyle.FONT_BODY, size,
+                                        PDFStyle.COLOR_INK) + gap
+                    continue
+                field_id = part[0]
+                box_w = part[1] * cm if len(part) > 1 and part[1] else x + width - pad - cursor
+                tooltip = part[2] if len(part) > 2 else field_id
+                draw_answer_box(self.c, cursor, row_y, box_w, field_height, field_id, tooltip=tooltip, multiline=False)
+                cursor += box_w + gap
+            row_y -= field_height + row_gap
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_life_line(self, nodes, headers=None, field_prefix="timeline_node"):
+        """The life line of drawn_blocks.draw_life_line, down to the bottom of the page."""
+        self._ensure_space(14 * cm)
+        draw_life_line(self.c, self.text_x, self.y_cursor, self.target_width, nodes, headers, field_prefix)
+        self.y_cursor = PDFStyle.CONTENT_BOTTOM
+        return self.y_cursor
+
+    def add_tree_of_life(self, zones, annotation=None):
+        """The tree of life of drawn_blocks.draw_tree_of_life, down to the bottom of the page."""
+        self._ensure_space(14 * cm)
+        draw_tree_of_life(self.c, self.text_x, self.y_cursor, self.target_width, zones, annotation)
+        self.y_cursor = PDFStyle.CONTENT_BOTTOM
         return self.y_cursor
 
     def render(self):

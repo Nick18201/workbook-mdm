@@ -1,35 +1,12 @@
+from workbook_generator.compiler import build_reference_workbook
 from workbook_generator.utils import create_cli
-from workbook_generator.document_builder import DocumentBuilder
-from workbook_generator.components import create_closing_page
-from workbook_generator.chapters import chap1
 
 
 def generate_workbook_chap1(output_filename="Workbook_Chapitre_1.pdf"):
-    builder = DocumentBuilder(output_path=output_filename, carnet=1)
-    builder.set_title("Marge de Manœuvre - Chapitre 1 : L'état des lieux")
-
-    builder.add_page(chap1.create_chap1_cover)
-    builder.add_page(chap1.create_concept_page)
-    builder.add_page(chap1.create_meteo_page)
-    builder.add_page(chap1.create_vision_page)
-    builder.add_page(chap1.create_boussole_page)
-    builder.add_page(chap1.create_sac_a_dos_page)
-    builder.add_page(chap1.create_heritage_page)
-    builder.add_page(chap1.create_work_image_page)
-    builder.add_page(chap1.create_mentors_page)
-    builder.add_page(chap1.create_livrable_page)
-    builder.add_page(create_closing_page)
-
-    builder.save()
-
-
-# Backwards compatibility alias
-build_wb_chap1_pdf = generate_workbook_chap1
+    """Carnet 1 · L'état des lieux, compiled from workbooks/chap1.json."""
+    build_reference_workbook("chap1", output_filename)
 
 
 if __name__ == "__main__":
-    args = create_cli(
-        description="Générer le chapitre 1 PDF.",
-        default_output="Workbook_Chapitre_1.pdf"
-    )
+    args = create_cli(description="Générer le chapitre 1 PDF.", default_output="Workbook_Chapitre_1.pdf")
     generate_workbook_chap1(args.output)

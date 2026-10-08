@@ -281,6 +281,30 @@ def page_form_blocks(c):
     layout.render()
 
 
+def page_drawn_blocks(c):
+    layout = PageLayout(c, "Des blocs *dessinés.*", config=LayoutConfig(part_title="Illustrations"))
+    layout.add_fill_in_card([["Moi,", ("demo_fill_nom", None, "Prénom Nom")],
+                             ["je décide d'investir", ("demo_fill_heures", 1.6, "Nombre d'heures"),
+                              "heures par semaine dans mon bilan."]])
+    layout.add_life_line([("Sommet 1", "summit"), ("Vallée 1", "valley"), ("Sommet 2", "summit")],
+                         headers=["Les sommets · moments forts", "Les vallées · apprentissages"],
+                         field_prefix="demo_vie")
+    layout.render()
+
+
+def page_tree_of_life(c):
+    layout = PageLayout(c, "Un arbre *de vie.*", config=LayoutConfig(part_title="Illustrations"))
+    layout.add_tree_of_life([
+        ("1. Racines", "Votre histoire, vos origines", "demo_arbre_racines"),
+        ("2. Sol", "Vos besoins actuels", "demo_arbre_sol"),
+        ("3. Tronc", "Vos compétences et vos valeurs", "demo_arbre_tronc"),
+        ("4. Branches", "Vos projets et vos envies", "demo_arbre_branches"),
+        ("5. Feuilles", "Vos soutiens, votre entourage", "demo_arbre_feuilles"),
+        ("6. Fruits", "Vos réussites, ce que vous avez reçu", "demo_arbre_fruits"),
+    ], annotation="Les épreuves font partie de l'arbre, sans le résumer.")
+    layout.render()
+
+
 def page_meteo(c):
     create_standard_meteo_page(c, title="Votre météo *du jour.*", part_title="Ouverture de séance",
                                field_prefix="demo_meteo")
@@ -341,7 +365,8 @@ def build_test_suite_pdf(output_filename="Test_All_Templates.pdf"):
     builder.set_title("Planche de démonstration - DA Éditorial & Affirmé")
 
     for page in (page_elements_1, page_elements_2, page_cover, page_opener, page_questions,
-                 page_composite_1, page_composite_2, page_reading, page_form_blocks, page_meteo, page_quadrants,
+                 page_composite_1, page_composite_2, page_reading, page_form_blocks, page_drawn_blocks,
+                 page_tree_of_life, page_meteo, page_quadrants,
                  page_two_columns,
                  page_enquete, page_roadmap, page_livrable, create_closing_page):
         builder.add_page(page)

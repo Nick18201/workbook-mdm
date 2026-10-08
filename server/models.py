@@ -1,167 +1,39 @@
 """
-Pydantic Schemas for Workbook Definition, Templates, and API Requests.
+Pydantic Schemas of the API requests. The workbook format itself (WorkbookSpec, PageSpec,
+BlockSpec) lives in Scripts/workbook_generator/spec.py, shared with the CLI documents.
 """
 
-from typing import List, Optional, Literal, Dict, Any
+import os
+import sys
+from typing import Optional, Literal
+
 from pydantic import BaseModel, Field, model_validator
+
+SCRIPTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Scripts")
+if SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, SCRIPTS_DIR)
+
+from workbook_generator.spec import (  # noqa: E402  (re-exported for the server and the tests)
+    BASE_BLOCK_TYPES,
+    MAX_BLOCKS_PER_PAGE,
+    MAX_LIST_ITEMS,
+    MAX_NAME_LENGTH,
+    MAX_NESTING_DEPTH,
+    MAX_PAGES,
+    MAX_SCALE_STEPS,
+    MAX_TEXT_LENGTH,
+    BlockSpec,
+    PageSpec,
+    QuadrantItemSpec,
+    QuestionItemSpec,
+    SummaryPointSpec,
+    TwoColumnsRowSpec,
+    WorkbookSpec,
+)
 
 # Garde-fous contre les entrées démesurées (client ou LLM) : au-delà, l'API répond 422.
 MAX_NOTES_LENGTH = 50_000
 MAX_INSTRUCTION_LENGTH = 5_000
-MAX_NAME_LENGTH = 200
-MAX_PAGES = 30
-MAX_BLOCKS_PER_PAGE = 10
-MAX_LIST_ITEMS = 30
-MAX_TEXT_LENGTH = 2_000
-MAX_NESTING_DEPTH = 10
-MAX_SCALE_STEPS = 10
-
-
-def _check_bounded(value: Any, path: str = "", depth: int = 0) -> None:
-    """
-    Refuse les textes et listes démesurés n'importe où dans une spécification, y compris
-    dans les 'params' libres : chaque élément devient des pages et des champs PDF.
-    """
-    if depth > MAX_NESTING_DEPTH:
-        raise ValueError(f"{path or 'spécification'} : imbrication trop profonde")
-    if isinstance(value, str):
-        if len(value) > MAX_TEXT_LENGTH:
-            raise ValueError(
-                f"{path or 'texte'} : texte trop long ({len(value)} caractères, maximum {MAX_TEXT_LENGTH})"
-            )
-    elif isinstance(value, (list, tuple)):
-        if len(value) > MAX_LIST_ITEMS:
-            raise ValueError(f"{path or 'liste'} : {len(value)} éléments (maximum {MAX_LIST_ITEMS})")
-        for i, item in enumerate(value):
-            _check_bounded(item, f"{path}[{i}]", depth + 1)
-    elif isinstance(value, dict):
-        for key, item in value.items():
-            _check_bounded(item, f"{path}.{key}" if path else str(key), depth + 1)
-
-
-class QuestionItemSpec(BaseModel):
-    question: str = Field(..., description="Intitulé de la question ou consigne de réflexion")
-    field_id: str = Field(..., description="Identifiant unique pour le champ interactif AcroForm")
-    subtitle: Optional[str] = Field(None, description="Sous-titre d'aide ou de précision (1 ligne)")
-    example: Optional[str] = Field(None, description="Exemple concret pour guider la réponse (1 ligne)")
-
-
-class QuadrantItemSpec(BaseModel):
-    title: str = Field(..., description="Titre du quadrant (ex: Professionnel, Santé, Cadre)")
-    subtitle: Optional[str] = Field(None, description="Mots-clés associés entre parenthèses")
-    field_id: Optional[str] = Field(None, description="Identifiant du champ de saisie")
-
-
-class TwoColumnsRowSpec(BaseModel):
-    label: str = Field(..., description="Intitulé de la ligne / Situation de départ")
-    left_tooltip: Optional[str] = Field(None, description="Exemple ou indication pour la colonne 1")
-    right_tooltip: Optional[str] = Field(None, description="Exemple ou indication pour la colonne 2")
-
-
-class SummaryPointSpec(BaseModel):
-    label: str = Field(..., description="Numéro ou titre du point (ex: '1.')")
-    desc: str = Field("", description="Description du point ou étape")
-
-
-class BlockSpec(BaseModel):
-    type: Literal[
-        "callout",
-        "cards_grid",
-        "scale",
-        "checklist",
-        "table",
-        "stat_boxes",
-        "question",
-        "text",
-    ] = Field(..., description="Type de composant atomique")
-    text: Optional[str] = Field(None, description="Contenu texte principal (callout, text, ou intitulé question)")
-    title: Optional[str] = Field(None, description="Titre optionnel du composant")
-    variant: Optional[str] = Field("info", description="Variante visuelle : 'info', 'tip', 'quote'")
-    cards: Optional[List[Dict[str, Any]]] = Field(None, description="Cartes pour grille [{'title': '...', 'subtitle': '...', 'field_id': '...'}]")
-    columns: Optional[int] = Field(2, ge=1, le=4, description="Nombre de colonnes (cards_grid ou checklist)")
-    card_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur personnalisée des cartes en cm")
-    label: Optional[str] = Field(None, description="Libellé de la jauge / échelle ou stat")
-    min_val: Optional[int] = Field(0, description="Valeur minimale (scale)")
-    max_val: Optional[int] = Field(10, description="Valeur maximale (scale)")
-    min_label: Optional[str] = Field("", description="Libellé borne min (scale)")
-    max_label: Optional[str] = Field("", description="Libellé borne max (scale)")
-    items: Optional[List[Any]] = Field(None, description="Éléments de checklist")
-    headers: Optional[List[str]] = Field(None, description="En-têtes de colonnes (table)")
-    rows: Optional[List[List[Any]]] = Field(None, description="Lignes du tableau")
-    stats: Optional[List[Dict[str, Any]]] = Field(None, description="Indicateurs clés [{'stat': '...', 'label': '...'}]")
-    question: Optional[str] = Field(None, description="Intitulé de la question (question block)")
-    field_id: Optional[str] = Field(None, description="Identifiant unique pour le champ AcroForm")
-    subtitle: Optional[str] = Field(None, description="Sous-titre d'aide ou de précision")
-    example: Optional[str] = Field(None, description="Exemple d'illustration")
-    box_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur de la zone de saisie en cm")
-    field_prefix: Optional[str] = Field(None, description="Préfixe d'identifiants AcroForm")
-
-    @model_validator(mode="after")
-    def check_scale_range(self):
-        """Une échelle compte au plus MAX_SCALE_STEPS + 1 boutons radio."""
-        if self.type == "scale":
-            low = 0 if self.min_val is None else self.min_val
-            high = 10 if self.max_val is None else self.max_val
-            if not 0 < high - low <= MAX_SCALE_STEPS:
-                raise ValueError(
-                    f"échelle de {low} à {high} : max_val doit dépasser min_val de 1 à {MAX_SCALE_STEPS}"
-                )
-            self.min_val, self.max_val = low, high
-        return self
-
-
-class PageSpec(BaseModel):
-    template: Literal[
-        "cover",
-        "summary",
-        "questions",
-        "meteo",
-        "quadrants",
-        "two_columns",
-        "engagement",
-        "enquete",
-        "roadmap",
-        "closing",
-        "composite",
-    ] = Field(..., description="Type de gabarit universel parmi les 10 disponibles ou 'composite' pour assemblage libre")
-    title: str = Field("", description="Titre principal affiché en haut de la page")
-    part_title: Optional[str] = Field(None, description="Mention d'en-tête de partie (ex: '1. RÉCAPITULATIF')")
-    params: Dict[str, Any] = Field(
-        default_factory=dict,
-        description="Paramètres spécifiques selon le gabarit (questions, axes, etc.)",
-    )
-    blocks: Optional[List[BlockSpec]] = Field(
-        None,
-        max_length=MAX_BLOCKS_PER_PAGE,
-        description="Liste des composants atomiques si template == 'composite'",
-    )
-
-
-class WorkbookSpec(BaseModel):
-    chapter_num: int = Field(1, description="Numéro du chapitre")
-    chapter_title: str = Field("Mes Réflexions", description="Titre principal du chapitre")
-    title: Optional[str] = Field(None, description="Alias pour chapter_title")
-    subtitle: str = Field("BILAN DE COMPÉTENCES", description="Sous-titre de couverture")
-    beneficiary_name: Optional[str] = Field(None, description="Nom ou prénom du bénéficiaire pour personnalisation")
-    pages: List[PageSpec] = Field(
-        default_factory=list, max_length=MAX_PAGES, description="Liste ordonnée des pages du livret"
-    )
-
-    @model_validator(mode="before")
-    @classmethod
-    def check_sizes(cls, data: Any) -> Any:
-        _check_bounded(data)
-        return data
-
-    @model_validator(mode="before")
-    @classmethod
-    def sync_titles(cls, data: Any) -> Any:
-        if isinstance(data, dict):
-            if "title" in data and ("chapter_title" not in data or not data["chapter_title"]):
-                data["chapter_title"] = data["title"]
-            elif "chapter_title" in data and ("title" not in data or not data["title"]):
-                data["title"] = data["chapter_title"]
-        return data
 
 
 class ParseRequest(BaseModel):

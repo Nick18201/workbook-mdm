@@ -1,0 +1,886 @@
+{
+  "chapter_num": 5,
+  "chapter_title": "Valeurs et moteurs profonds",
+  "subtitle": "Bilan de compétences",
+  "carnet": 5,
+  "pdf_title": "Marge de Manœuvre - Chapitre 5 : Valeurs et moteurs profonds",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Valeurs et moteurs *profonds.*",
+        "number": 5,
+        "tagline": "Bilan de compétences",
+        "promise": "Ce qui doit compter dans votre prochain poste."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Ce qui compte *vraiment.*",
+      "params": {
+        "num": "5",
+        "intro_text": "Ce carnet identifie les valeurs qui guident réellement vos choix, votre énergie et votre rapport au travail, puis les traduit en conditions de travail concrètes pour évaluer vos futures pistes.",
+        "points": [
+          "Exercice 1 · Vos expériences d'alignement.",
+          "Exercice 2 · Vos expériences de désalignement.",
+          "Exercice 3 · Vos choix difficiles.",
+          "Exercice 4 · Nommer ce qui compte : la liste de valeurs.",
+          "Exercice 5 · Hiérarchiser vos valeurs.",
+          "Exercice 6 · Incarner vos valeurs non négociables.",
+          "Exercice 7 · Traduire vos valeurs en conditions de travail.",
+          "Exercice 8 · Vos tensions de valeurs.",
+          "Exercice 9 · Synthèse."
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Comprendre *vos valeurs.*",
+      "part_title": "Introduction",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce carnet vous aide à identifier ce qui compte vraiment pour vous dans votre vie professionnelle.",
+            "Les valeurs ne sont pas des idées abstraites. Elles se repèrent dans les situations où vous vous sentez :"
+          ],
+          "size": 12
+        },
+        {
+          "type": "star_list",
+          "items": [
+            "motivé·e ;",
+            "fier ou fière ;",
+            "utile ;",
+            "libre ;",
+            "reconnu·e ;",
+            "en confiance ;"
+          ],
+          "spacing_after_cm": 0.3,
+          "size": 12
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "mais aussi frustré·e, en colère, vidé·e, empêché·e ou en conflit intérieur."
+          ],
+          "size": 12
+        },
+        {
+          "type": "callout",
+          "text": "Ne cherchez pas les valeurs qui semblent les plus « belles » ou les plus attendues : identifiez celles qui influencent réellement vos choix, votre énergie et votre rapport au travail.",
+          "title": "L'objectif"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos expériences *d'alignement.*",
+      "part_title": "Exercice 1 · Alignement · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Identifiez les situations où vous vous êtes senti·e à votre place.",
+            "Repensez à trois situations (professionnelles, scolaires, associatives, personnelles) où vous étiez particulièrement aligné·e."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le contexte : quoi, qui, où",
+                "align_sit1_desc",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce qui vous donnait de l'énergie, ce que vous apportiez, la valeur respectée",
+                "align_sit1_analyse",
+                3.0
+              ]
+            ]
+          ],
+          "title": "Situation 1",
+          "color": "lilac"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le contexte : quoi, qui, où",
+                "align_sit2_desc",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce qui vous donnait de l'énergie, ce que vous apportiez, la valeur respectée",
+                "align_sit2_analyse",
+                3.0
+              ]
+            ]
+          ],
+          "title": "Situation 2",
+          "color": "sky"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le contexte : quoi, qui, où",
+                "align_sit3_desc",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce qui vous donnait de l'énergie, ce que vous apportiez, la valeur respectée",
+                "align_sit3_analyse",
+                3.0
+              ]
+            ]
+          ],
+          "title": "Situation 3",
+          "color": "lilac"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Synthèse : les valeurs que révèlent ces trois situations",
+              "field_id": "align_valeurs_revelees"
+            }
+          ],
+          "max_box_height_cm": 4.0
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos expériences *de désalignement.*",
+      "part_title": "Exercice 2 · Désalignement · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Comprenez quelle valeur importante a été ignorée ou bafouée dans des moments difficiles.",
+            "Repensez à trois situations où vous vous êtes senti·e en difficulté, frustré·e, vidé·e ou en conflit intérieur."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation de désalignement",
+                "desalign_sit1_desc",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce qui vous a dérangé, la limite franchie, la valeur absente ou bafouée",
+                "desalign_sit1_analyse",
+                3.0
+              ]
+            ]
+          ],
+          "title": "Situation 1",
+          "color": "lilac"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation de désalignement",
+                "desalign_sit2_desc",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce qui vous a dérangé, la limite franchie, la valeur absente ou bafouée",
+                "desalign_sit2_analyse",
+                3.0
+              ]
+            ]
+          ],
+          "title": "Situation 2",
+          "color": "sky"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation de désalignement",
+                "desalign_sit3_desc",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce qui vous a dérangé, la limite franchie, la valeur absente ou bafouée",
+                "desalign_sit3_analyse",
+                3.0
+              ]
+            ]
+          ],
+          "title": "Situation 3",
+          "color": "lilac"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Synthèse : les valeurs absentes, empêchées ou bafouées",
+              "field_id": "desalign_valeurs_revelees"
+            }
+          ],
+          "max_box_height_cm": 4.0
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos choix *difficiles.*",
+      "part_title": "Exercice 3 · Choix difficiles · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Les valeurs apparaissent dans les choix difficiles, parce que choisir, c'est renoncer. Repensez à deux choix complexes (rester ou partir, sécurité ou risque…)."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation",
+                "choix1_desc",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Ce que l'option A et l'option B permettaient chacune de préserver",
+                "choix1_options",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Ce que vous avez choisi, ce que cela a coûté et permis de respecter",
+                "choix1_resolution",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Les valeurs en conflit",
+                "choix1_valeurs",
+                1.0
+              ]
+            ]
+          ],
+          "title": "Choix difficile 1",
+          "color": "lilac"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation",
+                "choix2_desc",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Ce que l'option A et l'option B permettaient chacune de préserver",
+                "choix2_options",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Ce que vous avez choisi, ce que cela a coûté et permis de respecter",
+                "choix2_resolution",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Les valeurs en conflit",
+                "choix2_valeurs",
+                1.0
+              ]
+            ]
+          ],
+          "title": "Choix difficile 2",
+          "color": "sky"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Nommer *ce qui compte.*",
+      "part_title": "Exercice 4 · Liste de valeurs · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "À partir de vos situations d'alignement, de désalignement et de vos choix difficiles, cochez les valeurs qui reviennent régulièrement dans votre parcours."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "checklist_cards",
+          "groups": [
+            [
+              "Liberté et autonomie",
+              [
+                "Autonomie",
+                "Liberté",
+                "Indépendance",
+                "Créativité",
+                "Marge de manœuvre",
+                "Responsabilité",
+                "Choix",
+                "Souplesse",
+                "Authenticité",
+                "Initiative"
+              ]
+            ],
+            [
+              "Sécurité et stabilité",
+              [
+                "Sécurité",
+                "Stabilité",
+                "Prévisibilité",
+                "Cadre clair",
+                "Protection",
+                "Fiabilité",
+                "Continuité",
+                "Sérénité",
+                "Équilibre",
+                "Confort"
+              ]
+            ],
+            [
+              "Réussite et reconnaissance",
+              [
+                "Réussite",
+                "Progression",
+                "Ambition",
+                "Excellence",
+                "Compétence",
+                "Reconnaissance",
+                "Statut",
+                "Légitimité",
+                "Impact",
+                "Fierté"
+              ]
+            ],
+            [
+              "Relation et coopération",
+              [
+                "Bienveillance",
+                "Entraide",
+                "Écoute",
+                "Loyauté",
+                "Respect",
+                "Coopération",
+                "Confiance",
+                "Harmonie",
+                "Soutien",
+                "Qualité relationnelle"
+              ]
+            ],
+            [
+              "Justice et utilité sociale",
+              [
+                "Justice",
+                "Équité",
+                "Inclusion",
+                "Égalité",
+                "Utilité sociale",
+                "Sens",
+                "Contribution",
+                "Engagement",
+                "Éthique",
+                "Responsabilité sociale"
+              ]
+            ],
+            [
+              "Stimulation et apprentissage",
+              [
+                "Nouveauté",
+                "Défi",
+                "Apprentissage",
+                "Curiosité",
+                "Exploration",
+                "Variété",
+                "Mouvement",
+                "Intensité",
+                "Expérimentation",
+                "Évolution"
+              ]
+            ],
+            [
+              "Plaisir et qualité de vie",
+              [
+                "Plaisir",
+                "Joie",
+                "Légèreté",
+                "Beauté",
+                "Esthétique",
+                "Confort de vie",
+                "Temps pour soi",
+                "Vitalité",
+                "Spontanéité",
+                "Simplicité"
+              ]
+            ],
+            [
+              "Cadre, règles et transmission",
+              [
+                "Rigueur",
+                "Discipline",
+                "Respect du cadre",
+                "Tradition",
+                "Transmission",
+                "Fiabilité",
+                "Méthode",
+                "Structure",
+                "Engagement",
+                "Sens du devoir"
+              ]
+            ],
+            [
+              "Influence et pouvoir d'agir",
+              [
+                "Influence",
+                "Leadership",
+                "Décision",
+                "Pouvoir d'agir",
+                "Autorité",
+                "Responsabilité",
+                "Pilotage",
+                "Capacité à transformer",
+                "Capacité à orienter",
+                "Maîtrise"
+              ]
+            ]
+          ],
+          "columns": 3,
+          "field_prefix": "valeur"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Hiérarchiser *vos valeurs.*",
+      "part_title": "Exercice 5 · Hiérarchie · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Parmi les valeurs cochées, réduisez progressivement votre choix pour dégager celles qui guident votre vie professionnelle."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Mes 10 valeurs importantes",
+              "field_id": "hierarchie_10_valeurs",
+              "subtitle": "Les 10 valeurs qui reviennent le plus dans votre parcours."
+            },
+            {
+              "question": "2. Mes 5 valeurs prioritaires",
+              "field_id": "hierarchie_5_valeurs",
+              "subtitle": "Les 5 plus fortes parmi les 10."
+            },
+            {
+              "question": "3. Mes 3 valeurs non négociables",
+              "field_id": "hierarchie_3_valeurs",
+              "subtitle": "Les 3 plus vitales parmi les 5."
+            }
+          ],
+          "max_box_height_cm": 3.4
+        },
+        {
+          "type": "callout",
+          "text": "Une valeur non négociable est une valeur qui, si elle manque durablement dans votre travail, risque d'entraîner une perte de motivation et d'énergie.",
+          "title": "À retenir"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Incarner vos valeurs *non négociables.*",
+      "part_title": "Exercice 6 · Valeur 1 sur 3 · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Traduisez chaque valeur clé en ressentis, en actions et en besoins concrets."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Valeur non négociable n° 1",
+                "incarner_val_1_name",
+                0.9
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Comment cette valeur se manifeste-t-elle concrètement dans mon travail ?",
+              "field_id": "incarner_val_1_q1"
+            },
+            {
+              "question": "2. Dans quelles situations passées l'ai-je déjà vécue ?",
+              "field_id": "incarner_val_1_q2"
+            },
+            {
+              "question": "3. Qu'est-ce que je ressens quand elle est respectée, ou absente ?",
+              "field_id": "incarner_val_1_q3"
+            },
+            {
+              "question": "4. De quoi ai-je besoin concrètement pour qu'elle existe dans mon futur travail ?",
+              "field_id": "incarner_val_1_q4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Incarner vos valeurs *non négociables.*",
+      "part_title": "Exercice 6 · Valeur 2 sur 3 · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Traduisez chaque valeur clé en ressentis, en actions et en besoins concrets."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Valeur non négociable n° 2",
+                "incarner_val_2_name",
+                0.9
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Comment cette valeur se manifeste-t-elle concrètement dans mon travail ?",
+              "field_id": "incarner_val_2_q1"
+            },
+            {
+              "question": "2. Dans quelles situations passées l'ai-je déjà vécue ?",
+              "field_id": "incarner_val_2_q2"
+            },
+            {
+              "question": "3. Qu'est-ce que je ressens quand elle est respectée, ou absente ?",
+              "field_id": "incarner_val_2_q3"
+            },
+            {
+              "question": "4. De quoi ai-je besoin concrètement pour qu'elle existe dans mon futur travail ?",
+              "field_id": "incarner_val_2_q4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Incarner vos valeurs *non négociables.*",
+      "part_title": "Exercice 6 · Valeur 3 sur 3 · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Traduisez chaque valeur clé en ressentis, en actions et en besoins concrets."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Valeur non négociable n° 3",
+                "incarner_val_3_name",
+                0.9
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Comment cette valeur se manifeste-t-elle concrètement dans mon travail ?",
+              "field_id": "incarner_val_3_q1"
+            },
+            {
+              "question": "2. Dans quelles situations passées l'ai-je déjà vécue ?",
+              "field_id": "incarner_val_3_q2"
+            },
+            {
+              "question": "3. Qu'est-ce que je ressens quand elle est respectée, ou absente ?",
+              "field_id": "incarner_val_3_q3"
+            },
+            {
+              "question": "4. De quoi ai-je besoin concrètement pour qu'elle existe dans mon futur travail ?",
+              "field_id": "incarner_val_3_q4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos valeurs en *conditions de travail.*",
+      "part_title": "Exercice 7 · Conditions de travail · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Formulez des critères concrets et observables, pour évaluer vos futurs postes ou projets."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "question",
+          "question": "1. Pour respecter mes valeurs, j'ai besoin d'un environnement où…",
+          "field_id": "conditions_positives",
+          "box_height_cm": 6.5,
+          "example": "je peux organiser mon travail avec autonomie ; les relations sont respectueuses ; les objectifs sont clairs ; je peux apprendre régulièrement ; je me sens utile ; le rythme est soutenable."
+        },
+        {
+          "type": "question",
+          "question": "2. Pour respecter mes valeurs, j'ai besoin d'éviter les environnements où…",
+          "field_id": "conditions_negatives",
+          "box_height_cm": 6.5,
+          "example": "tout est contrôlé ; les priorités changent sans cesse ; il y a peu de reconnaissance ; les relations sont froides ou compétitives ; la pression est permanente ; il n'y a pas d'évolution."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos tensions *de valeurs.*",
+      "part_title": "Exercice 8 · Tensions · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Deux valeurs importantes pour vous peuvent entrer en contradiction. Cochez les tensions qui vous parlent, puis détaillez les deux plus présentes dans votre parcours."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "checklist_cards",
+          "groups": [
+            [
+              "Tensions possibles",
+              [
+                "Liberté / sécurité",
+                "Réussite / équilibre",
+                "Bienveillance / affirmation de soi",
+                "Stimulation / stabilité",
+                "Autonomie / appartenance",
+                "Reconnaissance / discrétion",
+                "Sens / rémunération",
+                "Engagement / protection de soi",
+                "Créativité / cadre",
+                "Ambition / qualité de vie",
+                "Loyauté / besoin de changement",
+                "Responsabilité / légèreté"
+              ]
+            ]
+          ],
+          "columns": 1,
+          "field_prefix": "tension_chk",
+          "item_columns": 3
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Les deux valeurs en tension, et les situations où elle apparaît",
+                "tension1_situations",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Arbitrage : la valeur que vous privilégiez, celle que vous sacrifiez",
+                "tension1_arbitrage",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Équilibre : le compromis à rechercher",
+                "tension1_equilibre",
+                1.5
+              ]
+            ]
+          ],
+          "title": "Tension 1",
+          "color": "sky"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Les deux valeurs en tension, et les situations où elle apparaît",
+                "tension2_situations",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Arbitrage : la valeur que vous privilégiez, celle que vous sacrifiez",
+                "tension2_arbitrage",
+                1.5
+              ]
+            ],
+            [
+              [
+                "Équilibre : le compromis à rechercher",
+                "tension2_equilibre",
+                1.5
+              ]
+            ]
+          ],
+          "title": "Tension 2",
+          "color": "lilac"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Synthèse.",
+      "part_title": "Exercice 9 · Synthèse · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Complétez ces phrases pour résumer ce qui compte vraiment pour vous. Elles guideront la suite de votre projet."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui compte vraiment pour moi au travail, c'est :",
+                "synthese_compte_travail",
+                1.2
+              ]
+            ],
+            [
+              [
+                "Je me sens aligné·e quand :",
+                "synthese_aligne_quand",
+                1.2
+              ]
+            ],
+            [
+              [
+                "Je perds de l'énergie quand :",
+                "synthese_perte_energie",
+                1.2
+              ]
+            ],
+            [
+              [
+                "Mes 3 valeurs non négociables sont :",
+                "synthese_non_nego",
+                1.2
+              ]
+            ],
+            [
+              [
+                "Pour les respecter, j'ai besoin de :",
+                "synthese_besoins_nego",
+                1.2
+              ]
+            ],
+            [
+              [
+                "Dans mon futur projet, je veux davantage :",
+                "synthese_davantage",
+                1.2
+              ]
+            ],
+            [
+              [
+                "Dans mon futur projet, je veux moins :",
+                "synthese_moins",
+                1.2
+              ]
+            ]
+          ],
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet",
+      "params": {
+        "lines": [
+          "J'évalue chaque piste à l'aune de mes 3 valeurs non négociables.",
+          "Je repère les situations où l'une de mes valeurs est mise à mal.",
+          "J'emporte ma liste de conditions de travail en entretien."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "livrable_chap5",
+        "livrable_title": "Vos valeurs non négociables",
+        "livrable_text": "Vos 3 valeurs non négociables, traduites en conditions de travail, validées en séance."
+      }
+    },
+    {
+      "template": "closing",
+      "params": {}
+    }
+  ]
+}

@@ -1,0 +1,2416 @@
+{
+  "chapter_num": 0,
+  "chapter_title": "Mon business plan",
+  "subtitle": "Créer ou reprendre une activité",
+  "folio": "business plan",
+  "pdf_title": "Mon Business Plan — De l'idée au projet viable",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mon business *plan.*",
+        "number": null,
+        "eyebrow": "Livret projet · entrepreneuriat",
+        "tagline": "Créer ou reprendre une activité",
+        "promise": "De l'idée au projet viable."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Votre projet *en bref.*",
+      "part_title": "Fiche projet",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un carnet de travail pour structurer, tester et faire évoluer votre projet. Commencez par l'identifier."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Porteur ou porteuse du projet (nom et prénom)",
+                "bp_identite_nom_prenom"
+              ],
+              [
+                "Nom ou intitulé du projet",
+                "bp_identite_nom_projet"
+              ]
+            ],
+            [
+              [
+                "Date de début",
+                "bp_identite_date_debut"
+              ],
+              [
+                "Version du document",
+                "bp_identite_version"
+              ]
+            ]
+          ],
+          "title": "Informations du projet"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Mon projet en une phrase (première intuition)",
+              "field_id": "bp_identite_pitch_intro",
+              "subtitle": "Formulez votre intuition de départ en une ou deux phrases claires."
+            }
+          ],
+          "max_box_height_cm": 5.0
+        },
+        {
+          "type": "annotation",
+          "text": "Cette phrase évoluera : c'est voulu."
+        }
+      ]
+    },
+    {
+      "template": "summary",
+      "title": "Construire votre *business plan.*",
+      "params": {
+        "num": "",
+        "intro_text": "Ce carnet vous accompagne pas à pas pour donner corps à votre projet. Rien n'est prérempli : vous suivez une boucle en six temps (comprendre, se questionner, chercher sur le terrain, écrire, décider, vérifier vos hypothèses) pour transformer une intuition en une entreprise viable et durable.",
+        "points": [
+          "1. Fondations et cible : clarifier l'idée, projeter la vision à 3 ans, comprendre les personnes visées.",
+          "2. Problème et offre : identifier le vrai problème, poser les hypothèses, formuler l'offre et sa valeur.",
+          "3. Marché et positionnement : étudier le marché, les concurrents et les alternatives, préparer le pitch.",
+          "4. Modèle économique et vente : revenus, Business Model Canvas, prix, dix premiers clients.",
+          "5. Moyens, finances et cadre : communication, ressources, statut juridique, prévisionnel, point mort.",
+          "6. Test et synthèse : MVP, entretiens terrain, risques, feuille de route et synthèse finale."
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Mon idée *de projet.*",
+      "part_title": "1. POSER LES FONDATIONS",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une idée n'est pas encore un projet. Une idée est une intuition spontanée ou une aspiration personnelle ; un projet est un système organisé capable d'apporter une solution réelle à des personnes précises. Être capable d'expliquer son idée en mots simples est la première victoire de l'entrepreneure.",
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Mon idée aujourd'hui (description libre)",
+              "field_id": "bp_p3_idee_libre",
+              "subtitle": "Décrivez librement et sans censure ce que vous aimeriez créer, proposer ou développer."
+            },
+            {
+              "question": "2. Mon projet en une phrase",
+              "field_id": "bp_p3_projet_phrase",
+              "subtitle": "Résumez l'essence : « J'aimerais créer / développer... pour aider... à... »"
+            },
+            {
+              "question": "3. Pourquoi ce projet ? (sens personnel et déclic)",
+              "field_id": "bp_p3_pourquoi_sens",
+              "subtitle": "Qu'est-ce qui vous a donné cette idée ? Quel problème ou manque avez-vous observé ? Pourquoi ce projet compte-t-il pour vous ?"
+            }
+          ],
+          "min_box_height_cm": 2.8,
+          "max_box_height_cm": 4.8
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ma vision *à 3 ans.*",
+      "part_title": "1. POSER LES FONDATIONS",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Construire sa vision, c'est se donner un cap avant de plonger dans les détails opérationnels. Cette vision doit allier votre ambition de création et le respect de votre écologie personnelle.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Mon projet idéal dans 3 ans",
+              "subtitle": "À quoi ressemble une journée type ? Quelle est la taille de l'activité ?",
+              "field_id": "bp_p4_vision_ideal",
+              "placeholder": "Décrivez votre quotidien, votre activité et vos clients idéaux..."
+            },
+            {
+              "title": "2. Ce que j'aimerais avoir construit",
+              "subtitle": "Quels produits, services, réputation ou impact concret ?",
+              "field_id": "bp_p4_vision_construit",
+              "placeholder": "Vos accomplissements concrets d'ici 3 ans..."
+            },
+            {
+              "title": "3. La place dans ma vie et mon équilibre",
+              "subtitle": "Quel temps de travail ? Quelle liberté ? Quel équilibre pro/perso ?",
+              "field_id": "bp_p4_vision_vie",
+              "placeholder": "Vos conditions de vie, votre rémunération cible, votre sérénité..."
+            },
+            {
+              "title": "4. Ce que je refuse absolument de construire",
+              "subtitle": "Quels pièges, contraintes ou compromis ne voulez-vous jamais accepter ?",
+              "field_id": "bp_p4_vision_refus",
+              "placeholder": "Vos limites non négociables et ce qui dénaturerait votre projet..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 7.6,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Mon public *cible.*",
+      "part_title": "2. COMPRENDRE À QUI JE M'ADRESSE",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Ne commencez jamais par concevoir votre produit ou votre service : commencez par les personnes. Pour qui voulez-vous créer de la valeur ? Dans quelle situation concrète se trouvent-elles aujourd'hui, et qu'est-ce qui leur pèse réellement dans leur quotidien professionnel ou personnel ?",
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Qui sont les personnes que je veux accompagner / servir ?",
+              "field_id": "bp_p5_qui_cible",
+              "subtitle": "Précisez leur situation : statut, contexte de vie, activité, environnement..."
+            },
+            {
+              "question": "2. Quels sont leurs besoins profonds et difficultés actuelles ?",
+              "field_id": "bp_p5_besoins_difficultes",
+              "subtitle": "Quelles épreuves ou irritants rencontrent-elles ? Que recherchent-elles en priorité ?"
+            },
+            {
+              "question": "3. Que font-elles ou qu'utilisent-elles déjà aujourd'hui ?",
+              "field_id": "bp_p5_solutions_actuelles",
+              "subtitle": "Quelles alternatives ou solutions imparfaites bricolent-elles pour y répondre sans vous ?"
+            }
+          ],
+          "min_box_height_cm": 2.8,
+          "max_box_height_cm": 4.8
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Fiche persona *et matrice de lucidité.*",
+      "part_title": "2. COMPRENDRE À QUI JE M'ADRESSE",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Donnez un visage concret à votre public cible en dressant le portrait d'une personne type. Distinguez impérativement ce que vous observez de façon certaine de ce qui relève encore d'hypothèses à tester.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Profil type et contexte",
+              "subtitle": "Prénom fictif, âge, métier, contexte de vie et habitudes...",
+              "field_id": "bp_p6_persona_profil",
+              "placeholder": "Ex : Claire, 38 ans, cadre en reconversion..."
+            },
+            {
+              "title": "Freins, craintes et motivations",
+              "subtitle": "Ce qui l'empêche d'agir vs ce qui la fait avancer...",
+              "field_id": "bp_p6_persona_freins",
+              "placeholder": "Peur de se tromper, manque de temps, désir d'autonomie..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 6.8,
+          "field_prefix": "grid"
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Ce que je pense savoir (mes intuitions)",
+              "subtitle": "Mes idées spontanées sur ses attentes et son budget...",
+              "field_id": "bp_p6_lucidite_pense",
+              "placeholder": "Je pense qu'elle est prête à payer pour gagner du temps..."
+            },
+            {
+              "title": "Ce que je dois encore vérifier sur le terrain",
+              "subtitle": "Les angles morts et questions à lui poser directement...",
+              "field_id": "bp_p6_lucidite_verifier",
+              "placeholder": "Vérifier si ce problème est une priorité budgétaire..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 6.8,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Quel problème *résoudre ?*",
+      "part_title": "3. LE BESOIN ET LE PROBLÈME",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Un projet viable ne repose pas uniquement sur une bonne idée : il doit soulager un problème ou combler un manque réel, ressenti et prioritaire. Plus le problème est douloureux et fréquent, plus la solution a de la valeur.",
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Le problème que j'ai identifié (description précise)",
+              "field_id": "bp_p7_probleme_desc",
+              "subtitle": "Quelle est la douleur, la frustration ou la perte de temps/argent constatée ?"
+            },
+            {
+              "question": "2. Pour qui ce problème existe-t-il, à quelle fréquence et avec quelle importance ?",
+              "field_id": "bp_p7_probleme_intensite",
+              "subtitle": "Est-ce un problème vital, urgent, régulier ou secondaire ? Qui en souffre le plus ?"
+            },
+            {
+              "question": "3. Comment font les personnes aujourd'hui et pourquoi les solutions actuelles ne suffisent-elles pas ?",
+              "field_id": "bp_p7_probleme_limites",
+              "subtitle": "Quels sont les manques des offres existantes (trop chères, impersonnelles, complexes...) ?"
+            }
+          ],
+          "min_box_height_cm": 2.8,
+          "max_box_height_cm": 4.8
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Mes hypothèses *à vérifier.*",
+      "part_title": "3. LE BESOIN ET LE PROBLÈME",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Formulez vos hypothèses sous forme de paris à tester. L'enquête de terrain vous permettra de transformer des suppositions en certitudes opérationnelles ou d'ajuster votre approche avant d'engager des frais.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Hypothèse Clé",
+            "Pourquoi je le pense ?",
+            "Comment la tester concrètement ?",
+            "Résultat / Observation"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p8_hyp1_texte",
+                "placeholder": "Hypothèse 1 : Les personnes manquent de..."
+              },
+              {
+                "field_id": "bp_p8_hyp1_pourquoi",
+                "placeholder": "Vu dans 3 témoignages récents..."
+              },
+              {
+                "field_id": "bp_p8_hyp1_comment",
+                "placeholder": "Questionner 5 personnes cibles..."
+              },
+              {
+                "field_id": "bp_p8_hyp1_resultat",
+                "placeholder": "Confirmé / Invalidé : détails..."
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p8_hyp2_texte",
+                "placeholder": "Hypothèse 2 : Elles sont prêtes à investir..."
+              },
+              {
+                "field_id": "bp_p8_hyp2_pourquoi",
+                "placeholder": "Car le coût du statu quo est fort..."
+              },
+              {
+                "field_id": "bp_p8_hyp2_comment",
+                "placeholder": "Demander quel budget elles consacrent..."
+              },
+              {
+                "field_id": "bp_p8_hyp2_resultat",
+                "placeholder": "Budget confirmé entre X et Y €..."
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p8_hyp3_texte",
+                "placeholder": "Hypothèse 3 : Le format idéal est..."
+              },
+              {
+                "field_id": "bp_p8_hyp3_pourquoi",
+                "placeholder": "Manque de disponibilité en journée..."
+              },
+              {
+                "field_id": "bp_p8_hyp3_comment",
+                "placeholder": "Tester 2 créneaux en sondage..."
+              },
+              {
+                "field_id": "bp_p8_hyp3_resultat",
+                "placeholder": "Préférence nette pour le soir / visio..."
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p8_hyp4_texte",
+                "placeholder": "Hypothèse 4 : Le canal de contact prioritaire est..."
+              },
+              {
+                "field_id": "bp_p8_hyp4_pourquoi",
+                "placeholder": "Présence active sur les réseaux pro..."
+              },
+              {
+                "field_id": "bp_p8_hyp4_comment",
+                "placeholder": "Publier un post d'accroche et mesurer..."
+              },
+              {
+                "field_id": "bp_p8_hyp4_resultat",
+                "placeholder": "Retours directs et intérêt validé..."
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.76,
+            4.08,
+            4.42,
+            3.74
+          ],
+          "field_prefix": "tbl_hyp"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "Ce que mes recherches et mes échanges de terrain m'ont appris",
+          "field_id": "bp_p8_enseignements_recherche",
+          "box_height_cm": 5.6,
+          "subtitle": "Quels sont les retours majeurs, les surprises et les prises de conscience suite à vos premières investigations ?",
+          "example": "Ex : J'ai découvert que le besoin n'était pas tant technique qu'émotionnel (besoin de réassurance et de cadre sécurisant)."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que je propose *concrètement.*",
+      "part_title": "4. MON OFFRE",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Transformer le besoin identifié en une solution tangible, désirable et sécurisante pour la cliente. Être précise sur ce qui est fourni permet de vendre avec assurance et d'éviter les surcharges futures.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "question",
+          "question": "Mon Produit / Service & l'Expérience vécue",
+          "field_id": "bp_p9_offre_description",
+          "box_height_cm": 4.2,
+          "subtitle": "À quoi sert-il concrètement ? Que reçoit la personne ? Quelle expérience relationnelle lui faites-vous vivre ?",
+          "example": "Ex : Un accompagnement individuel en 5 séances avec livret d'exercices et support WhatsApp entre les séances."
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Ce qui est rigoureusement inclus",
+              "subtitle": "Temps dédié, livrables, accès, ressources partagées...",
+              "field_id": "bp_p9_offre_inclus",
+              "placeholder": "Ex : 5 séances de 1h30, livret personnalisé, compte-rendu écrit après chaque séance..."
+            },
+            {
+              "title": "Ce qui n'est pas inclus (périmètre)",
+              "subtitle": "Limites saines, conditions préalables, hors périmètre...",
+              "field_id": "bp_p9_offre_exclus",
+              "placeholder": "Ex : Disponibilité les week-ends, interventions d'urgence, prise en charge juridique ou comptable..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 7.0,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ma proposition *de valeur.*",
+      "part_title": "4. MON OFFRE",
+      "blocks": [
+        {
+          "type": "callout",
+          "text": "« Pourquoi une personne choisirait-elle votre projet plutôt qu'une autre solution ou plutôt que de ne rien faire ? »",
+          "title": "La question pivot du business plan",
+          "variant": "tip"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.2
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Le bénéfice principal et les bénéfices secondaires",
+              "field_id": "bp_p10_benefices",
+              "subtitle": "Quel est le résultat tangible promis ? Quels sont les bénéfices émotionnels (sérénité, fierté, clarté) ?"
+            },
+            {
+              "question": "2. Ce qui rend mon approche unique et singulière",
+              "field_id": "bp_p10_approche_differente",
+              "subtitle": "Qu'est-ce qui vous distingue (votre histoire, votre méthode, votre énergie, votre éthique) ?"
+            },
+            {
+              "question": "3. Formule de pitch : mon énoncé de valeur",
+              "field_id": "bp_p10_pitch_promesse",
+              "subtitle": "Complétez : « J'accompagne [Cible] qui rencontrent [Problème] grâce à [Solution], contrairement à [Alternatives]. »"
+            }
+          ],
+          "min_box_height_cm": 2.8,
+          "max_box_height_cm": 4.6
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Mon marché *et ses tendances.*",
+      "part_title": "5. ÉTUDIER LE MARCHÉ",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Comprendre dans quel environnement vous vous inscrivez. Les tendances sociétales, technologiques ou réglementaires peuvent constituer des vents porteurs puissants ou des obstacles à anticiper dès maintenant.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "question",
+          "question": "Dans quel marché et secteur d'activité est-ce que je me situe ?",
+          "field_id": "bp_p11_marche_secteur",
+          "box_height_cm": 3.2,
+          "subtitle": "Définissez votre domaine (ex : conseil, artisanat d'art, services aux familles, formation, bien-être...)."
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Tendances favorables (vents porteurs)",
+              "subtitle": "Quelles évolutions sociétales ou technologiques favorisent votre projet ?",
+              "field_id": "bp_p11_tendances_favorables",
+              "placeholder": "Ex : Besoin croissant de déconnexion, recherche d'utilité, essor du télétravail..."
+            },
+            {
+              "title": "Tendances fragilisantes (risques du marché)",
+              "subtitle": "Quels changements économiques ou concurrentiels peuvent fragiliser l'activité ?",
+              "field_id": "bp_p11_tendances_risques",
+              "placeholder": "Ex : Baisse du pouvoir d'achat, saturation d'un canal, montée de solutions IA gratuites..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 5.6,
+          "field_prefix": "grid"
+        },
+        {
+          "type": "question",
+          "question": "Quelles réglementations, normes ou obligations dois-je impérativement connaître ?",
+          "field_id": "bp_p11_reglementations",
+          "box_height_cm": 3.2,
+          "subtitle": "Diplômes requis, normes ERP, RGPD, médiation de la consommation, assurances spécifiques..."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Concurrents *et alternatives.*",
+      "part_title": "5. ÉTUDIER LE MARCHÉ",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Ne limitez jamais votre veille aux concurrents directs : intégrez les concurrents indirects, les solutions bricolées et surtout le choix n°1 de beaucoup de prospects : l'inaction (« ne rien faire »).",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "checklist",
+          "items": [
+            [
+              "Concurrents directs : même offre, même cible",
+              "bp_p12_chk_directs"
+            ],
+            [
+              "Concurrents indirects : offre différente pour même besoin",
+              "bp_p12_chk_indirects"
+            ],
+            [
+              "Alternatives : méthodes maison, systèmes D, livres, tutos",
+              "bp_p12_chk_alternatives"
+            ],
+            [
+              "L'Inaction : ne rien changer et subir la situation",
+              "bp_p12_chk_inaction"
+            ]
+          ],
+          "title": "Les 4 familles d'acteurs à observer :",
+          "columns": 2,
+          "field_prefix": "chk"
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Acteur / concurrent clé n°1",
+              "subtitle": "Nom, offre, tarifs, forces observées et limites...",
+              "field_id": "bp_p12_concurrent_1",
+              "placeholder": "Nom : ...\nOffre & Prix : ...\nForces : ...\nCe que je peux apprendre ou faire différemment : ..."
+            },
+            {
+              "title": "Acteur / alternative clé n°2",
+              "subtitle": "Nom, offre, tarifs, forces observées et limites...",
+              "field_id": "bp_p12_concurrent_2",
+              "placeholder": "Nom : ...\nOffre & Prix : ...\nForces : ...\nCe que je peux apprendre ou faire différemment : ..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 10.0,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Benchmark *et inspirations.*",
+      "part_title": "6. S'INSPIRER DE PROJETS EXISTANTS",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Observez des projets inspirants en France, en Europe ou au Québec. L'objectif n'est pas de copier mais de comprendre ce qui fonctionne et de révéler votre propre singularité.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Projet Inspirant (Nom & Lieu)",
+            "Concept & Public Visé",
+            "Offre & Modèle Économique",
+            "Particularité / Force"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p13_bench1_nom",
+                "placeholder": "Projet A (ex : École libre...)"
+              },
+              {
+                "field_id": "bp_p13_bench1_concept",
+                "placeholder": "Accompagnement de..."
+              },
+              {
+                "field_id": "bp_p13_bench1_modele",
+                "placeholder": "Abonnement mensuel..."
+              },
+              {
+                "field_id": "bp_p13_bench1_force",
+                "placeholder": "Communauté très active..."
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p13_bench2_nom",
+                "placeholder": "Projet B (ex : Agence éthique...)"
+              },
+              {
+                "field_id": "bp_p13_bench2_concept",
+                "placeholder": "Ateliers collectifs..."
+              },
+              {
+                "field_id": "bp_p13_bench2_modele",
+                "placeholder": "Forfait sur devis..."
+              },
+              {
+                "field_id": "bp_p13_bench2_force",
+                "placeholder": "Marque forte et engagée..."
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p13_bench3_nom",
+                "placeholder": "Projet C (ex : Tiers-lieu rural...)"
+              },
+              {
+                "field_id": "bp_p13_bench3_concept",
+                "placeholder": "Événements & espace partagé..."
+              },
+              {
+                "field_id": "bp_p13_bench3_modele",
+                "placeholder": "Hybride (public + privé)..."
+              },
+              {
+                "field_id": "bp_p13_bench3_force",
+                "placeholder": "Partenariats locaux solides..."
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p13_bench4_nom",
+                "placeholder": "Projet D (ex : Plateforme atelier...)"
+              },
+              {
+                "field_id": "bp_p13_bench4_concept",
+                "placeholder": "Vente directe & transmission..."
+              },
+              {
+                "field_id": "bp_p13_bench4_modele",
+                "placeholder": "Modèle mixte créateur..."
+              },
+              {
+                "field_id": "bp_p13_bench4_force",
+                "placeholder": "Identité visuelle remarquable..."
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.25,
+            4.25,
+            4.42,
+            4.08
+          ],
+          "field_prefix": "tbl_bench"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.35
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Les idées fortes que je retiens et que je pourrais adapter",
+              "field_id": "bp_p13_idees_adaptees",
+              "subtitle": "Quelles bonnes pratiques découvrez-vous chez ces pionniers ?"
+            },
+            {
+              "question": "Ce que je ne veux surtout pas reproduire",
+              "field_id": "bp_p13_idees_refusees",
+              "subtitle": "Quels écueils, lourdeurs ou manques observez-vous chez eux que vous refusez ?"
+            }
+          ],
+          "min_box_height_cm": 2.8,
+          "max_box_height_cm": 4.2
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Identité *et univers de marque.*",
+      "part_title": "7. MON POSITIONNEMENT",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Votre positionnement n'est pas un slogan : c'est la place singulière et nette que vous prenez dans l'esprit de votre communauté. Il guide votre manière de communiquer, votre tarif et la relation que vous nouez.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Si mon projet était une personne",
+              "subtitle": "Comment serait-elle ? Quel ton ? Quelle énergie ? Quels traits ?",
+              "field_id": "bp_p14_personnalite",
+              "placeholder": "Ex : Chaleureuse mais sans complaisance, structurée, rassurante, pétillante..."
+            },
+            {
+              "title": "2. 3 à 5 mots décrivant mon univers",
+              "subtitle": "Les termes signatures qui définissent l'ambiance et la vibration...",
+              "field_id": "bp_p14_mots_univers",
+              "placeholder": "Ex : Clarté, Empathie, Rigueur, Action, Émancipation..."
+            },
+            {
+              "title": "3. Ce que je veux incarner vs refuser",
+              "subtitle": "Ce que vous défendez fièrement vs ce que vous refusez catégoriquement...",
+              "field_id": "bp_p14_incarner_refuser",
+              "placeholder": "J'incarne le respect du rythme, je refuse les promesses miracles et le marketing agressif..."
+            },
+            {
+              "title": "4. Niveau de gamme et expérience client",
+              "subtitle": "Accessible, équitable, premium ? Quelle relation humaine privilégiée ?",
+              "field_id": "bp_p14_gamme_relation",
+              "placeholder": "Accompagnement de proximité sur-mesure, écoute intime et grande disponibilité..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 7.6,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Laboratoire *de pitch.*",
+      "part_title": "7. MON POSITIONNEMENT",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une phrase de positionnement percutante ne naît jamais du premier coup de plume. Testez trois approches différentes (descriptive, transformatrice, audacieuse) avant d'élire votre formulation phare.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Version 1 : factuelle et descriptive",
+              "subtitle": "Sobre et directe : Ce que vous faites, pour qui et avec quel moyen...",
+              "field_id": "bp_p15_pitch_v1",
+              "placeholder": "Ex : Je propose du conseil en organisation pour les artisanes indépendantes..."
+            },
+            {
+              "title": "Version 2 : axée sur la transformation",
+              "subtitle": "Centrée sur le bénéfice vécu et le passage d'un état A à un état B...",
+              "field_id": "bp_p15_pitch_v2",
+              "placeholder": "Ex : J'aide les créatrices à retrouver 10h de sérénité par semaine sans sacrifier leur CA..."
+            },
+            {
+              "title": "Version 3 : audacieuse et différenciante",
+              "subtitle": "Votre parti-pris singulier qui prend le contre-pied des habitudes du marché...",
+              "field_id": "bp_p15_pitch_v3",
+              "placeholder": "Ex : L'accompagnement qui réconcilie performance entrepreneuriale et écologie du repos..."
+            }
+          ],
+          "columns": 3,
+          "card_height_cm": 6.2,
+          "field_prefix": "grid"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.35
+        },
+        {
+          "type": "question",
+          "question": "La formulation que je retiens aujourd'hui :",
+          "field_id": "bp_p15_pitch_retenu",
+          "box_height_cm": 5.5,
+          "subtitle": "La synthèse qui résonne avec justesse et que vous aurez fierté à prononcer lors de vos rencontres professionnelles.",
+          "example": "Ex : J'aide les femmes en reconversion à bâtir un projet professionnel rentable qui respecte leur santé et leurs valeurs profondes."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Sources de revenus *et modèle.*",
+      "part_title": "8. MON MODÈLE ÉCONOMIQUE",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Votre modèle économique explique comment votre projet crée de la valeur, la délivre et en capture une partie pour assurer sa viabilité financière. Un modèle sain diversifie intelligemment ses rentrées sans s'éparpiller.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "checklist",
+          "items": [
+            [
+              "Vente unitaire de produit / prestation",
+              "bp_p16_chk_vente"
+            ],
+            [
+              "Abonnement / Forfait mensuel récurrent",
+              "bp_p16_chk_abo"
+            ],
+            [
+              "Accompagnement / Pack sur devis",
+              "bp_p16_chk_pack"
+            ],
+            [
+              "Financement public / Aides / Subventions",
+              "bp_p16_chk_public"
+            ],
+            [
+              "Partenariats / Apport d'affaires",
+              "bp_p16_chk_partenariat"
+            ],
+            [
+              "Modèle hybride (Particuliers + Entreprises)",
+              "bp_p16_chk_hybride"
+            ]
+          ],
+          "title": "Sources de revenus envisagées :",
+          "columns": 2,
+          "field_prefix": "chk"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Mes sources de revenus prioritaires et secondaires",
+              "field_id": "bp_p16_sources_revenus",
+              "subtitle": "Quelle offre génère le cœur de vos revenus ? Quelles sont les rentrées complémentaires ?"
+            },
+            {
+              "question": "2. Quelle personne ou organisation paie concrètement ?",
+              "field_id": "bp_p16_qui_paie",
+              "subtitle": "La personne accompagnée elle-même, son employeur (B2B), une caisse de retraite, un OPCO..."
+            },
+            {
+              "question": "3. Pour quoi paie-t-elle et à quel moment du parcours ?",
+              "field_id": "bp_p16_quand_paie",
+              "subtitle": "Acompte à la commande (30%), solde à la livraison, prélèvement mensuel, paiement en 3x..."
+            }
+          ],
+          "min_box_height_cm": 2.4,
+          "max_box_height_cm": 3.8
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Business Model *Canvas.*",
+      "part_title": "8. MON MODÈLE ÉCONOMIQUE",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "La vue d'ensemble synthétique de votre écosystème en 9 blocs interdépendants. Remplissez chaque bloc avec des mots-clés percutants pour tester la cohérence globale de votre édifice.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Segments clients",
+              "subtitle": "Pour qui créez-vous de la valeur ?",
+              "field_id": "bp_p17_canvas_segments",
+              "placeholder": "Cibles prioritaires, personas..."
+            },
+            {
+              "title": "2. Proposition de valeur",
+              "subtitle": "Quelle promesse unique délivrez-vous ?",
+              "field_id": "bp_p17_canvas_valeur",
+              "placeholder": "Bénéfice clé, transformation..."
+            },
+            {
+              "title": "3. Relations clients",
+              "subtitle": "Quel lien entretenez-vous ?",
+              "field_id": "bp_p17_canvas_relations",
+              "placeholder": "Accompagnement individuel, communauté..."
+            },
+            {
+              "title": "4. Canaux de vente",
+              "subtitle": "Comment vous faites-vous connaître ?",
+              "field_id": "bp_p17_canvas_canaux",
+              "placeholder": "Réseaux, site, bouche-à-oreille..."
+            },
+            {
+              "title": "5. Activités clés",
+              "subtitle": "Quelles actions devez-vous réussir ?",
+              "field_id": "bp_p17_canvas_activites",
+              "placeholder": "Production, accompagnement, com..."
+            },
+            {
+              "title": "6. Ressources clés",
+              "subtitle": "De quoi avez-vous besoin pour tourner ?",
+              "field_id": "bp_p17_canvas_ressources",
+              "placeholder": "Matériel, compétences, temps..."
+            },
+            {
+              "title": "7. Partenaires clés",
+              "subtitle": "Qui sont vos alliés stratégiques ?",
+              "field_id": "bp_p17_canvas_partenaires",
+              "placeholder": "Prescripteurs, pairs, mentors..."
+            },
+            {
+              "title": "8. Structure de coûts",
+              "subtitle": "Quelles sont vos dépenses majeures ?",
+              "field_id": "bp_p17_canvas_couts",
+              "placeholder": "Charges fixes, outils, sous-traitance..."
+            },
+            {
+              "title": "9. Flux de revenus",
+              "subtitle": "Comment rentre l'argent dans l'entreprise ?",
+              "field_id": "bp_p17_canvas_revenus",
+              "placeholder": "Tarifs forfaits, récurrence, marge..."
+            }
+          ],
+          "columns": 3,
+          "card_height_cm": 5.3,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Grille des offres *et formules.*",
+      "part_title": "9. MON OFFRE COMMERCIALE",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Structurez vos prestations sous forme d'une gamme claire : une offre phare (qui concentre vos efforts), des offres complémentaires pour enrichir la relation, et vos idées d'offres futures à garder pour plus tard.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Offre / Formule",
+            "Public Cible",
+            "Contenu Clé",
+            "Prix Envisagé",
+            "Marge / Rentabilité"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p18_o1_nom",
+                "placeholder": "Formule Découverte"
+              },
+              {
+                "field_id": "bp_p18_o1_cible",
+                "placeholder": "Débutantes..."
+              },
+              {
+                "field_id": "bp_p18_o1_contenu",
+                "placeholder": "Audit de 2h + mémo"
+              },
+              {
+                "field_id": "bp_p18_o1_prix",
+                "placeholder": "180 €"
+              },
+              {
+                "field_id": "bp_p18_o1_marge",
+                "placeholder": "Forte"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p18_o2_nom",
+                "placeholder": "Accompagnement Phare"
+              },
+              {
+                "field_id": "bp_p18_o2_cible",
+                "placeholder": "En reconversion..."
+              },
+              {
+                "field_id": "bp_p18_o2_contenu",
+                "placeholder": "Programme 3 mois"
+              },
+              {
+                "field_id": "bp_p18_o2_prix",
+                "placeholder": "950 €"
+              },
+              {
+                "field_id": "bp_p18_o2_marge",
+                "placeholder": "Très bonne"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p18_o3_nom",
+                "placeholder": "Atelier Collectif"
+              },
+              {
+                "field_id": "bp_p18_o3_cible",
+                "placeholder": "Groupe (6 pers)"
+              },
+              {
+                "field_id": "bp_p18_o3_contenu",
+                "placeholder": "Journée immersive"
+              },
+              {
+                "field_id": "bp_p18_o3_prix",
+                "placeholder": "150 € / pers"
+              },
+              {
+                "field_id": "bp_p18_o3_marge",
+                "placeholder": "Excellente"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p18_o4_nom",
+                "placeholder": "Option / Suivi Long Terme"
+              },
+              {
+                "field_id": "bp_p18_o4_cible",
+                "placeholder": "Anciennes clientes..."
+              },
+              {
+                "field_id": "bp_p18_o4_contenu",
+                "placeholder": "Entretien mensuel de suivi"
+              },
+              {
+                "field_id": "bp_p18_o4_prix",
+                "placeholder": "90 € / mois"
+              },
+              {
+                "field_id": "bp_p18_o4_marge",
+                "placeholder": "Excellente"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.74,
+            3.4,
+            4.76,
+            2.55,
+            2.55
+          ],
+          "field_prefix": "tbl_offres"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Mon offre phare (core offer)",
+              "subtitle": "L'offre signature sur laquelle vous concentrez 80% de votre énergie commerciale...",
+              "field_id": "bp_p18_offre_phare",
+              "placeholder": "Pourquoi cette offre est votre fer de lance ? À quel problème n°1 répond-elle ?"
+            },
+            {
+              "title": "Mes offres complémentaires et futures",
+              "subtitle": "Ce que vous proposerez dans un second temps (cross-sell, montée en gamme, produits digitaux)...",
+              "field_id": "bp_p18_offres_futures",
+              "placeholder": "Idées à mûrir sans vous disperser lors des premiers mois..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 8.0,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Comment fixer *mes prix ?*",
+      "part_title": "10. MES PRIX",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Fixer ses prix est souvent un moment de doute. Pourtant, un prix juste se calcule à l'intersection de 3 angles : 1. Vos coûts réels (le plancher vital) • 2. La valeur perçue (la transformation vécue) • 3. Le marché (la concurrence).",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Prix plancher (minimum vital)",
+              "subtitle": "En-dessous de ce prix, vous travaillez à perte ou sacrifiez votre santé...",
+              "field_id": "bp_p19_prix_plancher",
+              "placeholder": "Ex : 450 € minimum par prestation..."
+            },
+            {
+              "title": "2. Prix cible (idéal et rentable)",
+              "subtitle": "Le tarif juste qui rémunère votre expertise et finance votre sérénité...",
+              "field_id": "bp_p19_prix_cible",
+              "placeholder": "Ex : 750 € par prestation..."
+            },
+            {
+              "title": "3. Prix plafond (audacieux)",
+              "subtitle": "Le prix maximal justifiable si vous ajoutez un accompagnement sur-mesure...",
+              "field_id": "bp_p19_prix_plafond",
+              "placeholder": "Ex : 1 200 € en formule premium..."
+            },
+            {
+              "title": "4. Prix observés sur le marché",
+              "subtitle": "Les fourchettes pratiquées par les acteurs comparables...",
+              "field_id": "bp_p19_prix_marche",
+              "placeholder": "Ex : Entre 500 € et 900 € selon l'expérience..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 4.0,
+          "field_prefix": "grid"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.25
+        },
+        {
+          "type": "question",
+          "question": "Pourquoi mon prix est-il cohérent, juste et pleinement légitime ?",
+          "field_id": "bp_p19_justification_prix",
+          "box_height_cm": 3.2,
+          "subtitle": "Écrivez vos arguments clés pour assumer vos tarifs avec sérénité et sans baisser vos prix par peur.",
+          "example": "Ex : Mon tarif reflète un suivi individuel sans compromis, un gain de plusieurs mois d'errance pour la cliente et une disponibilité réelle."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Trouver mes *premiers clients.*",
+      "part_title": "11. COMMERCIALISATION",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Attendre que les clients arrivent par magie ne fonctionne pas. Pour lancer la machine, il faut choisir 2 à 3 canaux d'acquisition prioritaires et concentrer ses efforts sur l'obtention de ses 10 premiers clients.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "checklist",
+          "items": [
+            [
+              "Bouche-à-oreille & Réseau proche",
+              "bp_p20_chk_reseau"
+            ],
+            [
+              "Réseaux sociaux (LinkedIn, Instagram)",
+              "bp_p20_chk_social"
+            ],
+            [
+              "Prescripteurs & Partenaires recommandants",
+              "bp_p20_chk_prescripteurs"
+            ],
+            [
+              "Événements, ateliers & salons locaux",
+              "bp_p20_chk_salons"
+            ],
+            [
+              "Site web & Référencement (SEO)",
+              "bp_p20_chk_site"
+            ],
+            [
+              "Démarchage direct & Prise de contact qualifiée",
+              "bp_p20_chk_direct"
+            ]
+          ],
+          "title": "Canaux d'acquisition privilégiés :",
+          "columns": 2,
+          "field_prefix": "chk"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Mes 2 à 3 canaux prioritaires et justification",
+              "field_id": "bp_p20_canaux_choisis",
+              "subtitle": "Pourquoi ces canaux correspondent-ils à votre personnalité et aux habitudes de vos clientes ?"
+            },
+            {
+              "question": "2. Comment vais-je obtenir mes 10 premiers clients ?",
+              "field_id": "bp_p20_dix_premiers_clients",
+              "subtitle": "Détaillez vos actions directes : liste de 20 contacts tièdes, appel découverte, offre pilote à prix doux..."
+            },
+            {
+              "question": "3. Comment transformer un premier contact intéressé en cliente engagée ?",
+              "field_id": "bp_p20_conversion_contact",
+              "subtitle": "Quel est votre rituel d'échange : appel d'alignement de 30 min, diagnostic offert, proposition personnalisée..."
+            }
+          ],
+          "min_box_height_cm": 2.4,
+          "max_box_height_cm": 3.8
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le parcours client *en 7 étapes.*",
+      "part_title": "11. COMMERCIALISATION",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Le voyage de votre cliente commence bien avant l'achat et se poursuit bien après la prestation : Découverte → Intérêt → Contact → Achat → Expérience → Fidélisation → Recommandation.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Jalon du Parcours",
+            "Ce que vit & ressent la cliente",
+            "Ce que je dois faire / délivrer"
+          ],
+          "rows": [
+            [
+              "1. Découverte & Intérêt",
+              {
+                "field_id": "bp_p21_r1_client",
+                "placeholder": "Elle voit un post, ressent de la curiosité et se sent comprise..."
+              },
+              {
+                "field_id": "bp_p21_r1_action",
+                "placeholder": "Publier un contenu à forte valeur, inviter à un échange..."
+              }
+            ],
+            [
+              "2. Contact & Décision",
+              {
+                "field_id": "bp_p21_r2_client",
+                "placeholder": "Elle hésite, a besoin de réassurance et de clarté sur le prix..."
+              },
+              {
+                "field_id": "bp_p21_r2_action",
+                "placeholder": "Mener un appel de découverte, envoyer une proposition claire..."
+              }
+            ],
+            [
+              "3. Expérience Vécue",
+              {
+                "field_id": "bp_p21_r3_client",
+                "placeholder": "Elle se sent écoutée, accompagnée et observe des progrès réels..."
+              },
+              {
+                "field_id": "bp_p21_r3_action",
+                "placeholder": "Délivrer avec exigence, envoyer les outils, maintenir le lien régulier..."
+              }
+            ],
+            [
+              "4. Clôture & Ambassadrice",
+              {
+                "field_id": "bp_p21_r4_client",
+                "placeholder": "Elle est fière du chemin parcouru et veut en parler autour d'elle..."
+              },
+              {
+                "field_id": "bp_p21_r4_action",
+                "placeholder": "Séance bilan, recueil de témoignage écrit/vidéo, proposition de suite..."
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.76,
+            6.12,
+            6.12
+          ],
+          "field_prefix": "tbl_parcours"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Le moment clé d'enchantement (effet whaou)",
+              "subtitle": "Quelle attention inattendue allez-vous lui offrir pour marquer les esprits ?",
+              "field_id": "bp_p21_enchantement",
+              "placeholder": "Ex : Un livret d'accueil imprimé envoyé par courrier, une synthèse sur-mesure..."
+            },
+            {
+              "title": "La mécanique de recommandation",
+              "subtitle": "Comment inciterez-vous vos clientes satisfaites à parler de vous ?",
+              "field_id": "bp_p21_recommandation",
+              "placeholder": "Ex : Programme de parrainage, demande d'avis Google systématique..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 6.8,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre message *et votre ton.*",
+      "part_title": "12. COMMUNICATION",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Communiquer, ce n'est pas faire du bruit : c'est transmettre avec clarté votre vision du monde et vos convictions. Votre message doit être immédiatement reconnaissable et aligné avec votre voix authentique.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Mon message principal (l'idée directrice incontournable)",
+              "field_id": "bp_p22_message_principal",
+              "subtitle": "Quelle conviction fondamentale souhaitez-vous répéter avec constance à votre communauté ?"
+            },
+            {
+              "question": "2. Mes messages secondaires et piliers de contenu",
+              "field_id": "bp_p22_messages_secondaires",
+              "subtitle": "Quels sont vos 3 grands thèmes de prédilection (ex : organisation, écologie personnelle, méthode...) ?"
+            },
+            {
+              "question": "3. Mon ton d'expression et mes mots signatures",
+              "field_id": "bp_p22_ton_expression",
+              "subtitle": "Plutôt chaleureux et complice ? Structuré et directif ? Pédagogue et imagé ?"
+            },
+            {
+              "question": "4. Ce que je refuse catégoriquement de communiquer (mes lignes rouges)",
+              "field_id": "bp_p22_refus_communication",
+              "subtitle": "Les discours culpabilisants, les astuces miracles ou les codes marketing que vous rejetez fermement."
+            }
+          ],
+          "min_box_height_cm": 2.2,
+          "max_box_height_cm": 3.4
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Plan *de communication.*",
+      "part_title": "12. COMMUNICATION",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Mieux vaut un seul canal tenu avec une régularité exemplaire que cinq comptes de réseaux sociaux abandonnés. Calibrez votre plan de communication en fonction du temps dont vous disposez réellement chaque semaine.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Canal Choisi",
+            "Objectif Visé",
+            "Type de Contenu",
+            "Fréquence",
+            "Temps / Semaine"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p23_c1_nom",
+                "placeholder": "LinkedIn"
+              },
+              {
+                "field_id": "bp_p23_c1_obj",
+                "placeholder": "Notoriété & autorité"
+              },
+              {
+                "field_id": "bp_p23_c1_contenu",
+                "placeholder": "Retours d'expérience, conseils"
+              },
+              {
+                "field_id": "bp_p23_c1_freq",
+                "placeholder": "2 posts / sem."
+              },
+              {
+                "field_id": "bp_p23_c1_temps",
+                "placeholder": "2h"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p23_c2_nom",
+                "placeholder": "Newsletter"
+              },
+              {
+                "field_id": "bp_p23_c2_obj",
+                "placeholder": "Lien intime & confiance"
+              },
+              {
+                "field_id": "bp_p23_c2_contenu",
+                "placeholder": "Réflexions approfondies"
+              },
+              {
+                "field_id": "bp_p23_c2_freq",
+                "placeholder": "Tous les 15 jours"
+              },
+              {
+                "field_id": "bp_p23_c2_temps",
+                "placeholder": "1h30"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p23_c3_nom",
+                "placeholder": "Réseau Local"
+              },
+              {
+                "field_id": "bp_p23_c3_obj",
+                "placeholder": "Recommandations"
+              },
+              {
+                "field_id": "bp_p23_c3_contenu",
+                "placeholder": "Déjeuners & ateliers"
+              },
+              {
+                "field_id": "bp_p23_c3_freq",
+                "placeholder": "1 fois / mois"
+              },
+              {
+                "field_id": "bp_p23_c3_temps",
+                "placeholder": "3h"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p23_c4_nom",
+                "placeholder": "Bouche-à-oreille"
+              },
+              {
+                "field_id": "bp_p23_c4_obj",
+                "placeholder": "Prescription directe"
+              },
+              {
+                "field_id": "bp_p23_c4_contenu",
+                "placeholder": "Échanges pairs & retours"
+              },
+              {
+                "field_id": "bp_p23_c4_freq",
+                "placeholder": "Continu"
+              },
+              {
+                "field_id": "bp_p23_c4_temps",
+                "placeholder": "1h"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.4,
+            3.74,
+            4.76,
+            2.55,
+            2.55
+          ],
+          "field_prefix": "tbl_com"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Mon rythme de publication soutenable",
+              "subtitle": "Quel rituel de création hebdomadaire pouvez-vous respecter avec plaisir ?",
+              "field_id": "bp_p23_rituel_creation",
+              "placeholder": "Ex : Bloquer le mardi matin pour rédiger l'ensemble des contenus de la quinzaine..."
+            },
+            {
+              "title": "Le message clé d'appel à l'action (CTA)",
+              "subtitle": "Vers quoi orientez-vous systématiquement vos lecteurs intéressés ?",
+              "field_id": "bp_p23_call_to_action",
+              "placeholder": "Ex : « Réservez votre séance d'alignement de 30 minutes offerte via mon calendrier en ligne »..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 6.8,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ressources *et arbitrages.*",
+      "part_title": "13. LES RESSOURCES NÉCESSAIRES",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Faire l'inventaire précis de ce dont vous avez besoin pour exercer votre métier sereinement. Privilégiez la légèreté au démarrage : acheter uniquement l'indispensable, louer ou mutualiser le reste.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "checklist",
+          "items": [
+            [
+              "Matériel informatique & téléphonie fiable",
+              "bp_p24_chk_info"
+            ],
+            [
+              "Espace de travail calme (bureau ou tiers-lieu)",
+              "bp_p24_chk_local"
+            ],
+            [
+              "Outils numériques (visio, compta, CRM, agenda)",
+              "bp_p24_chk_outils"
+            ],
+            [
+              "Fournisseurs ou matières premières sécurisés",
+              "bp_p24_chk_fournisseurs"
+            ],
+            [
+              "Accompagnement comptable & juridique dédié",
+              "bp_p24_chk_compta"
+            ],
+            [
+              "Compétences techniques spécifiques à acquérir",
+              "bp_p24_chk_competences"
+            ]
+          ],
+          "title": "Ressources nécessaires pour démarrer :",
+          "columns": 2,
+          "field_prefix": "chk"
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Ce que j'ai déjà sous la main",
+              "subtitle": "Matériel, compétences acquises, carnet d'adresses disponible...",
+              "field_id": "bp_p24_ressources_dispo",
+              "placeholder": "Ordinateur récent, réseau d'anciennes collègues, compétences rédactionnelles..."
+            },
+            {
+              "title": "2. Ce qui me manque impérativement",
+              "subtitle": "Les investissements ou acquisitions prioritaires pour ouvrir...",
+              "field_id": "bp_p24_ressources_manque",
+              "placeholder": "Assurance pro, identité visuelle claire, logiciel de facturation conforme..."
+            },
+            {
+              "title": "3. Acheter, louer ou mutualiser ?",
+              "subtitle": "Quels arbitrages pour limiter vos charges fixes initiales ?",
+              "field_id": "bp_p24_arbitrage_logistique",
+              "placeholder": "Mutualiser un bureau 2 jours/semaine, utiliser des outils freemium au début..."
+            },
+            {
+              "title": "4. Ce que je fais vs ce que je délègue",
+              "subtitle": "Préservez votre énergie vitale pour votre cœur de valeur ajoutée...",
+              "field_id": "bp_p24_faire_deleguer",
+              "placeholder": "Je fais l'accompagnement et la com ; je délègue la déclaration fiscale et le webdesign..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 6.0,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Compétences *et entourage.*",
+      "part_title": "14. MOI ET LE PROJET",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Vous êtes le premier actif de votre entreprise. Prendre la mesure de vos forces, identifier avec humilité vos axes de progression et vous entourer de personnes fiables et compétentes est la clé de la longévité.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Domaine de Compétence",
+            "Niveau Actuel (1 à 5)",
+            "Importance Projet",
+            "Plan de Montée en Compétences"
+          ],
+          "rows": [
+            [
+              "Cœur de Métier / Expertise",
+              {
+                "field_id": "bp_p25_c1_niv",
+                "placeholder": "5/5 (Maîtrisé)"
+              },
+              {
+                "field_id": "bp_p25_c1_imp",
+                "placeholder": "Vitale"
+              },
+              {
+                "field_id": "bp_p25_c1_plan",
+                "placeholder": "Veille continue et lectures spécialisées..."
+              }
+            ],
+            [
+              "Posture Commerciale & Vente",
+              {
+                "field_id": "bp_p25_c2_niv",
+                "placeholder": "2/5 (À renforcer)"
+              },
+              {
+                "field_id": "bp_p25_c2_imp",
+                "placeholder": "Prioritaire"
+              },
+              {
+                "field_id": "bp_p25_c2_plan",
+                "placeholder": "Simulations d'entretiens et formation courte..."
+              }
+            ],
+            [
+              "Gestion & Suivi Financier",
+              {
+                "field_id": "bp_p25_c3_niv",
+                "placeholder": "3/5 (Autonome)"
+              },
+              {
+                "field_id": "bp_p25_c3_imp",
+                "placeholder": "Importante"
+              },
+              {
+                "field_id": "bp_p25_c3_plan",
+                "placeholder": "Mise en place d'un tableau de bord mensuel..."
+              }
+            ],
+            [
+              "Organisation & Écologie de vie",
+              {
+                "field_id": "bp_p25_c4_niv",
+                "placeholder": "4/5 (Avancée)"
+              },
+              {
+                "field_id": "bp_p25_c4_imp",
+                "placeholder": "Vitale"
+              },
+              {
+                "field_id": "bp_p25_c4_plan",
+                "placeholder": "Rituels de pause et sanctuarisation du repos..."
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.76,
+            3.06,
+            3.06,
+            6.12
+          ],
+          "field_prefix": "tbl_comp"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Mes forces et expériences piliers",
+              "subtitle": "Quels succès passés vous donnent une légitimité indiscutable ?",
+              "field_id": "bp_p25_forces_legitimite",
+              "placeholder": "10 ans d'expérience en gestion d'équipe, capacité d'écoute empathique, persévérance..."
+            },
+            {
+              "title": "Mon entourage clé et personnes ressources",
+              "subtitle": "De quelles personnes avez-vous besoin autour de vous ?",
+              "field_id": "bp_p25_entourage_ressource",
+              "placeholder": "Un pair à retrouver chaque quinzaine, une mentore expérimentée, mon expert-comptable..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 7.2,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Cadre juridique *et fiscal.*",
+      "part_title": "15. LE CADRE JURIDIQUE",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Le choix du statut juridique doit être au service de votre projet et de votre sécurité, jamais l'inverse. Faites le point sur les formes envisageables, les obligations réglementaires et les assurances obligatoires.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "checklist",
+          "items": [
+            [
+              "Statut d'exercice (Micro-entreprise, SASU, EURL, Coopérative)",
+              "bp_p26_chk_statut"
+            ],
+            [
+              "Assurance Responsabilité Civile Professionnelle (RC Pro)",
+              "bp_p26_chk_rcpro"
+            ],
+            [
+              "Ouverture d'un compte bancaire professionnel dédié",
+              "bp_p26_chk_banque"
+            ],
+            [
+              "Rédaction des Conditions Générales de Vente (CGV)",
+              "bp_p26_chk_cgv"
+            ],
+            [
+              "Conformité RGPD & Mentions légales obligatoires",
+              "bp_p26_chk_rgpd"
+            ],
+            [
+              "Adhésion à un médiateur de la consommation (si B2C)",
+              "bp_p26_chk_mediateur"
+            ]
+          ],
+          "title": "Obligations administratives et légales :",
+          "columns": 2,
+          "field_prefix": "chk"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Le statut juridique retenu ou envisagé pour démarrer",
+              "field_id": "bp_p26_statut_choisi",
+              "subtitle": "Pourquoi ce choix ? (Simplicité de gestion, protection du patrimoine, cumul avec allocations...)"
+            },
+            {
+              "question": "2. Ce que j'ai déjà vérifié auprès de professionnels fiables",
+              "field_id": "bp_p26_verifications_faites",
+              "subtitle": "Conseils reçus auprès d'un expert-comptable, de la BGE, de la CCI, de France Travail..."
+            },
+            {
+              "question": "3. Les questions administratives ou fiscales en suspens",
+              "field_id": "bp_p26_questions_juridiques",
+              "subtitle": "Quels doutes restent à éclaircir avant la signature des statuts ou l'immatriculation ?"
+            }
+          ],
+          "min_box_height_cm": 2.8,
+          "max_box_height_cm": 4.4
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Dépenses *et charges prévues.*",
+      "part_title": "16. PRÉVISIONNEL FINANCIER",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Distinguez précisément vos investissements initiaux (ce que vous payez une fois pour démarrer) de vos charges mensuelles récurrentes (ce que l'entreprise doit payer chaque mois pour exister).",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Dépense de Démarrage (Investissement)",
+            "Montant Estimé (€)",
+            "Devis / Source",
+            "Vital dès le J1 ?"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p27_inv1_nom",
+                "placeholder": "Frais d'immatriculation & statuts"
+              },
+              {
+                "field_id": "bp_p27_inv1_mt",
+                "placeholder": "150 €"
+              },
+              {
+                "field_id": "bp_p27_inv1_src",
+                "placeholder": "Greffe / INPI"
+              },
+              {
+                "field_id": "bp_p27_inv1_vit",
+                "placeholder": "Oui"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p27_inv2_nom",
+                "placeholder": "Identité visuelle & site web"
+              },
+              {
+                "field_id": "bp_p27_inv2_mt",
+                "placeholder": "600 €"
+              },
+              {
+                "field_id": "bp_p27_inv2_src",
+                "placeholder": "Graphiste indépendante"
+              },
+              {
+                "field_id": "bp_p27_inv2_vit",
+                "placeholder": "Oui"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p27_inv3_nom",
+                "placeholder": "Matériel professionnel & outils"
+              },
+              {
+                "field_id": "bp_p27_inv3_mt",
+                "placeholder": "800 €"
+              },
+              {
+                "field_id": "bp_p27_inv3_src",
+                "placeholder": "Devis matériel informatique"
+              },
+              {
+                "field_id": "bp_p27_inv3_vit",
+                "placeholder": "Non (phase 2)"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p27_inv4_nom",
+                "placeholder": "Trésorerie de sécurité initiale"
+              },
+              {
+                "field_id": "bp_p27_inv4_mt",
+                "placeholder": "1 500 €"
+              },
+              {
+                "field_id": "bp_p27_inv4_src",
+                "placeholder": "Épargne de précaution"
+              },
+              {
+                "field_id": "bp_p27_inv4_vit",
+                "placeholder": "Vitale"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            6.46,
+            3.4,
+            4.08,
+            3.06
+          ],
+          "field_prefix": "tbl_inv"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Nature de la Charge Mensuelle",
+            "Montant Mensuel (€)",
+            "Type (Fixe ou Variable)",
+            "Optimisation possible ?"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p27_ch1_nom",
+                "placeholder": "Assurance RC Pro & Protection"
+              },
+              {
+                "field_id": "bp_p27_ch1_mt",
+                "placeholder": "35 € / mois"
+              },
+              {
+                "field_id": "bp_p27_ch1_type",
+                "placeholder": "Fixe"
+              },
+              {
+                "field_id": "bp_p27_ch1_opt",
+                "placeholder": "Non négociable"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p27_ch2_nom",
+                "placeholder": "Logiciels & abonnements SaaS"
+              },
+              {
+                "field_id": "bp_p27_ch2_mt",
+                "placeholder": "60 € / mois"
+              },
+              {
+                "field_id": "bp_p27_ch2_type",
+                "placeholder": "Fixe"
+              },
+              {
+                "field_id": "bp_p27_ch2_opt",
+                "placeholder": "Paiement annuel (-20%)"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p27_ch3_nom",
+                "placeholder": "Cotisations sociales & bancaires"
+              },
+              {
+                "field_id": "bp_p27_ch3_mt",
+                "placeholder": "21% du CA"
+              },
+              {
+                "field_id": "bp_p27_ch3_type",
+                "placeholder": "Variable"
+              },
+              {
+                "field_id": "bp_p27_ch3_opt",
+                "placeholder": "ACRE 1ère année"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p27_ch4_nom",
+                "placeholder": "Frais bancaires & terminaux"
+              },
+              {
+                "field_id": "bp_p27_ch4_mt",
+                "placeholder": "25 € / mois"
+              },
+              {
+                "field_id": "bp_p27_ch4_type",
+                "placeholder": "Fixe"
+              },
+              {
+                "field_id": "bp_p27_ch4_opt",
+                "placeholder": "Banque pro en ligne"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            6.46,
+            3.4,
+            4.08,
+            3.06
+          ],
+          "field_prefix": "tbl_charges"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.35
+        },
+        {
+          "type": "callout",
+          "text": "Règle de sécurité : Prévoyez toujours une marge d'imprévus de 15% à 20% sur vos dépenses de démarrage. La trésorerie est le poumon qui vous permet de vous installer sereinement sans angoisse du lendemain.",
+          "title": "Le conseil de Marge de Manœuvre",
+          "variant": "warning"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Chiffre d'affaires *et point mort.*",
+      "part_title": "16. PRÉVISIONNEL FINANCIER",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Faire comprendre le raisonnement économique : Nombre de ventes × Prix moyen = Chiffre d'Affaires. Construire 3 scénarios pour préparer votre sérénité et calculer le seuil minimal de rentabilité.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Scénario 1 : prudent (démarrage)",
+              "subtitle": "Hypothèses basses : 2 à 3 ventes / mois pour couvrir les charges fixes minimales...",
+              "field_id": "bp_p28_scen_prudent",
+              "placeholder": "Ex : 2 forfaits à 750 € = 1 500 € / mois de CA..."
+            },
+            {
+              "title": "Scénario 2 : réaliste (vitesse de croisière)",
+              "subtitle": "Hypothèses moyennes à 12 mois : volume régulier et rémunération cible assurée...",
+              "field_id": "bp_p28_scen_intermediaire",
+              "placeholder": "Ex : 4 forfaits à 750 € + 2 ateliers = 3 500 € / mois de CA..."
+            },
+            {
+              "title": "Scénario 3 : ambitieux (plein régime)",
+              "subtitle": "Hypothèses hautes : carnet de commandes plein, liste d'attente et partenariats...",
+              "field_id": "bp_p28_scen_ambitieux",
+              "placeholder": "Ex : 6 forfaits + formations d'entreprise = 5 500 € / mois de CA..."
+            }
+          ],
+          "columns": 3,
+          "card_height_cm": 6.4,
+          "field_prefix": "grid"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.35
+        },
+        {
+          "type": "question",
+          "question": "Mon Seuil de Rentabilité & Salaire Cible (Point Mort)",
+          "field_id": "bp_p28_seuil_calcul",
+          "box_height_cm": 5.2,
+          "subtitle": "Combien de prestations devez-vous impérativement vendre chaque mois pour couvrir vos charges et vous verser votre rémunération ?",
+          "example": "Ex : Charges fixes (300 €) + Cotisations (700 €) + Salaire net cible (2 000 €) = 3 000 € de CA requis, soit 4 forfaits à 750 € par mois."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Plan de financement *initial.*",
+      "part_title": "17. FINANCER LE PROJET",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Ne sous-estimez jamais le besoin en trésorerie de départ. Le montant à financer ne couvre pas seulement les achats : il doit sécuriser un matelas de 3 à 6 mois de charges pour vous permettre de prospecter l'esprit tranquille.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "stat_boxes",
+          "stats": [
+            {
+              "value": "BESOIN INITIAL",
+              "label": "Achats & Matériel"
+            },
+            {
+              "value": "TRÉSORERIE",
+              "label": "Sécurité 3 à 6 mois"
+            },
+            {
+              "value": "TOTAL GLOBAL",
+              "label": "À Financer au J1"
+            }
+          ]
+        },
+        {
+          "type": "space",
+          "height_cm": 0.2
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Source de Financement",
+            "Montant Possible",
+            "Conditions & Modalités",
+            "Avantages & Contraintes"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p29_f1_src",
+                "placeholder": "Apport personnel (épargne)"
+              },
+              {
+                "field_id": "bp_p29_f1_mt",
+                "placeholder": "3 000 €"
+              },
+              {
+                "field_id": "bp_p29_f1_cond",
+                "placeholder": "Disponible immédiatement"
+              },
+              {
+                "field_id": "bp_p29_f1_av",
+                "placeholder": "Zéro dette, liberté totale"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p29_f2_src",
+                "placeholder": "Maintien ARE / Versement ARCE"
+              },
+              {
+                "field_id": "bp_p29_f2_mt",
+                "placeholder": "Maintien mensuel"
+              },
+              {
+                "field_id": "bp_p29_f2_cond",
+                "placeholder": "Droits ouverts France Travail"
+              },
+              {
+                "field_id": "bp_p29_f2_av",
+                "placeholder": "Garantit les dépenses de vie"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p29_f3_src",
+                "placeholder": "Prêt d'honneur (Initiative / BGE)"
+              },
+              {
+                "field_id": "bp_p29_f3_mt",
+                "placeholder": "5 000 €"
+              },
+              {
+                "field_id": "bp_p29_f3_cond",
+                "placeholder": "Prêt à taux 0 sans garantie"
+              },
+              {
+                "field_id": "bp_p29_f3_av",
+                "placeholder": "Effet de levier précieux"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p29_f4_src",
+                "placeholder": "Financement participatif / Don"
+              },
+              {
+                "field_id": "bp_p29_f4_mt",
+                "placeholder": "2 000 €"
+              },
+              {
+                "field_id": "bp_p29_f4_cond",
+                "placeholder": "Campagne de 30 jours"
+              },
+              {
+                "field_id": "bp_p29_f4_av",
+                "placeholder": "Fédère la communauté dès le départ"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.42,
+            3.06,
+            4.76,
+            4.76
+          ],
+          "field_prefix": "tbl_financement"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.35
+        },
+        {
+          "type": "question",
+          "question": "Ma Décision de Financement pour le Démarrage",
+          "field_id": "bp_p29_decision_financement",
+          "box_height_cm": 4.8,
+          "subtitle": "Quelle combinaison de financements retenez-vous pour sécuriser votre lancement sans prendre de risque inconsidéré ?"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Tester avec *un MVP.*",
+      "part_title": "18. TESTER AVANT DE SE LANCER",
+      "blocks": [
+        {
+          "type": "callout",
+          "text": "« Quelle est la plus petite version de mon projet que je peux tester en moins de 30 jours et à moindre coût ? »",
+          "title": "Le principe du minimum viable product (MVP)",
+          "variant": "tip"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.2
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Mon MVP (expérimentation minimale)",
+              "subtitle": "Que pouvez-vous tester immédiatement ? Avec qui ? Sous quel format léger ?",
+              "field_id": "bp_p30_mvp_definition",
+              "placeholder": "Ex : Proposer 3 ateliers pilotes gratuits ou à prix libre auprès de 5 connaissances cibles..."
+            },
+            {
+              "title": "2. Critères de décision (continuer ou pivoter)",
+              "subtitle": "Quel résultat vous encouragera à foncer ? Quel retour vous fera réajuster ?",
+              "field_id": "bp_p30_mvp_criteres",
+              "placeholder": "Si au moins 2 personnes recommandent l'atelier sans hésiter, je valide l'offre..."
+            },
+            {
+              "title": "3. Mon guide d'interviews terrain",
+              "subtitle": "Qui interroger ? Quelles questions neutres poser pour comprendre sans vendre ?",
+              "field_id": "bp_p30_interviews_guide",
+              "placeholder": "« Racontez-moi la dernière fois où vous avez rencontré ce problème... Comment avez-vous fait ? »..."
+            },
+            {
+              "title": "4. Ce que mes tests m'ont appris (surprises)",
+              "subtitle": "Quels retours inattendus confirment ou bousculent vos certitudes de départ ?",
+              "field_id": "bp_p30_interviews_surprises",
+              "placeholder": "J'ai découvert qu'elles demandent surtout un modèle prêt à l'emploi plutôt que de la théorie..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 7.0,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Risques *et hypothèses clés.*",
+      "part_title": "19. RISQUES ET INCERTITUDES",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Être lucide sur ses vulnérabilités n'est pas être pessimiste : c'est se donner les moyens d'y faire face sereinement. Formalisez vos plans de secours et identifiez les 5 vérités sans lesquelles votre projet s'arrête.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Risque Majeur Identifié",
+            "Gravité & Probabilité",
+            "Mesure de Prévention",
+            "Plan B de Secours"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "bp_p31_r1_nom",
+                "placeholder": "Démarrage commercial plus lent que prévu"
+              },
+              {
+                "field_id": "bp_p31_r1_grav",
+                "placeholder": "Forte / Moyenne"
+              },
+              {
+                "field_id": "bp_p31_r1_prev",
+                "placeholder": "Constituer 6 mois de trésorerie"
+              },
+              {
+                "field_id": "bp_p31_r1_planb",
+                "placeholder": "Missions ponctuelles de sous-traitance"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p31_r2_nom",
+                "placeholder": "Fatigue / surcharge mentale"
+              },
+              {
+                "field_id": "bp_p31_r2_grav",
+                "placeholder": "Moyenne / Forte"
+              },
+              {
+                "field_id": "bp_p31_r2_prev",
+                "placeholder": "Bloquer un jour off par semaine"
+              },
+              {
+                "field_id": "bp_p31_r2_planb",
+                "placeholder": "Réduire le nombre de clientes actives"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p31_r3_nom",
+                "placeholder": "Évolution réglementaire défavorable"
+              },
+              {
+                "field_id": "bp_p31_r3_grav",
+                "placeholder": "Moyenne / Faible"
+              },
+              {
+                "field_id": "bp_p31_r3_prev",
+                "placeholder": "Veille syndicale et juridique"
+              },
+              {
+                "field_id": "bp_p31_r3_planb",
+                "placeholder": "Adapter la prestation en conseil pur"
+              }
+            ],
+            [
+              {
+                "field_id": "bp_p31_r4_nom",
+                "placeholder": "Baisse temporaire de motivation / doutes"
+              },
+              {
+                "field_id": "bp_p31_r4_grav",
+                "placeholder": "Faible / Fréquente"
+              },
+              {
+                "field_id": "bp_p31_r4_prev",
+                "placeholder": "Binôme d'action & mentorat bimensuel"
+              },
+              {
+                "field_id": "bp_p31_r4_planb",
+                "placeholder": "Prendre 3 jours de recul et relire ma vision"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.76,
+            3.4,
+            4.42,
+            4.42
+          ],
+          "field_prefix": "tbl_risques"
+        },
+        {
+          "type": "space",
+          "height_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "Les 5 Hypothèses Vitales (Ce qui DOIT être vrai pour réussir)",
+          "field_id": "bp_p31_hypotheses_vitales",
+          "box_height_cm": 5.6,
+          "subtitle": "Quelles sont les 5 conditions indispensables dont dépend la survie de votre projet ? Comment les surveiller ?",
+          "example": "1. Les clientes reconnaissent ce problème comme urgent • 2. Elles ont le budget disponible • 3. Mon canal LinkedIn génère 2 leads/mois • 4. Je délivre en 5h max • 5. Mon écologie de vie est préservée."
+        }
+      ]
+    },
+    {
+      "template": "roadmap",
+      "title": "Feuille de route : *vos prochains jalons.*",
+      "part_title": "20. MON PLAN D'ACTION",
+      "params": {
+        "intro_text": "Découpez votre lancement en trois paliers clairs, pour obtenir de premiers résultats rapides et garder le cap.",
+        "stages": [
+          {
+            "period": "PALIER 1 · 0 À 30 JOURS",
+            "theme": "CADRAGE & TERRAIN",
+            "default_obj": "Valider l'intérêt du marché et tester l'offre pilote auprès de 5 pairs.",
+            "actions": [
+              "Mener 5 entretiens d'enquête terrain ciblés sans chercher à vendre",
+              "Formaliser la fiche de l'offre pilote et la grille tarifaire",
+              "Contacter 10 personnes du réseau tiède pour annoncer la démarche"
+            ],
+            "default_kpi": "5 entretiens qualifiés menés et 2 personnes prêtes à tester"
+          },
+          {
+            "period": "PALIER 2 · 30 À 90 JOURS",
+            "theme": "LANCEMENT DU MVP",
+            "default_obj": "Délivrer les premières prestations pilotes et sécuriser le cadre légal.",
+            "actions": [
+              "Finaliser l'immatriculation et l'assurance professionnelle (RC Pro)",
+              "Accompagner 3 clientes pilotes et recueillir leurs témoignages écrits",
+              "Lancer la communication régulière sur mon canal prioritaire"
+            ],
+            "default_kpi": "3 clientes accompagnées avec succès et 2 recommandations obtenues"
+          },
+          {
+            "period": "PALIER 3 · 3 À 6 MOIS",
+            "theme": "CONSOLIDATION & CROISIÈRE",
+            "default_obj": "Atteindre le seuil de rentabilité mensuel et pérenniser la méthode.",
+            "actions": [
+              "Signer 3 à 4 nouveaux accompagnements au tarif plein",
+              "Nouer 2 partenariats stratégiques de prescription",
+              "Faire le premier bilan financier et ajuster le tableau de bord"
+            ],
+            "default_kpi": "Chiffre d'affaires mensuel stable supérieur à mon point mort"
+          }
+        ],
+        "field_prefix": "bp_p32_road"
+      }
+    },
+    {
+      "template": "composite",
+      "title": "La synthèse *du projet.*",
+      "part_title": "21. SYNTHÈSE DU BUSINESS PLAN",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "L'Executive Summary est le condensé exécutif de votre projet. C'est la page que lira en premier un partenaire, un financeur ou un mentor pour évaluer la clarté, l'alignement et la solidité de votre démarche.",
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "1. Le projet et sa raison d'être",
+              "subtitle": "Nom du projet, mission centrale et déclic personnel...",
+              "field_id": "bp_p33_exec_projet",
+              "placeholder": "Présentation concise du projet et de la mission sociétale..."
+            },
+            {
+              "title": "2. La cible et le problème résolu",
+              "subtitle": "Pour qui ? Quelle douleur majeure et fréquente comblez-vous ?",
+              "field_id": "bp_p33_exec_cible",
+              "placeholder": "Profil type de cliente et difficulté quotidienne résolue..."
+            },
+            {
+              "title": "3. L'offre et la proposition de valeur",
+              "subtitle": "Vos prestations phares et ce qui rend votre approche unique...",
+              "field_id": "bp_p33_exec_offre",
+              "placeholder": "Formules proposées, promesse et singularité concurrentielle..."
+            },
+            {
+              "title": "4. Le marché et les opportunités",
+              "subtitle": "Secteur porteur, tendances favorables et positionnement clé...",
+              "field_id": "bp_p33_exec_marche",
+              "placeholder": "Taille de marché, vents porteurs et différenciation..."
+            },
+            {
+              "title": "5. Modèle économique et chiffres clés",
+              "subtitle": "Prix moyen, seuil de rentabilité et CA prévisionnel an 1...",
+              "field_id": "bp_p33_exec_finances",
+              "placeholder": "Prix forfaits, point mort mensuel et scénario cible..."
+            },
+            {
+              "title": "6. Besoin de financement et échéance clé",
+              "subtitle": "Montant recherché, statut juridique et date de lancement...",
+              "field_id": "bp_p33_exec_besoins",
+              "placeholder": "Besoin de démarrage, apport personnel et prochain jalon..."
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 5.7,
+          "field_prefix": "grid"
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin du livret",
+      "params": {
+        "lines": [
+          "Je confronte mes hypothèses au terrain, sans me fier à ma seule intuition.",
+          "Je regarde mes chiffres, mes devis et mes finances avec honnêteté.",
+          "J'accepte l'imperfection des débuts et je teste vite pour apprendre.",
+          "Je pose des limites pour préserver ma santé et mon rythme de vie.",
+          "J'assume la valeur de mon travail et je développe mon projet pas à pas."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "livrable_bp",
+        "livrable_title": "Votre business plan",
+        "livrable_text": "Votre modèle économique, votre prévisionnel et votre feuille de route, validés en séance."
+      }
+    },
+    {
+      "template": "closing",
+      "params": {}
+    }
+  ]
+}

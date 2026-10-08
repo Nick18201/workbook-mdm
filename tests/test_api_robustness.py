@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 import server.app as app_module
 from server.app import app
 from server.models import MAX_LIST_ITEMS, MAX_NOTES_LENGTH, MAX_PAGES, PageSpec, WorkbookSpec
-from server.pdf_compiler import compile_workbook_from_spec
+from workbook_generator.compiler import compile_workbook_from_spec
 from workbook_generator import DocumentBuilder
 
 

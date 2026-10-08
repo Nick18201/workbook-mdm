@@ -21,6 +21,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copie des briques applicatives, polices et illustrations
 COPY assets/ ./assets/
 COPY Scripts/ ./Scripts/
+COPY workbooks/ ./workbooks/
 COPY server/ ./server/
 
 # Port d'écoute par défaut Cloud Run

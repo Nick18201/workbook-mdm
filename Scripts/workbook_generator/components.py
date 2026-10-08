@@ -307,7 +307,7 @@ def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, 
     Chapter opener: eyebrow, big number, title, objective, then the exercises of the
     chapter as a star list in a pastel card (EXERCICES & PROTOCOLES).
     intro_text is rendered as ReportLab paragraph markup (<b>, <br/>...): callers passing
-    untrusted text must escape it first, as server/pdf_compiler.py does.
+    untrusted text must escape it first, as compiler.py does.
     """
     x, width = content_frame()
     items = [t for t in (_point_text(p) for p in points_list or []) if t]

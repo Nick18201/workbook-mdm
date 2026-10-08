@@ -1,7 +1,7 @@
 import pymupdf
 
 from server.models import BlockSpec, PageSpec, WorkbookSpec
-from server.pdf_compiler import compile_workbook_from_spec
+from workbook_generator.compiler import compile_workbook_from_spec
 from server.predefined_workbooks import get_predefined_spec
 
 

@@ -1,0 +1,325 @@
+{
+  "chapter_num": 3,
+  "chapter_title": "Mes fonctionnements propres",
+  "subtitle": "Bilan de compétences · MBTI®",
+  "carnet": 3,
+  "pdf_title": "Marge de Manœuvre - Chapitre 3 : Mes fonctionnements propres",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mes fonctionnements *propres.*",
+        "number": 3,
+        "tagline": "Bilan de compétences · MBTI®",
+        "promise": "Comment vous travaillez le mieux."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Votre mode *d'emploi.*",
+      "params": {
+        "num": "3",
+        "intro_text": "Ce carnet explore votre façon de fonctionner : où vous puisez votre énergie, ce que vous remarquez en premier, comment vous décidez, votre rapport au temps et vos réactions sous pression. Il prépare la restitution de votre profil MBTI®.",
+        "points": [
+          "Exercice 1 · Récapitulatif de la séance précédente.",
+          "Exercice 2 · Votre énergie et votre environnement (questions 1 à 3).",
+          "Exercice 3 · Votre regard sur le réel : l'information (questions 4 à 7).",
+          "Exercice 4 · Vos décisions (questions 8 à 11).",
+          "Exercice 5 · Votre rapport au temps et à l'action (questions 12 à 15).",
+          "Exercice 6 · Votre zone d'ombre (questions 16 et 17)."
+        ]
+      }
+    },
+    {
+      "template": "recap",
+      "part_title": "Exercice 1 · Récapitulatif",
+      "params": {
+        "intro_text": "Revenez sur la séance précédente pour consolider ce que vous en retenez avant d'ouvrir une nouvelle étape. Répondez spontanément.",
+        "questions": [
+          "Qu'est-ce que cette séance vous a permis de comprendre de plus sur vous-même ?",
+          "Quels éléments de votre ligne de vie ou de votre arbre de vie vous reviennent le plus en tête ?",
+          "En quoi cela éclaire-t-il la suite de votre bilan et vos pistes ?"
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Introduction",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Il n'y a ni bonne ni mauvaise réponse, ni question piège.",
+            "Ce qui nous intéresse ici, ce n'est pas ce que vous savez faire (vos compétences), mais ce qui se passe dans votre tête et dans votre corps (votre énergie).",
+            "Détaillez vos réponses : racontez le « pourquoi » et le « comment ». Prenez vos exemples dans votre vie personnelle (famille, loisirs) autant que professionnelle."
+          ],
+          "size": 12
+        },
+        {
+          "type": "heading",
+          "text": "Cinq dimensions, dix-sept questions"
+        },
+        {
+          "type": "frise",
+          "steps": [
+            [
+              "battery_charging_full",
+              "L'énergie",
+              "Q. 1 à 3"
+            ],
+            [
+              "visibility",
+              "L'information",
+              "Q. 4 à 7"
+            ],
+            [
+              "balance",
+              "Les décisions",
+              "Q. 8 à 11"
+            ],
+            [
+              "schedule",
+              "Le temps et l'action",
+              "Q. 12 à 15"
+            ],
+            [
+              "dark_mode",
+              "La zone d'ombre",
+              "Q. 16 et 17"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "text": "Vos réponses préparent la restitution de votre profil MBTI® en séance : apportez ce carnet rempli.",
+          "title": "Pour la séance"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre énergie *et votre environnement.*",
+      "part_title": "Exercice 2 · Énergie",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Comment vous vous rechargez, et comment vous traitez l'information immédiate."
+          ],
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "1. Le vendredi soir",
+              "field_id": "mbti_q1",
+              "subtitle": "La semaine a été intense, pleine d'imprévus et d'échanges. Votre « batterie sociale » est à plat. Décrivez la soirée ou le week-end idéal qui vous permettra d'être en forme lundi matin."
+            },
+            {
+              "question": "2. L'interruption",
+              "field_id": "mbti_q2",
+              "subtitle": "Vous êtes plongé·e dans une tâche qui demande de la concentration. Quelqu'un entre pour vous poser une question anodine. Décrivez votre réaction intérieure (agacement, soulagement, fil de pensée rompu ?) et ce que vous faites."
+            },
+            {
+              "question": "3. Le processus de pensée",
+              "field_id": "mbti_q3",
+              "subtitle": "Face à un problème complexe et nouveau, avez-vous besoin d'en parler à voix haute pour mettre vos idées en place, ou de vous isoler dans le silence pour structurer votre pensée avant d'en discuter ? Racontez une fois où vous avez dû faire l'inverse."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre regard *sur le réel.*",
+      "part_title": "Exercice 3 · Information",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce que votre cerveau remarque en premier, et comment il apprend."
+          ],
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "4. L'exercice de l'objet",
+              "field_id": "mbti_q4",
+              "subtitle": "Choisissez un objet du quotidien près de vous (une table, une tasse, un stylo). Décrivez-le en 4 ou 5 phrases : ce que vous voyez, à quoi il sert, ce qu'il vous évoque. Écrivez tout ce qui vous passe par la tête en le regardant."
+            },
+            {
+              "question": "5. Le grand saut",
+              "field_id": "mbti_q5",
+              "subtitle": "On vous demande une tâche manuelle ou technique que vous n'avez jamais faite (monter un meuble complexe, cuisiner un plat étranger, utiliser un nouveau logiciel). Quel est votre premier réflexe ? Qu'est-ce qui vous frustre le plus dans l'apprentissage ?"
+            }
+          ]
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "6. La conversation ennuyeuse",
+              "field_id": "mbti_q6",
+              "subtitle": "Pensez à une discussion, lors d'un repas, qui vous a profondément ennuyé·e ou fait « décrocher ». De quoi parlaient les gens ?"
+            },
+            {
+              "question": "7. La machine à voyager dans le temps",
+              "field_id": "mbti_q7",
+              "subtitle": "Projetez-vous dans 5 ans, dans votre vie idéale. Pas seulement un titre de poste : décrivez l'ambiance de votre journée. Qu'est-ce qui vous rend fier ou fière ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos *décisions.*",
+      "part_title": "Exercice 4 · Décisions",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos critères pour trancher et juger une situation."
+          ],
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "8. Le choix difficile",
+              "field_id": "mbti_q8",
+              "subtitle": "Vous organisez un événement aux places très limitées et devez exclure une personne de votre cercle, professionnel ou personnel. Comment prenez-vous la décision ? Décrivez votre malaise face à ce choix."
+            },
+            {
+              "question": "9. Le cadeau embarrassant",
+              "field_id": "mbti_q9",
+              "subtitle": "Une personne très proche vous offre un vêtement que vous trouvez vraiment laid, et vous demande avec enthousiasme s'il vous plaît. Que répondez-vous spontanément, et pourquoi ? Qu'est-ce qui compte le plus pour vous ?"
+            }
+          ]
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "10. L'arbitre",
+              "field_id": "mbti_q10",
+              "subtitle": "Deux collègues ou amis se disputent violemment, l'ambiance est gâchée. Qu'est-ce qui vous dérange le plus ? Comment intervenez-vous ?"
+            },
+            {
+              "question": "11. La critique",
+              "field_id": "mbti_q11",
+              "subtitle": "Pensez à la dernière critique qui vous a blessé·e. Qu'est-ce qui a été le plus dur à accepter ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre rapport au temps *et à l'action.*",
+      "part_title": "Exercice 5 · Temps et action",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre besoin de structure face à l'inconnu."
+          ],
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "12. La page blanche",
+              "field_id": "mbti_q12",
+              "subtitle": "Vous vous réveillez un samedi matin sans rien de prévu pour les deux prochains jours. Que ressentez-vous ?"
+            },
+            {
+              "question": "13. L'adrénaline de l'échéance",
+              "field_id": "mbti_q13",
+              "subtitle": "Pensez à un projet important à rendre à une date précise. De quoi avez-vous besoin pour être efficace ?"
+            }
+          ]
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "14. L'organisation des vacances",
+              "field_id": "mbti_q14",
+              "subtitle": "Vous partez deux semaines à l'étranger. Jusqu'où votre voyage est-il préparé ? Si un événement annule le programme de la journée, est-ce stimulant ou profondément agaçant ?"
+            },
+            {
+              "question": "15. Conclure ou explorer",
+              "field_id": "mbti_q15",
+              "subtitle": "Qu'est-ce qui vous satisfait le plus : le moment où l'on cherche des idées et ouvre toutes les possibilités, ou le moment où l'on tranche, ferme les dossiers et raye les tâches de la liste ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre zone *d'ombre.*",
+      "part_title": "Exercice 6 · Zone d'ombre",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Comment vous réagissez quand vous êtes poussé·e dans vos retranchements."
+          ],
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "16. Le point de rupture",
+              "field_id": "mbti_q16",
+              "subtitle": "Chacun a un « mauvais côté » sous l'effet d'un stress extrême ou d'une grande fatigue. À quoi ressemblez-vous dans ces moments-là ? Tyrannique et cassant·e ? Très émotif·ve et susceptible ? Obsédé·e par des détails ? Impulsif·ve et imprudent·e ?"
+            },
+            {
+              "question": "17. L'insomnie (bonus)",
+              "field_id": "mbti_q17",
+              "subtitle": "Il est 3 heures du matin, vous n'arrivez pas à dormir : votre cerveau tourne à plein régime. Sur quoi boucle-t-il ?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet",
+      "params": {
+        "lines": [
+          "Je réponds à partir de situations vécues, pas de ce que j'aimerais être.",
+          "Je note les exemples qui me reviennent entre deux séances.",
+          "J'apporte ce carnet rempli à la séance de restitution."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "livrable_chap3",
+        "livrable_title": "Votre mode d'emploi",
+        "livrable_text": "Vos réponses sur l'énergie, l'information, les décisions et l'action, qui préparent la restitution de votre profil MBTI® en séance."
+      }
+    },
+    {
+      "template": "closing",
+      "params": {}
+    }
+  ]
+}

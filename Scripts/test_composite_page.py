@@ -26,7 +26,7 @@ from workbook_generator import (
     QuestionConfig,
 )
 from server.models import WorkbookSpec, PageSpec, BlockSpec
-from server.pdf_compiler import compile_workbook_from_spec
+from workbook_generator.compiler import compile_workbook_from_spec
 
 
 def test_direct_composite_pages():

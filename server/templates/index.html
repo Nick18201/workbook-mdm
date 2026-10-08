@@ -520,19 +520,19 @@
       {
         name: "Alexandre Martin",
         context: "Directeur Marketing de 42 ans en reconversion vers la création d'un atelier d'ébénisterie et de mobilier design éco-conçu. Enjeux : transition de revenus, légitimité créative, aménagement d'un atelier et rythme familial.",
-        instructions: "Adapter tous les exemples à l'artisanat du bois et à la création de marque. Accentuer la gestion du temps et le minimum financier vital.",
+        instructions: "Adapter tous les exemples à l'artisanat du bois et à la création de marque. Accentuer l'objectif boussole et ce que le métier de ses parents lui a transmis.",
         template: "chap1"
       },
       {
         name: "Sarah Benali",
         context: "Directrice des Opérations RH (39 ans) souhaitant devenir Consultante indépendante en stratégie RSE & transition écologique des PME. Enjeux : tarification de ses offres, positionnement différenciant, trouver ses 3 premiers clients.",
-        instructions: "Adapter les exemples au conseil RSE et aux PME. Mettre en valeur la posture d'experte et la levée des doutes tarifaires.",
+        instructions: "Adapter les exemples au conseil RSE et aux PME. Insister sur le minimum financier acceptable et la tarification de ses offres.",
         template: "chap4"
       },
       {
         name: "Julien Thomas",
         context: "Ingénieur aéronautique (45 ans) en reconversion vers la formation de managers de terrain. Enjeux : quitter le confort du salariat, apprendre à animer des groupes, développer son réseau.",
-        instructions: "Orienter les questions sur la posture de formateur et le réseau. Insister sur la feuille de route à 30, 60 et 90 jours.",
+        instructions: "Orienter les fiches métiers vers la formation de managers et le réseau. Insister sur le retour des proches.",
         template: "chap6"
       },
       {
@@ -1230,6 +1230,17 @@ Notes de la séance :
                 }).join('')}
               </div>
             </div>`;
+        } else if (page.template === 'recap') {
+          const rawQs = p.questions || p.items || [];
+          const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
+          contentHtml = `
+            <div class="space-y-2 text-xs">
+              ${p.intro_text ? `<div class="bg-slate-50 p-2.5 rounded-lg text-slate-700 italic">${escapeHtml(p.intro_text)}</div>` : ''}
+              ${qs.map((q, i) => `
+                <div class="p-2.5 bg-slate-50/80 rounded-xl border border-slate-200/80 font-bold text-slate-900">
+                  <span class="font-mono text-mdm-blue font-black">${i+1}.</span> ${escapeHtml(typeof q === 'object' ? (q.question || q.text || '') : q)}
+                </div>`).join('')}
+            </div>`;
         } else if (page.template === 'questions') {
           const rawQs = p.questions || p.items || [];
           const qs = Array.isArray(rawQs) ? rawQs : Object.values(rawQs);
@@ -1451,7 +1462,7 @@ Notes de la séance :
                               const cells = Array.isArray(row) ? row : (typeof row === 'object' ? Object.values(row) : [row]);
                               return `
                                 <tr>
-                                  ${cells.map(cell => `<td class="p-2.5 text-slate-800">${escapeHtml(cell)}</td>`).join('')}
+                                  ${cells.map(cell => `<td class="p-2.5 text-slate-800">${escapeHtml(typeof cell === 'object' && cell ? (cell.text || cell.placeholder || '') : cell)}</td>`).join('')}
                                 </tr>`;
                             }).join('')}
                           </tbody>
@@ -1496,7 +1507,7 @@ Notes de la séance :
                         </div>`).join('')}
                     </div>`;
                 } else {
-                  return `<p class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-lg">${escapeHtml(b.text || '')}</p>`;
+                  return referenceBlockHtml(b) ?? `<p class="text-xs text-slate-800 leading-relaxed bg-slate-50 p-2.5 rounded-lg">${escapeHtml(b.text || '')}</p>`;
                 }
               }).join('')}
             </div>`;
@@ -1513,6 +1524,7 @@ Notes de la séance :
           roadmap: 'Feuille de Route 30·60·90j',
           engagement: 'Pacte d\'Engagement',
           closing: 'Clôture de Séance',
+          recap: 'Récapitulatif',
           composite: 'Atelier Sur-Mesure',
         };
         const pageLabel = templateLabels[page.template] || 'Atelier Pédagogique';
@@ -1594,6 +1606,58 @@ Notes de la séance :
     // Titles mark their coral accent with *…* (rendered in the PDF): plain text for the previews
     function plainTitle(str) {
       return String(str || '').replace(/\*/g, '');
+    }
+
+    // Preview of the blocks the reference workbooks use besides the 8 base blocks (BlockSpec)
+    function referenceBlockHtml(b) {
+      const text = (v) => escapeHtml(typeof v === 'object' && v ? (v.title || v.text || v.label || '') : v);
+      const box = (inner) => `<div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">${inner}</div>`;
+      const list = (items) => `<ul class="space-y-1 text-xs text-slate-800">${items.map(i => `<li class="flex space-x-2"><span class="text-mdm-blue">·</span><span>${i}</span></li>`).join('')}</ul>`;
+      const field = '<span class="inline-block align-middle w-16 h-3 bg-white border border-dashed border-slate-300 rounded"></span>';
+      const items = b.items || [];
+      switch (b.type) {
+        case 'heading':
+          return `<div class="font-bold text-slate-900 text-sm">${escapeHtml(b.text)}</div>`;
+        case 'paragraphs':
+          return `<div class="space-y-1.5">${items.map(p => `<p class="text-xs text-slate-800 leading-relaxed">${escapeHtml(p)}</p>`).join('')}</div>`;
+        case 'star_list':
+          return list(items.map(text));
+        case 'annotation':
+          return `<p class="text-xs text-mdm-blue italic">${escapeHtml(b.text)}</p>`;
+        case 'questions_group':
+          return `<div class="space-y-2">${(b.questions || []).map(q => box(`
+            <div class="font-bold text-slate-900 text-xs">${escapeHtml(q.question)}</div>
+            ${q.subtitle ? `<div class="text-[11px] text-slate-600">${escapeHtml(q.subtitle)}</div>` : ''}`)).join('')}</div>`;
+        case 'fields_card':
+          return box(`${b.title ? `<div class="font-bold text-slate-900 text-xs">${escapeHtml(b.title)}</div>` : ''}
+            ${list((b.rows || []).flat().map(f => `${escapeHtml(Array.isArray(f) ? f[0] : f)} ${field}`))}`);
+        case 'fill_in_card':
+          return box((b.rows || []).map(line => `<div class="text-xs text-slate-800">${line.map(part => typeof part === 'string' ? escapeHtml(part) : field).join(' ')}</div>`).join(''));
+        case 'numbered_lines':
+          return box(list((b.cards || []).map(col => `${text(Array.isArray(col) ? col[0] : col)} · ${b.count || 5} lignes`)));
+        case 'rating_grid':
+          return box(list(items.map(l => `${text(Array.isArray(l) ? l[0] : l)} · échelle`)));
+        case 'info_cards':
+          return `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">${(b.cards || []).map(card => box(`
+            <div class="font-bold text-slate-900 text-xs">${escapeHtml(card.title)} <span class="italic text-mdm-blue font-normal">${escapeHtml(card.subtitle)}</span></div>
+            <div class="text-[11px] text-slate-600">${escapeHtml(card.text)}</div>`)).join('')}</div>`;
+        case 'link_card':
+          return box(`<div class="font-bold text-slate-900 text-xs">${escapeHtml(b.title)}</div>${list((b.links || []).map(l => `${escapeHtml(l[0])}${l[2] ? ' : ' + escapeHtml(l[2]) : ''}`))}`);
+        case 'checklist_cards':
+          return box(list((b.groups || []).map(g => `${text(Array.isArray(g) ? g[0] : g)} · ${Array.isArray(g) && Array.isArray(g[1]) ? g[1].length : 0} cases`)));
+        case 'frise':
+          return box(`<div class="text-xs text-slate-800">${(b.steps || []).map(s => text(Array.isArray(s) ? s[1] : s)).join(' → ')}</div>`);
+        case 'life_line':
+          return box(`<div class="font-bold text-slate-900 text-xs">Ligne de vie</div><div class="text-xs text-slate-700">${items.map(n => text(Array.isArray(n) ? n[0] : n)).join(' · ')}</div>`);
+        case 'tree_of_life':
+          return box(`<div class="font-bold text-slate-900 text-xs">Arbre de vie</div>${list(items.map(z => text(Array.isArray(z) ? z[0] : z)))}`);
+        case 'space':
+          return '';
+        case 'page_break':
+          return '<div class="text-[10px] text-slate-400 uppercase tracking-widest border-t border-dashed border-slate-200 pt-1">Suite page suivante</div>';
+        default:
+          return null;
+      }
     }
 
     function escapeHtml(str) {
