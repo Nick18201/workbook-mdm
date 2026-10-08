@@ -1,0 +1,1626 @@
+{
+  "chapter_title": "Décider et agir",
+  "subtitle": "Bilan de compétences",
+  "carnet": "route",
+  "pdf_title": "Marge de Manœuvre · Carnet de route : Décider et agir",
+  "parts": [
+    "Prouver et préparer le choix",
+    "Décider et agir"
+  ],
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Décider *et agir.*",
+        "number": "",
+        "tagline": "Bilan de compétences",
+        "promise": "Vos preuves, deux pistes, un plan daté."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "De vos preuves *à votre plan.*",
+      "params": {
+        "num": "",
+        "intro_text": "Ce carnet prépare les séances 9 et 10, en deux parties. La première rassemble vos preuves : votre profil, vos compétences, deux récits. La seconde fait de votre choix un plan : piste A, piste B, feuilles de route et premières actions.<br/><br/><b>Votre profil, vos compétences et vos récits peuvent se montrer en entretien. Vos seuils, vos garde-fous et le chemin parcouru restent à vous.</b>",
+        "points": [
+          "Partie 1 · Avant de commencer · Météo et récapitulatif · 10 min",
+          "Exercice 1 · Votre profil · 10 min",
+          "Exercice 2 · Vos compétences prouvées · 35 min",
+          "Exercice 3 · Deux récits d'action · 30 min",
+          "Fin de la partie 1 · 5 min",
+          "Partie 2 · Avant de reprendre · Météo et récapitulatif · 10 min",
+          "Exercice 4 · Piste A, piste B · 20 min",
+          "Exercice 5 · Vos feuilles de route · 25 min",
+          "Exercice 6 · Le module de votre projet · 5 min",
+          "Exercice 7 · Vos premières actions · 10 min",
+          "Exercice 8 · Garde-fous et soutiens · 10 min",
+          "Exercice 9 · Le chemin parcouru · 20 min",
+          "Fin de carnet · 5 min"
+        ],
+        "duration": "1 h 30, puis 1 h 45",
+        "split": "Partie 1 : votre profil et vos compétences (55 min), puis vos récits et la fin (35 min). Partie 2 : vos pistes et vos feuilles de route (55 min), puis le reste (50 min). Le module de votre projet s'ajoute, si votre projet en demande un. Gardez vos carnets à portée de main : celui-ci en reprend beaucoup."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Partie 1 · Météo et récapitulatif · 10 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "route_meteo",
+          "data_id": "route.meteo"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "En séance 8, vous avez tiré de votre matrice (carnet 7, exercice 5) trois scénarios, classés en trois familles : les pistes directes, avec vos compétences actuelles ; les passerelles courtes, après une formation courte ; les angles morts, des pistes que vous ne regardiez pas, apparues en chemin. Notez-les, avec leur famille."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Le scénario, en quelques mots",
+            "Sa famille"
+          ],
+          "rows": [
+            [
+              "Scénario 1",
+              {
+                "field_id": "route_scenario_1",
+                "placeholder": "Scénario 1 : en quelques mots"
+              },
+              {
+                "field_id": "route_scenario_1_famille",
+                "placeholder": "Scénario 1 : sa famille"
+              }
+            ],
+            [
+              "Scénario 2",
+              {
+                "field_id": "route_scenario_2",
+                "placeholder": "Scénario 2 : en quelques mots"
+              },
+              {
+                "field_id": "route_scenario_2_famille",
+                "placeholder": "Scénario 2 : sa famille"
+              }
+            ],
+            [
+              "Scénario 3",
+              {
+                "field_id": "route_scenario_3",
+                "placeholder": "Scénario 3 : en quelques mots"
+              },
+              {
+                "field_id": "route_scenario_3_famille",
+                "placeholder": "Scénario 3 : sa famille"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            2.4,
+            10.2,
+            4.5
+          ],
+          "field_height_cm": 1.6
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le scénario vers lequel je penche",
+                "route_penche",
+                1.6
+              ],
+              [
+                "Pourquoi lui",
+                "route_penche_pourquoi",
+                1.6
+              ],
+              [
+                "Ce qui me fait encore hésiter",
+                "route_hesite",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Après la séance 8",
+          "hint": "Un scénario qui s'impose, deux qui se tiennent, une question restée ouverte…",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre profil, *en une page.*",
+      "part_title": "Exercice 1 · Votre profil · 10 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce que vous savez de votre façon de travailler, sur une page qui peut se montrer. Reportez-le, sans le réécrire : votre profil validé après la restitution (carnet 4), votre cartographie des énergies (carnet 3)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mon profil, en mots",
+              "c4.profil",
+              "route_profil",
+              1.6
+            ],
+            [
+              "Mes deux forces",
+              "c4.profil",
+              "route_forces",
+              1.6
+            ],
+            [
+              "Ce qui me recharge",
+              "c3.energies",
+              "route_recharge",
+              1.6
+            ],
+            [
+              "Ce qui me coûte",
+              "c3.energies",
+              "route_coute",
+              1.6
+            ],
+            [
+              "Pour mon énergie, j'ai besoin de…",
+              "c3.energies",
+              "route_besoin",
+              1.6
+            ],
+            [
+              "Donc, mon poste devra…",
+              "c3.energies",
+              "route_critere",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "question",
+          "question": "Dans le scénario vers lequel je penche, mon profil est un atout quand…",
+          "field_id": "route_profil_atout",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "contrast_example",
+          "title": "Analyste de données",
+          "surface": "J'ai le sens de l'organisation.",
+          "exploitable": "Dans le scénario 2, mon profil est un atout quand il faut vérifier des chiffres au calme, puis les expliquer à une équipe pressée."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos compétences, *prouvées.*",
+      "part_title": "Exercice 2 · Vos compétences prouvées · 20 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une compétence prouvée tient en trois éléments : un verbe et un objet, une situation où vous l'avez mise en œuvre, ce qu'il en reste (un résultat, une trace). Notez-en cinq. Partez du carnet 2 : vos fiches d'expérience et ce que la fiche de poste ne disait pas (exercice 1), le travail empêché (exercice 2), votre zone d'excellence (exercice 3), vos compétences de vie (exercice 6)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre niveau, de 1 à 4 :",
+            "• 1 · Apprendre : vous faites avec des consignes et une personne référente.",
+            "• 2 · Faire : vous menez le travail courant et réglez les imprévus habituels sans aide.",
+            "• 3 · Améliorer : vous simplifiez les méthodes, vous aidez vos pairs.",
+            "• 4 · Transmettre : vous formez, on vient vous consulter."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Ma compétence : un verbe, un objet",
+            "Où je l'ai prouvée",
+            "Le résultat, ou la trace",
+            "Niveau, de 1 à 4",
+            "Envie : oui, plutôt, non"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "route_competence_1",
+                "placeholder": "Compétence 1 : un verbe, un objet"
+              },
+              {
+                "field_id": "route_competence_1_preuve",
+                "placeholder": "Compétence 1 : où je l'ai prouvée"
+              },
+              {
+                "field_id": "route_competence_1_trace",
+                "placeholder": "Compétence 1 : le résultat, ou la trace"
+              },
+              {
+                "field_id": "route_competence_1_niveau",
+                "placeholder": "Compétence 1 : mon niveau, de 1 à 4"
+              },
+              {
+                "field_id": "route_competence_1_envie",
+                "placeholder": "Compétence 1 : envie de l'utiliser"
+              }
+            ],
+            [
+              {
+                "field_id": "route_competence_2",
+                "placeholder": "Compétence 2 : un verbe, un objet"
+              },
+              {
+                "field_id": "route_competence_2_preuve",
+                "placeholder": "Compétence 2 : où je l'ai prouvée"
+              },
+              {
+                "field_id": "route_competence_2_trace",
+                "placeholder": "Compétence 2 : le résultat, ou la trace"
+              },
+              {
+                "field_id": "route_competence_2_niveau",
+                "placeholder": "Compétence 2 : mon niveau, de 1 à 4"
+              },
+              {
+                "field_id": "route_competence_2_envie",
+                "placeholder": "Compétence 2 : envie de l'utiliser"
+              }
+            ],
+            [
+              {
+                "field_id": "route_competence_3",
+                "placeholder": "Compétence 3 : un verbe, un objet"
+              },
+              {
+                "field_id": "route_competence_3_preuve",
+                "placeholder": "Compétence 3 : où je l'ai prouvée"
+              },
+              {
+                "field_id": "route_competence_3_trace",
+                "placeholder": "Compétence 3 : le résultat, ou la trace"
+              },
+              {
+                "field_id": "route_competence_3_niveau",
+                "placeholder": "Compétence 3 : mon niveau, de 1 à 4"
+              },
+              {
+                "field_id": "route_competence_3_envie",
+                "placeholder": "Compétence 3 : envie de l'utiliser"
+              }
+            ],
+            [
+              {
+                "field_id": "route_competence_4",
+                "placeholder": "Compétence 4 : un verbe, un objet"
+              },
+              {
+                "field_id": "route_competence_4_preuve",
+                "placeholder": "Compétence 4 : où je l'ai prouvée"
+              },
+              {
+                "field_id": "route_competence_4_trace",
+                "placeholder": "Compétence 4 : le résultat, ou la trace"
+              },
+              {
+                "field_id": "route_competence_4_niveau",
+                "placeholder": "Compétence 4 : mon niveau, de 1 à 4"
+              },
+              {
+                "field_id": "route_competence_4_envie",
+                "placeholder": "Compétence 4 : envie de l'utiliser"
+              }
+            ],
+            [
+              {
+                "field_id": "route_competence_5",
+                "placeholder": "Compétence 5 : un verbe, un objet"
+              },
+              {
+                "field_id": "route_competence_5_preuve",
+                "placeholder": "Compétence 5 : où je l'ai prouvée"
+              },
+              {
+                "field_id": "route_competence_5_trace",
+                "placeholder": "Compétence 5 : le résultat, ou la trace"
+              },
+              {
+                "field_id": "route_competence_5_niveau",
+                "placeholder": "Compétence 5 : mon niveau, de 1 à 4"
+              },
+              {
+                "field_id": "route_competence_5_envie",
+                "placeholder": "Compétence 5 : envie de l'utiliser"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.4,
+            3.9,
+            4.4,
+            2.0,
+            2.4
+          ],
+          "field_height_cm": 1.6,
+          "fixed": true,
+          "data_id": "route.competences"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Responsable logistique",
+          "surface": "Gestion des stocks.",
+          "exploitable": "Réorganiser un stock de pièces détachées · entrepôt, 2023 · plus de ruptures, l'équipe garde mon tableau · 3 · oui."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que les autres *voient.*",
+      "part_title": "Exercice 2 · Ce que les autres voient · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une preuve vient aussi du regard des autres. Reportez ce que vos proches voient chez vous (carnet 6, exercice 2), puis notez ce qu'on vient souvent vous demander."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ce qui, chez moi, fait penser mes proches à un métier",
+              "c6.proches",
+              "route_rappel_proches",
+              1.6
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qu'on vient souvent me demander, et que je fais sans y penser",
+                "route_miroir",
+                1.6
+              ]
+            ]
+          ],
+          "title": "L'épreuve du miroir",
+          "hint": "Ce qui vous semble si naturel qu'une personne débutante mettrait des mois à l'apprendre.",
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Scénario 1",
+                "route_porte_1",
+                1.6
+              ],
+              [
+                "Scénario 2",
+                "route_porte_2",
+                1.6
+              ],
+              [
+                "Scénario 3",
+                "route_porte_3",
+                1.6
+              ]
+            ]
+          ],
+          "title": "La compétence qui vous ouvre la porte",
+          "hint": "Pour chacun de vos trois scénarios, une compétence de votre tableau.",
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La compétence que je sous-estime",
+                "route_sous_estime",
+                1.6
+              ],
+              [
+                "La preuve que je la maîtrise",
+                "route_sous_estime_preuve",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Si vous le souhaitez",
+          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "question_labels": true,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Un premier *récit.*",
+      "part_title": "Exercice 3 · Récit 1 · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un récit prouve une compétence mieux qu'une liste : une situation vécue, même modeste, où vous avez su agir. Cherchez dans les sommets de votre ligne de vie (carnet 2, exercice 5) ou vos situations d'alignement (carnet 5, exercice 1). Un premier récit sur un savoir-faire, un second avec d'autres personnes."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Réceptionniste",
+          "surface": "J'ai géré un problème de planning.",
+          "exploitable": "Lundi, 8 h : deux formations prévues dans la même salle, vingt personnes à 9 h. J'ai ouvert la salle du fond et prévenu les deux équipes. À 9 h, tout le monde était installé."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation : ce qui posait problème",
+                "route_recit_1_situation",
+                1.6
+              ],
+              [
+                "Le signal qui m'a fait agir",
+                "route_recit_1_signal",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai fait, pas à pas : mes gestes, mes choix, les personnes que j'ai mobilisées",
+                "route_recit_1_actions",
+                2.6
+              ]
+            ],
+            [
+              [
+                "Le résultat : ce qui a changé ensuite",
+                "route_recit_1_resultat",
+                1.6
+              ],
+              [
+                "Ce récit prouve que je sais…",
+                "route_recit_1_preuve",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Récit 1",
+          "question_labels": true,
+          "fixed": true,
+          "data_id": "route.recits"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Un second *récit.*",
+      "part_title": "Exercice 3 · Récit 2, pour un entretien · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une situation avec d'autres personnes : convaincre, apaiser, transmettre. Ou une fois où vous avez cru ne pas y arriver, et ce qui vous a permis de passer."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation : ce qui posait problème",
+                "route_recit_2_situation",
+                1.6
+              ],
+              [
+                "Le signal qui m'a fait agir",
+                "route_recit_2_signal",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai fait, pas à pas : mes gestes, mes choix, les personnes que j'ai mobilisées",
+                "route_recit_2_actions",
+                2.6
+              ]
+            ],
+            [
+              [
+                "Le résultat : ce qui a changé ensuite",
+                "route_recit_2_resultat",
+                1.6
+              ],
+              [
+                "Ce récit prouve que je sais…",
+                "route_recit_2_preuve",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Récit 2",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mon récit 1, en trois phrases",
+                "route_recit_1_oral",
+                2.6
+              ],
+              [
+                "Mon récit 2, en trois phrases",
+                "route_recit_2_oral",
+                2.6
+              ]
+            ]
+          ],
+          "title": "Pour un entretien",
+          "hint": "Trois phrases : la situation, ce que j'ai fait, le résultat.",
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Racontez-les à voix haute : c'est là qu'on entend ce qui manque."
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre premier livrable.",
+      "part_title": "Fin de la partie 1 · 5 min",
+      "part": 1,
+      "params": {
+        "lines": [
+          "Je relis mes trois scénarios, mon tableau de compétences sous les yeux.",
+          "Je laisse mûrir mon choix : il se fait en séance 9, pas avant.",
+          "J'apporte ce carnet et mon carnet 7 à la séance 9."
+        ],
+        "field_prefix": "route_partie_1",
+        "livrable_title": "Vos preuves",
+        "livrable_text": "Votre profil (exercice 1), vos compétences prouvées (exercice 2) et vos deux récits (exercice 3). En séance 9, ils appuient votre choix. Ces pages peuvent se montrer en entretien.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes compétences",
+          "À aborder en séance : la compétence dont je doute encore, le scénario qui me fait hésiter",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *reprendre.*",
+      "part_title": "Partie 2 · Météo et récapitulatif · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "route_meteo_2",
+          "data_id": "route.meteo_2"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que la séance a tranché",
+                "route_seance_9_tranche",
+                1.6
+              ],
+              [
+                "Ce qui reste ouvert",
+                "route_seance_9_ouvert",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Après la séance 9",
+          "hint": "Le scénario choisi, celui que vous gardez en réserve, le module de votre projet…",
+          "question_labels": true
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos deux pistes s'écrivent à l'exercice 4, vos feuilles de route à l'exercice 5. Gardez votre carnet 7 ouvert : vos fiches et votre matrice servent ici."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "annotation",
+          "text": "Choisir, c'est aussi garder une piste en réserve."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Piste A, *piste B.*",
+      "part_title": "Exercice 4 · Vos deux pistes · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Piste A, votre projet d'élan : le projet qui vous attire le plus. Piste B, votre refuge ou votre tremplin : le plus sûr, ou celui qui prépare la piste A. Elles viennent de vos scénarios et du choix fait en séance 9. Vos critères sont déjà écrits : reportez-les. Si vous montrez ces pages, masquez vos seuils."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes trois valeurs",
+              "c5.grille",
+              "route_rappel_valeurs",
+              1.6
+            ],
+            [
+              "Leurs conditions",
+              "c5.grille",
+              "route_rappel_conditions",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "report",
+          "title": "À garder pour vous",
+          "items": [
+            [
+              "Minimum vital",
+              "c4.seuils",
+              "route_rappel_vital"
+            ],
+            [
+              "Minimum sécurisant",
+              "c4.seuils",
+              "route_rappel_securisant"
+            ],
+            [
+              "Revenu cible",
+              "c4.seuils",
+              "route_rappel_cible"
+            ],
+            [
+              "Durée acceptable d'une baisse",
+              "c4.seuils",
+              "route_rappel_duree"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Piste A · mon projet d'élan",
+            "Piste B · mon refuge, ou mon tremplin"
+          ],
+          "rows": [
+            [
+              "L'intitulé, et son numéro de scénario",
+              {
+                "field_id": "route_piste_a",
+                "placeholder": "Piste A : l'intitulé, et son numéro de scénario"
+              },
+              {
+                "field_id": "route_piste_b",
+                "placeholder": "Piste B : l'intitulé, et son numéro de scénario"
+              }
+            ],
+            [
+              "Ce qui m'y attire",
+              {
+                "field_id": "route_piste_a_attire",
+                "placeholder": "Piste A : ce qui m'y attire"
+              },
+              {
+                "field_id": "route_piste_b_attire",
+                "placeholder": "Piste B : ce qui m'y attire"
+              }
+            ],
+            [
+              "Mes atouts pour y aller (exercices 2 et 3)",
+              {
+                "field_id": "route_piste_a_atouts",
+                "placeholder": "Piste A : mes atouts pour y aller"
+              },
+              {
+                "field_id": "route_piste_b_atouts",
+                "placeholder": "Piste B : mes atouts pour y aller"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.1,
+            6.5,
+            6.5
+          ],
+          "field_height_cm": 1.6,
+          "data_id": "route.pistes"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Face à vos *critères.*",
+      "part_title": "Exercice 4 · Face à vos critères · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Jugez vos deux pistes sur les mêmes critères, vos reports sous les yeux."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Piste A · mon projet d'élan",
+            "Piste B · mon refuge, ou mon tremplin"
+          ],
+          "rows": [
+            [
+              "Les risques, les points de vigilance",
+              {
+                "field_id": "route_piste_a_risques",
+                "placeholder": "Piste A : les risques, les points de vigilance"
+              },
+              {
+                "field_id": "route_piste_b_risques",
+                "placeholder": "Piste B : les risques, les points de vigilance"
+              }
+            ],
+            [
+              "Mes trois valeurs : lesquelles elle respecte",
+              {
+                "field_id": "route_piste_a_valeurs",
+                "placeholder": "Piste A : les valeurs qu'elle respecte"
+              },
+              {
+                "field_id": "route_piste_b_valeurs",
+                "placeholder": "Piste B : les valeurs qu'elle respecte"
+              }
+            ],
+            [
+              "Mon minimum sécurisant : atteint quand ?",
+              {
+                "field_id": "route_piste_a_minimum",
+                "placeholder": "Piste A : quand j'atteins mon minimum sécurisant"
+              },
+              {
+                "field_id": "route_piste_b_minimum",
+                "placeholder": "Piste B : quand j'atteins mon minimum sécurisant"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.1,
+            6.5,
+            6.5
+          ],
+          "field_height_cm": 1.6,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Agronome",
+          "surface": "A : un métier qui me plaît. B : rester où je suis.",
+          "exploitable": "A : le conseil en agriculture biologique, une passerelle courte ; mon minimum, à terme. B : mon poste actuel, avec le suivi des essais en plus : un tremplin, mon minimum tout de suite."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le scénario que je laisse de côté",
+                "route_laisse",
+                1.6
+              ],
+              [
+                "Ce qu'il me coûte de le laisser",
+                "route_laisse_cout",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Si vous le souhaitez",
+          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Avec le recul, choisir m'apprend que…",
+          "field_id": "route_choisir",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre feuille de route, *piste A.*",
+      "part_title": "Exercice 5 · Feuille de route, piste A · 15 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Trois paliers, de la séance 10 à trois mois : un objectif, un résultat que vous pourrez constater, des actions datées. Partez de ce qui vous manque (carnet 7, les fiches de l'exercice 1) et de ce qu'il faudrait pour y aller, d'après votre matrice."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Pour la piste A : ce qu'il faudrait pour y aller (formation, délai, coût)",
+              "c7.matrice",
+              "route_rappel_matrice_a",
+              1.6
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Mon objectif",
+            "Le résultat que je pourrai constater",
+            "Mes actions, et leur date"
+          ],
+          "rows": [
+            [
+              "D'ici 30 jours : sécuriser, m'organiser",
+              {
+                "field_id": "route_feuille_a_30_objectif",
+                "placeholder": "Piste A, 30 jours : mon objectif"
+              },
+              {
+                "field_id": "route_feuille_a_30_resultat",
+                "placeholder": "Piste A, 30 jours : le résultat que je pourrai constater"
+              },
+              {
+                "field_id": "route_feuille_a_30_actions",
+                "placeholder": "Piste A, 30 jours : mes actions, et leur date"
+              }
+            ],
+            [
+              "D'ici 60 jours : tester sur le terrain",
+              {
+                "field_id": "route_feuille_a_60_objectif",
+                "placeholder": "Piste A, 60 jours : mon objectif"
+              },
+              {
+                "field_id": "route_feuille_a_60_resultat",
+                "placeholder": "Piste A, 60 jours : le résultat que je pourrai constater"
+              },
+              {
+                "field_id": "route_feuille_a_60_actions",
+                "placeholder": "Piste A, 60 jours : mes actions, et leur date"
+              }
+            ],
+            [
+              "D'ici 90 jours : conclure, ajuster",
+              {
+                "field_id": "route_feuille_a_90_objectif",
+                "placeholder": "Piste A, 90 jours : mon objectif"
+              },
+              {
+                "field_id": "route_feuille_a_90_resultat",
+                "placeholder": "Piste A, 90 jours : le résultat que je pourrai constater"
+              },
+              {
+                "field_id": "route_feuille_a_90_actions",
+                "placeholder": "Piste A, 90 jours : mes actions, et leur date"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.3,
+            4.1,
+            4.1,
+            5.6
+          ],
+          "field_height_cm": 2.6,
+          "data_id": "route.feuilles"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Céramiste",
+          "surface": "Me renseigner sur les formations.",
+          "exploitable": "D'ici 30 jours : choisir ma formation. Résultat : deux programmes comparés, avec leur coût. Actions : appeler les deux centres avant le 15, visiter l'atelier le 22."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre feuille de route, *piste B.*",
+      "part_title": "Exercice 5 · Feuille de route, piste B · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "La piste B avance en parallèle, ou prend le relais. Mêmes paliers, souvent plus courts. Si elle vient de votre matrice (carnet 7, exercice 5), relisez sa colonne."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Mon objectif",
+            "Le résultat que je pourrai constater",
+            "Mes actions, et leur date"
+          ],
+          "rows": [
+            [
+              "D'ici 30 jours : sécuriser, m'organiser",
+              {
+                "field_id": "route_feuille_b_30_objectif",
+                "placeholder": "Piste B, 30 jours : mon objectif"
+              },
+              {
+                "field_id": "route_feuille_b_30_resultat",
+                "placeholder": "Piste B, 30 jours : le résultat que je pourrai constater"
+              },
+              {
+                "field_id": "route_feuille_b_30_actions",
+                "placeholder": "Piste B, 30 jours : mes actions, et leur date"
+              }
+            ],
+            [
+              "D'ici 60 jours : tester sur le terrain",
+              {
+                "field_id": "route_feuille_b_60_objectif",
+                "placeholder": "Piste B, 60 jours : mon objectif"
+              },
+              {
+                "field_id": "route_feuille_b_60_resultat",
+                "placeholder": "Piste B, 60 jours : le résultat que je pourrai constater"
+              },
+              {
+                "field_id": "route_feuille_b_60_actions",
+                "placeholder": "Piste B, 60 jours : mes actions, et leur date"
+              }
+            ],
+            [
+              "D'ici 90 jours : conclure, ajuster",
+              {
+                "field_id": "route_feuille_b_90_objectif",
+                "placeholder": "Piste B, 90 jours : mon objectif"
+              },
+              {
+                "field_id": "route_feuille_b_90_resultat",
+                "placeholder": "Piste B, 90 jours : le résultat que je pourrai constater"
+              },
+              {
+                "field_id": "route_feuille_b_90_actions",
+                "placeholder": "Piste B, 90 jours : mes actions, et leur date"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.3,
+            4.1,
+            4.1,
+            5.6
+          ],
+          "field_height_cm": 2.6
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le signal qui me fera passer à la piste B",
+                "route_bascule",
+                1.6
+              ],
+              [
+                "Ou la date à laquelle je la lance",
+                "route_bascule_date",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Une piste B n'est pas un renoncement : elle vous laisse le choix."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le module *de votre projet.*",
+      "part_title": "Exercice 6 · Le module de votre projet · 5 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Selon votre piste A, un module s'ajoute à ce carnet, avec son propre temps d'écriture."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "Créer",
+              "subtitle": "une activité",
+              "text": "Le module création : votre offre, votre prix, votre point mort, un premier test. Il vous est remis après la séance 9."
+            },
+            {
+              "title": "Se reconvertir",
+              "subtitle": "par une formation",
+              "text": "La formation visée, son financement, son calendrier : nous les travaillons en séance 9."
+            },
+            {
+              "title": "Évoluer",
+              "subtitle": "dans votre entreprise",
+              "text": "Le poste visé, vos preuves, vos interlocuteurs : nous les travaillons en séance 9."
+            }
+          ],
+          "columns": 3
+        },
+        {
+          "type": "rating_grid",
+          "items": [
+            [
+              "Le module de mon projet",
+              "route_module"
+            ]
+          ],
+          "title": "Votre module",
+          "values": [
+            "Création",
+            "Reconversion",
+            "Évolution",
+            "Aucun"
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La formation ou la démarche visée",
+                "route_module_visee",
+                1.6
+              ],
+              [
+                "Son financement, ou la personne à voir",
+                "route_module_financement",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ma prochaine démarche",
+                "route_module_demarche",
+                1.6,
+                3
+              ],
+              [
+                "Sa date",
+                "route_module_demarche_date",
+                1.6,
+                1
+              ]
+            ]
+          ],
+          "title": "Ce que la séance 9 a posé",
+          "hint": "Par exemple : une formation en alternance, avec votre compte formation ; ou un rendez-vous avec votre responsable pour un nouveau poste.",
+          "question_labels": true
+        },
+        {
+          "type": "link_card",
+          "title": "Pour une formation",
+          "links": [
+            [
+              "Mon Compte Formation",
+              "https://www.moncompteformation.gouv.fr",
+              "vos droits à la formation et les formations que vous pouvez suivre (moncompteformation.gouv.fr)."
+            ],
+            [
+              "Le conseil en évolution professionnelle",
+              "https://mon-cep.org",
+              "un conseil pour construire votre projet de formation, près de chez vous (mon-cep.org)."
+            ]
+          ],
+          "color": "mint"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos premières *actions.*",
+      "part_title": "Exercice 7 · Vos premières actions · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Trois démarches simples, faisables dans les sept jours qui suivent la séance 10 : un appel, un message, une inscription. Une date, et une personne à prévenir : elle vous aide à tenir."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Ce que je fais",
+            "La date",
+            "Je préviens"
+          ],
+          "rows": [
+            [
+              "1",
+              {
+                "field_id": "route_action_1",
+                "placeholder": "Action 1 : ce que je fais"
+              },
+              {
+                "field_id": "route_action_1_date",
+                "placeholder": "Action 1 : la date"
+              },
+              {
+                "field_id": "route_action_1_previens",
+                "placeholder": "Action 1 : la personne que je préviens"
+              }
+            ],
+            [
+              "2",
+              {
+                "field_id": "route_action_2",
+                "placeholder": "Action 2 : ce que je fais"
+              },
+              {
+                "field_id": "route_action_2_date",
+                "placeholder": "Action 2 : la date"
+              },
+              {
+                "field_id": "route_action_2_previens",
+                "placeholder": "Action 2 : la personne que je préviens"
+              }
+            ],
+            [
+              "3",
+              {
+                "field_id": "route_action_3",
+                "placeholder": "Action 3 : ce que je fais"
+              },
+              {
+                "field_id": "route_action_3_date",
+                "placeholder": "Action 3 : la date"
+              },
+              {
+                "field_id": "route_action_3_previens",
+                "placeholder": "Action 3 : la personne que je préviens"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            1.0,
+            9.1,
+            2.8,
+            4.2
+          ],
+          "field_height_cm": 1.6,
+          "data_id": "route.actions"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Chauffagiste",
+          "surface": "Me renseigner.",
+          "exploitable": "Appeler le centre de formation de ma ville mardi, à 9 h. Je préviens mon frère, qui me demandera jeudi si c'est fait."
+        },
+        {
+          "type": "annotation",
+          "text": "Une action trop grosse se coupe en deux."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Garde-fous *et soutiens.*",
+      "part_title": "Exercice 8 · Garde-fous et soutiens · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Les premiers mois d'un projet ont leurs moments de doute : prévoyez-les. Relisez vos limites et ce que vous ont appris les personnes rencontrées sur le terrain, puis choisissez sur qui vous appuyer, parmi vos soutiens (carnet 5, exercice 8) et ces personnes."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes limites, hors argent",
+              "c5.limites",
+              "route_rappel_limites",
+              1.6
+            ],
+            [
+              "Ce que m'ont appris les personnes rencontrées",
+              "c7.enquetes",
+              "route_rappel_enquetes",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mon principal risque de décrocher : la dispersion, le doute, la fatigue…",
+                "route_risque",
+                1.6
+              ],
+              [
+                "Ma parade : une règle simple, que je peux vérifier",
+                "route_parade",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Qui me soutient",
+            "Ce que je lui demande",
+            "Notre premier point, le"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "route_allie_1",
+                "placeholder": "Soutien 1 : son prénom"
+              },
+              {
+                "field_id": "route_allie_1_demande",
+                "placeholder": "Soutien 1 : ce que je lui demande"
+              },
+              {
+                "field_id": "route_allie_1_point",
+                "placeholder": "Soutien 1 : notre premier point, le"
+              }
+            ],
+            [
+              {
+                "field_id": "route_allie_2",
+                "placeholder": "Soutien 2 : son prénom"
+              },
+              {
+                "field_id": "route_allie_2_demande",
+                "placeholder": "Soutien 2 : ce que je lui demande"
+              },
+              {
+                "field_id": "route_allie_2_point",
+                "placeholder": "Soutien 2 : notre premier point, le"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.6,
+            8.3,
+            4.2
+          ],
+          "field_height_cm": 0.85
+        },
+        {
+          "type": "contrast_example",
+          "title": "Typographe",
+          "surface": "Ne pas me disperser.",
+          "exploitable": "Mon risque : tout lancer en même temps. Ma parade : une seule démarche par semaine, choisie le lundi, et un point avec ma sœur le premier jeudi du mois."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le chemin *parcouru.*",
+      "part_title": "Exercice 9 · Votre boussole, vos domaines · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez votre objectif boussole (carnet 2), puis renotez vos domaines de vie sans regarder vos notes du carnet 1 : vous les comparerez ensuite."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Je voulais avoir clarifié…",
+              "c2.boussole",
+              "route_rappel_clarifier",
+              1.6
+            ],
+            [
+              "Je saurai que j'ai réussi quand…",
+              "c2.boussole",
+              "route_rappel_reussite",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui est clarifié",
+                "route_clarifie",
+                1.6
+              ],
+              [
+                "Ce qui reste ouvert",
+                "route_ouvert",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "rating_grid",
+          "min_label": "1 · Pas du tout satisfaisant",
+          "max_label": "10 · Pleinement satisfaisant",
+          "items": [
+            [
+              "1. Travail, carrière",
+              "route_domaine_travail"
+            ],
+            [
+              "2. Argent, finances",
+              "route_domaine_argent"
+            ],
+            [
+              "3. Santé, énergie",
+              "route_domaine_sante"
+            ],
+            [
+              "4. Famille",
+              "route_domaine_famille"
+            ],
+            [
+              "5. Amis, vie sociale",
+              "route_domaine_social"
+            ],
+            [
+              "6. Temps pour soi, loisirs",
+              "route_domaine_loisirs"
+            ],
+            [
+              "7. Lieu de vie, environnement",
+              "route_domaine_lieu"
+            ],
+            [
+              "8. Utilité, engagements",
+              "route_domaine_utilite"
+            ]
+          ],
+          "field_prefix": "route_domaine",
+          "title": "Mes domaines de vie, aujourd'hui",
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos météos, *votre suivi.*",
+      "part_title": "Exercice 9 · Vos météos, votre suivi · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Recopiez votre énergie du jour, de 0 à 10, notée en page « Avant de commencer » de chaque carnet, et « Avant de reprendre » de chaque partie 2. Puis comparez vos domaines de vie avec ceux du carnet 1 (exercice 2)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Carnet 1",
+                "route_energie_c1",
+                0.85
+              ],
+              [
+                "Carnet 2",
+                "route_energie_c2",
+                0.85
+              ],
+              [
+                "Carnet 3",
+                "route_energie_c3",
+                0.85
+              ],
+              [
+                "Carnet 4",
+                "route_energie_c4",
+                0.85
+              ],
+              [
+                "Carnet 5",
+                "route_energie_c5",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Carnet 6",
+                "route_energie_c6",
+                0.85
+              ],
+              [
+                "Carnet 7, partie 1",
+                "route_energie_c7",
+                0.85
+              ],
+              [
+                "Carnet 7, partie 2",
+                "route_energie_c7_2",
+                0.85
+              ],
+              [
+                "Ce carnet, partie 1",
+                "route_energie_route",
+                0.85
+              ],
+              [
+                "Ce carnet, partie 2",
+                "route_energie_route_2",
+                0.85
+              ]
+            ]
+          ],
+          "title": "Mon énergie, carnet par carnet",
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que me disent mes météos",
+                "route_meteos_remarque",
+                1.6
+              ],
+              [
+                "Le domaine qui a le plus bougé",
+                "route_domaine_bouge",
+                1.6
+              ],
+              [
+                "Ce qui l'explique",
+                "route_domaine_bouge_pourquoi",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Actuaire",
+          "surface": "Ça va mieux.",
+          "exploitable": "Mon énergie est passée de 3 à 7, surtout après le carnet 5. Santé, énergie : de 3 à 6, depuis que je ne travaille plus le soir."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que je veux pouvoir constater d'ici là",
+                "route_suivi_constater",
+                1.6
+              ],
+              [
+                "La question que je voudrai poser",
+                "route_suivi_question",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Pour le suivi à six mois",
+          "hint": "Un entretien de 40 minutes, six mois après la séance 10. Relisez avant votre feuille de route, vos premières actions et cette page.",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre carnet de route.",
+      "part_title": "Fin de carnet · 5 min",
+      "data_id": "route.livrable",
+      "part": 2,
+      "params": {
+        "lines": [
+          "Avant chaque entretien, je relis mes compétences prouvées et mes deux récits.",
+          "Chaque fin de mois, je relis ma feuille de route, et j'en parle avec la personne qui me soutient.",
+          "J'apporte ce carnet à la séance 10, puis au suivi à six mois."
+        ],
+        "field_prefix": "route_livrable",
+        "livrable_title": "Vos feuilles de route et vos premières actions",
+        "livrable_text": "Vos pistes A et B (exercice 4), leurs feuilles de route à 30, 60 et 90 jours (exercice 5) et vos premières actions (exercice 7). En séance 10, elles entrent dans votre document de synthèse, co-rédigé, qui n'appartient qu'à vous.",
+        "zones": [
+          "Ce qui m'étonne en relisant mon parcours",
+          "À aborder en séance : ce qui me fait hésiter entre A et B, une action que je n'ose pas dater",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ]
+      }
+    },
+    {
+      "template": "closing",
+      "fixed": true,
+      "params": {
+        "messages": [
+          "Le bilan s'achève, votre projet commence.",
+          "Prochaine étape : la séance 10. Apportez ce carnet.",
+          "Dans six mois, le suivi : votre feuille de route en main."
+        ]
+      }
+    }
+  ]
+}

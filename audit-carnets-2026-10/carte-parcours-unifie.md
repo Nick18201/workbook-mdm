@@ -215,7 +215,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Récapitulatif de la séance 8 | Audit | Les 3 scénarios, et vers lequel vous penchez. |
+| Récapitulatif de la séance 8 | Audit | Les 3 scénarios, et vers lequel vous penchez. Les trois familles y sont définies : les pistes directes (avec vos compétences actuelles), les passerelles courtes (après une formation courte), les angles morts (des pistes que vous ne regardiez pas, apparues en chemin). |
 | Votre profil, en une page | Livret thème 1 | Reports seulement : profil de fonctionnement, forces, cartographie des énergies. On ne refait plus rien. Sans l'exemple « ISFJ » ni aucun code de type. |
 | Vos compétences prouvées | Livret thèmes 3 et 4 | Un tableau : compétence, où je l'ai prouvée, résultat ou trace, niveau d'autonomie de 1 à 4, envie de l'utiliser. Il part des expériences, du travail réel et des compétences de vie du carnet 2. |
 | Deux récits d'action | Livret thème 5 | Deux récits au lieu d'un, « Ce récit prouve que je sais… », et une version orale en trois phrases. |
@@ -227,7 +227,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | Piste A, piste B | App (carnet 6) + Livret thème 7 | Le format de l'app : projet d'élan et refuge-tremplin, atouts, risques. Les pistes viennent des scénarios. |
 | Feuilles de route à 30, 60 et 90 jours | App (carnet 6) | Importer. Une par piste, comme le promet le programme. |
 | Vos premières actions sous 7 jours | Livret thème 7 | Action, date, personne à prévenir. |
-| Garde-fous et alliés | App (carnet 6) | Importer. Les alliés viennent de l'entourage noté au carnet 5. |
+| Garde-fous et soutiens | App (carnet 6) | Importer. Les soutiens viennent de l'entourage noté au carnet 5. |
 | Le chemin parcouru | Audit | Relire l'objectif boussole, renoter les domaines de vie du carnet 1, comparer les météos. |
 | Préparer le suivi à 6 mois | Audit | Ce qu'il faut relire et apporter à l'entretien de suivi. |
 | Le module de votre projet | Programme (S9) | Selon le projet : création (module court du business plan), reconversion (formation et financement, à créer), évolution interne (argumentaire, à créer). |
@@ -251,9 +251,9 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | S5 → S6 | Carnet 6 | 2 h | `carnet-6.json` (R6), issu de la partie exploration du carnet 6 | 2 h, affiché exercice par exercice (avant : 5 – 7 h pour tout le carnet 6) |
 | S6 → S7 | Carnet 7, partie 1 | 1 h 45 | `carnet-7.json` (R7), partie 1, issue des fiches du carnet 6 et du carnet terrain de l'app | 1 h 45, affiché exercice par exercice : trois fiches à critères au lieu de dix (avant : 2 h 30 – 4 h pour les dix fiches) |
 | S7 → S8 | Carnet 7, partie 2 | 2 h | `carnet-7.json` (R7), partie 2 | 2 h, affiché exercice par exercice (n'existait pas) ; les entretiens se font hors temps d'écriture |
-| S8 → S9 | Carnet de route, partie 1 | 1 h 30 | Livret | 3 h 30 – 4 h 30 pour tout le livret |
-| S9 → S10 | Carnet de route, partie 2 | 1 h 45 (+ module) | Livret, thème 7 | |
-| **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | ≈ 21 – 27 h |
+| S8 → S9 | Carnet de route, partie 1 | 1 h 30 | `carnet-de-route.json` (R8), partie 1, issue des thèmes 1, 3, 4 et 5 du livret | 1 h 30, affiché exercice par exercice (avant : 3 h 30 – 4 h 30 pour tout le livret) |
+| S9 → S10 | Carnet de route, partie 2 | 1 h 45 (+ module) | `carnet-de-route.json` (R8), partie 2, issue du thème 7 du livret et du plan d'action de l'app | 1 h 45, affiché exercice par exercice, plus le module de projet (n'existait pas) |
+| **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | 19 h 30 affichées, carnet par carnet (avant : ≈ 21 – 27 h) |
 
 L'interview du carnet 2, les échanges avec les proches et les entretiens du carnet 7 se font hors temps d'écriture. Le module de projet s'ajoute pour les personnes concernées.
 
@@ -263,7 +263,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 
 | Donnée | Écrite dans | Reportée dans | Identifiant |
 |---|---|---|---|
-| Météo (énergie de 0 à 10) | Ouverture de chaque carnet, et de chaque partie du carnet 7 | Carnet de route (le chemin parcouru) · suivi à 6 mois | `c1.meteo` … `c7.meteo`, `c7.meteo_2`, `route.meteo` |
+| Météo (énergie de 0 à 10) | Ouverture de chaque carnet, et de chaque partie du carnet 7 et du carnet de route | Carnet de route (le chemin parcouru) · suivi à 6 mois | `c1.meteo` … `c7.meteo`, `c7.meteo_2`, `route.meteo`, `route.meteo_2` |
 | Domaines de vie notés | Carnet 1 | Carnet 4 (note « Argent ») · carnet de route (nouvelle notation) | `c1.domaines` |
 | Objectif v1, « Je m'autorise à » | Carnet 1 | Carnet 2 (boussole) · carnet 6 (pistes audacieuses) | `c1.objectif`, `c1.autorisation` |
 | Ce qui pèse, héritage reçu et choisi | Carnet 1 | Carnet 2 (À lire) · carnet 4 (histoire avec l'argent) | `c1.sac_a_dos`, `c1.heritage` |
@@ -279,7 +279,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création | `c4.seuils`, `c4.tendance` |
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création | `c5.grille` |
 | Limites hors argent (travail, demandes urgentes, santé, proches) | Carnet 5, avant la grille | Carnet 6 (cartographie) · carnet de route (garde-fous) | `c5.limites` |
-| Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) | `c5.entourage` |
+| Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (soutiens) | `c5.entourage` |
 | Retour des proches (métiers suggérés, et pourquoi) | Carnet 6 | Carnet de route (preuve extérieure) | `c6.proches` |
 | 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 | `c6.pistes` |
 | Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route | `c7.fiches`, `c7.enquetes`, `c7.matrice` |
