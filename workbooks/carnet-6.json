@@ -30,7 +30,7 @@
           "Fin de carnet · Vos dix pistes · 10 min"
         ],
         "duration": "2 h",
-        "split": "En trois fois : le récapitulatif et votre cartographie (30 min), vos proches et les ressources (30 min), puis vos pistes et la fin (1 h)."
+        "split": "En trois fois : le récapitulatif et votre cartographie (30 min), vos proches et les ressources (30 min), puis vos pistes et la fin (1 h). Une réponse de vos proches manque ? Relancez dès le début."
       }
     },
     {
@@ -117,9 +117,9 @@
               "c6_carto_energie"
             ],
             [
-              "Ce qui me coûte",
+              "Pour mon énergie, mon poste devra…",
               "c3.energies",
-              "c6_carto_cout"
+              "c6_carto_critere"
             ],
             [
               "Mes moteurs à moi",
@@ -467,7 +467,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Cinq pistes réalistes : accessibles avec vos compétences actuelles, ou après une formation courte."
+            "Cinq pistes réalistes : directes, avec vos compétences actuelles, ou passerelles courtes, après une formation courte."
           ],
           "spacing_after_cm": 0.3
         },
@@ -692,7 +692,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "En séance 6, vous retiendrez trois pistes à confronter au terrain. Relisez les dix, puis notez vos trois favorites, réalistes ou audacieuses : elles se discutent."
+            "En séance 6, vous retiendrez trois pistes. Relisez les dix, votre cartographie sous les yeux (exercice 1), puis notez vos trois favorites : elles se discutent."
           ],
           "spacing_after_cm": 0.45
         },
@@ -797,12 +797,12 @@
       "params": {
         "lines": [
           "Pour chacune de mes trois favorites, je repère une personne qui exerce ce métier, ou qui en connaît une.",
-          "Si ma séance 6 s'ouvre par l'initiation à l'IA, j'apporte deux tâches de mon travail à essayer ensemble.",
+          "Si ma séance 6 s'ouvre par l'initiation à l'IA, j'apporte deux tâches de mon travail, actuel ou passé, à essayer ensemble.",
           "J'apporte ce carnet à la séance 6."
         ],
         "field_prefix": "c6_livrable",
         "livrable_title": "Vos dix pistes",
-        "livrable_text": "Cinq pistes réalistes et cinq audacieuses, avec leur origine et ce qu'elles disent de ce que vous cherchez (exercice 4), et vos trois favorites. En séance 6, vous en retiendrez trois à confronter au terrain.",
+        "livrable_text": "Cinq pistes réalistes et cinq audacieuses, avec leur origine et ce qui vous y attire (exercice 4), et vos trois favorites. En séance 6, vous en retiendrez trois à confronter au terrain.",
         "zones": [
           "Ce qui m'étonne en relisant mes réponses",
           "À aborder en séance : une piste que je n'ose pas défendre, une suggestion qui me gêne",

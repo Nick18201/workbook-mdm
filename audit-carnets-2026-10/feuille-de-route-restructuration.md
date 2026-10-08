@@ -150,11 +150,11 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - Avant d'eux, la météo et le récapitulatif (10 min).
     - Puis votre cartographie (20 min), le retour de vos proches (20 min, deux pages), explorer les ressources (10 min), dix pistes (40 min, deux pages) et « Avant de choisir » (10 min).
     - La fin de carnet prend 10 min.
-    - L'ouverture découpe en trois fois : le récapitulatif et la cartographie (30 min), les proches et les ressources (30 min), puis les pistes et la fin (1 h).
+    - L'ouverture découpe en trois fois : le récapitulatif et la cartographie (30 min), les proches et les ressources (30 min), puis les pistes et la fin (1 h). Elle ajoute : « Une réponse de vos proches manque ? Relancez dès le début. » (rapport 06 : les sollicitations dès l'ouverture).
     - La promesse de couverture devient « Dix pistes, avant d'en choisir trois. » L'ancienne, « Des pistes confrontées au réel », annonçait le carnet 7.
 53. **Les trois valeurs ne s'écrivent qu'une fois dans le carnet.** Le récapitulatif les reporte, une ligne par valeur (`c5.grille`), puis pose deux cases : « Ce que la séance a confirmé » et « Ce qu'elle a déplacé ». La cartographie reporte leurs conditions, pas les valeurs.
 54. **La cartographie est une page de reports**, sur deux colonnes.
-    - Les reports : le profil, en mots, et les deux forces (`c4.profil`) ; ce qui me recharge et ce qui me coûte (`c3.energies`) ; les moteurs à moi (`c2.moteurs`) ; l'objectif boussole (`c2.boussole`, comme le demande le rapport 01) ; les trois conditions (`c5.grille`) ; les limites hors argent (`c5.limites`).
+    - Les reports : le profil, en mots, et les deux forces (`c4.profil`) ; ce qui me recharge et « Pour mon énergie, mon poste devra… » (`c3.energies` : le critère retourné plutôt que le coût, que le rapport 06 jugeait resté à l'état de constat) ; les moteurs à moi (`c2.moteurs`) ; l'objectif boussole (`c2.boussole`, comme le demande le rapport 01) ; les trois conditions (`c5.grille`) ; les limites hors argent (`c5.limites`).
     - Les quatre seuils (`c4.seuils`) vont dans une seconde carte, « À garder pour vous », sans commentaire. La consigne dit de les masquer si l'on montre la page.
     - La page se ferme sur une question, fixe : « Le travail qui me ressemble, quel que soit le métier, c'est… ». Elle renvoie à la journée dans cinq ans (carnet 3, Q7). L'exemple est dans la question, faute de place pour un exemple contrasté.
 55. **Le retour des proches tient sur deux pages, sous le protocole complet.**
@@ -170,22 +170,22 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - Six lignes, « Les métiers que je repère », sans exemple : il orienterait le repérage.
     - L'immersion (PMSMP), le guide d'entretien et les salaires vont au carnet 7.
 57. **Les dix pistes tiennent sur deux pages**, en deux tableaux numérotés R1 à R5 et A1 à A5, pour en parler en séance.
-    - Une piste réaliste est accessible avec vos compétences actuelles, ou après une formation courte. Une piste audacieuse ne tient compte d'aucune contrainte.
+    - Une piste réaliste est directe, avec vos compétences actuelles, ou passerelle courte, après une formation courte : le vocabulaire du programme, que la séance 8 reprend pour classer les pistes. Une piste audacieuse ne tient compte d'aucune contrainte.
     - Les colonnes : « D'où elle vient », puis « Ce qui m'attire » pour les réalistes, « Ce qu'elle dit de ce que je cherche » pour les audacieuses.
     - Le report de la première page donne le fil des pistes (`c2.livrable` à `c5.livrable`) et « Je m'autorise à » (`c1.autorisation`). La consigne renvoie aussi aux modèles (carnet 1, exercice 5), à l'interview (carnet 2), aux proches et aux ressources.
     - `c6.pistes` est posé sur le tableau des réalistes.
-58. **« Avant de choisir » (exercice 5)** : les trois favorites (la piste, pourquoi elle, ce qui m'en fait douter). Puis la question franche facultative, « Le métier que je n'ai jamais osé envisager » et « Ce qui m'en empêche ». Enfin la clôture, « Ce que je garde de mes pistes audacieuses, même si je ne les exerce pas… ». La séance 6 tranche.
+58. **« Avant de choisir » (exercice 5)** : on relit les dix pistes, la cartographie sous les yeux, puis on note les trois favorites (la piste, pourquoi elle, ce qui m'en fait douter). C'est un premier tri face aux critères ; la confrontation complète se fait sur les fiches du carnet 7. Puis la question franche facultative, « Le métier que je n'ai jamais osé envisager » et « Ce qui m'en empêche ». Enfin la clôture, « Ce que je garde de mes pistes audacieuses, même si je ne les exerce pas… ». La séance 6 tranche.
 59. **La fin de carnet n'a pas de fil des pistes** : il s'arrête au carnet 6, qui l'utilise.
     - La zone adaptée : « À aborder en séance : une piste que je n'ose pas défendre, une suggestion qui me gêne ».
     - Les engagements : repérer une personne pour chaque favorite (le contact se prend au carnet 7), et apporter le carnet.
-60. **L'option « Initiation à l'IA » est une ligne d'engagement adaptable** : « Si ma séance 6 s'ouvre par l'initiation à l'IA, j'apporte deux tâches de mon travail à essayer ensemble. » Elle est hors temps d'écriture, et l'app peut la retirer.
+60. **L'option « Initiation à l'IA » est une ligne d'engagement adaptable** : « Si ma séance 6 s'ouvre par l'initiation à l'IA, j'apporte deux tâches de mon travail, actuel ou passé, à essayer ensemble. » « Actuel ou passé » vaut aussi entre deux emplois. Elle est hors temps d'écriture, et l'app peut la retirer.
 61. **Retirés de l'ancien carnet 6.**
     - Les tensions du récapitulatif : elles restent au carnet 5.
     - Les fiches métiers : elles vont au carnet 7.
     - Trois engagements : « une fiche par semaine », « confronter chaque piste » et « contacter un professionnel ».
     - Deux questions plus franches du rapport sont écartées :
       - « La valeur que j'ai le plus sacrifiée » double « agir contre une valeur » et le choix regretté du carnet 5 ;
-      - « Ce que je ne veux plus revivre, donc ma piste doit… » est inutile : les irritants sont retournés aux carnets 1 à 3 et repris dans les conditions de la grille.
+      - « Ce que je ne veux plus revivre, donc ma piste doit… » est inutile : les irritants sont retournés aux carnets 1 à 3, et la cartographie reporte le critère d'énergie du carnet 3.
     - Deux autres vont au carnet 7 : « Le compromis que cette piste me demande, et si je l'accepte », et « Ce qui pourrait me faire repousser ce contact ».
 
 ## 3. Les PR, dans l'ordre
@@ -349,7 +349,7 @@ Pour chaque PR de carnet :
   - Les situations d'alignement (exercice 1) peuvent nourrir les deux récits d'action du carnet de route (rapport 07) : un renvoi écrit, sans identifiant.
   - Les tensions et la hiérarchie restent dans le carnet 5, sans report.
 - **Les reprises du carnet 6.**
-  - Les dix pistes (`c6.pistes`) vont au récapitulatif du carnet 7 (les trois pistes retenues en séance 6, et pourquoi), puis au carnet de route (R7, R8).
+  - Les dix pistes (`c6.pistes`) vont au récapitulatif du carnet 7 (les trois pistes retenues en séance 6, et pourquoi), puis au carnet de route (R7, R8). Le rapport 07 y propose « Pour chacune de vos pistes réalistes (carnet 6), quelle compétence vous ouvre la porte ? », aux compétences prouvées (R8).
   - Les réponses des proches (`c6.proches`) vont au carnet de route, comme preuve extérieure (rapport 07, R8). Le livret business plan en parle déjà dans ses encadrés fixes.
   - Les trois favorites et les personnes repérées en fin de carnet 6 n'ont pas d'identifiant : la séance 6 tranche, et le carnet 7 récapitule ses choix. Les personnes repérées servent aux contacts d'enquête du carnet 7.
   - Les questions plus franches reportées au carnet 7 : « Le compromis que cette piste me demande, et si je l'accepte » (fiches), « Ce qui pourrait me faire repousser ce contact » (enquêtes).
