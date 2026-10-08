@@ -227,7 +227,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | Piste A, piste B | App (carnet 6) + Livret thème 7 | Le format de l'app : projet d'élan et refuge-tremplin, atouts, risques. Les pistes viennent des scénarios. |
 | Feuilles de route à 30, 60 et 90 jours | App (carnet 6) | Importer. Une par piste, comme le promet le programme. |
 | Vos premières actions sous 7 jours | Livret thème 7 | Action, date, personne à prévenir. |
-| Garde-fous et alliés | App (carnet 6) | Importer. Les alliés viennent de l'entourage noté au carnet 5. |
+| Garde-fous et soutiens | App (carnet 6) | Importer. Les soutiens viennent de l'entourage noté au carnet 5. |
 | Le chemin parcouru | Audit | Relire l'objectif boussole, renoter les domaines de vie du carnet 1, comparer les météos. |
 | Préparer le suivi à 6 mois | Audit | Ce qu'il faut relire et apporter à l'entretien de suivi. |
 | Le module de votre projet | Programme (S9) | Selon le projet : création (module court du business plan), reconversion (formation et financement, à créer), évolution interne (argumentaire, à créer). |
@@ -279,7 +279,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création | `c4.seuils`, `c4.tendance` |
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création | `c5.grille` |
 | Limites hors argent (travail, demandes urgentes, santé, proches) | Carnet 5, avant la grille | Carnet 6 (cartographie) · carnet de route (garde-fous) | `c5.limites` |
-| Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) | `c5.entourage` |
+| Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (soutiens) | `c5.entourage` |
 | Retour des proches (métiers suggérés, et pourquoi) | Carnet 6 | Carnet de route (preuve extérieure) | `c6.proches` |
 | 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 | `c6.pistes` |
 | Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route | `c7.fiches`, `c7.enquetes`, `c7.matrice` |

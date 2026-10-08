@@ -271,7 +271,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - La couverture : « Décider *et agir.* », promesse « Vos preuves, deux pistes, un plan daté. » Ni la couverture ni l'ouverture n'ont de grand numéro.
 80. **Neuf exercices, numérotés à la suite : 1 h 30, puis 1 h 45.**
     - Partie 1 : la météo et le récapitulatif (10 min), votre profil (10 min), vos compétences prouvées (20 min, puis 15 min), deux récits d'action (2 × 15 min), la fin de la partie 1 (5 min).
-    - Partie 2 : la météo et le récapitulatif (10 min), piste A et piste B (2 × 10 min), vos feuilles de route (15 min, puis 10 min), le module de votre projet (5 min), vos premières actions (10 min), garde-fous et alliés (10 min), le chemin parcouru (2 × 10 min, suivi compris), la fin de carnet (5 min). Le module lui-même s'ajoute.
+    - Partie 2 : la météo et le récapitulatif (10 min), piste A et piste B (2 × 10 min), vos feuilles de route (15 min, puis 10 min), le module de votre projet (5 min), vos premières actions (10 min), garde-fous et soutiens (10 min), le chemin parcouru (2 × 10 min, suivi compris), la fin de carnet (5 min). Le module lui-même s'ajoute.
     - L'ouverture dit en gras ce qui se montre (le profil, les compétences, les récits) et ce qui reste à la personne (les seuils, les garde-fous, le chemin parcouru), comme le demandait le rapport 07. La page des pistes le rappelle (« masquez vos seuils »), et le premier livrable aussi.
 81. **Le récapitulatif de la séance 8** : la matrice est citée par un renvoi écrit (carnet 7, exercice 5), puis un tableau des trois scénarios (« Le scénario, en quelques mots » · « Sa famille ») et trois cases : « Le scénario vers lequel je penche » · « Pourquoi lui » · « Ce qui me fait encore hésiter ». Dans tout le carnet, les scénarios se désignent « Scénario 1 » à « Scénario 3 ».
 82. **Le profil, en une page de reports** : le profil en mots et les deux forces (`c4.profil`), ce qui recharge, ce qui coûte, le besoin et le critère retourné (`c3.energies`), sans code de type. Une seule question : « Dans le scénario vers lequel je penche, mon profil est un atout quand… ». Les moteurs (`c2.moteurs`) ne sont pas reportés : la grille du carnet 5 les a relus, et le carnet de route reporte ce qu'elle en a tiré, les trois valeurs et leurs conditions.
@@ -283,9 +283,9 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 85. **Deux récits d'action, fixes** (`route.recits` sur le premier) : la situation et ce qui posait problème, le signal qui m'a fait agir (plus de « déclic »), ce que j'ai fait pas à pas, le résultat, « Ce récit prouve que je sais… ». Le premier porte sur un savoir-faire. Le second se passe avec d'autres personnes, ou c'est « une fois où vous avez cru ne pas y arriver » : la question plus franche du rapport 07 devient une consigne. Puis chaque récit en trois phrases, pour un entretien. Le renvoi aux sommets de la ligne de vie (carnet 2, exercice 5) et à l'alignement (carnet 5, exercice 1) est écrit.
 86. **Une météo par partie**, comme au carnet 7 : la seconde a un nouvel identifiant, `route.meteo_2` (carte, section 7). Le récapitulatif de la séance 9 tient en deux cases : « Ce que la séance a tranché » · « Ce qui reste ouvert ».
 87. **Piste A, piste B, sur deux pages.**
-    - La définition est fixe : « Piste A : le projet qui vous attire le plus. Piste B : le plus sûr, ou un tremplin. » « Transmission » disparaît.
+    - La définition est fixe, avec les mots du programme : « Piste A, votre projet d'élan : le projet qui vous attire le plus. Piste B, votre refuge ou votre tremplin : le plus sûr, ou celui qui prépare la piste A. » « Transmission » disparaît.
     - Les critères sont reportés, pas redemandés : les trois valeurs et leurs conditions (`c5.grille`), les quatre seuils dans « À garder pour vous » (`c4.seuils`).
-    - Un premier tableau A · B, adaptable (l'app y écrit les pistes pré-intitulées) : l'intitulé et son numéro de scénario, ce qui m'y attire, mes atouts (une compétence, un récit). `route.pistes` y est posé.
+    - Un premier tableau A · B, adaptable (l'app y écrit les pistes pré-intitulées) : l'intitulé et son numéro de scénario, ce qui m'y attire, mes atouts (exercices 2 et 3). `route.pistes` y est posé.
     - Un second tableau, fixe, « Face à vos critères » : les risques, les valeurs que la piste respecte, le moment où le minimum sécurisant est atteint.
     - La charge moyenne (renoncer à un scénario) suit la convention du carnet 4 : « Le scénario que je laisse de côté » · « Ce qu'il me coûte de le laisser », facultatif, puis « Avec le recul, choisir m'apprend que… ».
 88. **Une feuille de route par piste, en tableau** (`route.feuilles` sur la première) : trois paliers de 30, 60 et 90 jours, avec les thèmes de l'app (sécuriser, tester, conclure), face à « Mon objectif », « Le résultat que je pourrai constater » et « Mes actions, et leur date », en cases de 2,6 cm.
@@ -296,8 +296,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - « Ce que la séance 9 a posé » : la formation ou la démarche visée, son financement ou la personne à voir, ma prochaine démarche, sa date. La personne en reconversion ou en évolution interne garde ainsi une trace de la séance 9 en attendant ses modules.
     - Deux liens officiels, vérifiés le 8 octobre 2026, remplacent les volumes d'heures CPF du livret : Mon Compte Formation et Mon CEP (France compétences, pour trouver un conseiller en évolution professionnelle).
 90. **Les premières actions** (`route.actions`) : trois lignes, « Ce que je fais » · « La date » · « Je préviens ».
-91. **Garde-fous et alliés.**
-    - Les reports : les limites hors argent (`c5.limites`) et « Les professionnels rencontrés, et ce que j'en retiens » (`c7.enquetes`).
+91. **Garde-fous et soutiens** (« alliés », au masculin générique, devient « soutiens », comme au carnet 5).
+    - Les reports : les limites hors argent (`c5.limites`) et « Ce que m'ont appris les personnes rencontrées » (`c7.enquetes`).
     - Le risque de décrocher et sa parade, puis un tableau des soutiens (« Qui me soutient » · « Ce que je lui demande » · « Notre premier point, le ») : les deux questions de l'app. Les soutiens viennent du carnet 5 (exercice 8), par un renvoi écrit.
     - La question franche du rapport 07 sur le cadre de sécurité (« Le compromis que je ne referai plus, même pour un meilleur salaire ») est écartée : elle double les limites du carnet 5, « Ce que je n'accepte pas » au carnet 4 et le compromis du carnet 7 (exercice 6), et la page n'en a plus la place. Les seuils ne sont que reportés.
 92. **Le chemin parcouru tient sur deux pages.**
@@ -313,6 +313,21 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - Thème 6 : « Ce qui m'attire pour l'avenir » (des évolutions sociétales, abstraites, qui orientent la réponse) est retiré. « Ce que je décide moi-même » est couvert par les limites, reportées. « Qui interviewer » est retiré : les comptes rendus du carnet 7 le remplacent. Les réussites passées nourrissent le second récit.
     - Thème 7 : les seuils sont reportés, les pistes A et B ont leurs tableaux, le petit pas devient trois premières actions, un lien officiel remplace les heures CPF. « Garantie à 100 % », « pas proximal » et « le plus grand piège d'une reconversion » sont retirés.
     - Les 28 exemples d'un seul profil sont remplacés par huit exemples contrastés, un par exercice qui en a la place, chacun d'un métier différent.
+94. **Second passage sur l'audit** (demandé par Nicolas).
+    - Corrigé :
+      - le travail empêché (carnet 2, exercice 2) rejoint les renvois des compétences prouvées, et la consigne dit combien en noter : cinq ;
+      - une case, une chose : « La situation : ce qui posait problème », « Le résultat : ce qui a changé ensuite », « Mes atouts pour y aller (exercices 2 et 3) » ;
+      - les mots du programme, « projet d'élan » et « refuge, ou tremplin », dans la définition et les en-têtes des pistes A et B ;
+      - aucune répétition entre une page et ses engagements, comme le relevait le rapport 07 au livret : « à voix haute » reste sur la page des récits, la première action à l'exercice 7. Les engagements deviennent « Je laisse mûrir mon choix : il se fait en séance 9, pas avant » et « Avant chaque entretien, je relis mes compétences prouvées et mes deux récits » ;
+      - le masculin générique : « alliés » devient « soutiens », « les professionnels rencontrés » devient « les personnes rencontrées » ;
+      - le renvoi au carnet 7 de « Avant de reprendre » est marqué fixe ;
+      - la consigne des météos nomme aussi les pages « Avant de reprendre » ;
+      - la page du module reçoit un exemple, dans l'aide de « Ce que la séance 9 a posé », et « Face à vos critères » une phrase d'ouverture.
+    - Écarté, avec la raison :
+      - une ligne « Ce qu'elle me coûte » aux pistes A et B (rapport 07, thème 7) : les risques, le minimum sécurisant et le compromis du carnet 7 (exercice 6) le disent, et la page est pleine ;
+      - un « pourquoi » après le niveau d'autonomie (rapport 07, thème 4) : la preuve et le résultat, sur la même ligne du tableau, en tiennent lieu ;
+      - « Envie : oui, plutôt, non » reste une colonne fermée, comme le proposait le rapport 07 : c'est un palier, pas une question à rouvrir ;
+      - la relecture de « Je m'autorise à » (rapport 07, fil rouge) : le carnet 6 l'a reportée aux pistes audacieuses, et la boussole relue au chemin parcouru la prolonge.
 
 ## 3. Les PR, dans l'ordre
 
@@ -329,7 +344,7 @@ Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
 | **R5 · Carnet 5** | Valeurs : la liste corrigée, la grille anti-compromis (seul endroit des 3 valeurs), l'entourage et la demande aux proches. | Les réponses des proches arrivent avant la séance 6. |
 | **R6 · Carnet 6** | Exploration : la cartographie en reports, le retour des proches, les ressources, 10 pistes. | Les seuils restent dans une zone « à garder pour vous ». |
 | **R7 · Carnet 7** | Confronter, en deux parties : les 3 fiches à critères, la préparation des enquêtes, salaires et débouchés, puis les comptes rendus, le terrain et la matrice. | Des liens officiels, pas de chiffres écrits dans le carnet. |
-| **R8 · Carnet de route** | Deux parties. D'abord : profil en reports, compétences prouvées, deux récits. Ensuite : pistes A et B, feuilles de route à 30, 60 et 90 jours, premières actions, garde-fous et alliés, chemin parcouru, préparation du suivi, place du module de projet. | Remplace le livret. Ses 28 exemples (un seul profil, peut-être une personne réelle) disparaissent au profit d'exemples contrastés tirés de métiers différents. |
+| **R8 · Carnet de route** | Deux parties. D'abord : profil en reports, compétences prouvées, deux récits. Ensuite : pistes A et B, feuilles de route à 30, 60 et 90 jours, premières actions, garde-fous et soutiens, chemin parcouru, préparation du suivi, place du module de projet. | Remplace le livret. Ses 28 exemples (un seul profil, peut-être une personne réelle) disparaissent au profit d'exemples contrastés tirés de métiers différents. |
 | **R9 · Module création** | Le business plan court, environ 12 pages : fondations, problème, offre, prix, point mort, test, synthèse. Il reprend les seuils, la grille anti-compromis et l'entretien prospects de l'app. | Il est personnalisable en une fois. |
 | **R10 · Livret business plan** | Le livret complet autonome, avec les refontes de l'audit (rapport `08-business_plan.md`), et la personnalisation partie par partie dans l'app. | Informations réglementaires renvoyées vers les sources officielles. |
 | **R11 · Nettoyage** | Supprimer `chap0` à `chap6.json` et `livret.json`, mettre à jour le catalogue de l'app, la CI et `test_cli_documents.py`. Vérifier la cohérence avec le programme et le récapitulatif du site. | Tant que R11 n'est pas fusionnée, les anciens carnets restent disponibles à côté des nouveaux. |
@@ -502,7 +517,7 @@ Pour chaque PR de carnet :
 - **Les reprises du carnet 5.**
   - La grille anti-compromis (`c5.grille`) est reportée au carnet 6 : les valeurs au récapitulatif, leurs conditions à la cartographie (R6). Au carnet 7, les fiches jugent chaque piste sur ses trois conditions, et la grille d'entretien en reporte les trois questions (R7). Ses trois valeurs et leurs conditions sont reportées aux pistes A et B (R8). Elle ira au module création (R9).
   - Les limites hors argent (`c5.limites`) sont reportées à la cartographie du carnet 6 (R6). Elles sont reportées aux garde-fous du carnet de route (R8).
-  - L'entourage (`c5.entourage`) est repris au retour des proches du carnet 6, par un renvoi écrit : une ligne par proche sollicité (R6). Il est cité aux alliés du carnet de route, par un renvoi écrit (R8).
+  - L'entourage (`c5.entourage`) est repris au retour des proches du carnet 6, par un renvoi écrit : une ligne par proche sollicité (R6). Il est cité aux soutiens du carnet de route, par un renvoi écrit (R8).
   - Les situations d'alignement (exercice 1) sont citées par un renvoi écrit aux récits d'action du carnet de route (R8).
   - Les tensions et la hiérarchie restent dans le carnet 5, sans report.
 - **Les reprises du carnet 6.**
@@ -513,7 +528,7 @@ Pour chaque PR de carnet :
 - **Les reprises du carnet 7.**
   - Les fiches, les comptes rendus et la matrice (`c7.fiches`, `c7.enquetes`, `c7.matrice`) servent à la séance 8, qui en tire les trois scénarios. Le carnet de route les reprend (R8) :
     - la matrice est citée au récapitulatif de la séance 8 ;
-    - « Les professionnels rencontrés, et ce que j'en retiens » (rapport 07) est reporté des comptes rendus aux garde-fous et alliés ;
+    - « Ce que m'ont appris les personnes rencontrées » (« Les professionnels rencontrés, et ce que j'en retiens » au rapport 07) est reporté des comptes rendus aux garde-fous et soutiens ;
     - « Ce qu'il faudrait pour y aller » est reporté de la matrice à la feuille de route de la piste A, et « Ce qui me manque », sur les fiches, y est cité.
   - Les deux météos (`c7.meteo`, `c7.meteo_2`) sont recopiées au chemin parcouru du carnet de route (R8).
   - « Ma zone de recherche » n'a pas d'identifiant, et le carnet de route ne la cite pas : la feuille de route s'en sert sans la recopier.

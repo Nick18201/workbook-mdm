@@ -34,7 +34,7 @@
           "Exercice 5 · Vos feuilles de route · 25 min",
           "Exercice 6 · Le module de votre projet · 5 min",
           "Exercice 7 · Vos premières actions · 10 min",
-          "Exercice 8 · Garde-fous et alliés · 10 min",
+          "Exercice 8 · Garde-fous et soutiens · 10 min",
           "Exercice 9 · Le chemin parcouru · 20 min",
           "Fin de carnet · 5 min"
         ],
@@ -216,7 +216,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Une compétence prouvée tient en trois éléments : un verbe et un objet, une situation où vous l'avez mise en œuvre, et ce qu'il en reste, un résultat ou une trace. Partez de vos fiches d'expérience et de ce que la fiche de poste ne disait pas (carnet 2, exercice 1), de votre zone d'excellence (exercice 3) et de vos compétences de vie (exercice 6)."
+            "Une compétence prouvée tient en trois éléments : un verbe et un objet, une situation où vous l'avez mise en œuvre, ce qu'il en reste (un résultat, une trace). Notez-en cinq. Partez du carnet 2 : vos fiches d'expérience et ce que la fiche de poste ne disait pas (exercice 1), le travail empêché (exercice 2), votre zone d'excellence (exercice 3), vos compétences de vie (exercice 6)."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -369,7 +369,7 @@
           "type": "contrast_example",
           "title": "Responsable logistique",
           "surface": "Gestion des stocks.",
-          "exploitable": "Réorganiser un stock de pièces détachées · à l'entrepôt, en 2023 · les ruptures deviennent rares, l'équipe garde mon tableau · 3 · oui."
+          "exploitable": "Réorganiser un stock de pièces détachées · entrepôt, 2023 · plus de ruptures, l'équipe garde mon tableau · 3 · oui."
         }
       ]
     },
@@ -382,7 +382,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Une preuve vient aussi du regard des autres. Reportez ce que vos proches voient chez vous (carnet 6, exercice 2), puis notez ce qu'on vous demande sans que vous y pensiez."
+            "Une preuve vient aussi du regard des autres. Reportez ce que vos proches voient chez vous (carnet 6, exercice 2), puis notez ce qu'on vient souvent vous demander."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -486,7 +486,7 @@
           "rows": [
             [
               [
-                "La situation, et ce qui posait problème",
+                "La situation : ce qui posait problème",
                 "route_recit_1_situation",
                 1.6
               ],
@@ -505,7 +505,7 @@
             ],
             [
               [
-                "Le résultat : ce qui a changé, et pour qui",
+                "Le résultat : ce qui a changé ensuite",
                 "route_recit_1_resultat",
                 1.6
               ],
@@ -541,7 +541,7 @@
           "rows": [
             [
               [
-                "La situation, et ce qui posait problème",
+                "La situation : ce qui posait problème",
                 "route_recit_2_situation",
                 1.6
               ],
@@ -560,7 +560,7 @@
             ],
             [
               [
-                "Le résultat : ce qui a changé, et pour qui",
+                "Le résultat : ce qui a changé ensuite",
                 "route_recit_2_resultat",
                 1.6
               ],
@@ -592,7 +592,7 @@
             ]
           ],
           "title": "Pour un entretien",
-          "hint": "La situation, ce que j'ai fait, le résultat. Puis lisez-les à voix haute.",
+          "hint": "Trois phrases : la situation, ce que j'ai fait, le résultat.",
           "question_labels": true
         },
         {
@@ -608,8 +608,8 @@
       "part": 1,
       "params": {
         "lines": [
-          "Je relis mes deux récits à voix haute, une fois.",
           "Je relis mes trois scénarios, mon tableau de compétences sous les yeux.",
+          "Je laisse mûrir mon choix : il se fait en séance 9, pas avant.",
           "J'apporte ce carnet et mon carnet 7 à la séance 9."
         ],
         "field_prefix": "route_partie_1",
@@ -658,7 +658,8 @@
           "items": [
             "Vos deux pistes s'écrivent à l'exercice 4, vos feuilles de route à l'exercice 5. Gardez votre carnet 7 ouvert : vos fiches et votre matrice servent ici."
           ],
-          "spacing_after_cm": 0.45
+          "spacing_after_cm": 0.45,
+          "fixed": true
         },
         {
           "type": "annotation",
@@ -675,7 +676,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Piste A : le projet qui vous attire le plus. Piste B : le plus sûr, ou un tremplin. Elles viennent de vos scénarios et du choix fait en séance 9. Vos critères sont déjà écrits : reportez-les. Si vous montrez ces pages, masquez vos seuils."
+            "Piste A, votre projet d'élan : le projet qui vous attire le plus. Piste B, votre refuge ou votre tremplin : le plus sûr, ou celui qui prépare la piste A. Elles viennent de vos scénarios et du choix fait en séance 9. Vos critères sont déjà écrits : reportez-les. Si vous montrez ces pages, masquez vos seuils."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -729,8 +730,8 @@
           "type": "table",
           "headers": [
             "",
-            "Piste A · le projet qui m'attire le plus",
-            "Piste B · le plus sûr, ou un tremplin"
+            "Piste A · mon projet d'élan",
+            "Piste B · mon refuge, ou mon tremplin"
           ],
           "rows": [
             [
@@ -756,7 +757,7 @@
               }
             ],
             [
-              "Mes atouts pour y aller : une compétence, un récit",
+              "Mes atouts pour y aller (exercices 2 et 3)",
               {
                 "field_id": "route_piste_a_atouts",
                 "placeholder": "Piste A : mes atouts pour y aller"
@@ -784,11 +785,18 @@
       "part": 2,
       "blocks": [
         {
+          "type": "paragraphs",
+          "items": [
+            "Jugez vos deux pistes sur les mêmes critères, vos reports sous les yeux."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
           "type": "table",
           "headers": [
             "",
-            "Piste A · le projet qui m'attire le plus",
-            "Piste B · le plus sûr, ou un tremplin"
+            "Piste A · mon projet d'élan",
+            "Piste B · mon refuge, ou mon tremplin"
           ],
           "rows": [
             [
@@ -1076,7 +1084,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "En séance 9, votre carnet de route s'adapte à votre projet. Selon votre piste A, un module s'y ajoute, avec son propre temps d'écriture."
+            "Selon votre piste A, un module s'ajoute à ce carnet, avec son propre temps d'écriture."
           ],
           "spacing_after_cm": 0.45
         },
@@ -1148,6 +1156,7 @@
             ]
           ],
           "title": "Ce que la séance 9 a posé",
+          "hint": "Par exemple : une formation en alternance, avec votre compte formation ; ou un rendez-vous avec votre responsable pour un nouveau poste.",
           "question_labels": true
         },
         {
@@ -1260,14 +1269,14 @@
     },
     {
       "template": "composite",
-      "title": "Garde-fous *et alliés.*",
-      "part_title": "Exercice 8 · Garde-fous et alliés · 10 min",
+      "title": "Garde-fous *et soutiens.*",
+      "part_title": "Exercice 8 · Garde-fous et soutiens · 10 min",
       "part": 2,
       "blocks": [
         {
           "type": "paragraphs",
           "items": [
-            "Les premiers mois d'un projet ont leurs moments de doute : prévoyez-les. Relisez vos limites et ce que vous ont appris les professionnels rencontrés, puis choisissez vos alliés parmi vos soutiens (carnet 5, exercice 8) et ces personnes."
+            "Les premiers mois d'un projet ont leurs moments de doute : prévoyez-les. Relisez vos limites et ce que vous ont appris les personnes rencontrées sur le terrain, puis choisissez sur qui vous appuyer, parmi vos soutiens (carnet 5, exercice 8) et ces personnes."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -1282,7 +1291,7 @@
               1.6
             ],
             [
-              "Les professionnels rencontrés, et ce que j'en retiens",
+              "Ce que m'ont appris les personnes rencontrées",
               "c7.enquetes",
               "route_rappel_enquetes",
               1.6
@@ -1463,7 +1472,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Recopiez votre énergie du jour, de 0 à 10, notée en page « Avant de commencer » de chaque carnet. Puis comparez vos domaines de vie avec ceux du carnet 1 (exercice 2)."
+            "Recopiez votre énergie du jour, de 0 à 10, notée en page « Avant de commencer » de chaque carnet, et « Avant de reprendre » de chaque partie 2. Puis comparez vos domaines de vie avec ceux du carnet 1 (exercice 2)."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -1588,7 +1597,7 @@
       "part": 2,
       "params": {
         "lines": [
-          "Je mène ma première action dans les sept jours qui suivent la séance 10.",
+          "Avant chaque entretien, je relis mes compétences prouvées et mes deux récits.",
           "Chaque fin de mois, je relis ma feuille de route, et j'en parle avec la personne qui me soutient.",
           "J'apporte ce carnet à la séance 10, puis au suivi à six mois."
         ],
