@@ -88,6 +88,18 @@ def test_customize_requires_a_known_base(client, monkeypatch):
     assert missing.status_code == 422
 
 
+def test_customize_refuses_a_part_the_workbook_lacks(client, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    profile = {"beneficiary_name": "Alex", "beneficiary_context": "Ingénieur"}
+
+    no_parts = client.post("/api/customize", json={"template_id": "chap1", "part": 1, **profile})
+    too_far = client.post("/api/customize", json={"template_id": "business-plan", "part": 7, **profile})
+    out_of_bounds = client.post("/api/customize", json={"template_id": "business-plan", "part": 0, **profile})
+
+    assert no_parts.status_code == too_far.status_code == out_of_bounds.status_code == 422
+    assert "Partie 1" in no_parts.json()["detail"]
+
+
 def test_no_cors_headers_for_other_origins(client):
     r = client.get("/api/templates", headers={"Origin": "https://evil.example"})
     preflight = client.options(

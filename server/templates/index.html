@@ -170,6 +170,13 @@
           <p id="tpl_badge_desc" class="text-slate-600 text-[11px] leading-relaxed"></p>
         </div>
 
+        <!-- Parties d'un long livret, personnalisées une à une -->
+        <div id="parts_box" class="hidden">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Parties à personnaliser</label>
+          <p class="text-[11px] text-slate-500 mb-1.5 leading-relaxed">Ce livret est trop long pour être personnalisé d'un coup : l'IA le reprend une partie après l'autre. Les pages hors parties (couverture, mode d'emploi, fin du livret) restent telles quelles.</p>
+          <div id="parts_list" class="grid grid-cols-1 gap-1 text-[11px] text-slate-700"></div>
+        </div>
+
         <!-- Bénéficiaire -->
         <div class="grid grid-cols-1 gap-3">
           <div>
@@ -513,6 +520,16 @@
       if (titleEl) titleEl.innerHTML = `<span class="mi text-mdm-blue">${escapeHtml(tpl.icon)}</span> ${escapeHtml(tpl.title)}`;
       if (pagesEl) pagesEl.innerText = `${tpl.page_count} Pages`;
       if (descEl) descEl.innerText = `${tpl.description} · ${tpl.subtitle}`;
+
+      const partsBox = document.getElementById('parts_box');
+      const partsList = document.getElementById('parts_list');
+      const parts = tpl.parts || [];
+      partsList.innerHTML = parts.map((title, i) => `
+        <label class="flex items-center space-x-2 cursor-pointer">
+          <input type="checkbox" value="${i + 1}" checked class="accent-mdm-blue">
+          <span>Partie ${i + 1} · ${escapeHtml(title)}</span>
+        </label>`).join('');
+      partsBox.classList.toggle('hidden', parts.length === 0);
     }
 
     // 4. Exemples de profils réalistes pour tester la personnalisation
@@ -539,7 +556,7 @@
         name: "Élodie Garnier",
         context: "Responsable Achats (36 ans) souhaitant lancer une boutique en ligne et un concept-store d'objets du quotidien zéro déchet. Enjeux : validation du panier moyen, sourcing fournisseurs responsables, trésorerie de départ.",
         instructions: "Adapter les exercices aux étapes clés du business plan, à la validation du MVP et aux chiffres de rentabilité.",
-        template: "business_plan"
+        template: "business-plan"
       }
     ];
     let samplePersonaIdx = 0;
@@ -576,38 +593,68 @@
         return;
       }
 
-      setLoading(true, `Personnalisation du livret pour ${beneficiaryName} par Gemini Flash...`);
+      // A long workbook goes part by part: each call customizes one part of the previous result
+      const partTitles = (availableTemplates.find(t => t.id === templateId) || {}).parts || [];
+      const parts = partTitles.length
+        ? [...document.querySelectorAll('#parts_list input:checked')].map(input => Number(input.value))
+        : [null];
+      if (parts.length === 0) {
+        alert("Cochez au moins une partie à personnaliser.");
+        return;
+      }
 
-      const payload = {
-        template_id: templateId || "chap1",
-        base_spec: null,
-        beneficiary_name: beneficiaryName,
-        beneficiary_context: beneficiaryContext,
-        custom_instructions: customInstructions || null
-      };
+      let spec = null, lastRes = null, fallbackRes = null, failure = null;
+      const summaries = [], notes = [];
+      for (const [k, part] of parts.entries()) {
+        setLoading(true, part
+          ? `Personnalisation pour ${beneficiaryName} : partie ${k + 1} sur ${parts.length}, « ${partTitles[part - 1]} »...`
+          : `Personnalisation du livret pour ${beneficiaryName} par Gemini Flash...`);
+        const payload = {
+          template_id: spec ? null : (templateId || "chap1"),
+          base_spec: spec,
+          beneficiary_name: beneficiaryName,
+          beneficiary_context: beneficiaryContext,
+          custom_instructions: customInstructions || null,
+          part: part
+        };
+        try {
+          const res = await fetch('/api/customize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
 
-      try {
-        const res = await fetch('/api/customize', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({ detail: "Erreur lors de la personnalisation" }));
+            throw new Error(err.detail || "Erreur serveur");
+          }
 
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({ detail: "Erreur lors de la personnalisation" }));
-          throw new Error(err.detail || "Erreur serveur");
+          const data = await res.json();
+          spec = data.spec;
+          lastRes = res;
+          if (res.headers.get('X-MDM-Generation') === 'fallback') fallbackRes = res;
+          const prefix = part ? `Partie ${part} · ` : '';
+          if (data.customizations_summary) summaries.push(prefix + data.customizations_summary);
+          if (data.pedagogical_note) notes.push(prefix + data.pedagogical_note);
+        } catch (err) {
+          failure = { part, err };
+          break;
         }
+      }
+      setLoading(false);
 
-        const data = await res.json();
-        currentWorkbookSpec = data.spec;
+      if (spec) {
+        currentWorkbookSpec = spec;
         iterationCount = 1;
-        renderPreview(currentWorkbookSpec, data.customizations_summary, data.pedagogical_note);
-        showGenerationSource(res);
+        renderPreview(currentWorkbookSpec, summaries.join('\n'), notes.join('\n') || null);
+        showGenerationSource(fallbackRes || lastRes);
+      }
+      if (!failure) {
         showToast(`Livret personnalisé pour ${beneficiaryName}`);
-      } catch (err) {
-        alert("Erreur lors de la personnalisation : " + err.message);
-      } finally {
-        setLoading(false);
+      } else if (spec) {
+        alert(`La partie « ${partTitles[failure.part - 1]} » n'a pas pu être personnalisée : ${failure.err.message} Les parties précédentes le sont.`);
+      } else {
+        alert("Erreur lors de la personnalisation : " + failure.err.message);
       }
     }
 

@@ -197,12 +197,19 @@ def api_get_template_spec(template_id: str):
 @app.post("/api/customize", response_model=CustomizeResponse, response_model_exclude_unset=True)
 def api_customize_workbook(request: CustomizeRequest, response: Response):
     """
-    Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du consultant.
+    Personnalise un livret existant pour un bénéficiaire selon son profil et les consignes du consultant :
+    tout le livret, ou une seule de ses parties (un long livret se personnalise partie par partie).
     """
-    if request.base_spec is None and not get_predefined_spec(request.template_id):
+    base_spec = request.base_spec if request.base_spec is not None else get_predefined_spec(request.template_id)
+    if base_spec is None:
         raise HTTPException(
             status_code=404,
             detail=f"Modèle de livret '{request.template_id}' introuvable.",
+        )
+    if request.part is not None and not any(page.part == request.part for page in base_spec.pages):
+        raise HTTPException(
+            status_code=422,
+            detail=f"Requête invalide. Partie {request.part} : ce livret n'a aucune page dans cette partie.",
         )
     try:
         result, fallback_reason = customize_spec_with_gemini(request)

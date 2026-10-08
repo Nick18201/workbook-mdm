@@ -144,3 +144,51 @@ def test_customize_never_changes_what_is_fixed(client, monkeypatch):
     assert blocks[0]["text"] == "Avertissement."
     assert blocks[1]["subtitle"] == "Adapté."
     assert "_ref" not in r.text
+
+
+def test_customize_one_part_leaves_the_rest_as_it_was(client, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    base = {"parts": ["Les fondations", "Le test"], "pages": [
+        {"template": "cover", "params": {"cover_title": "Mon *livret.*"}},
+        {"template": "composite", "title": "Une.", "part": 1, "blocks": [
+            {"type": "question", "question": "Q1 ?", "field_id": "a", "subtitle": "Texte de la partie 1."}]},
+        {"template": "composite", "title": "Deux.", "part": 2, "blocks": [
+            {"type": "protocol", "text": "Avertissement."},
+            {"type": "question", "question": "Q2 ?", "field_id": "b", "subtitle": "Texte de la partie 2."}]},
+        {"template": "closing", "params": {}},
+    ]}
+    # Gemini only answers with the pages of the part, rewritten, without their 'part'
+    answer = {"beneficiary_name": "Alex", "pages": [{"template": "composite", "title": "Deux, adaptée.", "_ref": "p3",
+                                                     "blocks": [
+        {"type": "protocol", "text": "Autre avertissement.", "_ref": "p3.b1"},
+        {"type": "question", "question": "Q2 ?", "field_id": "b", "subtitle": "Adapté.", "_ref": "p3.b2"},
+    ]}]}
+    prompts = []
+
+    class Response:
+        text = json.dumps({"spec": answer})
+
+    class Models:
+        def generate_content(self, **kwargs):
+            prompts.append(kwargs["contents"])
+            return Response
+
+    class Client:
+        def __init__(self, **kwargs):
+            self.models = Models()
+
+    monkeypatch.setattr(gemini_service.genai, "Client", Client)
+
+    r = client.post("/api/customize", json={"base_spec": base, "beneficiary_name": "Alex",
+                                            "beneficiary_context": "Libraire", "part": 2})
+    spec = r.json()["spec"]
+    cover, one, two, closing = spec["pages"]
+
+    assert r.headers["X-MDM-Generation"] == "ai"
+    assert "Texte de la partie 2." in prompts[0] and "Texte de la partie 1." not in prompts[0]
+    assert "partie 2 sur 2, « Le test »" in prompts[0]
+    assert spec["parts"] == base["parts"] and spec["beneficiary_name"] == "Alex"
+    assert cover == base["pages"][0] and one == base["pages"][1] and closing == base["pages"][3]
+    assert two["title"] == "Deux, adaptée." and two["part"] == 2
+    assert two["blocks"][0]["text"] == "Avertissement."  # fixed, even part by part
+    assert two["blocks"][1]["subtitle"] == "Adapté."

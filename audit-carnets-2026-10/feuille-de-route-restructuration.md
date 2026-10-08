@@ -12,6 +12,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R0 · Socle : nommage, palette, gabarit commun, langue du PDF | Fusionné (PR #52) |
 | R0 bis · Format : fixe / adaptable, identifiants de données, reports | Fusionné (PR #53) |
 | R1 · Carnet 1 · L'état des lieux (`carnet-1.json`) | Fusionné (PR #54) |
+| R10 · Livret business plan : refonte et personnalisation partie par partie | PR en cours, menée en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
 **Avant chaque PR : vérifier que la précédente est fusionnée**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
@@ -147,7 +148,6 @@ Pour chaque PR de carnet :
 - **La politique des champs** : police fixe avec défilement, ou police automatique. À trancher après un test de saisie dans de vrais lecteurs PDF (Acrobat, Aperçu, navigateur).
 - **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm.
 - **Les exemples du livret** décrivent peut-être une personne réelle. Ils disparaissent avec le carnet de route (R8), mais si c'est le cas, l'historique git les garde.
-- **La personnalisation partie par partie** du livret business plan, dans l'app (R10).
 
 ## 8. Pour reprendre dans une nouvelle conversation
 

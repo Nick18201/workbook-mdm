@@ -471,11 +471,12 @@ class PageLayout:
         self.y_cursor -= PDFStyle.GAP_BLOCK - 6
         return self.y_cursor
 
-    def add_table(self, headers, rows, col_widths=None, field_prefix="tbl"):
+    def add_table(self, headers, rows, col_widths=None, field_prefix="tbl", field_height=None):
         """
         Table: a white header row in PT Mono, then rows separated by rules. A dict cell is an
         answer field, an empty cell a check box; text cells wrap. The header repeats on
-        continuation pages.
+        continuation pages. field_height sets the height of the answer fields (one line by
+        default); fields taller than 1.2 cm take several lines.
         """
         n_cols = len(headers)
         if n_cols == 0:
@@ -531,6 +532,8 @@ class PageLayout:
                 row = [row]
             cell_items = []
             row_h = 0.95 * cm
+            if field_height and any(isinstance(cell, dict) for cell in row):
+                row_h = max(row_h, field_height + 8)
             for c_idx in range(n_cols):
                 w = widths[c_idx]
                 cell = row[c_idx] if c_idx < len(row) else ""
@@ -556,7 +559,8 @@ class PageLayout:
                 if kind == "input":
                     fid = value.get("field_id", f"{field_prefix}_r{r_idx+1}_c{c_idx+1}")
                     draw_answer_box(self.c, curr_x + 3, r_y + 4, w - 6, row_h - 8, fid,
-                                    tooltip=value.get("placeholder", ""), multiline=False)
+                                    tooltip=value.get("placeholder", ""),
+                                    multiline=field_height is not None and row_h - 8 > 1.2 * cm)
                 elif kind == "empty":
                     fid = f"{field_prefix}_r{r_idx+1}_c{c_idx+1}"
                     create_checkbox(self.form, f"{fid}_chk", pos=(curr_x + w / 2 - 5.5, r_y + (row_h - 11) / 2),
