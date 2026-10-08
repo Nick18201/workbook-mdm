@@ -328,7 +328,8 @@ def page_drawn_blocks(c):
     layout.add_fill_in_card([["Moi,", ("demo_fill_nom", None, "Prénom Nom")],
                              ["je décide d'investir", ("demo_fill_heures", 1.6, "Nombre d'heures"),
                               "heures par semaine dans mon bilan."]])
-    layout.add_life_line([("Sommet 1", "summit"), ("Vallée 1", "valley"), ("Sommet 2", "summit")],
+    layout.add_life_line([("Sommet 1", "summit"), ("Vallée 1", "valley", "Ce qui m'a permis de traverser"),
+                          ("Sommet 2", "summit")],
                          headers=["Les sommets · moments forts", "Les vallées · apprentissages"],
                          field_prefix="demo_vie")
     layout.render()

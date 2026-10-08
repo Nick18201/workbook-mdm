@@ -1,0 +1,1137 @@
+{
+  "chapter_num": 2,
+  "chapter_title": "Mon parcours",
+  "subtitle": "Bilan de compétences",
+  "carnet": 2,
+  "pdf_title": "Marge de Manœuvre · Carnet 2 : Mon parcours",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mon *parcours.*",
+        "number": 2,
+        "tagline": "Bilan de compétences",
+        "promise": "Trouver le fil rouge de votre parcours."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Relire votre *parcours.*",
+      "params": {
+        "num": "2",
+        "intro_text": "Ce carnet prépare la séance 2. Il relit vos expériences : ce que vous y faisiez vraiment, ce qui vous donnait de l'énergie, ce qui vous coûtait. Il en tire votre fil rouge et les critères de votre prochain poste.<br/><br/>Une idée de piste vous vient en chemin ? Notez-la en fin de carnet : le fil des pistes commence ici.",
+        "points": [
+          "Avant de commencer · Météo et récapitulatif · 15 min",
+          "À lire · Comprendre ses racines · 10 min",
+          "Exercice 1 · Vos expériences, votre travail réel · 45 min",
+          "Exercice 2 · Le travail empêché · 10 min",
+          "Exercice 3 · Vos quatre zones, vos critères · 15 min",
+          "Exercice 4 · Vos moteurs, votre fil rouge · 20 min",
+          "Exercice 5 · Votre ligne de vie · 25 min",
+          "Exercice 6 · Vos compétences de vie · 15 min",
+          "Exercice 7 · L'arbre de vie · facultatif · 15 min",
+          "Pour aller plus loin · Une interview · facultatif",
+          "Fin de carnet · Votre fil rouge · 10 min"
+        ],
+        "duration": "2 h 45",
+        "split": "En trois fois : jusqu'à l'exercice 1 (1 h 10), les exercices 2 à 4 (45 min), puis la fin du carnet (50 min). L'arbre de vie et l'interview sont facultatifs, en plus de ce temps."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Météo et récapitulatif · 15 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c2_meteo",
+          "data_id": "c2.meteo"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mon objectif, première version",
+              "c1.objectif",
+              "c2_rappel_objectif"
+            ],
+            [
+              "Je m'autorise à explorer…",
+              "c1.autorisation",
+              "c2_rappel_autorisation"
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "En séance 1, j'ai vu que…",
+                "c2_seance_1",
+                1.6
+              ],
+              [
+                "D'ici la fin de mon bilan, je veux avoir clarifié…",
+                "c2_boussole_clarifier",
+                1.6
+              ]
+            ],
+            [
+              [
+                "… pour pouvoir…",
+                "c2_boussole_pouvoir",
+                1.6
+              ],
+              [
+                "Je saurai que j'ai réussi quand…",
+                "c2_boussole_reussite",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Mon objectif boussole",
+          "hint": "Votre objectif, précisé après la séance 1 : vous le relirez à la fin du bilan. Exemple : avoir identifié deux pistes réalistes et compatibles avec mes contraintes.",
+          "question_labels": true,
+          "data_id": "c2.boussole"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Comprendre *ses racines.*",
+      "part_title": "À lire · Comprendre ses racines · 5 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Ces deux pages parlent de famille, de loyauté, parfois de honte. Lisez-les à votre rythme. Si une idée vous remue, notez-la pour la séance."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Au carnet 1, vous avez trié ce que vous avez reçu de votre milieu. Ces pages donnent des mots à ce tri : trois notions pour comprendre ce qui oriente encore vos choix."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "heading",
+          "text": "1. Le bagage social (l'habitus)"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "L'habitus, c'est votre manière spontanée de réagir, de parler, de vous tenir, héritée de votre famille et de votre milieu. Il agit comme un logiciel installé depuis l'enfance.",
+            "Quand vous changez de milieu, ce logiciel peut créer un décalage : l'impression de porter un costume mal taillé, ou la pensée « Un jour, ils vont se rendre compte que je ne suis pas à la hauteur. » Réussir mieux que ses parents peut faire naître de la culpabilité ; une situation moins prestigieuse que la leur, de la honte. Ce malaise peut retenir de demander une augmentation, ou pousser au surmenage."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "2. Les loyautés familiales"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Chaque famille tient un livre de comptes invisible : ce que l'on pense devoir à ses parents. Il oriente des choix sans qu'on le voie.",
+            "• S'arrêter juste avant le but, pour ne pas dépasser ses parents : l'échec devient une façon de leur rester fidèle.",
+            "• Le mythe familial : « Chez nous, on est des intellectuels. » Un projet qui le contredit rencontre des résistances, en vous comme autour de vous."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "3. Le travail empêché"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Travailler, c'est aussi y mettre du sien. Quand vous ne pouvez pas faire votre travail bien, selon vos propres critères, vous en souffrez : la psychologie du travail parle de travail empêché. Cette souffrance n'est pas une faiblesse : elle montre que vous tenez à la qualité de votre travail. L'exercice 2 vous aide à en faire un critère."
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Et *vous ?*",
+      "part_title": "À lire · Et vous ? · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Facultatif. Trois questions pour relier ces notions à votre histoire. Une ligne suffit. Laissez vierge ce que vous préférez garder pour la séance."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Une personne de ma famille, ou de mon entourage, qui m'a donné confiance",
+                "c2_racines_confiance",
+                2.6
+              ]
+            ],
+            [
+              [
+                "La phrase de famille qui décide encore parfois à ma place",
+                "c2_racines_phrase",
+                2.6
+              ]
+            ],
+            [
+              [
+                "Ce que je n'ose pas faire, de peur de décevoir ma famille",
+                "c2_racines_decevoir",
+                2.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "anchor",
+          "field_id": "c2_racines_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos expériences, *votre travail réel.*",
+      "part_title": "Exercice 1 · Vos expériences · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Le travail réel, c'est ce que vous faites vraiment, au-delà de la fiche de poste : vos astuces, vos rattrapages. C'est là que se cachent vos compétences les plus solides. Choisissez les quatre expériences qui vous ont le plus appris (emploi, stage, mission bénévole), pas forcément les plus récentes. En deux fois si besoin."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "contrast_example",
+          "title": "Gestionnaire de clientèle",
+          "surface": "Le contact client.",
+          "exploitable": "Rattraper au téléphone un client qui voulait résilier, trouver la solution pendant l'appel, et le garder."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le poste et la structure",
+                "c2_exp_1_poste",
+                0.85,
+                3
+              ],
+              [
+                "Les années",
+                "c2_exp_1_annees",
+                0.85,
+                1
+              ]
+            ],
+            [
+              [
+                "Mes missions",
+                "c2_exp_1_missions",
+                2.9
+              ],
+              [
+                "Ce que la fiche de poste ne dit pas : chaque semaine, sans que ce soit écrit, je…",
+                "c2_exp_1_reel",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Ce qui me donnait de l'énergie",
+                "c2_exp_1_energie",
+                2.9
+              ],
+              [
+                "Ce qui me coûtait",
+                "c2_exp_1_cout",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Comment ce poste a commencé",
+                "c2_exp_1_debut",
+                2.9
+              ],
+              [
+                "Pourquoi il s'est terminé, ou pourquoi je veux en partir",
+                "c2_exp_1_fin",
+                2.9
+              ]
+            ]
+          ],
+          "title": "Expérience 1",
+          "question_labels": true,
+          "data_id": "c2.experiences"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Deuxième *expérience.*",
+      "part_title": "Exercice 1 · Expérience 2 · 10 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le poste et la structure",
+                "c2_exp_2_poste",
+                0.85,
+                3
+              ],
+              [
+                "Les années",
+                "c2_exp_2_annees",
+                0.85,
+                1
+              ]
+            ],
+            [
+              [
+                "Mes missions",
+                "c2_exp_2_missions",
+                2.9
+              ],
+              [
+                "Ce que la fiche de poste ne dit pas : chaque semaine, sans que ce soit écrit, je…",
+                "c2_exp_2_reel",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Ce qui me donnait de l'énergie",
+                "c2_exp_2_energie",
+                2.9
+              ],
+              [
+                "Ce qui me coûtait",
+                "c2_exp_2_cout",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Comment ce poste a commencé",
+                "c2_exp_2_debut",
+                2.9
+              ],
+              [
+                "Pourquoi il s'est terminé, ou pourquoi je veux en partir",
+                "c2_exp_2_fin",
+                2.9
+              ]
+            ]
+          ],
+          "title": "Expérience 2",
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Un stage ou une mission bénévole comptent autant qu'un emploi."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Troisième *expérience.*",
+      "part_title": "Exercice 1 · Expérience 3 · 10 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le poste et la structure",
+                "c2_exp_3_poste",
+                0.85,
+                3
+              ],
+              [
+                "Les années",
+                "c2_exp_3_annees",
+                0.85,
+                1
+              ]
+            ],
+            [
+              [
+                "Mes missions",
+                "c2_exp_3_missions",
+                2.9
+              ],
+              [
+                "Ce que la fiche de poste ne dit pas : chaque semaine, sans que ce soit écrit, je…",
+                "c2_exp_3_reel",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Ce qui me donnait de l'énergie",
+                "c2_exp_3_energie",
+                2.9
+              ],
+              [
+                "Ce qui me coûtait",
+                "c2_exp_3_cout",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Comment ce poste a commencé",
+                "c2_exp_3_debut",
+                2.9
+              ],
+              [
+                "Pourquoi il s'est terminé, ou pourquoi je veux en partir",
+                "c2_exp_3_fin",
+                2.9
+              ]
+            ]
+          ],
+          "title": "Expérience 3",
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Le travail réel se cache dans les détails : une astuce, un rattrapage."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Quatrième *expérience.*",
+      "part_title": "Exercice 1 · Expérience 4 · 10 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le poste et la structure",
+                "c2_exp_4_poste",
+                0.85,
+                3
+              ],
+              [
+                "Les années",
+                "c2_exp_4_annees",
+                0.85,
+                1
+              ]
+            ],
+            [
+              [
+                "Mes missions",
+                "c2_exp_4_missions",
+                2.9
+              ],
+              [
+                "Ce que la fiche de poste ne dit pas : chaque semaine, sans que ce soit écrit, je…",
+                "c2_exp_4_reel",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Ce qui me donnait de l'énergie",
+                "c2_exp_4_energie",
+                2.9
+              ],
+              [
+                "Ce qui me coûtait",
+                "c2_exp_4_cout",
+                2.9
+              ]
+            ],
+            [
+              [
+                "Comment ce poste a commencé",
+                "c2_exp_4_debut",
+                2.9
+              ],
+              [
+                "Pourquoi il s'est terminé, ou pourquoi je veux en partir",
+                "c2_exp_4_fin",
+                2.9
+              ]
+            ]
+          ],
+          "title": "Expérience 4",
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Ce qui vous coûtait deviendra un critère, à l'exercice 3."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le travail *empêché.*",
+      "part_title": "Exercice 2 · Le travail empêché · 10 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cette page revient sur des moments où vous n'avez pas pu bien faire votre travail. Elle peut réveiller de la frustration."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce que vous n'avez pas pu bien faire dit ce dont vous avez besoin pour bien travailler."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le travail que j'aurais voulu mieux faire",
+                "c2_empeche_mieux",
+                1.6
+              ],
+              [
+                "Ce qui m'en empêchait (les moyens, les délais, les règles…)",
+                "c2_empeche_frein",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Le travail que j'ai dû mal faire, et qui me reste en travers",
+                "c2_empeche_travers",
+                1.6
+              ],
+              [
+                "Donc, pour faire un travail que je juge bien fait, j'ai besoin de…",
+                "c2_empeche_besoin",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true,
+          "data_id": "c2.travail_empeche"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Aide à domicile",
+          "surface": "On n'a jamais le temps.",
+          "exploitable": "J'aurais voulu parler avec les personnes, pas seulement faire le ménage. J'ai besoin de pouvoir allonger une visite."
+        },
+        {
+          "type": "anchor",
+          "field_id": "c2_empeche_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "quadrants",
+      "title": "Vos quatre *zones.*",
+      "part_title": "Exercice 3 · Vos quatre zones · 10 min",
+      "params": {
+        "instruction": "Ce que vous savez faire ne vous donne pas toujours de l'énergie. Reprenez les missions de vos fiches et rangez chacune dans une zone. Quelques mots par mission suffisent.",
+        "quadrants": [
+          {
+            "title": "Zone d'excellence",
+            "subtitle": "Facile pour moi, et cela me donne de l'énergie",
+            "field_id": "c2_zone_excellence"
+          },
+          {
+            "title": "Zone de compétence",
+            "subtitle": "Je sais très bien faire, mais cela me laisse neutre",
+            "field_id": "c2_zone_competence"
+          },
+          {
+            "title": "Zone d'apprentissage",
+            "subtitle": "Je ne maîtrise pas encore, mais cela me stimule",
+            "field_id": "c2_zone_apprentissage"
+          },
+          {
+            "title": "Zone à risque",
+            "subtitle": "Je sais faire, mais cela m'épuise",
+            "field_id": "c2_zone_risque"
+          }
+        ],
+        "field_prefix": "c2_zone"
+      },
+      "data_id": "c2.zones"
+    },
+    {
+      "template": "composite",
+      "title": "Vos *critères.*",
+      "part_title": "Exercice 3 · Vos critères · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce qui vous coûte dit ce dont votre prochain poste devra vous protéger. Reprenez ce qui vous coûtait (exercice 1) et votre zone à risque, puis retournez chaque irritant en critère."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que je ne veux plus jamais revivre dans un poste",
+                "c2_critere_1_irritant",
+                2.2
+              ],
+              [
+                "Donc, mon prochain poste devra…",
+                "c2_critere_1",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce que je ne veux plus jamais revivre dans un poste",
+                "c2_critere_2_irritant",
+                2.2
+              ],
+              [
+                "Donc, mon prochain poste devra…",
+                "c2_critere_2",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce que je ne veux plus jamais revivre dans un poste",
+                "c2_critere_3_irritant",
+                2.2
+              ],
+              [
+                "Donc, mon prochain poste devra…",
+                "c2_critere_3",
+                2.2
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true,
+          "data_id": "c2.criteres"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Graphiste",
+          "surface": "Je ne veux plus de stress.",
+          "exploitable": "Je ne veux plus passer mes soirées à préparer les fichiers pour l'imprimeur. Donc, mon prochain poste devra me laisser la conception, et confier la fabrication."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce qui *revient.*",
+      "part_title": "Exercice 4 · Vos moteurs · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Prenez de la hauteur : ce qui revient d'un poste à l'autre dit comment vous choisissez."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Je choisis souvent…",
+                "c2_schema_choisis",
+                2.4
+              ],
+              [
+                "Je pars quand…",
+                "c2_schema_pars",
+                2.4
+              ],
+              [
+                "Je reste quand…",
+                "c2_schema_reste",
+                2.4
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "question",
+          "question": "Le schéma que je répète, et qui me coûte le plus :",
+          "field_id": "c2_schema_cout",
+          "box_height_cm": 1.6,
+          "fixed": true
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un moteur, c'est ce qui vous fait avancer durablement dans un travail : apprendre, être utile, décider, la reconnaissance, la sécurité… Les valeurs viendront au carnet 5 : ici, partez de vos expériences. Rangez chaque moteur dans une colonne, avec le numéro de l'expérience où vous l'avez vu."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "Je le veux, moi",
+              "c2_moteur_veux",
+              "Ex : apprendre (expériences 2 et 4)"
+            ],
+            [
+              "On l'attend de moi",
+              "c2_moteur_attendu",
+              "Ex : la sécurité (expérience 1)"
+            ]
+          ],
+          "count": 4,
+          "line_height_cm": 0.8,
+          "data_id": "c2.moteurs"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre fil *rouge.*",
+      "part_title": "Exercice 4 · Votre fil rouge · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Les métiers changent, vos verbes d'action restent. Choisissez les trois qui décrivent le mieux ce que vous aimez faire, puis écrivez ce qui relie vos expériences."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "Mes trois verbes d'action",
+              "c2_verbe",
+              "Fédérer, analyser, concevoir, simplifier, transmettre, réparer, négocier…"
+            ]
+          ],
+          "count": 3,
+          "line_height_cm": 0.8
+        },
+        {
+          "type": "question",
+          "question": "Mon fil rouge en une phrase : ce qui relie mes expériences, c'est…",
+          "field_id": "c2_fil_rouge",
+          "subtitle": "Relisez vos schémas, vos moteurs et vos verbes. Une phrase suffit.",
+          "box_height_cm": 2.4,
+          "data_id": "c2.fil_rouge"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Géomètre",
+          "surface": "Je change souvent de poste.",
+          "exploitable": "Ce qui relie mes expériences, c'est découvrir un terrain nouveau : je pars quand je n'apprends plus."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre ligne *de vie.*",
+      "part_title": "Exercice 5 · Votre ligne de vie · 15 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cet exercice, sur deux pages, revient sur les moments forts et les moments difficiles de votre vie. Vous choisissez ce que vous notez : un mot suffit."
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre vie professionnelle et personnelle : vos sommets à gauche, vos vallées à droite, avec leur date, du plus ancien au plus récent. Laissez vides les cases inutiles."
+          ],
+          "spacing_after_cm": 0.35
+        },
+        {
+          "type": "life_line",
+          "headers": [
+            "Les sommets · moments forts",
+            "Les vallées · moments difficiles"
+          ],
+          "items": [
+            [
+              "Sommet 1",
+              "summit",
+              "Ce qui m'a donné de l'énergie"
+            ],
+            [
+              "Vallée 1",
+              "valley",
+              "Ce qui m'a permis de traverser"
+            ],
+            [
+              "Sommet 2",
+              "summit",
+              "Ce qui m'a donné de l'énergie"
+            ],
+            [
+              "Vallée 2",
+              "valley",
+              "Ce qui m'a permis de traverser"
+            ],
+            [
+              "Sommet 3",
+              "summit",
+              "Ce qui m'a donné de l'énergie"
+            ],
+            [
+              "Vallée 3",
+              "valley",
+              "Ce qui m'a permis de traverser"
+            ]
+          ],
+          "field_prefix": "c2_vie"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que dit votre *ligne de vie.*",
+      "part_title": "Exercice 5 · Ce qu'elle vous dit · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez votre ligne de vie d'un seul regard, puis notez ce qu'elle dit de vous."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que mes sommets ont en commun",
+                "c2_vie_sommets",
+                1.8
+              ],
+              [
+                "Ce qui m'aide à traverser les moments difficiles",
+                "c2_vie_traverser",
+                1.8
+              ]
+            ],
+            [
+              [
+                "Donc, mon prochain poste devra…",
+                "c2_vie_donc",
+                1.8
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "question",
+          "question": "La vallée dont je parle le moins :",
+          "field_id": "c2_vie_vallee",
+          "subtitle": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "box_height_cm": 1.6,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Fleuriste",
+          "surface": "J'ai aimé ma première boutique.",
+          "exploitable": "Mes sommets ont en commun de tout décider, de la vitrine aux prix. Donc, mon prochain poste devra me laisser une vraie marge de décision."
+        },
+        {
+          "type": "anchor",
+          "field_id": "c2_vie_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos compétences *de vie.*",
+      "part_title": "Exercice 6 · Vos compétences de vie · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre vécu est un capital : une expérience de vie cache souvent des compétences utiles au travail."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "1. Vie familiale et personnelle",
+                "c2_vecu_1",
+                1.6
+              ],
+              [
+                "La compétence cachée",
+                "c2_competence_1",
+                1.6
+              ]
+            ],
+            [
+              [
+                "2. Défis et épreuves (facultatif)",
+                "c2_vecu_2",
+                1.6
+              ],
+              [
+                "La compétence cachée",
+                "c2_competence_2",
+                1.6
+              ]
+            ],
+            [
+              [
+                "3. Engagements et loisirs",
+                "c2_vecu_3",
+                1.6
+              ],
+              [
+                "La compétence cachée",
+                "c2_competence_3",
+                1.6
+              ]
+            ],
+            [
+              [
+                "4. Voyages et déménagements",
+                "c2_vecu_4",
+                1.6
+              ],
+              [
+                "La compétence cachée",
+                "c2_competence_4",
+                1.6
+              ]
+            ],
+            [
+              [
+                "5. Une autre expérience marquante",
+                "c2_vecu_5",
+                1.6
+              ],
+              [
+                "La compétence cachée",
+                "c2_competence_5",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Les compétences que j'ai envie d'utiliser dans mon prochain poste",
+                "c2_competences_envie",
+                1.6
+              ]
+            ]
+          ],
+          "hint": "À chaque ligne, une expérience précise (organiser une fête de famille, aider un proche, tenir une association…), puis la compétence qu'elle a fait naître.",
+          "question_labels": true,
+          "data_id": "c2.competences_vie"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Secrétaire",
+          "surface": "Aider un parent → organisation.",
+          "exploitable": "Coordonner deux ans les rendez-vous médicaux d'un parent avec mes frères et sœurs → planifier sous contrainte, répartir les tâches."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre arbre *de vie.*",
+      "part_title": "Exercice 7 · L'arbre de vie · facultatif · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Facultatif : cet arbre résume ce carnet en une image. Reprenez ce que vous avez noté : trois compétences des exercices 1 et 6 pour le tronc, vos sommets pour les fruits. Quelques mots par zone suffisent."
+          ],
+          "spacing_after_cm": 0.2
+        },
+        {
+          "type": "tree_of_life",
+          "items": [
+            [
+              "1. Racines",
+              "Votre histoire, vos origines",
+              "c2_arbre_racines"
+            ],
+            [
+              "2. Sol",
+              "Vos besoins actuels",
+              "c2_arbre_sol"
+            ],
+            [
+              "3. Tronc",
+              "Vos forces",
+              "c2_arbre_tronc"
+            ],
+            [
+              "4. Branches",
+              "Vos projets et vos envies",
+              "c2_arbre_branches"
+            ],
+            [
+              "5. Feuilles",
+              "Vos soutiens, votre entourage",
+              "c2_arbre_feuilles"
+            ],
+            [
+              "6. Fruits",
+              "Vos réussites",
+              "c2_arbre_fruits"
+            ]
+          ],
+          "text": "Les épreuves font partie de l'arbre, sans le résumer."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre première *interview.*",
+      "part_title": "Pour aller plus loin · Une interview · facultatif",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Facultatif, hors temps d'écriture : c'est votre premier contact avec le terrain. Rencontrez une personne dont le métier ou le parcours vous inspire, si possible l'un de vos modèles du carnet 1.",
+            "Pas de rendez-vous possible avant la séance 2 ? Gardez cette page : elle reste ouverte jusqu'au carnet 7, où vous préparerez vos enquêtes."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes modèles",
+              "c1.modeles",
+              "c2_rappel_modeles"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "text": "« Je fais le point sur mon parcours professionnel. Accepteriez-vous de me parler de votre métier pendant une vingtaine de minutes ? »",
+          "title": "Pour demander"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La personne",
+                "c2_interview_nom",
+                0.85,
+                2
+              ],
+              [
+                "Son métier, son activité",
+                "c2_interview_metier",
+                0.85,
+                2
+              ],
+              [
+                "Le rendez-vous",
+                "c2_interview_date",
+                0.85,
+                1
+              ]
+            ]
+          ],
+          "data_id": "c2.interview"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Quel a été votre parcours jusqu'à ce métier ?",
+              "field_id": "c2_interview_parcours"
+            },
+            {
+              "question": "Qu'aimez-vous le plus dans ce que vous faites ?",
+              "field_id": "c2_interview_aime"
+            }
+          ],
+          "max_box_height_cm": 2.6
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vous *en retenez.*",
+      "part_title": "Pour aller plus loin · Une interview · facultatif",
+      "blocks": [
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Quelles sont les difficultés, ou les contraintes cachées ?",
+              "field_id": "c2_interview_difficultes"
+            },
+            {
+              "question": "Quel conseil donneriez-vous à quelqu'un qui veut se lancer ?",
+              "field_id": "c2_interview_conseil"
+            },
+            {
+              "question": "Ce que j'en retiens pour moi :",
+              "field_id": "c2_interview_retiens"
+            }
+          ],
+          "max_box_height_cm": 3.0
+        },
+        {
+          "type": "contrast_example",
+          "title": "Paysagiste",
+          "surface": "C'est un beau métier.",
+          "exploitable": "Les chantiers d'hiver sont durs, mais les clients restent fidèles. Je veux vérifier que je supporte le travail dehors en hiver."
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 10 min",
+      "params": {
+        "lines": [
+          "Je regarde mes expériences difficiles à mon rythme, en séance si besoin.",
+          "Je note chaque idée de piste, même improbable, dans le fil des pistes.",
+          "J'apporte ce carnet à la séance 2."
+        ],
+        "field_prefix": "c2_livrable",
+        "livrable_title": "Votre fil rouge",
+        "livrable_text": "Vos expériences, avec ce qui vous donne de l'énergie et ce qui vous coûte, le travail réel et le travail empêché, vos quatre zones et vos critères, vos moteurs et votre fil rouge, vos compétences de vie. Relus ensemble en séance 2.",
+        "pistes": true
+      },
+      "data_id": "c2.livrable"
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Votre fil rouge est écrit.",
+          "Prochaine étape : la séance 2. Apportez ce carnet.",
+          "Ensuite, le carnet 3 : vos fonctionnements propres."
+        ]
+      },
+      "fixed": true
+    }
+  ]
+}

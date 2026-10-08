@@ -18,7 +18,11 @@ CATALOGUE = [
      "Préparer la séance 1 : cadre de travail, état des lieux rapide, domaines de vie, objectif de départ "
      "et ce que la personne a reçu de son milieu sur le travail.",
      "explore", BILAN),
-    # Former carnets 0 and 1, until the clean-up of the restructuring (R11)
+    ("carnet-2", 2, "Carnet 2 · Mon parcours", "Expériences, travail réel, quatre zones, fil rouge et ligne de vie",
+     "Préparer la séance 2 : objectif boussole, expériences avec ce qui donne de l'énergie et ce qui coûte, "
+     "travail empêché, quatre zones, critères, moteurs, fil rouge, ligne de vie et compétences de vie.",
+     "park", BILAN),
+    # Former carnets 0 to 2, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
      "flag", BILAN),
@@ -26,7 +30,8 @@ CATALOGUE = [
      "Météo, vision à 360°, objectif boussole et héritages",
      "Fixer le point de départ : état d'esprit, domaines de vie, objectif boussole, sac à dos et héritages familiaux.",
      "explore", BILAN),
-    ("chap2", 2, "Carnet 2 · Mon parcours", "Expériences, fil rouge, ligne de vie et arbre de vie",
+    ("chap2", 2, "Carnet 2 · Mon parcours (ancien parcours)",
+     "Expériences, fil rouge, ligne de vie et arbre de vie",
      "Relire le parcours expérience par expérience, repérer le fil rouge et les moteurs, les compétences de vie.",
      "park", BILAN),
     ("chap3", 3, "Carnet 3 · Mes fonctionnements propres", "Énergie, information, décisions et rapport au temps",

@@ -20,11 +20,16 @@ from .primitives import (
 )
 
 
+LIFE_LINE_PROMPTS = {"summit": "Ce que j'ai aimé", "valley": "Ce que j'en retiens"}
+
+
 def draw_life_line(c, x, top, width, nodes, headers, field_prefix):
     """
     The life line, from top down to the bottom margin: a dotted axis, the summits on the
-    left and the valleys on the right, each a pastel card with an event line and a box.
-    nodes: [(label, 'summit' | 'valley'), ...]; headers: the labels of the two sides.
+    left and the valleys on the right, each a pastel card with an event line (one written
+    line, 0.85 cm) and a box (two handwritten lines, 1.6 cm).
+    nodes: [(label, 'summit' | 'valley') or (label, kind, box label), ...]; without a box
+    label, LIFE_LINE_PROMPTS. headers: the labels of the two sides.
     """
     center = x + width / 2
     left_header, right_header = (list(headers or []) + ["", ""])[:2]
@@ -33,7 +38,7 @@ def draw_life_line(c, x, top, width, nodes, headers, field_prefix):
 
     card_w = width / 2 - 0.75 * cm
     pad = 0.35 * cm
-    label_h, line_h, box_h = 10, 0.75 * cm, 1.55 * cm
+    label_h, line_h, box_h = 10, 0.85 * cm, 1.6 * cm
     card_h = 2 * pad + 2 * (label_h + 3) + line_h + 0.25 * cm + box_h
     first_y = top - 0.65 * cm - card_h / 2
     last_y = PDFStyle.CONTENT_BOTTOM + card_h / 2
@@ -58,9 +63,11 @@ def draw_life_line(c, x, top, width, nodes, headers, field_prefix):
     c.restoreState()
 
     pastels = pastel_cycle(c)
-    for i, (label, kind) in enumerate(nodes, start=1):
-        cy = first_y - (i - 1) * step
+    for i, node in enumerate(nodes, start=1):
+        label, kind = node[0], node[1]
         summit = kind == "summit"
+        prompt = str(node[2]) if len(node) > 2 and node[2] else LIFE_LINE_PROMPTS["summit" if summit else "valley"]
+        cy = first_y - (i - 1) * step
         card_x = x if summit else center + 0.75 * cm
         color = pastels[1] if summit else pastels[2]
         # Connector, then the badge on the axis ringed with the page color
@@ -78,11 +85,11 @@ def draw_life_line(c, x, top, width, nodes, headers, field_prefix):
         draw_answer_box(c, card_x + pad, t - line_h, card_w - 2 * pad, line_h, f"{field_prefix}_{i}_titre",
                         tooltip=f"{label} : date et événement", multiline=False)
         t -= line_h + 0.25 * cm
-        draw_eyebrow(c, card_x + pad, t - 7.5, "Ce que j'ai aimé" if summit else "Ce que j'en retiens", size=7.5,
-                     tracking=PDFStyle.TRACKING_LABEL, max_width=card_w - 2 * pad)
+        draw_eyebrow(c, card_x + pad, t - 7.5, prompt, size=7.5, tracking=PDFStyle.TRACKING_LABEL,
+                     max_width=card_w - 2 * pad)
         t -= label_h + 3
         draw_answer_box(c, card_x + pad, t - box_h, card_w - 2 * pad, box_h, f"{field_prefix}_{i}_desc",
-                        tooltip="Ce que j'ai aimé" if summit else "Ce que j'en retiens")
+                        tooltip=f"{label} : {prompt}")
 
 
 def _tree_zone(c, cx, top, width, number_title, hint, field_id, box_h, align="center"):
@@ -109,7 +116,8 @@ def draw_tree_of_life(c, x, top, width, zones, annotation=None):
     bottom = PDFStyle.CONTENT_BOTTOM
     pastels = pastel_cycle(c)
 
-    ground_y = bottom + 3.4 * cm
+    # The roots box (2 cm, two handwritten lines and more) sits between the ground and the margin
+    ground_y = bottom + 4.1 * cm
     trunk_w, trunk_top = 5.4 * cm, ground_y + 5.6 * cm
     crown_r = min(5.2 * cm, (top - trunk_top) / 2 + 1.2 * cm)
     crown_cy = top - crown_r - 0.1 * cm
@@ -143,8 +151,8 @@ def draw_tree_of_life(c, x, top, width, zones, annotation=None):
     _tree_zone(c, x + side_r * 0.95, crown_cy - crown_r * 0.62 + 1.45 * cm, 4.5 * cm, *leaves, 1.9 * cm)
     _tree_zone(c, x + width - side_r * 0.95, crown_cy - crown_r * 0.62 + 1.45 * cm, 4.5 * cm, *fruits, 1.9 * cm)
     _tree_zone(c, cx, trunk_top - 0.3 * cm, trunk_w - 0.9 * cm, *trunk, trunk_top - ground_y - 1.6 * cm)
-    _tree_zone(c, x + 2.3 * cm, ground_y + 2.5 * cm, 4.6 * cm, *soil, 1.5 * cm)
-    _tree_zone(c, cx, ground_y - 1.15 * cm, 9.0 * cm, *roots, 1.3 * cm)
+    _tree_zone(c, x + 2.3 * cm, ground_y + 2.6 * cm, 4.6 * cm, *soil, 1.6 * cm)
+    _tree_zone(c, cx, ground_y - 1.15 * cm, 9.0 * cm, *roots, 2.0 * cm)
 
     if annotation:
         draw_annotation(c, x + width - 4.9 * cm, ground_y + 2.4 * cm, annotation, 4.6 * cm)
