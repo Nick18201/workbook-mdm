@@ -173,17 +173,18 @@ Pour chaque PR de carnet :
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R2 (carnet 2) fusionnée :
+Message à coller, une fois la PR R2 (carnet 2, #57) fusionnée :
 
 ```text
 Reprends la restructuration des carnets avec la PR R3 : le carnet 3, « Mes fonctionnements propres ».
 
 1. Prérequis
-- Vérifie que la PR R2 (carnet 2) est fusionnée dans main.
+- Vérifie que la PR Nick18201/workbook-mdm#57 (R2, carnet 2) est fusionnée dans main.
 - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
+- D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch.
 
 2. À lire, dans cet ordre
-- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 et 2, et les mesures utiles pour qu'une page tienne.
+- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 et 2, et les mesures qui disent si une page tient.
 - audit-carnets-2026-10/carte-parcours-unifie.md :
   - section 4 (gabarit commun) ;
   - section 5, carnet 3 ;
@@ -196,11 +197,13 @@ Reprends la restructuration des carnets avec la PR R3 : le carnet 3, « Mes fonc
 workbooks/carnet-3.json, cible 1 h 45 d'écriture.
 - Une page « Avant de commencer » : la météo (c3.meteo) et le récapitulatif guidé de la séance 2. Il relit le fil rouge et les quatre zones par des blocs report vers c2.fil_rouge et c2.zones, et reprend les moteurs du carnet 2 (c2.moteurs).
 - Les exercices de la carte :
-  - l'encadré « À savoir sur le test » : un test des fonctionnements cognitifs, version maison conçue et éprouvée par Lysiane Brand, psychologue du travail ; quatre préférences, pas « cinq dimensions » ; les mises en situation ne calculent pas le profil ; il est restitué en séance, et c'est la personne qui le valide ;
-  - les 17 mises en situation, avec les réécritures du rapport (Q1, Q4, Q7, Q8, Q13), Q14 et Q15 en échelle suivie d'un « pourquoi » ;
-  - « Sous pression » : Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs, avec le protocole complet ; la Q11 (critique blessante) aussi sous protocole ;
+  - l'encadré « À savoir sur le test » : un test des fonctionnements cognitifs, version maison conçue et éprouvée par Lysiane Brand, psychologue du travail ; quatre préférences, pas « cinq dimensions » ; les mises en situation ne calculent pas le profil ; il est restitué en séance, et c'est la personne qui le valide. La consigne « Partez de situations vécues » passe en tête du carnet ;
+  - les 17 mises en situation, avec les réécritures du rapport (Q1, Q4, Q7, Q8, Q13), Q3 en deux champs (« et ce que cela m'a coûté »), Q14 et Q15 en échelle suivie d'un « pourquoi », sans nommer de pôle ;
+  - la Q11 (critique blessante), avec sa phrase de clôture ;
+  - « Sous pression » (Q16 et Q17), avec le protocole complet : Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs ; Q17 (ce sur quoi l'esprit boucle) en quelques mots, sans le développer ;
   - « Ce que j'en retiens pour mon travail » : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… », et les irritants retournés en critères.
-- Une fin de carnet avec le fil des pistes (pistes: true) et c3.livrable. La cartographie des énergies de travail et des facteurs d'usure (c3.energies), livrable du programme, assemble les quatre zones du carnet 2 et la page « Ce que j'en retiens ».
+- Pas de champ pour le profil validé : il s'écrit une seule fois, au récapitulatif du carnet 4 (c4.profil). L'encadré « À compléter après la restitution » du rapport est donc écarté.
+- Une fin de carnet avec le fil des pistes (pistes: true) et c3.livrable. Le livrable est la cartographie des énergies de travail et des facteurs d'usure (c3.energies), livrable du programme : elle assemble les quatre zones du carnet 2 et la page « Ce que j'en retiens ».
 - Les marques fixed de la section 8 : les questions du test (les personnaliser biaiserait la restitution), le protocole, les questions franches et les renvois entre carnets.
 
 4. Les règles à tenir
@@ -210,7 +213,7 @@ workbooks/carnet-3.json, cible 1 h 45 d'écriture.
 - Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 et 2 (liste en section 5 de la feuille de route). Pour les mises en situation, un exemple sur un sujet absent du carnet, pour ne pas orienter une préférence (le rapport propose le choix d'un restaurant).
 - Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière.
 - Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. tests/test_workbooks.py le vérifie.
-- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court.
+- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court. Mesure la hauteur des blocs avant de rendre (repères en section 5 de la feuille de route).
 
 5. Méthode
 a. Commence par me montrer le plan du carnet 3, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
