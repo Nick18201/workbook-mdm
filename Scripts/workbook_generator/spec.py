@@ -100,8 +100,8 @@ class BlockSpec(BaseModel):
     weight], a frise step [icon, title, marker], a link [name, url, description], a
     checklist_cards group [title, items], a numbered_lines card [title, field_prefix, hint],
     a fill_in_card line a list of texts and boxes [field_id, width_cm, tooltip], a life_line
-    node [label, 'summit' | 'valley'], a tree_of_life zone [title, hint, field_id] (roots,
-    soil, trunk, branches, leaves, fruits).
+    node [label, 'summit' | 'valley', label of its box (optional)], a tree_of_life zone
+    [title, hint, field_id] (roots, soil, trunk, branches, leaves, fruits).
     The common template of the carnets adds 'protocol' (before a heavy exercise: the warning
     in 'text', or a default one), 'anchor' (after it: the anchoring sentence, 'field_id'),
     'contrast_example' ('title' names the neighbouring trade, 'surface' and 'exploitable'
