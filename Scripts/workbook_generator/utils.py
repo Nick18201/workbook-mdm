@@ -71,7 +71,6 @@ _TYPO_RULES = [
     (re.compile(r"(?<=\d) (?=\d{3}\b|[^\W\d_]|[%€$°])"), NBSP),
     # œ in cœur, œuvre, manœuvre, sœur, vœu, œil…
     (re.compile(r"[Oo][Ee](?=[Uu])|\b[Oo]e(?=il)"), lambda m: "Œ" if m.group(0)[0] == "O" else "œ"),
-    (re.compile(r"\bMBTI\b(?!®)"), "MBTI®"),
 ]
 
 
@@ -96,7 +95,7 @@ def french_typography(text):
     """
     French typography of a text, plain or in ReportLab paragraph markup (tags, entities
     and URLs are left alone): no-break spaces before ; : ! ?, inside « », between a number
-    and its unit; "…" quotes become « … »; oe becomes œ in cœur, œuvre…; MBTI gets its ®.
+    and its unit; "…" quotes become « … »; oe becomes œ in cœur, œuvre….
     Idempotent, so text may go through it several times.
     """
     if not text or not isinstance(text, str):

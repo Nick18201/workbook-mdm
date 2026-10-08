@@ -16,7 +16,7 @@ Elle est tirée du code du site (`tailwind.config.mjs`, `global.css`, composants
 - **Marge de Manœuvre** est un organisme de bilans de compétences, **100 % à distance**. La méthode a été conçue par une psychologue du travail et un consultant en transformation. Chaque bénéficiaire est accompagné par une seule personne.
 - **Positionnement** : le passage à l'action réaliste (un projet piloté, le marché du travail, l'IA, un salaire et un rythme de vie sécurisés). Il rompt avec les bilans « quête de sens » et le développement personnel.
 - **Les workbooks** sont les « carnets de bord », travaillés entre les séances :
-  - un tronc commun de 7 carnets (chapitres 0 à 6) : Le Prélude, L'État des lieux, Mon parcours, Mes fonctionnements propres (MBTI®), Mon rapport à l'argent, Valeurs & moteurs profonds, Phase d'exploration ;
+  - un tronc commun de 7 carnets (chapitres 0 à 6) : Le Prélude, L'État des lieux, Mon parcours, Mes fonctionnements propres, Mon rapport à l'argent, Valeurs & moteurs profonds, Phase d'exploration ;
   - puis un carnet de route propre au projet : reconversion, création ou reprise, ou évolution interne.
   - Chaque carnet contient un objectif, 4 exercices ou protocoles et **un livrable validé en séance**.
 - **Public** : des adultes en transition professionnelle, souvent fatigués ou inquiets. La priorité va à la lisibilité et au calme, sans tomber dans le mièvre.
@@ -204,7 +204,7 @@ Les quatre familles sont sur Google Fonts.
   - une espace insécable avant : ; ! ? ;
   - une espace insécable entre un nombre et son unité (« 8 domaines », « 93 questions ») ;
   - « œ » ;
-  - « MBTI® » toujours avec ®.
+  - Le test du bilan est le « test des fonctionnements cognitifs » : jamais « MBTI » (marque sous licence) ni type en quatre lettres.
 
 ## 8. Adapter la DA au workbook (propositions à valider)
 

@@ -8,7 +8,7 @@ Propositions pour le générateur de carnets de bord. Elles ne viennent pas du s
   - Le Prélude
   - L'État des lieux
   - Mon parcours
-  - Mes fonctionnements propres (MBTI®)
+  - Mes fonctionnements propres
   - Mon rapport à l'argent
   - Valeurs & moteurs profonds
   - Phase d'exploration

@@ -14,6 +14,8 @@ Audit pédagogique et ergonomique des carnets 0 à 6, du livret de compétences 
 | `rapports/08-business_plan.md` | Le livret projet « Mon business plan », avec une section sur l'exactitude réglementaire. |
 | `methode/grille.md` | La grille d'audit commune (9 axes, charte de ton, protocole de sécurité émotionnelle, priorités). |
 | `methode/transversal-technique.md` | Les constats techniques sur les champs de formulaire et l'architecture des deux chaînes. |
+| `feuille-de-route-restructuration.md` | La suite après l'unification : l'état des PR, toutes les décisions (dont celles qui remplacent la section 9 de la carte), les PR de restructuration dans l'ordre, le socle commun, la méthode et le message pour reprendre dans une nouvelle conversation. |
+| `chantier-modules-s9.md` | Les modules « reconversion » et « évolution interne » du carnet de route, à créer plus tard : leur rôle, une première structure et les questions à vous poser. |
 
 Chaque rapport suit la même structure : synthèse, exercice par exercice, charge émotionnelle, fil rouge, écart avec l'app web, recommandations classées P1 / P2 / P3 (correction rapide ou refonte). Les références `fichier:ligne` renvoient à `Scripts/workbook_generator/chapters/`.
 

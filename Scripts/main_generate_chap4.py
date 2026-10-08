@@ -1,32 +1,12 @@
+from workbook_generator.compiler import build_reference_workbook
 from workbook_generator.utils import create_cli
-from workbook_generator.document_builder import DocumentBuilder
-from workbook_generator.chapters import chap4
-from workbook_generator.components import create_closing_page
 
 
 def generate_workbook_chap4(output_filename="Workbook_Chapitre_4.pdf"):
-    builder = DocumentBuilder(output_path=output_filename, carnet=4)
-    builder.set_title("Marge de Manœuvre - Chapitre 4 : Mon rapport à l'argent")
-
-    builder.add_page(chap4.create_chap4_v2_cover)
-    builder.add_page(chap4.create_concept_page)
-    builder.add_page(chap4.create_recap_seance_page)
-    builder.add_page(chap4.create_situation_actuelle_page)
-    builder.add_page(chap4.create_histoire_argent_page)
-    builder.add_page(chap4.create_premieres_experiences_page)
-    builder.add_page(chap4.create_argent_projet_pro_page)
-    builder.add_page(chap4.create_minimum_financier_page)
-    builder.add_page(chap4.create_archetypes_v2_page)
-    builder.add_page(chap4.create_synthese_v2_page)
-    builder.add_page(chap4.create_livrable_page)
-    builder.add_page(create_closing_page)
-
-    builder.save()
+    """Carnet 4 · Mon rapport à l'argent, compiled from workbooks/chap4.json."""
+    build_reference_workbook("chap4", output_filename)
 
 
 if __name__ == "__main__":
-    args = create_cli(
-        description="Générer le chapitre 4 PDF.",
-        default_output="Workbook_Chapitre_4.pdf"
-    )
-    generate_workbook_chap4(output_filename=args.output)
+    args = create_cli(description="Générer le chapitre 4 PDF.", default_output="Workbook_Chapitre_4.pdf")
+    generate_workbook_chap4(args.output)

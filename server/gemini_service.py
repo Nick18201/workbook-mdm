@@ -102,8 +102,22 @@ TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les 
 - Tout l'accompagnement se fait à distance : jamais « présentiel ».
 - N'invente aucun chiffre, témoignage ou partenariat ; aucune statistique sans source.
 - Titres de page : une affirmation ponctuée, en minuscules sauf la première lettre et les noms propres (jamais de Majuscule À Chaque Mot), terminée par un point, un « ? » ou un « ! » (ex : « Votre situation actuelle. », « Mon rapport *à l'argent.* »).
-- Typographie française : guillemets « », espace avant : ; ! ?, « œ » (cœur, manœuvre), « MBTI® » toujours avec ®.
+- Le test du bilan s'appelle « test des fonctionnements cognitifs » : jamais « MBTI » ni type en quatre lettres (ISFJ…).
+- Typographie française : guillemets « », espace avant : ; ! ?, « œ » (cœur, manœuvre).
 """
+
+
+# Iterate and customize receive whole workbooks, the reference ones included
+REFERENCE_BLOCKS_RULES = """BLOCS DES CARNETS DE RÉFÉRENCE :
+- Les carnets de référence utilisent aussi le gabarit 'recap' et des blocs que tu ne crées jamais toi-même : 'questions_group', 'heading', 'paragraphs', 'star_list', 'annotation', 'frise', 'fields_card', 'numbered_lines', 'rating_grid', 'info_cards', 'link_card', 'checklist_cards', 'fill_in_card', 'life_line', 'tree_of_life', 'space', 'page_break'.
+- Quand tu en rencontres un, garde son type, ses clés, l'ordre de ses éléments et tous ses identifiants ('field_id', 'field_prefix', identifiants dans les listes) ; adapte seulement ses textes, sans les allonger.
+- Pour ajouter du contenu, utilise uniquement les 8 blocs de base ('callout', 'cards_grid', 'scale', 'checklist', 'table', 'stat_boxes', 'question', 'text').
+"""
+
+
+def _spec_json(spec: WorkbookSpec) -> str:
+    """A spec as compact JSON for a prompt: only what it sets, without the empty fields."""
+    return json.dumps(spec.model_dump(exclude_unset=True, exclude_none=True), ensure_ascii=False)
 
 
 SYSTEM_PROMPT = """Tu es un ingénieur pédagogique et directeur artistique d'élite pour 'Marge de Manœuvre' (bilans de compétences 100 % à distance, tournés vers le passage à l'action).
@@ -676,7 +690,7 @@ Tu dois impérativement répondre avec un objet JSON valide contenant exactement
   "pedagogical_note": "Courte justification pédagogique de ce choix."
 }
 
-""" + TONE_RULES
+""" + REFERENCE_BLOCKS_RULES + TONE_RULES
 
 
 def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
@@ -692,9 +706,7 @@ def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
         )
         return GenerationResult(_build_fallback_iteration(request), "no_api_key")
 
-    current_json = json.dumps(
-        request.current_spec.model_dump(), ensure_ascii=False, indent=2
-    )
+    current_json = _spec_json(request.current_spec)
 
     notes_context = (
         f"\nNOTES DE SÉANCE D'ORIGINE :\n{request.raw_notes}\n"
@@ -732,7 +744,7 @@ def _build_fallback_iteration(request: IterateRequest) -> IterateResponse:
     """
     Fallback heuristic when offline or when Gemini is unreachable.
     """
-    new_spec = WorkbookSpec(**request.current_spec.model_dump())
+    new_spec = WorkbookSpec(**request.current_spec.model_dump(exclude_unset=True))
     return IterateResponse(
         spec=new_spec,
         changes_summary="Ajustements enregistrés sur votre maquette.",
@@ -745,7 +757,7 @@ Ton rôle est de prendre un livret pédagogique existant de référence (`Workbo
 
 RÈGLES D'OR DE PERSONNALISATION :
 1. PRÉSERVER L'OSSATURE PÉDAGOGIQUE ET LE DESIGN SYSTEM :
-   - Conserve scrupuleusement l'ordre logique, les gabarits prévus (cover, summary, questions, meteo, quadrants, two_columns, enquete, roadmap, engagement, closing, composite) et le nombre de pages du livret modèle.
+   - Conserve scrupuleusement l'ordre logique, les gabarits prévus (cover, summary, recap, questions, meteo, quadrants, two_columns, enquete, roadmap, engagement, closing, composite) et le nombre de pages du livret modèle.
    - Ne modifie JAMAIS la structure des clés de paramètres ('params', 'blocks', 'quadrants', 'rows', 'questions', 'stages', 'lines', 'messages').
 2. CONTEXTUALISER EN PROFONDEUR POUR LE BÉNÉFICIAIRE :
    - Renseigne `beneficiary_name` avec le prénom et nom du bénéficiaire.
@@ -769,7 +781,7 @@ Produis uniquement un objet JSON valide avec les clés suivantes :
   "pedagogical_note": "Conseil méthodologique pour le consultant qui animera ce livret avec le bénéficiaire."
 }
 
-""" + TONE_RULES
+""" + REFERENCE_BLOCKS_RULES + TONE_RULES
 
 
 def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
@@ -790,7 +802,7 @@ def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
         logger.warning("GEMINI_API_KEY non configurée. Utilisation du fallback.")
         return GenerationResult(_build_fallback_customization(request, base_spec), "no_api_key")
 
-    base_spec_json = base_spec.model_dump_json(indent=2)
+    base_spec_json = _spec_json(base_spec)
     user_prompt = f"""Voici le livret pédagogique de référence (modèle existant) à personnaliser :
 ---
 {base_spec_json}
@@ -829,7 +841,7 @@ def _build_fallback_customization(
     """
     Personnalisation déterministe hors-ligne lorsque l'API Gemini est indisponible.
     """
-    spec_dict = base_spec.model_dump()
+    spec_dict = base_spec.model_dump(exclude_unset=True)
     spec_dict["beneficiary_name"] = request.beneficiary_name
 
     # Contextualiser la couverture

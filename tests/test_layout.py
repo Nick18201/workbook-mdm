@@ -1,7 +1,7 @@
 import pymupdf
 
 from server.models import BlockSpec, PageSpec, WorkbookSpec
-from server.pdf_compiler import compile_workbook_from_spec
+from workbook_generator.compiler import compile_workbook_from_spec
 from workbook_generator.utils import strip_unsupported_glyphs
 
 CM = 28.3465

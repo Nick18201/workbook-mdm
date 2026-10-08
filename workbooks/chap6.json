@@ -1,0 +1,559 @@
+{
+  "chapter_num": 6,
+  "chapter_title": "Phase d'exploration",
+  "subtitle": "Bilan de compétences",
+  "carnet": 6,
+  "pdf_title": "Marge de Manœuvre - Chapitre 6 : Phase d'exploration",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Phase *d'exploration.*",
+        "number": 6,
+        "tagline": "Bilan de compétences",
+        "promise": "Des pistes confrontées au réel."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Explorer *des pistes.*",
+      "params": {
+        "num": "6",
+        "intro_text": "Ce carnet rassemble vos pistes professionnelles, résume ce que vous savez de vous (profil de fonctionnement cognitif, valeurs, moteurs) et le confronte aux idées de votre entourage, pour ouvrir et tester des pistes de métiers.",
+        "points": [
+          "Exercice 1 · Récapitulatif : vos valeurs.",
+          "Exercice 2 · Votre cartographie personnelle.",
+          "Exercice 3 · Le retour de vos proches.",
+          "Exercice 4 · Dix métiers à explorer.",
+          "Exercice 5 · Fiches métiers : les pistes « no limit ».",
+          "Exercice 6 · Fiches métiers : les pistes réalistes.",
+          "Ressources · Pour vos recherches."
+        ]
+      }
+    },
+    {
+      "template": "recap",
+      "part_title": "Exercice 1 · Récapitulatif valeurs",
+      "params": {
+        "intro_text": "Revenez sur la séance consacrée à vos valeurs, pour consolider ce que vous en retenez avant d'ouvrir une nouvelle étape. Répondez spontanément.",
+        "questions": [
+          "Quelles sont les 3 valeurs non négociables qui guident vos choix aujourd'hui ?",
+          "De quoi avez-vous besoin concrètement (conditions de travail) pour respecter ces valeurs ?",
+          "Quelles tensions de valeurs (par exemple liberté / sécurité) pèsent le plus sur votre transition ?"
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Votre cartographie *personnelle.*",
+      "part_title": "Exercice 2 · Cartographie",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Résumez les éléments clés issus de vos séances de bilan."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mon profil de fonctionnement cognitif",
+                "carto_profil",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ce que j'aime faire dans la vie",
+                "carto_aime_faire",
+                4.2
+              ],
+              [
+                "Mes envies et objectifs",
+                "carto_envies_objectifs",
+                4.2
+              ]
+            ],
+            [
+              [
+                "Mes points forts",
+                "carto_points_forts",
+                4.2
+              ],
+              [
+                "Mes valeurs",
+                "carto_valeurs",
+                4.2
+              ]
+            ],
+            [
+              [
+                "Mes besoins",
+                "carto_besoins",
+                4.2
+              ],
+              [
+                "Mes sources de stress",
+                "carto_stress",
+                4.2
+              ]
+            ]
+          ],
+          "title": "Ma cartographie"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le retour *de vos proches.*",
+      "part_title": "Exercice 3 · Retour des proches",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Présentez votre cartographie à au moins 3 personnes de votre entourage, sans parler de vos pistes, et demandez-leur à quels métiers et secteurs elles pensent pour vous."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Les secteurs et métiers suggérés par mes proches",
+              "field_id": "proches_suggestions"
+            },
+            {
+              "question": "Ce que je pense de ces propositions",
+              "field_id": "proches_avis"
+            },
+            {
+              "question": "Comment j'ai vécu cet exercice",
+              "field_id": "proches_vecu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Dix métiers *à explorer.*",
+      "part_title": "Exercice 4 · Pistes de métiers",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Pour avancer, notez 10 métiers en deux catégories : 5 pistes « no limit », sans tenir compte des contraintes, et 5 pistes réalistes, faisables concrètement aujourd'hui."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "numbered_lines",
+          "cards": [
+            [
+              "5 métiers « no limit »",
+              "index_piste_nl",
+              "Sans tenir compte des contraintes"
+            ],
+            [
+              "5 métiers réalistes",
+              "index_piste_r",
+              "Concrètement faisables aujourd'hui"
+            ]
+          ],
+          "count": 5,
+          "line_height_cm": 1.2
+        },
+        {
+          "type": "annotation",
+          "text": "Les pistes « no limit » disent souvent ce que vous cherchez vraiment."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Fiches métiers : *pistes « no limit ».*",
+      "part_title": "Exercice 5 · Pistes no limit",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Explorez vos pistes sans tenir compte des contraintes matérielles ou personnelles."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "nl_intitule_1",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "nl_pourquoi_1",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "nl_missions_1",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 1 · no limit",
+          "color": "sky"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "nl_intitule_2",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "nl_pourquoi_2",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "nl_missions_2",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 2 · no limit",
+          "color": "mint"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "nl_intitule_3",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "nl_pourquoi_3",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "nl_missions_3",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 3 · no limit",
+          "color": "sky"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "nl_intitule_4",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "nl_pourquoi_4",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "nl_missions_4",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 4 · no limit",
+          "color": "mint"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "nl_intitule_5",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "nl_pourquoi_5",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "nl_missions_5",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 5 · no limit",
+          "color": "sky"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Fiches métiers : *pistes réalistes.*",
+      "part_title": "Exercice 6 · Pistes réalistes",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Explorez les pistes qui vous semblent concrètement faisables dans votre situation."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "r_intitule_1",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "r_pourquoi_1",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "r_missions_1",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 1 · réaliste",
+          "color": "sky"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "r_intitule_2",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "r_pourquoi_2",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "r_missions_2",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 2 · réaliste",
+          "color": "mint"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "r_intitule_3",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "r_pourquoi_3",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "r_missions_3",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 3 · réaliste",
+          "color": "sky"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "r_intitule_4",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "r_pourquoi_4",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "r_missions_4",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 4 · réaliste",
+          "color": "mint"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Intitulé du métier",
+                "r_intitule_5",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Pourquoi ce métier vous attire",
+                "r_pourquoi_5",
+                2.4
+              ],
+              [
+                "Missions et compétences utiles",
+                "r_missions_5",
+                2.4
+              ]
+            ]
+          ],
+          "title": "Piste 5 · réaliste",
+          "color": "sky"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ressources *pour vos recherches.*",
+      "part_title": "Ressources",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Quelques ressources pour explorer les métiers et compléter vos fiches."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "link_card",
+          "title": "Le quotidien des métiers (audio, vidéo)",
+          "links": [
+            [
+              "Into the Job",
+              "https://podcast.ausha.co/into-the-job",
+              "podcast, des témoignages concrets sur le quotidien professionnel."
+            ],
+            [
+              "Maintenant j'aime le lundi",
+              "https://www.youtube.com/c/Maintenantjaimelelundi/playlists",
+              "YouTube, des parcours, des reconversions et des métiers."
+            ]
+          ],
+          "color": "sky"
+        },
+        {
+          "type": "link_card",
+          "title": "Des fiches métiers complètes",
+          "links": [
+            [
+              "APEC",
+              "https://www.apec.fr/tous-nos-metiers.html",
+              "les métiers cadres, les fonctions support et le management."
+            ],
+            [
+              "Cadremploi",
+              "https://www.cadremploi.fr/editorial/conseils/fiches-metiers.html",
+              "une vue synthétique des missions, des compétences et des salaires."
+            ],
+            [
+              "ONISEP",
+              "https://www.onisep.fr/decouvrir-les-metiers",
+              "les formations, les secteurs et les débouchés."
+            ],
+            [
+              "CIDJ",
+              "https://www.cidj.com/metiers/metiers-par-centres-d-interets",
+              "des listes de métiers classées par centres d'intérêt."
+            ],
+            [
+              "MétierScope (France Travail)",
+              "https://candidat.pole-emploi.fr/metierscope/centres-interet",
+              "des métiers par centres d'intérêt, avec l'état du marché."
+            ]
+          ],
+          "color": "mint"
+        },
+        {
+          "type": "link_card",
+          "title": "Votre espace Notion",
+          "links": [
+            [
+              "Vos ressources Notion",
+              "https://www.notion.so/Vos-ressources-aca96b6474d04acd9eaafa92523df7a6",
+              "toutes les ressources et les guides pratiques du bilan."
+            ]
+          ],
+          "color": "almond"
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet",
+      "params": {
+        "lines": [
+          "Je complète au moins une fiche métier par semaine.",
+          "Je confronte chaque piste à mes valeurs et à mon minimum financier.",
+          "Je contacte un professionnel pour chacune de mes pistes réalistes."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "livrable_chap6",
+        "livrable_title": "Vos pistes métiers",
+        "livrable_text": "Vos dix pistes et leurs fiches métiers, prêtes à être confrontées au terrain, validées en séance."
+      }
+    },
+    {
+      "template": "closing",
+      "params": {}
+    }
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "chapter_num": 0,
+  "chapter_title": "Votre portfolio de compétences",
+  "subtitle": "Livret de compétences augmenté",
+  "folio": "livret de compétences",
+  "pdf_title": "Livret de Compétences Augmenté - Marge de Manœuvre",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Votre portfolio *de compétences.*",
+        "number": null,
+        "eyebrow": "Livret de compétences",
+        "tagline": "Livret de compétences augmenté",
+        "promise": "Vos compétences, prouvées par des faits."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Vos préférences *naturelles.*",
+      "part_title": "Thème 1 · Profil et énergie",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une préférence psychologique n'est ni un examen ni une étiquette qui vous enferme. C'est simplement la façon dont votre esprit aime fonctionner spontanément quand vous êtes détendu : comment vous puisez votre énergie, comment vous observez les situations, comment vous prenez vos décisions et comment vous préférez organiser votre quotidien.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "Mes préférences spontanées",
+          "field_id": "livret_p1_preferences",
+          "box_height_cm": 4.7,
+          "subtitle": "Vos dominantes : plutôt calme ou action partagée ? Détails concrets ou vision globale ? Logique rationnelle ou harmonie humaine ? Organisation posée ou flexibilité ?",
+          "example": "Ex : réfléchi, rigoureux, attentif aux personnes et aux faits concrets, besoin de calme pour préparer l'action."
+        },
+        {
+          "type": "question",
+          "question": "Mes forces naturelles au travail",
+          "field_id": "livret_p1_forces",
+          "box_height_cm": 4.7,
+          "subtitle": "Grâce à cette manière d'être, quelle valeur ajoutée et quels atouts précieux apportez-vous spontanément à un collectif ou dans vos missions au quotidien ?",
+          "example": "Ex : Mon sens du détail évite les erreurs critiques ; ma posture calme et mon écoute rassurent mes collègues et les partenaires."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre énergie *et votre climat idéal.*",
+      "part_title": "Thème 1 · Profil et énergie",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Dans le travail, nous avons tous un « réservoir d'énergie ». Certaines tâches et ambiances rechargent naturellement vos batteries, tandis que d'autres vous demandent un effort d'adaptation coûteux. Construire une trajectoire durable, c'est choisir un environnement qui respecte votre énergie."
+        },
+        {
+          "type": "question",
+          "question": "Mon climat de travail idéal",
+          "field_id": "livret_p1_climat",
+          "box_height_cm": 5.0,
+          "subtitle": "Dans quel type d'ambiance, de rythme de travail, de style de management et de relations humaines donnez-vous le meilleur de vous-même ?",
+          "example": "Ex : Une équipe soudée, un management qui fait confiance sans être directif, un rythme régulier sans urgences artificielles."
+        },
+        {
+          "type": "question",
+          "question": "Ce qui vide mes batteries (mes signaux de vigilance)",
+          "field_id": "livret_p1_couts",
+          "box_height_cm": 5.0,
+          "subtitle": "Quelles sont les situations ou modes de fonctionnement qui vous épuisent rapidement ou vous pèsent lourdement ?",
+          "example": "Ex : Les conflits ouverts non résolus, l'absence de consignes claires, le bruit permanent ou l'isolement complet sans échange."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Les coulisses *du travail réel.*",
+      "part_title": "Thème 2 · Travail réel",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "La fiche de poste officielle est souvent une vue très théorique du travail. Dans la réalité, pour que les projets aboutissent malgré les aléas, vous compensez les manques, vous inventez des solutions et vous rassurez les gens. C'est précisément dans ces régulations invisibles que s'exprime votre véritable valeur professionnelle.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Ce que ma fiche de poste ne dit pas",
+          "field_id": "livret_p2_coulisses",
+          "box_height_cm": 5.0,
+          "subtitle": "Les micro-décisions, arbitrages et ajustements indispensables que vous réalisez chaque semaine et qui n'étaient écrits sur aucun descriptif officiel de poste.",
+          "example": "Ex : Anticiper les erreurs d'un logiciel, vulgariser des règles techniques pour des non-spécialistes, désamorcer des tensions."
+        },
+        {
+          "type": "question",
+          "question": "Mes astuces et mes solutions maison",
+          "field_id": "livret_p2_bricolages",
+          "box_height_cm": 5.0,
+          "subtitle": "Les outils, raccourcis, matrices ou méthodes que vous avez créés ou adaptés vous-même pour fluidifier votre quotidien et gagner en efficacité.",
+          "example": "Ex : Mise en place spontanée d'un tableau de chiffrage et d'aide à la saisie réduisant de moitié les délais administratifs."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Qualité voulue, *travail empêché.*",
+      "part_title": "Thème 2 · Travail réel",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "La fatigue et la démotivation ne viennent presque jamais de la paresse, mais de ce que les ergonomes nomment le « travail empêché » : avoir à cœur de réaliser un travail de grande qualité, mais en être empêché par le manque de moyens, des délais intenables ou des règles déconnectées du terrain.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Ce que j'aurais aimé accomplir avec fierté",
+          "field_id": "livret_p2_empeche",
+          "box_height_cm": 5.0,
+          "subtitle": "Quelles missions ou gestes professionnels auriez-vous voulu soigner davantage si l'organisation ou les contraintes de votre précédent poste ne vous avaient pas freiné ?",
+          "example": "Ex : Prendre le temps d'accompagner les acteurs sur le terrain plutôt que de devoir produire des calculs d'écran à la chaîne."
+        },
+        {
+          "type": "question",
+          "question": "Mes exigences de qualité pour demain",
+          "field_id": "livret_p2_exigences",
+          "box_height_cm": 5.0,
+          "subtitle": "De quelles conditions (autonomie, temps de réflexion, relations saines, impact concret) aurez-vous impérativement besoin dans votre futur métier pour être pleinement fier de votre geste ?",
+          "example": "Ex : Avoir un impact environnemental visible, échanger avec un collectif de confiance, retrouver le plaisir du travail soigné."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Savoir-faire *et méthodes.*",
+      "part_title": "Thème 3 · Compétences en action",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une compétence n'est pas un diplôme théorique : c'est votre capacité à combiner vos connaissances et vos réflexes pour agir avec pertinence face à une situation réelle. Regardons d'abord vos expertises de spécialité et vos méthodes pour structurer le travail.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Mes savoir-faire techniques et mon cœur de métier",
+          "field_id": "livret_p3_techniques",
+          "box_height_cm": 5.0,
+          "subtitle": "Les outils, logiciels spécialisés, réglementations, calculs, normes et gestes professionnels que vous maîtrisez avec une grande aisance.",
+          "example": "Ex : Modélisation réglementaire RE2020, logiciels thermiques et de CAO, analyse de plans de construction, métrés."
+        },
+        {
+          "type": "question",
+          "question": "Mes méthodes pour structurer, chiffrer et résoudre",
+          "field_id": "livret_p3_methodes",
+          "box_height_cm": 5.0,
+          "subtitle": "Comment vous y prenez-vous pour organiser un planning, vérifier la qualité, chiffrer un projet ou trouver l'origine d'un dysfonctionnement ?",
+          "example": "Ex : Détection méthodique des goulets d'étranglement, fiabilisation des bases de données, suivi financier analytique."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Coopération *et apprentissage.*",
+      "part_title": "Thème 3 · Compétences en action",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Votre valeur professionnelle ne se limite pas à vos outils techniques. Elle repose tout autant sur votre manière d'entrer en relation avec les autres, de partager votre savoir et de continuer à évoluer face aux transformations permanentes de votre secteur.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Coopérer, écouter, transmettre",
+          "field_id": "livret_p3_relation",
+          "box_height_cm": 5.2,
+          "subtitle": "Comment interagissez-vous au quotidien ? (Vulgariser des notions complexes pour des novices, apaiser des tensions, négocier avec tact, transmettre).",
+          "example": "Ex : Expliquer des contraintes thermiques avec des mots simples aux artisans sur le chantier, former un nouveau collègue."
+        },
+        {
+          "type": "question",
+          "question": "Mon agilité et mon envie d'apprendre",
+          "field_id": "livret_p3_apprentissage",
+          "box_height_cm": 5.2,
+          "subtitle": "Comment réagissez-vous face à la nouveauté ? Racontez votre manière d'apprendre par vous-même et d'explorer des sujets inédits.",
+          "example": "Ex : Veille continue sur les nouvelles réglementations, montée en compétence rapide en autodidacte sur un logiciel complexe."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos degrés *d'autonomie.*",
+      "part_title": "Thème 4 · Autonomie et transférabilité",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Face à une mission, nous ne sommes jamais « bon » ou « mauvais ». Nous évoluons selon 4 paliers naturels :\n• Niveau 1 (Guidé) : J'apprends les bases, j'ai besoin de consignes claires et d'un référent pour me rassurer.\n• Niveau 2 (Autonome) : Je réalise mon travail courant seul et je résous les petits imprévus habituels sans aide.\n• Niveau 3 (Améliorateur) : Je maîtrise très bien : je crée des astuces, je simplifie les méthodes et j'aide mes pairs.\n• Niveau 4 (Référent) : Je suis la personne ressource : je forme les autres, j'explique le métier et j'arbitre.",
+          "font_size": 9,
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "question",
+          "question": "Où se situent mes compétences clés ?",
+          "field_id": "livret_p4_paliers",
+          "box_height_cm": 4.5,
+          "subtitle": "Choisissez 2 ou 3 de vos compétences phares : à quel niveau (1, 2, 3 ou 4) vous situez-vous aujourd'hui et pourquoi ?",
+          "example": "Ex : Modélisation technique : Niveau 3 (Améliorateur) — je conçois des outils partagés pour fluidifier le travail de l'équipe."
+        },
+        {
+          "type": "question",
+          "question": "L'épreuve du miroir (ce qui me paraît évident)",
+          "field_id": "livret_p4_miroir",
+          "box_height_cm": 4.5,
+          "subtitle": "Qu'est-ce qui vous semble tellement naturel dans votre métier qu'un débutant mettrait des mois à assimiler ?",
+          "example": "Ex : Repérer une incohérence thermique d'un simple coup d'œil sur un plan sans avoir besoin de tout recalculer."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos compétences *transférables.*",
+      "part_title": "Thème 4 · Autonomie et transférabilité",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Qu'est-ce qu'une compétence transférable ? C'est un savoir-faire ou une méthode que vous pouvez « décrocher » de votre poste actuel pour l'« accrocher » avec succès dans un univers professionnel totalement différent (ex : la pédagogie, le chiffrage, l'organisation de projets, l'audit de qualité).",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Mes savoir-faire tout-terrain",
+          "field_id": "livret_p4_transferabilite",
+          "box_height_cm": 5.0,
+          "subtitle": "Quelles sont les 3 grandes compétences méthodologiques ou humaines que vous possédez et qui marcheraient instantanément dans un tout autre secteur ?",
+          "example": "Ex : Diagnostic d'efficacité énergétique, animation d'ateliers pédagogiques pour adultes, chiffrage financier de dossiers."
+        },
+        {
+          "type": "question",
+          "question": "Dans quels nouveaux métiers pourraient-ils servir ?",
+          "field_id": "livret_p4_metiers_cibles",
+          "box_height_cm": 5.0,
+          "subtitle": "Imaginez des contextes, structures ou métiers (même différents du vôtre) où ces compétences feraient de vous un candidat précieux.",
+          "example": "Ex : Enseignant technique en lycée/CFA, économe de flux territorial en collectivité, conseiller technique en coopérative (CAE)."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Arrêt sur image : *le décor et le déclic.*",
+      "part_title": "Thème 5 · Récit d'action",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Pour ancrer la confiance en sa valeur, rien ne remplace le souvenir d'un moment réel où votre intervention a fait la différence. Choisissez une situation vécue (même simple ou modeste) où un imprévu ou un problème s'est posé, et où vous avez su agir avec pertinence.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "1. La situation de départ et le défi inattendu",
+          "field_id": "livret_p5_situation",
+          "box_height_cm": 5.0,
+          "subtitle": "Où étiez-vous ? Quelle était la mission initiale, et quel obstacle, anomalie ou urgence est survenu ?",
+          "example": "Ex : Bloqué sur un dossier complexe à 48h de l'échéance finale avec un calcul non-conforme et un client sous pression."
+        },
+        {
+          "type": "question",
+          "question": "2. Le déclic et ce que vous avez observé",
+          "field_id": "livret_p5_declic",
+          "box_height_cm": 5.0,
+          "subtitle": "À quel micro-signal précis (un chiffre anormal, une hésitation, un détail matériel) avez-vous compris qu'il fallait intervenir sans attendre ?",
+          "example": "Ex : En lisant les plans de structure, j'ai repéré immédiatement un pont thermique oublié que personne n'avait décelé."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos actions *pas à pas.*",
+      "part_title": "Thème 5 · Récit d'action",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Ce qui fait votre compétence réelle, ce ne sont pas de grands concepts abstraits, mais la suite précise de vos gestes, de vos décisions et de vos paroles. Décrivez la scène comme si vous revoyiez un film au ralenti.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "3. Ce que vous avez fait, pas à pas (actions et choix)",
+          "field_id": "livret_p5_action",
+          "box_height_cm": 5.2,
+          "subtitle": "Qu'avez-vous fait concrètement ? (Vos gestes, arbitrages, paroles, outils ou personnes mobilisés). Privilégiez le « Comment » plutôt que la théorie.",
+          "example": "Ex : J'ai isolé les variables critiques, appelé le projeteur pour convenir d'une variante et rédigé une note technique vulgarisée."
+        },
+        {
+          "type": "question",
+          "question": "4. Le résultat et ce dont vous êtes fier ou fière",
+          "field_id": "livret_p5_resultat",
+          "box_height_cm": 5.2,
+          "subtitle": "Quels ont été les effets concrets et mesurables pour le projet, le client ou l'équipe ? De quoi êtes-vous le plus fier dans votre réaction ?",
+          "example": "Ex : Dossier validé dans les délais sans surcoût, client rassuré et reconnaissant, fierté d'avoir trouvé une solution élégante."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Regard sur demain *et vos choix.*",
+      "part_title": "Thème 6 · Projection",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Construire sa trajectoire, c'est d'abord lever les yeux du guidon, observer ce qui bouge dans le monde du travail et reprendre le volant de ses décisions personnelles au lieu de subir passivement les événements.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Ce qui m'attire pour l'avenir",
+          "field_id": "livret_p6_regard",
+          "box_height_cm": 5.2,
+          "subtitle": "Quelles évolutions sociétales, écologiques ou techniques résonnent avec vos valeurs et vous donnent envie de participer et d'agir ?",
+          "example": "Ex : La transition énergétique des territoires, la transmission des savoirs aux bâtisseurs, la sobriété d'usage."
+        },
+        {
+          "type": "question",
+          "question": "Ce que je décide moi-même",
+          "field_id": "livret_p6_choix",
+          "box_height_cm": 5.2,
+          "subtitle": "Quelles décisions sur votre vie professionnelle et votre équilibre personnel vous appartiennent en propre et ne dépendent que de vous ?",
+          "example": "Ex : Fixer ma limite stricte de temps de trajet, décider de mon niveau d'implication, refuser un management désincarné."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Curiosités *et socle de confiance.*",
+      "part_title": "Thème 6 · Projection",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Pour s'orienter sans angoisse, il faut mener des enquêtes simples sur le terrain et se rappeler que vous avez déjà surmonté des transitions ou des apprentissages difficiles par le passé.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Ce que j'ai envie d'explorer (mes curiosités métiers)",
+          "field_id": "livret_p6_curiosite",
+          "box_height_cm": 5.2,
+          "subtitle": "Quels métiers, structures ou professionnels en poste avez-vous envie d'interviewer pour découvrir la réalité concrète de leur quotidien ?",
+          "example": "Ex : Solliciter un formateur technique en CFA et un chargé de mission énergie en collectivité pour 20 minutes d'échange."
+        },
+        {
+          "type": "question",
+          "question": "Mes réussites passées (mon socle de confiance)",
+          "field_id": "livret_p6_confiance",
+          "box_height_cm": 5.2,
+          "subtitle": "Sur quelle difficulté, reconversion ou étape antérieure déjà traversée avec succès vous appuyez-vous aujourd'hui ?",
+          "example": "Ex : Avoir validé un diplôme d'ingénieur après un BTS en apprenant tout sur le tas avec discipline et méthode."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre cadre de sécurité *et deux pistes.*",
+      "part_title": "Thème 7 · Plan d'action",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Pour avancer l'esprit libre, il ne faut jamais se mettre en insécurité. Poser clairement vos impératifs matériels et familiaux est le premier rempart contre le stress. À partir de ce socle solide, nous dessinons deux chemins complémentaires.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Mon cadre de sécurité non négociable",
+          "field_id": "livret_p7_securite",
+          "box_height_cm": 5.2,
+          "subtitle": "Vos critères de sérénité obligatoires : salaire net minimum vital pour le foyer, temps de trajet maximal (ex : 20 min max), préservation de votre rythme familial.",
+          "example": "Ex : Maintien du revenu net cadre indispensable, temps de route limité à 20 min, aucun découchage, disponibilité pour mes 3 enfants."
+        },
+        {
+          "type": "question",
+          "question": "Mes deux pistes de travail (projet A et projet B)",
+          "field_id": "livret_p7_pistes",
+          "box_height_cm": 5.2,
+          "subtitle": "Piste A (votre projet d'élan, de transmission et de sens) vs Piste B (votre projet refuge ou tremplin sécurisant).",
+          "example": "Ex : Piste A : Enseignant / formateur technique | Piste B : Économe de flux territorial ou conseil indépendant en coopérative (CAE)."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre prochain *petit pas.*",
+      "part_title": "Thème 7 · Plan d'action",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Le plus grand piège d'une reconversion est de viser une montagne lointaine et de se sentir paralysé. Le secret de l'action réside dans le « pas proximal » : une toute petite démarche, simple et garantie à 100 %, réalisable dans les 7 prochains jours.",
+          "spacing_after_cm": 0.6
+        },
+        {
+          "type": "question",
+          "question": "Mon prochain petit pas (une action concrète à 7 jours)",
+          "field_id": "livret_p7_pas_proximal",
+          "box_height_cm": 5.2,
+          "subtitle": "Quelle est la toute petite action (un coup de fil de 10 min, vérifier son compte CPF, contacter un pair) que vous vous engagez à réaliser d'ici notre prochain rendez-vous ?",
+          "example": "Ex : Consulter le solde de mes droits CPF et envoyer un message à un ancien collègue devenu formateur pour prendre la température."
+        },
+        {
+          "type": "question",
+          "question": "Mes besoins d'appui et de formations courtes",
+          "field_id": "livret_p7_formation",
+          "box_height_cm": 5.2,
+          "subtitle": "Quels modules courts (quelques dizaines d'heures finançables CPF), conseils ou démarches vous donneraient une pleine sérénité pour franchir le pas ?",
+          "example": "Ex : Module court de pédagogie pour adultes (30 heures éligibles CPF) pour valider la posture d'animation sans surcharger mon emploi du temps."
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin du livret",
+      "params": {
+        "lines": [
+          "Je m'appuie sur mon récit d'action en entretien.",
+          "Je relis mes compétences transférables avant chaque candidature.",
+          "Je réalise mon prochain petit pas dans les 7 jours."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "livrable_livret",
+        "livrable_title": "Votre portfolio de compétences",
+        "livrable_text": "Vos compétences, votre récit d'action et vos deux pistes, validés en séance."
+      }
+    },
+    {
+      "template": "closing",
+      "params": {}
+    }
+  ]
+}

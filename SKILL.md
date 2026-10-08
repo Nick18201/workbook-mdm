@@ -6,7 +6,7 @@ description: |
 
   4 modes d'action :
   1. CONCEPTION : Ingestion des notes brutes → structuration pédagogique, visual mapping vers les gabarits standards, calibrage des longueurs de texte → génération de Wordbook/Conception_Workbook_Chapitre_X.md.
-  2. COMPILATION (BUILD) : Lecture de la fiche de conception validée → création du module chapX/ modulaire → script racine main_generate_chapX.py → compilation et validation sans warning.
+  2. COMPILATION (BUILD) : Lecture de la fiche de conception validée → fichier workbooks/<id>.json → script racine main_generate_<id>.py → compilation et validation sans warning.
   3. MODIFICATION : Retouche ciblée d'un chapitre existant (texte, question, ajout/suppression de page) avec recalcul automatique des hauteurs.
   4. ENRICHISSEMENT DESIGN SYSTEM : Création de nouveaux gabarits dans components.py ou de blocs PageLayout dans templates.py, avec page de démonstration dans test_all_templates.py.
 
@@ -21,16 +21,13 @@ description: |
 
 L'agent DOIT respecter scrupuleusement les directives de [`Agent.md`](file:///c:/Users/nblum/LLM_LAB/PROJETS/mdm-workbook/Agent.md) et la direction artistique de [`DA-workbook.md`](file:///c:/Users/nblum/LLM_LAB/PROJETS/mdm-workbook/DA-workbook.md) :
 
-1. **Règle absolue de modularité** :
-   * Le paradigme "1 fichier = 1 chapitre" est **formellement interdit**.
-   * La norme exclusive est : **1 dossier modulaire = 1 chapitre** (`Scripts/workbook_generator/chapters/chapX/`) contenant :
-     - `__init__.py` : Routeur léger exportant les fonctions de rendu.
-     - `intro.py` : Couverture, ouverture, récapitulatif.
-     - `exercices.py` : Fonctions des pages d'exercices découpées.
-     - `cloture.py` : La fin de carnet (`create_livrable_page`), et les pages thématiques spécifiques si besoin.
-2. **Orchestration exclusive via `DocumentBuilder`** :
-   * Tout script d'entrée racine (`Scripts/main_generate_chapX.py`) utilise `DocumentBuilder(output_path, carnet=X)` pour les 7 carnets (pastel dominant et folio « carnet X/7 »), ou `DocumentBuilder(output_path, folio="titre court")` pour les autres documents.
-   * Chaque page est ajoutée via `builder.add_page(create_<page>_page)`.
+1. **Une source unique, déclarative** :
+   * Chaque document (carnets, livret, business plan) est **un fichier JSON** dans `workbooks/`, au format `WorkbookSpec` (`Scripts/workbook_generator/spec.py`). Le même fichier sert le PDF et l'app web.
+   * Une page est un gabarit (`cover`, `summary`, `recap`, `meteo`, `quadrants`, `two_columns`, `enquete`, `roadmap`, `engagement`, `closing`) ou une page `composite`, faite de blocs (`BlockSpec`) : un bloc = un appel `PageLayout.add_*`, longueurs en cm (`*_cm`), couleurs par leur nom (`"sky"`).
+   * En tête du fichier : `carnet` (0 à 6 : pastel dominant et folio « carnet X/7 ») ou `folio` (« titre court ») pour les autres documents, et `pdf_title`.
+2. **Compilation par le moteur unique** :
+   * `workbook_generator.compiler.compile_workbook_from_spec` transforme une spécification en PDF, pour la ligne de commande comme pour l'app.
+   * Le script d'entrée (`Scripts/main_generate_<id>.py`) appelle seulement `build_reference_workbook("<id>", output)`.
 3. **Zéro dessin manuel empirique** :
    * Ne jamais coder de calculs $x, y$ hasardeux sur le canvas.
    * Utiliser systématiquement :
@@ -119,36 +116,25 @@ Ce mode est activé lorsque l'utilisateur fournit des notes, un compte-rendu de 
 Ce mode est activé dès que l'utilisateur valide la conception.
 
 ### Étapes d'exécution :
-1. **Créer l'arborescence modulaire** :
-   * Créer le dossier `Scripts/workbook_generator/chapters/chapX/`.
-   * Créer `__init__.py` exportant les fonctions de pages.
-   * Créer `intro.py` (couverture, ouverture, récap).
-   * Créer `exercices.py` (pages d'exercices utilisant les gabarits standards).
-   * Créer `cloture.py` (fin de carnet).
-2. **Créer le script d'entrée CLI** :
+1. **Écrire le fichier du document** :
+   * Créer `workbooks/<id>.json` (ou reprendre un JSON exporté de l'app) : couverture, ouverture, pages d'exercices, fin de carnet (`engagement`), 4e de couverture (`closing`).
+   * Prendre exemple sur un carnet existant ; chaque `field_id` doit être unique dans le document.
+2. **Créer le script d'entrée CLI et la fiche de l'app** :
    * Créer `Scripts/main_generate_chapX.py` :
      ```python
+     from workbook_generator.compiler import build_reference_workbook
      from workbook_generator.utils import create_cli
-     from workbook_generator.document_builder import DocumentBuilder
-     from workbook_generator.chapters import chapX
-     from workbook_generator.components import create_closing_page
+
 
      def generate_workbook_chapX(output_filename="Workbook_Chapitre_X.pdf"):
-         builder = DocumentBuilder(output_path=output_filename, carnet=X)
-         builder.set_title("Marge de Manœuvre - Chapitre X")
+         build_reference_workbook("chapX", output_filename)
 
-         builder.add_page(chapX.create_chapX_cover)
-         builder.add_page(chapX.create_concept_page)
-         # ... ajouter chaque page ...
-         builder.add_page(chapX.create_livrable_page)
-         builder.add_page(create_closing_page)
-
-         builder.save()
 
      if __name__ == "__main__":
-         args = create_cli("Générer le chapitre X PDF.", "Workbook_Chapitre_X.pdf")
-         generate_workbook_chapX(output_filename=args.output)
+         args = create_cli(description="Générer le chapitre X PDF.", default_output="Workbook_Chapitre_X.pdf")
+         generate_workbook_chapX(args.output)
      ```
+   * Ajouter sa fiche (titre, description, icône) au `CATALOGUE` de `server/predefined_workbooks.py`.
 3. **Exécuter la compilation** :
    * Lancer la commande : `python Scripts/main_generate_chapX.py`.
 4. **Vérification automatique** :
@@ -164,7 +150,7 @@ Ce mode est activé lorsque l'utilisateur demande d'ajuster un chapitre existant
 
 ### Étapes d'exécution :
 1. **Localiser précisément la page cible** :
-   * Examiner `Scripts/main_generate_chapX.py` pour voir quelles fonctions sont appelées et dans quel fichier elles résident.
+   * Ouvrir le fichier du document dans `workbooks/` et y repérer la page (son `title` ou son `part_title`).
 2. **Appliquer la modification** :
    * Modifier le texte ou la question, au ton de la DA.
    * Grâce à `PageLayout`, les dimensions des boîtes se réajustent et le contenu en trop passe sur une page « (suite) ».
@@ -183,7 +169,7 @@ Ce mode est activé lorsqu'un exercice nécessite un composant visuel inédit.
    * Utiliser les primitives de `primitives.py` et les tokens de `PDFStyle`.
    * Gérer les formulaires via `create_input_field`, `create_checkbox` ou `create_radio`.
    * Appeler `_ensure_space(hauteur)` avant de dessiner, puis avancer `y_cursor`.
-2. **Exporter dans `Scripts/workbook_generator/__init__.py`**.
+2. **Exporter dans `Scripts/workbook_generator/__init__.py`**, puis le rendre décrivable : type dans `spec.py` (`BlockSpec.type` ou `PageSpec.template`), branche dans `compiler.py`, aperçu dans `server/templates/index.html`.
 3. **Valider dans `Scripts/test_all_templates.py`** :
    * Ajouter une page de démonstration pour le nouveau composant.
    * Exécuter `python Scripts/test_all_templates.py` et vérifier le rendu.
@@ -195,7 +181,7 @@ Ce mode est activé lorsqu'un exercice nécessite un composant visuel inédit.
 
 Avant d'annoncer à l'utilisateur que son PDF est prêt :
 * [ ] Le script a retourné le code de sortie `0`, et `python -m pytest tests` passe.
-* [ ] La règle 1 dossier = 1 chapitre est respectée (pas de script monolithique).
+* [ ] Le contenu est dans `workbooks/<id>.json`, pas dans du code Python.
 * [ ] Aucune variable $y$ calculée à l'aveugle : utilisation stricte des helpers ou d'Auto-Fit.
 * [ ] Les champs AcroForm ont des identifiants uniques.
 * [ ] Titres ponctués, vouvoiement, vocabulaire de la DA, livrable en fin de carnet.
