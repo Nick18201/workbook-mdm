@@ -10,7 +10,7 @@ from server.app import app
 from server.predefined_workbooks import CATALOGUE, get_predefined_spec
 from workbook_generator import forms
 from workbook_generator.compiler import build_reference_workbook, compile_workbook_from_spec
-from workbook_generator.spec import WORKBOOKS_DIR, BlockSpec, PageSpec, WorkbookSpec, load_workbook
+from workbook_generator.spec import WORKBOOKS_DIR, BlockSpec, PageSpec, WorkbookSpec, data_carnet, load_workbook
 
 WORKBOOK_IDS = sorted(name[:-5] for name in os.listdir(WORKBOOKS_DIR) if name.endswith(".json"))
 
@@ -93,6 +93,7 @@ BLOCKS = {
     "anchor": {"field_id": "ancrage"},
     "contrast_example": {"title": "Chef de rayon", "surface": "J'aime le contact.", "exploitable": "Je fidélise."},
     "energy": {"field_prefix": "meteo"},
+    "report": {"items": [["Vos quatre seuils", "c4.seuils", "report_seuils"]]},
     "space": {"height_cm": 0.5},
     "page_break": {},
 }
@@ -105,3 +106,40 @@ def test_every_block_type_compiles():
              for t, data in BLOCKS.items()]
     doc = pymupdf.open(stream=compile_workbook_from_spec(WorkbookSpec(pages=pages)), filetype="pdf")
     assert doc.page_count >= len(BLOCKS)
+
+
+def _declared_data_ids(raw):
+    """The data ids a workbook file declares, on its pages and its blocks."""
+    ids = []
+    for page in raw.get("pages", []):
+        ids += [page["data_id"]] if "data_id" in page else []
+        ids += [b["data_id"] for b in page.get("blocks") or [] if "data_id" in b]
+    return ids
+
+
+def _raw_workbooks():
+    for workbook_id in WORKBOOK_IDS:
+        with open(os.path.join(WORKBOOKS_DIR, f"{workbook_id}.json"), encoding="utf-8") as f:
+            yield workbook_id, json.load(f)
+
+
+def test_data_ids_are_unique_and_name_their_carnet():
+    for workbook_id, raw in _raw_workbooks():
+        ids = _declared_data_ids(raw)
+        assert len(ids) == len(set(ids)), workbook_id
+        if "carnet" in raw:
+            assert all(data_carnet(i) == raw["carnet"] for i in ids), workbook_id
+        else:
+            assert ids == [], f"{workbook_id} : seul un carnet du bilan déclare des données"
+
+
+def test_reports_point_to_declared_data():
+    """A report to a carnet whose file exists must name a data id that file declares."""
+    declared = {raw["carnet"]: set(_declared_data_ids(raw)) for _, raw in _raw_workbooks() if "carnet" in raw}
+    for workbook_id, raw in _raw_workbooks():
+        for page in raw.get("pages", []):
+            for block in page.get("blocks") or []:
+                for item in block.get("items") or [] if block.get("type") == "report" else []:
+                    source = data_carnet(item[1])
+                    if source in declared:
+                        assert item[1] in declared[source], (workbook_id, item[1])

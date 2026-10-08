@@ -9,7 +9,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | Audit, carte du parcours, récapitulatif pour le site | Fusionnés (PR #48 et #49) |
 | Programme du bilan : séances 5 / 3 / 2, test des fonctionnements cognitifs, plus de Hexa3D | Fusionné (PR #50) |
 | Unification : une seule source, `workbooks/*.json`, un seul moteur, MBTI retiré des carnets | Fusionné (PR #51) |
-| R0 · Socle : nommage, palette, gabarit commun, langue du PDF | PR en cours |
+| R0 · Socle : nommage, palette, gabarit commun, langue du PDF | Fusionné (PR #52) |
+| R0 bis · Format : fixe / adaptable, identifiants de données, reports | PR en cours |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
 **Avant de commencer : fusionner les PR #50 et #51**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
@@ -75,7 +76,8 @@ Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
 Pour chaque PR de carnet :
 - **Contenu.** Suivre le tableau de la carte (section 5) et les recommandations du rapport du carnet (`rapports/`).
 - **Charge émotionnelle.** Poser le protocole sur chaque exercice à forte charge.
-- **Les données qui circulent.** Les écrire une seule fois et les reporter avec leur origine (carte, section 7).
+- **Les données qui circulent.** Les écrire une seule fois (`data_id`) et les reporter avec un bloc `report` (carte, section 7, pour les identifiants). Les tests vérifient qu'un report vise une donnée déclarée.
+- **Fixe ou adaptable.** Marquer `"fixed": true` ce que la personnalisation ne doit pas toucher (carte, section 8) : le cadre et les héritages (carnet 1), les questions du test (carnet 3), la liste de valeurs (carnet 5), les critères des fiches, la définition des seuils.
 - **Durée.** Viser la durée cible, la mettre dans le sourcil des exercices et mettre à jour le budget (carte, section 6).
 - **Vérifier le rendu de chaque page.**
 
@@ -95,10 +97,9 @@ Pour chaque PR de carnet :
 - **Accessibilité** : la langue `fr` dans le catalogue du PDF.
 - Chaque nouveau bloc suit la liste « Adding a new page template or atomic block » de `CLAUDE.md` : `spec.py`, `compiler.py`, aperçu dans l'app, test, planche de démonstration. Il s'ajoute aussi à `REFERENCE_BLOCKS_RULES` s'il ne doit pas être créé par Gemini.
 
-**Format** (carte, section 10)
-- **La marque « fixe / adaptable »** sur chaque bloc. Une seule règle de lecture pour la personnalisation : Gemini ne touche que l'adaptable.
-- **Des identifiants stables pour les données** (par exemple `c4.seuils`). Un renvoi devient alors « Reportez vos seuils · carnet 4, p. 12 » au moment de la génération, sans numéro de page écrit à la main.
-- Ces deux points peuvent former une PR à part (R0 bis) si le socle devient trop gros.
+**Format** (carte, section 10) : fait dans R0 bis
+- **La marque « fixe / adaptable »** sur chaque bloc. Une seule règle de lecture pour la personnalisation : ce qui porte `"fixed": true` (une page entière ou un bloc) ne change pas, le reste est adaptable. Le protocole, l'ancrage, la météo et les reports sont toujours fixes. L'app ne se contente pas de le demander à Gemini : elle rétablit ce qui est fixe après chaque personnalisation (`keep_fixed`). La retouche d'un livret (« itérer ») suit la consigne du consultant, qui peut demander de modifier une page fixe.
+- **Des identifiants stables pour les données** (par exemple `c4.seuils`), posés par `data_id` sur la page ou le bloc qui écrit la donnée. Le bloc `report` la reporte : « Vos quatre seuils · carnet 4 · p. 12 », la page étant lue dans le carnet 4 de `workbooks/` au moment de la génération. Sans fichier pour ce carnet, la ligne affiche « carnet 4 ». Les identifiants à utiliser sont dans la carte, section 7.
 
 ## 5. Comment travailler
 

@@ -259,31 +259,31 @@ L'interview du carnet 2, les échanges avec les proches et les entretiens du car
 
 ## 7. Les données qui circulent
 
-Pour chaque donnée : où elle est écrite (une seule fois), et où elle est reportée.
+Pour chaque donnée : où elle est écrite (une seule fois), où elle est reportée, et son identifiant. Le carnet qui l'écrit pose l'identifiant (`data_id`) sur la page ou le bloc, et le carnet qui la reporte le cite dans un bloc `report` : la ligne affiche alors son origine, par exemple « carnet 4 · p. 12 », calculée à la génération.
 
-| Donnée | Écrite dans | Reportée dans |
-|---|---|---|
-| Météo (énergie de 0 à 10) | Ouverture de chaque carnet | Carnet de route (le chemin parcouru) · suivi à 6 mois |
-| Domaines de vie notés | Carnet 1 | Carnet 4 (note « Argent ») · carnet de route (nouvelle notation) |
-| Objectif v1, « Je m'autorise à » | Carnet 1 | Carnet 2 (boussole) · carnet 6 (pistes audacieuses) |
-| Ce qui pèse, héritage reçu et choisi | Carnet 1 | Carnet 2 (À lire) · carnet 4 (histoire avec l'argent) |
-| Modèles, anti-modèles | Carnet 1 | Carnet 2 (interview) · carnet 7 (contacts d'enquête) |
-| Objectif boussole | Carnet 2 | Carnet de route (le chemin parcouru) |
-| Expériences, travail réel, travail empêché, irritants retournés | Carnet 2 | Carnet 5 (grille anti-compromis) · carnet de route (compétences prouvées) |
-| Quatre zones, fil rouge, moteurs, verbes d'action | Carnet 2 | Carnet 3 (cartographie des énergies) · carnet 5 · carnet 6 |
-| Compétences de vie | Carnet 2 | Carnet de route (compétences prouvées) |
-| Première interview | Carnet 2 (facultatif) | Carnet 7 (grille d'entretien, contacts) |
-| Fil des pistes | Livrables des carnets 2 à 5 | Carnet 6 (dix pistes) |
-| Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route |
-| Profil de fonctionnement validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route |
-| 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création |
-| Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création |
-| Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) |
-| 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 |
-| Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route |
-| Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · module évolution interne |
-| Pistes A et B, feuilles de route, actions | Carnet de route, partie 2 | Document de synthèse · suivi à 6 mois |
-| Livrable de chaque carnet | Fin de chaque carnet | Document de synthèse, assemblé au fil du parcours |
+| Donnée | Écrite dans | Reportée dans | Identifiant |
+|---|---|---|---|
+| Météo (énergie de 0 à 10) | Ouverture de chaque carnet | Carnet de route (le chemin parcouru) · suivi à 6 mois | `c1.meteo` … `c7.meteo`, `route.meteo` |
+| Domaines de vie notés | Carnet 1 | Carnet 4 (note « Argent ») · carnet de route (nouvelle notation) | `c1.domaines` |
+| Objectif v1, « Je m'autorise à » | Carnet 1 | Carnet 2 (boussole) · carnet 6 (pistes audacieuses) | `c1.objectif`, `c1.autorisation` |
+| Ce qui pèse, héritage reçu et choisi | Carnet 1 | Carnet 2 (À lire) · carnet 4 (histoire avec l'argent) | `c1.sac_a_dos`, `c1.heritage` |
+| Modèles, anti-modèles | Carnet 1 | Carnet 2 (interview) · carnet 7 (contacts d'enquête) | `c1.modeles` |
+| Objectif boussole | Carnet 2 | Carnet de route (le chemin parcouru) | `c2.boussole` |
+| Expériences, travail réel, travail empêché, irritants retournés | Carnet 2 | Carnet 5 (grille anti-compromis) · carnet de route (compétences prouvées) | `c2.experiences`, `c2.travail_empeche`, `c2.criteres` |
+| Quatre zones, fil rouge, moteurs, verbes d'action | Carnet 2 | Carnet 3 (cartographie des énergies) · carnet 5 · carnet 6 | `c2.zones`, `c2.fil_rouge`, `c2.moteurs` |
+| Compétences de vie | Carnet 2 | Carnet de route (compétences prouvées) | `c2.competences_vie` |
+| Première interview | Carnet 2 (facultatif) | Carnet 7 (grille d'entretien, contacts) | `c2.interview` |
+| Fil des pistes | Livrables des carnets 2 à 5 | Carnet 6 (dix pistes) | `c2.livrable` … `c5.livrable` (sur la page du livrable) |
+| Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route | `c3.energies` |
+| Profil de fonctionnement validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route | `c4.profil` |
+| 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création | `c4.seuils`, `c4.tendance` |
+| Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création | `c5.grille` |
+| Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) | `c5.entourage` |
+| 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 | `c6.pistes` |
+| Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route | `c7.fiches`, `c7.enquetes`, `c7.matrice` |
+| Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · module évolution interne | `route.competences`, `route.recits` |
+| Pistes A et B, feuilles de route, actions | Carnet de route, partie 2 | Document de synthèse · suivi à 6 mois | `route.pistes`, `route.feuilles`, `route.actions` |
+| Livrable de chaque carnet | Fin de chaque carnet | Document de synthèse, assemblé au fil du parcours | `c1.livrable` … `c7.livrable`, `route.livrable` |
 
 ## 8. Personnalisation dans l'app
 
@@ -333,6 +333,8 @@ Le format unifié doit savoir décrire :
 - **les composants du gabarit commun** : météo, récapitulatif avec reports, protocole de sécurité, exemple contrasté, durée dans le sourcil, livrable à trois zones avec le fil des pistes ;
 - **la marque « fixe / adaptable »** de chaque bloc ;
 - **des identifiants stables pour les données** (par exemple `c4.seuils`). Un renvoi (« Reportez vos seuils ») pourrait alors être résolu au moment de la génération en « carnet 4, p. 12 », sans numéro de page écrit à la main.
+
+Ces deux derniers points sont faits (PR R0 bis) : `"fixed": true` sur une page ou un bloc, toujours vrai pour le protocole, la météo et les reports ; `data_id` et le bloc `report`, dont l'origine est calculée à la génération (section 7).
 
 Ce que Gemini a le droit de produire reste un sous-ensemble de ce que le moteur sait dessiner. La numérotation passe de `chap0`…`chap6` à des carnets 1 à 7 et un carnet de route, avec des couleurs par carnet à réattribuer.
 
