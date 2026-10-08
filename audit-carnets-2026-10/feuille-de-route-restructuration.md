@@ -151,6 +151,67 @@ Pour chaque PR de carnet :
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R1 (carnet 1) fusionnée :
+Message à coller, une fois la PR R1 (carnet 1, #54) fusionnée :
 
-> Reprends la restructuration des carnets avec la PR R2 (carnet 2). Lis d'abord `audit-carnets-2026-10/feuille-de-route-restructuration.md` (sections 2 à 6), puis la carte `audit-carnets-2026-10/carte-parcours-unifie.md` (sections 4, 5 pour le carnet 2, 7 et 8), et les rapports `rapports/02-chap2.md` et `rapports/07-livret.md` (thème 2, le travail réel). Vérifie que la PR R1 est fusionnée, puis crée une branche depuis `main`. Construis `workbooks/carnet-2.json` sur le modèle de `carnet-1.json` et de ses conventions (feuille de route, section 5) : page « Avant de commencer » avec la météo et le récapitulatif guidé de la séance 1 (reports de l'objectif et du « Je m'autorise à » du carnet 1), protocole et ancrage, exemples contrastés, durées dans les sourcils, fin en trois zones avec le fil des pistes (`pistes: true`), les `data_id` de la section 7 de la carte et les marques `fixed` de la section 8. Importe les quatre zones de l'app (texte d'origine : `git show 1696357:server/predefined_workbooks.py`, carnet 3 de l'app). Ajoute le script, l'entrée du catalogue (avec « (ancien parcours) » sur `chap2`) et la ligne de `tests/test_cli_documents.py`, et vérifie le rendu de chaque page. Une fois le carnet construit, relis l'audit (`synthese.html`) et les rapports pour vérifier que chaque recommandation est traitée, et itère si besoin. Mets aussi à jour la section 8 de la feuille de route pour la reprise suivante. Commence par me montrer le plan du carnet 2, page par page, avant d'écrire le JSON.
+```text
+Reprends la restructuration des carnets avec la PR R2 : le carnet 2, « Mon parcours ».
+
+1. Prérequis
+- Vérifie que la PR Nick18201/workbook-mdm#54 (R1, carnet 1) est fusionnée dans main.
+- Crée ensuite une branche depuis main à jour. N'empile pas les branches.
+
+2. À lire, dans cet ordre
+- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par le carnet 1.
+- audit-carnets-2026-10/carte-parcours-unifie.md :
+  - section 4 (gabarit commun) ;
+  - section 5, carnet 2 ;
+  - sections 6 (budget), 7 (identifiants c2.*) et 8 (fixe ou adaptable : carnet 2 = pertinence moyenne).
+- audit-carnets-2026-10/rapports/02-chap2.md en entier, et rapports/07-livret.md, thème 2 (le travail réel, que le carnet 2 absorbe).
+- La synthèse audit-carnets-2026-10/synthese.html, sections 02 (constats transversaux) et 06 (conditions de remplissage).
+- workbooks/carnet-1.json, le modèle à suivre, et workbooks/chap2.json, le contenu actuel.
+- Les quatre zones de l'app : git show 1696357:server/predefined_workbooks.py, fonction _build_chap3_spec.
+
+3. Ce qu'il faut construire
+workbooks/carnet-2.json, cible 2 h 45 d'écriture.
+- Une page « Avant de commencer » : la météo (c2.meteo) et le récapitulatif guidé de la séance 1. Ce récapitulatif utilise des blocs report vers c1.objectif et c1.autorisation pour préciser l'objectif boussole (c2.boussole).
+- Les exercices de la carte :
+  - « À lire : comprendre ses racines », allégé à trois notions, avec protocole, sans « névrose de classe » ;
+  - les expériences et le travail réel, une fiche par expérience, quatre au choix ;
+  - le travail empêché, avec protocole et un seul terme ;
+  - les quatre zones ;
+  - le fil rouge en une phrase, les trois verbes d'action, et pour chaque moteur « je le veux / on l'attend de moi » ;
+  - la ligne de vie, avec protocole sur les vallées ;
+  - les compétences de vie, avec une ligne « épreuves » facultative ;
+  - l'arbre de vie, facultatif ;
+  - l'interview, facultative et hors temps d'écriture, en proposant de choisir parmi les modèles du carnet 1 (report de c1.modeles).
+- Une fin de carnet avec le fil des pistes (pistes: true) et c2.livrable.
+- Les autres data_id de la carte, section 7.
+- Les marques fixed de la section 8 : le protocole, les questions franches, et les renvois entre carnets.
+
+4. Les règles à tenir
+- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel, aucun chiffre sans source.
+- Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je ».
+- Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux du carnet 1 (juriste, cariste, commis de cuisine, comptable, ébéniste).
+- Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière.
+- Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. tests/test_workbooks.py le vérifie.
+- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court.
+- Attention : la ligne de vie et l'arbre de vie remplissent le reste de leur page.
+
+5. Méthode
+a. Commence par me montrer le plan du carnet 2, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
+b. Écris le JSON. Ajoute Scripts/main_generate_carnet_2.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-2 du catalogue (server/predefined_workbooks.py), avec « (ancien parcours) » sur chap2.
+c. Rends chaque page en PNG dans previews/ avec pymupdf et relis-les une à une.
+d. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py.
+e. Relis la synthèse et les rapports 02 et 07, recommandation par recommandation. Itère, puis dis-moi ce qui est traité et ce qui est écarté, avec la raison.
+f. Mets à jour la feuille de route :
+   - section 1 (état des PR) ;
+   - section 2 (décisions prises pendant R2) ;
+   - section 5 (nouvelles conventions, s'il y en a) ;
+   - section 8 (le prompt de reprise pour R3, rédigé sur ce modèle).
+   Mets aussi à jour la carte, section 6 (budget du carnet 2).
+g. Commite sur la branche. J'ouvrirai la PR avec le bouton.
+
+6. Environnement (Windows, dans un worktree)
+- Le Python du venv est ../../../.venv/Scripts/python.exe.
+- Pour importer le moteur hors des scripts : PYTHONPATH="Scripts;." (point-virgule sous Windows) et PYTHONIOENCODING=utf-8.
+```
