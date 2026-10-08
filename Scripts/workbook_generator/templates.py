@@ -1177,42 +1177,53 @@ class PageLayout:
 
     REPORT_LABEL_SIZE = 10
     REPORT_LABEL_LEADING = 13
-    REPORT_ORIGIN_MAX = "CARNET DE ROUTE · P. 00"
 
-    def add_report(self, lines, title=None):
+    def add_report(self, lines, title=None, columns=1):
         """
         Data written in another carnet, copied here with its origin (« one piece of data,
         one entry »): a pastel card titled « À reporter », then per line its label, the
         origin on the right (« carnet 4 · p. 12 ») and a box; boxes taller than 1.2 cm are
-        multiline. lines: (label, origin, field_id, height_cm or None). A card that does not
-        fit continues on the next page.
+        multiline. lines: (label, origin, field_id, height_cm or None), laid out on 1 or 2
+        columns (short lines, e.g. the four zones). A card that does not fit continues on
+        the next page.
         """
         pad = PDFStyle.CARD_PADDING
         inner = self.target_width - 2 * pad
         title = title or "À reporter"
         _, pill_h = label_pill_size(title)
-        row_gap = 0.35 * cm
+        row_gap, col_gap = 0.35 * cm, 0.4 * cm
+        cols = max(1, min(int(columns or 1), 2))
+        col_w = (inner - col_gap * (cols - 1)) / cols
 
-        # The origin column is as wide as the longest origin, resolved or not, so that a
-        # page number never changes how the labels wrap (nor the pages of the document)
-        origin_w = text_width(self.REPORT_ORIGIN_MAX, PDFStyle.FONT_LABEL, PDFStyle.SIZE_FOLIO, PDFStyle.TRACKING_LABEL)
-        label_w = inner - origin_w - 0.4 * cm
-        rows = []
+        def origin_width(origin):
+            # Room for the page, resolved or not (« CARNET 4 · P. 00 »), so that a page number
+            # never changes how the labels wrap (nor the pages of the document)
+            if not origin:
+                return 0
+            return text_width(f"{origin.split(' · ')[0]} · P. 00", PDFStyle.FONT_LABEL, PDFStyle.SIZE_FOLIO,
+                              PDFStyle.TRACKING_LABEL)
+
+        items = []
         for label, origin, field_id, height in lines:
             origin = str(origin or "").upper()
+            label_w = col_w - origin_width(origin) - (0.4 * cm if origin else 0)
             label_h = paragraph_height(str(label), label_w, PDFStyle.FONT_HEADING_BOLD, self.REPORT_LABEL_SIZE,
                                        self.REPORT_LABEL_LEADING)
-            box_h = height * cm if height else 0.85 * cm
-            rows.append((str(label), origin, field_id, label_w, label_h + 3 + box_h, box_h))
+            items.append((str(label), origin, field_id, label_w, label_h, height * cm if height else 0.85 * cm))
+        # A row of the grid: its items, then the height of their labels and of their boxes
+        rows = []
+        for k in range(0, len(items), cols):
+            row = items[k:k + cols]
+            rows.append((row, max(i[4] for i in row), max(i[5] for i in row)))
 
         first = True
         while rows:
             head = pill_h + 0.3 * cm if first else 0
-            self._ensure_space(2 * pad + head + rows[0][4])
+            self._ensure_space(2 * pad + head + rows[0][1] + 3 + rows[0][2])
             available = self.y_cursor - self.bottom_limit - 2 * pad - head
             count, used = 0, 0
-            for row in rows:
-                need = row[4] + (row_gap if count else 0)
+            for _, label_h, box_h in rows:
+                need = label_h + 3 + box_h + (row_gap if count else 0)
                 if count and used + need > available:
                     break
                 used += need
@@ -1225,18 +1236,19 @@ class PageLayout:
             if first:
                 draw_label_pill(self.c, self.text_x + pad, t - pill_h, title, variant="on_pastel", max_width=inner)
                 t -= head
-            for k, (label, origin, field_id, label_w, row_h, box_h) in enumerate(chunk):
-                x = self.text_x + pad
-                draw_paragraph(self.c, label, x, t, label_w, PDFStyle.FONT_HEADING_BOLD, self.REPORT_LABEL_SIZE,
-                               PDFStyle.COLOR_INK, self.REPORT_LABEL_LEADING)
-                if origin:
-                    draw_text(self.c, x + inner, first_baseline(t, PDFStyle.SIZE_FOLIO, self.REPORT_LABEL_LEADING),
-                              origin, PDFStyle.FONT_LABEL, PDFStyle.SIZE_FOLIO, PDFStyle.COLOR_INK_MUTED,
-                              PDFStyle.TRACKING_LABEL, align="right")
-                box_top = t - (row_h - box_h)
-                draw_answer_box(self.c, x, box_top - box_h, inner, box_h, field_id, tooltip=label,
-                                multiline=box_h > 1.2 * cm)
-                t -= row_h + row_gap
+            for row, label_h, box_h in chunk:
+                for k, (label, origin, field_id, label_w, _, item_box_h) in enumerate(row):
+                    x = self.text_x + pad + k * (col_w + col_gap)
+                    draw_paragraph(self.c, label, x, t, label_w, PDFStyle.FONT_HEADING_BOLD, self.REPORT_LABEL_SIZE,
+                                   PDFStyle.COLOR_INK, self.REPORT_LABEL_LEADING)
+                    if origin:
+                        draw_text(self.c, x + col_w, first_baseline(t, PDFStyle.SIZE_FOLIO, self.REPORT_LABEL_LEADING),
+                                  origin, PDFStyle.FONT_LABEL, PDFStyle.SIZE_FOLIO, PDFStyle.COLOR_INK_MUTED,
+                                  PDFStyle.TRACKING_LABEL, align="right")
+                    box_top = t - label_h - 3
+                    draw_answer_box(self.c, x, box_top - item_box_h, col_w, item_box_h, field_id, tooltip=label,
+                                    multiline=item_box_h > 1.2 * cm)
+                t -= label_h + 3 + box_h + row_gap
             self.y_cursor = top - h - PDFStyle.GAP_BLOCK
             first = False
             if rows:

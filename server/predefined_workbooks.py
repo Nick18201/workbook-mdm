@@ -22,7 +22,12 @@ CATALOGUE = [
      "Préparer la séance 2 : objectif boussole, expériences avec ce qui donne de l'énergie et ce qui coûte, "
      "travail empêché, quatre zones, critères, moteurs, fil rouge, ligne de vie et compétences de vie.",
      "park", BILAN),
-    # Former carnets 0 to 2, until the clean-up of the restructuring (R11)
+    ("carnet-3", 3, "Carnet 3 · Mes fonctionnements propres",
+     "Test des fonctionnements cognitifs, 17 mises en situation et cartographie des énergies",
+     "Préparer la séance 3, la restitution du test : énergie, information, décisions, temps et action, réactions "
+     "sous pression, puis ce qui donne de l'énergie et ce qui use au travail.",
+     "psychology", BILAN),
+    # Former carnets 0 to 3, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
      "flag", BILAN),
@@ -34,7 +39,8 @@ CATALOGUE = [
      "Expériences, fil rouge, ligne de vie et arbre de vie",
      "Relire le parcours expérience par expérience, repérer le fil rouge et les moteurs, les compétences de vie.",
      "park", BILAN),
-    ("chap3", 3, "Carnet 3 · Mes fonctionnements propres", "Énergie, information, décisions et rapport au temps",
+    ("chap3", 3, "Carnet 3 · Mes fonctionnements propres (ancien parcours)",
+     "Énergie, information, décisions et rapport au temps",
      "Préparer la restitution du test des fonctionnements cognitifs : énergie, information, décisions, zone d'ombre.",
      "psychology", BILAN),
     ("chap4", 4, "Carnet 4 · Mon rapport à l'argent", "Histoire avec l'argent, seuils et tensions",

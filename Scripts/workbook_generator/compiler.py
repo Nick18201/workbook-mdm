@@ -361,7 +361,8 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
     elif b_type == "energy":
         layout.add_energy_check(b_data.get("field_prefix") or f"p{page_idx}_meteo_{b_idx}")
     elif b_type == "report":
-        layout.add_report(_report_lines(b_data.get("items"), page_idx, b_idx, pages_of), title=b_data.get("title"))
+        layout.add_report(_report_lines(b_data.get("items"), page_idx, b_idx, pages_of), title=b_data.get("title"),
+                          columns=_as_number(b_data.get("columns"), 1, int))
     elif b_type == "space":
         layout.add_space(_length_pt(b_data.get("height_cm"), 0))
     elif b_type == "page_break":

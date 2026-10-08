@@ -109,7 +109,7 @@ class BlockSpec(BaseModel):
     Their fixed texts live in templates.py, so a customization cannot change them.
     A 'report' line copies a piece of data written in another carnet: its items are
     [label, data_id, field_id, height_cm], and the origin (« carnet 4 · p. 12 ») is
-    resolved when the PDF is built. 'data_id' names the data a block produces, 'fixed'
+    resolved when the PDF is built; 'columns': 2 lays short lines side by side. 'data_id' names the data a block produces, 'fixed'
     keeps a block out of customization (see keep_fixed).
     """
     type: Literal[

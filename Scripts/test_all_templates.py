@@ -205,8 +205,13 @@ def page_reports(c):
         ("Le profil de fonctionnement que vous avez validé", "carnet 4 · p. 3", "demo_report_profil", None),
         ("Vos quatre seuils", "carnet 4 · p. 12", "demo_report_seuils", 1.6),
         ("Vos trois valeurs et leur condition observable", "carnet 5 · p. 14", "demo_report_valeurs", 2.2),
-        ("Vos quatre zones", "carnet 2", "demo_report_zones", 1.6),
     ])
+    layout.add_report([
+        ("Zone d'excellence", "carnet 2 · p. 14", "demo_report_excellence", None),
+        ("Zone de compétence", "carnet 2 · p. 14", "demo_report_competence", None),
+        ("Zone d'apprentissage", "carnet 2 · p. 14", "demo_report_apprentissage", None),
+        ("Zone à risque", "carnet 2 · p. 14", "demo_report_risque", None),
+    ], title="Vos quatre zones", columns=2)
     layout.render()
 
 
