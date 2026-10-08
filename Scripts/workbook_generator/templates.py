@@ -844,8 +844,11 @@ class PageLayout:
             draw_label_pill(self.c, self.text_x + pad, t - label_pill_size(title)[1], title, variant="on_pastel",
                             max_width=inner)
             t -= title_h
+        # A value written in words (« En vigilance ») stays inside the card, even above the last pastille
+        right = self.text_x + self.target_width - pad / 2
         for k, val in enumerate(values):
-            draw_text(self.c, scale_x + d / 2 + k * step, t - 8, str(val), PDFStyle.FONT_LABEL, 8,
+            half = text_width(str(val), PDFStyle.FONT_LABEL, 8) / 2
+            draw_text(self.c, min(scale_x + d / 2 + k * step, right - half), t - 8, str(val), PDFStyle.FONT_LABEL, 8,
                       PDFStyle.COLOR_INK_MUTED, align="center")
         t -= numbers_h
         for i, item in enumerate(labels):

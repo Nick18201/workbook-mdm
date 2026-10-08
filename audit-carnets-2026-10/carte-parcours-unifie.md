@@ -249,8 +249,8 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | S3 → S4 | Carnet 4 | 2 h | `carnet-4.json` (R4), issu du carnet 4 et des idées reçues de l'app | 2 h, affiché exercice par exercice (avant : ≈ 2 h 30) |
 | S4 → S5 | Carnet 5 | 2 h 15 | `carnet-5.json` (R5), issu du carnet 5 et des limites hors argent de l'app | 2 h 15, affiché exercice par exercice (avant : 2 h 30 – 3 h, affiché 95 min) |
 | S5 → S6 | Carnet 6 | 2 h | `carnet-6.json` (R6), issu de la partie exploration du carnet 6 | 2 h, affiché exercice par exercice (avant : 5 – 7 h pour tout le carnet 6) |
-| S6 → S7 | Carnet 7, partie 1 | 1 h 45 | Carnet 6, fiches | |
-| S7 → S8 | Carnet 7, partie 2 | 2 h | (n'existe pas) | |
+| S6 → S7 | Carnet 7, partie 1 | 1 h 45 | `carnet-7.json` (R7), partie 1, issue des fiches du carnet 6 et du carnet terrain de l'app | 1 h 45, affiché exercice par exercice : trois fiches à critères au lieu de dix (avant : 2 h 30 – 4 h pour les dix fiches) |
+| S7 → S8 | Carnet 7, partie 2 | 2 h | `carnet-7.json` (R7), partie 2 | 2 h, affiché exercice par exercice (n'existait pas) ; les entretiens se font hors temps d'écriture |
 | S8 → S9 | Carnet de route, partie 1 | 1 h 30 | Livret | 3 h 30 – 4 h 30 pour tout le livret |
 | S9 → S10 | Carnet de route, partie 2 | 1 h 45 (+ module) | Livret, thème 7 | |
 | **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | ≈ 21 – 27 h |
@@ -263,7 +263,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 
 | Donnée | Écrite dans | Reportée dans | Identifiant |
 |---|---|---|---|
-| Météo (énergie de 0 à 10) | Ouverture de chaque carnet | Carnet de route (le chemin parcouru) · suivi à 6 mois | `c1.meteo` … `c7.meteo`, `route.meteo` |
+| Météo (énergie de 0 à 10) | Ouverture de chaque carnet, et de chaque partie du carnet 7 | Carnet de route (le chemin parcouru) · suivi à 6 mois | `c1.meteo` … `c7.meteo`, `c7.meteo_2`, `route.meteo` |
 | Domaines de vie notés | Carnet 1 | Carnet 4 (note « Argent ») · carnet de route (nouvelle notation) | `c1.domaines` |
 | Objectif v1, « Je m'autorise à » | Carnet 1 | Carnet 2 (boussole) · carnet 6 (pistes audacieuses) | `c1.objectif`, `c1.autorisation` |
 | Ce qui pèse, héritage reçu et choisi | Carnet 1 | Carnet 2 (À lire) · carnet 4 (histoire avec l'argent) | `c1.sac_a_dos`, `c1.heritage` |

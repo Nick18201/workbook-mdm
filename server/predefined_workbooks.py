@@ -43,6 +43,12 @@ CATALOGUE = [
      "Préparer la séance 6 : ce que la personne sait d'elle sur une page, les métiers suggérés par ses proches, "
      "les ressources pour explorer, puis dix pistes, cinq réalistes et cinq audacieuses, et ses trois favorites.",
      "travel_explore", BILAN),
+    ("carnet-7", 7, "Carnet 7 · Confronter au terrain",
+     "Trois fiches à critères, enquêtes métier, comptes rendus et matrice de faisabilité",
+     "Préparer les séances 7 et 8, en deux parties : les trois pistes retenues face aux critères (valeurs, "
+     "minimum, énergie), la grille d'entretien et trois contacts, puis les comptes rendus d'enquête, ce que le "
+     "terrain apprend, la matrice de faisabilité et les compromis acceptables.",
+     "handshake", BILAN),
     # Former carnets 0 to 6, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
