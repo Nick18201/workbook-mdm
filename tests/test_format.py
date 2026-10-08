@@ -122,6 +122,18 @@ def test_customization_keeps_what_is_fixed():
     assert "_ref" not in json.dumps(spec.model_dump())
 
 
+def test_customization_keeps_the_parts():
+    base = tag_refs(WorkbookSpec(parts=["Les fondations"], pages=[_page("Un.", [_question("a")], part=1)]))
+    out = json.loads(json.dumps(base))
+    out["parts"] = ["Autre partie", "En plus"]
+    del out["pages"][0]["part"]
+
+    spec = WorkbookSpec.model_validate(keep_fixed(base, out))
+
+    assert spec.parts == ["Les fondations"]
+    assert spec.pages[0].part == 1
+
+
 def test_customization_without_references_is_matched_by_position():
     base = tag_refs(_base())
     out = json.loads(json.dumps(base).replace('"_ref"', '"_autre"'))

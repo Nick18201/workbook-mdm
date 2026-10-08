@@ -23,6 +23,7 @@ MAX_LIST_ITEMS = 60
 MAX_TEXT_LENGTH = 2_000
 MAX_NESTING_DEPTH = 10
 MAX_SCALE_STEPS = 10
+MAX_PARTS = 12
 
 WORKBOOKS_DIR = os.path.join(PDFStyle.PROJECT_DIR, "workbooks")
 
@@ -184,7 +185,9 @@ class BlockSpec(BaseModel):
     start_label: Optional[str] = Field(None, description="Libellé de départ de la frise")
     end_label: Optional[str] = Field(None, description="Libellé d'arrivée de la frise")
     hint: Optional[str] = Field(None, description="Ligne d'aide sous le titre (fields_card)")
-    field_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur par défaut des champs (fields_card)")
+    field_height_cm: Optional[float] = Field(
+        None, gt=0, le=20, description="Hauteur par défaut des champs (fields_card, fill_in_card, table)"
+    )
     question_labels: Optional[bool] = Field(None, description="Libellés en questions plutôt qu'en repères (fields_card)")
     count: Optional[int] = Field(None, ge=1, le=MAX_LIST_ITEMS, description="Nombre de lignes (numbered_lines)")
     line_height_cm: Optional[float] = Field(None, gt=0, le=5, description="Hauteur d'une ligne (numbered_lines)")
@@ -255,6 +258,9 @@ class PageSpec(BaseModel):
     data_id: Optional[str] = Field(
         None, pattern=DATA_ID_PATTERN, description="Identifiant de la donnée écrite sur cette page (ex : 'c4.livrable')"
     )
+    part: Optional[int] = Field(
+        None, ge=1, le=MAX_PARTS, description="Partie du livret (WorkbookSpec.parts) à laquelle appartient la page"
+    )
 
 
 # A carnet of the bilan: 1 to 7, or the carnet de route
@@ -273,6 +279,9 @@ class WorkbookSpec(BaseModel):
     folio: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Texte du folio (défaut : le titre)")
     pastel: Optional[str] = Field(None, description="Pastel dominant ('lilac', 'sky'…)")
     pdf_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre des métadonnées du PDF")
+    parts: Optional[List[str]] = Field(
+        None, max_length=MAX_PARTS, description="Titres des parties d'un long livret, que l'app personnalise une à une"
+    )
     pages: List[PageSpec] = Field(
         default_factory=list, max_length=MAX_PAGES, description="Liste ordonnée des pages du livret"
     )
@@ -297,7 +306,7 @@ class WorkbookSpec(BaseModel):
 # --- Customization: what is fixed stays fixed -------------------------------------
 
 REF_KEY = "_ref"  # position of a page (« p3 ») or a block (« p3.b2 ») in the spec sent to Gemini
-IDENTITY_KEYS = ("carnet", "folio", "pastel", "chapter_num")
+IDENTITY_KEYS = ("carnet", "folio", "pastel", "chapter_num", "parts")
 
 
 def _page_is_fixed(page):
@@ -373,6 +382,10 @@ def _merge_block(base, out):
 def _merge_page(base, out):
     if base.get("data_id"):
         out["data_id"] = base["data_id"]
+    if base.get("part"):
+        out["part"] = base["part"]
+    else:
+        out.pop("part", None)
     if base.get("blocks") is not None or out.get("blocks") is not None:
         out["blocks"] = _merge(base.get("blocks") or [], out.get("blocks") or [], "type", _block_is_fixed,
                                _merge_block, _block_is_fixed)
@@ -384,9 +397,9 @@ def keep_fixed(base: dict, out: dict) -> dict:
     The customization rule, enforced: Gemini only changes what is adaptable. In `out` (the
     customized spec, as a dict), every page marked 'fixed', every block marked 'fixed' or of
     FIXED_BLOCK_TYPES comes back as in `base` (from tag_refs), even if it was changed or
-    dropped. The identity of the document (carnet, folio, pastel, number) and the data ids
-    stay as in base. Raises ValueError when the output lost both its references and its
-    structure. Returns the merged spec without the '_ref' keys.
+    dropped. The identity of the document (carnet, folio, pastel, number, parts), the data
+    ids and the part of each page stay as in base. Raises ValueError when the output lost
+    both its references and its structure. Returns the merged spec without the '_ref' keys.
     """
     out = dict(out)
     for key in IDENTITY_KEYS:
@@ -397,6 +410,35 @@ def keep_fixed(base: dict, out: dict) -> dict:
     out["pages"] = _merge(base.get("pages") or [], out.get("pages") or [], "template", _page_is_fixed, _merge_page,
                           _page_holds_fixed)
     return _strip_refs(out)
+
+
+# --- Customization part by part: a long workbook is too much for one Gemini answer ----
+
+def part_of(data: dict, part: int) -> dict:
+    """The spec (a dict, from tag_refs or a dump) reduced to the pages of one part."""
+    out = {key: value for key, value in data.items() if key != "pages"}
+    out["pages"] = [page for page in data.get("pages") or [] if page.get("part") == part]
+    return out
+
+
+def put_part_back(base: dict, part: int, customized: dict) -> dict:
+    """
+    `base` (a spec dict without '_ref') whose pages of `part` are replaced, where they
+    were, by those of `customized` (part_of then keep_fixed). The rest of the document
+    stays as it was; only the beneficiary's name comes from the customization.
+    """
+    new_pages = [dict(page, part=part) for page in customized.get("pages") or []]
+    pages, placed = [], False
+    for page in base.get("pages") or []:
+        if page.get("part") != part:
+            pages.append(page)
+        elif not placed:
+            pages += new_pages
+            placed = True
+    out = dict(base, pages=pages)
+    if customized.get("beneficiary_name"):
+        out["beneficiary_name"] = customized["beneficiary_name"]
+    return out
 
 
 def workbook_path(workbook_id: str) -> str:

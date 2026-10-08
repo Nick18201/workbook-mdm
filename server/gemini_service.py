@@ -22,7 +22,7 @@ from .models import (
     CustomizeResponse,
 )
 from .predefined_workbooks import get_predefined_spec
-from workbook_generator.spec import keep_fixed, tag_refs
+from workbook_generator.spec import keep_fixed, part_of, put_part_back, tag_refs
 
 logger = logging.getLogger(__name__)
 
@@ -112,7 +112,7 @@ TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les 
 REFERENCE_BLOCKS_RULES = """BLOCS DES CARNETS DE RÉFÉRENCE :
 - Les carnets de référence utilisent aussi le gabarit 'recap' et des blocs que tu ne crées jamais toi-même : 'questions_group', 'heading', 'paragraphs', 'star_list', 'annotation', 'frise', 'fields_card', 'numbered_lines', 'rating_grid', 'info_cards', 'link_card', 'checklist_cards', 'fill_in_card', 'life_line', 'tree_of_life', 'protocol', 'anchor', 'contrast_example', 'energy', 'report', 'space', 'page_break'.
 - Quand tu en rencontres un, garde son type, ses clés, l'ordre de ses éléments et tous ses identifiants ('field_id', 'field_prefix', identifiants dans les listes) ; adapte seulement ses textes, sans les allonger.
-- Ne modifie jamais les blocs 'protocol' (avertissement avant un exercice à forte charge), 'anchor' (phrase d'ancrage qui le clôt), 'energy' (météo du jour) et 'report' (report d'une donnée écrite dans un autre carnet) : ils font partie du cadre, du protocole de sécurité et des renvois entre carnets. Garde les clés 'data_id' et 'fixed' là où elles sont. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
+- Ne modifie jamais les blocs 'protocol' (avertissement avant un exercice à forte charge), 'anchor' (phrase d'ancrage qui le clôt), 'energy' (météo du jour) et 'report' (report d'une donnée écrite dans un autre carnet) : ils font partie du cadre, du protocole de sécurité et des renvois entre carnets. Garde les clés 'data_id', 'fixed' et 'part' là où elles sont. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
 - Dans une page 'summary', garde 'duration' et 'split' ; dans une page 'engagement', garde 'zones' et 'pistes'.
 - Pour ajouter du contenu, utilise uniquement les 8 blocs de base ('callout', 'cards_grid', 'scale', 'checklist', 'table', 'stat_boxes', 'question', 'text').
 """
@@ -790,6 +790,19 @@ Produis uniquement un objet JSON valide avec les clés suivantes :
 """ + REFERENCE_BLOCKS_RULES + TONE_RULES
 
 
+def _part_scope(spec: WorkbookSpec, part: Optional[int]) -> str:
+    """Tells Gemini it only gets one part of a long workbook (nothing for a whole workbook)."""
+    if not part:
+        return ""
+    titles = spec.parts or []
+    name = f", « {titles[part - 1]} »" if part <= len(titles) else ""
+    return (
+        f"Ce livret est long : tu n'en reçois que la partie {part} sur {max(len(titles), part)}{name}. "
+        "Personnalise ces pages seulement et renvoie-les toutes, dans le même ordre : "
+        "les autres parties sont personnalisées à part."
+    )
+
+
 def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
     """
     Personnalise un livret existant (spécification de référence) en fonction du profil
@@ -808,14 +821,16 @@ def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
         logger.warning("GEMINI_API_KEY non configurée. Utilisation du fallback.")
         return GenerationResult(_build_fallback_customization(request, base_spec), "no_api_key")
 
-    # Pages and blocks carry a '_ref', so that what is fixed comes back as it was (keep_fixed)
+    # Pages and blocks carry a '_ref', so that what is fixed comes back as it was (keep_fixed).
+    # A long workbook goes part by part: Gemini then only gets the pages of one part.
     base_tagged = tag_refs(base_spec)
-    base_spec_json = json.dumps(base_tagged, ensure_ascii=False)
+    sent = part_of(base_tagged, request.part) if request.part else base_tagged
+    base_spec_json = json.dumps(sent, ensure_ascii=False)
     user_prompt = f"""Voici le livret pédagogique de référence (modèle existant) à personnaliser :
 ---
 {base_spec_json}
 ---
-
+{_part_scope(base_spec, request.part)}
 PROFIL DU BÉNÉFICIAIRE :
 - Nom / Prénom : {request.beneficiary_name}
 - Contexte & Métier / Projet : {request.beneficiary_context}
@@ -828,8 +843,11 @@ Respecte scrupuleusement la structure des gabarits et les longueurs maximales de
 Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_note'."""
 
     def build(data: dict) -> CustomizeResponse:
+        spec = keep_fixed(sent, data.get("spec", data))
+        if request.part:
+            spec = put_part_back(base_spec.model_dump(exclude_unset=True, exclude_none=True), request.part, spec)
         return CustomizeResponse(
-            spec=WorkbookSpec(**keep_fixed(base_tagged, data.get("spec", data))),
+            spec=WorkbookSpec(**spec),
             customizations_summary=data.get(
                 "customizations_summary",
                 f"Livret adapté avec succès pour {request.beneficiary_name} ({request.beneficiary_context}).",
@@ -878,6 +896,11 @@ def _build_fallback_customization(
                 qs[0]["example"] = f"Projet {request.beneficiary_context[:45]}..." if request.beneficiary_context else qs[0].get("example")
 
     new_spec = WorkbookSpec(**keep_fixed(tag_refs(base_spec), spec_dict))
+    if request.part:  # as with Gemini, only the pages of the requested part change
+        new_spec = WorkbookSpec(**put_part_back(
+            base_spec.model_dump(exclude_unset=True, exclude_none=True), request.part,
+            part_of(new_spec.model_dump(exclude_unset=True, exclude_none=True), request.part),
+        ))
     summary = (
         f"Version personnalisée pour {request.beneficiary_name} générée avec succès. "
         f"Profil intégré ({request.beneficiary_context})."

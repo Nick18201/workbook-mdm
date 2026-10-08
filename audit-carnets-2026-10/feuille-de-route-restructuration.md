@@ -13,6 +13,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R0 bis · Format : fixe / adaptable, identifiants de données, reports | Fusionné (PR #53) |
 | R1 · Carnet 1 · L'état des lieux (`carnet-1.json`) | Fusionné (PR #54) |
 | R2 · Carnet 2 · Mon parcours (`carnet-2.json`) | PR en cours |
+| R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
 **Avant chaque PR : vérifier que la précédente est fusionnée**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
@@ -169,62 +170,63 @@ Pour chaque PR de carnet :
 - **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm. Depuis R2, la ligne de vie et l'arbre de vie les tiennent aussi.
 - **Les reprises du carnet 2** se font dans les carnets suivants : le fil rouge et les quatre zones au récapitulatif du carnet 3, les moteurs et les critères à la grille anti-compromis du carnet 5, les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru.
 - **Les exemples du livret** décrivent peut-être une personne réelle. Ils disparaissent avec le carnet de route (R8), mais si c'est le cas, l'historique git les garde.
-- **La personnalisation partie par partie** du livret business plan, dans l'app (R10).
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
 Message à coller, une fois la PR R2 (carnet 2) fusionnée :
 
-> Reprends la restructuration des carnets avec la PR R3 : le carnet 3, « Mes fonctionnements propres ».
->
-> 1. Prérequis
-> - Vérifie que la PR R2 (carnet 2) est fusionnée dans main.
-> - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
->
-> 2. À lire, dans cet ordre
-> - audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 et 2, et les mesures utiles pour qu'une page tienne.
-> - audit-carnets-2026-10/carte-parcours-unifie.md :
->   - section 4 (gabarit commun) ;
->   - section 5, carnet 3 ;
->   - sections 6 (budget), 7 (identifiants c3.*) et 8 (fixe ou adaptable : carnet 3 = pertinence faible, les questions du test ne sont jamais personnalisées).
-> - audit-carnets-2026-10/rapports/03-chap3.md en entier.
-> - La synthèse audit-carnets-2026-10/synthese.html, sections 02 (constats transversaux) et 06 (conditions de remplissage).
-> - workbooks/carnet-1.json et workbooks/carnet-2.json, les modèles à suivre, et workbooks/chap3.json, le contenu actuel.
->
-> 3. Ce qu'il faut construire
-> workbooks/carnet-3.json, cible 1 h 45 d'écriture.
-> - Une page « Avant de commencer » : la météo (c3.meteo) et le récapitulatif guidé de la séance 2. Il relit le fil rouge et les quatre zones par des blocs report vers c2.fil_rouge et c2.zones, et reprend les moteurs du carnet 2 (c2.moteurs).
-> - Les exercices de la carte :
->   - l'encadré « À savoir sur le test » : un test des fonctionnements cognitifs, version maison conçue et éprouvée par Lysiane Brand, psychologue du travail ; quatre préférences, pas « cinq dimensions » ; les mises en situation ne calculent pas le profil ; il est restitué en séance, et c'est la personne qui le valide ;
->   - les 17 mises en situation, avec les réécritures du rapport (Q1, Q4, Q7, Q8, Q13), Q14 et Q15 en échelle suivie d'un « pourquoi » ;
->   - « Sous pression » : Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs, avec le protocole complet ; la Q11 (critique blessante) aussi sous protocole ;
->   - « Ce que j'en retiens pour mon travail » : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… », et les irritants retournés en critères.
-> - Une fin de carnet avec le fil des pistes (pistes: true) et c3.livrable. La cartographie des énergies de travail et des facteurs d'usure (c3.energies), livrable du programme, assemble les quatre zones du carnet 2 et la page « Ce que j'en retiens ».
-> - Les marques fixed de la section 8 : les questions du test (les personnaliser biaiserait la restitution), le protocole, les questions franches et les renvois entre carnets.
->
-> 4. Les règles à tenir
-> - Aucune mention du MBTI, ni de code de type (ISFJ…).
-> - Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel, aucun chiffre sans source.
-> - Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je », ni point médian (« cassant·e »).
-> - Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 et 2 (liste en section 5 de la feuille de route). Pour les mises en situation, un exemple sur un sujet absent du carnet, pour ne pas orienter une préférence (le rapport propose le choix d'un restaurant).
-> - Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière.
-> - Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. tests/test_workbooks.py le vérifie.
-> - Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court.
->
-> 5. Méthode
-> a. Commence par me montrer le plan du carnet 3, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
-> b. Écris le JSON. Ajoute Scripts/main_generate_carnet_3.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-3 du catalogue (server/predefined_workbooks.py), avec « (ancien parcours) » sur chap3.
-> c. Rends chaque page en PNG dans previews/ avec pymupdf et relis-les une à une.
-> d. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py.
-> e. Relis la synthèse et le rapport 03, recommandation par recommandation. Itère, puis dis-moi ce qui est traité et ce qui est écarté, avec la raison.
-> f. Mets à jour la feuille de route :
->    - section 1 (état des PR) ;
->    - section 2 (décisions prises pendant R3) ;
->    - section 5 (nouvelles conventions, s'il y en a) ;
->    - section 8 (le prompt de reprise pour R4, rédigé sur ce modèle).
->    Mets aussi à jour la carte, section 6 (budget du carnet 3).
-> g. Commite sur la branche. J'ouvrirai la PR avec le bouton.
->
-> 6. Environnement (Windows, dans un worktree)
-> - Le Python du venv est ../../../.venv/Scripts/python.exe.
-> - Pour importer le moteur hors des scripts : PYTHONPATH="Scripts;." (point-virgule sous Windows) et PYTHONIOENCODING=utf-8.
+```text
+Reprends la restructuration des carnets avec la PR R3 : le carnet 3, « Mes fonctionnements propres ».
+
+1. Prérequis
+- Vérifie que la PR R2 (carnet 2) est fusionnée dans main.
+- Crée ensuite une branche depuis main à jour. N'empile pas les branches.
+
+2. À lire, dans cet ordre
+- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 et 2, et les mesures utiles pour qu'une page tienne.
+- audit-carnets-2026-10/carte-parcours-unifie.md :
+  - section 4 (gabarit commun) ;
+  - section 5, carnet 3 ;
+  - sections 6 (budget), 7 (identifiants c3.*) et 8 (fixe ou adaptable : carnet 3 = pertinence faible, les questions du test ne sont jamais personnalisées).
+- audit-carnets-2026-10/rapports/03-chap3.md en entier.
+- La synthèse audit-carnets-2026-10/synthese.html, sections 02 (constats transversaux) et 06 (conditions de remplissage).
+- workbooks/carnet-1.json et workbooks/carnet-2.json, les modèles à suivre, et workbooks/chap3.json, le contenu actuel.
+
+3. Ce qu'il faut construire
+workbooks/carnet-3.json, cible 1 h 45 d'écriture.
+- Une page « Avant de commencer » : la météo (c3.meteo) et le récapitulatif guidé de la séance 2. Il relit le fil rouge et les quatre zones par des blocs report vers c2.fil_rouge et c2.zones, et reprend les moteurs du carnet 2 (c2.moteurs).
+- Les exercices de la carte :
+  - l'encadré « À savoir sur le test » : un test des fonctionnements cognitifs, version maison conçue et éprouvée par Lysiane Brand, psychologue du travail ; quatre préférences, pas « cinq dimensions » ; les mises en situation ne calculent pas le profil ; il est restitué en séance, et c'est la personne qui le valide ;
+  - les 17 mises en situation, avec les réécritures du rapport (Q1, Q4, Q7, Q8, Q13), Q14 et Q15 en échelle suivie d'un « pourquoi » ;
+  - « Sous pression » : Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs, avec le protocole complet ; la Q11 (critique blessante) aussi sous protocole ;
+  - « Ce que j'en retiens pour mon travail » : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… », et les irritants retournés en critères.
+- Une fin de carnet avec le fil des pistes (pistes: true) et c3.livrable. La cartographie des énergies de travail et des facteurs d'usure (c3.energies), livrable du programme, assemble les quatre zones du carnet 2 et la page « Ce que j'en retiens ».
+- Les marques fixed de la section 8 : les questions du test (les personnaliser biaiserait la restitution), le protocole, les questions franches et les renvois entre carnets.
+
+4. Les règles à tenir
+- Aucune mention du MBTI, ni de code de type (ISFJ…).
+- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel, aucun chiffre sans source.
+- Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je », ni point médian (« cassant·e »).
+- Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 et 2 (liste en section 5 de la feuille de route). Pour les mises en situation, un exemple sur un sujet absent du carnet, pour ne pas orienter une préférence (le rapport propose le choix d'un restaurant).
+- Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière.
+- Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. tests/test_workbooks.py le vérifie.
+- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court.
+
+5. Méthode
+a. Commence par me montrer le plan du carnet 3, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
+b. Écris le JSON. Ajoute Scripts/main_generate_carnet_3.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-3 du catalogue (server/predefined_workbooks.py), avec « (ancien parcours) » sur chap3.
+c. Rends chaque page en PNG dans previews/ avec pymupdf et relis-les une à une.
+d. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py.
+e. Relis la synthèse et le rapport 03, recommandation par recommandation. Itère, puis dis-moi ce qui est traité et ce qui est écarté, avec la raison.
+f. Mets à jour la feuille de route :
+   - section 1 (état des PR) ;
+   - section 2 (décisions prises pendant R3) ;
+   - section 5 (nouvelles conventions, s'il y en a) ;
+   - section 8 (le prompt de reprise pour R4, rédigé sur ce modèle).
+   Mets aussi à jour la carte, section 6 (budget du carnet 3).
+g. Commite sur la branche. J'ouvrirai la PR avec le bouton.
+
+6. Environnement (Windows, dans un worktree)
+- Le Python du venv est ../../../.venv/Scripts/python.exe.
+- Pour importer le moteur hors des scripts : PYTHONPATH="Scripts;." (point-virgule sous Windows) et PYTHONIOENCODING=utf-8.
+```
