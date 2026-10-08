@@ -197,12 +197,13 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - Partie 1 : la météo et le récapitulatif (10 min), vos trois fiches (1 h 10 : où chercher, 10 min, puis 3 × 20 min), préparer vos enquêtes (20 min : la grille, puis les contacts), la fin de la partie 1 (5 min).
     - Partie 2 : « Avant de reprendre », la météo et le récapitulatif (10 min), vos comptes rendus (45 min : 15 min, puis 30 min pour deux), ce que le terrain vous a appris (15 min), la matrice de faisabilité (30 min), ce que vous acceptez (10 min), la fin de carnet (10 min).
     - La promesse de couverture est celle de l'ancien carnet 6, que l'audit jugeait non tenue : « Trois pistes, confrontées au réel. » L'ouverture pose la règle en gras : « Une enquête n'est pas une candidature : vous demandez un regard, pas un poste. »
+    - Le découpage de l'ouverture donne deux semaines par partie, et fait commencer la partie 1 par le récapitulatif et les contacts (20 min) : un rendez-vous prend du temps. C'est la même logique que les sollicitations des proches dès l'ouverture du carnet 6 (rapport 06).
 64. **Une météo par partie.** La seconde a un nouvel identifiant, `c7.meteo_2` (carte, section 7) : le chemin parcouru du carnet de route aura un point par intervalle.
 65. **Le récapitulatif de la séance 6** est un tableau, « La piste retenue, et son numéro · Pourquoi elle », suivi de « Ce que la séance a déplacé ».
     - Les dix pistes sont citées par un renvoi écrit (carnet 6, exercice 4), comme les prénoms au carnet 6 : trois intitulés tiennent dans une colonne.
     - Les sept autres « restent dans votre carnet 6 : le terrain en fera peut-être revenir une ».
 66. **Salaires et débouchés passent avant les fiches**, sur une page « Où chercher » qui ouvre l'exercice 1 : on cherche, puis on note, et le salaire ne s'écrit qu'une fois.
-    - La page porte « Ma zone de recherche » (les villes, le temps de trajet accepté, le télétravail).
+    - La page porte « Ma zone de recherche » en trois cases d'une ligne : les villes ou le département, le trajet que j'accepte, le télétravail.
     - Deux liens France Travail, vérifiés le 8 octobre 2026 :
       - Data Emploi : les offres, les salaires proposés et les embauches d'un métier, jusqu'au bassin d'emploi ;
       - l'enquête Besoins en main-d'œuvre.
@@ -211,13 +212,13 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - Puis la définition fixe des valeurs de la grille.
     - Chaque fiche note la rémunération observée et sa source, et les débouchés dans la zone. Aucun chiffre n'est écrit dans le carnet.
 67. **Une fiche par page, et trois rangées de critères fixes**, car une quatrième ne tient pas (mesuré).
-    - Ce que fait le métier, adaptable : la piste et son numéro, ses missions d'après mes recherches, puis « Ce que je sais déjà faire » et « Ce qui me manque ».
+    - Ce que fait le métier, adaptable : la piste et son numéro, ses missions d'après mes recherches (deux lignes), puis « Ce que je sais déjà faire » et « Ce qui me manque ».
     - « Face à mes critères » est une `rating_grid` : « Valeur 1 (2, 3) : condition remplie » et « Mon minimum est atteint », sur une seule échelle, « Oui / À terme / Non / À vérifier ». « Mon minimum » est le minimum sécurisant ; « à terme », il est atteint dans la durée acceptable d'une baisse. « À vérifier » devient une question d'enquête.
-    - Puis la rémunération observée et sa source, les débouchés dans ma zone, ce qui me rechargerait, ce qui me coûterait, ce qu'il me reste à vérifier, auprès de qui.
+    - Puis la rémunération observée, sa source (deux cases d'une ligne), les débouchés dans ma zone (une phrase, deux lignes), ce qui me rechargerait, ce qui me coûterait, ce qu'il me reste à vérifier, auprès de qui.
     - « Ce que cette piste dit de ce que je cherche » n'est pas redemandé : c'est une colonne des pistes audacieuses du carnet 6, citée par un renvoi.
     - `c7.fiches` est posé sur la fiche 1.
 68. **La question franche du compromis sort des fiches.** Elle est posée une fois, après le terrain, quand le compromis est concret : à l'exercice 6, « Ce que vous acceptez ».
-    - « Ma piste, et le compromis qu'elle me demande » · « À quelle condition je l'accepterais ».
+    - « La piste », puis « Le compromis qu'elle me demande » · « À quelle condition je l'accepterais ».
     - Puis la question franche facultative « La piste qu'il me coûterait le plus de lâcher » · « Ce qu'elle représente pour moi ».
     - Enfin la clôture « Avec le recul, le terrain m'apprend que… ».
 69. **La grille d'entretien compte sept questions communes.**
@@ -227,17 +228,17 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - L'IA y entre pour tout le monde, plutôt qu'en ligne sur les fiches : « Qu'est-ce qui change dans votre métier : les besoins, les recrutements, ce que l'IA déplace ? »
     - Puis le report des trois questions d'entretien de la grille (`c5.grille`), et un renvoi à ce qu'il reste à vérifier sur chaque fiche.
 70. **Les contacts.**
-    - Trois personnes à solliciter dans les dix jours, une par piste si possible : les modèles (carnet 1), la personne de l'interview (carnet 2), celles repérées en fin de carnet 6, par des renvois écrits.
+    - Trois personnes à solliciter dans les dix jours, une par piste si possible : les modèles (carnet 1), la personne de l'interview (carnet 2), celles repérées en fin de carnet 6, par des renvois écrits. La page se fait « dès le début de la partie 1, sans attendre vos fiches ».
     - Le message d'approche du rapport 06 finit sur « seulement votre regard sur ce métier » (« un regard de professionnel » s'accordait).
     - Un tableau : la personne, pour quelle piste, comment la joindre, sollicitée le, rendez-vous le.
     - La charge moyenne suit la convention du carnet 4 : « Ce qui pourrait me faire repousser ce contact » (facultatif), puis « Pour me lancer, je commence par… ».
 71. **Un compte rendu par entretien**, sur deux pages (le premier, puis le deuxième et le troisième). `c7.enquetes` est posé sur le premier.
-    - La personne et son métier, la piste, la date ; ce qui confirme ; « Ce qui contredit, ou m'étonne » ; ce que j'ai appris sur mes critères ; la suite.
+    - La personne, son métier, la piste, la date (quatre cases d'une ligne) ; ce qui confirme ; « Ce qui contredit, ou m'étonne » ; ce que j'ai appris sur mes critères ; la suite.
     - Une immersion ou un salon se notent de la même façon.
 72. **Ce que le terrain vous a appris** reprend les trois lignes de l'app (l'accès, le quotidien et le rythme, la rémunération et les débouchés), en « ce que j'imaginais » et « ce que le terrain montre ».
     - Les sept pistes non retenues trouvent leur place ici : une carte facultative « Une piste apparue ou revenue » (la piste, d'où elle vient, ce qui m'y attire).
     - Pas de quatrième fiche dans le PDF : l'app peut en ajouter.
-73. **La matrice de faisabilité est un tableau fixe** (`c7.matrice`) : une colonne par piste, cinq lignes.
+73. **La matrice de faisabilité est un tableau fixe** (`c7.matrice`) : une colonne par piste, cinq lignes. Une phrase la définit d'abord : « Une piste est faisable quand vos compétences, le marché et les débouchés de votre zone le permettent, tout de suite ou après une passerelle. »
     - Les trois du programme : mes compétences, le marché, les débouchés dans ma zone.
     - Puis « Ce qu'il faudrait pour y aller : formation, délai, coût » et « Mes critères après le terrain ».
     - La personne ne classe pas ses pistes : les trois familles (pistes directes, passerelles courtes, angles morts) se font en séance 8.
@@ -248,6 +249,18 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - « Pourquoi ce métier vous attire » : déjà au carnet 6, et « Pourquoi elle » au récapitulatif.
     - « Missions et compétences utiles » : scindée en trois cases.
     - Du rapport 06, sont écartés « Ce que je garde de cette piste, même si je ne l'exerce pas » (déjà la clôture du carnet 6) et les exemples du guide de haute montagne et de la médiation culturelle, remplacés par six exemples de métiers nouveaux.
+77. **Second passage sur l'audit** (demandé par Nicolas).
+    - Corrigé :
+      - une case par information : la rémunération et sa source, la personne et son métier, la piste et son compromis, les trois éléments de la zone de recherche ;
+      - les débouchés, qui appellent une phrase, prennent deux lignes ;
+      - les contacts se sollicitent dès le début de la partie 1 ;
+      - la grille d'entretien pose le cadre de l'enquête (« Vous n'avez pas à raconter votre bilan : vous choisissez ce que vous dites de vous », rapport 06, cadre) ;
+      - la matrice définit la faisabilité (synthèse, constat 7 : une phrase avant chaque notion).
+    - Écarté, avec la raison :
+      - un « parce que » sous la grille de chaque fiche : la page est pleine. Les réponses « non » et « à vérifier » vont dans « Ce qu'il me reste à vérifier », puis dans les comptes rendus et la ligne « Mes critères après le terrain » de la matrice, et la séance 7 les reprend ;
+      - une page « Vos pistes face à vos critères » en partie 1 (rapport 06, P2) : la même rangée de critères sur chaque fiche et la matrice de la partie 2 en tiennent lieu ;
+      - une case « Mon message, avec mes mots » (l'app) : le message est un modèle, que l'app peut adapter au secteur ;
+      - un intitulé de piste à 1 cm (rapport 06, P3) : 0,85 cm, la hauteur d'une ligne d'écriture, comme dans les autres carnets.
 
 ## 3. Les PR, dans l'ordre
 
@@ -367,6 +380,7 @@ Pour chaque PR de carnet :
   - une échelle en mots peut avoir quatre valeurs (« Oui / À terme / Non / À vérifier »). Le moteur garde les valeurs dans la carte, et le libellé d'une ligne tient toujours en une trentaine de caractères (« Valeur 1 : condition remplie ») ;
   - une fiche répétée qui n'a pas la place d'une consigne la reçoit sur la page qui ouvre l'exercice, avec l'exemple et les définitions ;
   - une piste se désigne par « Piste 1 » à « Piste 3 », dans l'ordre du récapitulatif, sans recopier son intitulé ailleurs que sur sa fiche ;
+  - une donnée et sa source vont dans deux cases côte à côte (« Rémunération observée » · « Sa source ») ; plusieurs informations courtes (le lieu, le trajet, le télétravail) prennent chacune une case d'une ligne, sous un titre de carte, plutôt qu'une grande case qui pose trois questions ;
   - un lien dont la page s'affiche en JavaScript se vérifie dans le navigateur intégré, pas avec une simple requête ;
   - métiers déjà pris pour les exemples : ceux des carnets 1 à 6, plus frigoriste, pépiniériste, ergonome, chimiste, géologue, garagiste (carnet 7).
 - **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm (1,1 cm de moins sous un titre de deux lignes). Ordres de grandeur, écart compris :
@@ -383,7 +397,7 @@ Pour chaque PR de carnet :
   - mesures du carnet 5 : un tableau de cinq lignes de 2,2 cm, avec son en-tête, 13,7 cm ; neuf cartes de neuf cases à cocher sur trois colonnes, 19 cm ; treize cases à cocher sur trois colonnes, 4,9 cm ; une `fill_in_card` d'une ligne, 2,5 cm ; des `numbered_lines` sur deux colonnes avec une aide, 7,6 cm pour cinq lignes et 5,6 cm pour trois ; trois `info_cards` sur une rangée, 5,7 cm ; une frise et son intertitre, 4,4 cm ; une `fields_card` de trois rangées de cases de 1,6 cm, 10,2 cm ; un report de quatre lignes de 1,6 cm sur deux colonnes, 8,2 cm ; un tableau de cases d'une ligne, 0,75 cm d'en-tête puis 1,15 cm par ligne ;
   - mesures du carnet 6 : un tableau de cases de 1,6 cm, 0,75 cm d'en-tête puis 1,9 cm par ligne (10,2 cm pour cinq lignes, 6,4 cm pour trois) ; un report de huit lignes sur deux colonnes, dont deux de 1,6 cm, 10,8 cm ; un report de quatre lignes sur deux colonnes, 5,7 cm ; trois `link_card` de deux, cinq et un liens, 14,4 cm avec leurs écarts ; deux cartes de `numbered_lines` côte à côte, trois lignes de 0,85 cm chacune, 5,2 cm ;
   - mesures du carnet 7 :
-    - une `fields_card` de trois rangées (0,85, 2,2, puis deux cases de 1,6 cm), 8,9 cm, et de trois rangées (0,85, 1,6, 1,6), 8,3 cm ;
+    - une `fields_card` de trois rangées (0,85, 1,6, puis deux cases de 1,6 cm), 8,3 cm, et de trois rangées de 1,6 cm (dont une de trois cases), 9 cm ;
     - une `rating_grid` de quatre lignes avec son titre, 6,5 cm : une fiche (ces trois blocs) remplit exactement une page, sans phrase d'ouverture ;
     - un compte rendu (titre, rangées de 0,85, 2,6 et 1,6 cm), 10,3 cm, deux par page ;
     - une `star_list` de sept questions, dont deux sur deux lignes, 7 cm ;
