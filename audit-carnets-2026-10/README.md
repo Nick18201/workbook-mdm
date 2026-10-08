@@ -7,7 +7,8 @@ Audit pédagogique et ergonomique des carnets 0 à 6, du livret de compétences 
 | Fichier | Contenu |
 |---|---|
 | `synthese.html` | La synthèse complète, à ouvrir dans un navigateur : l'essentiel, 8 constats transversaux, charge de travail, fil rouge, un verdict par document, conditions de remplissage, architecture, plan par lots, décisions. Les 9 rapports détaillés y sont repris en fin de page. |
-| `carte-parcours-unifie.md` | La proposition de parcours unifié, pour les PDF et l'app, à valider : carnets alignés sur les séances du programme, gabarit commun, décisions exercice par exercice, budget de temps, données qui circulent, règles de personnalisation. |
+| `carte-parcours-unifie.md` (et `.html`) | Le parcours unifié, pour les PDF et l'app. Il intègre les décisions du 8 octobre : plus de carnet 0, carnets 1 à 7 puis carnet de route, le carnet N prépare la séance N, séances réparties 5 / 3 / 2. Il donne aussi le gabarit commun, une décision par exercice, le budget de temps, les données qui circulent et les règles de personnalisation. |
+| `recap-site-parcours.md` | Le récapitulatif à transmettre à l'agent du site : ce qui change, les nouveaux textes des séances et des carnets au format des données du site, les fichiers à modifier, et la consigne de ne rien publier avant la date de bascule. |
 | `rapports/00-chap0.md` … `06-chap6.md` | Un rapport par carnet. |
 | `rapports/07-livret.md` | Le livret de compétences. |
 | `rapports/08-business_plan.md` | Le livret projet « Mon business plan », avec une section sur l'exactitude réglementaire. |

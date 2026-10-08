@@ -1,283 +1,283 @@
 # Carte du parcours unifié
 
-Proposition du 8 octobre 2026, à valider par Nicolas et Lysiane avant toute ligne de code. Elle fixe, pour les PDF comme pour l'app, une seule liste de carnets, un seul ordre et un seul contenu. Elle s'appuie sur trois sources :
+Version du 8 octobre 2026. Elle intègre les décisions de Nicolas :
+- plus de carnet 0 ;
+- un carnet 1 qui réunit un état des lieux rapide et les héritages ;
+- le carnet N prépare la séance N ;
+- la séance libérée va au temps 2 ;
+- le document du temps 3 s'appelle « carnet de route ».
 
-- le **programme** du bilan (`chapters/programme/`), qui est la référence contractuelle : séances, livrables promis, 10 à 20 h de travail personnel ;
-- les **carnets PDF** (`chapters/chap0` à `chap6`, `livret`, `business_plan`) ;
-- les **carnets de l'app** (`server/predefined_workbooks.py`) ;
+Elle fixe, pour les PDF comme pour l'app, une seule liste de carnets, un seul ordre et un seul contenu. Elle s'appuie sur :
+- le programme du bilan (`chapters/programme/`) ;
+- les carnets PDF (`chapters/chap0` à `chap6`, `livret`, `business_plan`) ;
+- les carnets de l'app (`server/predefined_workbooks.py`) ;
+- l'audit (`synthese.html` et `rapports/` dans ce dossier).
 
-et sur l'audit (`synthese.html` et `rapports/` dans ce dossier).
+Le récapitulatif destiné à l'agent du site est dans `recap-site-parcours.md`.
 
 ## 1. Le constat de départ
 
-Le programme organise le bilan en 10 séances, en 3 temps.
-
-| Temps | Séances | Livrables promis par le programme |
-|---|---|---|
-| 1 · Comprendre | S1 situation et cadre · S2 héritages · S3 parcours · S4 MBTI® · S5 argent · S6 valeurs et moteurs | Profil MBTI® et analyse d'impact de l'environnement · Cartographie des énergies de travail et des facteurs d'usure · Seuil de sécurité financière (4 seuils) |
-| 2 · Confronter | S7 explorer : 10 pistes, 5 réalistes et 5 audacieuses · S8 confronter : 3 familles de scénarios, enquêtes, salaires et débouchés | Matrice de faisabilité · 3 scénarios comparés · Retours d'enquêtes terrain |
-| 3 · Décider et agir | S9 choisir, et adapter le carnet de route au projet (formation pour une reconversion, modèle économique pour une création, argumentaire pour une évolution interne) · S10 synthèse, pistes A et B, actions sous 7 jours · suivi à 6 mois | Feuilles de route A et B · Premières actions sous 7 jours · Document de synthèse co-rédigé |
+Le programme actuel organise le bilan en 10 séances, en 3 temps : comprendre (S1 à S6), confronter (S7 et S8), décider et agir (S9 et S10), plus un suivi à 6 mois.
 
 Les deux chaînes couvrent ce parcours de façon inverse :
+- **les PDF** couvrent bien le temps 1, puis s'essoufflent : rien pour les enquêtes, la matrice, les scénarios ni la feuille de route datée ;
+- **l'app** comprime le temps 1 (ni MBTI®, ni liste de valeurs, ni ligne de vie), mais développe le terrain et le plan d'action.
 
-- **les PDF** couvrent bien le temps 1 (carnets 0 à 5). Ils couvrent le début du temps 2 (carnet 6 : 10 pistes) et survolent le temps 3 (livret de compétences). Rien pour les enquêtes, la matrice, les scénarios, la feuille de route datée.
-- **l'app** comprime le temps 1 en 5 carnets courts : ni MBTI®, ni liste de valeurs, ni ligne de vie. En revanche, elle développe le temps 2 (carnet 5 « terrain ») et le temps 3 (carnet 6 « plan d'action »).
+L'audit a aussi relevé un déséquilibre :
+- six séances d'introspection pour deux de terrain ;
+- 1 à 2 semaines seulement pour obtenir des entretiens avec des professionnels ;
+- des pistes qui partent de zéro à la séance 7 ;
+- un doublon entre les carnets 0 et 1, qui demandent deux fois l'objectif, l'humeur et les domaines de vie.
 
-Le parcours unifié prend donc **le temps 1 des PDF et les temps 2 et 3 de l'app**, puis rattache chaque livrable promis par le programme à un carnet.
+Le parcours unifié prend **le temps 1 des PDF et les temps 2 et 3 de l'app**. Il fusionne le début du parcours et donne au terrain la séance libérée.
 
-## 2. Les règles du parcours
+## 2. Le nouveau découpage des séances
 
-1. **Un carnet, un intervalle entre deux séances.** Le carnet N se remplit entre la séance N et la séance N+1 : il récapitule la séance N et prépare la séance N+1. Le carnet 0 se remplit avant la séance 1. C'est déjà la logique implicite des PDF (le carnet 4 récapitule la restitution MBTI® de la séance 4 et prépare la séance 5 sur l'argent).
-2. **Sept carnets, comme le promet le programme**, plus un carnet de route pour le temps 3. Les deux derniers intervalles du temps 2 tiennent dans un carnet 6 en deux parties.
-3. **1 h 30 à 3 h d'écriture par intervalle, 20 h au total au plus.** Les entretiens et les recherches sur le terrain ne comptent pas dans ce temps, et le carnet le dit.
+Toujours 10 séances de 1 h 20 et un suivi de 40 min à 6 mois. La répartition passe de 6 / 2 / 2 à **5 / 3 / 2**.
+
+| Temps | Séance | Sujet | Carnet qui la prépare | Livrables du temps |
+|---|---|---|---|---|
+| 1 · Comprendre | S1 | État des lieux et héritages : votre situation, ce qui vous pèse, ce qui tient encore, ce que vous avez reçu de votre milieu. Le cadre de travail. | Carnet 1 | Profil MBTI® et analyse d'impact de l'environnement · Cartographie des énergies de travail et des facteurs d'usure · Seuil de sécurité financière (4 seuils) |
+| | S2 | Votre parcours réel | Carnet 2 | |
+| | S3 | Votre fonctionnement (MBTI®) | Carnet 3 | |
+| | S4 | Votre rapport à l'argent | Carnet 4 | |
+| | S5 | Vos valeurs et vos moteurs | Carnet 5 | |
+| 2 · Confronter | S6 | Explorer : 10 pistes, 5 réalistes et 5 audacieuses ; choix des 3 pistes à confronter | Carnet 6 | Matrice de faisabilité · 3 scénarios comparés · Retours d'enquêtes terrain |
+| | S7 | Confronter : les 3 pistes passées au crible de vos critères, enquêtes préparées et lancées, salaires et débouchés | Carnet 7, partie 1 | |
+| | S8 | Tirer les leçons du terrain : ce que les enquêtes confirment ou contredisent, matrice de faisabilité, 3 familles de scénarios (pistes directes, passerelles courtes, angles morts) | Carnet 7, partie 2 | |
+| 3 · Décider et agir | S9 | Choisir, et adapter le carnet de route au projet (formation pour une reconversion, modèle économique pour une création, argumentaire pour une évolution interne) | Carnet de route, partie 1 | Feuilles de route A et B · Premières actions sous 7 jours · Document de synthèse co-rédigé · Suivi à 6 mois |
+| | S10 | Synthèse, piste A (projet d'élan) et piste B (refuge et tremplin), premières actions | Carnet de route, partie 2 | |
+| | Suivi | Point à 6 mois (40 min) | — | |
+
+L'option « Initiation à l'IA », présentée sur le site comme l'ouverture de la séance d'exploration, ouvre désormais **la séance 6**.
+
+## 3. Les règles du parcours
+
+1. **Le carnet N prépare la séance N.** Il se remplit entre la séance N−1 et la séance N. Le carnet 1 se remplit avant la séance 1, après le premier échange de 30 min.
+2. **Sept carnets de bord (1 à 7), comme le promet le programme, puis le carnet de route du temps 3.** Le carnet 7 et le carnet de route ont chacun deux parties, une par intervalle entre deux séances.
+3. **1 h 30 à 3 h d'écriture par intervalle, 20 h au total au plus.** Les entretiens, les échanges avec les proches et les recherches ne comptent pas dans ce temps, et le carnet le dit.
 4. **Une donnée, une saisie.** Une information est écrite là où elle est produite, puis seulement reportée sur une ligne, avec son origine (« Reportez vos seuils · carnet 4 »).
 5. **Chaque livrable du programme a un carnet** qui le produit (section 5).
-6. **Un gabarit commun** à tous les carnets (section 4), pour que la personne retrouve ses repères.
-7. **Le terrain commence avant le temps 2.** Les idées de pistes sont notées dès le carnet 2, et un premier contact avec un professionnel est proposé dès le carnet 2 (section 3).
-8. **Le document de synthèse se prépare au fil de l'eau.** Chaque livrable de carnet en est une brique. La séance 10 sert à le relire et à décider, pas à l'assembler.
-
-## 3. L'équilibre des séances
-
-| Temps | Séances | Part des séances | Intervalles de travail personnel |
-|---|---|---|---|
-| Comprendre | S1 à S6 | 60 % | 6 (carnets 0 à 5) |
-| Confronter | S7 et S8 | 20 % | 2 (carnet 6, en deux parties) |
-| Décider et agir | S9 et S10 | 20 % | 2 (carnet de route, en deux parties) |
-
-**Ce qui tient.** Le cadre légal est respecté : la phase d'investigation (Code du travail, art. R. 6313-4) comprend la vérification du projet et couvre S2 à S8. Le temps 1 progresse logiquement, et les séances sur les héritages et sur l'argent font la singularité de MDM : on les garde.
-
-**Ce qui coince**, aujourd'hui :
-- le terrain n'a pas le temps d'exister : 1 à 2 semaines entre S7 et S8 pour obtenir trois entretiens, au moment du carnet le plus lourd ;
-- les pistes partent de zéro à S7, après six séances sans parler de métier ;
-- six séances d'introspection d'affilée font un creux de motivation au milieu du bilan ;
-- la séance 10 doit tout contenir (synthèse, pistes A et B, actions, document de synthèse), et le parcours création déborde S9 et S10.
-
-**Les ajustements retenus**, sans changer les 10 séances du programme :
-
-| Ajustement | Où dans la carte |
-|---|---|
-| **Le fil des pistes** : à partir du carnet 2, chaque livrable porte une ligne « Une idée de piste qui m'est venue en remplissant ce carnet ». Le carnet 6 rassemble ces idées au lieu de partir de rien. | Gabarit commun (section 4), carnet 6 partie 1 |
-| **Un premier contact avec le terrain dès le temps 1** : l'interview d'une personne passionnée reste au carnet 2, comme premier entretien, facultatif. | Carnet 2 |
-| **Le retour des proches lancé en fin de carnet 5**, pour que leurs réponses soient arrivées à S7. | Carnets 5 et 6 |
-| **Du temps calendaire au bon endroit** : deux semaines entre S7 et S8 (la borne haute du programme, qui annonce des séances espacées de 1 à 2 semaines), des séances plus rapprochées pendant le temps 1 si la personne le souhaite. | Carnet 6 partie 2, décisions |
-| **Le document de synthèse préparé au fil de l'eau**, à partir des livrables. | Règle 8, données qui circulent (section 7) |
-| **Le parcours création qui déborde le bilan** : un module court dans S9 et S10, le business plan complet comme outil à part. | Business plan |
-| **Le travail réel remonté au carnet 2** : le programme le rattache à la séance 3 (« votre travail réel, au-delà de la fiche de poste »). | Carnet 2, carnet de route |
+6. **Un gabarit commun** à tous les carnets (section 4).
+7. **Le terrain commence avant le temps 2.** Le fil des pistes démarre au carnet 2, l'interview d'un professionnel est proposée dès le carnet 2, et les proches sont sollicités en fin de carnet 5.
+8. **Deux semaines pour chaque intervalle de terrain** (S6 → S7 et S7 → S8), la borne haute du programme, qui annonce des séances espacées de 1 à 2 semaines. Des séances plus rapprochées pendant le temps 1 si la personne le souhaite.
+9. **Le document de synthèse se prépare au fil de l'eau.** Chaque livrable de carnet en est une brique. La séance 10 sert à le relire et à décider, pas à l'assembler.
 
 ## 4. Le gabarit commun d'un carnet
 
 | Page | Contenu | Source |
 |---|---|---|
 | Couverture | Promesse du carnet. | PDF |
-| Ouverture | But du carnet, liste des exercices avec leur durée, total et découpage conseillé, rappel du cadre en une ligne (« Vos réponses vous appartiennent. Vous pouvez passer une question. »), mode d'emploi en une ligne. | PDF, à compléter |
-| Météo | Échelle d'énergie de 0 à 10 et une ligne « Ce chiffre s'explique surtout par… ». Deux minutes. Reprise à chaque carnet, elle mesure le chemin parcouru. | App (météo en ouverture de chaque carnet) |
-| Récapitulatif guidé | Relit le livrable du carnet précédent et la séance qui vient d'avoir lieu, avec des renvois explicites. | PDF (carnets 2 à 6), à généraliser |
-| Exercices | Sourcil « Exercice N · nom · durée ». Une phrase qui dit à quoi sert l'exercice. Des amorces. Un exemple contrasté (« En surface / Exploitable ») tiré d'un métier voisin. Des formats variés. Les irritants retournés en critères (« donc mon prochain poste doit… »). Le protocole de sécurité quand la charge est forte : avertissement, optionnalité, phrase d'ancrage. | Audit |
-| Livrable | La sortie nommée du carnet (celle que le suivant reprend, et la brique du document de synthèse), les engagements, puis trois zones courtes : « Ce qui m'étonne en relisant ce carnet », « À aborder en séance », « Ce que j'ai laissé vierge, à reprendre ensemble ». À partir du carnet 2, une ligne de plus : « Une idée de piste qui m'est venue en remplissant ce carnet » (le fil des pistes). | Audit |
+| Ouverture | Le but du carnet, la liste des exercices avec leur durée, le total et le découpage conseillé. Un rappel du cadre en une ligne : « Vos réponses vous appartiennent. Vous pouvez passer une question. » Le mode d'emploi en une ligne. | PDF, à compléter |
+| Météo | Une échelle d'énergie de 0 à 10 et une ligne « Ce chiffre s'explique surtout par… ». Deux minutes. Reprise à chaque carnet, elle mesure le chemin parcouru. | App |
+| Récapitulatif guidé | À partir du carnet 2. Il relit le livrable du carnet précédent et la séance qui vient d'avoir lieu, avec des renvois explicites. | PDF, à généraliser |
+| Exercices | Sourcil « Exercice N · nom · durée », et une phrase qui dit à quoi sert l'exercice. Des amorces, et un exemple contrasté (« En surface / Exploitable ») tiré d'un métier voisin. Des formats variés. Les irritants retournés en critères (« donc mon prochain poste doit… »). Le protocole de sécurité quand la charge est forte : avertissement, optionnalité, phrase d'ancrage. | Audit |
+| Livrable | La sortie nommée du carnet : celle que le suivant reprend, et une brique du document de synthèse. Les engagements. Trois zones courtes : « Ce qui m'étonne en relisant ce carnet », « À aborder en séance », « Ce que j'ai laissé vierge, à reprendre ensemble ». À partir du carnet 2, une ligne de plus : « Une idée de piste qui m'est venue en remplissant ce carnet » (le fil des pistes). | Audit |
 | Dos | Prochaine étape. | PDF |
 
 ## 5. Le parcours, carnet par carnet
 
-Légende des sources : **PDF** = exercice existant dans les carnets du code ; **App** = page existante dans l'app ; **Audit** = ajout ou réécriture proposé par l'audit. Les durées sont des cibles d'écriture.
+Légende des sources :
+- **PDF C0 à C6** : exercice des carnets actuels du code ;
+- **Livret** : l'actuel livret de compétences ;
+- **App** : page des carnets actuels de l'app ;
+- **Audit** : ajout ou réécriture proposé par l'audit.
 
-### Carnet 0 · Le prélude · avant S1 · cible 1 h
+Les durées sont des cibles d'écriture.
 
-Prépare S1 « Faire le point sur votre situation actuelle ».
+### Carnet 1 · L'état des lieux · avant S1 · cible 1 h 45
 
-| Exercice | Source | Décision |
-|---|---|---|
-| Le cadre de travail | App (trois règles) + Audit | Nouveau. Les trois règles de l'app (confidentialité, franchise, action), complétées : qui lit les réponses, droit de passer une question, ce qui est trop lourd se note pour la séance, mode d'emploi du PDF. |
-| Mon engagement | PDF ex. 1 | Garder la formule « Moi, … je décide d'investir … heures », avec un repère sourcé et l'objectif en amorce. |
-| Faire le point | PDF ex. 2 | Alléger : 8 questions deviennent 2 parties de 15 min, sans doublons. Ajouter « Ce bilan vient-il de vous, ou d'une demande extérieure ? ». |
-| Vos domaines de vie | PDF ex. 3 | Garder : c'est la notation de référence, reprise en fin de parcours. Ajouter « Donc, mon prochain projet devra… ». |
-| Votre entourage | PDF ex. 4 | Garder, en fiche à trois colonnes. Il sera repris au carnet 6. |
-| Votre objectif, première version | PDF + App | Une seule question d'objectif et « Je m'autorise à explorer… », avec un exemple. Horizon unique : « d'ici la fin de votre bilan ». |
-
-**Sortie** : engagement, situation, domaines notés, entourage, objectif v1, « Je m'autorise à ».
-
-### Carnet 1 · L'état des lieux · S1 → S2 · cible 1 h 30
-
-Récapitule S1, prépare S2 « Comprendre ce qui vous a construit et l'impact de vos héritages ».
+Prépare S1. Un état des lieux rapide, puis les héritages, qui en font partie.
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Récapitulatif de la séance 1 | Audit | Nouveau (le carnet 1 n'en a pas). Relit l'objectif v1 du carnet 0. |
-| Votre objectif boussole | PDF ex. 3 + App | Garder les trois amorces du PDF (« je veux avoir clarifié… pour pouvoir… je saurai que j'ai réussi quand… ») et ajouter l'exemple de l'app. Il précise l'objectif v1, il ne le remplace pas. |
-| Le sac à dos | PDF ex. 4 + App | Prendre la forme de l'app, en deux colonnes « Ce qui pèse → Ce que je décide », sans le mot « injonction ». Protocole sur la peur. |
-| Ce que vous avez reçu | PDF ex. 5 et 6 + App | Fusion. D'abord « Ce que vous avez vu » (image du travail des parents ou des adultes qui ont compté), puis « Ce que vous en faites », dans le format reçu / choisi de l'app. Remplace le « 3FVS » non expliqué. Protocole et alternative pour une famille absente ou douloureuse. |
-| Vos modèles et anti-modèles | PDF ex. 7 + App | Garder, avec « Donc, dans mon prochain poste, je veux… ». |
-| Météo, vision à 360° | PDF ex. 1 et 2 | Retirer : la météo passe dans le gabarit commun. La vision à 360° double les domaines de vie du carnet 0. |
+| Le cadre de travail | App (trois règles) + Audit | Les trois règles de l'app (confidentialité, franchise, action), complétées : qui lit les réponses, droit de passer une question, ce qui est trop lourd se note pour la séance, mode d'emploi du PDF. |
+| Mon engagement | PDF C0 ex. 1 | Garder la formule « Moi, … je décide d'investir … heures », avec un repère sourcé. |
+| Faire le point, rapidement | PDF C0 ex. 2 + PDF C1 ex. 4 + App | Quatre questions au lieu de huit, environ 20 min. Où j'en suis (avec une amorce). Ce qui pèse et ce que je décide (le sac à dos, en deux colonnes comme dans l'app, avec le protocole sur la peur). Ce qui tient encore. Ce bilan vient-il de moi ou d'une demande extérieure ? |
+| Vos domaines de vie | PDF C0 ex. 3 | Garder : c'est la notation de référence, reprise en fin de parcours. Ajouter « Donc, mon prochain projet devra… ». |
+| Votre objectif, première version | PDF C0 + App | Une seule question d'objectif, avec un exemple. Et « Je m'autorise à explorer… ». Horizon unique : « d'ici la fin de votre bilan ». |
+| Ce que vous avez reçu | PDF C1 ex. 5 et 6 + App | Fusion. D'abord « Ce que vous avez vu » (le travail des parents ou des adultes qui ont compté), puis « Ce que vous en faites », au format reçu / choisi de l'app. Remplace le « 3FVS » non expliqué. Protocole, et une alternative pour une famille absente ou douloureuse. |
+| Vos modèles et anti-modèles | PDF C1 ex. 7 + App | Garder, avec « Donc, dans mon prochain poste, je veux… ». |
+| Retirés | PDF C0 et C1 | Les quatre autres questions de « Faire le point ». La vision à 360° (doublon des domaines de vie). La météo séparée (elle passe dans le gabarit). L'entourage (déplacé au carnet 5, où l'on choisit les proches à solliciter). L'objectif boussole (déplacé au carnet 2, après la séance 1). |
 
-**Sortie** : objectif boussole, ce que je dépose, héritage reçu et choisi, modèles et anti-modèles.
+**Sortie** : votre point de départ. Il réunit la situation, ce qui pèse et ce qui tient, les domaines notés, l'objectif v1, « Je m'autorise à », l'héritage reçu et choisi, les modèles et anti-modèles.
 
-**Titre** : à décider. Le contenu porte désormais surtout sur les héritages (S2).
+### Carnet 2 · Mon parcours · S1 → S2 · cible 2 h 45
 
-### Carnet 2 · Mon parcours · S2 → S3 · cible 2 h 30
-
-Récapitule S2, prépare S3 « Analyser et comprendre votre parcours » : ce que vous savez faire, ce que vous aimez, ce qui ne vous correspond plus.
-
-| Exercice | Source | Décision |
-|---|---|---|
-| Récapitulatif de la séance 2 | PDF ex. 1 | Garder. Il relit « reçu / choisi » au lieu de refaire le tri. |
-| À lire : comprendre ses racines | PDF | Garder, allégé (trois notions annoncées, pas neuf), avec le protocole. Retirer « névrose de classe » ou le citer avec sa source. |
-| Vos expériences, une par une | PDF ex. 2 | Remplacer « aimé / pas aimé » par « ce qui me donnait de l'énergie / ce qui me coûtait ». Ajouter comment le poste a commencé et pourquoi il s'est terminé. Quatre fiches au choix. |
-| Votre travail réel | Livret thème 2 | Déplacer ici : le programme rattache le « travail réel, au-delà de la fiche de poste » à la séance 3. Garder « Ce que ma fiche de poste ne dit pas » et le travail empêché, qui applique directement l'activité empêchée expliquée dans l'« À lire » du même carnet. Un seul terme pour les deux. Protocole sur le travail empêché. |
-| Vos quatre zones | App (carnet 3) | Importer. La zone d'excellence, la zone à risque (je sais faire, mais cela m'épuise), etc. C'est la pièce qui manque aux PDF. |
-| Votre fil rouge, vos moteurs | PDF ex. 3 + App | Garder, en écrivant enfin le fil rouge en une phrase. Ajouter les trois verbes d'action de l'app et « je le veux / on l'attend de moi ». |
-| Votre ligne de vie | PDF ex. 4 | Garder, avec le protocole sur les vallées. |
-| Vos compétences de vie | PDF ex. 5 | Garder. Ligne « épreuves » facultative. Entourer celles qu'on veut utiliser demain. |
-| L'arbre de vie | PDF ex. 6 | Facultatif : c'est une synthèse de ce qui précède. |
-| Interview d'une personne passionnée | PDF bonus | Garder ici, comme premier contact avec le terrain : facultatif, hors temps d'écriture. Choisir si possible l'un des modèles du carnet 1. Si le rendez-vous n'est pas possible avant S3, il reste ouvert jusqu'au carnet 6. Ses questions nourrissent la grille d'entretien du carnet 6. |
-
-**Sortie** : expériences avec énergie et coût, travail réel et travail empêché, quatre zones, fil rouge, moteurs, verbes d'action, compétences de vie, irritants retournés en critères. Premières lignes du fil des pistes.
-
-### Carnet 3 · Mes fonctionnements propres · S3 → S4 · cible 1 h 45
-
-Récapitule S3, prépare S4, la restitution du MBTI®.
+Récapitule S1 et prépare S2, qui porte sur le parcours réel : ce que vous savez faire, ce que vous aimez, ce qui ne vous correspond plus.
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Récapitulatif de la séance 3 | PDF ex. 1 | Garder. Il relit le fil rouge et les quatre zones. |
-| À savoir sur le MBTI® | Audit | Nouveau. Quatre préférences et non « cinq dimensions ». Ces questions ne calculent pas le type. Le type est restitué en séance et c'est la personne qui le valide. |
-| Les 17 mises en situation | PDF ex. 2 à 5 | Garder, avec les réécritures de l'audit (Q1, Q4, Q7, Q8, Q13). Q14 et Q15 passent en échelle suivie d'un « pourquoi ». |
-| Sous pression | PDF ex. 6 | Réécrire Q16 du point de vue des proches, sans adjectifs péjoratifs. Protocole complet. |
-| Ce que j'en retiens pour mon travail | Audit | Nouveau. « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… ». |
+| Récapitulatif de la séance 1 et objectif boussole | PDF C1 ex. 3 + App | Précise l'objectif v1 après la séance 1. Trois amorces du PDF (« je veux avoir clarifié… pour pouvoir… je saurai que j'ai réussi quand… ») et l'exemple de l'app. |
+| À lire : comprendre ses racines | PDF C2 | Garder, allégé : trois notions annoncées, pas neuf. Protocole. Retirer « névrose de classe », ou la citer avec sa source. |
+| Vos expériences et votre travail réel | PDF C2 ex. 2 + Livret thème 2 | Une fiche par expérience, quatre au choix. Chaque fiche porte : les missions, ce que la fiche de poste ne dit pas, ce qui me donnait de l'énergie, ce qui me coûtait, comment le poste a commencé et pourquoi il s'est terminé. Le programme rattache le travail réel à cette séance. |
+| Le travail empêché | Livret thème 2 | Une page, qui applique l'activité empêchée expliquée dans l'« À lire ». Un seul terme pour les deux. Protocole. |
+| Vos quatre zones | App (carnet 3) | Importer : zone d'excellence, zone à risque (je sais faire, mais cela m'épuise), etc. |
+| Votre fil rouge, vos moteurs | PDF C2 ex. 3 + App | Le fil rouge enfin écrit en une phrase. Les trois verbes d'action de l'app. Pour chaque moteur : « je le veux / on l'attend de moi ». |
+| Votre ligne de vie | PDF C2 ex. 4 | Garder, avec le protocole sur les vallées. |
+| Vos compétences de vie | PDF C2 ex. 5 | Garder. Ligne « épreuves » facultative. Entourer celles qu'on veut utiliser demain. |
+| L'arbre de vie | PDF C2 ex. 6 | Facultatif : c'est une synthèse de ce qui précède. |
+| Interview d'une personne passionnée | PDF C2 bonus | Premier contact avec le terrain, facultatif, hors temps d'écriture. Si possible l'un des modèles du carnet 1. Le rendez-vous reste ouvert jusqu'au carnet 7. |
 
-**Sortie** : la **cartographie des énergies de travail et des facteurs d'usure** (livrable du programme), qui assemble les quatre zones du carnet 2 et cette page.
+**Sortie** : votre fil rouge. Il réunit les expériences avec énergie et coût, le travail réel et le travail empêché, les quatre zones, les moteurs et les verbes d'action, les compétences de vie, les irritants retournés en critères. Premières lignes du fil des pistes.
 
-### Carnet 4 · Mon rapport à l'argent · S4 → S5 · cible 2 h
+### Carnet 3 · Mes fonctionnements propres · S2 → S3 · cible 1 h 45
 
-Récapitule S4, prépare S5 « Poser sans tabou votre rapport à l'argent ».
+Récapitule S2 et prépare S3, la restitution du MBTI®.
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Récapitulatif de la restitution MBTI® | PDF ex. 1 | Garder. Ajouter le champ « le type que j'ai validé » : c'est la seule saisie du type, reportée ensuite. |
-| Votre situation | PDF ex. 2 | Choix exclusif en boutons radio, puis un « pourquoi ». Reprend la note « Argent » du carnet 0. |
-| Votre histoire avec l'argent | PDF ex. 3 | 4 questions ouvertes au lieu de 7, protocole complet. La question sur le couple est reformulée au passé, avec un renvoi vers la séance. |
-| Vos premières expériences, vos idées reçues | PDF ex. 4 + App | L'encadré passif devient le format de l'app « Ce que je me dis → Ce que montrent les faits ». |
-| Argent et projet | PDF ex. 5 | Grille d'aisance de 1 à 5 (demander une augmentation, négocier, fixer un prix…). La question « ce que vous n'osez pas demander » a sa propre case. |
-| Vos quatre seuils | PDF ex. 6 + App | Une carte unique, alignée sur le programme : minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. En € nets par mois, pour vous. Une fourchette suffit. « Cette piste » part au carnet 6. |
-| Vos tendances | PDF ex. 7 | Deux ou trois au plus. Noms de tendances neutres (la sécurité, le mérite…). |
-| Synthèse | PDF ex. 8 | Garder la question franche sur la peur du manque, puis la phrase d'ancrage. |
+| Récapitulatif de la séance 2 | PDF C3 ex. 1 | Il relit le fil rouge et les quatre zones. |
+| À savoir sur le MBTI® | Audit | Nouveau. Quatre préférences, pas « cinq dimensions ». Ces questions ne calculent pas le type. Le type est restitué en séance, et c'est la personne qui le valide. |
+| Les 17 mises en situation | PDF C3 ex. 2 à 5 | Garder, avec les réécritures de l'audit (Q1, Q4, Q7, Q8, Q13). Q14 et Q15 passent en échelle suivie d'un « pourquoi ». |
+| Sous pression | PDF C3 ex. 6 | Q16 réécrite du point de vue des proches, sans adjectifs péjoratifs. Protocole complet. |
+| Ce que j'en retiens pour mon travail | Audit | Nouveau : « Je sais le faire, mais cela me coûte… », « Pour garder mon énergie, j'ai besoin de… ». |
+
+**Sortie** : la **cartographie des énergies de travail et des facteurs d'usure** (livrable du programme). Elle assemble les quatre zones du carnet 2 et cette page.
+
+### Carnet 4 · Mon rapport à l'argent · S3 → S4 · cible 2 h
+
+Récapitule S3 et prépare S4.
+
+| Exercice | Source | Décision |
+|---|---|---|
+| Récapitulatif de la restitution MBTI® | PDF C4 ex. 1 | Avec le champ « le type que j'ai validé » : c'est la seule saisie du type, reportée ensuite. |
+| Votre situation | PDF C4 ex. 2 | Choix exclusif en boutons radio, puis un « pourquoi ». Reprend la note « Argent » des domaines de vie (carnet 1). |
+| Votre histoire avec l'argent | PDF C4 ex. 3 | 4 questions ouvertes au lieu de 7. Protocole complet. La question sur le couple est posée au passé, avec un renvoi vers la séance. Renvoi à l'héritage du carnet 1. |
+| Vos premières expériences, vos idées reçues | PDF C4 ex. 4 + App | L'encadré passif devient le format de l'app : « Ce que je me dis → Ce que montrent les faits ». |
+| Argent et projet | PDF C4 ex. 5 | Grille d'aisance de 1 à 5 (demander une augmentation, négocier, fixer un prix…). « Ce que je n'ose pas demander » a sa propre case. |
+| Vos quatre seuils | PDF C4 ex. 6 + App | Une carte unique, alignée sur le programme : minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. En € nets par mois, pour vous. Une fourchette suffit. |
+| Vos tendances | PDF C4 ex. 7 | Deux ou trois au plus, avec des noms neutres (la sécurité, le mérite…). |
+| Synthèse | PDF C4 ex. 8 | Garder la question franche sur la peur du manque, suivie de la phrase d'ancrage. |
 
 **Sortie** : le **seuil de sécurité financière, en 4 seuils** (livrable du programme), et la tendance dominante.
 
-### Carnet 5 · Valeurs et moteurs profonds · S5 → S6 · cible 2 h 15
+### Carnet 5 · Valeurs et moteurs profonds · S4 → S5 · cible 2 h 15
 
-Récapitule S5, prépare S6 « Clarifier vos valeurs et vos moteurs ».
-
-| Exercice | Source | Décision |
-|---|---|---|
-| Récapitulatif de la séance 5 | Audit | Nouveau : seuils retenus, tendance dominante, ce que l'argent protège. |
-| Alignement, désalignement, choix difficiles | PDF ex. 1 à 3 | Garder. Renvois aux sommets et vallées du carnet 2. Protocole sur le désalignement. Chaque irritant devient une condition. |
-| La liste de valeurs | PDF ex. 4 | Garder, corrigée : sans doublons, avec les pôles des tensions, et 15 à 20 valeurs à cocher. |
-| Hiérarchiser | PDF ex. 5 | Lignes numérotées 10, 5 puis 3. Test « si elle manquait six mois ». Une ligne « la valeur que je coche surtout parce qu'elle est attendue de moi ». |
-| Incarner | PDF ex. 6 | Garder, avec l'origine de la valeur et une échelle « respectée aujourd'hui ». |
-| Vos tensions | PDF ex. 8 | Placer avant les conditions. Renvoi aux seuils du carnet 4. |
-| Votre grille anti-compromis | PDF ex. 7 et 9 + App | Fusion en une seule sortie : valeur, condition observable, signal d'alerte, question à poser en entretien. Les limites non financières de l'app (domaine par domaine) y entrent. Les moteurs du carnet 2 y sont relus. |
-| Lancer le retour de vos proches | PDF carnet 6 ex. 3 | Avancé ici, pour que les réponses soient arrivées à S7. Choisir trois proches parmi les soutiens du carnet 0, leur envoyer la question (« Si tu ne connaissais pas mon métier actuel, à quel métier penserais-tu pour moi ? Qu'est-ce qui, chez moi, t'y fait penser ? »). Les réponses se recueillent au carnet 6. |
-
-**Sortie** : la **grille anti-compromis** (le mot du programme), le seul endroit où les trois valeurs sont écrites. La demande aux proches est partie.
-
-### Carnet 6 · Explorer et confronter · en deux parties · cible 2 h, puis 2 h 30
-
-**Partie 1 · S6 → S7.** Récapitule S6, prépare S7 « Explorer des métiers et des secteurs ».
+Récapitule S4 et prépare S5.
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Récapitulatif de la séance 6 | PDF ex. 1 | Une ligne par valeur, reportée depuis le carnet 5, et « ce que la séance a confirmé, ce qu'elle a déplacé ». |
-| Votre cartographie | PDF ex. 2 | Une seule page de reports : type MBTI®, quatre zones, moteurs, seuils, grille anti-compromis, intérêts Hexa3D. Les seuils restent dans une zone « à garder pour vous ». |
-| Le retour de vos proches | PDF ex. 3 | Les réponses se recueillent ici (la demande est partie en fin de carnet 5) : trois cartes, une par personne, puis « ce qui me parle vraiment / ce qui ressemble plutôt à ce qu'on attend de moi ». Protocole. |
-| Les ressources | PDF | Placées avant les pistes, liens à jour. |
-| Dix pistes | PDF ex. 4 | 5 réalistes et 5 audacieuses (le mot du programme, à la place de « no limit »). On part du fil des pistes noté depuis le carnet 2, des suggestions des proches et de « Je m'autorise à » (carnet 0). Une colonne « d'où vient cette piste ». |
+| Récapitulatif de la séance 4 | Audit | Nouveau : seuils retenus, tendance dominante, ce que l'argent protège. |
+| Alignement, désalignement, choix difficiles | PDF C5 ex. 1 à 3 | Renvois aux sommets et aux vallées du carnet 2. Protocole sur le désalignement. Chaque irritant devient une condition. |
+| La liste de valeurs | PDF C5 ex. 4 | Liste corrigée : sans doublons, avec les pôles des tensions, 15 à 20 valeurs à cocher. |
+| Hiérarchiser | PDF C5 ex. 5 | Lignes numérotées 10, 5 puis 3, et le test « si elle manquait six mois ». Une ligne « la valeur que je coche surtout parce qu'elle est attendue de moi ». |
+| Vos tensions | PDF C5 ex. 8 | Placées avant la grille, avec un renvoi aux seuils du carnet 4. |
+| Votre grille anti-compromis | PDF C5 ex. 6, 7 et 9 + App | Une seule sortie. Pour chacune des 3 valeurs : d'où elle vient, la condition observable, le signal d'alerte, la question à poser en entretien. Les limites non financières de l'app y entrent. Les moteurs du carnet 2 y sont relus. |
+| Votre entourage, et le retour de vos proches | PDF C0 ex. 4 + PDF C6 ex. 3 | Les soutiens et les regards critiques, en quelques lignes. Puis trois proches à qui envoyer la question : « Si tu ne connaissais pas mon métier actuel, à quel métier penserais-tu pour moi ? Qu'est-ce qui, chez moi, t'y fait penser ? ». Leurs réponses arriveront avant la séance 6. |
 
-**Partie 2 · S7 → S8.** Prépare S8 « Approfondir et confronter vos pistes ». Cet intervalle dure deux semaines, pour laisser le temps d'obtenir les rendez-vous.
+**Sortie** : la **grille anti-compromis**, le seul endroit où les 3 valeurs sont écrites. La demande aux proches est partie.
+
+### Carnet 6 · L'exploration · S5 → S6 · cible 2 h
+
+Récapitule S5 et prépare S6 « Explorer ».
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Vos trois pistes prioritaires | PDF ex. 5 et 6 | 3 fiches complètes au lieu de 10, les autres en option. Chaque fiche porte une rangée de critères : grille anti-compromis, seuils, énergie, « à vérifier auprès de qui ». La fiche audacieuse garde « ce que cette piste dit de ce que je cherche ». |
-| Préparer vos enquêtes | App (carnet 5) + PDF bonus | Grille d'entretien de l'app, complétée par les questions de l'interview du carnet 2 et par ce qu'elle a appris. Message d'approche. Trois contacts dans les 10 jours, choisis si possible parmi les modèles du carnet 1. |
-| Ce que le terrain vous a appris | App (carnet 5) | Format de l'app « Ce que j'imaginais → Ce que le terrain montre », puis un compte rendu par entretien : ce qui confirme, ce qui contredit, la suite. |
-| La matrice de faisabilité | Audit | Nouveau, à compléter en séance 8 : chaque piste face aux compétences, au marché et aux débouchés. Classement en trois familles : pistes directes, passerelles courtes, angles morts. |
+| Récapitulatif de la séance 5 | PDF C6 ex. 1 | Une ligne par valeur, reportée du carnet 5, et « ce que la séance a confirmé, ce qu'elle a déplacé ». |
+| Votre cartographie | PDF C6 ex. 2 | Une seule page de reports : type MBTI®, cartographie des énergies, moteurs, seuils, grille anti-compromis, intérêts Hexa3D. Les seuils restent dans une zone « à garder pour vous ». |
+| Le retour de vos proches | PDF C6 ex. 3 | Recueil des réponses : trois cartes, une par personne, puis « ce qui me parle vraiment / ce qui ressemble plutôt à ce qu'on attend de moi ». Protocole. |
+| Les ressources | PDF C6 | Placées avant les pistes. Liens à jour. |
+| Dix pistes | PDF C6 ex. 4 | 5 réalistes et 5 audacieuses. Elles partent du fil des pistes, des suggestions des proches et de « Je m'autorise à » (carnet 1). Une colonne « d'où vient cette piste ». |
 
-**Sortie** : la **matrice de faisabilité** et les **retours d'enquêtes** (livrables du programme).
+**Sortie** : **10 pistes qualifiées**. La séance 6 en retient 3 à confronter.
+
+### Carnet 7 · Confronter au terrain · en deux parties · cible 1 h 45, puis 2 h
+
+**Partie 1 · S6 → S7 · deux semaines.** Prépare S7.
+
+| Exercice | Source | Décision |
+|---|---|---|
+| Récapitulatif de la séance 6 | Audit | Les 3 pistes retenues, et pourquoi. |
+| Vos trois fiches | PDF C6 ex. 5 et 6 | Une fiche par piste retenue, avec une rangée de critères : grille anti-compromis, seuils, énergie, « à vérifier auprès de qui ». La fiche audacieuse garde « ce que cette piste dit de ce que je cherche ». Les autres pistes restent en option. |
+| Préparer vos enquêtes | App (carnet 5) + PDF C2 bonus | La grille d'entretien de l'app, complétée par les questions de l'interview du carnet 2. Un message d'approche. Trois contacts à solliciter dans les 10 jours, si possible parmi les modèles du carnet 1. |
+| Salaires et débouchés | Programme + Audit | Où chercher, et ce qu'il faut noter pour son bassin d'emploi. Des liens officiels, pas de chiffres écrits dans le carnet. |
+
+**Partie 2 · S7 → S8 · deux semaines.** Prépare S8.
+
+| Exercice | Source | Décision |
+|---|---|---|
+| Vos comptes rendus d'enquête | Audit | Un par entretien : ce qui confirme, ce qui contredit, la suite. |
+| Ce que le terrain vous a appris | App (carnet 5) | « Ce que j'imaginais → Ce que le terrain montre ». |
+| La matrice de faisabilité | Audit | Chaque piste face aux compétences, au marché et aux débouchés. Brouillon ici, finalisé en séance 8 avec le classement en trois familles : pistes directes, passerelles courtes, angles morts. |
+
+**Sortie** : les **retours d'enquêtes** et la **matrice de faisabilité** (livrables du programme). La séance 8 en tire les **3 scénarios comparés**.
 
 ### Le carnet de route · temps 3 · en deux parties · cible 1 h 30, puis 1 h 45
 
-C'est l'actuel livret de compétences, recentré. Le programme parle de « carnet de route » pour le temps 3. Le nom est à décider (section 9).
+C'est l'actuel livret de compétences, recentré et renommé.
 
-**Partie 1 · S8 → S9 · Prouver et comparer.**
+**Partie 1 · S8 → S9 · Prouver et préparer le choix.**
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Votre profil, en une page | Livret thème 1 | Reports seulement (type, forces, cartographie des énergies). On ne refait plus rien. |
+| Récapitulatif de la séance 8 | Audit | Les 3 scénarios, et vers lequel vous penchez. |
+| Votre profil, en une page | Livret thème 1 | Reports seulement : type, forces, cartographie des énergies. On ne refait plus rien. |
 | Vos compétences prouvées | Livret thèmes 3 et 4 | Un tableau : compétence, où je l'ai prouvée, résultat ou trace, niveau d'autonomie de 1 à 4, envie de l'utiliser. Il part des expériences, du travail réel et des compétences de vie du carnet 2. |
 | Deux récits d'action | Livret thème 5 | Deux récits au lieu d'un, « Ce récit prouve que je sais… », et une version orale en trois phrases. |
-| Trois scénarios comparés | Audit | Nouveau (livrable du programme) : les trois pistes prioritaires, face aux critères et aux retours d'enquêtes. |
 
 **Partie 2 · S9 → S10 · Décider et agir.**
 
 | Exercice | Source | Décision |
 |---|---|---|
-| Piste A, piste B | App (carnet 6) + livret thème 7 | Format de l'app : projet d'élan et refuge-tremplin, atouts, risques. Les pistes viennent des scénarios. Neutre (sans « transmission »). |
-| Feuille de route à 30, 60 et 90 jours | App (carnet 6) | Importer. Une feuille par piste (le programme promet les deux). |
+| Piste A, piste B | App (carnet 6) + Livret thème 7 | Le format de l'app : projet d'élan et refuge-tremplin, atouts, risques. Les pistes viennent des scénarios. |
+| Feuilles de route à 30, 60 et 90 jours | App (carnet 6) | Importer. Une par piste, comme le promet le programme. |
 | Vos premières actions sous 7 jours | Livret thème 7 | Action, date, personne à prévenir. |
-| Garde-fous et alliés | App (carnet 6) | Importer. Les alliés viennent de l'entourage du carnet 0. |
-| Le chemin parcouru | Audit | Nouveau : relire l'objectif boussole, renoter les domaines de vie du carnet 0, comparer les météos. |
-| Préparer le suivi à 6 mois | Audit | Nouveau : ce qu'il faut relire et apporter à l'entretien de suivi. |
+| Garde-fous et alliés | App (carnet 6) | Importer. Les alliés viennent de l'entourage noté au carnet 5. |
+| Le chemin parcouru | Audit | Relire l'objectif boussole, renoter les domaines de vie du carnet 1, comparer les météos. |
+| Préparer le suivi à 6 mois | Audit | Ce qu'il faut relire et apporter à l'entretien de suivi. |
 | Le module de votre projet | Programme (S9) | Selon le projet : création (module court du business plan), reconversion (formation et financement, à créer), évolution interne (argumentaire, à créer). |
 
-**Sortie** : les **feuilles de route A et B** et les **premières actions** (livrables du programme). Le document de synthèse co-rédigé reste un document à part. Ses briques sont prêtes : les livrables de chaque carnet (section 7), si bien que la séance 10 sert à le relire et à décider.
+**Sortie** : les **feuilles de route A et B** et les **premières actions** (livrables du programme). Le document de synthèse co-rédigé reste un document à part, mais ses briques sont prêtes (section 7).
 
 ### Le business plan · deux formats
 
-- **Le module création du carnet de route** (S9 → S10, environ 3 h) : le parcours court de 12 pages proposé par l'audit (fondations, problème, offre, prix, point mort, test, synthèse). Il reprend les seuils et la grille anti-compromis, avec l'entretien prospects de l'app (objections, prix perçu, déclencheur d'achat).
-- **Le livret projet complet**, outil autonome pour l'accompagnement à la création après le bilan. Il s'ouvre par un mode d'emploi, avec des renvois « Si vous avez fait le bilan : … ». Il intègre les refontes de l'audit (finances guidées, page « Le risque, pour vous », reprise d'activité, informations réglementaires renvoyées vers les sources officielles).
+- **Le module création du carnet de route** (S9 → S10, environ 3 h). C'est le parcours court de 12 pages proposé par l'audit : fondations, problème, offre, prix, point mort, test, synthèse. Il reprend les seuils et la grille anti-compromis, ainsi que l'entretien prospects de l'app (objections, prix perçu, déclencheur d'achat).
+- **Le livret projet complet**, outil autonome pour l'accompagnement à la création après le bilan. Il s'ouvre par un mode d'emploi et des renvois « Si vous avez fait le bilan : … ». Il intègre les refontes de l'audit : finances guidées, page « Le risque, pour vous », reprise d'activité, informations réglementaires renvoyées vers les sources officielles.
 
 ## 6. Le budget de temps
 
-| Intervalle | Carnet | Cible | Estimation actuelle |
-|---|---|---|---|
-| avant S1 | Carnet 0 | 1 h | ≈ 1 h 15 |
-| S1 → S2 | Carnet 1 | 1 h 30 | 1 h 50 – 2 h 30 |
-| S2 → S3 | Carnet 2 | 2 h 30 (avec le travail réel) | 2 h 35 – 3 h 35 |
-| S3 → S4 | Carnet 3 | 1 h 45 | 1 h 40 – 2 h 30 |
-| S4 → S5 | Carnet 4 | 2 h | ≈ 2 h 30 |
-| S5 → S6 | Carnet 5 | 2 h 15 | 2 h 30 – 3 h |
-| S6 → S7 | Carnet 6, partie 1 | 2 h | 5 – 7 h pour tout le carnet |
-| S7 → S8 | Carnet 6, partie 2 | 2 h 30 (hors entretiens) | |
-| S8 → S9 | Carnet de route, partie 1 | 1 h 30 | 3 h 30 – 4 h 30 pour tout le livret |
-| S9 → S10 | Carnet de route, partie 2 | 1 h 45 (+ module) | |
-| **Total** | | **≈ 18 h 45**, dans les 10-20 h du programme | ≈ 21 – 27 h |
+| Intervalle | Carnet | Cible | Correspond aujourd'hui à | Estimation actuelle |
+|---|---|---|---|---|
+| avant S1 | Carnet 1 | 1 h 45 | Carnet 0 et une partie du carnet 1 | ≈ 1 h 15, plus 1 h 50 – 2 h 30 |
+| S1 → S2 | Carnet 2 | 2 h 45 | Carnet 2, plus le travail réel du livret | 2 h 35 – 3 h 35 |
+| S2 → S3 | Carnet 3 | 1 h 45 | Carnet 3 | 1 h 40 – 2 h 30 |
+| S3 → S4 | Carnet 4 | 2 h | Carnet 4 | ≈ 2 h 30 |
+| S4 → S5 | Carnet 5 | 2 h 15 | Carnet 5 | 2 h 30 – 3 h |
+| S5 → S6 | Carnet 6 | 2 h | Carnet 6, partie exploration | 5 – 7 h pour tout le carnet 6 |
+| S6 → S7 | Carnet 7, partie 1 | 1 h 45 | Carnet 6, fiches | |
+| S7 → S8 | Carnet 7, partie 2 | 2 h | (n'existe pas) | |
+| S8 → S9 | Carnet de route, partie 1 | 1 h 30 | Livret | 3 h 30 – 4 h 30 pour tout le livret |
+| S9 → S10 | Carnet de route, partie 2 | 1 h 45 (+ module) | Livret, thème 7 | |
+| **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | ≈ 21 – 27 h |
 
-L'interview du carnet 2, les échanges avec les proches et les entretiens du carnet 6 se font hors temps d'écriture : chaque carnet le dit. Le module de projet (création, reconversion, évolution) s'ajoute pour les personnes concernées. Il reste dans l'enveloppe si la partie 2 du carnet de route s'allège d'autant pour elles.
+L'interview du carnet 2, les échanges avec les proches et les entretiens du carnet 7 se font hors temps d'écriture. Le module de projet s'ajoute pour les personnes concernées.
 
 ## 7. Les données qui circulent
 
-Chaque ligne : où la donnée est écrite (une seule fois), et où elle est reportée.
+Pour chaque donnée : où elle est écrite (une seule fois), et où elle est reportée.
 
 | Donnée | Écrite dans | Reportée dans |
 |---|---|---|
-| Météo (énergie de 0 à 10) | Ouverture de chaque carnet | Carnet de route : le chemin parcouru · suivi à 6 mois |
-| Domaines de vie notés | Carnet 0 | Carnet de route, partie 2 (nouvelle notation) |
-| Objectif v1, « Je m'autorise à » | Carnet 0 | Carnet 1 (boussole) · carnet 6 (pistes audacieuses) |
-| Entourage | Carnet 0 | Carnet 5 (choix des proches sollicités) · carnet 6 (leurs réponses) · carnet de route (alliés) |
-| Objectif boussole | Carnet 1 | Carnet de route (le chemin parcouru) |
-| Ce que je dépose, héritage reçu et choisi | Carnet 1 | Carnet 2 (récapitulatif) · carnet 4 (histoire avec l'argent) |
-| Modèles, anti-modèles | Carnet 1 | Carnet 6 (contacts d'enquête) |
-| Expériences avec énergie et coût, irritants retournés | Carnet 2 | Carnet 5 (grille anti-compromis) · carnet de route (preuves) |
-| Travail réel, travail empêché | Carnet 2 | Carnet 5 (grille anti-compromis) · carnet de route (compétences prouvées) |
-| Première interview | Carnet 2 (facultatif) | Carnet 6, partie 2 (grille d'entretien, contacts) |
-| Fil des pistes | Livrable des carnets 2 à 5 | Carnet 6, partie 1 (dix pistes) |
+| Météo (énergie de 0 à 10) | Ouverture de chaque carnet | Carnet de route (le chemin parcouru) · suivi à 6 mois |
+| Domaines de vie notés | Carnet 1 | Carnet 4 (note « Argent ») · carnet de route (nouvelle notation) |
+| Objectif v1, « Je m'autorise à » | Carnet 1 | Carnet 2 (boussole) · carnet 6 (pistes audacieuses) |
+| Ce qui pèse, héritage reçu et choisi | Carnet 1 | Carnet 2 (À lire) · carnet 4 (histoire avec l'argent) |
+| Modèles, anti-modèles | Carnet 1 | Carnet 2 (interview) · carnet 7 (contacts d'enquête) |
+| Objectif boussole | Carnet 2 | Carnet de route (le chemin parcouru) |
+| Expériences, travail réel, travail empêché, irritants retournés | Carnet 2 | Carnet 5 (grille anti-compromis) · carnet de route (compétences prouvées) |
 | Quatre zones, fil rouge, moteurs, verbes d'action | Carnet 2 | Carnet 3 (cartographie des énergies) · carnet 5 · carnet 6 |
 | Compétences de vie | Carnet 2 | Carnet de route (compétences prouvées) |
+| Première interview | Carnet 2 (facultatif) | Carnet 7 (grille d'entretien, contacts) |
+| Fil des pistes | Livrables des carnets 2 à 5 | Carnet 6 (dix pistes) |
 | Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route |
 | Type MBTI® validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route |
-| 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 6 · carnet de route · module création |
-| Grille anti-compromis (3 valeurs) | Carnet 5 | Fiches et enquêtes du carnet 6 · piste A / piste B · module création |
+| 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création |
+| Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création |
+| Entourage, proches sollicités | Carnet 5 | Carnet 6 (réponses) · carnet de route (alliés) |
 | Intérêts Hexa3D | Séance (à préciser) | Carnet 6 (cartographie) |
-| 10 pistes | Carnet 6, partie 1 | Carnet 6, partie 2 (3 prioritaires) |
-| Fiches, enquêtes, matrice | Carnet 6, partie 2 | Carnet de route (scénarios) |
+| 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 |
+| Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route |
 | Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · module évolution interne |
 | Pistes A et B, feuilles de route, actions | Carnet de route, partie 2 | Document de synthèse · suivi à 6 mois |
 | Livrable de chaque carnet | Fin de chaque carnet | Document de synthèse, assemblé au fil du parcours |
@@ -286,40 +286,54 @@ Chaque ligne : où la donnée est écrite (une seule fois), et où elle est repo
 
 L'app a deux usages : créer un livret de toutes pièces, puis exporter son JSON pour l'intégrer à la base, et personnaliser un livret existant.
 
-**Créer de toutes pièces.** Les candidats naturels sont les deux modules qui manquent au carnet de route : reconversion (formation et financement) et évolution interne (argumentaire de repositionnement). Une fois le format unifié, un livret exporté de l'app s'intègre en déposant son fichier JSON dans le dossier des carnets, sans retranscription.
+**Créer de toutes pièces.** Les candidats naturels sont les deux modules qui manquent au carnet de route : reconversion (formation et financement) et évolution interne (argumentaire de repositionnement). Une fois le format unifié, un livret exporté de l'app s'intègre en déposant son fichier JSON dans le dossier des carnets.
 
 **Personnaliser.** Chaque bloc du format porte une marque « fixe » ou « adaptable ». La personnalisation ne touche que les blocs adaptables.
 
 | Pertinence | Carnets | Ce qui s'adapte | Ce qui reste fixe |
 |---|---|---|---|
-| Forte | Carnet 6, carnet de route et ses modules, business plan | Pistes pré-intitulées, ressources du secteur, nombre de fiches, contacts suggérés, exemples, module de projet | Gabarit, protocole, critères des fiches, définitions des seuils |
-| Moyenne | Carnets 1, 2 et 4 | Vocabulaire du secteur, situation (reconversion, évolution, retour à l'emploi), nombre de fiches d'expérience, exemples. Au carnet 4, le statut (salarié, indépendant, demandeur d'emploi), jamais de chiffres personnels | Protocole, questions franches, carte des seuils |
-| Faible | Carnets 0, 3 et 5 | Au plus le prénom et les exemples | Le cadre (carnet 0), les questions MBTI® (les personnaliser biaiserait la restitution), la liste de valeurs et l'entonnoir (carnet 5) |
+| Forte | Carnets 6 et 7, carnet de route et ses modules, business plan | Pistes pré-intitulées, ressources du secteur, nombre de fiches, contacts suggérés, exemples, module de projet | Gabarit, protocole, critères des fiches, définitions des seuils |
+| Moyenne | Carnets 2 et 4 | Vocabulaire du secteur, situation (reconversion, évolution, retour à l'emploi), nombre de fiches d'expérience, exemples. Au carnet 4, le statut (salarié, indépendant, demandeur d'emploi), jamais de chiffres personnels | Protocole, questions franches, carte des seuils |
+| Faible | Carnets 1, 3 et 5 | Au plus le prénom et les exemples. Avant la séance 1, on connaît peu la personne | Le cadre et les héritages (carnet 1), les questions MBTI® (carnet 3 : les personnaliser biaiserait la restitution), la liste de valeurs et l'entonnoir (carnet 5) |
 
 Deux règles valent partout :
 - **les exemples viennent d'un métier voisin**, jamais du métier de la personne, sinon ils sont recopiés ;
 - **ne sont jamais modifiés** : le cadre, le protocole de sécurité, les textes réglementaires et les renvois entre carnets.
 
-## 9. Les décisions à prendre
+## 9. Les décisions
 
-1. **La règle « un carnet entre la séance N et la séance N+1 »** : la valider.
-2. **Le carnet de route** : faut-il renommer le livret de compétences « carnet de route », puisque le programme emploie ce mot pour le temps 3 et ne nomme pas le livret ? Ou garder « livret de compétences » et l'ajouter au programme ? Le programme est un texte réglementaire.
-3. **Le carnet 6 en deux parties** (on reste à 7 carnets), ou deux carnets séparés (il faudrait alors changer le programme, qui annonce 7 carnets).
-4. **Le titre du carnet 1**, dont le contenu porte désormais surtout sur les héritages.
+**Prises le 8 octobre 2026**
+- Plus de carnet 0. Le carnet 1 réunit un état des lieux rapide et les héritages. Les éléments facultatifs du carnet 0 sont retirés.
+- Le carnet N prépare la séance N.
+- La séance libérée va au temps 2 : répartition 5 / 3 / 2.
+- Le document du temps 3 s'appelle « carnet de route ».
+- Les ajustements d'équilibre : fil des pistes, interview dès le carnet 2, proches sollicités en fin de carnet 5, deux semaines pour chaque intervalle de terrain, synthèse préparée au fil de l'eau, travail réel au carnet 2.
+
+**À prendre**
+1. **La date de bascule** : les bilans en cours gardent l'ancien déroulé. Le nouveau vaut à partir de quelle date ? Le programme, le site et les carnets doivent changer le même jour.
+2. **L'option « Initiation à l'IA »** ouvre désormais la séance 6 (exploration) : à confirmer.
+3. **Hexa3D** : à quelle séance le test est-il passé et restitué ? Aucun carnet n'en parle aujourd'hui. La séance 5 ou 6 semble la plus logique.
+4. **La passation du MBTI®** : le site la place dans le carnet 3 (« 93 questions »). Or le carnet 3 contient 17 mises en situation, pas le questionnaire officiel. Où et quand le questionnaire est-il passé ?
 5. **Le business plan en deux formats** : un module court dans le bilan et un livret complet autonome.
-6. **Hexa3D** : à quelle séance le test est-il passé et restitué ? Aucun carnet n'en parle aujourd'hui.
-7. **Les retraits** : vision à 360° et météo séparée (carnet 1), arbre de vie facultatif (carnet 2), 10 fiches réduites à 3 obligatoires (carnet 6). Le travail réel passe du livret au carnet 2.
-8. **Le calendrier** : deux semaines entre S7 et S8, et des séances plus rapprochées pendant le temps 1 si la personne le souhaite. C'est compatible avec le programme (1 à 2 semaines entre les séances), mais c'est à organiser dès la prise de rendez-vous.
-9. **Le terrain plus tôt** : interview facultative dès le carnet 2, retour des proches lancé en fin de carnet 5, fil des pistes dans chaque livrable à partir du carnet 2.
-10. **Les deux modules à créer** : formation et financement (reconversion), argumentaire (évolution interne). Faut-il les créer avec l'app ?
+6. **Les retraits** : vision à 360°, questions de « Faire le point », arbre de vie facultatif, 3 fiches métiers obligatoires au lieu de 10.
+7. **Les deux modules à créer** : formation et financement (reconversion), argumentaire (évolution interne). Faut-il les créer avec l'app ?
+8. **Le nom affiché** : « carnet 1 » à « carnet 7 » partout (PDF, app, site), à la place de « chapitre 0 » à « chapitre 6 ».
 
 ## 10. Ce que cela implique pour le format technique
 
-Une fois la carte validée, le format unifié doit savoir décrire :
+Le format unifié doit savoir décrire :
 - **les blocs des PDF** que l'app ne connaît pas encore : heading, paragraphs, fields_card, annotation, link_card, numbered_lines, info_cards, frise, checklist_cards, rating_grid, star_list, page_break ;
 - **les gabarits dessinés** : ligne de vie, arbre de vie, cartographie, matrice ;
-- **les composants du gabarit commun** : météo, récapitulatif avec reports, protocole de sécurité, exemple contrasté, durée dans le sourcil, livrable à trois zones ;
+- **les composants du gabarit commun** : météo, récapitulatif avec reports, protocole de sécurité, exemple contrasté, durée dans le sourcil, livrable à trois zones avec le fil des pistes ;
 - **la marque « fixe / adaptable »** de chaque bloc ;
 - **des identifiants stables pour les données** (par exemple `c4.seuils`). Un renvoi (« Reportez vos seuils ») pourrait alors être résolu au moment de la génération en « carnet 4, p. 12 », sans numéro de page écrit à la main.
 
-Ce que Gemini a le droit de produire reste un sous-ensemble de ce que le moteur sait dessiner.
+Ce que Gemini a le droit de produire reste un sous-ensemble de ce que le moteur sait dessiner. La numérotation passe de `chap0`…`chap6` à des carnets 1 à 7 et un carnet de route, avec des couleurs par carnet à réattribuer.
+
+## 11. Ce qu'il faut mettre à jour ailleurs
+
+| Où | Quoi | Quand |
+|---|---|---|
+| Programme du bilan (`chapters/programme/`, texte réglementaire) | Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. | À la date de bascule, en même temps que le site, sur demande de Nicolas |
+| Site (dépôt `marge-de-manoeuvre`) | Voir `recap-site-parcours.md` | À la date de bascule |
+| Carnets PDF et app | Unification et renumérotation | Lot d'unification |
