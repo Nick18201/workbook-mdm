@@ -20,6 +20,7 @@ from workbook_generator import (
     PDFStyle,
     PageLayout,
     LayoutConfig,
+    QuestionConfig,
     QuestionItem,
     TextConfig,
     create_cover_page,
@@ -181,7 +182,35 @@ def page_opener(c):
         "Poser sans détour les chiffres de votre sécurité financière pour bâtir une trajectoire viable.",
         [("1.", "Les 8 archétypes financiers"), ("2.", "Déconstruction de l'illégitimité tarifaire"),
          ("3.", "Cadrage des 4 seuils financiers"), ("4.", "Délai de trésorerie tolérable")],
+        duration="2 h", split="En deux fois : exercices 1 et 2, puis 3 et 4.",
     )
+
+
+def page_weather_recap(c):
+    layout = PageLayout(c, "Avant de *commencer.*", config=LayoutConfig(part_title="Récapitulatif · 10 min"))
+    layout.add_energy_check("demo_meteo")
+    layout.add_questions_group([
+        QuestionItem(question="Le profil de fonctionnement que vous avez validé en séance :",
+                     form_field_id="demo_recap_profil"),
+        QuestionItem(question="Ce que la séance a confirmé, ce qu'elle a déplacé :", form_field_id="demo_recap_seance"),
+    ], max_box_height=3.0 * cm)
+    layout.render()
+
+
+def page_heavy_exercise(c):
+    layout = PageLayout(c, "Votre histoire *avec l'argent.*",
+                        config=LayoutConfig(part_title="Exercice 3 · Histoire · 25 min"))
+    layout.add_protocol("Cet exercice revient sur l'argent dans votre famille, et sur ce qu'il en reste aujourd'hui.")
+    layout.add_contrast_example(
+        "Chez nous, on ne parlait pas d'argent.",
+        "Chez nous, on ne parlait pas d'argent : je n'ai jamais négocié un salaire, et je découvre "
+        "les grilles de mon secteur à 40 ans.",
+        title="Libraire",
+    )
+    layout.add_question_block("Ce que l'on disait de l'argent chez vous, et ce que vous en avez gardé :",
+                              "demo_histoire", config=QuestionConfig(box_height=4.0 * cm))
+    layout.add_anchor("demo_ancrage")
+    layout.render()
 
 
 def page_questions(c):
@@ -357,6 +386,7 @@ def page_livrable(c):
             "Préparer deux questions sur la rémunération pour la prochaine séance.",
         ],
         field_prefix="demo_livrable",
+        pistes=True,
     )
 
 
@@ -364,7 +394,8 @@ def build_test_suite_pdf(output_filename="Test_All_Templates.pdf"):
     builder = DocumentBuilder(output_path=output_filename, carnet=4)
     builder.set_title("Planche de démonstration - DA Éditorial & Affirmé")
 
-    for page in (page_elements_1, page_elements_2, page_cover, page_opener, page_questions,
+    for page in (page_elements_1, page_elements_2, page_cover, page_opener, page_weather_recap, page_questions,
+                 page_heavy_exercise,
                  page_composite_1, page_composite_2, page_reading, page_form_blocks, page_drawn_blocks,
                  page_tree_of_life, page_meteo, page_quadrants,
                  page_two_columns,

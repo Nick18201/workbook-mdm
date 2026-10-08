@@ -38,7 +38,7 @@ MAX_INSTRUCTION_LENGTH = 5_000
 
 class ParseRequest(BaseModel):
     raw_notes: str = Field(..., max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes ou texte au kilomètre")
-    chapter_num: int = Field(1, description="Numéro du chapitre")
+    chapter_num: int = Field(1, description="Numéro du carnet")
     chapter_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre souhaité (optionnel, inféré si omis)")
     beneficiary_name: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Prénom ou nom du bénéficiaire")
     meteo_option: Optional[
@@ -80,7 +80,7 @@ class IterateResponse(BaseModel):
 
 class TemplateInfo(BaseModel):
     id: str = Field(..., description="Identifiant unique du livret modèle")
-    chapter_num: int = Field(..., description="Numéro du chapitre")
+    chapter_num: int = Field(..., description="Numéro du carnet")
     title: str = Field(..., description="Titre du livret")
     subtitle: str = Field(..., description="Sous-titre de couverture")
     description: str = Field(..., description="Brève description pédagogique")

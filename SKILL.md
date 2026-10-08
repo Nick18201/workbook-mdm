@@ -24,7 +24,7 @@ L'agent DOIT respecter scrupuleusement les directives de [`Agent.md`](file:///c:
 1. **Une source unique, déclarative** :
    * Chaque document (carnets, livret, business plan) est **un fichier JSON** dans `workbooks/`, au format `WorkbookSpec` (`Scripts/workbook_generator/spec.py`). Le même fichier sert le PDF et l'app web.
    * Une page est un gabarit (`cover`, `summary`, `recap`, `meteo`, `quadrants`, `two_columns`, `enquete`, `roadmap`, `engagement`, `closing`) ou une page `composite`, faite de blocs (`BlockSpec`) : un bloc = un appel `PageLayout.add_*`, longueurs en cm (`*_cm`), couleurs par leur nom (`"sky"`).
-   * En tête du fichier : `carnet` (0 à 6 : pastel dominant et folio « carnet X/7 ») ou `folio` (« titre court ») pour les autres documents, et `pdf_title`.
+   * En tête du fichier : `carnet` (1 à 7 ou `"route"` : pastel dominant et folio « carnet X/7 » ou « carnet de route ») ou `folio` (« titre court ») pour les autres documents, et `pdf_title`.
 2. **Compilation par le moteur unique** :
    * `workbook_generator.compiler.compile_workbook_from_spec` transforme une spécification en PDF, pour la ligne de commande comme pour l'app.
    * Le script d'entrée (`Scripts/main_generate_<id>.py`) appelle seulement `build_reference_workbook("<id>", output)`.
@@ -48,7 +48,7 @@ L'agent DOIT respecter scrupuleusement les directives de [`Agent.md`](file:///c:
 | N° | Gabarit | Appel API (`workbook_generator`) | Usage |
 |:---|:---|:---|:---|
 | **1** | **Couverture** | `create_cover_page(c, title, number, tagline, promise)` | Logotype, illustration de la table de travail (au pastel du carnet), gros numéro PT Mono, titre avec mot d'accent, promesse sur un post-it |
-| **2** | **Ouverture de chapitre** | `create_standard_summary_page(c, num, title, intro, points)` | Sourcil, gros numéro, titre, objectif, encadré EXERCICES & PROTOCOLES à puces étoile |
+| **2** | **Ouverture de carnet** | `create_standard_summary_page(c, num, title, intro, points, duration, split)` | Sourcil, gros numéro, titre, objectif, encadré EXERCICES & PROTOCOLES à puces étoile, durée, découpage et cadre |
 | **3** | **Questions Auto-Fit** | `PageLayout.add_questions_group(questions)` | 1 à 4 questions sur cartes pastel, boîtes auto-dimensionnées |
 | **4** | **Météo Intérieure** | `create_standard_meteo_page(c, title, part_title, ...)` | Humeur et pictogrammes météo, jauge d'énergie 0-10 en pastilles, réflexion |
 | **5** | **4 Quadrants / Matrice** | `create_standard_quadrants_page(c, title, part_title, data)` | 4 cartes pastel avec leur zone de réponse |

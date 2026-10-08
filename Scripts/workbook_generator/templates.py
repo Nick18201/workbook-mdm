@@ -9,6 +9,8 @@ from .config import PDFStyle
 from .components import (
     HINT_LEADING,
     HINT_SIZE,
+    QUESTION_LEADING,
+    QUESTION_SIZE,
     choice_scale_height,
     draw_answer_box,
     draw_choice_scale,
@@ -23,8 +25,11 @@ from .primitives import (
     draw_annotation,
     draw_card_title,
     draw_drawn_arrow,
+    draw_eyebrow,
     draw_folio,
     draw_frise,
+    draw_icon,
+    draw_icon_badge,
     draw_label_pill,
     draw_page_head,
     draw_paragraph,
@@ -44,6 +49,16 @@ from .primitives import (
 )
 
 logger = logging.getLogger(__name__)
+
+# Fixed texts of the common template of the carnets (never customized). The safety
+# protocol of a heavy exercise follows James Pennebaker's expressive writing: a warning,
+# a strict right to leave it blank, and an anchoring sentence to close it.
+PROTOCOL_WARNING = "Les questions qui suivent sont franches et peuvent remuer. Prenez-les à votre rythme."
+PROTOCOL_OPTIONAL = ("Si cet exercice vous semble trop lourd à faire hors séance, laissez-le vierge : "
+                     "nous l'aborderons ensemble.")
+ANCHOR_PROMPT = "Aujourd'hui, avec le recul, je sais que…"
+ENERGY_PROMPT = "Votre niveau d'énergie aujourd'hui :"
+ENERGY_REASON = "Ce chiffre s'explique surtout par…"
 
 
 @dataclass
@@ -1024,6 +1039,127 @@ class PageLayout:
                 draw_answer_box(self.c, cursor, row_y, box_w, field_height, field_id, tooltip=tooltip, multiline=False)
                 cursor += box_w + gap
             row_y -= field_height + row_gap
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    # --- Common template of the carnets ---------------------------------------------
+
+    def add_protocol(self, text=None):
+        """
+        Before a heavy exercise: a white card with a shield badge, « Avant de commencer »,
+        the warning (`text`, or PROTOCOL_WARNING) and the right to leave it blank.
+        """
+        pad = PDFStyle.CARD_PADDING
+        badge = 1.0 * cm
+        text_x = self.text_x + pad + badge + 0.4 * cm
+        inner = self.text_x + self.target_width - pad - text_x
+        label = "Avant de commencer"
+        warning = str(text or PROTOCOL_WARNING)
+        size, leading = PDFStyle.SIZE_BODY, PDFStyle.SIZE_BODY * PDFStyle.LEADING_BODY
+        _, pill_h = label_pill_size(label)
+        warning_h = paragraph_height(warning, inner, PDFStyle.FONT_BODY, size, leading)
+        optional_h = paragraph_height(PROTOCOL_OPTIONAL, inner, PDFStyle.FONT_BODY_BOLD, size, leading)
+        h = 2 * pad + max(badge, pill_h + 0.25 * cm + warning_h + 0.1 * cm + optional_h)
+        self._ensure_space(h)
+
+        top = self.y_cursor
+        draw_white_card(self.c, self.text_x, top - h, self.target_width, h)
+        draw_icon_badge(self.c, self.text_x + pad + badge / 2, top - pad - badge / 2, "shield", diameter=badge)
+        draw_label_pill(self.c, text_x, top - pad - pill_h, label, max_width=inner)
+        t = top - pad - pill_h - 0.25 * cm
+        t -= draw_paragraph(self.c, warning, text_x, t, inner, PDFStyle.FONT_BODY, size, PDFStyle.COLOR_INK,
+                            leading) + 0.1 * cm
+        draw_paragraph(self.c, PROTOCOL_OPTIONAL, text_x, t, inner, PDFStyle.FONT_BODY_BOLD, size, PDFStyle.COLOR_INK,
+                       leading)
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_anchor(self, field_id, box_height=1.6 * cm):
+        """After a heavy exercise: « Pour clore », the anchoring sentence (ANCHOR_PROMPT) and its box."""
+        pad = PDFStyle.CARD_PADDING
+        inner = self.target_width - 2 * pad
+        label = "Pour clore"
+        _, pill_h = label_pill_size(label)
+        prompt_h = paragraph_height(ANCHOR_PROMPT, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
+        h = 2 * pad + pill_h + 0.25 * cm + prompt_h + 0.2 * cm + box_height
+        self._ensure_space(h)
+
+        top = self.y_cursor
+        draw_pastel_card(self.c, self.text_x, top - h, self.target_width, h)
+        draw_label_pill(self.c, self.text_x + pad, top - pad - pill_h, label, variant="on_pastel", max_width=inner)
+        t = top - pad - pill_h - 0.25 * cm
+        t -= draw_paragraph(self.c, ANCHOR_PROMPT, self.text_x + pad, t, inner, PDFStyle.FONT_HEADING_BOLD,
+                            QUESTION_SIZE, PDFStyle.COLOR_INK, QUESTION_LEADING) + 0.2 * cm
+        draw_answer_box(self.c, self.text_x + pad, t - box_height, inner, box_height, field_id, tooltip=ANCHOR_PROMPT)
+        self.y_cursor -= h + PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_contrast_example(self, surface, exploitable, title=None):
+        """
+        A contrasted example, taken from a neighbouring trade (`title`): the same answer
+        « En surface » (white card) and « Exploitable » (pastel card), side by side.
+        """
+        pad = 0.45 * cm
+        arrow_gap = 0.8 * cm
+        col_w = (self.target_width - arrow_gap) / 2
+        inner = col_w - 2 * pad
+        size, leading = PDFStyle.SIZE_BODY, PDFStyle.SIZE_BODY * 1.45
+        _, pill_h = label_pill_size("En surface")
+        head_h = 8 + 0.3 * cm
+        texts_h = max(paragraph_height(str(t or ""), inner, PDFStyle.FONT_HEADING_ITALIC, size, leading)
+                      for t in (surface, exploitable))
+        card_h = 2 * pad + pill_h + 0.25 * cm + texts_h
+        self._ensure_space(head_h + card_h)
+
+        top = self.y_cursor
+        draw_eyebrow(self.c, self.text_x, top - 8, f"Exemple · {title}" if title else "Exemple",
+                     max_width=self.target_width)
+        top -= head_h
+        cards = (
+            ("En surface", surface, self.text_x, PDFStyle.COLOR_INK_MUTED, "pastel"),
+            ("Exploitable", exploitable, self.text_x + col_w + arrow_gap, PDFStyle.COLOR_INK, "on_pastel"),
+        )
+        for label, text, x, color, pill in cards:
+            if pill == "pastel":
+                draw_white_card(self.c, x, top - card_h, col_w, card_h, radius=12)
+            else:
+                draw_pastel_card(self.c, x, top - card_h, col_w, card_h, radius=12)
+            draw_label_pill(self.c, x + pad, top - pad - pill_h, label, variant=pill, max_width=inner)
+            draw_paragraph(self.c, str(text or ""), x + pad, top - pad - pill_h - 0.25 * cm, inner,
+                           PDFStyle.FONT_HEADING_ITALIC, size, color, leading)
+        draw_icon(self.c, "arrow_forward", self.text_x + col_w + arrow_gap / 2, top - card_h / 2, 16)
+        self.y_cursor = top - card_h - PDFStyle.GAP_BLOCK
+        return self.y_cursor
+
+    def add_energy_check(self, field_prefix):
+        """
+        The weather of the day, the same at the start of every carnet (two minutes): the
+        energy level from 0 to 10 (a single choice), then « Ce chiffre s'explique surtout par… ».
+        """
+        pad = PDFStyle.CARD_PADDING
+        inner = self.target_width - 2 * pad
+        label = "Météo du jour"
+        _, pill_h = label_pill_size(label)
+        prompt_h = paragraph_height(ENERGY_PROMPT, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
+        reason_h = paragraph_height(ENERGY_REASON, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
+        box_h = 1.2 * cm
+        h = (2 * pad + pill_h + 0.25 * cm + prompt_h + 0.15 * cm + choice_scale_height(True) + 0.3 * cm
+             + reason_h + 0.15 * cm + box_h)
+        self._ensure_space(h)
+
+        top = self.y_cursor
+        draw_pastel_card(self.c, self.text_x, top - h, self.target_width, h)
+        x = self.text_x + pad
+        draw_label_pill(self.c, x, top - pad - pill_h, label, variant="on_pastel", max_width=inner)
+        t = top - pad - pill_h - 0.25 * cm
+        t -= draw_paragraph(self.c, ENERGY_PROMPT, x, t, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE,
+                            PDFStyle.COLOR_INK, QUESTION_LEADING) + 0.15 * cm
+        group = reserve_field_name(self.form, f"{field_prefix}_energie")
+        t -= draw_choice_scale(self.c, group, x, t, inner, list(range(11)), "À plat", "En pleine forme",
+                               tooltip="Niveau d'énergie") + 0.3 * cm
+        t -= draw_paragraph(self.c, ENERGY_REASON, x, t, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE,
+                            PDFStyle.COLOR_INK, QUESTION_LEADING) + 0.15 * cm
+        draw_answer_box(self.c, x, t - box_h, inner, box_h, f"{field_prefix}_raison", tooltip=ENERGY_REASON)
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 

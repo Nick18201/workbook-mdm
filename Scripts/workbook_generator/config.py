@@ -47,9 +47,18 @@ class PDFStyle:
     COLOR_MINT = PASTELS["mint"]
     COLOR_BLUSH = PASTELS["blush"]
 
-    # Dominant pastel of each core workbook (chapters 0 to 6); lilac for any other document
-    CARNET_PASTELS = {0: "lilac", 1: "sky", 2: "almond", 3: "mint", 4: "blush", 5: "lilac", 6: "sky"}
+    # Dominant pastel of each carnet of the bilan, by stage of the programme (chosen on
+    # 2026-10-08): cool tints for stage 1 (carnets 1 to 5), warm ones for stage 2 (carnets
+    # 6 and 7), jasmine for the carnet de route (stage 3). Lilac for any other document.
+    CARNET_ROUTE = "route"
+    CARNET_PASTELS = {
+        1: "sky", 2: "lilac", 3: "mint", 4: "sky", 5: "lilac",
+        6: "almond", 7: "blush",
+        CARNET_ROUTE: "jasmine",
+    }
+    CARNET_COUNT = 7  # carnets de bord, numbered 1 to 7; the carnet de route comes after them
     DEFAULT_PASTEL = "lilac"
+    PDF_LANG = "fr-FR"  # language of the PDF catalog, read by screen readers
 
     # B. Fonts (files in assets/fonts, see its README). register_fonts() swaps a name
     # for a Helvetica font when its file is missing.

@@ -78,3 +78,49 @@ def test_predefined_workbook_pdf_stays_light():
     pdf = compile_workbook_from_spec(get_predefined_spec("chap1"))
 
     assert len(pdf) < 1_500_000
+
+
+def _words(page):
+    return " ".join(page.get_text().split())
+
+
+def test_opener_of_a_carnet_gives_its_duration_and_frame():
+    spec = WorkbookSpec(carnet=2, pages=[PageSpec(template="summary", title="Mon *parcours.*", params={
+        "num": "2", "points": ["Exercice 1 · Vos expériences · 40 min"], "duration": "2 h 45",
+        "split": "En trois fois : exercices 1 et 2, 3 à 5, puis 6 à 8.",
+    })])
+    text = _words(_open(spec)[0])
+
+    assert "Comptez 2 h 45 d'écriture, hors entretiens et recherches." in text
+    assert "En trois fois" in text
+    assert "Vous pouvez passer une question." in text
+    # Outside the carnets of the bilan, no frame: the reference documents keep their opener
+    other = _words(_open(WorkbookSpec(pages=[PageSpec(template="summary", title="S", params={"points": ["Un"]})]))[0])
+    assert "passer une question" not in other
+
+
+def test_end_of_carnet_has_guided_zones_and_the_thread_of_leads():
+    spec = WorkbookSpec(pages=[PageSpec(template="engagement", title="Votre livrable.", params={
+        "lines": ["Je relis mes réponses."], "field_prefix": "fin", "pistes": True,
+    })])
+    page = _open(spec)[0]
+    names = {w.field_name for w in page.widgets()}
+
+    assert {"fin_zone_1", "fin_zone_2", "fin_zone_3", "fin_piste"} <= names
+    assert "À aborder en séance" in _words(page)
+    assert not any(n.startswith("notes_") for n in names)
+
+
+def test_protocol_texts_are_fixed():
+    spec = WorkbookSpec(pages=[PageSpec(template="composite", title="Votre histoire.", blocks=[
+        BlockSpec(type="protocol", text="Cet exercice revient sur votre enfance."),
+        BlockSpec(type="question", question="Q ?", field_id="q"),
+        BlockSpec(type="anchor", field_id="ancrage"),
+    ])])
+    page = _open(spec)[0]
+    text = _words(page)
+
+    assert "Cet exercice revient sur votre enfance." in text
+    assert "laissez-le vierge : nous l'aborderons ensemble." in text
+    assert "Aujourd'hui, avec le recul, je sais que…" in text
+    assert "ancrage" in {w.field_name for w in page.widgets()}

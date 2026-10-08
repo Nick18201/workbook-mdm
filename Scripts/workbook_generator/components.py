@@ -16,7 +16,7 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 
 from .config import PDFStyle
-from .document_builder import document_pastel
+from .document_builder import carnet_eyebrow, document_pastel, document_style
 from .forms import create_input_field, create_checkbox, create_radio, reserve_field_name
 from .primitives import (
     content_frame,
@@ -27,6 +27,7 @@ from .primitives import (
     draw_filled_arrow,
     draw_folio,
     draw_heading,
+    draw_icon,
     draw_icon_badge,
     draw_label_pill,
     draw_logotype,
@@ -222,11 +223,12 @@ def _intro(c, text, x, top, width, size=None):
 
 # --- Cover ---------------------------------------------------------------------
 
-_CHAPTER_LABEL = re.compile(r"^\s*chapitre\s+(\d+)\s*[:·.\-–—]\s*(.+)$", re.IGNORECASE)
+_CHAPTER_LABEL = re.compile(r"^\s*(?:carnet|chapitre)\s+(\d+)\s*[:·.\-–—]\s*(.+)$", re.IGNORECASE)
 
 
 def split_chapter_label(label):
-    """'CHAPITRE 4 : MON RAPPORT À L'ARGENT' -> ('4', 'MON RAPPORT À L'ARGENT'); (None, label) otherwise."""
+    """'Carnet 4 : Mon rapport à l'argent' (or the former 'Chapitre 4 : …') -> ('4', 'Mon rapport à l'argent');
+    (None, label) otherwise."""
     match = _CHAPTER_LABEL.match(str(label or ""))
     if match:
         return match.group(1), match.group(2).strip()
@@ -273,7 +275,7 @@ def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise
                              tracking=PDFStyle.TRACKING_TITLE_XL)
     title_top = 3.6 * cm + title_h
     if eyebrow is None:
-        eyebrow = f"Carnet de bord · chapitre {number}" if number not in (None, "") else "Carnet de bord"
+        eyebrow = carnet_eyebrow(c, number)
     if number not in (None, ""):
         number_size = 130
         number_y = title_top + 0.8 * cm
@@ -290,7 +292,7 @@ def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise
     c.showPage()
 
 
-# --- Chapter opener (former summary page) --------------------------------------
+# --- Carnet opener (former summary page) ---------------------------------------
 
 def _point_text(point):
     if isinstance(point, (tuple, list)):
@@ -302,16 +304,65 @@ def _point_text(point):
     return str(point).strip()
 
 
-def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, points_list):
+# Fixed lines of a carnet's opener: the frame is never customized
+OPENER_FRAME = ("Vos réponses vous appartiennent : seule la personne qui vous accompagne les lit. "
+                "Vous pouvez passer une question.")
+OPENER_HOW_TO = "Remplissez ce PDF à l'écran ou sur papier. Nous le relisons ensemble en séance."
+NOTE_SIZE = PDFStyle.SIZE_BODY_SMALL
+NOTE_LEADING = NOTE_SIZE * 1.45
+NOTE_INDENT = 0.7 * cm
+NOTE_GAP = 0.18 * cm
+
+
+def _opener_notes(c, duration=None, split=None):
     """
-    Chapter opener: eyebrow, big number, title, objective, then the exercises of the
-    chapter as a star list in a pastel card (EXERCICES & PROTOCOLES).
+    The lines under the exercises of an opener, as (icon, text): the writing time and the
+    advised split, then, in a carnet of the bilan, the frame and how to fill in the PDF.
+    """
+    notes = []
+    timing = [f"Comptez {duration} d'écriture, hors entretiens et recherches." if duration else "", split or ""]
+    timing = " ".join(t.strip() for t in timing if t and t.strip())
+    if timing:
+        notes.append(("schedule", timing))
+    if document_style(c).carnet is not None:
+        notes += [("lock", OPENER_FRAME), ("edit_note", OPENER_HOW_TO)]
+    return notes
+
+
+def _opener_notes_height(notes, width):
+    if not notes:
+        return 0
+    texts = sum(paragraph_height(text, width - NOTE_INDENT, PDFStyle.FONT_BODY, NOTE_SIZE, NOTE_LEADING)
+                for _, text in notes)
+    return 0.5 * cm + texts + NOTE_GAP * (len(notes) - 1)
+
+
+def _draw_opener_notes(c, notes, x, top, width):
+    """Draws the opener notes (a blue icon, then the text) from `top`. Returns their height."""
+    y = top - 0.5 * cm
+    for icon, text in notes:
+        draw_icon(c, icon, x + 6, first_baseline(y, NOTE_SIZE, NOTE_LEADING) + 0.35 * NOTE_SIZE, 13)
+        y -= draw_paragraph(c, text, x + NOTE_INDENT, y, width - NOTE_INDENT, PDFStyle.FONT_BODY, NOTE_SIZE,
+                            PDFStyle.COLOR_INK, NOTE_LEADING) + NOTE_GAP
+    return top - y - NOTE_GAP
+
+
+def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, points_list, duration=None,
+                                 split=None):
+    """
+    Carnet opener: eyebrow, big number, title, objective, then the exercises of the
+    carnet as a star list in a pastel card (EXERCICES & PROTOCOLES). Below them, the
+    writing time (duration, e.g. « 1 h 45 ») and the advised split (a sentence), then,
+    in a carnet of the bilan, the frame (who reads, the right to skip a question) and
+    how to fill in the PDF.
     intro_text is rendered as ReportLab paragraph markup (<b>, <br/>...): callers passing
     untrusted text must escape it first, as compiler.py does.
     """
     x, width = content_frame()
     items = [t for t in (_point_text(p) for p in points_list or []) if t]
-    eyebrow = f"Carnet de bord · chapitre {chapter_num_str}" if chapter_num_str else "Carnet de bord"
+    notes = _opener_notes(c, duration, split)
+    notes_h = _opener_notes_height(notes, width)
+    eyebrow = carnet_eyebrow(c, chapter_num_str)
     number = str(chapter_num_str or "")
     number_size = 130
     title_w = width * 0.85
@@ -340,6 +391,7 @@ def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, 
     block_h = heading_height(chapter_title, title_w, size=34, min_size=24, max_lines=3) + 0.45 * cm
     block_h += intro_h + 0.7 * cm if intro else 0
     block_h += _exercises_card_height(items, inner_w) if items else 0
+    block_h += notes_h
     y = min(y, PDFStyle.CONTENT_BOTTOM + 1.0 * cm + block_h)
     y = draw_heading(c, chapter_title, x, y, title_w, size=34, min_size=24, max_lines=3) - 0.45 * cm
     if intro:
@@ -349,13 +401,15 @@ def create_standard_summary_page(c, chapter_num_str, chapter_title, intro_text, 
     remaining = items
     first = True
     while remaining or first:
-        page_items, remaining = _fit_star_items(remaining, width - 2 * PDFStyle.CARD_PADDING, y - PDFStyle.CONTENT_BOTTOM)
+        page_items, remaining = _fit_star_items(remaining, inner_w, y - PDFStyle.CONTENT_BOTTOM - notes_h)
         if page_items:
-            _draw_exercises_card(c, x, y, width, page_items)
+            y -= _draw_exercises_card(c, x, y, width, page_items)
         if remaining:
             _finish_page(c)
             y = draw_page_head(c, chapter_title, eyebrow=eyebrow, suffix="(suite)") - 0.6 * cm
         first = False
+    if notes:
+        _draw_opener_notes(c, notes, x, y, width)
     _finish_page(c)
 
 
@@ -384,6 +438,19 @@ def _draw_exercises_card(c, x, top, width, items):
 
 # --- End of the workbook ------------------------------------------------------
 
+# The three zones that close every carnet, and the line of the thread of leads
+END_ZONES = (
+    "Ce qui m'étonne en relisant mes réponses",
+    "À aborder en séance",
+    "Ce que j'ai laissé vierge, à reprendre ensemble",
+)
+END_PISTE = "Une idée de piste qui m'est venue en remplissant ce carnet"
+ZONE_SIZE = 10.5
+ZONE_LEADING = ZONE_SIZE * 1.3
+ZONE_MIN_BOX = 1.3 * cm
+ZONE_MAX_BOX = 4.0 * cm
+
+
 def create_standard_engagement_page(
     c,
     part_title,
@@ -393,11 +460,15 @@ def create_standard_engagement_page(
     field_prefix="engagement",
     livrable_title=None,
     livrable_text=None,
+    zones=None,
+    pistes=False,
 ):
     """
     End of the workbook: the deliverable on a jasmine post-it with the « Validé en séance »
     stamp, the session date and a validation box, then the commitments (custom_lines) as a
-    checklist. signature_label names the date field (former signature block).
+    checklist, and three short guided zones (END_ZONES, or `zones`) down to the bottom of
+    the page. With pistes, one more line collects the leads that came up (the thread of
+    leads, carnets 2 to 5). signature_label names the date field (former signature block).
     """
     x, width = content_frame()
     form = c.acroForm
@@ -460,12 +531,30 @@ def create_standard_engagement_page(
             y -= draw_paragraph(c, text, x + 20, y, width - 20) + 0.25 * cm
         y -= 0.75 * cm
 
-    # 4. The rest of the page: notes to bring to the next session
-    if y - PDFStyle.CONTENT_BOTTOM > 3.5 * cm:
-        draw_eyebrow(c, x, y - 8, "Mes notes pour la prochaine séance", max_width=width)
-        y -= 8 + 0.35 * cm
-        draw_answer_box(c, x, PDFStyle.CONTENT_BOTTOM, width, y - PDFStyle.CONTENT_BOTTOM, f"notes_{field_prefix}",
-                        tooltip="Mes notes pour la prochaine séance")
+    # 4. Short guided zones instead of a blank page of notes, sharing the rest of the page
+    entries = [(str(z).strip(), f"{field_prefix}_zone_{k}")
+               for k, z in enumerate(END_ZONES if zones is None else zones, start=1) if str(z).strip()]
+    if pistes:
+        entries.append((END_PISTE, f"{field_prefix}_piste"))
+    if entries:
+        labels_h = [paragraph_height(label, width, PDFStyle.FONT_HEADING_BOLD, ZONE_SIZE, ZONE_LEADING) + 4
+                    for label, _ in entries]
+        gap = 0.4 * cm
+        head_h = 8 + 0.45 * cm
+        if y - PDFStyle.CONTENT_BOTTOM < head_h + sum(labels_h) + len(entries) * ZONE_MIN_BOX + gap * (len(entries) - 1):
+            _finish_page(c)
+            y = draw_page_head(c, title or "Votre livrable.", eyebrow=part_title or "Fin de carnet",
+                               suffix="(suite)") - 0.7 * cm
+        draw_eyebrow(c, x, y - 8, "Avant la prochaine séance", max_width=width)
+        y -= head_h
+        box_h = (y - PDFStyle.CONTENT_BOTTOM - sum(labels_h) - gap * (len(entries) - 1)) / len(entries)
+        box_h = min(ZONE_MAX_BOX, box_h)
+        for (label, field_id), label_h in zip(entries, labels_h):
+            draw_paragraph(c, label, x, y, width, PDFStyle.FONT_HEADING_BOLD, ZONE_SIZE, PDFStyle.COLOR_INK,
+                           ZONE_LEADING)
+            y -= label_h
+            draw_answer_box(c, x, y - box_h, width, box_h, field_id, tooltip=label)
+            y -= box_h + gap
     _finish_page(c)
 
 
@@ -588,7 +677,7 @@ def create_standard_meteo_page(
     t = y - pad
     t -= draw_prompt(energy_prompt, t)
     group = reserve_field_name(form, f"{field_prefix}_energy")
-    draw_choice_scale(c, group, inner_x, t, inner_w, list(range(11)), "Épuisé (0)", "Plein d'énergie (10)", tooltip="Niveau")
+    draw_choice_scale(c, group, inner_x, t, inner_w, list(range(11)), "À plat (0)", "En pleine forme (10)", tooltip="Niveau")
     y -= card_h + gap
 
     # 3. What fills the mind: the rest of the page

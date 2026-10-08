@@ -60,7 +60,7 @@ app = FastAPI(
 _FIELD_LABELS = {
     "raw_notes": "Notes de séance",
     "feedback": "Consigne d'ajustement",
-    "chapter_title": "Titre du chapitre",
+    "chapter_title": "Titre du carnet",
     "beneficiary_name": "Nom du bénéficiaire",
     "beneficiary_context": "Contexte du bénéficiaire",
     "custom_instructions": "Consignes spécifiques",
@@ -221,7 +221,7 @@ def api_compile_pdf(spec: WorkbookSpec):
     try:
         pdf_bytes = compile_workbook_from_spec(spec)
         filename = (
-            f"Workbook_Chapitre_{spec.chapter_num}.pdf"
+            f"Carnet_{spec.chapter_num}.pdf"
             if spec.chapter_num
             else "Workbook.pdf"
         )
@@ -243,7 +243,7 @@ def api_quick_generate(request: ParseRequest):
     try:
         spec, fallback_reason = parse_notes_with_gemini(request)
         pdf_bytes = compile_workbook_from_spec(spec)
-        filename = f"Workbook_Chapitre_{spec.chapter_num}.pdf"
+        filename = f"Carnet_{spec.chapter_num}.pdf"
         return StreamingResponse(
             io.BytesIO(pdf_bytes),
             media_type="application/pdf",

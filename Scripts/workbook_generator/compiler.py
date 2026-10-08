@@ -282,6 +282,18 @@ def _add_block(layout, b_data, page_idx, b_idx):
         zones = [[str(title or ""), str(hint or ""), field_id or f"p{page_idx}_arbre_{b_idx}_{k}"]
                  for k, (title, hint, field_id) in enumerate((z[:3] for z in zones), start=1)]
         layout.add_tree_of_life(zones, annotation=b_data.get("text"))
+    elif b_type == "protocol":
+        layout.add_protocol(b_data.get("text"))
+    elif b_type == "anchor":
+        layout.add_anchor(b_data.get("field_id") or f"p{page_idx}_ancrage_{b_idx}")
+    elif b_type == "contrast_example":
+        layout.add_contrast_example(
+            b_data.get("surface") or "",
+            b_data.get("exploitable") or b_data.get("text") or "",
+            title=b_data.get("title"),
+        )
+    elif b_type == "energy":
+        layout.add_energy_check(b_data.get("field_prefix") or f"p{page_idx}_meteo_{b_idx}")
     elif b_type == "space":
         layout.add_space(_length_pt(b_data.get("height_cm"), 0))
     elif b_type == "page_break":
@@ -305,8 +317,8 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
     # Helper factories to avoid late-binding closure issues in loops
     def make_cover_renderer(page_obj):
         params = page_obj.params
-        # 'subtitle' holds the chapter label, e.g. "Chapitre 4 : Mon rapport à l'argent"
-        label = str(params.get("subtitle") or f"Chapitre {spec.chapter_num} : {spec.chapter_title}")
+        # 'subtitle' holds the carnet label, e.g. "Carnet 4 : Mon rapport à l'argent"
+        label = str(params.get("subtitle") or f"Carnet {spec.chapter_num} : {spec.chapter_title}")
         number, name = split_chapter_label(label)
         if number is None and not params.get("subtitle"):
             number = spec.chapter_num
@@ -360,8 +372,12 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
             else:
                 # A plain text is a whole exercise line (« Exercice 1 · … »)
                 points_list.append(str(pt))
+        params = page_obj.params
+        duration = params.get("duration") or params.get("duree")
+        split = params.get("split") or params.get("decoupage")
         return lambda c: create_standard_summary_page(
-            c, num_str, title, intro_text, points_list
+            c, num_str, title, intro_text, points_list,
+            duration=str(duration) if duration else None, split=str(split) if split else None,
         )
 
     def make_recap_renderer(page_obj):
@@ -505,6 +521,10 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
         params = page_obj.params
         livrable_title = params.get("livrable_title") or params.get("deliverable_title") or params.get("livrable")
         livrable_text = params.get("livrable_text") or params.get("deliverable_text") or params.get("deliverable")
+        zones = params.get("zones")
+        if isinstance(zones, dict):
+            zones = list(zones.values())
+        zones = [str(z) for z in zones] if isinstance(zones, list) else None
         return lambda c: create_standard_engagement_page(
             c,
             part_title=page_obj.part_title or "Fin de carnet",
@@ -514,6 +534,8 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
             field_prefix=str(params.get("field_prefix", f"p{page_idx}_engagement")),
             livrable_title=str(livrable_title) if livrable_title else None,
             livrable_text=str(livrable_text) if livrable_text else None,
+            zones=zones,
+            pistes=params.get("pistes") is True,
         )
 
     def make_enquete_renderer(page_obj, page_idx):

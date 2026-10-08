@@ -6,7 +6,7 @@ format (Gemini, customization, JSON import and export), and compiler.py renders 
 
 import json
 import os
-from typing import Any, Dict, List, Literal, Optional
+from typing import Annotated, Any, Dict, List, Literal, Optional, Union
 
 from pydantic import BaseModel, Field, model_validator
 
@@ -86,6 +86,11 @@ class BlockSpec(BaseModel):
     a fill_in_card line a list of texts and boxes [field_id, width_cm, tooltip], a life_line
     node [label, 'summit' | 'valley'], a tree_of_life zone [title, hint, field_id] (roots,
     soil, trunk, branches, leaves, fruits).
+    The common template of the carnets adds 'protocol' (before a heavy exercise: the warning
+    in 'text', or a default one), 'anchor' (after it: the anchoring sentence, 'field_id'),
+    'contrast_example' ('title' names the neighbouring trade, 'surface' and 'exploitable'
+    the two versions of an answer) and 'energy' (the weather of the day, 'field_prefix').
+    Their fixed texts live in templates.py, so a customization cannot change them.
     """
     type: Literal[
         "callout",
@@ -111,6 +116,10 @@ class BlockSpec(BaseModel):
         "fill_in_card",
         "life_line",
         "tree_of_life",
+        "protocol",
+        "anchor",
+        "contrast_example",
+        "energy",
         "space",
         "page_break",
     ] = Field(..., description="Type de composant atomique")
@@ -165,6 +174,8 @@ class BlockSpec(BaseModel):
     links: Optional[List[List[Any]]] = Field(None, description="Ressources [[nom, url, description], …] (link_card)")
     groups: Optional[List[Any]] = Field(None, description="Groupes de cases [[titre, [éléments]], …] (checklist_cards)")
     item_columns: Optional[int] = Field(None, ge=1, le=4, description="Colonnes de cases dans chaque carte")
+    surface: Optional[str] = Field(None, description="Réponse « En surface » de l'exemple contrasté")
+    exploitable: Optional[str] = Field(None, description="Réponse « Exploitable » de l'exemple contrasté")
 
     @model_validator(mode="after")
     def check_scale_range(self):
@@ -208,13 +219,19 @@ class PageSpec(BaseModel):
     )
 
 
+# A carnet of the bilan: 1 to 7, or the carnet de route
+Carnet = Union[Annotated[int, Field(ge=1, le=PDFStyle.CARNET_COUNT)], Literal["route"]]
+
+
 class WorkbookSpec(BaseModel):
-    chapter_num: int = Field(1, description="Numéro du chapitre")
-    chapter_title: str = Field("Mes Réflexions", description="Titre principal du chapitre")
+    chapter_num: int = Field(1, description="Numéro du carnet (grand numéro de la couverture et de l'ouverture)")
+    chapter_title: str = Field("Mes Réflexions", description="Titre principal du carnet")
     title: Optional[str] = Field(None, description="Alias pour chapter_title")
     subtitle: str = Field("BILAN DE COMPÉTENCES", description="Sous-titre de couverture")
     beneficiary_name: Optional[str] = Field(None, description="Nom ou prénom du bénéficiaire pour personnalisation")
-    carnet: Optional[int] = Field(None, ge=0, le=6, description="Numéro d'un carnet du bilan : pastel et folio « carnet N/7 »")
+    carnet: Optional[Carnet] = Field(
+        None, description="Carnet du bilan, 1 à 7 ou 'route' : pastel, folio « carnet N/7 » ou « carnet de route »"
+    )
     folio: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Texte du folio (défaut : le titre)")
     pastel: Optional[str] = Field(None, description="Pastel dominant ('lilac', 'sky'…)")
     pdf_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre des métadonnées du PDF")

@@ -7,8 +7,9 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | Étape | État |
 |---|---|
 | Audit, carte du parcours, récapitulatif pour le site | Fusionnés (PR #48 et #49) |
-| Programme du bilan : séances 5 / 3 / 2, test des fonctionnements cognitifs, plus de Hexa3D | PR #50, à fusionner |
-| Unification : une seule source, `workbooks/*.json`, un seul moteur, MBTI retiré des carnets | PR #51, à fusionner |
+| Programme du bilan : séances 5 / 3 / 2, test des fonctionnements cognitifs, plus de Hexa3D | Fusionné (PR #50) |
+| Unification : une seule source, `workbooks/*.json`, un seul moteur, MBTI retiré des carnets | Fusionné (PR #51) |
+| R0 · Socle : nommage, palette, gabarit commun, langue du PDF | PR en cours |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
 **Avant de commencer : fusionner les PR #50 et #51**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
@@ -43,6 +44,13 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
    Leur texte d'origine se retrouve dans l'historique git : `git show 1696357:server/predefined_workbooks.py`.
 6. **Découpage : un socle commun, puis une PR par carnet**, dans l'ordre du parcours.
 
+**Prises pendant R0 (8 octobre 2026)**
+7. **La palette suit les temps du programme** (choisie parmi quatre palettes comparées côte à côte, toutes pastels de la DA) :
+   - temps 1, teintes froides : carnet 1 ciel, carnet 2 lilas, carnet 3 menthe, carnet 4 ciel, carnet 5 lilas ;
+   - temps 2, teintes chaudes : carnet 6 amande, carnet 7 rose poudré ;
+   - temps 3 : le carnet de route en jasmin.
+   Écartées : le cycle des pastels sans logique, et les huit teintes distinctes, qui demandaient trois pastels nouveaux (pistache, pivoine, lagon) hors de la DA.
+
 ## 3. Les PR, dans l'ordre
 
 Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
@@ -50,6 +58,7 @@ Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
 | PR | Contenu | Points d'attention |
 |---|---|---|
 | **R0 · Socle** | Le gabarit commun et le système de nommage (détails en section 4). La carte : section 9 mise à jour. | Touche tous les documents. Comparer avant et après chaque document, et ne garder que les changements voulus. |
+| **R0 bis · Format** | La marque « fixe / adaptable » et les identifiants de données, avec le bloc de report (« Reportez vos seuils · carnet 4, p. 12 ») et la règle de personnalisation qui en découle dans l'app. | Séparée de R0 pour garder le socle lisible. À fusionner avant R2, le premier carnet qui reporte des données. |
 | **R1 · Carnet 1** | État des lieux et héritages, à partir du carnet 0 et du carnet 1 actuels et de l'app (carte, section 5). | Le cadre de travail est fixe et jamais personnalisé. Une alternative pour une famille absente ou douloureuse. |
 | **R2 · Carnet 2** | Parcours : objectif boussole, expériences et travail réel, travail empêché, quatre zones, fil rouge, ligne de vie, arbre de vie facultatif, interview. | Il absorbe le travail réel du livret. Cible : 2 h 45. |
 | **R3 · Carnet 3** | Fonctionnements : l'encadré « À savoir sur le test », les 17 mises en situation réécrites, la page « ce que j'en retiens ». | Aucune mention du MBTI. Q16 est réécrite du point de vue des proches. |
@@ -74,11 +83,11 @@ Pour chaque PR de carnet :
 
 **Nommage**
 - `DocumentBuilder` accepte les carnets 1 à 7 (folio « carnet N/7 ») et le carnet de route (folio « carnet de route »). L'ouverture affiche « Carnet de bord · carnet N » au lieu de « chapitre N ».
-- `PDFStyle.CARNET_PASTELS` est réattribué pour 1 à 7 et pour le carnet de route. **Montrer 3 ou 4 palettes côte à côte avant de trancher** : c'est la règle pour les choix de teintes.
+- `PDFStyle.CARNET_PASTELS` est réattribué pour 1 à 7 et pour le carnet de route. **Fait** : palette « par temps » (section 2, point 7).
 - Les scripts `main_generate_carnet_N.py`, le catalogue de l'app, la CI et les tests suivent.
 
 **Gabarit commun** (carte, section 4 ; synthèse, lot 2)
-- **Le bloc « protocole »**, en trois temps. Avant l'exercice : « Si cet exercice vous semble trop lourd seul, laissez-le vierge, nous l'aborderons ensemble. » Après l'exercice : un champ d'ancrage court, « Aujourd'hui, avec le recul, je sais que… ».
+- **Le bloc « protocole »**, en trois temps. Avant l'exercice : un avertissement, puis « Si cet exercice vous semble trop lourd à faire hors séance, laissez-le vierge : nous l'aborderons ensemble. » (« trop lourd seul » s'accordait avec la personne). Après l'exercice : un champ d'ancrage court, « Aujourd'hui, avec le recul, je sais que… ».
 - **La durée dans le sourcil** (« Exercice 2 · 15-20 min »). La page d'ouverture donne le total et le découpage conseillé, avec une ligne de cadre (qui lit, droit de passer une question).
 - **L'exemple contrasté**, avec un rendu commun « En surface / Exploitable ».
 - **La météo et le récapitulatif** dans le gabarit de chaque carnet.
