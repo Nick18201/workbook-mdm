@@ -49,7 +49,13 @@ CATALOGUE = [
      "minimum, énergie), la grille d'entretien et trois contacts, puis les comptes rendus d'enquête, ce que le "
      "terrain apprend, la matrice de faisabilité et les compromis acceptables.",
      "handshake", BILAN),
-    # Former carnets 0 to 6, until the clean-up of the restructuring (R11)
+    ("carnet-de-route", 8, "Carnet de route · Décider et agir",
+     "Profil en reports, compétences prouvées, récits, pistes A et B, feuilles de route et premières actions",
+     "Préparer les séances 9 et 10, en deux parties : le profil, les compétences prouvées et deux récits d'action, "
+     "puis les pistes A et B face aux critères, les feuilles de route à 30, 60 et 90 jours, le module du projet, "
+     "les premières actions, les garde-fous et le chemin parcouru.",
+     "route", BILAN),
+    # Former carnets 0 to 6 and the former livret, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
      "flag", BILAN),
@@ -75,7 +81,7 @@ CATALOGUE = [
     ("chap6", 6, "Carnet 6 · Phase d'exploration (ancien parcours)", "Cartographie, retour des proches et fiches métiers",
      "Cartographie personnelle, retour des proches, dix métiers à explorer et fiches métiers à confronter au réel.",
      "travel_explore", BILAN),
-    ("livret", 7, "Livret de compétences", "Portfolio de compétences prouvées par des faits",
+    ("livret", 7, "Livret de compétences (ancien parcours)", "Portfolio de compétences prouvées par des faits",
      "Préférences, travail réel, cartographie du métier, autonomie, récits d'action et plan de sécurité.",
      "workspace_premium", BILAN),
     ("business-plan", 99, "Mon business plan · De l'idée au projet viable",
