@@ -16,7 +16,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R3 · Carnet 3 · Mes fonctionnements propres (`carnet-3.json`) | Fusionné (PR #58) |
 | R4 · Carnet 4 · Mon rapport à l'argent (`carnet-4.json`) | Fusionné (PR #59) |
 | R5 · Carnet 5 · Valeurs et moteurs profonds (`carnet-5.json`) | Fusionné (PR #60) |
-| R6 · Carnet 6 · L'exploration (`carnet-6.json`) | PR à ouvrir |
+| R6 · Carnet 6 · L'exploration (`carnet-6.json`) | Fusionné (PR #61) |
+| R7 · Carnet 7 · Confronter au terrain (`carnet-7.json`), en deux parties | PR à ouvrir |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
@@ -188,6 +189,66 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
       - « Ce que je ne veux plus revivre, donc ma piste doit… » est inutile : les irritants sont retournés aux carnets 1 à 3, et la cartographie reporte le critère d'énergie du carnet 3.
     - Deux autres vont au carnet 7 : « Le compromis que cette piste me demande, et si je l'accepte », et « Ce qui pourrait me faire repousser ce contact ».
 
+**Prises pendant R7 (8 octobre 2026)**
+62. **Un seul fichier en deux parties, et une fin par partie.**
+    - `carnet-7.json` déclare `parts` (« Confronter vos pistes », « Tirer les leçons du terrain ») : l'app le personnalise partie par partie, comme le livret business plan. La couverture, l'ouverture et le dos restent hors parties.
+    - Chaque partie prépare une séance, donc chacune finit par un livrable validé en séance : « Votre premier livrable » (vos trois fiches, vos enquêtes lancées) avant la séance 7, « Votre second livrable » (`c7.livrable` : les retours d'enquêtes et la matrice) avant la séance 8.
+63. **Six exercices, numérotés à la suite : 1 h 45, puis 2 h.**
+    - Partie 1 : la météo et le récapitulatif (10 min), vos trois fiches (1 h 10 : où chercher, 10 min, puis 3 × 20 min), préparer vos enquêtes (20 min : la grille, puis les contacts), la fin de la partie 1 (5 min).
+    - Partie 2 : « Avant de reprendre », la météo et le récapitulatif (10 min), vos comptes rendus (45 min : 15 min, puis 30 min pour deux), ce que le terrain vous a appris (15 min), la matrice de faisabilité (30 min), ce que vous acceptez (10 min), la fin de carnet (10 min).
+    - La promesse de couverture est celle de l'ancien carnet 6, que l'audit jugeait non tenue : « Trois pistes, confrontées au réel. » L'ouverture pose la règle en gras : « Une enquête n'est pas une candidature : vous demandez un regard, pas un poste. »
+64. **Une météo par partie.** La seconde a un nouvel identifiant, `c7.meteo_2` (carte, section 7) : le chemin parcouru du carnet de route aura un point par intervalle.
+65. **Le récapitulatif de la séance 6** est un tableau, « La piste retenue, et son numéro · Pourquoi elle », suivi de « Ce que la séance a déplacé ».
+    - Les dix pistes sont citées par un renvoi écrit (carnet 6, exercice 4), comme les prénoms au carnet 6 : trois intitulés tiennent dans une colonne.
+    - Les sept autres « restent dans votre carnet 6 : le terrain en fera peut-être revenir une ».
+66. **Salaires et débouchés passent avant les fiches**, sur une page « Où chercher » qui ouvre l'exercice 1 : on cherche, puis on note, et le salaire ne s'écrit qu'une fois.
+    - La page porte « Ma zone de recherche » (les villes, le temps de trajet accepté, le télétravail).
+    - Deux liens France Travail, vérifiés le 8 octobre 2026 :
+      - Data Emploi : les offres, les salaires proposés et les embauches d'un métier, jusqu'au bassin d'emploi ;
+      - l'enquête Besoins en main-d'œuvre.
+      L'ancienne page « marché du travail » renvoie désormais vers MétierScope.
+    - L'immersion (Immersion facilitée, la PMSMP) : « avec une convention : parlons-en en séance ».
+    - Puis la définition fixe des valeurs de la grille.
+    - Chaque fiche note la rémunération observée et sa source, et les débouchés dans la zone. Aucun chiffre n'est écrit dans le carnet.
+67. **Une fiche par page, et trois rangées de critères fixes**, car une quatrième ne tient pas (mesuré).
+    - Ce que fait le métier, adaptable : la piste et son numéro, ses missions d'après mes recherches, puis « Ce que je sais déjà faire » et « Ce qui me manque ».
+    - « Face à mes critères » est une `rating_grid` : « Valeur 1 (2, 3) : condition remplie » et « Mon minimum est atteint », sur une seule échelle, « Oui / À terme / Non / À vérifier ». « Mon minimum » est le minimum sécurisant ; « à terme », il est atteint dans la durée acceptable d'une baisse. « À vérifier » devient une question d'enquête.
+    - Puis la rémunération observée et sa source, les débouchés dans ma zone, ce qui me rechargerait, ce qui me coûterait, ce qu'il me reste à vérifier, auprès de qui.
+    - « Ce que cette piste dit de ce que je cherche » n'est pas redemandé : c'est une colonne des pistes audacieuses du carnet 6, citée par un renvoi.
+    - `c7.fiches` est posé sur la fiche 1.
+68. **La question franche du compromis sort des fiches.** Elle est posée une fois, après le terrain, quand le compromis est concret : à l'exercice 6, « Ce que vous acceptez ».
+    - « Ma piste, et le compromis qu'elle me demande » · « À quelle condition je l'accepterais ».
+    - Puis la question franche facultative « La piste qu'il me coûterait le plus de lâcher » · « Ce qu'elle représente pour moi ».
+    - Enfin la clôture « Avec le recul, le terrain m'apprend que… ».
+69. **La grille d'entretien compte sept questions communes.**
+    - De l'app : le quotidien réel, ce qui change dans le métier, la façon d'y entrer.
+    - De l'interview du carnet 2 : le parcours, ce qu'on aime, les difficultés, le conseil.
+    - En plus : la rémunération pour débuter, et « Qui d'autre me conseilleriez-vous de rencontrer ? ».
+    - L'IA y entre pour tout le monde, plutôt qu'en ligne sur les fiches : « Qu'est-ce qui change dans votre métier : les besoins, les recrutements, ce que l'IA déplace ? »
+    - Puis le report des trois questions d'entretien de la grille (`c5.grille`), et un renvoi à ce qu'il reste à vérifier sur chaque fiche.
+70. **Les contacts.**
+    - Trois personnes à solliciter dans les dix jours, une par piste si possible : les modèles (carnet 1), la personne de l'interview (carnet 2), celles repérées en fin de carnet 6, par des renvois écrits.
+    - Le message d'approche du rapport 06 finit sur « seulement votre regard sur ce métier » (« un regard de professionnel » s'accordait).
+    - Un tableau : la personne, pour quelle piste, comment la joindre, sollicitée le, rendez-vous le.
+    - La charge moyenne suit la convention du carnet 4 : « Ce qui pourrait me faire repousser ce contact » (facultatif), puis « Pour me lancer, je commence par… ».
+71. **Un compte rendu par entretien**, sur deux pages (le premier, puis le deuxième et le troisième). `c7.enquetes` est posé sur le premier.
+    - La personne et son métier, la piste, la date ; ce qui confirme ; « Ce qui contredit, ou m'étonne » ; ce que j'ai appris sur mes critères ; la suite.
+    - Une immersion ou un salon se notent de la même façon.
+72. **Ce que le terrain vous a appris** reprend les trois lignes de l'app (l'accès, le quotidien et le rythme, la rémunération et les débouchés), en « ce que j'imaginais » et « ce que le terrain montre ».
+    - Les sept pistes non retenues trouvent leur place ici : une carte facultative « Une piste apparue ou revenue » (la piste, d'où elle vient, ce qui m'y attire).
+    - Pas de quatrième fiche dans le PDF : l'app peut en ajouter.
+73. **La matrice de faisabilité est un tableau fixe** (`c7.matrice`) : une colonne par piste, cinq lignes.
+    - Les trois du programme : mes compétences, le marché, les débouchés dans ma zone.
+    - Puis « Ce qu'il faudrait pour y aller : formation, délai, coût » et « Mes critères après le terrain ».
+    - La personne ne classe pas ses pistes : les trois familles (pistes directes, passerelles courtes, angles morts) se font en séance 8.
+74. **Pas de protocole complet au carnet 7** : le rapport 06 n'y voit aucune charge forte. Deux points de charge moyenne suivent la convention du carnet 4 (les contacts, l'exercice 6).
+75. **Le moteur garde dans la carte les valeurs en mots d'une `rating_grid`.** « À vérifier », et « En vigilance » au carnet 4, en sortaient de quelques points. Seules changent les pages à échelle en mots : carnet 4 p. 4, business plan p. 41 et 46. Un test le vérifie.
+76. **Retirés des fiches de l'ancien carnet 6.**
+    - Sept des dix fiches : l'app peut en ajouter.
+    - « Pourquoi ce métier vous attire » : déjà au carnet 6, et « Pourquoi elle » au récapitulatif.
+    - « Missions et compétences utiles » : scindée en trois cases.
+    - Du rapport 06, sont écartés « Ce que je garde de cette piste, même si je ne l'exerce pas » (déjà la clôture du carnet 6) et les exemples du guide de haute montagne et de la médiation culturelle, remplacés par six exemples de métiers nouveaux.
+
 ## 3. Les PR, dans l'ordre
 
 Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
@@ -301,6 +362,13 @@ Pour chaque PR de carnet :
   - un lien porte son adresse courte entre parenthèses, à la fin de sa description, pour l'impression. Chaque lien se vérifie avant la PR : un podcast avait disparu ;
   - un titre dont le premier mot se termine par une apostrophe se met entièrement en accent (« *L'exploration.* ») : « L'*exploration.* » laisserait un blanc après l'apostrophe ;
   - métiers déjà pris pour les exemples : ceux des carnets 1 à 5, plus archiviste, économiste, topographe (carnet 6).
+- **Les conventions ajoutées par le carnet 7** (`workbooks/carnet-7.json`) :
+  - un carnet en deux parties déclare `parts`, et chaque page de partie son `part`. Ses exercices sont numérotés à la suite. Chaque partie finit par sa page de livrable (« Votre premier livrable », « Votre second livrable »), et la partie 2 s'ouvre sur « Avant de reprendre », avec sa météo (`cN.meteo_2`). Les sourcils de ces pages commencent par « Partie 1 · » ou « Partie 2 · » ;
+  - une échelle en mots peut avoir quatre valeurs (« Oui / À terme / Non / À vérifier »). Le moteur garde les valeurs dans la carte, et le libellé d'une ligne tient toujours en une trentaine de caractères (« Valeur 1 : condition remplie ») ;
+  - une fiche répétée qui n'a pas la place d'une consigne la reçoit sur la page qui ouvre l'exercice, avec l'exemple et les définitions ;
+  - une piste se désigne par « Piste 1 » à « Piste 3 », dans l'ordre du récapitulatif, sans recopier son intitulé ailleurs que sur sa fiche ;
+  - un lien dont la page s'affiche en JavaScript se vérifie dans le navigateur intégré, pas avec une simple requête ;
+  - métiers déjà pris pour les exemples : ceux des carnets 1 à 6, plus frigoriste, pépiniériste, ergonome, chimiste, géologue, garagiste (carnet 7).
 - **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm (1,1 cm de moins sous un titre de deux lignes). Ordres de grandeur, écart compris :
   - protocole et ancrage : 5,1 cm chacun (5,6 cm pour un avertissement de trois lignes) ;
   - météo : 7,6 cm ;
@@ -313,9 +381,17 @@ Pour chaque PR de carnet :
   - paragraphe d'une ligne : 1 cm ;
   - la ligne de vie et l'arbre de vie demandent au moins 14 cm ;
   - mesures du carnet 5 : un tableau de cinq lignes de 2,2 cm, avec son en-tête, 13,7 cm ; neuf cartes de neuf cases à cocher sur trois colonnes, 19 cm ; treize cases à cocher sur trois colonnes, 4,9 cm ; une `fill_in_card` d'une ligne, 2,5 cm ; des `numbered_lines` sur deux colonnes avec une aide, 7,6 cm pour cinq lignes et 5,6 cm pour trois ; trois `info_cards` sur une rangée, 5,7 cm ; une frise et son intertitre, 4,4 cm ; une `fields_card` de trois rangées de cases de 1,6 cm, 10,2 cm ; un report de quatre lignes de 1,6 cm sur deux colonnes, 8,2 cm ; un tableau de cases d'une ligne, 0,75 cm d'en-tête puis 1,15 cm par ligne ;
-  - mesures du carnet 6 : un tableau de cases de 1,6 cm, 0,75 cm d'en-tête puis 1,9 cm par ligne (10,2 cm pour cinq lignes, 6,4 cm pour trois) ; un report de huit lignes sur deux colonnes, dont deux de 1,6 cm, 10,8 cm ; un report de quatre lignes sur deux colonnes, 5,7 cm ; trois `link_card` de deux, cinq et un liens, 14,4 cm avec leurs écarts ; deux cartes de `numbered_lines` côte à côte, trois lignes de 0,85 cm chacune, 5,2 cm.
+  - mesures du carnet 6 : un tableau de cases de 1,6 cm, 0,75 cm d'en-tête puis 1,9 cm par ligne (10,2 cm pour cinq lignes, 6,4 cm pour trois) ; un report de huit lignes sur deux colonnes, dont deux de 1,6 cm, 10,8 cm ; un report de quatre lignes sur deux colonnes, 5,7 cm ; trois `link_card` de deux, cinq et un liens, 14,4 cm avec leurs écarts ; deux cartes de `numbered_lines` côte à côte, trois lignes de 0,85 cm chacune, 5,2 cm ;
+  - mesures du carnet 7 :
+    - une `fields_card` de trois rangées (0,85, 2,2, puis deux cases de 1,6 cm), 8,9 cm, et de trois rangées (0,85, 1,6, 1,6), 8,3 cm ;
+    - une `rating_grid` de quatre lignes avec son titre, 6,5 cm : une fiche (ces trois blocs) remplit exactement une page, sans phrase d'ouverture ;
+    - un compte rendu (titre, rangées de 0,85, 2,6 et 1,6 cm), 10,3 cm, deux par page ;
+    - une `star_list` de sept questions, dont deux sur deux lignes, 7 cm ;
+    - une `link_card` de deux liens de deux lignes, 5,1 cm, et d'un lien, 3,8 cm ;
+    - un report de trois lignes de 0,85 cm, 7,75 cm ;
+    - un tableau de trois lignes de 0,85 cm, dont l'en-tête tient sur deux lignes, 5,2 cm.
 
-  Une ouverture de neuf lignes, avec une introduction de sept lignes, ne tient que sous un titre d'une ligne.
+  Une ouverture de neuf lignes, avec une introduction de sept lignes, ne tient que sous un titre d'une ligne. Une ouverture de dix lignes tient avec une introduction de quatre lignes, une phrase en gras de deux lignes et un découpage de trois lignes.
 - **Tester l'app en local** : `python -m uvicorn server.app:app --port 8080`. Sans clé Gemini, l'app fonctionne en mode de secours. Avec la vraie clé, tester la personnalisation des carnets 6, 7, du carnet de route et du module création, ceux qui s'y prêtent le plus (carte, section 8).
 
 ## 6. Les règles à garder en tête
@@ -333,115 +409,129 @@ Pour chaque PR de carnet :
 
 - **La politique des champs** : police fixe avec défilement, ou police automatique. À trancher après un test de saisie dans de vrais lecteurs PDF (Acrobat, Aperçu, navigateur).
 - **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm. Depuis R2, la ligne de vie et l'arbre de vie les tiennent aussi.
-- **Les reprises du carnet 2** se font dans les carnets suivants : les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3). Les moteurs et les critères sont relus avant la grille anti-compromis du carnet 5 (R5). Les moteurs « je le veux » et l'objectif boussole sont reportés à la cartographie du carnet 6 (R6).
+- **Les reprises du carnet 2** se font dans les carnets suivants : les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3). Les moteurs et les critères sont relus avant la grille anti-compromis du carnet 5 (R5). Les moteurs « je le veux » et l'objectif boussole sont reportés à la cartographie du carnet 6 (R6). Les questions de l'interview entrent dans la grille d'entretien du carnet 7, et la personne interviewée parmi ses contacts (R7).
 - **Les reprises du carnet 3.**
   - La cartographie des énergies (`c3.energies`) se reporte au carnet de route (profil). Deux de ses lignes sont déjà reprises au récapitulatif du carnet 4 (R4), une autre avant la grille du carnet 5 (R5), deux à la cartographie du carnet 6 (R6). Elle remplace « Ce qui vide mes batteries » et « Mes sources de stress » : on la reporte, on ne repose pas la question.
   - Les réponses à « Sous pression » (Q16 et Q17) restent dans le carnet 3, sans report.
 - **Les reprises du carnet 4.**
   - Les seuils (`c4.seuils`) et la tendance dominante (`c4.tendance`) sont reportés au récapitulatif du carnet 5, et ses tensions y renvoient (R5).
-  - Les seuils sont reportés à la cartographie du carnet 6, dans une carte « À garder pour vous » (R6). Sur chaque fiche du carnet 7, une ligne : « Rémunération observée · mon minimum est atteint : oui / à terme / non » (R7). Ils vont ensuite au carnet de route et au module création (R8, R9).
+  - Les seuils sont reportés à la cartographie du carnet 6, dans une carte « À garder pour vous » (R6). Sur chaque fiche du carnet 7, « Mon minimum est atteint : oui / à terme / non / à vérifier » et la rémunération observée, avec un renvoi à la cartographie (R7). Ils vont ensuite au carnet de route et au module création (R8, R9).
   - Le profil validé et ses deux forces (`c4.profil`) sont reportés à la cartographie du carnet 6 (R6). Ils iront au carnet de route (« profil, forces, cartographie des énergies »).
   - Le livret business plan cite déjà les seuils, dans des encadrés fixes « Si vous avez fait le bilan ».
 - **Les reprises du carnet 5.**
-  - La grille anti-compromis (`c5.grille`) est reportée au carnet 6 : les valeurs au récapitulatif, leurs conditions à la cartographie (R6). Elle va ensuite aux fiches du carnet 7 (la rangée de critères) et à ses enquêtes (les questions d'entretien) (R7), à la piste A et à la piste B (R8) et au module création (R9).
+  - La grille anti-compromis (`c5.grille`) est reportée au carnet 6 : les valeurs au récapitulatif, leurs conditions à la cartographie (R6). Au carnet 7, les fiches jugent chaque piste sur ses trois conditions, et la grille d'entretien en reporte les trois questions (R7). Elle ira à la piste A et à la piste B (R8) et au module création (R9).
   - Les limites hors argent (`c5.limites`) sont reportées à la cartographie du carnet 6 (R6). Elles iront aux garde-fous du carnet de route.
   - L'entourage (`c5.entourage`) est repris au retour des proches du carnet 6, par un renvoi écrit : une ligne par proche sollicité (R6). Il ira aux alliés du carnet de route.
   - Les situations d'alignement (exercice 1) peuvent nourrir les deux récits d'action du carnet de route (rapport 07) : un renvoi écrit, sans identifiant.
   - Les tensions et la hiérarchie restent dans le carnet 5, sans report.
 - **Les reprises du carnet 6.**
-  - Les dix pistes (`c6.pistes`) vont au récapitulatif du carnet 7 (les trois pistes retenues en séance 6, et pourquoi), puis au carnet de route (R7, R8). Le rapport 07 y propose « Pour chacune de vos pistes réalistes (carnet 6), quelle compétence vous ouvre la porte ? », aux compétences prouvées (R8).
+  - Les dix pistes (`c6.pistes`) sont citées au récapitulatif du carnet 7 par un renvoi écrit : les trois pistes retenues en séance 6, et pourquoi (R7). Le rapport 07 propose « Pour chacune de vos pistes réalistes (carnet 6), quelle compétence vous ouvre la porte ? », aux compétences prouvées du carnet de route (R8).
   - Les réponses des proches (`c6.proches`) vont au carnet de route, comme preuve extérieure (rapport 07, R8). Le livret business plan en parle déjà dans ses encadrés fixes.
-  - Les trois favorites et les personnes repérées en fin de carnet 6 n'ont pas d'identifiant : la séance 6 tranche, et le carnet 7 récapitule ses choix. Les personnes repérées servent aux contacts d'enquête du carnet 7.
-  - Les questions plus franches reportées au carnet 7 : « Le compromis que cette piste me demande, et si je l'accepte » (fiches), « Ce qui pourrait me faire repousser ce contact » (enquêtes).
-- **L'option « Initiation à l'IA »** n'apparaît qu'en une ligne d'engagement, en fin de carnet 6. Le site dit que la personne explore ensuite ses pistes « en sachant ce que l'IA y déplace » : une ligne « Ce que l'IA change à ce métier » sur les fiches du carnet 7 est à trancher en R7.
-- **Les liens des ressources** vieillissent : en R6, un podcast avait disparu et trois adresses avaient changé. Les revérifier à chaque PR qui touche une page de ressources, et avant R11.
+  - Les personnes repérées en fin de carnet 6 sont citées aux contacts d'enquête du carnet 7 (R7).
+  - Les deux questions plus franches reportées au carnet 7 y sont posées : le compromis à l'exercice 6, après le terrain, et « Ce qui pourrait me faire repousser ce contact » aux contacts (R7).
+- **Les reprises du carnet 7.**
+  - Les fiches, les comptes rendus et la matrice (`c7.fiches`, `c7.enquetes`, `c7.matrice`) servent à la séance 8, qui en tire les trois scénarios. Le carnet de route les reprend (R8) :
+    - « Les professionnels rencontrés depuis le carnet 6, et ce que j'en retiens » (rapport 07) vient des comptes rendus ;
+    - « Ce qui me manque », sur chaque fiche, et la ligne « Ce qu'il faudrait pour y aller » de la matrice nourrissent les feuilles de route et le module de projet.
+  - Les deux météos (`c7.meteo`, `c7.meteo_2`) vont au chemin parcouru du carnet de route.
+  - « Ma zone de recherche » n'a pas d'identifiant. Le carnet de route peut la citer par un renvoi écrit (carnet 7, exercice 1).
+  - Les questions plus franches restent dans le carnet 7, sans report.
+- **Les trois familles de scénarios** (pistes directes, passerelles courtes, angles morts) viennent du programme. Aucun carnet ne les définit : le carnet 7 les nomme seulement, et la séance 8 fait le classement. Le récapitulatif du carnet de route devra les nommer de la même façon. Le sens exact d'« angles morts » est à préciser avec Nicolas avant R8.
+- **L'immersion** (PMSMP) demande une convention signée par un organisme comme France Travail. Le carnet 7 dit seulement « parlons-en en séance ». Qui peut la signer pour une personne salariée en bilan reste à préciser.
+- **L'option « Initiation à l'IA »** n'apparaît qu'en une ligne d'engagement, en fin de carnet 6. Le site dit que la personne explore ensuite ses pistes « en sachant ce que l'IA y déplace ». Au carnet 7, la grille d'entretien pose la question à chaque professionnel : « ce que l'IA déplace » (R7).
+- **Les liens des ressources** vieillissent : en R6, un podcast avait disparu et trois adresses avaient changé ; en R7, la page « marché du travail » de France Travail renvoyait vers MétierScope (remplacée par Data Emploi). Les revérifier à chaque PR qui touche une page de ressources, et avant R11.
+- **La personnalisation partie par partie du carnet 7** est à tester avec la vraie clé Gemini. Sans clé, les deux parties passent en mode de secours, et la partie personnalisée reprend sa place.
 - **Les noms des seuils dans le programme.** En séance 4, le programme parle de « revenu vital », de « revenu sécurisant » et de « délai de trésorerie », sans revenu cible. Les carnets disent minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. C'est un texte réglementaire : à aligner sur demande, au lot programme et site.
 - **Les modalités du test** (passation, personne qui fait la restitution) restent à préciser dans l'encadré « À savoir sur le test » du carnet 3.
 - **Les exemples du livret** décrivent peut-être une personne réelle. Ils disparaissent avec le carnet de route (R8), mais si c'est le cas, l'historique git les garde.
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R6 (carnet 6) fusionnée :
+Message à coller, une fois la PR R7 (carnet 7) fusionnée :
 
 ```text
-Reprends la restructuration des carnets avec la PR R7 : le carnet 7, « Confronter au terrain », en deux parties.
+Reprends la restructuration des carnets avec la PR R8 : le carnet de route, en deux parties. Il remplace l'actuel livret de compétences.
 
 1. Prérequis
-- Vérifie que la PR R6 (carnet 6, branche claude/demarre-r6-c5fa67) est fusionnée dans main.
+- Vérifie que la PR R7 (carnet 7, branche claude/demarrage-r7-128d2a) est fusionnée dans main.
 - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
 - D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch. Avant de pousser sur une branche dont la PR existe, vérifie qu'elle n'est pas déjà fusionnée.
 
 2. À lire, dans cet ordre
-- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 à 6, et les mesures qui disent si une page tient. Cette section 8 contient ce prompt.
+- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 à 7, dont celles d'un carnet en deux parties (carnet 7), et les mesures qui disent si une page tient. La section 7 liste les reprises qui attendent le carnet de route. Cette section 8 contient ce prompt.
 - audit-carnets-2026-10/carte-parcours-unifie.md :
-  - section 3 (règles 7 et 8 : le terrain, deux semaines par intervalle) et section 4 (gabarit commun) ;
-  - section 5, carnet 7 (partie 1 : S6 → S7, partie 2 : S7 → S8) ;
-  - sections 6 (budget : 1 h 45, puis 2 h), 7 (identifiants c7.fiches, c7.enquetes, c7.matrice, c7.meteo, c7.livrable, et les données des carnets 1 à 6 qu'il reprend) et 8 (fixe ou adaptable : carnet 7 = pertinence forte ; nombre de fiches, contacts suggérés, exemples ; les critères des fiches, le protocole et la définition des seuils restent fixes).
-- audit-carnets-2026-10/rapports/06-chap6.md : les fiches métiers (exercices 5 et 6), les ressources (immersion, salaires), « Pour passer au réel », la charge émotionnelle (questions plus franches gardées pour R7) et le tableau des recommandations.
-- Les passages des autres rapports qui parlent des fiches, des enquêtes ou du terrain (cherche « fiche », « enquête », « carnet 6 » et « chap6 » dans rapports/) :
-  - 02 : l'interview du carnet 2 et ses questions, à réutiliser dans la grille d'entretien ;
-  - 04 : « Rémunération observée · mon minimum est atteint : oui / à terme / non » sur chaque fiche ;
-  - 05 : les 3 valeurs et leurs questions d'entretien dans les fiches ;
-  - 07 : « Les professionnels rencontrés depuis le carnet 6, et ce que j'en retiens » (le carnet de route le reprendra) ;
-  - 08 : « Si ce projet est l'une de vos pistes (carnet 6), reprenez sa fiche ».
-- La synthèse audit-carnets-2026-10/synthese.html en entier, en particulier les sections 02 (constats transversaux), 04 (fil rouge : le lieu de convergence) et 06 (conditions de remplissage).
-- Le carnet terrain de l'ancienne app (grille d'entretien, idées reçues et réalité du terrain, trois contacts et message d'approche) : git show 1696357:server/predefined_workbooks.py, fonction _build_chap5_spec.
-- workbooks/carnet-1.json à workbooks/carnet-6.json, les modèles à suivre, et les fiches de workbooks/chap6.json (exercices 5 et 6), le contenu actuel.
+  - section 3 (règle 9 : le document de synthèse se prépare au fil de l'eau) et section 4 (gabarit commun) ;
+  - section 5, carnet de route (partie 1 : S8 → S9, partie 2 : S9 → S10) ;
+  - sections 6 (budget : 1 h 30, puis 1 h 45, plus le module), 7 (identifiants route.competences, route.recits, route.pistes, route.feuilles, route.actions, route.meteo, route.livrable, et les données des carnets 1 à 7 qu'il reprend) et 8 (fixe ou adaptable : pertinence forte ; pistes pré-intitulées, ressources du secteur, module de projet ; le protocole et la définition des seuils restent fixes).
+- audit-carnets-2026-10/rapports/07-livret.md en entier : les thèmes, la charge émotionnelle (questions plus franches), le fil rouge et le tableau des recommandations.
+- audit-carnets-2026-10/chantier-modules-s9.md : la place des modules reconversion et évolution interne (à venir), et le module création (R9).
+- Les passages des autres rapports qui parlent du livret, des pistes A et B ou du plan d'action (cherche « livret », « piste A » et « feuille de route » dans rapports/) :
+  - 01 : l'objectif boussole, relu en fin de bilan ;
+  - 02 : les compétences de vie et les expériences, aux compétences prouvées ;
+  - 04 : les seuils, sans les redemander ;
+  - 05 : les trois valeurs face aux pistes A et B ;
+  - 06 : les pistes et le retour des proches.
+- La synthèse audit-carnets-2026-10/synthese.html en entier, en particulier les sections 02 (constats transversaux), 04 (fil rouge : « Le livret consolide ») et 06 (conditions de remplissage).
+- Le plan d'action de l'ancienne app (arbitrage A/B, feuilles de route à 30, 60 et 90 jours, garde-fous) : git show 1696357:server/predefined_workbooks.py, fonction _build_chap6_spec.
+- workbooks/carnet-1.json à workbooks/carnet-7.json, les modèles à suivre (carnet-7.json pour les deux parties), et workbooks/livret.json, le contenu actuel.
 
 3. Ce qu'il faut construire
-workbooks/carnet-7.json, cible 1 h 45 pour la partie 1 (S6 → S7) et 2 h pour la partie 2 (S7 → S8).
-- Partie 1 · Confronter :
-  - « Avant de commencer » : la météo (c7.meteo) et le récapitulatif de la séance 6, avec les trois pistes retenues et pourquoi. Les dix pistes (c6.pistes) sont reportées ou citées par un renvoi ;
-  - trois fiches, une par piste retenue (c7.fiches). Chaque fiche porte :
-    - les missions du métier, d'après vos recherches ;
-    - ce que je sais déjà faire et ce qui me manque, en deux cases ;
-    - une rangée de critères, fixe : les conditions de la grille (c5.grille), « Rémunération observée · mon minimum est atteint : oui / à terme / non » (c4.seuils), ce qui me rechargerait et ce qui me coûterait (c3.energies), « À vérifier auprès de qui ».
-    La fiche audacieuse garde « Ce que cette piste dit de ce que je cherche ». Les sept autres pistes restent en option. Question franche du rapport 06 : « Le compromis que cette piste me demande, et si je l'accepte » ;
-  - préparer vos enquêtes. La grille d'entretien de l'app, complétée par les questions de l'interview (c2.interview) et les questions d'entretien de la grille (c5.grille). Un message d'approche : « Je ne cherche pas de poste, seulement un regard de professionnel ». Trois contacts à solliciter dans les 10 jours, parmi les modèles (c1.modeles) et les personnes repérées en fin de carnet 6. Question franche : « Ce qui pourrait me faire repousser ce contact » ;
-  - salaires et débouchés : où chercher, et ce qu'il faut noter pour son bassin d'emploi. Des liens officiels, vérifiés, et aucun chiffre écrit dans le carnet. L'immersion (PMSMP, France Travail) a sa place ici.
-- Partie 2 · Tirer les leçons du terrain :
-  - vos comptes rendus d'enquête (c7.enquetes), un par entretien : ce qui confirme, ce qui contredit, la suite ;
-  - « Ce que j'imaginais → Ce que le terrain montre », d'après l'app ;
-  - la matrice de faisabilité (c7.matrice) : chaque piste face aux compétences, au marché et aux débouchés. C'est un brouillon, finalisé en séance 8 avec le classement en trois familles : pistes directes, passerelles courtes, angles morts.
-- Une fin de carnet avec c7.livrable : les retours d'enquêtes et la matrice. La séance 8 en tire les trois scénarios comparés.
-- Les marques fixed de la section 8 de la carte : les critères des fiches, le protocole, la définition des seuils, les renvois entre carnets. Le reste s'adapte, surtout le nombre de fiches et les contacts suggérés.
+workbooks/carnet-de-route.json ("carnet": "route"), cible 1 h 30 pour la partie 1 (S8 → S9) et 1 h 45 pour la partie 2 (S9 → S10), module de projet en plus.
+- Partie 1 · Prouver et préparer le choix :
+  - « Avant de commencer » : la météo (route.meteo) et le récapitulatif de la séance 8 : les trois scénarios (pistes directes, passerelles courtes, angles morts, à nommer comme au carnet 7), et vers lequel vous penchez. La matrice (c7.matrice) est reportée ou citée ;
+  - votre profil, en une page, sans rien refaire : des reports seulement (c4.profil, c3.energies). Aucun code de type ;
+  - vos compétences prouvées (route.competences) : un tableau compétence, où je l'ai prouvée, résultat ou trace, niveau d'autonomie de 1 à 4, envie de l'utiliser. Il part des expériences, du travail réel et du travail empêché, et des compétences de vie (c2.experiences, c2.travail_empeche, c2.competences_vie) ; le retour des proches (c6.proches) sert de preuve extérieure ; « Pour chacune de vos pistes, quelle compétence vous ouvre la porte ? » (rapport 07) ;
+  - deux récits d'action (route.recits) au lieu d'un, « Ce récit prouve que je sais… », et une version orale en trois phrases. Renvoi écrit aux situations d'alignement du carnet 5 et aux sommets de la ligne de vie du carnet 2.
+- Partie 2 · Décider et agir :
+  - « Avant de reprendre » : une seconde météo (route.meteo_2) et le récapitulatif de la séance 9 ;
+  - piste A, piste B (route.pistes) : le format de l'app (projet d'élan, refuge et tremplin, atouts, risques). « Piste A : le projet qui vous attire le plus. Piste B : le plus sûr, ou un tremplin. » Face aux seuils (c4.seuils) et aux trois valeurs (c5.grille), sans les redemander ;
+  - les feuilles de route à 30, 60 et 90 jours (route.feuilles), une par piste, comme le promet le programme ;
+  - vos premières actions sous 7 jours (route.actions) : action, date, personne à prévenir ;
+  - garde-fous et alliés : les limites hors argent (c5.limites), l'entourage (c5.entourage), les professionnels rencontrés (c7.enquetes : « Les professionnels rencontrés depuis le carnet 6, et ce que j'en retiens ») ;
+  - le chemin parcouru : relire l'objectif boussole (c2.boussole), renoter les huit domaines de vie (c1.domaines), comparer les météos (c1.meteo à c7.meteo, c7.meteo_2) ;
+  - préparer le suivi à 6 mois ;
+  - la place du module de votre projet : création (module création, R9), reconversion et évolution interne (à venir, chantier-modules-s9.md ; la séance 9 traite le sujet à l'oral).
+- Une fin par partie, sur le modèle du carnet 7, avec route.livrable en fin de carnet : les feuilles de route A et B et les premières actions. Le document de synthèse co-rédigé reste à part.
+- Les marques fixed de la section 8 de la carte : le protocole, la définition des seuils, les renvois entre carnets. Le reste s'adapte, surtout les pistes pré-intitulées et le module de projet.
 - À trancher dans le plan :
-  - le format des deux parties : un seul fichier avec `parts` (comme le livret business plan, personnalisé partie par partie) ou deux fins de carnet ;
-  - où la partie 2 commence (une page « Avant de commencer » avec une seconde météo ?) ;
-  - une ligne « Ce que l'IA change à ce métier » sur les fiches, pour l'option « Initiation à l'IA » de la séance 6 ;
-  - la place des sept pistes non retenues.
+  - le sens d'« angles morts » (feuille de route, section 7) : à demander avant d'écrire le récapitulatif de la séance 8 ;
+  - comment comparer les huit météos sans tout recopier (un report par carnet, ou un tableau) ;
+  - le niveau d'autonomie : une rating_grid de 1 à 4 par compétence, ou une colonne de tableau ;
+  - ce qui se montre (compétences prouvées, récits) et ce qui reste privé (seuils, garde-fous) : le dire dans le carnet, comme le demande le rapport 07 ;
+  - la place du module : une page de renvoi dans le carnet de route, ou rien de plus que la ligne de l'ouverture.
 
 4. Les règles à tenir
-- Aucune mention du MBTI, ni de code de type.
-- Aucun chiffre sans source, aucun chiffre personnel dans un exemple, aucun salaire écrit dans le carnet. Les seuils restent ceux de la personne : on les reporte, on ne les commente pas.
-- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel.
+- Aucune mention du MBTI, ni de code de type (l'exemple « ISFJ » du livret disparaît).
+- Les 28 exemples du livret disparaissent : ils décrivent un seul profil, peut-être une personne réelle. Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 à 7 (liste en section 5 de la feuille de route). Pas d'exemple sur un exercice de tri qu'il orienterait.
+- Aucun chiffre sans source (ni « garantie à 100 % », ni volumes d'heures CPF : un lien officiel à la place), aucun chiffre personnel dans un exemple. Les seuils restent ceux de la personne : on les reporte, on ne les commente pas.
+- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel, pas de « déclic ».
 - Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je », ni point médian. « Celles et ceux » reste possible hors amorce.
-- Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 à 6 (liste en section 5 de la feuille de route). Pas d'exemple sur un exercice de tri qu'il orienterait.
-- Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière. La charge moyenne (peur de solliciter, renoncer à une piste) suit la convention du carnet 4 : question franche facultative, puis une clôture.
+- Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière. La charge moyenne (travail empêché, cadre de sécurité, renoncer à une piste) suit la convention du carnet 4 : question franche facultative, puis une clôture.
 - Une question qui demande deux choses a deux cases. Une sous-question fermée (oui ou non) se rouvre, sauf un critère à cocher suivi d'un « parce que ».
 - Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. tests/test_workbooks.py le vérifie.
 - Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court. Mesure la hauteur des blocs avant de rendre (repères en section 5 de la feuille de route).
 
 5. Méthode
-a. Commence par me montrer le plan du carnet 7, page par page, avec les durées et leur total pour chaque partie, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
-b. Écris le JSON. Ajoute Scripts/main_generate_carnet_7.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-7 du catalogue (server/predefined_workbooks.py). Ajoute carnet_7 à la liste des scripts de CLAUDE.md. L'ancien chap6 porte déjà « (ancien parcours) ».
+a. Commence par me montrer le plan du carnet de route, page par page, avec les durées et leur total pour chaque partie, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
+b. Écris le JSON. Ajoute Scripts/main_generate_carnet_de_route.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-de-route du catalogue (server/predefined_workbooks.py). Ajoute carnet_de_route à la liste des scripts de CLAUDE.md. Le livret actuel (livret.json) prend « (ancien parcours) » dans son titre au catalogue ; il reste jusqu'à R11.
 c. Rends chaque page en PNG dans previews/ avec pymupdf et relis-les une à une. Mesure aussi la place libre en bas de chaque page.
 d. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py. Vérifie chaque lien.
 e. Relis tout l'audit, point par point, dès ce premier tour :
-   - le rapport 06 (fiches, ressources, « Pour passer au réel », charge émotionnelle, recommandations) ;
+   - le rapport 07 (thèmes, charge émotionnelle, fil rouge, recommandations) ;
    - la synthèse en entier ;
    - les passages des autres rapports listés plus haut.
-   Vérifie chaque point dans le JSON. Pour chaque question des fiches de l'ancien chap6.json, dis où elle va, ou pourquoi elle est retirée. Itère, puis dis-moi ce qui est traité, ce qui est écarté (avec la raison) et ce qui est reporté à une autre PR.
+   Vérifie chaque point dans le JSON. Pour chaque question du livret actuel, dis où elle va, ou pourquoi elle est retirée. Itère, puis dis-moi ce qui est traité, ce qui est écarté (avec la raison) et ce qui est reporté à une autre PR.
 f. Mets à jour la feuille de route :
-   - section 1 (état des PR : R6 fusionnée, R7 à ouvrir) ;
-   - section 2 (décisions prises pendant R7) ;
+   - section 1 (état des PR : R7 fusionnée, R8 à ouvrir) ;
+   - section 2 (décisions prises pendant R8) ;
    - section 5 (nouvelles conventions, s'il y en a) ;
    - section 7 (ce qui reste ouvert) ;
-   - section 8 (le prompt de reprise pour R8, le carnet de route, rédigé sur ce modèle).
-   Mets aussi à jour la carte, section 6 (budget du carnet 7), et section 7 si un identifiant change.
+   - section 8 (le prompt de reprise pour R9, le module création, rédigé sur ce modèle).
+   Mets aussi à jour la carte, section 6 (budget du carnet de route), et section 7 si un identifiant change.
 g. Commite sur la branche. J'ouvrirai la PR avec le bouton.
 
 6. Environnement (Windows, dans un worktree)
 - Le Python du venv est ../../../.venv/Scripts/python.exe.
 - Pour importer le moteur hors des scripts : PYTHONPATH="Scripts;." (point-virgule sous Windows) et PYTHONIOENCODING=utf-8.
+- Les outils du scratchpad des sessions précédentes ont disparu : réécris si besoin un script qui mesure la hauteur de chaque bloc et la place libre (en enveloppant compiler._add_block), et un script qui compare page par page l'image, le texte et les champs de chaque document avant et après un changement du moteur.
 ```

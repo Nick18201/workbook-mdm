@@ -2,6 +2,7 @@ import pymupdf
 
 from server.models import BlockSpec, PageSpec, WorkbookSpec
 from workbook_generator.compiler import compile_workbook_from_spec
+from workbook_generator.primitives import content_frame
 from workbook_generator.utils import strip_unsupported_glyphs
 
 CM = 28.3465
@@ -100,6 +101,17 @@ def test_scales_are_single_choice_radio_groups():
         assert len(radios) == 11
         assert len({w.field_name for w in radios}) == 1  # one group: choosing a level clears the others
         assert sorted(int(w.on_state()) for w in radios) == list(range(11))
+
+
+def test_rating_grid_values_in_words_stay_inside_their_card():
+    doc = _open(PageSpec(template="composite", title="Critères", blocks=[BlockSpec(
+        type="rating_grid", items=[["Mon minimum est atteint", "minimum"]], values=["Oui", "À terme", "Non", "À vérifier"],
+    )]))
+
+    x, width = content_frame()
+    spans = [s for b in doc[0].get_text("dict")["blocks"] for l in b.get("lines", []) for s in l["spans"]]
+    last = next(s for s in spans if s["text"].strip() == "À vérifier")
+    assert last["bbox"][2] <= x + width
 
 
 def test_pictograms_are_drawn_with_the_icon_font():

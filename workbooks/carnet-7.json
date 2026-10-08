@@ -1,0 +1,1286 @@
+{
+  "chapter_num": 7,
+  "chapter_title": "Confronter au terrain",
+  "subtitle": "Bilan de compétences",
+  "carnet": 7,
+  "pdf_title": "Marge de Manœuvre · Carnet 7 : Confronter au terrain",
+  "parts": [
+    "Confronter vos pistes",
+    "Tirer les leçons du terrain"
+  ],
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Confronter *au terrain.*",
+        "number": 7,
+        "tagline": "Bilan de compétences",
+        "promise": "Trois pistes, confrontées au réel."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Aller voir *le terrain.*",
+      "params": {
+        "num": "7",
+        "intro_text": "Ce carnet prépare les séances 7 et 8, en deux parties. La première passe vos trois pistes au crible de vos critères et lance vos enquêtes. La seconde tire les leçons du terrain : ce qui confirme, ce qui contredit, et votre matrice de faisabilité.<br/><br/><b>Une enquête n'est pas une candidature : vous demandez un regard, pas un poste.</b>",
+        "points": [
+          "Partie 1 · Avant de commencer · Météo et récapitulatif · 10 min",
+          "Exercice 1 · Vos trois fiches · 1 h 10",
+          "Exercice 2 · Préparer vos enquêtes · 20 min",
+          "Fin de la partie 1 · 5 min",
+          "Partie 2 · Avant de reprendre · Météo et récapitulatif · 10 min",
+          "Exercice 3 · Vos comptes rendus · 45 min",
+          "Exercice 4 · Ce que le terrain vous a appris · 15 min",
+          "Exercice 5 · La matrice de faisabilité · 30 min",
+          "Exercice 6 · Ce que vous acceptez · 10 min",
+          "Fin de carnet · 10 min"
+        ],
+        "duration": "1 h 45, puis 2 h",
+        "split": "Partie 1, entre les séances 6 et 7 : vos fiches (1 h 20), puis vos enquêtes (25 min). Partie 2, entre les séances 7 et 8 : un compte rendu après chaque entretien (55 min), puis le terrain, la matrice et la fin (1 h 05)."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Partie 1 · Météo et récapitulatif · 10 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c7_meteo",
+          "data_id": "c7.meteo"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "En séance 6, vous avez retenu trois pistes parmi vos dix (carnet 6, exercice 4). Notez-les avec leur numéro, et ce qui les a fait retenir. Les sept autres restent dans votre carnet 6 : le terrain en fera peut-être revenir une."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "La piste retenue, et son numéro",
+            "Pourquoi elle"
+          ],
+          "rows": [
+            [
+              "Piste 1",
+              {
+                "field_id": "c7_piste_1",
+                "placeholder": "Piste 1 : la piste retenue, et son numéro au carnet 6"
+              },
+              {
+                "field_id": "c7_piste_1_pourquoi",
+                "placeholder": "Piste 1 : pourquoi elle"
+              }
+            ],
+            [
+              "Piste 2",
+              {
+                "field_id": "c7_piste_2",
+                "placeholder": "Piste 2 : la piste retenue, et son numéro au carnet 6"
+              },
+              {
+                "field_id": "c7_piste_2_pourquoi",
+                "placeholder": "Piste 2 : pourquoi elle"
+              }
+            ],
+            [
+              "Piste 3",
+              {
+                "field_id": "c7_piste_3",
+                "placeholder": "Piste 3 : la piste retenue, et son numéro au carnet 6"
+              },
+              {
+                "field_id": "c7_piste_3_pourquoi",
+                "placeholder": "Piste 3 : pourquoi elle"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            1.6,
+            6.5,
+            9.0
+          ],
+          "field_height_cm": 1.6
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que la séance a déplacé",
+                "c7_seance_6_deplace",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Après la séance 6",
+          "hint": "Une favorite écartée, une piste gardée de justesse, un critère précisé…",
+          "question_labels": true
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Où *chercher.*",
+      "part_title": "Exercice 1 · Où chercher · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Pour chaque piste retenue, une fiche : ce que fait le métier, puis ce qu'il vaut face à vos critères. Cherchez d'abord dans les fiches métiers du carnet 6 (exercice 3) et dans ces sources, puis notez. Ce qui vous attire dans chaque piste est déjà écrit (carnet 6, exercice 4)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ma zone de recherche : les villes, le temps de trajet que j'accepte, le télétravail",
+                "c7_zone",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "link_card",
+          "title": "Salaires et débouchés près de chez vous",
+          "links": [
+            [
+              "Data Emploi (France Travail)",
+              "https://dataemploi.francetravail.fr",
+              "les offres, les salaires proposés et les embauches d'un métier, pour votre département ou votre bassin d'emploi (dataemploi.francetravail.fr)."
+            ],
+            [
+              "Besoins en main-d'œuvre (France Travail)",
+              "https://statistiques.francetravail.org/bmo",
+              "les projets de recrutement des employeurs pour l'année, par métier et par bassin d'emploi (statistiques.francetravail.org)."
+            ]
+          ]
+        },
+        {
+          "type": "link_card",
+          "title": "Voir le métier de près",
+          "links": [
+            [
+              "Immersion facilitée",
+              "https://immersion-facile.beta.gouv.fr",
+              "quelques jours en entreprise pour découvrir un métier, avec une convention : parlons-en en séance (immersion-facile.beta.gouv.fr)."
+            ]
+          ],
+          "color": "mint"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Sur chaque fiche, la rangée « Face à mes critères » est la même, votre cartographie sous les yeux (carnet 6, exercice 1). Valeurs 1 à 3 : vos trois conditions. Mon minimum : votre minimum sécurisant ; « à terme », vous l'atteignez dans la durée acceptable d'une baisse que vous vous êtes fixée. « À vérifier » : une question pour vos enquêtes."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Frigoriste",
+          "surface": "Ça paie bien, et ça recrute.",
+          "exploitable": "Une fourchette pour débuter, d'après la fiche métier et les offres de ma zone. Mon minimum : à terme. Surtout des CDD, à moins d'une heure."
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Votre première *piste.*",
+      "part_title": "Exercice 1 · Fiche 1 · 20 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La piste, et son numéro au carnet 6",
+                "c7_fiche_1_piste",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ses missions, d'après mes recherches",
+                "c7_fiche_1_missions",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce que je sais déjà faire",
+                "c7_fiche_1_acquis",
+                1.6
+              ],
+              [
+                "Ce qui me manque",
+                "c7_fiche_1_manque",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "data_id": "c7.fiches"
+        },
+        {
+          "type": "rating_grid",
+          "items": [
+            [
+              "Valeur 1 : condition remplie",
+              "c7_fiche_1_valeur_1"
+            ],
+            [
+              "Valeur 2 : condition remplie",
+              "c7_fiche_1_valeur_2"
+            ],
+            [
+              "Valeur 3 : condition remplie",
+              "c7_fiche_1_valeur_3"
+            ],
+            [
+              "Mon minimum est atteint",
+              "c7_fiche_1_minimum"
+            ]
+          ],
+          "title": "Face à mes critères",
+          "values": [
+            "Oui",
+            "À terme",
+            "Non",
+            "À vérifier"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Rémunération observée, et sa source",
+                "c7_fiche_1_remuneration",
+                0.85
+              ],
+              [
+                "Les débouchés dans ma zone",
+                "c7_fiche_1_debouches",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ce qui me rechargerait",
+                "c7_fiche_1_recharge",
+                1.6
+              ],
+              [
+                "Ce qui me coûterait",
+                "c7_fiche_1_coute",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce qu'il me reste à vérifier",
+                "c7_fiche_1_verifier",
+                1.6
+              ],
+              [
+                "Auprès de qui",
+                "c7_fiche_1_aupres",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Votre deuxième *piste.*",
+      "part_title": "Exercice 1 · Fiche 2 · 20 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La piste, et son numéro au carnet 6",
+                "c7_fiche_2_piste",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ses missions, d'après mes recherches",
+                "c7_fiche_2_missions",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce que je sais déjà faire",
+                "c7_fiche_2_acquis",
+                1.6
+              ],
+              [
+                "Ce qui me manque",
+                "c7_fiche_2_manque",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "rating_grid",
+          "items": [
+            [
+              "Valeur 1 : condition remplie",
+              "c7_fiche_2_valeur_1"
+            ],
+            [
+              "Valeur 2 : condition remplie",
+              "c7_fiche_2_valeur_2"
+            ],
+            [
+              "Valeur 3 : condition remplie",
+              "c7_fiche_2_valeur_3"
+            ],
+            [
+              "Mon minimum est atteint",
+              "c7_fiche_2_minimum"
+            ]
+          ],
+          "title": "Face à mes critères",
+          "values": [
+            "Oui",
+            "À terme",
+            "Non",
+            "À vérifier"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Rémunération observée, et sa source",
+                "c7_fiche_2_remuneration",
+                0.85
+              ],
+              [
+                "Les débouchés dans ma zone",
+                "c7_fiche_2_debouches",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ce qui me rechargerait",
+                "c7_fiche_2_recharge",
+                1.6
+              ],
+              [
+                "Ce qui me coûterait",
+                "c7_fiche_2_coute",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce qu'il me reste à vérifier",
+                "c7_fiche_2_verifier",
+                1.6
+              ],
+              [
+                "Auprès de qui",
+                "c7_fiche_2_aupres",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Votre troisième *piste.*",
+      "part_title": "Exercice 1 · Fiche 3 · 20 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La piste, et son numéro au carnet 6",
+                "c7_fiche_3_piste",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ses missions, d'après mes recherches",
+                "c7_fiche_3_missions",
+                2.2
+              ]
+            ],
+            [
+              [
+                "Ce que je sais déjà faire",
+                "c7_fiche_3_acquis",
+                1.6
+              ],
+              [
+                "Ce qui me manque",
+                "c7_fiche_3_manque",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "rating_grid",
+          "items": [
+            [
+              "Valeur 1 : condition remplie",
+              "c7_fiche_3_valeur_1"
+            ],
+            [
+              "Valeur 2 : condition remplie",
+              "c7_fiche_3_valeur_2"
+            ],
+            [
+              "Valeur 3 : condition remplie",
+              "c7_fiche_3_valeur_3"
+            ],
+            [
+              "Mon minimum est atteint",
+              "c7_fiche_3_minimum"
+            ]
+          ],
+          "title": "Face à mes critères",
+          "values": [
+            "Oui",
+            "À terme",
+            "Non",
+            "À vérifier"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Rémunération observée, et sa source",
+                "c7_fiche_3_remuneration",
+                0.85
+              ],
+              [
+                "Les débouchés dans ma zone",
+                "c7_fiche_3_debouches",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ce qui me rechargerait",
+                "c7_fiche_3_recharge",
+                1.6
+              ],
+              [
+                "Ce qui me coûterait",
+                "c7_fiche_3_coute",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce qu'il me reste à vérifier",
+                "c7_fiche_3_verifier",
+                1.6
+              ],
+              [
+                "Auprès de qui",
+                "c7_fiche_3_aupres",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Votre grille *d'entretien.*",
+      "part_title": "Exercice 2 · Votre grille d'entretien · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une enquête, c'est un échange d'une vingtaine de minutes avec une personne qui exerce le métier. Gardez cette grille sous les yeux : les questions communes, puis les vôtres, avec ce qu'il vous reste à vérifier sur chaque fiche (exercice 1)."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "heading",
+          "text": "À chaque entretien"
+        },
+        {
+          "type": "star_list",
+          "items": [
+            "« Quel a été votre parcours jusqu'à ce métier ? »",
+            "« Racontez-moi une semaine ordinaire. Qu'aimez-vous le plus, et que ne disent pas les fiches de poste ? »",
+            "« Quelles sont les difficultés, les contraintes cachées ? »",
+            "« Qu'est-ce qui change dans votre métier : les besoins, les recrutements, ce que l'IA déplace ? »",
+            "« Comment y entre-t-on aujourd'hui, et à quelle rémunération peut-on s'attendre pour débuter ? »",
+            "« Quel conseil donneriez-vous à quelqu'un qui veut se lancer ? »",
+            "« Qui d'autre me conseilleriez-vous de rencontrer ? »"
+          ]
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma question pour vérifier la valeur 1",
+              "c5.grille",
+              "c7_question_valeur_1"
+            ],
+            [
+              "Ma question pour vérifier la valeur 2",
+              "c5.grille",
+              "c7_question_valeur_2"
+            ],
+            [
+              "Ma question pour vérifier la valeur 3",
+              "c5.grille",
+              "c7_question_valeur_3"
+            ]
+          ],
+          "title": "Mes questions à moi"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Pépiniériste",
+          "surface": "« Le métier vous plaît ? »",
+          "exploitable": "« Racontez-moi votre journée d'hier : qu'est-ce qui vous a pris le plus de temps ? »"
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Vos trois *contacts.*",
+      "part_title": "Exercice 2 · Vos trois contacts · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Trois personnes à solliciter dans les dix jours, une par piste si possible. Pensez d'abord à celles que vous connaissez : vos modèles (carnet 1, exercice 5), la personne de votre interview (carnet 2), celles repérées en fin de carnet 6. Le rendez-vous peut avoir lieu après la séance 7."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "callout",
+          "text": "« Je réfléchis à une évolution vers votre métier. Accepteriez-vous un échange d'une vingtaine de minutes ? Je ne cherche pas de poste, seulement votre regard sur ce métier. »",
+          "title": "Pour demander"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "La personne",
+            "Pour quelle piste",
+            "Comment la joindre",
+            "Sollicitée le",
+            "Rendez-vous le"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "c7_contact_1",
+                "placeholder": "Contact 1 : la personne"
+              },
+              {
+                "field_id": "c7_contact_1_piste",
+                "placeholder": "Contact 1 : pour quelle piste"
+              },
+              {
+                "field_id": "c7_contact_1_joindre",
+                "placeholder": "Contact 1 : comment la joindre"
+              },
+              {
+                "field_id": "c7_contact_1_sollicite",
+                "placeholder": "Contact 1 : sollicitée le"
+              },
+              {
+                "field_id": "c7_contact_1_rendez_vous",
+                "placeholder": "Contact 1 : rendez-vous le"
+              }
+            ],
+            [
+              {
+                "field_id": "c7_contact_2",
+                "placeholder": "Contact 2 : la personne"
+              },
+              {
+                "field_id": "c7_contact_2_piste",
+                "placeholder": "Contact 2 : pour quelle piste"
+              },
+              {
+                "field_id": "c7_contact_2_joindre",
+                "placeholder": "Contact 2 : comment la joindre"
+              },
+              {
+                "field_id": "c7_contact_2_sollicite",
+                "placeholder": "Contact 2 : sollicitée le"
+              },
+              {
+                "field_id": "c7_contact_2_rendez_vous",
+                "placeholder": "Contact 2 : rendez-vous le"
+              }
+            ],
+            [
+              {
+                "field_id": "c7_contact_3",
+                "placeholder": "Contact 3 : la personne"
+              },
+              {
+                "field_id": "c7_contact_3_piste",
+                "placeholder": "Contact 3 : pour quelle piste"
+              },
+              {
+                "field_id": "c7_contact_3_joindre",
+                "placeholder": "Contact 3 : comment la joindre"
+              },
+              {
+                "field_id": "c7_contact_3_sollicite",
+                "placeholder": "Contact 3 : sollicitée le"
+              },
+              {
+                "field_id": "c7_contact_3_rendez_vous",
+                "placeholder": "Contact 3 : rendez-vous le"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.4,
+            2.6,
+            4.5,
+            2.8,
+            2.8
+          ],
+          "field_height_cm": 0.85
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui pourrait me faire repousser ce contact",
+                "c7_repousser",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Si vous le souhaitez",
+          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Pour me lancer, je commence par…",
+          "field_id": "c7_lancer",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ],
+      "part": 1
+    },
+    {
+      "template": "engagement",
+      "title": "Votre premier livrable.",
+      "part_title": "Fin de la partie 1 · 5 min",
+      "params": {
+        "lines": [
+          "Je sollicite mes trois contacts dans les dix jours, sans attendre la séance 7.",
+          "Une personne ne répond pas ? J'en sollicite une autre, sans le prendre pour moi.",
+          "J'apporte ce carnet à la séance 7."
+        ],
+        "field_prefix": "c7_partie_1",
+        "livrable_title": "Vos trois fiches, vos enquêtes lancées",
+        "livrable_text": "Vos trois pistes face à vos critères (exercice 1), votre grille d'entretien et vos trois contacts sollicités (exercice 2). En séance 7, vous les passez au crible ensemble, avant les entretiens.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes fiches",
+          "À aborder en séance : une piste qui faiblit, un contact que je n'ose pas solliciter",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ]
+      },
+      "part": 1
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *reprendre.*",
+      "part_title": "Partie 2 · Météo et récapitulatif · 10 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c7_meteo_2",
+          "data_id": "c7.meteo_2"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que la séance a confirmé",
+                "c7_seance_7_confirme",
+                1.6
+              ],
+              [
+                "Ce qu'elle a déplacé",
+                "c7_seance_7_deplace",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Après la séance 7",
+          "hint": "Une piste écartée ou reformulée, un critère précisé, un contact suggéré…",
+          "question_labels": true
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos comptes rendus et votre matrice suivent vos pistes d'aujourd'hui. Relisez vos contacts (exercice 2) : un rendez-vous manque encore ? Relancez dès le début, ou sollicitez une autre personne."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "annotation",
+          "text": "Un entretien qui déçoit apprend autant qu'un autre."
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Vos comptes *rendus.*",
+      "part_title": "Exercice 3 · Compte rendu 1 · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un compte rendu après chaque entretien, le jour même si possible : ce qui confirme, ce qui contredit, la suite. Une immersion, un salon : notez-les de la même façon. Un entretien n'a pas eu lieu ? Laissez sa fiche vierge."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "contrast_example",
+          "title": "Ergonome",
+          "surface": "C'était intéressant.",
+          "exploitable": "Elle confirme les horaires connus à l'avance. Elle contredit ce que je croyais du diplôme : une formation courte lui a suffi. La suite : rencontrer sa collègue."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La personne, son métier",
+                "c7_entretien_1_personne",
+                0.85,
+                3
+              ],
+              [
+                "La piste",
+                "c7_entretien_1_piste",
+                0.85,
+                1.4
+              ],
+              [
+                "La date",
+                "c7_entretien_1_date",
+                0.85,
+                1.2
+              ]
+            ],
+            [
+              [
+                "Ce qui confirme ce que je pensais",
+                "c7_entretien_1_confirme",
+                2.6
+              ],
+              [
+                "Ce qui contredit, ou m'étonne",
+                "c7_entretien_1_contredit",
+                2.6
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai appris sur mes critères",
+                "c7_entretien_1_criteres",
+                1.6
+              ],
+              [
+                "La suite : une personne, une démarche",
+                "c7_entretien_1_suite",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Entretien 1",
+          "question_labels": true,
+          "data_id": "c7.enquetes"
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Deux autres *entretiens.*",
+      "part_title": "Exercice 3 · Comptes rendus 2 et 3 · 30 min",
+      "blocks": [
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La personne, son métier",
+                "c7_entretien_2_personne",
+                0.85,
+                3
+              ],
+              [
+                "La piste",
+                "c7_entretien_2_piste",
+                0.85,
+                1.4
+              ],
+              [
+                "La date",
+                "c7_entretien_2_date",
+                0.85,
+                1.2
+              ]
+            ],
+            [
+              [
+                "Ce qui confirme ce que je pensais",
+                "c7_entretien_2_confirme",
+                2.6
+              ],
+              [
+                "Ce qui contredit, ou m'étonne",
+                "c7_entretien_2_contredit",
+                2.6
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai appris sur mes critères",
+                "c7_entretien_2_criteres",
+                1.6
+              ],
+              [
+                "La suite : une personne, une démarche",
+                "c7_entretien_2_suite",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Entretien 2",
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La personne, son métier",
+                "c7_entretien_3_personne",
+                0.85,
+                3
+              ],
+              [
+                "La piste",
+                "c7_entretien_3_piste",
+                0.85,
+                1.4
+              ],
+              [
+                "La date",
+                "c7_entretien_3_date",
+                0.85,
+                1.2
+              ]
+            ],
+            [
+              [
+                "Ce qui confirme ce que je pensais",
+                "c7_entretien_3_confirme",
+                2.6
+              ],
+              [
+                "Ce qui contredit, ou m'étonne",
+                "c7_entretien_3_contredit",
+                2.6
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai appris sur mes critères",
+                "c7_entretien_3_criteres",
+                1.6
+              ],
+              [
+                "La suite : une personne, une démarche",
+                "c7_entretien_3_suite",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Entretien 3",
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Un entretien de plus ? Une feuille à part, les mêmes rubriques."
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Ce que le terrain *vous a appris.*",
+      "part_title": "Exercice 4 · Ce que le terrain vous a appris · 15 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez vos comptes rendus. Pour chaque thème : ce que vous imaginiez avant le terrain, espoir ou crainte, puis ce que le terrain montre."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "L'accès au métier : ce que j'imaginais",
+                "c7_imaginais_acces",
+                1.6
+              ],
+              [
+                "Ce que le terrain montre",
+                "c7_terrain_acces",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Le quotidien, le rythme : ce que j'imaginais",
+                "c7_imaginais_quotidien",
+                1.6
+              ],
+              [
+                "Ce que le terrain montre",
+                "c7_terrain_quotidien",
+                1.6
+              ]
+            ],
+            [
+              [
+                "La rémunération, les débouchés : ce que j'imaginais",
+                "c7_imaginais_remuneration",
+                1.6
+              ],
+              [
+                "Ce que le terrain montre",
+                "c7_terrain_remuneration",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La piste",
+                "c7_piste_apparue",
+                0.85
+              ],
+              [
+                "D'où elle vient",
+                "c7_piste_apparue_origine",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Ce qui m'y attire",
+                "c7_piste_apparue_attire",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Une piste apparue ou revenue",
+          "hint": "Facultatif. Une piste qu'un entretien a fait apparaître, ou l'une de vos dix pistes du carnet 6.",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Chimiste",
+          "surface": "C'est dur d'y entrer.",
+          "exploitable": "J'imaginais qu'il fallait un master. Deux personnes rencontrées y sont entrées par une formation courte, puis un stage."
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Votre matrice *de faisabilité.*",
+      "part_title": "Exercice 5 · La matrice de faisabilité · 30 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos fiches, vos comptes rendus et ce que le terrain vous a appris sous les yeux, situez chaque piste. C'est un brouillon : en séance 8, vous le finalisez, puis vous classez vos pistes en trois familles, pistes directes, passerelles courtes, angles morts."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Piste 1",
+            "Piste 2",
+            "Piste 3"
+          ],
+          "rows": [
+            [
+              "Mes compétences : ce que j'ai, ce qui me manque",
+              {
+                "field_id": "c7_matrice_1_competences",
+                "placeholder": "Piste 1 : mes compétences"
+              },
+              {
+                "field_id": "c7_matrice_2_competences",
+                "placeholder": "Piste 2 : mes compétences"
+              },
+              {
+                "field_id": "c7_matrice_3_competences",
+                "placeholder": "Piste 3 : mes compétences"
+              }
+            ],
+            [
+              "Le marché : la demande, les conditions d'entrée",
+              {
+                "field_id": "c7_matrice_1_marche",
+                "placeholder": "Piste 1 : le marché"
+              },
+              {
+                "field_id": "c7_matrice_2_marche",
+                "placeholder": "Piste 2 : le marché"
+              },
+              {
+                "field_id": "c7_matrice_3_marche",
+                "placeholder": "Piste 3 : le marché"
+              }
+            ],
+            [
+              "Les débouchés dans ma zone",
+              {
+                "field_id": "c7_matrice_1_debouches",
+                "placeholder": "Piste 1 : les débouchés dans ma zone"
+              },
+              {
+                "field_id": "c7_matrice_2_debouches",
+                "placeholder": "Piste 2 : les débouchés dans ma zone"
+              },
+              {
+                "field_id": "c7_matrice_3_debouches",
+                "placeholder": "Piste 3 : les débouchés dans ma zone"
+              }
+            ],
+            [
+              "Ce qu'il faudrait pour y aller : formation, délai, coût",
+              {
+                "field_id": "c7_matrice_1_chemin",
+                "placeholder": "Piste 1 : ce qu'il faudrait pour y aller"
+              },
+              {
+                "field_id": "c7_matrice_2_chemin",
+                "placeholder": "Piste 2 : ce qu'il faudrait pour y aller"
+              },
+              {
+                "field_id": "c7_matrice_3_chemin",
+                "placeholder": "Piste 3 : ce qu'il faudrait pour y aller"
+              }
+            ],
+            [
+              "Mes critères après le terrain : valeurs, minimum, énergie",
+              {
+                "field_id": "c7_matrice_1_criteres",
+                "placeholder": "Piste 1 : mes critères après le terrain"
+              },
+              {
+                "field_id": "c7_matrice_2_criteres",
+                "placeholder": "Piste 2 : mes critères après le terrain"
+              },
+              {
+                "field_id": "c7_matrice_3_criteres",
+                "placeholder": "Piste 3 : mes critères après le terrain"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.2,
+            4.3,
+            4.3,
+            4.3
+          ],
+          "field_height_cm": 2.2,
+          "fixed": true,
+          "data_id": "c7.matrice"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Géologue",
+          "surface": "Le marché : ça recrute.",
+          "exploitable": "Des offres régulières dans ma zone, surtout en CDD. Les deux personnes rencontrées confirment des besoins chaque été."
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vous *acceptez.*",
+      "part_title": "Exercice 6 · Ce que vous acceptez · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Avant la séance 8, regardez ce que chaque piste vous demande. Un compromis choisi en connaissance de cause n'est pas un renoncement."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ma piste, et le compromis qu'elle me demande",
+                "c7_compromis",
+                1.6
+              ],
+              [
+                "À quelle condition je l'accepterais",
+                "c7_compromis_condition",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Garagiste",
+          "surface": "Gagner moins.",
+          "exploitable": "La piste 2 me demande de gagner moins au début. Je l'accepte si j'atteins mon minimum dans la durée que je me suis fixée."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La piste qu'il me coûterait le plus de lâcher",
+                "c7_lacher",
+                1.6
+              ],
+              [
+                "Ce qu'elle représente pour moi",
+                "c7_lacher_sens",
+                1.6
+              ]
+            ]
+          ],
+          "title": "Si vous le souhaitez",
+          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Avec le recul, le terrain m'apprend que…",
+          "field_id": "c7_terrain_appris",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ],
+      "part": 2
+    },
+    {
+      "template": "engagement",
+      "title": "Votre second livrable.",
+      "part_title": "Fin de carnet · 10 min",
+      "params": {
+        "lines": [
+          "Je remercie les personnes rencontrées, et je leur dis ce que leur regard a changé.",
+          "Je garde le contact avec au moins l'une d'elles.",
+          "J'apporte ce carnet à la séance 8."
+        ],
+        "field_prefix": "c7_livrable",
+        "livrable_title": "Vos retours d'enquêtes et votre matrice",
+        "livrable_text": "Vos comptes rendus (exercice 3), ce que le terrain vous a appris (exercice 4) et votre matrice de faisabilité (exercice 5). En séance 8, vous en tirez trois scénarios, à comparer.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "À aborder en séance : une piste que le terrain fait vaciller, une question restée sans réponse",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ]
+      },
+      "data_id": "c7.livrable",
+      "part": 2
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Le terrain a parlé.",
+          "Prochaine étape : la séance 8. Apportez ce carnet.",
+          "Ensuite, le carnet de route : choisir, puis agir."
+        ]
+      },
+      "fixed": true
+    }
+  ]
+}
