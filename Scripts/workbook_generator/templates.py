@@ -1154,7 +1154,7 @@ class PageLayout:
         _, pill_h = label_pill_size(label)
         prompt_h = paragraph_height(ENERGY_PROMPT, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
         reason_h = paragraph_height(ENERGY_REASON, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
-        box_h = 1.2 * cm
+        box_h = 1.6 * cm  # two handwritten lines
         h = (2 * pad + pill_h + 0.25 * cm + prompt_h + 0.15 * cm + choice_scale_height(True) + 0.3 * cm
              + reason_h + 0.15 * cm + box_h)
         self._ensure_space(h)

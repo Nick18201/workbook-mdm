@@ -170,3 +170,27 @@ def test_reports_point_to_declared_data():
                     source = data_carnet(item[1])
                     if source in declared:
                         assert item[1] in declared[source], (workbook_id, item[1])
+
+
+CARNET_IDS = [workbook_id for workbook_id, raw in _raw_workbooks() if "carnet" in raw]
+CM = 72 / 2.54
+FIELD_INSET = 3  # draw_answer_box lays its field 3 pt inside the drawn box
+
+
+@pytest.mark.parametrize("workbook_id", CARNET_IDS)
+def test_carnet_fields_leave_room_to_write_by_hand(workbook_id):
+    """
+    A carnet is filled on screen or printed: a box for a sentence leaves two handwritten
+    lines (1.6 cm), a one-line box room for a word (0.8 cm), and every field has a tooltip.
+    """
+    buffer = io.BytesIO()
+    build_reference_workbook(workbook_id, buffer)
+    for page in pymupdf.open(stream=buffer.getvalue(), filetype="pdf"):
+        for widget in page.widgets():
+            where = (page.number + 1, widget.field_name)
+            assert widget.field_label, where
+            if widget.field_type != pymupdf.PDF_WIDGET_TYPE_TEXT:
+                continue
+            box_cm = (widget.rect.height + 2 * FIELD_INSET) / CM
+            multiline = bool(widget.field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE)
+            assert box_cm >= (1.6 if multiline else 0.8) - 0.01, (*where, round(box_cm, 2))

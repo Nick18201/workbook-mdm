@@ -11,10 +11,11 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | Unification : une seule source, `workbooks/*.json`, un seul moteur, MBTI retiré des carnets | Fusionné (PR #51) |
 | R0 · Socle : nommage, palette, gabarit commun, langue du PDF | Fusionné (PR #52) |
 | R0 bis · Format : fixe / adaptable, identifiants de données, reports | Fusionné (PR #53) |
+| R1 · Carnet 1 · L'état des lieux (`carnet-1.json`) | Fusionné (PR #54) |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | PR en cours, menée en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
-**Avant de commencer : fusionner les PR #50 et #51**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
+**Avant chaque PR : vérifier que la précédente est fusionnée**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
 
 ## 2. Les décisions
 
@@ -53,6 +54,12 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
    - temps 3 : le carnet de route en jasmin.
    Écartées : le cycle des pastels sans logique, et les huit teintes distinctes, qui demandaient trois pastels nouveaux (pistache, pivoine, lagon) hors de la DA.
 
+**Prises pendant R1 (8 octobre 2026)**
+8. **La page « Avant de commencer » porte la météo**, dans chaque carnet. Au carnet 1, elle porte aussi l'engagement ; à partir du carnet 2, le récapitulatif guidé. Elle n'est pas numérotée : les exercices numérotés sont ceux qu'on écrit (cinq au carnet 1).
+9. **Le carnet 1 s'ouvre par une page « Bienvenue »** : les trois temps du bilan sur une frise (carnets 1 à 5, 6 et 7, carnet de route) et le lien vers l'espace Notion. Puis le cadre de travail.
+10. **Les huit domaines de vie**, notation de référence du parcours, reprise au carnet de route : travail, carrière · argent, finances · santé, énergie · famille · amis, vie sociale · temps pour soi, loisirs · lieu de vie, environnement · utilité, engagements. Bornes « Pas du tout satisfaisant » et « Pleinement satisfaisant ». Le carnet 4 reprend la note « Argent, finances ».
+11. **Les anciens carnets restent dans l'app jusqu'à R11**, avec « (ancien parcours) » dans leur titre quand un nouveau carnet les remplace (`chap0` et `chap1` depuis R1).
+
 ## 3. Les PR, dans l'ordre
 
 Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
@@ -81,6 +88,7 @@ Pour chaque PR de carnet :
 - **Fixe ou adaptable.** Marquer `"fixed": true` ce que la personnalisation ne doit pas toucher (carte, section 8) : le cadre et les héritages (carnet 1), les questions du test (carnet 3), la liste de valeurs (carnet 5), les critères des fiches, la définition des seuils.
 - **Durée.** Viser la durée cible, la mettre dans le sourcil des exercices et mettre à jour le budget (carte, section 6).
 - **Vérifier le rendu de chaque page.**
+- **Relire l'audit** (`synthese.html` et le rapport du carnet) une fois le carnet construit, recommandation par recommandation, et itérer.
 
 ## 4. Le socle (R0) en détail
 
@@ -112,6 +120,16 @@ Pour chaque PR de carnet :
   - que chaque fichier est au catalogue ;
   - qu'aucun `field_id` n'est en double ;
   - que les fichiers ne gardent que ce qu'ils définissent : pas de `null`, pas de valeur par défaut recopiée.
+- **Les conventions posées par le carnet 1** (`workbooks/carnet-1.json`), à suivre dans les suivants :
+  - en tête du fichier, `"carnet": N` (pastel, folio et sourcils viennent de là), sans `folio` ni `pastel` ;
+  - les identifiants de champs commencent par `cN_` (`c1_objectif`), ceux de la météo par `cN_meteo` et ceux du livrable par `cN_livrable` ;
+  - l'ouverture liste chaque élément avec sa durée (« Exercice 3 · Votre objectif, première version · 10 min »), donne `duration` et `split` ; la somme fait la cible de la carte ;
+  - chaque page d'exercice a pour sourcil « Exercice N · nom court · durée », une page par partie quand l'exercice en a deux, et s'ouvre par une phrase qui dit à quoi il sert ;
+  - un seul exemple contrasté par exercice, d'un métier au nom épicène et différent à chaque fois (juriste, cariste, commis de cuisine, comptable, ébéniste au carnet 1) ; un exemple de plus peut aller dans le champ `example` d'une question ;
+  - le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière ;
+  - `fixed: true` sur la page entière quand tout y est fixe, sur le bloc sinon ; un paragraphe qui renvoie à un autre carnet (« vous la préciserez au carnet 2 ») est fixe, comme le dos ;
+  - deux lignes manuscrites pour une réponse en phrase (case de 1,6 cm au moins), une ligne pour un mot (0,8 cm) ; `tests/test_workbooks.py` le vérifie pour chaque carnet, avec une info-bulle sur chaque champ ;
+  - une page ne déborde jamais sur une page « (suite) » : passer des cases en grille de deux colonnes, raccourcir un libellé ou un exemple, plutôt que de descendre sous ces hauteurs.
 - **Tester l'app en local** : `python -m uvicorn server.app:app --port 8080`. Sans clé Gemini, l'app fonctionne en mode de secours. Avec la vraie clé, tester la personnalisation des carnets 6, 7, du carnet de route et du module création, ceux qui s'y prêtent le plus (carte, section 8).
 
 ## 6. Les règles à garder en tête
@@ -128,11 +146,72 @@ Pour chaque PR de carnet :
 ## 7. Ce qui reste ouvert
 
 - **La politique des champs** : police fixe avec défilement, ou police automatique. À trancher après un test de saisie dans de vrais lecteurs PDF (Acrobat, Aperçu, navigateur).
-- **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet.
+- **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm.
 - **Les exemples du livret** décrivent peut-être une personne réelle. Ils disparaissent avec le carnet de route (R8), mais si c'est le cas, l'historique git les garde.
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller :
+Message à coller, une fois la PR R1 (carnet 1, #54) fusionnée :
 
-> Reprends la restructuration des carnets. Lis d'abord `audit-carnets-2026-10/feuille-de-route-restructuration.md`, puis la carte `audit-carnets-2026-10/carte-parcours-unifie.md`. Vérifie que les PR #50 et #51 sont fusionnées, puis lance la PR R0 (le socle) depuis `main`. Commence par me montrer les palettes de pastels candidates pour les carnets 1 à 7 et le carnet de route.
+```text
+Reprends la restructuration des carnets avec la PR R2 : le carnet 2, « Mon parcours ».
+
+1. Prérequis
+- Vérifie que la PR Nick18201/workbook-mdm#54 (R1, carnet 1) est fusionnée dans main.
+- Crée ensuite une branche depuis main à jour. N'empile pas les branches.
+
+2. À lire, dans cet ordre
+- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par le carnet 1.
+- audit-carnets-2026-10/carte-parcours-unifie.md :
+  - section 4 (gabarit commun) ;
+  - section 5, carnet 2 ;
+  - sections 6 (budget), 7 (identifiants c2.*) et 8 (fixe ou adaptable : carnet 2 = pertinence moyenne).
+- audit-carnets-2026-10/rapports/02-chap2.md en entier, et rapports/07-livret.md, thème 2 (le travail réel, que le carnet 2 absorbe).
+- La synthèse audit-carnets-2026-10/synthese.html, sections 02 (constats transversaux) et 06 (conditions de remplissage).
+- workbooks/carnet-1.json, le modèle à suivre, et workbooks/chap2.json, le contenu actuel.
+- Les quatre zones de l'app : git show 1696357:server/predefined_workbooks.py, fonction _build_chap3_spec.
+
+3. Ce qu'il faut construire
+workbooks/carnet-2.json, cible 2 h 45 d'écriture.
+- Une page « Avant de commencer » : la météo (c2.meteo) et le récapitulatif guidé de la séance 1. Ce récapitulatif utilise des blocs report vers c1.objectif et c1.autorisation pour préciser l'objectif boussole (c2.boussole).
+- Les exercices de la carte :
+  - « À lire : comprendre ses racines », allégé à trois notions, avec protocole, sans « névrose de classe » ;
+  - les expériences et le travail réel, une fiche par expérience, quatre au choix ;
+  - le travail empêché, avec protocole et un seul terme ;
+  - les quatre zones ;
+  - le fil rouge en une phrase, les trois verbes d'action, et pour chaque moteur « je le veux / on l'attend de moi » ;
+  - la ligne de vie, avec protocole sur les vallées ;
+  - les compétences de vie, avec une ligne « épreuves » facultative ;
+  - l'arbre de vie, facultatif ;
+  - l'interview, facultative et hors temps d'écriture, en proposant de choisir parmi les modèles du carnet 1 (report de c1.modeles).
+- Une fin de carnet avec le fil des pistes (pistes: true) et c2.livrable.
+- Les autres data_id de la carte, section 7.
+- Les marques fixed de la section 8 : le protocole, les questions franches, et les renvois entre carnets.
+
+4. Les règles à tenir
+- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel, aucun chiffre sans source.
+- Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je ».
+- Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux du carnet 1 (juriste, cariste, commis de cuisine, comptable, ébéniste).
+- Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière.
+- Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. tests/test_workbooks.py le vérifie.
+- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court.
+- Attention : la ligne de vie et l'arbre de vie remplissent le reste de leur page.
+
+5. Méthode
+a. Commence par me montrer le plan du carnet 2, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
+b. Écris le JSON. Ajoute Scripts/main_generate_carnet_2.py, la ligne de tests/test_cli_documents.py, et l'entrée carnet-2 du catalogue (server/predefined_workbooks.py), avec « (ancien parcours) » sur chap2.
+c. Rends chaque page en PNG dans previews/ avec pymupdf et relis-les une à une.
+d. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py.
+e. Relis la synthèse et les rapports 02 et 07, recommandation par recommandation. Itère, puis dis-moi ce qui est traité et ce qui est écarté, avec la raison.
+f. Mets à jour la feuille de route :
+   - section 1 (état des PR) ;
+   - section 2 (décisions prises pendant R2) ;
+   - section 5 (nouvelles conventions, s'il y en a) ;
+   - section 8 (le prompt de reprise pour R3, rédigé sur ce modèle).
+   Mets aussi à jour la carte, section 6 (budget du carnet 2).
+g. Commite sur la branche. J'ouvrirai la PR avec le bouton.
+
+6. Environnement (Windows, dans un worktree)
+- Le Python du venv est ../../../.venv/Scripts/python.exe.
+- Pour importer le moteur hors des scripts : PYTHONPATH="Scripts;." (point-virgule sous Windows) et PYTHONIOENCODING=utf-8.
+```

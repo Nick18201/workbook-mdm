@@ -14,10 +14,16 @@ BILAN = "Bilan de Compétences"
 
 # Fiche de chaque livret : (id, numéro, titre, sous-titre, description, icône, catégorie)
 CATALOGUE = [
-    ("chap0", 0, "Carnet 0 · Le prélude", "Engagement, point de situation et entourage",
+    ("carnet-1", 1, "Carnet 1 · L'état des lieux", "Cadre, point de situation, domaines de vie et héritages",
+     "Préparer la séance 1 : cadre de travail, état des lieux rapide, domaines de vie, objectif de départ "
+     "et ce que la personne a reçu de son milieu sur le travail.",
+     "explore", BILAN),
+    # Former carnets 0 and 1, until the clean-up of the restructuring (R11)
+    ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",
      "flag", BILAN),
-    ("chap1", 1, "Carnet 1 · L'état des lieux", "Météo, vision à 360°, objectif boussole et héritages",
+    ("chap1", 1, "Carnet 1 · L'état des lieux (ancien parcours)",
+     "Météo, vision à 360°, objectif boussole et héritages",
      "Fixer le point de départ : état d'esprit, domaines de vie, objectif boussole, sac à dos et héritages familiaux.",
      "explore", BILAN),
     ("chap2", 2, "Carnet 2 · Mon parcours", "Expériences, fil rouge, ligne de vie et arbre de vie",
