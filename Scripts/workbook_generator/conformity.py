@@ -88,7 +88,8 @@ GENERIC_JOB_WORDS = {"responsable", "chef", "cheffe", "charge", "chargee", "assi
 COMMON_PROFILE_WORDS = GENERIC_JOB_WORDS | {
     "depuis", "apres", "avant", "pendant", "entre", "toujours", "encore", "autre", "autres", "chaque", "premier",
     "premiere", "annee", "annees", "temps", "travail", "metiers", "postes", "professionnel", "professionnels",
-    "professionnelle", "personne", "personnes", "envisage", "souhaite", "aujourd", "quelques", "plusieurs"}
+    "professionnelle", "personne", "personnes", "envisage", "souhaite", "aujourd", "quelques", "plusieurs",
+    "entreprises", "carnet", "carnets", "seance", "seances", "bilan", "bilans", "parcours"}
 # An example that shares this many words with the person's profile tells their story, not a neighbour's
 SHARED_PROFILE_WORDS = 2
 

@@ -690,6 +690,7 @@ def main():
     parser.add_argument("--cas", nargs="*", help="les cas à passer (ex : reconversion creation)")
     parser.add_argument("--tirages", type=int, default=1, help="tirages par cas (2 pour la stabilité)")
     parser.add_argument("--plafond", type=int, help="jetons au plus, réflexion comprise")
+    parser.add_argument("--nom", help="le nom du rapport, après sa date (ex : verification)")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -708,7 +709,7 @@ def main():
     text = report(results, args.tirages, args.plafond, args.vrai)
     (outdir / "rapport.md").write_text(text, encoding="utf-8")
     if args.vrai:
-        name = f"{datetime.now():%Y-%m-%d}-" + (f"serie-{args.serie}" if args.serie else "cas")
+        name = f"{datetime.now():%Y-%m-%d}-" + (args.nom or (f"serie-{args.serie}" if args.serie else "cas"))
         path = HERE / "rapports" / f"{name}.md"
         if path.exists():
             path = path.with_name(f"{name}-{datetime.now():%H%M}.md")

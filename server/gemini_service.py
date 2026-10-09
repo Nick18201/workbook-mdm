@@ -60,8 +60,9 @@ GEMINI_MODELS = [
     for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash").split(",")
     if m.strip()
 ]
-# Délai maximal d'un appel Gemini (une analyse prend ~30 s ; Cloud Run coupe la requête à 300 s)
-GEMINI_TIMEOUT_S = float(os.environ.get("GEMINI_TIMEOUT_S", "120"))
+# Délai maximal d'un appel Gemini (une analyse prend ~30 s, le module création personnalisé
+# ~110 s, essais du lot 3 ; Cloud Run coupe la requête à 300 s)
+GEMINI_TIMEOUT_S = float(os.environ.get("GEMINI_TIMEOUT_S", "240"))
 
 
 @lru_cache(maxsize=4)
@@ -787,10 +788,15 @@ def _part_scope(spec: WorkbookSpec, part: Optional[int]) -> str:
         return ""
     titles = spec.parts or []
     name = f", « {titles[part - 1]} »" if part <= len(titles) else ""
+    # Each part is a call of its own: it does not see the trades the other parts' examples took
+    taken = sorted({block.title for page in spec.pages if page.part != part for block in page.blocks or []
+                    if block.type == "contrast_example" and block.title})
     return (
         f"Ce livret est long : tu n'en reçois que la partie {part} sur {max(len(titles), part)}{name}. "
         "Personnalise ces pages seulement et renvoie-les toutes, dans le même ordre : "
         "les autres parties sont personnalisées à part."
+        + (f" Les exemples des autres parties prennent déjà ces métiers : {', '.join(taken)} ; prends-en d'autres."
+           if taken else "")
     )
 
 

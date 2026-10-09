@@ -80,7 +80,7 @@ gcloud run services describe mdm-workbook-generator --region europe-west1 --form
 
 Variables d'environnement facultatives, modifiables sans toucher au code :
 - `GEMINI_MODELS` : modèle Gemini utilisé (`gemini-3.8-flash` par défaut). Une liste séparée par des virgules fait essayer les modèles dans l'ordre.
-- `GEMINI_TIMEOUT_S` : délai maximal d'un appel Gemini, en secondes (120 par défaut ; une analyse prend environ 30 s). Au-delà, l'application passe au modèle de secours heuristique et l'interface affiche le bandeau orange.
+- `GEMINI_TIMEOUT_S` : délai maximal d'un appel Gemini, en secondes (240 par défaut, sous les 300 s après lesquelles Cloud Run coupe la requête ; une analyse prend environ 30 s, le module création personnalisé environ 110 s). Au-delà, l'application passe au modèle de secours heuristique et l'interface affiche le bandeau orange.
 
 ### Ce que fait cette commande automatiquement :
 1. Envoie le code vers Google Cloud Build.
