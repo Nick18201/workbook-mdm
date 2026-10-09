@@ -45,7 +45,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Votre piste A et vos critères sont écrits dans vos carnets : reportez-les, puis dites votre activité avec vos mots."
+            "Reportez votre piste A et vos critères, puis dites votre activité avec vos mots."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -64,9 +64,9 @@
               "creation_rappel_valeurs"
             ],
             [
-              "Ce qui m'y attire",
-              "route.pistes",
-              "creation_rappel_attire",
+              "Pour mon énergie, mon poste devra…",
+              "c3.energies",
+              "creation_rappel_energie",
               1.6
             ],
             [
@@ -85,8 +85,13 @@
           "rows": [
             [
               [
-                "Mon activité, en quelques phrases : ce que je crée, pour qui",
+                "Ce que je crée",
                 "creation_activite",
+                1.6
+              ],
+              [
+                "Pour qui",
+                "creation_activite_public",
                 1.6
               ]
             ],
@@ -133,7 +138,7 @@
       "blocks": [
         {
           "type": "text",
-          "text": "Un projet viable soulage un problème réel, ressenti et prioritaire. Plus le problème est fréquent et coûteux pour vos clients, plus votre solution a de valeur.",
+          "text": "Un projet viable soulage un problème réel, ressenti et prioritaire. Plus le problème est fréquent et coûteux pour votre clientèle, plus votre solution a de valeur.",
           "spacing_after_cm": 0.4
         },
         {
@@ -143,26 +148,41 @@
           "exploitable": "Quatre des six clubs interrogés commandent leurs maillots au dernier moment, puis attendent trois semaines ; deux ont joué un tournoi en maillots dépareillés."
         },
         {
-          "type": "questions_group",
-          "questions": [
-            {
-              "question": "Le problème que j'ai observé",
-              "field_id": "creation_probleme",
-              "subtitle": "Ce qu'il coûte à vos clients : du temps, de l'argent, des tracas. Décrivez un cas précis."
-            },
-            {
-              "question": "Qui le vit, à quelle fréquence, avec quelle importance ?",
-              "field_id": "creation_probleme_intensite",
-              "subtitle": "Un problème urgent et fréquent, ou secondaire et occasionnel ?"
-            },
-            {
-              "question": "Comment font vos clients aujourd'hui, et pourquoi cela ne suffit pas ?",
-              "field_id": "creation_probleme_solutions",
-              "subtitle": "Les solutions existantes, les bricolages, et leurs limites : trop chères, trop lentes, trop compliquées."
-            }
+          "type": "question",
+          "question": "Le problème que j'ai observé",
+          "field_id": "creation_probleme",
+          "subtitle": "Ce qu'il coûte à votre clientèle : du temps, de l'argent, des tracas. Décrivez un cas précis.",
+          "box_height_cm": 3.0
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Qui le vit",
+                "creation_probleme_qui",
+                2.4
+              ],
+              [
+                "À quelle fréquence",
+                "creation_probleme_frequence",
+                2.4
+              ]
+            ],
+            [
+              [
+                "Comment fait votre clientèle aujourd'hui",
+                "creation_probleme_solutions",
+                2.4
+              ],
+              [
+                "Pourquoi cela ne suffit pas : trop cher, trop lent, trop compliqué…",
+                "creation_probleme_limites",
+                2.4
+              ]
+            ]
           ],
-          "min_box_height_cm": 2.0,
-          "max_box_height_cm": 3.6
+          "question_labels": true
         }
       ]
     },
@@ -180,7 +200,7 @@
           "type": "contrast_example",
           "title": "Caviste",
           "surface": "Je vends du bon vin.",
-          "exploitable": "Des vins de petits producteurs de la région, choisis pour un repas précis, avec une dégustation chaque samedi et la livraison dans le quartier."
+          "exploitable": "Des vins de petits domaines de la région, choisis pour un repas précis, avec une dégustation chaque samedi et la livraison dans le quartier."
         },
         {
           "type": "question",
@@ -222,7 +242,7 @@
       "blocks": [
         {
           "type": "text",
-          "text": "Un prix juste se trouve au croisement de trois angles : vos coûts, la valeur pour vos clients, et les prix du marché. Revenez à cette page après l'exercice 6 : votre point mort dira si votre prix tient.",
+          "text": "Un prix juste se trouve au croisement de trois angles : vos coûts, la valeur pour votre clientèle, et les prix du marché. Revenez à cette page après l'exercice 6 : votre point mort dira si votre prix tient.",
           "spacing_after_cm": 0.4
         },
         {
@@ -426,14 +446,14 @@
               }
             ],
             [
-              "Expert-comptable",
+              "Comptabilité",
               {
                 "field_id": "creation_charge4_montant",
-                "placeholder": "Expert-comptable : par mois"
+                "placeholder": "Comptabilité : par mois"
               },
               {
                 "field_id": "creation_charge4_reduire",
-                "placeholder": "Expert-comptable : comment le réduire"
+                "placeholder": "Comptabilité : comment la réduire"
               }
             ],
             [
@@ -483,7 +503,7 @@
         {
           "type": "callout",
           "title": "Imprévus",
-          "text": "Ajoutez une marge pour imprévus, à fixer avec votre expert-comptable ou votre conseiller.",
+          "text": "Ajoutez une marge pour imprévus, à fixer avec un cabinet comptable ou en séance.",
           "fixed": true
         }
       ]
@@ -627,12 +647,13 @@
             2.9
           ],
           "field_prefix": "creation_pm",
-          "field_height_cm": 0.85
+          "field_height_cm": 0.85,
+          "fixed": true
         },
         {
           "type": "paragraphs",
           "items": [
-            "En société, le calcul change : vos cotisations portent sur la rémunération que vous vous versez, et l'entreprise paie ses propres impôts. Faites-le avec votre expert-comptable."
+            "En société, le calcul change : vos cotisations portent sur la rémunération que vous vous versez, et l'entreprise peut payer ses propres impôts. Faites-le avec votre cabinet comptable."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -650,7 +671,7 @@
             [
               "Impots.gouv.fr, espace professionnel",
               "https://www.impots.gouv.fr/professionnel",
-              "la TVA, avec sa franchise sous un seuil, et la CFE, qui n'est pas due l'année de la création (impots.gouv.fr/professionnel)."
+              "la TVA, sa franchise en base, et la cotisation foncière des entreprises (CFE) : ce qui vous concerne, et quand (impots.gouv.fr/professionnel)."
             ],
             [
               "Bpifrance Création",
@@ -722,42 +743,44 @@
           "type": "fill_in_card",
           "rows": [
             [
-              "Le chiffre d'affaires qu'il me faut par mois :",
+              "Il me faut",
               [
                 "creation_ca_necessaire",
-                3.0,
+                2.8,
                 "Le chiffre d'affaires qu'il me faut par mois"
               ],
-              "€"
-            ],
-            [
-              "Soit",
+              "€ de chiffre d'affaires par mois, soit",
               [
                 "creation_ventes_necessaires",
-                2.0,
+                1.6,
                 "Nombre de ventes par mois"
               ],
-              "ventes par mois, au prix moyen."
-            ],
-            [
-              "Si mon activité ne couvre pas mon minimum vital au bout de",
-              [
-                "creation_delai",
-                1.6,
-                "Nombre de mois"
-              ],
-              "mois,"
-            ],
-            [
-              "je",
-              [
-                "creation_alors",
-                null,
-                "Ce que je ferai alors"
-              ]
+              "ventes."
             ]
           ],
           "size": 11,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "title": "Si mon activité ne couvre pas mon minimum vital",
+          "rows": [
+            [
+              [
+                "Au bout de combien de mois",
+                "creation_delai",
+                0.85,
+                1
+              ],
+              [
+                "Ce que je ferai alors",
+                "creation_alors",
+                1.6,
+                3
+              ]
+            ]
+          ],
+          "question_labels": true,
           "fixed": true
         },
         {
@@ -794,7 +817,7 @@
         },
         {
           "type": "fields_card",
-          "hint": "Si vous ne vivez pas en couple : ce qu'en pensent vos proches. Pour la tension, relisez vos tensions (carnet 5) et votre tendance face à l'argent (carnet 4).",
+          "hint": "Si vous ne vivez pas en couple : vos proches, soutiens ou regards critiques (carnet 5). Pour la tension, relisez vos tensions (carnet 5) et votre tendance face à l'argent (carnet 4).",
           "title": "Autour de vous",
           "rows": [
             [
@@ -1002,16 +1025,12 @@
       "part_title": "Exercice 9 · Votre test · 10 min",
       "blocks": [
         {
-          "type": "callout",
-          "title": "Le principe du test",
-          "variant": "tip",
-          "fixed": true,
-          "text": "Quelle est la plus petite version de votre projet que vous pouvez tester vite, à moindre coût ? On parle aussi de produit minimum viable (MVP, en anglais)."
-        },
-        {
-          "type": "text",
-          "text": "Écrivez d'abord les trois paris dont dépend votre projet : le test et vos entretiens les vérifient.",
-          "spacing_after_cm": 0.4
+          "type": "paragraphs",
+          "items": [
+            "Le principe : la plus petite version de votre projet, testée vite et à moindre coût. On parle aussi de produit minimum viable (MVP, en anglais). Écrivez d'abord les trois paris dont dépend votre projet : le test et vos entretiens les vérifient."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
         },
         {
           "type": "table",
@@ -1070,21 +1089,49 @@
           "exploitable": "Je continue si trois des dix commerces contactés acceptent un premier film payant. Je revois l'offre si personne ne paie."
         },
         {
-          "type": "cards_grid",
-          "cards": [
-            {
-              "title": "Mon test",
-              "subtitle": "Quoi, avec qui, quand, pour quel coût.",
-              "field_id": "creation_test"
-            },
-            {
-              "title": "Mes critères de décision",
-              "subtitle": "Le résultat qui vous fait continuer, celui qui vous fait revoir l'offre.",
-              "field_id": "creation_criteres"
-            }
+          "type": "fields_card",
+          "title": "Mon test, et mes critères",
+          "rows": [
+            [
+              [
+                "Ce que je teste",
+                "creation_test",
+                1.6,
+                2
+              ],
+              [
+                "Avec qui",
+                "creation_test_qui",
+                1.6,
+                1
+              ]
+            ],
+            [
+              [
+                "Ses dates",
+                "creation_test_dates",
+                0.85
+              ],
+              [
+                "Son coût (€)",
+                "creation_test_cout",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Je continue si…",
+                "creation_critere_continue",
+                1.6
+              ],
+              [
+                "Je revois l'offre si…",
+                "creation_critere_revois",
+                1.6
+              ]
+            ]
           ],
-          "columns": 2,
-          "card_height_cm": 4.4
+          "question_labels": true
         }
       ]
     },
@@ -1248,7 +1295,7 @@
       "blocks": [
         {
           "type": "text",
-          "text": "La page à montrer à un partenaire, à un financeur ou à une banque. Reprenez vos réponses, en quelques lignes par case.",
+          "text": "La page à montrer à une banque, à un réseau de prêt d'honneur ou à un partenaire. Reprenez vos réponses, en quelques lignes par case.",
           "spacing_after_cm": 0.4
         },
         {
@@ -1256,7 +1303,7 @@
           "cards": [
             {
               "title": "Le projet et vos atouts",
-              "subtitle": "Ce que vous faites, pour qui, et ce qui vous rend crédible : vos compétences prouvées.",
+              "subtitle": "Ce que vous faites, pour qui, et ce qui vous rend crédible : vos compétences prouvées et vos récits (carnet de route, exercices 2 et 3).",
               "field_id": "creation_syn_projet"
             },
             {
@@ -1265,28 +1312,54 @@
               "field_id": "creation_syn_offre"
             },
             {
-              "title": "Les chiffres clés",
-              "subtitle": "Prix moyen, point mort, montant à financer, apport.",
-              "field_id": "creation_syn_chiffres"
-            },
-            {
               "title": "Le test",
               "subtitle": "Ce que vous vérifiez, et vos critères de décision.",
               "field_id": "creation_syn_test"
             },
             {
               "title": "Les risques et vos parades",
-              "subtitle": "Les deux principaux, et ce que vous faites pour les éviter.",
+              "subtitle": "Les deux principaux, dont votre hypothèse la plus fragile. Vos garde-fous (carnet de route, exercice 8) sont déjà des parades.",
               "field_id": "creation_syn_risques"
-            },
-            {
-              "title": "Les prochaines étapes",
-              "subtitle": "Les objectifs de votre feuille de route, piste A.",
-              "field_id": "creation_syn_etapes"
             }
           ],
           "columns": 2,
-          "card_height_cm": 6.6
+          "card_height_cm": 5.8
+        },
+        {
+          "type": "fields_card",
+          "title": "Les chiffres clés, en euros",
+          "rows": [
+            [
+              [
+                "Prix moyen",
+                "creation_syn_prix",
+                0.85
+              ],
+              [
+                "Point mort, par mois",
+                "creation_syn_point_mort",
+                0.85
+              ],
+              [
+                "Montant à financer",
+                "creation_syn_financer",
+                0.85
+              ],
+              [
+                "Apport personnel",
+                "creation_syn_apport",
+                0.85
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "question",
+          "question": "Les prochaines étapes",
+          "field_id": "creation_syn_etapes",
+          "subtitle": "Les objectifs de votre feuille de route, piste A, avec ce que le module y change.",
+          "box_height_cm": 1.6
         }
       ]
     },
@@ -1298,7 +1371,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Votre feuille de route, piste A, est écrite au carnet de route (exercice 5) : reportez-en les objectifs, puis dites ce que le module y change. Souvent, le test trouve sa place dans le palier de 60 jours."
+            "Votre feuille de route, piste A, est écrite au carnet de route (exercice 5) : reportez-en les objectifs, puis dites ce que le module y change, d'après votre point mort (exercice 6) et vos critères de décision (exercice 9). Votre piste B, et le signal qui vous y fera passer, restent prêts."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -1315,24 +1388,11 @@
           ]
         },
         {
-          "type": "fields_card",
-          "rows": [
-            [
-              [
-                "Ce que le module change à ma feuille de route",
-                "creation_feuille_change",
-                1.6,
-                3
-              ],
-              [
-                "La date de mon test",
-                "creation_test_date",
-                1.6,
-                1
-              ]
-            ]
-          ],
-          "question_labels": true
+          "type": "question",
+          "question": "Ce que le module change à ma feuille de route",
+          "field_id": "creation_feuille_change",
+          "subtitle": "Souvent, le test trouve sa place dans le palier de 60 jours.",
+          "box_height_cm": 1.6
         },
         {
           "type": "rating_grid",
@@ -1348,7 +1408,8 @@
             "Je teste encore",
             "Je modifie",
             "En pause"
-          ]
+          ],
+          "fixed": true
         },
         {
           "type": "question",

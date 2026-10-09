@@ -341,10 +341,10 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - L'intervalle entre les séances 9 et 10 passe à 3 h 45 pour une création, et le total du bilan à 21 h 30. C'est au-dessus des « 1 h 30 à 3 h entre deux séances » et des « 10 à 20 h » du programme, qui dit « selon les personnes ». Le texte réglementaire n'a pas changé (section 7).
 97. **Le module est un extrait du livret « Mon business plan »** : ses seize exercices indispensables, dans le même ordre et avec les mêmes formulations.
     - Repris mot pour mot, et fixes : la définition du point mort, le principe du test, le texte du protocole, les encadrés réglementaires et les liens, les questions franches.
-    - Condensé : les dépenses de démarrage et les charges du mois sur une page, moins de lignes par tableau, les hypothèses avec le test, une synthèse en six cartes. Les « Si vous avez fait le bilan » deviennent de vrais reports.
+    - Condensé : les dépenses de démarrage et les charges du mois sur une page, moins de lignes par tableau, les hypothèses avec le test, une synthèse en quatre cartes et quatre montants. Les « Si vous avez fait le bilan » deviennent de vrais reports.
     - Restent dans le livret : la vision à trois ans, la semaine type, la cible, le marché, les concurrents, le modèle sur une page, la communication, le statut détaillé et la reprise d'activité. L'ouverture du module renvoie au livret pour une reprise.
 98. **Les reports, sans nouvelle saisie.**
-    - Exercice 1 : la piste A et ce qui y attire (`route.pistes`), les trois valeurs et leurs conditions (`c5.grille`).
+    - Exercice 1 : la piste A (`route.pistes`), « Pour mon énergie, mon poste devra… » (`c3.energies`), les trois valeurs et leurs conditions (`c5.grille`).
     - Exercice 6 : les quatre seuils (`c4.seuils`), dans « À garder pour vous ». La page se masque si l'on montre le module.
     - Exercice 10 : les objectifs à 30, 60 et 90 jours (`route.feuilles`). Le module n'écrit pas de seconde feuille de route : il dit ce qu'il change à celle du carnet de route, et la date du test, qui trouve souvent sa place dans le palier de 60 jours.
 99. **Le point mort face aux seuils.**
@@ -357,7 +357,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - « Ce projet, je le fais pour moi, ou pour prouver quelque chose à quelqu'un » ferme l'exercice 1, fixe.
 101. **L'entretien prospects de l'app** entre dans l'exercice 9, sur sa propre page : deux questions sur des faits (du guide d'entretien du livret), puis les objections spontanées, le prix perçu et le déclencheur d'achat. Un tableau de cinq personnes, puis « Mes hypothèses face aux faits » (confirmée / à revoir / fausse). Les entretiens se font hors temps d'écriture, avant ou après la séance 10.
 102. **La synthèse se montre, la décision reste à vous.**
-    - La synthèse tient en six cartes : le projet et vos atouts (vos compétences prouvées), l'offre et son prix, les chiffres clés, le test, les risques et vos parades, les prochaines étapes. Elle remplace le tableau des risques du livret.
+    - La synthèse tient en quatre cartes (le projet et vos atouts, avec les compétences prouvées et les récits ; l'offre et son prix ; le test ; les risques et vos parades, avec les garde-fous du carnet de route), quatre montants (prix moyen, point mort, montant à financer, apport) et les prochaines étapes. Elle remplace le tableau des risques du livret.
     - La décision : je lance / je teste encore / je modifie / en pause, puis « Parce que… », et « Ce projet respecte mes trois valeurs : oui / en partie / non ».
 103. **Les liens, vérifiés le 9 octobre 2026 dans le navigateur intégré.**
     - Urssaf (autoentrepreneur.urssaf.fr), impots.gouv.fr pour les professionnels (la TVA et sa franchise, la CFE), Bpifrance Création (l'accueil : son outil d'aide au choix du statut est en refonte).
@@ -372,6 +372,21 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - L'encadré de la tendance face à l'argent au financement : la page est pleine. La tendance est citée dans l'aide de la page du risque.
     - Le guichet unique : le module s'arrête à la décision, avant l'immatriculation. Le livret le garde (exercice 26).
     - La clôture du rapport 08 (« ce qui me permet d'avancer malgré ce risque ») : l'ancrage du gabarit commun, fixe, la remplace.
+106. **Second passage sur l'audit** (demandé par Nicolas).
+    - Corrigé :
+      - une case, une chose : « Ce que je crée » · « Pour qui » ; « Qui le vit » · « À quelle fréquence » ; « Comment fait votre clientèle aujourd'hui » · « Pourquoi cela ne suffit pas » ; le test en quatre cases (ce que je teste, avec qui, ses dates, son coût) et ses critères en deux, « Je continue si… » · « Je revois l'offre si… », comme l'exemple contrasté ; les chiffres clés de la synthèse en quatre montants d'une ligne ;
+      - « Si mon activité ne couvre pas mon minimum vital » : le nombre de mois dans une case d'une ligne, « Ce que je ferai alors » dans une case de 1,6 cm ;
+      - un seul « quand » pour le test : ses dates à l'exercice 9, plus à la décision ;
+      - l'énergie (rapport 08, partie 1, B) : « Ce qui m'y attire » (`route.pistes`), qui doublait « Ce que je veux vraiment », laisse sa place au critère d'énergie du carnet 3 (`c3.energies`) ;
+      - le fil rouge du rapport 08 : les récits d'action et les garde-fous du carnet de route nommés dans la synthèse, l'hypothèse la plus fragile comme premier risque, les soutiens et regards critiques (carnet 5) à la page du risque, la piste B et son signal à la décision, le point mort et les critères comme bases de la feuille de route ;
+      - le masculin générique : « vos clients » devient « votre clientèle », « votre expert-comptable ou votre conseiller » devient « un cabinet comptable ou en séance », « petits producteurs » devient « petits domaines », « un financeur » devient « une banque, un réseau de prêt d'honneur ou un partenaire » ;
+      - aucune règle fiscale écrite en dur (chantier des modules) : « la CFE, qui n'est pas due l'année de la création » devient « la cotisation foncière des entreprises (CFE) : ce qui vous concerne, et quand » ; « l'entreprise paie ses propres impôts » devient « peut payer », car une EURL peut rester à l'impôt sur le revenu ;
+      - la grille du point mort et l'échelle de la décision sont marquées fixes, comme une méthode.
+    - Écarté, avec la raison :
+      - « Comment je la vérifie, auprès de qui » reste une colonne : c'est une seule information, la façon de vérifier ;
+      - les prochaines étapes de la synthèse recopient la feuille de route : la synthèse est faite pour être montrée, elle reprend ce qui est écrit ailleurs ;
+      - « Comment la réduire » reste une case d'une ligne : quelques mots y suffisent, et cinq cases de 1,6 cm ne tiendraient pas avec les deux tableaux ;
+      - le livret garde « vos clients » et « votre expert-comptable » : il n'est pas du lot (R10).
 
 ## 3. Les PR, dans l'ordre
 
@@ -541,9 +556,9 @@ Pour chaque PR de carnet :
   - mesures du module création :
     - une `fields_card` de cases d'une ligne, trois puis deux, avec titre et aide de deux lignes, 7,2 cm ; une rangée de quatre cases d'une ligne, sans titre, 3,7 cm ;
     - deux tableaux de cinq lignes de 0,85 cm, 7,2 cm chacun ; un tableau de calcul de sept lignes de 0,85 cm, dont une sur deux lignes, 9,6 cm ; un tableau de quatre lignes de 1,6 cm, 9,3 cm ; de cinq lignes de 1,6 cm, l'en-tête sur deux lignes, 11,2 cm ;
-    - une `fill_in_card` de deux lignes, 4 cm, et de quatre lignes, 6,6 cm ;
+    - une `fill_in_card` d'une ligne, 2,7 cm, et de deux lignes, 4 cm ; une `fields_card` titrée d'une rangée (0,85 et 1,6 cm), 5,4 cm, et de trois rangées (1,6, 0,85 puis 1,6 cm), 9,3 cm ; deux rangées de cases de 2,4 cm sans titre, 8,6 cm ;
     - une `link_card` de quatre liens d'une ligne, 5,5 cm, et de trois liens, dont deux sur deux lignes, 5,8 cm ;
-    - six `cards_grid` de 6,6 cm sur deux colonnes, 21,4 cm ;
+    - quatre `cards_grid` de 5,8 cm sur deux colonnes, 12,8 cm ; quatre montants d'une ligne avec titre, 4,2 cm ;
     - une `rating_grid` de trois lignes avec titre, 5,7 cm.
 
   Une ouverture de neuf lignes, avec une introduction de sept lignes, ne tient que sous un titre d'une ligne. Une ouverture de dix lignes tient avec une introduction de quatre lignes, une phrase en gras de deux lignes et un découpage de trois lignes.
@@ -566,7 +581,7 @@ Pour chaque PR de carnet :
 - **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm. Depuis R2, la ligne de vie et l'arbre de vie les tiennent aussi.
 - **Les reprises du carnet 2** se font dans les carnets suivants : les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3). Les moteurs et les critères sont relus avant la grille anti-compromis du carnet 5 (R5). Les moteurs « je le veux » et l'objectif boussole sont reportés à la cartographie du carnet 6 (R6). Les questions de l'interview entrent dans la grille d'entretien du carnet 7, et la personne interviewée parmi ses contacts (R7). Les expériences, la zone d'excellence et les compétences de vie sont citées par un renvoi écrit aux compétences prouvées du carnet de route, et l'objectif boussole y est reporté au chemin parcouru (R8).
 - **Les reprises du carnet 3.**
-  - La cartographie des énergies (`c3.energies`) est reportée au profil du carnet de route : quatre lignes, le critère retourné compris (R8). Deux de ses lignes sont déjà reprises au récapitulatif du carnet 4 (R4), une autre avant la grille du carnet 5 (R5), deux à la cartographie du carnet 6 (R6). Elle remplace « Ce qui vide mes batteries » et « Mes sources de stress » : on la reporte, on ne repose pas la question.
+  - La cartographie des énergies (`c3.energies`) est reportée au profil du carnet de route : quatre lignes, le critère retourné compris (R8). Le critère retourné l'est aussi aux fondations du module création (R9). Deux de ses lignes sont déjà reprises au récapitulatif du carnet 4 (R4), une autre avant la grille du carnet 5 (R5), deux à la cartographie du carnet 6 (R6). Elle remplace « Ce qui vide mes batteries » et « Mes sources de stress » : on la reporte, on ne repose pas la question.
   - Les réponses à « Sous pression » (Q16 et Q17) restent dans le carnet 3, sans report.
 - **Les reprises du carnet 4.**
   - Les seuils (`c4.seuils`) et la tendance dominante (`c4.tendance`) sont reportés au récapitulatif du carnet 5, et ses tensions y renvoient (R5).
@@ -595,7 +610,7 @@ Pour chaque PR de carnet :
   - Les questions plus franches restent dans le carnet 7, sans report.
 - **Les reprises du carnet de route.**
   - Les compétences prouvées et les récits (`route.competences`, `route.recits`) iront aux modules reconversion et évolution interne (`chantier-modules-s9.md`).
-  - La piste A et ce qui y attire (`route.pistes`) sont reportés aux fondations du module création, les objectifs de sa feuille de route (`route.feuilles`) à sa décision (R9). Les pistes, les feuilles de route et les premières actions iront au document de synthèse et au suivi à six mois.
+  - La piste A (`route.pistes`) est reportée aux fondations du module création, les objectifs de sa feuille de route (`route.feuilles`) à sa décision (R9). Les pistes, les feuilles de route et les premières actions iront au document de synthèse et au suivi à six mois.
   - Le module création (R9) ne déclare aucune donnée : sa synthèse est une brique du document de synthèse, sans report.
   - Les deux météos du carnet de route (`route.meteo`, `route.meteo_2`) ferment la série du chemin parcouru. Le suivi à six mois n'a pas de document : la personne apporte son carnet de route.
 - **Les trois familles de scénarios** (pistes directes, passerelles courtes, angles morts) viennent du programme, qui ne les définit pas. Le carnet 7 les nomme, la séance 8 fait le classement, et le récapitulatif du carnet de route les définit (R8, décision 78). Le programme est un texte réglementaire : il garde ses mots, sauf demande.

@@ -237,7 +237,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 ### Le business plan · deux formats
 
 - **Le module création du carnet de route** (S9 → S10, 2 h, `module-creation.json`, R9). C'est le parcours court proposé par l'audit, en 13 pages d'exercices : les seize exercices indispensables du livret, condensés en dix (fondations, problème, offre, prix, dépenses et charges, point mort face aux seuils, le risque pour vous, financement, test et entretiens prospects, synthèse et décision).
-  - Il reporte la piste A et sa feuille de route (`route.pistes`, `route.feuilles`), les trois valeurs et leurs conditions (`c5.grille`), les quatre seuils (`c4.seuils`, « À garder pour vous »), sans nouvelle saisie.
+  - Il reporte la piste A et sa feuille de route (`route.pistes`, `route.feuilles`), le critère d'énergie (`c3.energies`), les trois valeurs et leurs conditions (`c5.grille`), les quatre seuils (`c4.seuils`, « À garder pour vous »), sans nouvelle saisie.
   - Il reprend l'entretien prospects de l'app (objections, prix perçu, déclencheur d'achat), sur une page qui se remplit au fil des entretiens, hors temps d'écriture.
   - Seule la synthèse se montre. Le risque pour vous prend le protocole complet. Aucun taux ni montant : des liens officiels (Urssaf, impots.gouv.fr, Bpifrance Création, France Travail, réseaux de prêts d'honneur).
   - Il déclare `"carnet": "route"` : la couleur et le folio du carnet de route. Le livret complet prend le relais après le bilan.
@@ -279,7 +279,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | Compétences de vie | Carnet 2 | Carnet de route (compétences prouvées) | `c2.competences_vie` |
 | Première interview | Carnet 2 (facultatif) | Carnet 7 (grille d'entretien, contacts) | `c2.interview` |
 | Fil des pistes | Livrables des carnets 2 à 5 | Carnet 6 (dix pistes) | `c2.livrable` … `c5.livrable` (sur la page du livrable) |
-| Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route | `c3.energies` |
+| Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route · module création | `c3.energies` |
 | Profil de fonctionnement validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route | `c4.profil` |
 | 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création | `c4.seuils`, `c4.tendance` |
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création | `c5.grille` |
