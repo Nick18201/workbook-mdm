@@ -19,7 +19,7 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
   - `compiler.py` : Le moteur unique qui transforme une spécification en PDF, pour la ligne de commande comme pour l'app web.
   - `utils.py` : Utilitaires (typographie française automatique, `create_cli` pour parser les arguments CLI, caches).
   - **`chapters/programme/`** : La brochure du programme publiée sur le site, seul document resté en Python (avec ses blocs propres dans `common.py`). Règle : un dossier par document, scindé en sous-fichiers, jamais un fichier unique.
-- **`assets/`** : Contient les `fonts/` (DM Sans, Manrope, PT Mono, Instrument Serif, Material Symbols Outlined, avec leurs licences) et `illustrations/` (`couverture.svg`, l'illustration des couvertures, et les logos CPF, France Travail, Qualiopi).
+- **`assets/`** : Contient les `fonts/` (DM Sans, Manrope, PT Mono, Instrument Serif, Material Symbols Outlined, avec leurs licences) et `illustrations/` (les logos CPF, France Travail, Qualiopi).
 - **`DA-workbook.md` et `design-system/`** : La direction artistique « Éditorial & Affirmé » (couleurs, typographie, éléments signature, ton et vocabulaire). Toute page doit s'y conformer.
 - **Fichiers racines** : Entrées PDF statiques (ex: `Workbook_Chapitre_1.pdf`) ou temporaires, ignorées par git.
 
@@ -32,7 +32,7 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
 
 ## 🎨 Direction artistique et ton
 - **Une seule palette** : fond ivoire, cartes pastel, zones à remplir blanches bordées en `line-strong`, titres à l'encre dont le dernier mot (ou les `*mots marqués*`) est en corail, repères en PT Mono. Jamais de couleur codée en dur : toujours `PDFStyle`.
-- **Chaque carnet** : couverture avec sa promesse sur un post-it, ouverture (objectif et liste « Exercice N · … »), pages d'exercice, puis la fin de carnet (post-it LIVRABLE et tampon « Validé en séance ») avant la 4e de couverture.
+- **Chaque carnet** : couverture typographique (grand numéro, titre et promesse), ouverture (objectif et liste « Exercice N · … »), pages d'exercice, puis la fin de carnet (post-it LIVRABLE et tampon « Validé en séance ») avant la 4e de couverture.
 - **Ton (section 7 de la DA)** : vouvoiement, phrases courtes et concrètes, titres ponctués en casse de phrase. Jamais « coach » (dire « consultant en transformation » ou « la personne qui vous accompagne »), pas de registre de développement personnel, jamais « présentiel », aucun chiffre sans source.
 - **Typographie française** : automatique au rendu (espaces insécables, guillemets « », œ), via `utils.french_typography`.
 

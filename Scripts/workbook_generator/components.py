@@ -20,8 +20,9 @@ from .document_builder import carnet_eyebrow, document_pastel, document_style
 from .forms import create_input_field, create_checkbox, create_radio, reserve_field_name
 from .primitives import (
     content_frame,
-    draw_cover_illustration,
+    draw_carnet_progress,
     draw_disc,
+    draw_display,
     draw_eyebrow,
     draw_field_box,
     draw_filled_arrow,
@@ -30,18 +31,19 @@ from .primitives import (
     draw_icon,
     draw_icon_badge,
     draw_label_pill,
-    draw_logotype,
     draw_number,
     draw_paragraph,
     pastel_cycle,
     draw_pastel_card,
     draw_page_head,
     draw_rule,
+    draw_signature,
     draw_stamp,
     draw_star_list,
     draw_text,
     first_baseline,
     heading_height,
+    ink_metrics,
     label_pill_size,
     paragraph_height,
     postit,
@@ -249,46 +251,74 @@ def as_title(text):
     return text
 
 
+COVER_HERO_MAX = 640  # pt, the giant number of a cover; it shrinks to fit its room
+COVER_HERO_TRACKING = -0.04
+COVER_DOT = 0.17  # em, the coral dot of the signature
+COVER_PROMISE_SIZE = 17
+
+
+def _cover_hero(c, number):
+    """
+    The giant word of a cover: the number without its leading zeros (« 3 »), « route » for
+    the carnet de route, or None when there is no short number (a livret).
+    """
+    if document_style(c).carnet == PDFStyle.CARNET_ROUTE and number in (None, ""):
+        return "route"
+    text = "" if number is None else str(number).strip()
+    if text.isdigit():
+        text = str(int(text))
+    return text if 0 < len(text) <= 3 else None
+
+
 def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise=None):
     """
-    Cover of a workbook: logotype, the cover illustration in the document pastel, the
-    eyebrow, the big chapter number in PT Mono blue, the title with its coral accent (see
-    primitives.title_runs), and the workbook's promise on a post-it stuck on the closed
-    notebooks of the illustration.
+    Cover of a workbook, all typography: the signature « marge de manœuvre. » and the tagline
+    at the top, with the row of the seven carnets under them in a carnet of the bilan; the
+    number giant in DM Sans 800, its full stop the coral dot of the brand (« route. » for the
+    carnet de route), over a disc of the document pastel cut by the right edge; then the
+    eyebrow, the title with its coral accent and the promise in Instrument Serif. Without a
+    number (a livret), the title is set larger instead.
     """
     x, width = content_frame()
-    draw_cover_illustration(c)
-    draw_logotype(c, x, HEIGHT - 2.6 * cm, size=16)
+    carnet = document_style(c).carnet
+    draw_disc(c, WIDTH + 0.5 * cm, HEIGHT - 11.5 * cm, 9.0 * cm, document_pastel(c))
 
-    if promise:
-        note_w, note_size = 6.0 * cm, PDFStyle.SIZE_POSTIT
-        note_h = paragraph_height(promise, note_w - 1.2 * cm, PDFStyle.FONT_SERIF, note_size, note_size * 1.3) + 1.3 * cm
-        note_x, note_y = x - 0.3 * cm, HEIGHT - 11.7 * cm - note_h
-        with postit(c, note_x, note_y, note_w, note_h, angle=-3):
-            draw_paragraph(c, promise, 0.6 * cm, note_h - 0.65 * cm, note_w - 1.2 * cm,
-                           PDFStyle.FONT_SERIF, note_size, PDFStyle.COLOR_INK, note_size * 1.3)
-
-    # The eyebrow, number and title sit in the lower third, above the tagline
-    title_w = width * 0.92
-    title_size = 46
-    title_h = heading_height(title, title_w, size=title_size, min_size=30, max_lines=3,
-                             tracking=PDFStyle.TRACKING_TITLE_XL)
-    title_top = 3.6 * cm + title_h
-    if eyebrow is None:
-        eyebrow = carnet_eyebrow(c, number)
-    if number not in (None, ""):
-        number_size = 130
-        number_y = title_top + 0.8 * cm
-        draw_number(c, x - 5, number_y, str(number).zfill(2) if str(number).isdigit() else number, size=number_size)
-        draw_eyebrow(c, x, number_y + number_size * 0.8, eyebrow, max_width=width)
-    else:
-        draw_eyebrow(c, x, title_top + 0.5 * cm, eyebrow, max_width=width)
-    draw_heading(c, title, x, title_top, title_w, size=title_size, min_size=30, max_lines=3,
-                 tracking=PDFStyle.TRACKING_TITLE_XL)
-
+    top = HEIGHT - 2.4 * cm
+    draw_signature(c, x, top, size=17)
     if tagline:
-        draw_rule(c, x, x + width, 2.35 * cm, color=PDFStyle.COLOR_INK, width=0.75)
-        draw_eyebrow(c, x, 1.6 * cm, tagline, max_width=width)
+        draw_eyebrow(c, x + width, top + 1, tagline, max_width=width * 0.5, align="right")
+    if carnet is not None:
+        top -= 1.2 * cm
+        draw_carnet_progress(c, x, top, carnet)
+
+    # From the bottom up: the promise, the title, the eyebrow
+    hero = _cover_hero(c, number)
+    bottom = 2.0 * cm
+    if promise:
+        size, leading, promise_w = COVER_PROMISE_SIZE, COVER_PROMISE_SIZE * 1.25, width * 0.8
+        promise_h = paragraph_height(promise, promise_w, PDFStyle.FONT_SERIF, size, leading, max_lines=3)
+        draw_paragraph(c, promise, x, bottom + promise_h, promise_w, PDFStyle.FONT_SERIF, size, PDFStyle.COLOR_INK,
+                       leading, max_lines=3)
+        bottom += promise_h + 0.55 * cm
+    title_size, title_min = (46, 30) if hero else (64, 40)
+    title_top = bottom + heading_height(title, width, size=title_size, min_size=title_min, max_lines=3,
+                                        tracking=PDFStyle.TRACKING_TITLE_XL)
+    draw_heading(c, title, x, title_top, width, size=title_size, min_size=title_min, max_lines=3,
+                 tracking=PDFStyle.TRACKING_TITLE_XL)
+    if eyebrow is None:
+        # In a carnet the row above already says « Carnet 3 sur 7 »
+        eyebrow = "Carnet de bord" if carnet not in (None, PDFStyle.CARNET_ROUTE) else carnet_eyebrow(c, number)
+    eyebrow_y = title_top + 0.45 * cm
+    draw_eyebrow(c, x, eyebrow_y, eyebrow, max_width=width)
+
+    if hero:
+        baseline = eyebrow_y + 1.3 * cm
+        _, ink_w, ink_top = ink_metrics(hero, PDFStyle.FONT_HEADING, 1000, COVER_HERO_TRACKING)
+        size = min(COVER_HERO_MAX, 1000 * (top - 1.2 * cm - baseline) / ink_top,
+                   width / (ink_w / 1000 + 0.05 + COVER_DOT))
+        ink_w = draw_display(c, x, baseline, hero, size, tracking=COVER_HERO_TRACKING)
+        dot = COVER_DOT * size
+        draw_disc(c, x + ink_w + 0.05 * size + dot / 2, baseline + dot / 2, dot / 2, PDFStyle.COLOR_CORAL)
     c.showPage()
 
 

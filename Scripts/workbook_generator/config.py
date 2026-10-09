@@ -120,11 +120,6 @@ class PDFStyle:
     FONTS_DIR = os.path.join(PROJECT_DIR, "assets", "fonts")
     ILLUS_DIR = os.path.join(PROJECT_DIR, "assets", "illustrations")
 
-    # Cover illustration (the work table seen from above). Its lilac is a placeholder that
-    # takes the document pastel; see the comment at the top of the SVG.
-    PATH_COVER_ILLUSTRATION = os.path.join(ILLUS_DIR, "couverture.svg")
-    COVER_ILLUSTRATION_PASTEL = "#E7E0FF"
-
     # Logos of the Programme brochure
     PATH_LOGO_CPF = os.path.join(ILLUS_DIR, "logo_cpf.png")
     PATH_LOGO_FRANCE_TRAVAIL = os.path.join(ILLUS_DIR, "logo_france_travail.png")
