@@ -156,7 +156,7 @@ FORMAT DE RÉPONSE : uniquement un objet JSON, de cette forme :
     {"template": "cover", "params": {"cover_title": "Mes enquêtes *métiers.*", "number": "", "tagline": "Bilan de compétences", "promise": "Ce que le document apporte, en 3 à 8 mots."}},
     {"template": "summary", "title": "Préparer *l'échange.*", "params": {"num": "", "intro_text": "Le but du document, en deux ou trois phrases.", "points": ["Exercice 1 · … · 15 min", "Exercice 2 · … · 20 min", "Fin de carnet · 5 min"], "duration": "40 min", "split": "En une fois, ou en deux : … ."}},
     {"template": "composite", "title": "…", "part_title": "Exercice 1 · … · 15 min", "blocks": [{"type": "paragraphs", "items": ["…"]}]},
-    {"template": "engagement", "title": "Votre livrable.", "part_title": "Fin de carnet · 5 min", "params": {"livrable_title": "…", "livrable_text": "…", "lines": ["…", "…"], "zones": ["Ce qui m'étonne en relisant mes réponses", "À aborder en séance : …", "Ce que j'ai laissé vierge, à reprendre ensemble"], "field_prefix": "enq_livrable"}},
+    {"template": "engagement", "title": "Votre livrable.", "part_title": "Fin de carnet · 5 min", "params": {"livrable_title": "…", "livrable_text": "…", "lines": ["…", "…"], "zones": ["Ce qui m'étonne en relisant mes réponses", "À aborder en séance : …", "Les questions que j'ai passées, à reprendre ensemble"], "field_prefix": "enq_livrable"}},
     {"template": "closing", "params": {"messages": ["…", "…"]}}
   ]
 }
@@ -367,7 +367,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
             "lines": ["Je fais mon prochain pas avant la séance.", "Je renvoie ce carnet complété avant la séance."],
             "zones": ["Ce qui m'étonne en relisant mes réponses",
                       "À aborder en séance : une question restée sans réponse",
-                      "Ce que j'ai laissé vierge, à reprendre ensemble"],
+                      "Les questions que j'ai passées, à reprendre ensemble"],
             "field_prefix": "doc_livrable",
         }))
     pages.append(PageSpec(template="closing", params={"messages": [

@@ -239,7 +239,7 @@ Les quatre familles sont sur Google Fonts.
 - **Encadré** (conseil, rappel, exemple) : une carte pastel avec une étiquette.
 - **Exemple contrasté** : sous un sourcil « EXEMPLE · MÉTIER VOISIN », la même réponse « En surface » (carte blanche, texte `ink-muted`) puis « Exploitable » (carte pastel), reliées par une flèche bleue.
 - **Exercice qui touche à l'intime** : avant, une carte blanche « AVANT DE COMMENCER » avec une pastille d'information (une annonce factuelle : de quoi parle l'exercice, à quoi il sert pour le bilan) ; après, une carte pastel « POUR CLORE » avec la phrase d'ancrage « Aujourd'hui, avec le recul, je sais que… ».
-- **Fin de carnet** : le post-it jasmin « LIVRABLE » et le tampon « Validé en séance », avec la date et une case à cocher, les engagements, puis trois zones courtes (ce qui m'étonne, à aborder en séance, ce que j'ai laissé vierge) et, des carnets 2 à 5, une idée de piste.
+- **Fin de carnet** : le post-it jasmin « LIVRABLE » et le tampon « Validé en séance », avec la date et une case à cocher, les engagements, puis trois zones courtes (ce qui m'étonne, à aborder en séance, les questions passées) et, des carnets 2 à 5, une idée de piste.
 - **Folio** : en PT Mono, en bas de page, par exemple « marge de manœuvre · carnet 3/7 · p. 12 » ou « marge de manœuvre · carnet de route · p. 4 ».
 
 **Dosage**

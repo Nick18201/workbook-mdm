@@ -119,12 +119,30 @@ def test_the_paper_workflow_is_flagged():
 
 def test_a_precaution_that_treats_the_person_as_fragile_is_flagged():
     for text in ("Il peut remuer. Prenez-le à votre rythme.", "Si cet exercice vous semble trop lourd, passez-le.",
-                 "Un mot suffit, ou laissez la case vierge pour la séance."):
+                 "Ces souvenirs sont parfois douloureux."):
         page = {"template": "composite", "blocks": [{"type": "protocol", "text": text}]}
         assert (CHECK, "precaution") in _rules(_spec(page), structure=False), text
     factual = {"template": "composite", "blocks": [{"type": "protocol", "text": (
         "Cet exercice parle de votre famille : ce que vous en avez retenu oriente encore vos choix.")}]}
     assert (CHECK, "precaution") not in _rules(_spec(factual), structure=False)
+
+
+def test_an_invitation_to_leave_a_box_blank_is_flagged():
+    # The right to skip a question is said once, in the opener (charte v2): carnet 3 had the first one
+    for text in ("Je laisse vierge ce qui me pèse : nous en parlerons en séance.",
+                 "Un mot suffit, ou laissez la case vierge pour la séance.",
+                 "Du plus ancien au plus récent. Laissez vides les cases inutiles.",
+                 "Une question vous gêne ? Laissez-la vierge."):
+        page = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [text]}]}
+        assert (FIX, "case-vierge") in _rules(_spec(page), structure=False), text
+    # A reply that did not come, an interview that did not happen, what was skipped (a past participle)
+    for text in ("Une réponse n'est pas arrivée ? Laissez sa ligne vierge.",
+                 "Un entretien n'a pas eu lieu ? Laissez sa fiche vierge.",
+                 "Ce que j'ai laissé vierge, à reprendre ensemble"):
+        page = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [text]}]}
+        assert (FIX, "case-vierge") not in _rules(_spec(page), structure=False), text
+    engagement = {"template": "engagement", "params": {"lines": ["Je laisse vierge ce qui me pèse."]}}
+    assert (FIX, "case-vierge") in _rules(_spec(engagement), structure=False)
 
 
 def test_a_forbidden_word_quoted_as_a_message_received_is_accepted():

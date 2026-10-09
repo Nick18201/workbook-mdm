@@ -122,7 +122,7 @@
           "type": "paragraphs",
           "items": [
             "L'habitus, c'est votre manière spontanée de réagir, de parler, de vous tenir, héritée de votre famille et de votre milieu. Il agit comme un logiciel installé depuis l'enfance.",
-            "Quand vous changez de milieu, ce logiciel peut créer un décalage : l'impression de porter un costume mal taillé, ou la pensée « Un jour, ils vont se rendre compte que je ne suis pas à la hauteur. » Réussir mieux que ses parents peut faire naître de la culpabilité ; une situation moins prestigieuse que la leur, de la honte. Ce malaise peut retenir de demander une augmentation, ou pousser au surmenage."
+            "Quand vous changez de milieu, ce logiciel peut créer un décalage : l'impression de porter un costume mal taillé, ou la pensée « Un jour, ils vont se rendre compte que je ne suis pas à la hauteur. » Réussir mieux que ses parents peut faire naître de la culpabilité ; une situation moins prestigieuse que la leur, de la honte. Ce malaise peut retenir de demander une augmentation, ou pousser au surmenage. Le repérer, c'est reprendre la main."
           ]
         },
         {
@@ -144,7 +144,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Travailler, c'est aussi y mettre du sien. Quand vous ne pouvez pas faire votre travail bien, selon vos propres critères, vous en souffrez : la psychologie du travail parle de travail empêché. Cette souffrance n'est pas une faiblesse : elle montre que vous tenez à la qualité de votre travail. L'exercice 2 vous aide à en faire un critère."
+            "Travailler, c'est aussi y mettre du sien. Quand vous ne pouvez pas faire votre travail bien, selon vos propres critères, vous en souffrez : la psychologie du travail parle de travail empêché. Cette souffrance dit une chose précieuse : vous tenez à la qualité de votre travail. L'exercice 2 en fait un critère."
           ]
         }
       ]
@@ -157,7 +157,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Facultatif. Trois questions pour relier ces notions à votre histoire. Une ligne suffit."
+            "Trois questions pour relier ces notions à votre histoire. Une ligne suffit."
           ],
           "spacing_after_cm": 0.45
         },
@@ -180,7 +180,7 @@
             ],
             [
               [
-                "Ce que je n'ose pas faire, de peur de décevoir ma famille",
+                "Ce que j'oserais si l'avis de ma famille ne comptait pas",
                 "c2_racines_decevoir",
                 2.6
               ]
@@ -580,7 +580,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Ce qui vous coûte dit ce dont votre prochain poste devra vous protéger. Reprenez ce qui vous coûtait (exercice 1) et votre zone à risque, puis retournez chaque irritant en critère."
+            "Ce qui vous coûte dit ce que vous exigerez de votre prochain poste. Reprenez ce qui vous coûtait (exercice 1) et votre zone à risque, puis retournez chaque irritant en critère."
           ],
           "spacing_after_cm": 0.45
         },
@@ -589,7 +589,7 @@
           "rows": [
             [
               [
-                "Ce que je ne veux plus jamais revivre dans un poste",
+                "Ce que je ne veux plus subir dans un poste",
                 "c2_critere_1_irritant",
                 2.2
               ],
@@ -601,7 +601,7 @@
             ],
             [
               [
-                "Ce que je ne veux plus jamais revivre dans un poste",
+                "Ce que je ne veux plus subir dans un poste",
                 "c2_critere_2_irritant",
                 2.2
               ],
@@ -613,7 +613,7 @@
             ],
             [
               [
-                "Ce que je ne veux plus jamais revivre dans un poste",
+                "Ce que je ne veux plus subir dans un poste",
                 "c2_critere_3_irritant",
                 2.2
               ],
@@ -673,7 +673,7 @@
         },
         {
           "type": "question",
-          "question": "Le schéma que je répète, et qui me coûte le plus :",
+          "question": "Le schéma que je répète, et que je veux changer :",
           "field_id": "c2_schema_cout",
           "answer": "sentence",
           "fixed": true
@@ -753,12 +753,12 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, revient sur les moments forts et les moments difficiles de votre vie. Vous choisissez ce que vous notez : un mot suffit."
+          "text": "Cet exercice, sur deux pages, revient sur les moments forts et les moments difficiles de votre vie : ensemble, ils montrent ce qui vous donne de l'énergie et ce qui vous aide à traverser. Un mot suffit."
         },
         {
           "type": "paragraphs",
           "items": [
-            "Votre vie professionnelle et personnelle : vos sommets à gauche, vos vallées à droite, avec leur date, du plus ancien au plus récent. Laissez vides les cases inutiles."
+            "Votre vie professionnelle et personnelle : jusqu'à trois sommets à gauche, trois vallées à droite, avec leur date, du plus ancien au plus récent."
           ],
           "spacing_after_cm": 0.35
         },
@@ -882,19 +882,19 @@
                 "sentence"
               ],
               [
-                "La compétence cachée",
+                "La compétence que j'en tire",
                 "c2_competence_1",
                 "sentence"
               ]
             ],
             [
               [
-                "2. Défis et épreuves (facultatif)",
+                "2. Défis et épreuves",
                 "c2_vecu_2",
                 "sentence"
               ],
               [
-                "La compétence cachée",
+                "La compétence que j'en tire",
                 "c2_competence_2",
                 "sentence"
               ]
@@ -906,7 +906,7 @@
                 "sentence"
               ],
               [
-                "La compétence cachée",
+                "La compétence que j'en tire",
                 "c2_competence_3",
                 "sentence"
               ]
@@ -929,7 +929,7 @@
                 "sentence"
               ],
               [
-                "La compétence cachée",
+                "La compétence que j'en tire",
                 "c2_competence_4",
                 "sentence"
               ]
@@ -941,7 +941,7 @@
                 "sentence"
               ],
               [
-                "La compétence cachée",
+                "La compétence que j'en tire",
                 "c2_competence_5",
                 "sentence"
               ]
@@ -1122,7 +1122,7 @@
       "part_title": "Fin de carnet · 10 min",
       "params": {
         "lines": [
-          "Je regarde mes expériences difficiles à mon rythme, en séance si besoin.",
+          "Je regarde aussi les expériences qui m'ont coûté : elles donnent mes critères.",
           "Je note chaque idée de piste, même improbable, dans le fil des pistes.",
           "Je renvoie ce carnet complété avant la séance 2."
         ],

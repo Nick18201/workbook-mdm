@@ -504,7 +504,7 @@ def _draw_exercises_card(c, x, top, width, items):
 END_ZONES = (
     "Ce qui m'étonne en relisant mes réponses",
     "À aborder en séance",
-    "Ce que j'ai laissé vierge, à reprendre ensemble",
+    "Les questions que j'ai passées, à reprendre ensemble",
 )
 END_PISTE = "Une idée de piste qui m'est venue en remplissant ce carnet"
 ZONE_SIZE = 10.5

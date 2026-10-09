@@ -76,7 +76,7 @@ L'option « Initiation à l'IA » ouvre **la séance 6**, celle de l'exploration
 | Météo | Une échelle d'énergie de 0 à 10 et une ligne « Ce chiffre s'explique surtout par… ». Deux minutes. Reprise à chaque carnet, elle mesure le chemin parcouru. | App |
 | Récapitulatif guidé | À partir du carnet 2. Il relit le livrable du carnet précédent et la séance qui vient d'avoir lieu, avec des renvois explicites. | PDF, à généraliser |
 | Exercices | Sourcil « Exercice N · nom · durée », et une phrase qui dit à quoi sert l'exercice. Des amorces, et un exemple contrasté (« En surface / Exploitable ») tiré d'un métier voisin. Des formats variés. Les irritants retournés en critères (« donc mon prochain poste doit… »). Le protocole de sécurité quand la charge est forte : avertissement, optionnalité, phrase d'ancrage. | Audit |
-| Livrable | La sortie nommée du carnet : celle que le suivant reprend, et une brique du document de synthèse. Les engagements. Trois zones courtes : « Ce qui m'étonne en relisant mes réponses », « À aborder en séance », « Ce que j'ai laissé vierge, à reprendre ensemble ». À partir du carnet 2, une ligne de plus : « Une idée de piste qui m'est venue en remplissant ce carnet » (le fil des pistes). | Audit |
+| Livrable | La sortie nommée du carnet : celle que le suivant reprend, et une brique du document de synthèse. Les engagements. Trois zones courtes : « Ce qui m'étonne en relisant mes réponses », « À aborder en séance », « Les questions que j'ai passées, à reprendre ensemble ». À partir du carnet 2, une ligne de plus : « Une idée de piste qui m'est venue en remplissant ce carnet » (le fil des pistes). | Audit |
 | Dos | Prochaine étape. | PDF |
 
 ## 5. Le parcours, carnet par carnet

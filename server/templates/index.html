@@ -1807,7 +1807,7 @@ MA PROCHAINE ACTION :`;
               </div>
               <div class="pt-3 border-t border-rose-100 space-y-1.5 text-xs text-slate-700">
                 <div class="font-bold text-[11px] uppercase text-slate-400">Avant la prochaine séance</div>
-                ${(Array.isArray(p.zones) ? p.zones : ["Ce qui m'étonne en relisant mes réponses", "À aborder en séance", "Ce que j'ai laissé vierge, à reprendre ensemble"])
+                ${(Array.isArray(p.zones) ? p.zones : ["Ce qui m'étonne en relisant mes réponses", "À aborder en séance", "Les questions que j'ai passées, à reprendre ensemble"])
                   .concat(p.pistes === true ? ["Une idée de piste qui m'est venue en remplissant ce carnet"] : [])
                   .map(z => `<div class="bg-white p-2 rounded-lg border border-rose-100">${escapeHtml(z)}</div>`).join('')}
               </div>
