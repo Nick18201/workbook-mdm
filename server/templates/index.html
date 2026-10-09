@@ -226,13 +226,13 @@
         <!-- Form Inputs -->
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Carnet N°</label>
-            <input type="number" id="chapter_num" value="1" min="0" max="20" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Carnet n° (facultatif)</label>
+            <input type="number" id="chapter_num" value="" min="1" max="20" placeholder="Aucun" title="1 à 7 : un carnet du bilan. Vide : un document hors de la suite des carnets." class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom du Bénéficiaire</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom du bénéficiaire (facultatif)</label>
           <input type="text" id="beneficiary_name" placeholder="Ex: Thomas, Sarah..." class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
         </div>
 
@@ -252,25 +252,28 @@
         <!-- Options du Livret -->
         <div class="bg-indigo-50/50 rounded-2xl p-3.5 border border-indigo-100/70 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Options du Livret</span>
-            <span class="text-[10px] text-slate-400 font-medium">Structure</span>
+            <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Options du document</span>
+            <span class="text-[10px] text-slate-400 font-medium">Gabarit de nos carnets</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Format du livret</label>
-              <select id="book_format" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-                <option value="short">Court (6 – 7 pages)</option>
-                <option value="standard" selected>Standard (7 – 10 pages)</option>
-                <option value="deep">Complet (+ de 10 pages)</option>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Durée d'écriture</label>
+              <select id="duration_min" title="Le temps que la personne passe à remplir le document, hors entretiens et recherches" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+                <option value="30">Environ 30 min</option>
+                <option value="45">Environ 45 min</option>
+                <option value="60" selected>Environ 1 h</option>
+                <option value="90">Environ 1 h 30</option>
+                <option value="120">Environ 2 h</option>
+                <option value="">Selon les notes</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Page Météo</label>
-              <select id="meteo_option" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
-                <option value="classic" selected>Avec météo (émotions & énergie)</option>
-                <option value="none">Sans météo (direct dans le sujet)</option>
-                <option value="auto">Automatique (selon notes)</option>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Météo de l'énergie</label>
+              <select id="meteo_option" title="L'échelle d'énergie de 0 à 10 de nos carnets, en début de document" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-xl text-xs font-medium bg-white focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+                <option value="auto" selected>Selon les notes</option>
+                <option value="classic">Oui</option>
+                <option value="none">Non</option>
               </select>
             </div>
           </div>
@@ -278,7 +281,7 @@
           <div class="pt-0.5 flex items-center">
             <label class="flex items-center space-x-2 cursor-pointer text-xs text-slate-600">
               <input type="checkbox" id="include_engagement" checked class="rounded border-slate-300 text-mdm-blue focus:ring-mdm-blue w-3.5 h-3.5">
-              <span>Inclure pacte d'engagement & signature</span>
+              <span>Finir par la page du livrable (engagements et trois zones guidées)</span>
             </label>
           </div>
         </div>
@@ -349,6 +352,18 @@
           <span id="ai_changelog_title">Ajustement appliqué</span>
         </div>
         <p id="ai_changelog_text" class="text-xs text-emerald-950 font-medium pl-5.5"></p>
+      </div>
+
+      <!-- Contrôle de conformité : les règles de nos carnets (/api/check) -->
+      <div id="conformity_bar" class="hidden bg-white/95 rounded-2xl p-3.5 border border-indigo-100 shadow-2xs space-y-2">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center space-x-2 text-xs font-bold text-slate-800">
+            <span class="mi text-mdm-blue">rule</span>
+            <span id="conformity_title">Règles des carnets</span>
+          </div>
+          <button type="button" id="conformity_toggle" onclick="toggleConformityList()" class="text-[11px] text-mdm-blue hover:underline font-semibold cursor-pointer">Voir</button>
+        </div>
+        <ul id="conformity_list" class="hidden text-[11px] leading-relaxed space-y-1"></ul>
       </div>
 
       <!-- Overview Card -->
@@ -645,6 +660,7 @@
 
       if (spec) {
         currentWorkbookSpec = spec;
+        currentCheckContext = beneficiaryContext;
         iterationCount = 1;
         renderPreview(currentWorkbookSpec, summaries.join('\n'), notes.join('\n') || null);
         showGenerationSource(fallbackRes || lastRes);
@@ -663,9 +679,7 @@
       if (!currentWorkbookSpec) return;
       const jsonStr = JSON.stringify(currentWorkbookSpec, null, 2);
       const blob = new Blob([jsonStr], { type: 'application/json' });
-      const benef = (currentWorkbookSpec.beneficiary_name || 'Modele').replace(/\s+/g, '_');
-      const num = currentWorkbookSpec.chapter_num || 1;
-      const filename = `Carnet_${num}_${benef}.json`;
+      const filename = `${fileBaseName(currentWorkbookSpec)}.json`;
       downloadBlob(blob, filename);
       showToast("Maquette JSON téléchargée");
     }
@@ -681,6 +695,7 @@
             throw new Error("Structure de livret JSON invalide (clé 'pages' manquante)");
           }
           currentWorkbookSpec = data;
+          currentCheckContext = null;
           iterationCount = 1;
           if (data.beneficiary_name) {
             document.getElementById('custom_beneficiary_name').value = data.beneficiary_name;
@@ -733,7 +748,7 @@
       }
       const reason = FALLBACK_REASONS[res.headers.get('X-MDM-Fallback-Reason')] || "Gemini est indisponible";
       document.getElementById('ai_fallback_text').innerText =
-        `Ce résultat vient d'un modèle générique de secours (${reason}) : il ne tient pas compte de vos notes ni de vos consignes.`;
+        `Ce résultat vient du mode de secours (${reason}) : il suit le gabarit de nos carnets, mais ne comprend ni vos notes ni vos consignes. Il reprend seulement le modèle choisi, ou les questions de vos notes.`;
       bar.classList.remove('hidden');
     }
 
@@ -897,7 +912,7 @@
       document.getElementById('chapter_title').value = "Clarifier mes Valeurs & Poser mes Limites";
       document.getElementById('beneficiary_name').value = "Julien";
       document.getElementById('meteo_option').value = "classic";
-      document.getElementById('book_format').value = "standard";
+      document.getElementById('duration_min').value = "60";
       document.getElementById('include_engagement').checked = true;
       document.getElementById('raw_notes').value = 
 `Thème : Carnet 5 - Les Valeurs & Limites professionnelles.
@@ -929,16 +944,16 @@ Notes de la séance :
       }
 
       initialRawNotes = rawNotes;
+      currentCheckContext = null;
       setLoading(true, "Analyse par Gemini...");
 
       const payload = {
         raw_notes: rawNotes,
-        chapter_num: parseInt(document.getElementById('chapter_num').value) || 1,
+        chapter_num: parseInt(document.getElementById('chapter_num').value) || null,
         chapter_title: document.getElementById('chapter_title').value.trim() || null,
         beneficiary_name: document.getElementById('beneficiary_name').value.trim() || null,
+        duration_min: parseInt(document.getElementById('duration_min').value) || null,
         meteo_option: document.getElementById('meteo_option').value,
-        session_focus: document.getElementById('session_focus') ? document.getElementById('session_focus').value : 'auto',
-        book_format: document.getElementById('book_format').value,
         include_engagement: document.getElementById('include_engagement').checked
       };
 
@@ -1034,9 +1049,7 @@ Notes de la séance :
         }
 
         const blob = await res.blob();
-        const benef = (currentWorkbookSpec.beneficiary_name || '').replace(/\s+/g, '_');
-        const num = currentWorkbookSpec.chapter_num || 1;
-        const filename = benef ? `Carnet_${num}_${benef}.pdf` : `Carnet_${num}.pdf`;
+        const filename = `${fileBaseName(currentWorkbookSpec)}.pdf`;
         downloadBlob(blob, filename);
       } catch (err) {
         alert("Erreur : " + err.message);
@@ -1079,6 +1092,58 @@ Notes de la séance :
       }
     }
 
+    // Les règles de nos carnets, contrôlées par le serveur sur la maquette affichée
+    let currentCheckContext = null;
+    let conformityRequest = 0;
+
+    async function showConformity(spec) {
+      const bar = document.getElementById('conformity_bar');
+      const request = ++conformityRequest;
+      try {
+        const res = await fetch('/api/check', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ spec: spec, context: currentCheckContext })
+        });
+        if (!res.ok) throw new Error(res.status);
+        const findings = await res.json();
+        if (request !== conformityRequest) return;
+        const toFix = findings.filter(f => f.level === 'à corriger').length;
+        document.getElementById('conformity_title').innerText = findings.length
+          ? `Règles des carnets : ${toFix} à corriger, ${findings.length - toFix} à vérifier`
+          : 'Règles des carnets : rien à signaler';
+        const list = document.getElementById('conformity_list');
+        list.innerHTML = findings.map(f => `
+          <li class="flex items-start gap-2">
+            <span class="shrink-0 font-bold ${f.level === 'à corriger' ? 'text-mdm-red' : 'text-amber-800'}">${f.level === 'à corriger' ? 'À corriger' : 'À vérifier'}</span>
+            <span class="text-slate-700">${f.page ? `Page ${f.page} · ` : ''}${escapeHtml(f.message)}</span>
+          </li>`).join('');
+        // Ce qui est à corriger s'affiche d'emblée ; le reste se déplie
+        list.classList.toggle('hidden', toFix === 0);
+        const toggle = document.getElementById('conformity_toggle');
+        toggle.classList.toggle('hidden', findings.length === 0);
+        toggle.innerText = list.classList.contains('hidden') ? 'Voir' : 'Masquer';
+        bar.classList.remove('hidden');
+      } catch (err) {
+        if (request === conformityRequest) bar.classList.add('hidden');
+      }
+    }
+
+    function toggleConformityList() {
+      const list = document.getElementById('conformity_list');
+      list.classList.toggle('hidden');
+      document.getElementById('conformity_toggle').innerText = list.classList.contains('hidden') ? 'Voir' : 'Masquer';
+    }
+
+    // Nom des fichiers téléchargés : « Carnet_7_Confronter_au_terrain », le titre sinon, puis le bénéficiaire
+    function fileBaseName(spec) {
+      const slug = text => plainTitle(text || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+      const parts = [Number.isInteger(spec.carnet) ? `Carnet_${spec.carnet}` : '', slug(spec.chapter_title), slug(spec.beneficiary_name)]
+        .filter(Boolean);
+      return parts.length ? parts.join('_').slice(0, 120) : 'Carnet';
+    }
+
     function renderPreview(spec, changesSummary = null, pedagogicalNote = null) {
       const container = document.getElementById('state_preview');
       container.innerHTML = '';
@@ -1086,6 +1151,7 @@ Notes de la séance :
       // 1. Ready bar
       document.getElementById('ready_bar').classList.remove('hidden');
       showPdfPageCount(spec);
+      showConformity(spec);
       document.getElementById('iteration_badge').innerText = `Version ${iterationCount}`;
       const benefBadge = document.getElementById('beneficiary_badge');
       if (benefBadge) {

@@ -26,7 +26,7 @@ from .components import (
     split_chapter_label,
 )
 from .config import PDFStyle
-from .document_builder import DocumentBuilder
+from .document_builder import DocumentBuilder, document_style
 from .primitives import plain_title
 from . import spec as spec_module
 from .spec import MAX_SCALE_STEPS, WorkbookSpec, data_carnet, load_workbook, normalize_answer
@@ -422,6 +422,14 @@ def workbook_page_count(spec: WorkbookSpec) -> int:
     return _compile_with_reports(spec, io.BytesIO())[2]
 
 
+def workbook_continuations(spec: WorkbookSpec) -> list:
+    """
+    The « (suite) » pages of the compiled spec: {'pdf_page', 'page' (the spec page it
+    continues, from 1), 'used' (share of the page height its content reaches)}.
+    """
+    return _compile_with_reports(spec, io.BytesIO())[3]
+
+
 def _compile_with_reports(spec: WorkbookSpec, output_path):
     """Compiles the spec, its reports naming the page of their data (see compile_workbook_from_spec)."""
     own = {}
@@ -769,7 +777,9 @@ def _compile(spec: WorkbookSpec, output_path, pages_of):
         "closing": lambda page, idx: make_closing_renderer(page),
         "composite": make_composite_renderer,
     }
+    first_pages = []  # first PDF page of each spec page
     for page_idx, page in enumerate(spec.pages, start=1):
+        first_pages.append(builder.canvas.getPageNumber())
         if page.data_id:
             data_pages.setdefault(page.data_id, builder.canvas.getPageNumber())
         # Unknown templates fall back to a page of questions
@@ -778,11 +788,17 @@ def _compile(spec: WorkbookSpec, output_path, pages_of):
     builder.save()
     # save() ends the last page if needed: the canvas then stands on the page after the last one
     page_count = builder.canvas.getPageNumber() - 1
+    # Each « (suite) » page, with the spec page it continues and how much of it is used
+    continuations = [
+        {"pdf_page": number, "page": max(i for i, first in enumerate(first_pages, start=1) if first <= number),
+         "used": used}
+        for number, used in document_style(builder.canvas).continuations
+    ]
     if buffer is None:
-        return None, data_pages, page_count
+        return None, data_pages, page_count, continuations
     pdf_bytes = buffer.getvalue()
     buffer.close()
-    return pdf_bytes, data_pages, page_count
+    return pdf_bytes, data_pages, page_count, continuations
 
 
 def build_reference_workbook(workbook_id, output_path):

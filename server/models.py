@@ -37,33 +37,51 @@ MAX_NOTES_LENGTH = 50_000
 MAX_INSTRUCTION_LENGTH = 5_000
 
 
+# Writing time of the former length formats, for clients that still send 'book_format'
+BOOK_FORMAT_MINUTES = {"short": 45, "standard": 75, "deep": 120}
+
+
 class ParseRequest(BaseModel):
     raw_notes: str = Field(..., max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes ou texte au kilomètre")
-    chapter_num: int = Field(1, description="Numéro du carnet")
+    chapter_num: Optional[int] = Field(
+        None, ge=0, le=20,
+        description="Numéro du carnet (1 à 7 : un carnet du bilan) ; vide ou 0 : un document hors de la suite des carnets",
+    )
     chapter_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre souhaité (optionnel, inféré si omis)")
     beneficiary_name: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Prénom ou nom du bénéficiaire")
+    duration_min: Optional[int] = Field(
+        None, ge=10, le=300, description="Durée d'écriture visée, en minutes (vide : selon les notes)"
+    )
     meteo_option: Optional[
         Literal["auto", "none", "classic", "clarity", "mental_load"]
     ] = Field(
         "auto",
-        description="Option de check-in / météo : 'auto' (décision IA), 'none' (pas de météo), 'classic' (météo classique), 'clarity' (boussole/intention), 'mental_load' (charge mentale)",
+        description="Météo de l'énergie : 'classic' (oui), 'none' (non), 'auto' (si les notes parlent de l'énergie "
+                    "ou de l'état d'esprit) ; 'clarity' et 'mental_load', anciennes valeurs, valent 'classic'",
     )
     session_focus: Optional[
         Literal["auto", "bilan", "decision", "action"]
-    ] = Field(
-        "auto",
-        description="Focus pédagogique dominant : 'auto' (libre), 'bilan' (diagnostic/recul), 'decision' (arbitrage/comparatif), 'action' (plan d'action/roadmap)",
-    )
+    ] = Field("auto", description="Ancien champ de l'interface, sans effet")
     book_format: Optional[
         Literal["auto", "short", "standard", "deep"]
     ] = Field(
-        "standard",
-        description="Format de longueur : 'short' (court, 6-7p), 'standard' (7-10p), 'deep' (complet, + de 10p)",
+        None,
+        description="Ancien format de longueur, pris en durée d'écriture quand duration_min est vide : "
+                    "'short' 45 min, 'standard' 1 h 15, 'deep' 2 h, 'auto' selon les notes",
     )
     include_engagement: Optional[bool] = Field(
         True,
-        description="Inclure la page de pacte d'engagement et signature en fin de livret",
+        description="Finir par la page du livrable (engagements et trois zones guidées)",
     )
+
+    def writing_minutes(self) -> Optional[int]:
+        """The writing time asked for, in minutes, or None to follow the notes."""
+        return self.duration_min or BOOK_FORMAT_MINUTES.get(self.book_format or "")
+
+    def wants_energy(self) -> Optional[bool]:
+        """True, False, or None when the notes decide (they speak of energy or state of mind)."""
+        option = self.meteo_option or "auto"
+        return None if option == "auto" else option != "none"
 
 
 
@@ -93,6 +111,23 @@ class TemplateInfo(BaseModel):
 
 class PageCountResponse(BaseModel):
     page_count: int = Field(..., description="Nombre de pages du PDF, pages « (suite) » comprises")
+
+
+class CheckRequest(BaseModel):
+    spec: WorkbookSpec = Field(..., description="Spécification à contrôler")
+    context: Optional[str] = Field(
+        None, max_length=MAX_INSTRUCTION_LENGTH,
+        description="Profil de la personne (personnalisation) : un exemple tiré de son métier est alors signalé",
+    )
+    structure: bool = Field(True, description="Contrôler aussi le gabarit commun des carnets")
+    layout: bool = Field(True, description="Compiler la maquette pour repérer les pages « (suite) » presque vides")
+
+
+class FindingInfo(BaseModel):
+    level: str = Field(..., description="« à corriger » ou « à vérifier »")
+    page: Optional[int] = Field(None, description="Page de la maquette, à partir de 1 (vide : tout le document)")
+    rule: str = Field(..., description="Règle en cause")
+    message: str = Field(..., description="Ce qui ne va pas, et comment faire")
 
 
 class CustomizeRequest(BaseModel):

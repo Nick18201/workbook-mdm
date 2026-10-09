@@ -129,3 +129,25 @@ def test_document_builder_raises_instead_of_exiting(tmp_path, monkeypatch):
 
     with pytest.raises(PermissionError, match="Cannot overwrite"):
         DocumentBuilder(str(target))
+
+
+def test_check_lists_what_breaks_our_rules(client):
+    spec = {"chapter_title": "Test", "pages": [
+        {"template": "cover"},
+        {"template": "composite", "part_title": "Exercice 1 · Test · 10 min",
+         "blocks": [{"type": "text", "text": "Une séance en présentiel."}]},
+        {"template": "closing"},
+    ]}
+    r = client.post("/api/check", json={"spec": spec})
+    assert r.status_code == 200
+    rules = {(f["level"], f["rule"]) for f in r.json()}
+    assert ("à corriger", "presentiel") in rules
+    assert client.post("/api/check", json={"spec": client.get("/api/templates/carnet-7").json()}).json() == []
+
+
+def test_downloads_are_named_after_their_title(client):
+    spec = client.get("/api/templates/carnet-7").json()
+    r = client.post("/api/compile", json=spec)
+    assert "filename=Carnet_7_Confronter_au_terrain.pdf" in r.headers["Content-Disposition"]
+    r = client.post("/api/compile", json={"chapter_title": "Mes enquêtes *métiers.*", "pages": [{"template": "cover"}]})
+    assert "filename=Mes_enquetes_metiers.pdf" in r.headers["Content-Disposition"]
