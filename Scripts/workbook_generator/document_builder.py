@@ -13,9 +13,9 @@ class DocumentStyle:
     pastel: str = PDFStyle.DEFAULT_PASTEL
     folio: str = ""  # e.g. "carnet 3/7" or a short title; the page number is added after it
     carnet: object = None  # 1 to 7 or PDFStyle.CARNET_ROUTE for a carnet of the bilan, else None
-    # « (suite) » pages as (page number, share of the page height their content uses), noted
-    # by PageLayout: a continuation that holds one small block is a layout to fix
-    continuations: list = field(default_factory=list)
+    # Pages of PageLayout as (page number, share of the page height their content uses, True
+    # on a « (suite) » page): a continuation that holds one small block is a layout to fix
+    page_fills: list = field(default_factory=list)
 
 
 def document_style(c):

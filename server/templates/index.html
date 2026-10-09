@@ -436,7 +436,10 @@
             <span class="mi text-mdm-blue">rule</span>
             <span id="conformity_title">Règles des carnets</span>
           </div>
-          <button type="button" id="conformity_toggle" onclick="toggleConformityList()" class="text-[11px] text-mdm-blue hover:underline font-semibold cursor-pointer">Voir</button>
+          <div class="flex items-center gap-3 shrink-0">
+            <button type="button" id="conformity_fix" onclick="prepareFixes()" title="Range ces remarques dans « Ajuster » : retirez celles à garder, puis lancez l'ajustement" class="hidden text-[11px] text-mdm-blue hover:underline font-semibold cursor-pointer">Corriger ces points</button>
+            <button type="button" id="conformity_toggle" onclick="toggleConformityList()" class="text-[11px] text-mdm-blue hover:underline font-semibold cursor-pointer">Voir</button>
+          </div>
         </div>
         <ul id="conformity_list" class="hidden text-[11px] leading-relaxed space-y-1"></ul>
       </div>
@@ -482,7 +485,7 @@
           <button type="button" onclick="applySuggestion('Allège et raccourcis les questions pour aérer la mise en page')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
             <span class="mi">lightbulb</span> Alléger
           </button>
-          <button type="button" onclick="applySuggestion('Ajoute une feuille de route 30-60-90 jours pour ancrer les actions')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
+          <button type="button" onclick="applySuggestion('Ajoute une feuille de route en tableau : une action sous 7 jours, une sous un mois, une sous trois mois, chacune avec sa date et ce qui m\'aide, toutes les cases à remplir')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
             <span class="mi">route</span> Feuille de route
           </button>
           <button type="button" onclick="applySuggestion('Ajoute une jauge ou échelle d\'auto-évaluation de 0 à 10')" class="px-2.5 py-1 bg-slate-50 hover:bg-indigo-50 hover:text-mdm-blue border border-slate-200 text-slate-600 rounded-lg text-[10px] font-medium transition cursor-pointer">
@@ -547,6 +550,10 @@
     let currentSource = null;
     // Un support mis en page tel quel ne suit pas le gabarit commun : le contrôle s'en passe
     let currentCheckStructure = true;
+    // Le texte d'où vient la maquette (notes, support) : une adresse web qu'il ne donne pas est signalée
+    let currentCheckSources = null;
+    // La durée d'écriture demandée à la création : l'ouverture doit la donner
+    let currentCheckMinutes = null;
 
     // 1. Initialisation au chargement
     document.addEventListener('DOMContentLoaded', () => {
@@ -570,6 +577,8 @@
     function forgetSource() {
       currentSource = null;
       currentCheckStructure = true;
+      currentCheckSources = null;
+      currentCheckMinutes = null;
       showSuggestions([]);
     }
 
@@ -1034,6 +1043,9 @@ Notes de la séance :
       initialRawNotes = rawNotes;
       currentCheckContext = null;
       forgetSource();
+      const durationMin = parseInt(document.getElementById('duration_min').value) || null;
+      currentCheckSources = rawNotes;
+      currentCheckMinutes = durationMin;
       setLoading(true, "Analyse par Gemini...");
 
       const payload = {
@@ -1041,7 +1053,7 @@ Notes de la séance :
         chapter_num: parseInt(document.getElementById('chapter_num').value) || null,
         chapter_title: document.getElementById('chapter_title').value.trim() || null,
         beneficiary_name: document.getElementById('beneficiary_name').value.trim() || null,
-        duration_min: parseInt(document.getElementById('duration_min').value) || null,
+        duration_min: durationMin,
         meteo_option: document.getElementById('meteo_option').value,
         include_engagement: document.getElementById('include_engagement').checked
       };
@@ -1140,6 +1152,8 @@ MA PROCHAINE ACTION :`;
         currentCheckContext = null;
         currentSource = sourceText;
         currentCheckStructure = false;
+        currentCheckSources = sourceText;
+        currentCheckMinutes = null;
         initialRawNotes = sourceText;
         iterationCount = 1;
         renderPreview(currentWorkbookSpec, data.changes_summary, null);
@@ -1167,12 +1181,12 @@ MA PROCHAINE ACTION :`;
       bar.classList.toggle('hidden', suggestions.length === 0);
     }
 
-    function prepareSuggestion(text) {
+    function prepareSuggestion(text, toast = "Consigne prête : relisez-la, puis « Ajuster »") {
       const prompt = document.getElementById('iteration_prompt');
       prompt.value = text;
       prompt.focus();
       prompt.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      showToast("Consigne prête : relisez-la, puis « Ajuster »");
+      showToast(toast);
     }
 
     async function iterateSpec() {
@@ -1212,6 +1226,7 @@ MA PROCHAINE ACTION :`;
         currentWorkbookSpec = data.spec;
         iterationCount++;
         promptInput.value = "";
+        promptInput.rows = 2;
         renderPreview(currentWorkbookSpec, data.changes_summary, data.pedagogical_note);
         showGenerationSource(res);
       } catch (err) {
@@ -1290,6 +1305,7 @@ MA PROCHAINE ACTION :`;
     // Les règles de nos carnets, contrôlées par le serveur sur la maquette affichée
     let currentCheckContext = null;
     let conformityRequest = 0;
+    let currentFindings = [];
 
     async function showConformity(spec) {
       const bar = document.getElementById('conformity_bar');
@@ -1298,30 +1314,66 @@ MA PROCHAINE ACTION :`;
         const res = await fetch('/api/check', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ spec: spec, context: currentCheckContext, structure: currentCheckStructure })
+          body: JSON.stringify({
+            spec: spec, context: currentCheckContext, structure: currentCheckStructure,
+            sources: currentCheckSources, duration_min: currentCheckMinutes
+          })
         });
         if (!res.ok) throw new Error(res.status);
         const findings = await res.json();
         if (request !== conformityRequest) return;
+        currentFindings = findings;
         const toFix = findings.filter(f => f.level === 'à corriger').length;
         document.getElementById('conformity_title').innerText = findings.length
           ? `Règles des carnets : ${toFix} à corriger, ${findings.length - toFix} à vérifier`
           : 'Règles des carnets : rien à signaler';
         const list = document.getElementById('conformity_list');
+        // Une remarque qui vise une page mène à sa carte dans l'aperçu
         list.innerHTML = findings.map(f => `
           <li class="flex items-start gap-2">
             <span class="shrink-0 font-bold ${f.level === 'à corriger' ? 'text-mdm-red' : 'text-amber-800'}">${f.level === 'à corriger' ? 'À corriger' : 'À vérifier'}</span>
-            <span class="text-slate-700">${f.page ? `Page ${f.page} · ` : ''}${escapeHtml(f.message)}</span>
+            ${f.page
+              ? `<button type="button" data-page="${f.page}" class="text-left text-slate-700 hover:text-mdm-blue cursor-pointer"><span class="font-semibold underline decoration-dotted underline-offset-2">Page ${f.page}</span> · ${escapeHtml(f.message)}</button>`
+              : `<span class="text-slate-700">${escapeHtml(f.message)}</span>`}
           </li>`).join('');
+        list.querySelectorAll('[data-page]').forEach(btn => {
+          btn.onclick = () => goToPage(Number(btn.dataset.page));
+        });
         // Ce qui est à corriger s'affiche d'emblée ; le reste se déplie
         list.classList.toggle('hidden', toFix === 0);
         const toggle = document.getElementById('conformity_toggle');
         toggle.classList.toggle('hidden', findings.length === 0);
         toggle.innerText = list.classList.contains('hidden') ? 'Voir' : 'Masquer';
+        document.getElementById('conformity_fix').classList.toggle('hidden', findings.length === 0);
         bar.classList.remove('hidden');
       } catch (err) {
         if (request === conformityRequest) bar.classList.add('hidden');
       }
+    }
+
+    // La carte d'une page de la maquette, mise en évidence un instant
+    function goToPage(page) {
+      const card = document.getElementById(`page_card_${page}`);
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      card.classList.add('ring-2', 'ring-mdm-blue');
+      setTimeout(() => card.classList.remove('ring-2', 'ring-mdm-blue'), 1600);
+    }
+
+    // Les remarques du contrôle, rangées dans « Ajuster » : le consultant retire celles à garder,
+    // puis lance l'ajustement (un appel, à sa demande)
+    const FEEDBACK_MAX = 4800;
+
+    function prepareFixes() {
+      if (!currentFindings.length) return;
+      let text = "Corrige ces points relevés par le contrôle des règles des carnets, sans rien changer d'autre :";
+      for (const f of currentFindings) {
+        const line = `\n- ${f.page ? `Page ${f.page} : ` : ''}${f.message}`;
+        if (text.length + line.length > FEEDBACK_MAX) break;
+        text += line;
+      }
+      document.getElementById('iteration_prompt').rows = Math.min(10, currentFindings.length + 2);
+      prepareSuggestion(text, "Points prêts : retirez ceux à garder, puis « Ajuster »");
     }
 
     // Chaque question et chaque libellé du support d'origine, retrouvés dans la maquette (mode fidèle)
@@ -1441,7 +1493,8 @@ MA PROCHAINE ACTION :`;
       // 5. Render individual page cards (WYSIWYG content sheets)
       spec.pages.forEach((page, idx) => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm space-y-3.5 transition hover:border-indigo-300";
+        card.id = `page_card_${idx + 1}`;  // une remarque du contrôle y mène (goToPage)
+        card.className = "bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm space-y-3.5 transition hover:border-indigo-300 scroll-mt-28";
 
         let badgeColor = "bg-blue-50 text-mdm-blue border border-blue-100";
         if (page.template === 'meteo') badgeColor = "bg-amber-50 text-amber-800 border border-amber-200";

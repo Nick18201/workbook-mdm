@@ -619,7 +619,7 @@
         "lines": [
           "Je relis mes trois scénarios, mon tableau de compétences sous les yeux.",
           "Je laisse mûrir mon choix : il se fait en séance 9, pas avant.",
-          "J'apporte ce carnet et mon carnet 7 à la séance 9."
+          "Je renvoie la partie 1 complétée avant la séance 9, et je garde mon carnet 7 à portée de main."
         ],
         "field_prefix": "route_partie_1",
         "livrable_title": "Vos preuves",
@@ -1633,7 +1633,7 @@
         "lines": [
           "Avant chaque entretien, je relis mes compétences prouvées et mes deux récits.",
           "Chaque fin de mois, je relis ma feuille de route, et j'en parle avec la personne qui me soutient.",
-          "J'apporte ce carnet à la séance 10, puis au suivi à six mois."
+          "Je renvoie ce carnet complété avant la séance 10, et je le rouvre pour le suivi à six mois."
         ],
         "field_prefix": "route_livrable",
         "livrable_title": "Vos feuilles de route et vos premières actions",

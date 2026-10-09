@@ -422,12 +422,21 @@ def workbook_page_count(spec: WorkbookSpec) -> int:
     return _compile_with_reports(spec, io.BytesIO())[2]
 
 
+def workbook_page_fills(spec: WorkbookSpec) -> list:
+    """
+    The pages PageLayout drew in the compiled spec (content pages and their « (suite) »
+    pages): {'pdf_page', 'page' (the spec page, from 1), 'used' (share of the page height
+    its content reaches), 'continued' (a « (suite) » page)}.
+    """
+    return _compile_with_reports(spec, io.BytesIO())[3]
+
+
 def workbook_continuations(spec: WorkbookSpec) -> list:
     """
     The « (suite) » pages of the compiled spec: {'pdf_page', 'page' (the spec page it
     continues, from 1), 'used' (share of the page height its content reaches)}.
     """
-    return _compile_with_reports(spec, io.BytesIO())[3]
+    return [{k: fill[k] for k in ("pdf_page", "page", "used")} for fill in workbook_page_fills(spec) if fill["continued"]]
 
 
 def _compile_with_reports(spec: WorkbookSpec, output_path):
@@ -788,17 +797,17 @@ def _compile(spec: WorkbookSpec, output_path, pages_of):
     builder.save()
     # save() ends the last page if needed: the canvas then stands on the page after the last one
     page_count = builder.canvas.getPageNumber() - 1
-    # Each « (suite) » page, with the spec page it continues and how much of it is used
-    continuations = [
+    # Each page of PageLayout, with its spec page and how much of it is used
+    fills = [
         {"pdf_page": number, "page": max(i for i, first in enumerate(first_pages, start=1) if first <= number),
-         "used": used}
-        for number, used in document_style(builder.canvas).continuations
+         "used": used, "continued": continued}
+        for number, used, continued in document_style(builder.canvas).page_fills
     ]
     if buffer is None:
-        return None, data_pages, page_count, continuations
+        return None, data_pages, page_count, fills
     pdf_bytes = buffer.getvalue()
     buffer.close()
-    return pdf_bytes, data_pages, page_count, continuations
+    return pdf_bytes, data_pages, page_count, fills
 
 
 def build_reference_workbook(workbook_id, output_path):

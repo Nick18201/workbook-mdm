@@ -38,7 +38,7 @@ FORBIDDEN = (
                   r"|ennéagramme|retrouver votre élan|espace d'écoute bienveillant",
      "registre du développement personnel, à proscrire"),
     ("tutoiement", r"\b(?:tu|toi|tes)\b", "vouvoiement : jamais de tutoiement"),
-    ("papier", r"\bimprim(?:ez|er)\b|\bsur papier\b|\bapportez(?:-le|-la)?\s+(?:ce|votre|vos|le|la)\s+"
+    ("papier", r"\bimprim(?:ez|er)\b|\bsur papier\b|\bapport(?:ez|er|e)(?:-le|-la)?\s+(?:ce|votre|vos|mon|mes|le|la)\s+"
                r"(?:carnet|module|livret|document)s?\b|\bapportez-le\b",
      "tout se fait à l'écran : le carnet se renvoie complété avant la séance (jamais « imprimez », « sur papier », "
      "« apportez ce carnet »)"),
@@ -88,6 +88,29 @@ NON_TEXT_KEYS = {"field_id", "field_prefix", "data_id", "type", "template", "col
                  "style", "align", "pastel", "carnet", "url"}
 
 DURATION = re.compile(r"\d+\s*(?:min|h)\b|facultatif|hors temps", re.IGNORECASE)
+# A writing time: « 15 min », « 1 h 30 », « 2 h »
+MINUTES = re.compile(r"(\d+)\s*h\b(?:\s*(\d{2})\b)?|(\d+)\s*min\b", re.IGNORECASE)
+OPTIONAL = re.compile(r"facultatif", re.IGNORECASE)
+
+# A figure that calls for a source (DA section 7: no unsourced figure): a rate, « 3 personnes
+# sur 10 », « une personne sur deux », what studies show
+STATISTIC = re.compile(
+    r"\b\d+(?:[,.]\d+)?\s?%|\b\d+\s+(?:[a-zà-ÿ'-]+\s+){0,2}sur\s+\d+\b"
+    r"|\b(?:un|une)\s+(?:personne|salarié|salariée|actif|active|cadre|français|française|créateur|créatrice"
+    r"|entreprise|reconversion|projet)s?\s+sur\s+(?:deux|trois|quatre|cinq|dix)\b"
+    r"|\b(?:les|des|une|plusieurs|de nombreuses)\s+études?\s+(?:montrent|prouvent|révèlent|indiquent|ont montré)\b"
+    r"|\bselon\s+(?:une|des|les)\s+études?\b|\bstatistiquement\b",
+    re.IGNORECASE,
+)
+# What names a source next to a figure: an address, the word, or a public body
+SOURCE = re.compile(r"https?://|\bsource|\b(?:INSEE|DARES|APEC|France Travail|Pôle emploi|OCDE|Bpifrance|URSSAF"
+                    r"|Céreq|CEREQ|France Stratégie|Eurostat|Banque de France)\b", re.IGNORECASE)
+
+# A label that calls for a sentence, not a word (ANSWER_RULES of the prompts)
+SENTENCE_LABEL = re.compile(r"^\s*(?:ce qu|pourquoi|comment|en quoi|qu'est-ce)|\?\s*$|\bet pourquoi\b", re.IGNORECASE)
+
+# A web address, and what is left of it to compare with the notes
+URL = re.compile(r"(?:https?://|www\.)[^\s«»\"'<>()\[\]]+", re.IGNORECASE)
 EXERCISE = re.compile(r"^\s*Exercice\s+(\d+)", re.IGNORECASE)
 # The eyebrow of the former workbooks (« 1. CADRAGE INITIAL »), before the common template
 OLD_EYEBROW = re.compile(r"^\s*\d+\.\s")
@@ -116,6 +139,17 @@ def _texts(value, key=None) -> Iterator[str]:
             return
         for v in value:
             yield from _texts(v)
+
+
+def _strings(value) -> List[str]:
+    """Every string of a page, a block or params, addresses and ids included."""
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [s for v in value.values() for s in _strings(v)]
+    if isinstance(value, (list, tuple)):
+        return [s for v in value for s in _strings(v)]
+    return []
 
 
 def _page_texts(page: PageSpec) -> Iterator[str]:
@@ -177,12 +211,60 @@ def _check_vocabulary(index, page, findings):
                                                          " (écrire « ce qui m'étonne », tourner autrement)"))
 
 
+def _check_statistics(index, page, findings):
+    """A figure names its source in the same block (DA section 7): flagged once per page."""
+    groups = [([page.title or "", page.part_title or ""] + list(_texts(page.params)), _strings(page.params))]
+    for block in page.blocks or []:
+        if block.type != "contrast_example":  # an example's figure is a « montant »
+            dumped = block.model_dump(exclude_none=True, exclude_defaults=True)
+            groups.append((list(_texts(dumped)), _strings(dumped)))
+    for texts, raw in groups:
+        for text in texts:
+            match = STATISTIC.search(text)
+            if match and not any(SOURCE.search(s) for s in raw):
+                findings.append(Finding(CHECK, index, "statistique", f"chiffre sans source : « {match.group(0)} » "
+                                                                     "(nommer sa source dans le bloc, ou le retirer)"))
+                return
+
+
+def _unsized_box(block: BlockSpec) -> Optional[str]:
+    """
+    The label of a box of this block that says neither the answer it expects nor a height
+    (field policy), else None. A questions_group may leave it out: its boxes share the room
+    left on the page, from 1.6 cm up. A fields_card box takes one line by default, right for
+    a word (a name, a date): only a label that calls for a sentence needs its answer.
+    """
+    if block.type == "question" and not (block.answer or block.box_height_cm):
+        return block.question or ""
+    if block.type == "fields_card" and not (block.answer or block.field_height_cm):
+        for row in block.rows or []:
+            for field in row:
+                if (isinstance(field, (list, tuple)) and field and (len(field) < 3 or field[2] in (None, ""))
+                        and SENTENCE_LABEL.search(str(field[0]))):
+                    return str(field[0])
+    if block.type == "table" and not (block.answer or block.field_height_cm):
+        for row in block.rows or []:
+            for cell in row:
+                if isinstance(cell, dict) and not cell.get("answer"):
+                    return str(cell.get("placeholder") or block.title or ", ".join(block.headers or []))
+    if block.type == "cards_grid" and not (block.answer or block.card_height_cm):
+        card = (block.cards or [{}])[0]
+        return str(card.get("title") if isinstance(card, dict) else card or block.title or "")
+    return None
+
+
 def _check_blocks(index, page, findings):
     if page.template == "roadmap":
         findings.append(Finding(CHECK, index, "roadmap", "le gabarit « roadmap » préremplit ses cases : les paliers "
                                                          "d'une feuille de route sont les lignes d'un tableau"))
     for block in page.blocks or []:
         _check_block(index, block, findings)
+    for block in page.blocks or []:
+        label = _unsized_box(block)
+        if label is not None:
+            findings.append(Finding(CHECK, index, "case-sans-taille", f"case sans réponse attendue : « {label} » "
+                                                                      "('answer' : word, sentence, paragraph ou long)"))
+            break
 
 
 def _check_block(index, block: BlockSpec, findings):
@@ -237,6 +319,98 @@ def _check_structure(spec: WorkbookSpec, findings):
     if exercise_pages and not has_example:
         findings.append(Finding(CHECK, None, "exemple", "aucun exemple contrasté (« En surface / Exploitable »), "
                                                         "tiré d'un métier voisin"))
+
+
+def _minutes(text) -> int:
+    """The writing time a text gives, in minutes: « 1 h 30 » is 90, « 1 h 45, puis 2 h » 225."""
+    total = 0
+    for hours, rest, minutes in MINUTES.findall(str(text or "").replace("\xa0", " ")):
+        total += int(hours) * 60 + int(rest or 0) if hours else int(minutes)
+    return total
+
+
+def _shown(minutes: int) -> str:
+    hours, rest = divmod(minutes, 60)
+    return f"{rest} min" if not hours else f"{hours} h {rest:02d}" if rest else f"{hours} h"
+
+
+def _tolerance(minutes: int) -> int:
+    """A total may round its lines (« 15 h » for 15 h 10): 5 min, or a tenth of a long time."""
+    return max(5, round(minutes / 10))
+
+
+def _point_text(point) -> str:
+    if isinstance(point, dict):
+        return " · ".join(str(point.get(k)) for k in ("label", "title", "text", "duration") if point.get(k))
+    return str(point or "")
+
+
+def _check_durations(spec: WorkbookSpec, duration_min: Optional[int], findings):
+    """
+    The writing time adds up (carte du parcours, section 4): the eyebrows of an exercise make
+    its line in the opener, the lines (an optional one aside) make the total, and the total
+    is the time the consultant asked for.
+    """
+    opener = next(((i, p) for i, p in enumerate(spec.pages, start=1) if p.template == "summary"), None)
+    if opener is None:
+        return
+    index, page = opener
+    points = page.params.get("points") or page.params.get("steps") or page.params.get("items") or []
+    listed, lines = {}, 0
+    for point in points:
+        text = _point_text(point).replace("\xa0", " ")
+        minutes = _minutes(text)
+        match = EXERCISE.match(text)
+        if match:
+            listed[match.group(1)] = listed.get(match.group(1), 0) + minutes
+        if not OPTIONAL.search(text):
+            lines += minutes
+
+    eyebrows = {}  # exercise number -> {eyebrow: minutes}, a page repeated under one eyebrow counted once
+    for p in spec.pages:
+        eyebrow = (p.part_title or "").replace("\xa0", " ").strip()
+        match = EXERCISE.match(eyebrow)
+        if match:
+            eyebrows.setdefault(match.group(1), {})[eyebrow] = _minutes(eyebrow)
+    for number, seen in eyebrows.items():
+        written = sum(seen.values())
+        if number not in listed:
+            if listed:
+                findings.append(Finding(CHECK, index, "duree", f"l'exercice {number} n'est pas dans la liste de l'ouverture"))
+        elif written and listed[number] and written != listed[number]:
+            findings.append(Finding(CHECK, index, "duree", f"l'exercice {number} compte {_shown(listed[number])} dans "
+                                                           f"l'ouverture et {_shown(written)} dans ses sourcils"))
+
+    total = _minutes(page.params.get("duration") or page.params.get("duree"))
+    if total and lines and abs(total - lines) > _tolerance(lines):
+        findings.append(Finding(CHECK, index, "duree", f"l'ouverture annonce {_shown(total)} au total, et ses lignes "
+                                                       f"font {_shown(lines)}"))
+    announced = total or lines
+    if duration_min and announced and abs(announced - duration_min) > _tolerance(duration_min):
+        findings.append(Finding(CHECK, index, "duree", f"l'ouverture annonce {_shown(announced)}, et la durée "
+                                                       f"d'écriture demandée était de {_shown(duration_min)}"))
+
+
+def _bare_address(text: str) -> str:
+    """An address as the notes may write it: no scheme, no « www. », no final slash or point."""
+    return re.sub(r"https?://|\bwww\.", "", text.lower()).rstrip("/.,;:!?")
+
+
+def _check_addresses(spec: WorkbookSpec, sources: str, findings):
+    """
+    A web address the notes (or the support) do not give was made up by the model (TONE_RULES):
+    it may not exist. Flagged, never removed: the consultant checks it.
+    """
+    known = _bare_address(sources)
+    seen = set()
+    for i, page in enumerate(spec.pages, start=1):
+        for text in _strings(page.model_dump(exclude_none=True)):
+            for address in URL.findall(text):
+                bare = _bare_address(address)
+                if bare and bare not in known and bare not in seen:
+                    seen.add(bare)
+                    findings.append(Finding(FIX, i, "adresse", f"adresse web absente du texte d'origine : « {address.rstrip('.,;:!?')} » "
+                                                               "(vérifier qu'elle existe, ou la retirer)"))
 
 
 def _plain_words(text):
@@ -304,20 +478,27 @@ def _check_layout(spec: WorkbookSpec, findings):
 
 
 def check_spec(spec: WorkbookSpec, structure: bool = True, context: Optional[str] = None,
-               layout: bool = False) -> List[Finding]:
+               layout: bool = False, sources: Optional[str] = None,
+               duration_min: Optional[int] = None) -> List[Finding]:
     """
     The findings of a spec, page by page. `structure=False` skips the common template of a
-    carnet (cover, opener, deliverable, eyebrows, contrast example), for a document laid out
-    as it was written. `context` describes the person (customization): an example taken
-    from their own trade is then flagged. `layout=True` compiles the spec to find the
-    « (suite) » pages that hold almost nothing.
+    carnet (cover, opener, deliverable, eyebrows, contrast example, writing times), for a
+    document laid out as it was written. `context` describes the person (customization): an
+    example taken from their own trade is then flagged. `layout=True` compiles the spec to
+    find the « (suite) » pages that hold almost nothing. `sources` is the text the document
+    comes from (notes, support): a web address it does not give is flagged. `duration_min`
+    is the writing time asked for a document created from notes.
     """
     findings: List[Finding] = []
     for i, page in enumerate(spec.pages, start=1):
         _check_vocabulary(i, page, findings)
+        _check_statistics(i, page, findings)
         _check_blocks(i, page, findings)
     if structure:
         _check_structure(spec, findings)
+        _check_durations(spec, duration_min, findings)
+    if sources:
+        _check_addresses(spec, sources, findings)
     _check_examples(spec, context, findings)
     _check_heavy_questions(spec, findings)
     if layout:

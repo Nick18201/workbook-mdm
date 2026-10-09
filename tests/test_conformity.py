@@ -141,3 +141,98 @@ def test_a_gendered_turn_of_phrase_is_flagged():
     neutral = {"template": "composite", "blocks": [{"type": "question", "question": "Ce que cette personne m'a appris"}]}
     assert (CHECK, "genre") in _rules(_spec(page), structure=False)
     assert (CHECK, "genre") not in _rules(_spec(neutral), structure=False)
+
+
+def test_a_commitment_to_bring_the_carnet_is_the_paper_workflow():
+    page = {"template": "engagement", "params": {"lines": ["J'apporte ce carnet à la séance 3."]}}
+    sent = {"template": "engagement", "params": {"lines": ["Je renvoie ce carnet complété avant la séance 3.",
+                                                           "J'apporte deux tâches de mon travail à essayer ensemble."]}}
+    assert (FIX, "papier") in _rules(_spec(page), structure=False)
+    assert (FIX, "papier") not in _rules(_spec(sent), structure=False)
+
+
+def test_a_figure_needs_its_source_in_the_same_block():
+    for text in ("60 % des cadres changent de métier.", "7 personnes sur 10 regrettent leur choix.",
+                 "Une personne sur deux y pense.", "Les études montrent que l'écriture aide à décider."):
+        page = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [text]}]}
+        assert (CHECK, "statistique") in _rules(_spec(page), structure=False), text
+    sourced = {"template": "composite", "blocks": [
+        {"type": "paragraphs", "items": ["60 % des créations passent le cap des cinq ans (source : INSEE)."]},
+        {"type": "link_card", "title": "Où chercher", "links": [["Baromètre", "https://example.org/barometre",
+                                                                  "3 recrutements sur 10 passent par le réseau."]]},
+    ]}
+    plain = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [
+        "Notez votre énergie de 0 à 10, puis un regard sur deux pistes."]}]}
+    assert (CHECK, "statistique") not in _rules(_spec(sourced), structure=False)
+    assert (CHECK, "statistique") not in _rules(_spec(plain), structure=False)
+
+
+def _opener(points, duration):
+    return {"template": "summary", "params": {"points": points, "duration": duration}}
+
+
+def _exercise(eyebrow):
+    return {"template": "composite", "part_title": eyebrow,
+            "blocks": [{"type": "question", "question": "Ce que je retiens", "answer": "sentence"}]}
+
+
+def _durations(spec, **kwargs):
+    return [f.message for f in check_spec(spec, **kwargs) if f.rule == "duree"]
+
+
+def test_the_writing_times_add_up():
+    consistent = _spec(
+        {"template": "cover"},
+        _opener(["Météo · 2 min", "Exercice 1 · Vos contraintes · 25 min", "Exercice 2 · Vos pistes · 1 h 05",
+                 "Exercice 3 · Pour aller plus loin · facultatif · 15 min", "Fin de carnet · 5 min"], "1 h 37"),
+        _exercise("Exercice 1 · Vos contraintes · 25 min"),
+        _exercise("Exercice 2 · Vos pistes · 45 min"), _exercise("Exercice 2 · Vos pistes, suite · 20 min"),
+        _exercise("Exercice 3 · Pour aller plus loin · facultatif · 15 min"),
+        {"template": "engagement"}, {"template": "closing"},
+    )
+    assert _durations(consistent, duration_min=90) == []
+
+    drifting = _spec(
+        {"template": "cover"},
+        _opener(["Exercice 1 · Vos contraintes · 15 min", "Exercice 2 · Vos pistes · 20 min"], "1 h"),
+        _exercise("Exercice 1 · Vos contraintes · 25 min"),
+        _exercise("Exercice 2 · Vos pistes · 20 min"),
+        _exercise("Exercice 3 · Votre décision · 10 min"),
+        {"template": "engagement"}, {"template": "closing"},
+    )
+    messages = _durations(drifting, duration_min=30)
+    assert any("l'exercice 1 compte 15 min dans l'ouverture et 25 min" in m for m in messages)
+    assert any("l'exercice 3 n'est pas dans la liste" in m for m in messages)
+    assert any("annonce 1 h au total, et ses lignes font 35 min" in m for m in messages)
+    assert any("durée d'écriture demandée était de 30 min" in m for m in messages)
+    # A support laid out as written has no template to add up
+    assert _durations(drifting, structure=False, duration_min=30) == []
+
+
+def test_a_box_says_the_answer_it_expects():
+    unsized = {"template": "composite", "blocks": [{"type": "question", "question": "Mon prochain pas"}]}
+    one_line = {"template": "composite", "blocks": [{"type": "fields_card", "rows": [
+        [["Date", "date"], ["Ce que je retiens de l'échange", "retiens"]]]}]}
+    sized = {"template": "composite", "blocks": [
+        {"type": "question", "question": "Mon prochain pas", "answer": "sentence"},
+        {"type": "fields_card", "rows": [[["Date", "date"], ["Lieu", "lieu"]],
+                                         [["Ce que je retiens", "retiens", "sentence"]]]},
+        # A group shares the room left on the page between its boxes
+        {"type": "questions_group", "questions": [{"question": "Pourquoi ce métier ?", "field_id": "pourquoi"}]},
+    ]}
+    assert (CHECK, "case-sans-taille") in _rules(_spec(unsized), structure=False)
+    assert (CHECK, "case-sans-taille") in _rules(_spec(one_line), structure=False)
+    assert (CHECK, "case-sans-taille") not in _rules(_spec(sized), structure=False)
+
+
+def test_a_web_address_the_notes_do_not_give_is_flagged():
+    page = {"template": "composite", "blocks": [{"type": "link_card", "title": "Où chercher", "links": [
+        ["APEC", "https://www.apec.fr/", "les fiches métiers."],
+        ["Fiches", "https://www.apec.fr/candidat/fiches-metiers.html", "les fiches."],
+        ["Inventé", "https://www.metiers-de-demain.fr", "un site."]]}]}
+    notes = "Pour ses recherches : l'APEC (apec.fr), sans plus."
+    findings = [f for f in check_spec(_spec(page), structure=False, sources=notes) if f.rule == "adresse"]
+    assert [f.level for f in findings] == [FIX, FIX]
+    assert "fiches-metiers" in findings[0].message and "metiers-de-demain" in findings[1].message
+    # Without the text of origin (a customization), nothing to compare
+    assert not [f for f in check_spec(_spec(page), structure=False) if f.rule == "adresse"]

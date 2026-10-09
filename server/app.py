@@ -311,12 +311,13 @@ def api_page_count(spec: WorkbookSpec):
 def api_check_spec(request: CheckRequest):
     """
     Contrôle de conformité d'une spécification aux règles de nos carnets (vocabulaire,
-    gabarit commun, cases, exemples, protocole) : la liste de l'aperçu, après chaque
-    génération, personnalisation, ajustement ou import. Une liste vide : rien à signaler.
+    gabarit commun, durées, cases, exemples, chiffres, adresses, protocole) : la liste de
+    l'aperçu, après chaque génération, personnalisation, ajustement ou import. Une liste
+    vide : rien à signaler.
     """
     try:
         findings = check_spec(request.spec, structure=request.structure, context=request.context,
-                              layout=request.layout)
+                              layout=request.layout, sources=request.sources, duration_min=request.duration_min)
         return [FindingInfo(**finding._asdict()) for finding in findings]
     except Exception as e:
         logger.error("Erreur lors du contrôle de conformité : %s", e, exc_info=True)

@@ -789,7 +789,7 @@
         "lines": [
           "Je sollicite mes trois contacts dans les dix jours, sans attendre la séance 7.",
           "Une personne ne répond pas ? J'en sollicite une autre, sans le prendre pour moi.",
-          "J'apporte ce carnet à la séance 7."
+          "Je renvoie la partie 1 complétée avant la séance 7."
         ],
         "field_prefix": "c7_partie_1",
         "livrable_title": "Vos trois fiches, vos enquêtes lancées",
@@ -1388,7 +1388,7 @@
         "lines": [
           "Je remercie les personnes rencontrées, et je leur dis ce que leur regard a changé.",
           "Je garde le contact avec au moins l'une d'elles.",
-          "J'apporte ce carnet à la séance 8."
+          "Je renvoie ce carnet complété avant la séance 8."
         ],
         "field_prefix": "c7_livrable",
         "livrable_title": "Vos retours d'enquêtes et votre matrice",
