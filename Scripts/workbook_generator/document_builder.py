@@ -1,5 +1,5 @@
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.rl_accel import fp_str
@@ -13,6 +13,9 @@ class DocumentStyle:
     pastel: str = PDFStyle.DEFAULT_PASTEL
     folio: str = ""  # e.g. "carnet 3/7" or a short title; the page number is added after it
     carnet: object = None  # 1 to 7 or PDFStyle.CARNET_ROUTE for a carnet of the bilan, else None
+    # « (suite) » pages as (page number, share of the page height their content uses), noted
+    # by PageLayout: a continuation that holds one small block is a layout to fix
+    continuations: list = field(default_factory=list)
 
 
 def document_style(c):

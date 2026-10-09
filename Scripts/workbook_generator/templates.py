@@ -21,6 +21,7 @@ from .components import (
     draw_question,
     question_text_height,
 )
+from .document_builder import document_style
 from .drawn_blocks import draw_life_line, draw_tree_of_life
 from .forms import create_checkbox, create_radio, reserve_field_name
 from .utils import french_typography
@@ -127,6 +128,8 @@ class PageLayout:
         # Page where the current block starts: set to None before a block, it takes the page
         # of its first _ensure_space (compiler.py records it for the block's data id)
         self.block_page = None
+        # True on a « (suite) » page: render() notes how much of it the content uses
+        self._continued = False
 
         self._start_page(title)
         if config.y_start is not None:
@@ -142,6 +145,7 @@ class PageLayout:
     def _new_page(self):
         """Finishes the current page and starts a continuation page."""
         self.render()
+        self._continued = True
         self._start_page(self.title, suffix="(suite)" if self.title else "")
 
     def _ensure_space(self, height):
@@ -1303,6 +1307,9 @@ class PageLayout:
         return self.y_cursor
 
     def render(self):
-        """Finishes the page with its folio."""
+        """Finishes the page with its folio (and, on a « (suite) » page, notes how full it is)."""
+        if self._continued:
+            used = (self.height - max(self.y_cursor, 0)) / self.height
+            document_style(self.c).continuations.append((self.c.getPageNumber(), round(used, 3)))
         draw_folio(self.c)
         self.c.showPage()

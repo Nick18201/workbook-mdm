@@ -4,8 +4,10 @@ FastAPI Server for Marge de Manœuvre Workbook Generator.
 
 import io
 import os
+import re
 import sys
 import logging
+import unicodedata
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
@@ -36,9 +38,13 @@ from server.models import (
     IterateResponse,
     CustomizeRequest,
     CustomizeResponse,
+    CheckRequest,
+    FindingInfo,
     PageCountResponse,
     TemplateInfo,
 )
+from workbook_generator.conformity import check_spec
+from workbook_generator.primitives import plain_title
 from server.gemini_service import (
     parse_notes_with_gemini,
     refine_spec_with_gemini,
@@ -118,6 +124,19 @@ def _internal_error(action):
         status_code=500,
         detail=f"{action} a échoué (erreur interne, détails dans les journaux du serveur).",
     )
+
+
+def _slug(text):
+    """« Mes enquêtes métiers. » -> « Mes_enquetes_metiers » (an HTTP header takes no accent)."""
+    text = unicodedata.normalize("NFKD", plain_title(text or "")).encode("ascii", "ignore").decode()
+    return re.sub(r"[^A-Za-z0-9]+", "_", text).strip("_")
+
+
+def _pdf_filename(spec: WorkbookSpec) -> str:
+    """The PDF's name: « Carnet_7_… » for a carnet of the bilan, its title otherwise, then the beneficiary."""
+    parts = [f"Carnet_{spec.carnet}" if isinstance(spec.carnet, int) else "",
+             _slug(spec.chapter_title), _slug(spec.beneficiary_name)]
+    return "_".join(part for part in parts if part)[:120] + ".pdf" if any(parts) else "Carnet.pdf"
 
 
 def _generation_headers(fallback_reason):
@@ -239,11 +258,7 @@ def api_compile_pdf(spec: WorkbookSpec):
     """
     try:
         pdf_bytes = compile_workbook_from_spec(spec)
-        filename = (
-            f"Carnet_{spec.chapter_num}.pdf"
-            if spec.chapter_num
-            else "Workbook.pdf"
-        )
+        filename = _pdf_filename(spec)
         return StreamingResponse(
             io.BytesIO(pdf_bytes),
             media_type="application/pdf",
@@ -268,6 +283,22 @@ def api_page_count(spec: WorkbookSpec):
         raise _internal_error("Le comptage des pages")
 
 
+@app.post("/api/check", response_model=list[FindingInfo])
+def api_check_spec(request: CheckRequest):
+    """
+    Contrôle de conformité d'une spécification aux règles de nos carnets (vocabulaire,
+    gabarit commun, cases, exemples, protocole) : la liste de l'aperçu, après chaque
+    génération, personnalisation, ajustement ou import. Une liste vide : rien à signaler.
+    """
+    try:
+        findings = check_spec(request.spec, structure=request.structure, context=request.context,
+                              layout=request.layout)
+        return [FindingInfo(**finding._asdict()) for finding in findings]
+    except Exception as e:
+        logger.error("Erreur lors du contrôle de conformité : %s", e, exc_info=True)
+        raise _internal_error("Le contrôle de conformité")
+
+
 @app.post("/api/quick-generate")
 def api_quick_generate(request: ParseRequest):
     """
@@ -276,7 +307,7 @@ def api_quick_generate(request: ParseRequest):
     try:
         spec, fallback_reason = parse_notes_with_gemini(request)
         pdf_bytes = compile_workbook_from_spec(spec)
-        filename = f"Carnet_{spec.chapter_num}.pdf"
+        filename = _pdf_filename(spec)
         return StreamingResponse(
             io.BytesIO(pdf_bytes),
             media_type="application/pdf",

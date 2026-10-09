@@ -25,6 +25,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | R11 · Nettoyage : plus de `chap0` à `chap6` ni de livret de compétences | Fusionné (PR #70) |
 | Programme : noms des seuils, charge d'une création, test du module création | Fusionné (PR #69) |
+| Carnet 7 : apports du support d'enquête métier de Lysiane | Fusionné (PR #73) |
+| App, lot 1 : les règles des carnets transmises à Gemini, contrôle de conformité, création au gabarit commun | En PR (section 8) |
 | Redéploiement de l'app (Cloud Run) | Après la fusion de R11, sur demande (section 8) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme (écarts relevés en R11 : section 7) |
 
@@ -662,10 +664,16 @@ Pour chaque PR de carnet :
   - Le bénéficiaire : le mode « Livret existant » le rend obligatoire (alerte de l'interface, `CustomizeRequest.beneficiary_name`), et la personnalisation l'ajoute au sous-titre de couverture et à l'introduction. Le mode « Notes brutes » le laisse déjà facultatif.
   - Le moteur sait en partie s'en passer : une couverture sans numéro prend un titre plus grand, une ouverture accepte un `num` vide, et un document hors carnets a son `folio` et son `pastel` au lieu de `carnet`.
   - À corriger : numéro et bénéficiaire facultatifs dans les deux modes (une personnalisation peut viser un thème ou un métier plutôt qu'une personne), un prompt et un mode de secours qui s'en passent, pas de surtitre « N. » sans numéro, des noms de fichier tirés du titre.
+  - Fait pour la création (lot 1 de l'app, 9 octobre) : numéro et bénéficiaire facultatifs (confirmé par Nicolas), le prompt et le mode de secours s'en passent, aucun « Carnet N » ni « N. TITRE » sans numéro, un folio et un pastel à la place ; les fichiers téléchargés portent le titre (« Mes_enquetes_metiers.pdf »). Reste la personnalisation, au lot 2.
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
 R11 clôt la restructuration : les carnets 1 à 7, le carnet de route, son module création et le livret business plan sont les seuls documents du dépôt et de l'app. Trois chantiers suivent, dans cet ordre.
+
+**Le chantier de l'app (9 octobre).** Un test l'a lancé : le support d'enquête métier de Lysiane, collé dans la création depuis des notes, a perdu 30 % de son contenu, parce que le prompt suivait une recette d'avant la restructuration (page météo, « crash test », plan A et B). Nicolas veut que tout ce qui a guidé la conception des carnets guide aussi Gemini. Trois lots, une PR chacun :
+- **Lot 1, les règles des carnets pour Gemini.** `server/prompt_rules.py` rassemble les règles (DA section 7, carte sections 3, 4 et 8, sections 5 et 6 ci-dessus, protocole Pennebaker, politique des champs) et tous les prompts en sont faits. La création suit le gabarit commun (choix de Nicolas : la météo de l'énergie au choix, la longueur en durée d'écriture). `conformity.check_spec` contrôle chaque maquette (`/api/check`, liste « Règles des carnets » sous l'aperçu) ; les carnets de référence le passent. Mesuré avec la vraie clé avant et après (support de Lysiane, notes d'exemple, personnalisation du carnet 4).
+- **Lot 2, trois modes** : « Adapter un carnet », « Créer depuis des notes », « Mettre en page un support » (fidèle : chaque question gardée, dans l'ordre ; seules la typographie, les mots proscrits et les tailles de case changent ; les ajouts sont suggérés à part, à appliquer par « itérer », choix de Nicolas). Avec un contrôle de couverture question par question, le bénéficiaire facultatif en personnalisation et le comptage des pages relancé après une modification directe.
+- **Lot 3, les essais avec le vrai Gemini** sur chaque mode, puis le redéploiement (par Nicolas). Chaque série d'appels est annoncée à Nicolas avant d'être lancée (coût).
 
 1. **Le redéploiement.** La prod tourne toujours sur la révision `00009-dzj` (PR #45) : aucun des nouveaux carnets n'y est. Après la fusion de R11, et sur demande de Nicolas, déployer `main` (`server/DEPLOY_CLOUD_RUN.md`), puis tester avec la vraie clé Gemini ce que le mode de secours ne montre pas (section 7) : la personnalisation d'un carnet en un appel, où `keep_fixed` rétablit ce qui est fixe ; celle du carnet 7 et du carnet de route, partie par partie ; celle du module création, en une fois ; celle du business plan, partie par partie.
 2. **Le lot site.** Le programme est aligné (PR #69 : noms des seuils, charge de travail d'une création ; le module création tient la trajectoire « Création »). `recap-site-parcours.md` est à jour : le confier à l'agent du site, qui a déjà repris sa première version, pour sa « Mise à jour du 9 octobre » (titres des carnets 5 et 6, séance 4, travail personnel d'une création, nouveau PDF du programme). Le programme et le site partent ensemble : le PDF recopié dans `marge-de-manoeuvre/public/documents/` n'a pas encore été changé.
