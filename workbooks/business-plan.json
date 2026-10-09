@@ -387,7 +387,7 @@
       "blocks": [
         {
           "type": "text",
-          "text": "Commencez par les personnes, avant le produit. Pour qui voulez-vous créer de la valeur, et qu'est-ce qui leur pèse au quotidien ?",
+          "text": "Commencez par les personnes, avant le produit. Pour qui voulez-vous créer de la valeur, et qu'est-ce qui leur complique la vie au quotidien ?",
           "spacing_after_cm": 0.4
         },
         {
@@ -400,7 +400,7 @@
               "example": "les familles avec de jeunes enfants, dans un rayon de dix kilomètres."
             },
             {
-              "question": "Qu'est-ce qui leur pèse aujourd'hui ?",
+              "question": "Qu'est-ce qui leur complique la vie aujourd'hui ?",
               "field_id": "bp1_cible_difficultes",
               "subtitle": "Leurs difficultés, leurs irritants, ce qu'elles cherchent en priorité."
             },
@@ -1380,7 +1380,7 @@
         },
         {
           "type": "question",
-          "question": "Le prix que je n'ose pas annoncer, et ce que je crains d'entendre",
+          "question": "Le prix que je n'ose pas annoncer, et l'objection que j'imagine",
           "field_id": "bp4_prix_crainte",
           "box_height_cm": 2.0
         }
@@ -1399,7 +1399,7 @@
         },
         {
           "type": "question",
-          "question": "À l'idée de vendre, je ressens… et cela vient de…",
+          "question": "À l'idée de vendre, je ressens… et ce qui m'aiderait, c'est…",
           "field_id": "bp4_vendre",
           "box_height_cm": 1.6
         },
@@ -1820,7 +1820,7 @@
         },
         {
           "type": "question",
-          "question": "La compétence qui me manque et qui me fait douter de tout le projet",
+          "question": "La compétence qui me manque le plus pour ce projet",
           "field_id": "bp5_doute",
           "subtitle": "Et ce que vous pouvez faire : vous former, vous associer, déléguer.",
           "answer": "sentence"
@@ -2846,7 +2846,7 @@
         },
         {
           "type": "callout",
-          "text": "Votre tendance dominante face à l'argent (carnet 4) pèse-t-elle sur ce choix ? Relisez-la avant de décider.",
+          "text": "Votre tendance dominante face à l'argent (carnet 4) joue-t-elle sur ce choix ? Relisez-la avant de décider.",
           "title": "Si vous avez fait le bilan",
           "fixed": true
         },
@@ -3424,7 +3424,7 @@
       "params": {
         "lines": [
           "Je teste mes hypothèses sur le terrain avant d'engager des frais.",
-          "Je regarde mes chiffres et mes devis avec honnêteté.",
+          "Je m'appuie sur mes chiffres et mes devis pour décider.",
           "Je teste vite et j'accepte l'imperfection des débuts.",
           "Je protège ma santé, mon foyer et mon rythme de vie.",
           "J'assume la valeur de mon travail."
