@@ -126,24 +126,27 @@
     <div class="lg:col-span-5 bg-white/90 rounded-3xl p-6 sm:p-7 shadow-xl shadow-indigo-900/5 border border-indigo-50 flex flex-col space-y-4">
       
       <!-- MODE SWITCHER TABS -->
-      <div class="grid grid-cols-2 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/60 text-xs font-bold">
-        <button id="tab_customize" onclick="switchMode('customize')" class="py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 bg-white text-mdm-blue shadow-xs cursor-pointer">
-          <span><span class="mi">auto_awesome</span> Livret existant</span>
+      <div class="grid grid-cols-3 gap-1 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/60 text-[11px] font-bold leading-tight">
+        <button id="tab_customize" onclick="switchMode('customize')" class="py-2.5 px-2 rounded-xl transition flex items-center justify-center text-center bg-white text-mdm-blue shadow-xs cursor-pointer">
+          <span><span class="mi">tune</span> Adapter un carnet</span>
         </button>
-        <button id="tab_generate" onclick="switchMode('generate')" class="py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 text-slate-500 hover:text-slate-800 cursor-pointer">
-          <span><span class="mi">edit_note</span> Notes brutes</span>
+        <button id="tab_generate" onclick="switchMode('generate')" class="py-2.5 px-2 rounded-xl transition flex items-center justify-center text-center text-slate-500 hover:text-slate-800 cursor-pointer">
+          <span><span class="mi">edit_note</span> Créer depuis des notes</span>
+        </button>
+        <button id="tab_layout" onclick="switchMode('layout')" class="py-2.5 px-2 rounded-xl transition flex items-center justify-center text-center text-slate-500 hover:text-slate-800 cursor-pointer">
+          <span><span class="mi">article</span> Mettre en page un support</span>
         </button>
       </div>
 
-      <!-- PANEL 1: PERSONNALISER UN LIVRET EXISTANT -->
+      <!-- PANEL 1: ADAPTER UN CARNET (/api/customize) -->
       <div id="panel_customize" class="space-y-4">
         <div>
           <h2 class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center">
             <span class="mr-2 text-mdm-blue"><span class="mi">tune</span></span>
-            Personnaliser&nbsp;<span class="text-mdm-red">un livret.</span>
+            Adapter&nbsp;<span class="text-mdm-red">un carnet.</span>
           </h2>
           <p class="text-xs text-slate-500 mt-0.5">
-            Sélectionnez un livret de référence, renseignez le profil de votre bénéficiaire, et l'IA adapte l'ensemble des exercices, questions et exemples à sa situation.
+            Choisissez un carnet de référence et décrivez le profil, le métier ou le thème visé : l'IA en adapte les exemples, les consignes et les questions. Ce qui est fixe (cadre, protocole, reports) ne change pas.
           </p>
         </div>
 
@@ -180,15 +183,15 @@
         <!-- Bénéficiaire -->
         <div class="grid grid-cols-1 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Bénéficiaire (Nom / Prénom)</label>
-            <input type="text" id="custom_beneficiary_name" placeholder="Ex: Alexandre Martin" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Prénom du bénéficiaire (facultatif)</label>
+            <input type="text" id="custom_beneficiary_name" placeholder="Vide : un carnet adapté à un métier ou à un thème" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
           </div>
         </div>
 
-        <!-- Profil & Projet -->
+        <!-- Profil, métier ou thème -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="block text-xs font-semibold text-slate-700">Profil & Projet du Bénéficiaire</label>
+            <label class="block text-xs font-semibold text-slate-700">Profil, métier ou thème</label>
             <button type="button" onclick="loadSampleBeneficiary()" class="text-[11px] text-mdm-blue hover:underline font-medium cursor-pointer"><span class="mi">lightbulb</span> Tester un exemple</button>
           </div>
           <textarea id="custom_beneficiary_context" rows="3" placeholder="Ex: Directeur Marketing de 42 ans en transition vers la création d'un atelier d'ébénisterie et mobilier éco-conçu. Enjeux : transition de revenus, légitimité créative, équilibre familial..." class="w-full p-3 border border-slate-200 rounded-xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
@@ -211,15 +214,18 @@
         </div>
       </div>
 
-      <!-- PANEL 2: GÉNÉRATION DEPUIS NOTES BRUTES -->
+      <!-- PANEL 2: CRÉER DEPUIS DES NOTES (/api/parse) -->
       <div id="panel_generate" class="hidden space-y-4">
         <div>
           <h2 class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center">
             <span class="mr-2 text-mdm-blue"><span class="mi">edit_note</span></span>
-            Notes de&nbsp;<span class="text-mdm-red">séance.</span>
+            Créer depuis&nbsp;<span class="text-mdm-red">des notes.</span>
           </h2>
           <p class="text-xs text-slate-500 mt-0.5">
-            Collez vos notes brutes ou votre compte-rendu de séance pour concevoir un livret à partir de zéro.
+            Collez vos notes ou votre compte rendu de séance : l'IA conçoit un document au gabarit de nos carnets.
+          </p>
+          <p class="text-[11px] text-slate-500 mt-1">
+            Un support déjà écrit ? <button type="button" onclick="switchMode('layout')" class="text-mdm-blue hover:underline font-semibold cursor-pointer">Mettez-le en page</button> : rien n'y est perdu.
           </p>
         </div>
 
@@ -297,6 +303,55 @@
         </div>
       </div>
 
+      <!-- PANEL 3: METTRE EN PAGE UN SUPPORT (/api/layout) -->
+      <div id="panel_layout" class="hidden space-y-4">
+        <div>
+          <h2 class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center">
+            <span class="mr-2 text-mdm-blue"><span class="mi">article</span></span>
+            Mettre en page&nbsp;<span class="text-mdm-red">un support.</span>
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">
+            Collez le texte d'un support déjà écrit (un questionnaire, une fiche d'enquête) : il est mis en page tel quel, dans nos carnets. Chaque question, consigne et case est gardée, dans l'ordre ; seules changent la typographie, les mots proscrits et la taille des cases. Les ajouts possibles sont proposés à part.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Carnet n° (facultatif)</label>
+            <input type="number" id="layout_chapter_num" value="" min="1" max="20" placeholder="Aucun" title="1 à 7 : un carnet du bilan. Vide : un document hors de la suite des carnets." class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Prénom (facultatif)</label>
+            <input type="text" id="layout_beneficiary_name" placeholder="Aucun" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Titre (facultatif)</label>
+          <input type="text" id="layout_title" placeholder="Vide : le titre du support" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-mdm-blue">
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="block text-xs font-semibold text-slate-600">Texte du support</label>
+            <button type="button" onclick="loadSampleSupport()" class="text-xs text-mdm-blue hover:underline font-medium cursor-pointer">Charger un exemple</button>
+          </div>
+          <textarea id="source_text" rows="9" placeholder="Collez ici le texte du support, copié depuis le PDF ou le document..." class="w-full p-3.5 border border-slate-200 rounded-2xl text-xs font-sans leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-mdm-blue"></textarea>
+        </div>
+
+        <label class="flex items-center space-x-2 cursor-pointer text-xs text-slate-600">
+          <input type="checkbox" id="layout_frame" checked class="rounded border-slate-300 text-mdm-blue focus:ring-mdm-blue w-3.5 h-3.5">
+          <span>Ajouter une couverture (le seul titre) et un dos</span>
+        </label>
+
+        <div class="pt-1">
+          <button id="btn_layout" onclick="layoutSupport()" class="w-full py-3.5 px-4 bg-mdm-blue hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition-all cursor-pointer">
+            <span class="mi">article</span>
+            <span>Mettre en page</span>
+          </button>
+        </div>
+      </div>
+
     </div>
 
     <!-- RIGHT COLUMN: Maquette, Itération & Téléchargement -->
@@ -352,6 +407,26 @@
           <span id="ai_changelog_title">Ajustement appliqué</span>
         </div>
         <p id="ai_changelog_text" class="text-xs text-emerald-950 font-medium pl-5.5"></p>
+      </div>
+
+      <!-- Couverture du support d'origine (/api/coverage) : mode « Mettre en page un support » -->
+      <div id="coverage_bar" class="hidden bg-white/95 rounded-2xl p-3.5 border border-indigo-100 shadow-2xs space-y-2">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center space-x-2 text-xs font-bold text-slate-800">
+            <span class="mi text-mdm-blue">fact_check</span>
+            <span id="coverage_title">Couverture du support</span>
+          </div>
+        </div>
+        <ul id="coverage_list" class="hidden text-[11px] leading-relaxed space-y-1"></ul>
+      </div>
+
+      <!-- Ajouts possibles d'un support mis en page, à appliquer avec « Ajuster » -->
+      <div id="suggestions_bar" class="hidden bg-white/95 rounded-2xl p-3.5 border border-indigo-100 shadow-2xs space-y-2">
+        <div class="flex items-center space-x-2 text-xs font-bold text-slate-800">
+          <span class="mi text-mdm-blue">lightbulb</span>
+          <span>Ajouts possibles, à appliquer avec « Ajuster »</span>
+        </div>
+        <ul id="suggestions_list" class="text-[11px] leading-relaxed space-y-1.5"></ul>
       </div>
 
       <!-- Contrôle de conformité : les règles de nos carnets (/api/check) -->
@@ -428,7 +503,7 @@
         </div>
         <h3 class="text-lg font-extrabold tracking-tight text-slate-900">Aucune <span class="text-mdm-red">maquette.</span></h3>
         <p class="text-xs text-slate-400 max-w-xs mt-1">
-          Collez vos notes à gauche puis cliquez sur Concevoir la maquette.
+          Choisissez un mode à gauche : adapter un carnet, créer depuis des notes ou mettre en page un support.
         </p>
       </div>
 
@@ -468,31 +543,34 @@
     let availableTemplates = [];
     let isDirectEditMode = false;
     let currentMode = 'customize';
+    // Le texte du support d'origine, tant que la maquette en vient (couverture contrôlée)
+    let currentSource = null;
+    // Un support mis en page tel quel ne suit pas le gabarit commun : le contrôle s'en passe
+    let currentCheckStructure = true;
 
     // 1. Initialisation au chargement
     document.addEventListener('DOMContentLoaded', () => {
       fetchTemplates();
     });
 
-    // 2. Gestion des onglets de mode
+    // 2. Gestion des onglets de mode : adapter un carnet, créer depuis des notes, mettre en page un support
+    const MODES = ['customize', 'generate', 'layout'];
+    const TAB_ACTIVE = "py-2.5 px-2 rounded-xl transition flex items-center justify-center text-center bg-white text-mdm-blue shadow-xs cursor-pointer";
+    const TAB_IDLE = "py-2.5 px-2 rounded-xl transition flex items-center justify-center text-center text-slate-500 hover:text-slate-800 cursor-pointer";
+
     function switchMode(mode) {
       currentMode = mode;
-      const tabCust = document.getElementById('tab_customize');
-      const tabGen = document.getElementById('tab_generate');
-      const panelCust = document.getElementById('panel_customize');
-      const panelGen = document.getElementById('panel_generate');
+      MODES.forEach(m => {
+        document.getElementById(`tab_${m}`).className = m === mode ? TAB_ACTIVE : TAB_IDLE;
+        document.getElementById(`panel_${m}`).classList.toggle('hidden', m !== mode);
+      });
+    }
 
-      if (mode === 'customize') {
-        tabCust.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 bg-white text-mdm-blue shadow-xs cursor-pointer";
-        tabGen.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 text-slate-500 hover:text-slate-800 cursor-pointer";
-        panelCust.classList.remove('hidden');
-        panelGen.classList.add('hidden');
-      } else {
-        tabGen.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 bg-white text-mdm-blue shadow-xs cursor-pointer";
-        tabCust.className = "py-2.5 px-3 rounded-xl transition flex items-center justify-center space-x-1.5 text-slate-500 hover:text-slate-800 cursor-pointer";
-        panelGen.classList.remove('hidden');
-        panelCust.classList.add('hidden');
-      }
+    // Une maquette qui ne vient pas d'un support : ni couverture du support, ni ajouts suggérés
+    function forgetSource() {
+      currentSource = null;
+      currentCheckStructure = true;
+      showSuggestions([]);
     }
 
     // 3. Récupération et affichage des modèles de livrets officiels
@@ -597,16 +675,12 @@
       const beneficiaryContext = document.getElementById('custom_beneficiary_context').value.trim();
       const customInstructions = document.getElementById('custom_instructions').value.trim();
 
-      if (!beneficiaryName) {
-        alert("Veuillez renseigner le prénom ou nom du bénéficiaire.");
-        document.getElementById('custom_beneficiary_name').focus();
-        return;
-      }
       if (!beneficiaryContext) {
-        alert("Veuillez décrire brièvement le profil, métier ou projet du bénéficiaire.");
+        alert("Veuillez décrire brièvement le profil, le métier ou le thème visé.");
         document.getElementById('custom_beneficiary_context').focus();
         return;
       }
+      const forWhom = beneficiaryName ? ` pour ${beneficiaryName}` : '';
 
       // A long workbook goes part by part: each call customizes one part of the previous result
       const partTitles = (availableTemplates.find(t => t.id === templateId) || {}).parts || [];
@@ -622,12 +696,12 @@
       const summaries = [], notes = [];
       for (const [k, part] of parts.entries()) {
         setLoading(true, part
-          ? `Personnalisation pour ${beneficiaryName} : partie ${k + 1} sur ${parts.length}, « ${partTitles[part - 1]} »...`
-          : `Personnalisation du livret pour ${beneficiaryName} par Gemini Flash...`);
+          ? `Personnalisation${forWhom} : partie ${k + 1} sur ${parts.length}, « ${partTitles[part - 1]} »...`
+          : `Personnalisation du carnet${forWhom} par Gemini...`);
         const payload = {
           template_id: spec ? null : (templateId || "carnet-1"),
           base_spec: spec,
-          beneficiary_name: beneficiaryName,
+          beneficiary_name: beneficiaryName || null,
           beneficiary_context: beneficiaryContext,
           custom_instructions: customInstructions || null,
           part: part
@@ -661,12 +735,13 @@
       if (spec) {
         currentWorkbookSpec = spec;
         currentCheckContext = beneficiaryContext;
+        forgetSource();
         iterationCount = 1;
         renderPreview(currentWorkbookSpec, summaries.join('\n'), notes.join('\n') || null);
         showGenerationSource(fallbackRes || lastRes);
       }
       if (!failure) {
-        showToast(`Livret personnalisé pour ${beneficiaryName}`);
+        showToast(`Carnet adapté${forWhom}`);
       } else if (spec) {
         alert(`La partie « ${partTitles[failure.part - 1]} » n'a pas pu être personnalisée : ${failure.err.message} Les parties précédentes le sont.`);
       } else {
@@ -696,6 +771,7 @@
           }
           currentWorkbookSpec = data;
           currentCheckContext = null;
+          forgetSource();
           iterationCount = 1;
           if (data.beneficiary_name) {
             document.getElementById('custom_beneficiary_name').value = data.beneficiary_name;
@@ -739,7 +815,7 @@
       model_error: "les modèles Gemini n'ont pas répondu correctement",
     };
 
-    function showGenerationSource(res) {
+    function showGenerationSource(res, isLayout = false) {
       const bar = document.getElementById('ai_fallback_bar');
       if (!bar) return;
       if (res.headers.get('X-MDM-Generation') !== 'fallback') {
@@ -747,8 +823,9 @@
         return;
       }
       const reason = FALLBACK_REASONS[res.headers.get('X-MDM-Fallback-Reason')] || "Gemini est indisponible";
-      document.getElementById('ai_fallback_text').innerText =
-        `Ce résultat vient du mode de secours (${reason}) : il suit le gabarit de nos carnets, mais ne comprend ni vos notes ni vos consignes. Il reprend seulement le modèle choisi, ou les questions de vos notes.`;
+      document.getElementById('ai_fallback_text').innerText = isLayout
+        ?`Ce résultat vient du mode de secours (${reason}) : le texte du support est repris ligne à ligne, sans aucun mot changé. Les mots proscrits restent : la liste des règles les signale.`
+        : `Ce résultat vient du mode de secours (${reason}) : il suit le gabarit de nos carnets, mais ne comprend ni vos notes ni vos consignes. Il reprend seulement le modèle choisi, ou les questions de vos notes.`;
       bar.classList.remove('hidden');
     }
 
@@ -774,6 +851,7 @@
         } else if (field === 'question') {
           qs[qIdx] = val.trim();
         }
+        scheduleRecheck();
         showToast("Question enregistrée");
       }
     }
@@ -782,6 +860,7 @@
       if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
       if (!currentWorkbookSpec.pages[pageIdx].params) currentWorkbookSpec.pages[pageIdx].params = {};
       currentWorkbookSpec.pages[pageIdx].params.intro_text = val.trim();
+      scheduleRecheck();
       showToast("Consigne enregistrée");
     }
 
@@ -799,6 +878,7 @@
           if (field === 'title') quads[qIdx][0] = val.trim();
           if (field === 'subtitle') quads[qIdx][1] = val.trim();
         }
+        scheduleRecheck();
         showToast("Quadrant enregistré");
       }
     }
@@ -813,6 +893,7 @@
           if (col === 'right') rows[rIdx].right_tooltip = val.trim();
           if (col === 'label') rows[rIdx].label = val.trim();
         }
+        scheduleRecheck();
         showToast("Ligne enregistrée");
       }
     }
@@ -823,6 +904,7 @@
       const stages = p.stages || p.stages_data || p.paliers;
       if (stages && stages[sIdx]) {
         stages[sIdx][field] = val.trim();
+        scheduleRecheck();
         showToast("Palier enregistré");
       }
     }
@@ -846,6 +928,7 @@
         } else {
           pts[pIdx] = val.trim();
         }
+        scheduleRecheck();
         showToast("Étape enregistrée");
       }
     }
@@ -854,6 +937,7 @@
       if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
       if (!currentWorkbookSpec.pages[pageIdx].params) currentWorkbookSpec.pages[pageIdx].params = {};
       currentWorkbookSpec.pages[pageIdx].params[field] = val.trim();
+      scheduleRecheck();
       showToast("Question météo enregistrée");
     }
 
@@ -861,6 +945,7 @@
       if (!currentWorkbookSpec || !currentWorkbookSpec.pages[pageIdx]) return;
       if (!currentWorkbookSpec.pages[pageIdx].params) currentWorkbookSpec.pages[pageIdx].params = {};
       currentWorkbookSpec.pages[pageIdx].params.instruction = val.trim();
+      scheduleRecheck();
       showToast("Consigne enregistrée");
     }
 
@@ -874,6 +959,7 @@
         } else {
           qs[qIdx] = val.trim();
         }
+        scheduleRecheck();
         showToast("Axe d'enquête enregistré");
       }
     }
@@ -888,6 +974,7 @@
         } else {
           lines[lIdx] = val.trim();
         }
+        scheduleRecheck();
         showToast("Engagement enregistré");
       }
     }
@@ -901,6 +988,7 @@
         } else {
           p.messages[mIdx] = val.trim();
         }
+        scheduleRecheck();
         showToast("Message enregistré");
       }
     }
@@ -945,6 +1033,7 @@ Notes de la séance :
 
       initialRawNotes = rawNotes;
       currentCheckContext = null;
+      forgetSource();
       setLoading(true, "Analyse par Gemini...");
 
       const payload = {
@@ -978,6 +1067,112 @@ Notes de la séance :
       } finally {
         setLoading(false);
       }
+    }
+
+    // Un support synthétique, pour essayer la mise en page fidèle
+    function loadSampleSupport() {
+      document.getElementById('layout_title').value = "";
+      document.getElementById('layout_chapter_num').value = "";
+      document.getElementById('layout_beneficiary_name').value = "";
+      document.getElementById('source_text').value =
+`ENTRETIEN RÉSEAU
+Avant l'échange
+Ce support vous aide à préparer un échange avec une personne de votre réseau, puis à en garder une trace.
+PERSONNE CONTACTÉE :
+SA FONCTION :
+DATE DE L'ÉCHANGE :
+COMMENT AVEZ-VOUS OBTENU CE CONTACT ?
+Mon réseau personnel
+Un ancien collègue
+LinkedIn
+Autre
+CE QUE J'ATTENDS DE CET ÉCHANGE :
+
+PENDANT L'ÉCHANGE
+Les questions à poser
+Gardez ces questions sous les yeux et notez les réponses telles qu'elles viennent.
+QUEL A ÉTÉ VOTRE PARCOURS JUSQU'À CE POSTE ?
+QU'EST-CE QUI VOUS PLAÎT LE PLUS DANS VOTRE TRAVAIL ?
+QUELLES COMPÉTENCES SONT LES PLUS UTILES AU QUOTIDIEN ?
+QUI D'AUTRE ME CONSEILLERIEZ-VOUS DE RENCONTRER ?
+
+APRÈS L'ÉCHANGE
+Faire le point
+Notez à chaud ce que vous retenez.
+MON INTÉRÊT POUR CE MÉTIER APRÈS L'ÉCHANGE :
+1
+2
+3
+4
+5
+CE QUE JE RETIENS :
+MA PROCHAINE ACTION :`;
+    }
+
+    async function layoutSupport() {
+      const sourceText = document.getElementById('source_text').value.trim();
+      if (!sourceText) {
+        alert("Veuillez coller le texte du support.");
+        return;
+      }
+
+      setLoading(true, "Mise en page du support...");
+      const payload = {
+        source_text: sourceText,
+        chapter_title: document.getElementById('layout_title').value.trim() || null,
+        chapter_num: parseInt(document.getElementById('layout_chapter_num').value) || null,
+        beneficiary_name: document.getElementById('layout_beneficiary_name').value.trim() || null,
+        frame: document.getElementById('layout_frame').checked
+      };
+
+      try {
+        const res = await fetch('/api/layout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({ detail: "Erreur serveur" }));
+          throw new Error(err.detail || "Erreur serveur");
+        }
+        const data = await res.json();
+        currentWorkbookSpec = data.spec;
+        currentCheckContext = null;
+        currentSource = sourceText;
+        currentCheckStructure = false;
+        initialRawNotes = sourceText;
+        iterationCount = 1;
+        renderPreview(currentWorkbookSpec, data.changes_summary, null);
+        showGenerationSource(res, true);
+        showSuggestions(data.suggestions || []);
+      } catch (err) {
+        alert("Erreur : " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // Les ajouts possibles d'un support mis en page : chacun prépare la consigne d'« Ajuster »
+    function showSuggestions(suggestions) {
+      const bar = document.getElementById('suggestions_bar');
+      const list = document.getElementById('suggestions_list');
+      list.innerHTML = suggestions.map((s, i) => `
+        <li class="flex items-start justify-between gap-2">
+          <span class="text-slate-700">${escapeHtml(s)}</span>
+          <button type="button" data-suggestion="${i}" class="shrink-0 text-mdm-blue hover:underline font-semibold cursor-pointer">Préparer</button>
+        </li>`).join('');
+      list.querySelectorAll('[data-suggestion]').forEach(btn => {
+        btn.onclick = () => prepareSuggestion(suggestions[Number(btn.dataset.suggestion)]);
+      });
+      bar.classList.toggle('hidden', suggestions.length === 0);
+    }
+
+    function prepareSuggestion(text) {
+      const prompt = document.getElementById('iteration_prompt');
+      prompt.value = text;
+      prompt.focus();
+      prompt.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showToast("Consigne prête : relisez-la, puis « Ajuster »");
     }
 
     async function iterateSpec() {
@@ -1103,7 +1298,7 @@ Notes de la séance :
         const res = await fetch('/api/check', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ spec: spec, context: currentCheckContext })
+          body: JSON.stringify({ spec: spec, context: currentCheckContext, structure: currentCheckStructure })
         });
         if (!res.ok) throw new Error(res.status);
         const findings = await res.json();
@@ -1129,6 +1324,56 @@ Notes de la séance :
       }
     }
 
+    // Chaque question et chaque libellé du support d'origine, retrouvés dans la maquette (mode fidèle)
+    let coverageRequest = 0;
+
+    async function showCoverage(spec) {
+      const bar = document.getElementById('coverage_bar');
+      const request = ++coverageRequest;
+      if (!currentSource) {
+        bar.classList.add('hidden');
+        return;
+      }
+      try {
+        const res = await fetch('/api/coverage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ spec: spec, source_text: currentSource })
+        });
+        if (!res.ok) throw new Error(res.status);
+        const c = await res.json();
+        if (request !== coverageRequest) return;
+        const complete = c.found === c.total && c.options_found === c.options_total;
+        const options = c.options_total ? ` · options : ${c.options_found}/${c.options_total}` : '';
+        const title = document.getElementById('coverage_title');
+        title.innerText = `Couverture du support : ${c.found}/${c.total} questions et libellés${options}`;
+        title.className = complete ? 'text-emerald-800' : 'text-mdm-red';
+        const lines = c.missing.map(m => {
+          const what = m.kind === 'option' ? `Option « ${escapeHtml(m.text)} » de « ${escapeHtml(m.of)} »` : `${m.kind === 'question' ? 'Question' : 'Libellé'} « ${escapeHtml(m.text)} »`;
+          return `<li><span class="font-bold text-mdm-red">Manque</span> <span class="text-slate-700">${what}${m.note ? ` (${escapeHtml(m.note)})` : ''}</span></li>`;
+        }).concat(c.out_of_order.map(t => `<li><span class="font-bold text-amber-800">Hors d'ordre</span> <span class="text-slate-700">« ${escapeHtml(t)} »</span></li>`));
+        const list = document.getElementById('coverage_list');
+        list.innerHTML = lines.join('');
+        list.classList.toggle('hidden', lines.length === 0);
+        bar.classList.remove('hidden');
+      } catch (err) {
+        if (request === coverageRequest) bar.classList.add('hidden');
+      }
+    }
+
+    // Après une modification directe dans l'aperçu : pages, règles et couverture recomptées, une fois la saisie finie
+    let recheckTimer = null;
+
+    function scheduleRecheck() {
+      clearTimeout(recheckTimer);
+      recheckTimer = setTimeout(() => {
+        if (!currentWorkbookSpec) return;
+        showPdfPageCount(currentWorkbookSpec);
+        showConformity(currentWorkbookSpec);
+        showCoverage(currentWorkbookSpec);
+      }, 800);
+    }
+
     function toggleConformityList() {
       const list = document.getElementById('conformity_list');
       list.classList.toggle('hidden');
@@ -1150,8 +1395,10 @@ Notes de la séance :
 
       // 1. Ready bar
       document.getElementById('ready_bar').classList.remove('hidden');
+      clearTimeout(recheckTimer);
       showPdfPageCount(spec);
       showConformity(spec);
+      showCoverage(spec);
       document.getElementById('iteration_badge').innerText = `Version ${iterationCount}`;
       const benefBadge = document.getElementById('beneficiary_badge');
       if (benefBadge) {
@@ -1558,19 +1805,20 @@ Notes de la séance :
                       </div>
                     </div>`;
                 } else if (bType === 'scale') {
-                  const minL = b.min_label || `0 · Faible`;
-                  const maxL = b.max_label || `10 · Élevé`;
+                  const low = Number.isInteger(b.min_val) ? b.min_val : 0;
+                  const high = Number.isInteger(b.max_val) ? b.max_val : 10;
+                  const steps = Array.from({ length: Math.max(0, Math.min(high - low, 20)) + 1 }, (_, i) => low + i);
                   return `
                     <div class="p-3 bg-indigo-50/40 border border-indigo-100 rounded-xl space-y-2">
                       <div class="font-bold text-slate-800 text-xs">
                         ${escapeHtml(b.label || b.title || "Échelle d'évaluation :")}
                       </div>
                       <div class="flex items-center justify-between text-[11px] text-slate-500 font-medium">
-                        <span class="text-slate-700 font-semibold">${escapeHtml(minL)}</span>
+                        <span class="text-slate-700 font-semibold">${escapeHtml(b.min_label || '')}</span>
                         <div class="flex items-center space-x-1 font-mono font-bold text-xs text-mdm-blue bg-white px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs">
-                          <span>0</span><span>·</span><span>1</span><span>·</span><span>2</span><span>·</span><span>3</span><span>·</span><span>4</span><span>·</span><span>5</span><span>·</span><span>6</span><span>·</span><span>7</span><span>·</span><span>8</span><span>·</span><span>9</span><span>·</span><span>10</span>
+                          ${steps.map(n => `<span>${n}</span>`).join('<span>·</span>')}
                         </div>
-                        <span class="text-slate-700 font-semibold">${escapeHtml(maxL)}</span>
+                        <span class="text-slate-700 font-semibold">${escapeHtml(b.max_label || '')}</span>
                       </div>
                     </div>`;
                 } else if (bType === 'table') {
@@ -1700,6 +1948,7 @@ Notes de la séance :
     function updatePageTitle(idx, val) {
       if (currentWorkbookSpec && currentWorkbookSpec.pages[idx]) {
         currentWorkbookSpec.pages[idx].title = val;
+        scheduleRecheck();
       }
     }
 
@@ -1707,33 +1956,21 @@ Notes de la séance :
       const empty = document.getElementById('state_empty');
       const loader = document.getElementById('state_loading');
       const preview = document.getElementById('state_preview');
-      const parseBtn = document.getElementById('btn_parse');
-      const iterateBtn = document.getElementById('btn_iterate');
+      const buttons = ['btn_customize', 'btn_parse', 'btn_layout', 'btn_iterate'].map(id => document.getElementById(id));
 
       if (isLoading) {
         empty.classList.add('hidden');
         preview.classList.add('hidden');
         loader.classList.remove('hidden');
         document.getElementById('loading_text').innerText = text;
-        if (parseBtn) {
-          parseBtn.disabled = true;
-          parseBtn.classList.add('opacity-60');
-        }
-        if (iterateBtn) {
-          iterateBtn.disabled = true;
-          iterateBtn.classList.add('opacity-60');
-        }
       } else {
         loader.classList.add('hidden');
-        if (parseBtn) {
-          parseBtn.disabled = false;
-          parseBtn.classList.remove('opacity-60');
-        }
-        if (iterateBtn) {
-          iterateBtn.disabled = false;
-          iterateBtn.classList.remove('opacity-60');
-        }
       }
+      buttons.forEach(btn => {
+        if (!btn) return;
+        btn.disabled = isLoading;
+        btn.classList.toggle('opacity-60', isLoading);
+      });
     }
 
     // Titles mark their coral accent with *…* (rendered in the PDF): plain text for the previews
