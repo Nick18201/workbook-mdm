@@ -993,7 +993,7 @@
             [
               "France Travail",
               "https://www.francetravail.fr/candidat/je-creereprends-une-entreprise/les-aides-financieres-creation-d.html",
-              "votre allocation, maintenue ou versée en capital (francetravail.fr)."
+              "votre allocation, maintenue ou versée en capital (ARCE), et l'ACRE, qui allège vos cotisations au démarrage (francetravail.fr)."
             ],
             [
               "Initiative France",
@@ -1040,7 +1040,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Le principe : la plus petite version de votre projet, testée vite et à moindre coût. On parle aussi de produit minimum viable (MVP, en anglais). Écrivez d'abord les trois paris dont dépend votre projet : le test et vos entretiens les vérifient."
+            "Le principe : la plus petite version de votre offre, testée sur le terrain en 15 jours au plus, à moindre coût. On parle aussi de produit minimum viable (MVP, en anglais). Écrivez d'abord les trois paris dont dépend votre projet : le test et vos entretiens les vérifient."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -1121,7 +1121,7 @@
             ],
             [
               [
-                "Ses dates",
+                "Ses dates, sur 15 jours au plus",
                 "creation_test_dates",
                 0.85
               ],
