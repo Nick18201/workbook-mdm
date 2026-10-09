@@ -81,7 +81,7 @@ def test_customize_requires_a_known_base(client, monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     profile = {"beneficiary_name": "Alex", "beneficiary_context": "Ingénieur"}
 
-    unknown = client.post("/api/customize", json={"template_id": "chap99", **profile})
+    unknown = client.post("/api/customize", json={"template_id": "carnet-99", **profile})
     missing = client.post("/api/customize", json={"template_id": None, **profile})
 
     assert unknown.status_code == 404
@@ -92,7 +92,7 @@ def test_customize_refuses_a_part_the_workbook_lacks(client, monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     profile = {"beneficiary_name": "Alex", "beneficiary_context": "Ingénieur"}
 
-    no_parts = client.post("/api/customize", json={"template_id": "chap1", "part": 1, **profile})
+    no_parts = client.post("/api/customize", json={"template_id": "carnet-1", "part": 1, **profile})
     too_far = client.post("/api/customize", json={"template_id": "business-plan", "part": 7, **profile})
     out_of_bounds = client.post("/api/customize", json={"template_id": "business-plan", "part": 0, **profile})
 

@@ -5,15 +5,15 @@ description: |
   Transforme des notes de séance brutes en livrets élégants, interactifs (AcroForm) et typographiquement parfaits en "One-Shot" sans chevauchement, dans la direction artistique « Éditorial & Affirmé ».
 
   4 modes d'action :
-  1. CONCEPTION : Ingestion des notes brutes → structuration pédagogique, visual mapping vers les gabarits standards, calibrage des longueurs de texte → génération de Wordbook/Conception_Workbook_Chapitre_X.md.
+  1. CONCEPTION : Ingestion des notes brutes → structuration pédagogique, visual mapping vers les gabarits standards, calibrage des longueurs de texte → génération de Wordbook/Conception_Carnet_X.md.
   2. COMPILATION (BUILD) : Lecture de la fiche de conception validée → fichier workbooks/<id>.json → script racine main_generate_<id>.py → compilation et validation sans warning.
-  3. MODIFICATION : Retouche ciblée d'un chapitre existant (texte, question, ajout/suppression de page) avec recalcul automatique des hauteurs.
+  3. MODIFICATION : Retouche ciblée d'un carnet existant (texte, question, ajout/suppression de page) avec recalcul automatique des hauteurs.
   4. ENRICHISSEMENT DESIGN SYSTEM : Création de nouveaux gabarits dans components.py ou de blocs PageLayout dans templates.py, avec page de démonstration dans test_all_templates.py.
 
   TOUJOURS utiliser ce skill quand l'utilisateur dit :
-  • "crée le chapitre [X]", "conception du chapitre", "voici mes notes pour le chapitre", "structure ces notes de séance", "prépare le livret pour la séance [N]".
-  • "compile le chapitre [X]", "génère le PDF du chapitre", "lance le build du workbook".
-  • "modifie la question dans le chapitre [X]", "ajoute un exercice au chapitre".
+  • "crée le carnet [X]", "conception du carnet", "voici mes notes pour le carnet", "structure ces notes de séance", "prépare le livret pour la séance [N]".
+  • "compile le carnet [X]", "génère le PDF du carnet", "lance le build du workbook".
+  • "modifie la question dans le carnet [X]", "ajoute un exercice au carnet".
   • "ajoute un nouveau composant", "nouveau gabarit dans la boîte à outils".
 ---
 
@@ -39,7 +39,7 @@ L'agent DOIT respecter scrupuleusement les directives de [`Agent.md`](file:///c:
    * Pas d'émoji ni de pictogramme typographique : les icônes sont des Material Symbols (`draw_icon`, `draw_icon_badge`).
    * Ton de la section 7 : vouvoiement, jamais « coach », pas de registre de développement personnel, jamais « présentiel ».
 5. **Exécution depuis la racine du dépôt** :
-   * Toujours lancer les commandes Python depuis la racine (`python Scripts/main_generate_chapX.py`) pour garantir la résolution des assets.
+   * Toujours lancer les commandes Python depuis la racine (`python Scripts/main_generate_carnet_1.py`) pour garantir la résolution des assets.
 
 ---
 
@@ -105,7 +105,7 @@ Ce mode est activé lorsque l'utilisateur fournit des notes, un compte-rendu de 
    * Formuler des consignes claires, concises et au ton de la DA (vouvoiement, titres ponctués).
    * Vérifier que les intitulés respectent les budgets (max 120 caractères par question).
 4. **Rédiger le fichier de conception** :
-   * Sauvegarder dans `Wordbook/Conception_Workbook_Chapitre_X.md`.
+   * Sauvegarder dans `Wordbook/Conception_Carnet_X.md`.
 5. **Arrêt obligatoire (Point de synchronisation)** :
    * Présenter la synthèse des pages proposées à l'utilisateur et lui demander explicitement sa validation avant de lancer la compilation.
 
@@ -120,23 +120,23 @@ Ce mode est activé dès que l'utilisateur valide la conception.
    * Créer `workbooks/<id>.json` (ou reprendre un JSON exporté de l'app) : couverture, ouverture, pages d'exercices, fin de carnet (`engagement`), 4e de couverture (`closing`).
    * Prendre exemple sur un carnet existant ; chaque `field_id` doit être unique dans le document.
 2. **Créer le script d'entrée CLI et la fiche de l'app** :
-   * Créer `Scripts/main_generate_chapX.py` :
+   * Créer `Scripts/main_generate_<id>.py` (ici pour `workbooks/carnet-N.json`) :
      ```python
      from workbook_generator.compiler import build_reference_workbook
      from workbook_generator.utils import create_cli
 
 
-     def generate_workbook_chapX(output_filename="Workbook_Chapitre_X.pdf"):
-         build_reference_workbook("chapX", output_filename)
+     def generate_workbook_carnet_N(output_filename="Carnet_N.pdf"):
+         build_reference_workbook("carnet-N", output_filename)
 
 
      if __name__ == "__main__":
-         args = create_cli(description="Générer le chapitre X PDF.", default_output="Workbook_Chapitre_X.pdf")
-         generate_workbook_chapX(args.output)
+         args = create_cli(description="Générer le carnet N PDF.", default_output="Carnet_N.pdf")
+         generate_workbook_carnet_N(args.output)
      ```
    * Ajouter sa fiche (titre, description, icône) au `CATALOGUE` de `server/predefined_workbooks.py`.
 3. **Exécuter la compilation** :
-   * Lancer la commande : `python Scripts/main_generate_chapX.py`.
+   * Lancer la commande : `python Scripts/main_generate_<id>.py`.
 4. **Vérification automatique** :
    * S'assurer du code de retour 0, puis lancer `python -m pytest tests`.
    * Si ReportLab émet une erreur de permission (PDF ouvert), informer poliment l'utilisateur.
@@ -144,9 +144,9 @@ Ce mode est activé dès que l'utilisateur valide la conception.
 
 ---
 
-## Mode 3 : MODIFICATION D'UN CHAPITRE EXISTANT
+## Mode 3 : MODIFICATION D'UN CARNET EXISTANT
 
-Ce mode est activé lorsque l'utilisateur demande d'ajuster un chapitre existant.
+Ce mode est activé lorsque l'utilisateur demande d'ajuster un carnet existant.
 
 ### Étapes d'exécution :
 1. **Localiser précisément la page cible** :
@@ -155,7 +155,7 @@ Ce mode est activé lorsque l'utilisateur demande d'ajuster un chapitre existant
    * Modifier le texte ou la question, au ton de la DA.
    * Grâce à `PageLayout`, les dimensions des boîtes se réajustent et le contenu en trop passe sur une page « (suite) ».
 3. **Recompiler et vérifier** :
-   * Exécuter `python Scripts/main_generate_chapX.py`.
+   * Exécuter `python Scripts/main_generate_<id>.py`.
    * Vérifier que la génération réussit.
 
 ---
@@ -173,7 +173,7 @@ Ce mode est activé lorsqu'un exercice nécessite un composant visuel inédit.
 3. **Valider dans `Scripts/test_all_templates.py`** :
    * Ajouter une page de démonstration pour le nouveau composant.
    * Exécuter `python Scripts/test_all_templates.py` et vérifier le rendu.
-4. **Utiliser dans le chapitre**.
+4. **Utiliser dans le carnet**.
 
 ---
 

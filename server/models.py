@@ -92,7 +92,7 @@ class TemplateInfo(BaseModel):
 
 
 class CustomizeRequest(BaseModel):
-    template_id: Optional[str] = Field(None, max_length=50, description="Identifiant du modèle de base (ex: 'chap1')")
+    template_id: Optional[str] = Field(None, max_length=50, description="Identifiant du modèle de base (ex: 'carnet-1')")
     base_spec: Optional[WorkbookSpec] = Field(None, description="Spécification de base si livret personnalisé ou importé")
     beneficiary_name: str = Field(..., max_length=MAX_NAME_LENGTH, description="Prénom ou nom complet du bénéficiaire")
     beneficiary_context: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Profil, métier actuel, projet visé, défis majeurs")

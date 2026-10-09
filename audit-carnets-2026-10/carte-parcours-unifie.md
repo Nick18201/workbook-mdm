@@ -13,7 +13,7 @@ Version du 8 octobre 2026. Elle intègre les décisions de Nicolas :
 
 Elle fixe, pour les PDF comme pour l'app, une seule liste de carnets, un seul ordre et un seul contenu. Elle s'appuie sur :
 - le programme du bilan (`chapters/programme/`) ;
-- les carnets PDF (`chapters/chap0` à `chap6`, `livret`, `business_plan`) ;
+- les carnets PDF (`chapters/chap0` à `chap6`, `livret`, `business_plan`), retirés du dépôt en R11 (l'historique git les garde) ;
 - les carnets de l'app (`server/predefined_workbooks.py`) ;
 - l'audit (`synthese.html` et `rapports/` dans ce dossier).
 
@@ -262,6 +262,8 @@ C'est l'actuel livret de compétences, recentré et renommé.
 
 L'interview du carnet 2, les échanges avec les proches, les entretiens du carnet 7 et les entretiens prospects du module création se font hors temps d'écriture. Le module de projet s'ajoute pour les personnes concernées : avec le module création, l'intervalle S9 → S10 passe à 3 h 45 et le total à 21 h 30, au-dessus de la fourchette du programme (feuille de route, section 7).
 
+Depuis R11, les documents d'où viennent les carnets (anciens carnets 0 à 6, livret de compétences) ne sont plus dans le dépôt ni dans l'app : les estimations « avant » restent ici pour mémoire. Le programme annonce 10 à 20 h de travail personnel, soit 1 h 30 à 3 h entre deux séances : sans module, aucun intervalle ne dépasse 2 h 45 (carnet 2).
+
 ## 7. Les données qui circulent
 
 Pour chaque donnée : où elle est écrite (une seule fois), où elle est reportée, et son identifiant. Le carnet qui l'écrit pose l'identifiant (`data_id`) sur la page ou le bloc, et le carnet qui la reporte le cite dans un bloc `report` : la ligne affiche alors son origine, par exemple « carnet 4 · p. 12 », calculée à la génération.
@@ -349,6 +351,6 @@ Ce que Gemini a le droit de produire reste un sous-ensemble de ce que le moteur 
 
 | Où | Quoi | Quand |
 |---|---|---|
-| Programme du bilan (`chapters/programme/`, texte réglementaire) | Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. Toute mention du MBTI disparaît : « test des fonctionnements cognitifs » à la place (`page_deroule.py`, `page_organisation_pedagogie.py`, `page_tarifs_financement.py`, `page_accompagnateurs.py`). Hexa3D disparaît aussi (`page_organisation_pedagogie.py:30`). L'indicateur de satisfaction « Pertinence des outils utilisés (MBTI®, Hexa3D, exercices) » (`page_indicateurs_satisfaction.py:23`) résume des enquêtes passées : retirer la parenthèse plutôt que de renommer les outils, pour ne pas fausser ce qui a été mesuré. | Lot dédié, en même temps que le site |
-| Site (dépôt `marge-de-manoeuvre`) | Voir `recap-site-parcours.md` | Dès que prêt, en même temps que le programme |
-| Carnets PDF et app | Unification et renumérotation. Toute mention du MBTI disparaît des carnets 3, 4 et 6, du livret (`profil.py`, exemple « ISFJ ») et du prompt Gemini (`server/gemini_service.py`). La règle typographique qui ajoute « ® » après MBTI (`utils.french_typography`, `tests/test_typography.py`) et les mentions de la documentation (`CLAUDE.md`, `DA-workbook.md`, `Agent.md`, `design-system/`) sont à retirer. | Lot d'unification |
+| Programme du bilan (`chapters/programme/`, texte réglementaire) | Le déroulé : séances S1 à S10, temps 1 en 5 séances, temps 2 en 3 séances, livrables. « 7 carnets de bord guidés » reste juste. Toute mention du MBTI disparaît : « test des fonctionnements cognitifs » à la place (`page_deroule.py`, `page_organisation_pedagogie.py`, `page_tarifs_financement.py`, `page_accompagnateurs.py`). Hexa3D disparaît aussi (`page_organisation_pedagogie.py:30`). L'indicateur de satisfaction « Pertinence des outils utilisés (MBTI®, Hexa3D, exercices) » (`page_indicateurs_satisfaction.py:23`) résume des enquêtes passées : retirer la parenthèse plutôt que de renommer les outils, pour ne pas fausser ce qui a été mesuré. | Fait (PR #50). Restent les écarts relevés en R11 (noms des seuils, charge de travail d'une création, modules de la séance 9, trajectoire « Création ») : feuille de route, section 7, à trancher sur demande, en même temps que le site |
+| Site (dépôt `marge-de-manoeuvre`) | Voir `recap-site-parcours.md`, à corriger d'abord sur les points relevés en R11 (feuille de route, section 7) : « soutiens » au lieu d'« alliés », « L'exploration », les exercices du carnet 1, le seul module création. Le design system (`design-system/`) garde « Du chapitre 0 au chapitre… » et `NumeroChapitre`. | Dès que prêt, en même temps que le programme |
+| Carnets PDF et app | Unification et renumérotation. Toute mention du MBTI disparaît des carnets 3, 4 et 6, du livret (`profil.py`, exemple « ISFJ ») et du prompt Gemini (`server/gemini_service.py`). La règle typographique qui ajoute « ® » après MBTI (`utils.french_typography`, `tests/test_typography.py`) et les mentions de la documentation (`CLAUDE.md`, `DA-workbook.md`, `Agent.md`, `design-system/`) sont à retirer. | Fait : unification et MBTI (PR #51), nouveaux carnets (R0 à R10), retrait des anciens carnets et du livret de compétences (R11) |

@@ -21,9 +21,11 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R8 · Carnet de route · Décider et agir (`carnet-de-route.json`), en deux parties | Fusionné (PR #63) |
 | R9 · Module création, le business plan court du carnet de route (`module-creation.json`) | Fusionné (PR #65) |
 | Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | Fusionné (PR #67) |
-| Champs 2 et 3 : cases étroites des carnets et du module, business plan, minimum des groupes de questions | PR #68, à fusionner avant R11 |
+| Champs 2 et 3 : cases étroites des carnets et du module, business plan, minimum des groupes de questions | Fusionné (PR #68) |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
-| Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
+| R11 · Nettoyage : plus de `chap0` à `chap6` ni de livret de compétences | Branche `claude/r11-nettoyage`, PR à ouvrir |
+| Redéploiement de l'app (Cloud Run) | Après la fusion de R11, sur demande (section 8) |
+| Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme (écarts relevés en R11 : section 7) |
 
 **Avant chaque PR : vérifier que la précédente est fusionnée**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
 
@@ -68,7 +70,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 8. **La page « Avant de commencer » porte la météo**, dans chaque carnet. Au carnet 1, elle porte aussi l'engagement ; à partir du carnet 2, le récapitulatif guidé. Elle n'est pas numérotée : les exercices numérotés sont ceux qu'on écrit (cinq au carnet 1).
 9. **Le carnet 1 s'ouvre par une page « Bienvenue »** : les trois temps du bilan sur une frise (carnets 1 à 5, 6 et 7, carnet de route) et le lien vers l'espace Notion. Puis le cadre de travail.
 10. **Les huit domaines de vie**, notation de référence du parcours, reprise au carnet de route : travail, carrière · argent, finances · santé, énergie · famille · amis, vie sociale · temps pour soi, loisirs · lieu de vie, environnement · utilité, engagements. Bornes « Pas du tout satisfaisant » et « Pleinement satisfaisant ». Le carnet 4 reprend la note « Argent, finances ».
-11. **Les anciens carnets restent dans l'app jusqu'à R11**, avec « (ancien parcours) » dans leur titre quand un nouveau carnet les remplace (`chap0` et `chap1` depuis R1, `chap2` depuis R2, `chap3` depuis R3, `chap4` depuis R4, `chap5` depuis R5, `chap6` depuis R6, le livret de compétences depuis R8).
+11. **Les anciens carnets restent dans l'app jusqu'à R11**, avec « (ancien parcours) » dans leur titre quand un nouveau carnet les remplace (`chap0` et `chap1` depuis R1, `chap2` depuis R2, `chap3` depuis R3, `chap4` depuis R4, `chap5` depuis R5, `chap6` depuis R6, le livret de compétences depuis R8). **Fait en R11** : ils ont quitté le dépôt et l'app, l'historique git les garde, et un JSON exporté de l'ancienne app se compile toujours.
 
 **Prises pendant R2 (8 octobre 2026)**
 12. **Les parties facultatives sont hors du total d'écriture.** Au carnet 2 : l'arbre de vie (15 min) et l'interview. L'ouverture le dit, et leur sourcil porte « facultatif ».
@@ -594,7 +596,6 @@ Pour chaque PR de carnet :
 - **La politique des champs** est tranchée, après un test de saisie dans Chrome : la taille automatique rendait les réponses illisibles, et Chrome ignore le blocage d'une case pleine. Les réponses se tapent en 11 pt fixe, une case pleine défile (sans barre de défilement), et chaque case se dimensionne par la réponse qu'elle attend (PR #67). Champs 2 et 3 l'appliquent aux cases étroites des carnets et du module, puis au business plan (conventions en section 5). Ce qui reste :
   - quatre tableaux gardent une hauteur fixe plutôt qu'une phrase de 150 caractères, qui y ferait 3,95 cm et couperait le tableau : la grille anti-compromis (carnet 5) et la matrice de faisabilité (carnet 7) à 2,6 cm, les feuilles de route (carnet de route) à 2,6 cm, les compétences prouvées à 1,6 cm. Elles tiennent la longueur de leurs exemples. À revoir si les carnets remplis montrent des réponses coupées ;
   - quelques coupes laissent une première page peu remplie, la page « (suite) » portant l'essentiel ; les plus nettes : la météo seule sur « Avant de commencer » (carnet de route), les consignes des entretiens prospects (module), l'introduction de « Mes risques et mes parades » et de « Trouver mes premiers clients » (business plan) ;
-  - l'ancien livret (`livret.json`) et les anciens `chap*` gardent leurs hauteurs : ils disparaissent en R11 ;
   - plus tard, une version de lecture : les réponses d'un carnet rempli, en entier, pour la personne qui accompagne, puisqu'une case pleine cache sa fin hors saisie et à l'impression.
 - **Les champs trop bas** pour l'écriture à la main (51 à l'audit) : réglé. Les carnets, le module et le business plan passent tous le test (1,6 cm pour une phrase, 0,8 cm pour un mot, une info-bulle par champ), et aucune de leurs pages « (suite) » ne se réduit à un petit bloc. Le minimum d'un groupe de questions (`min_box_height_cm`) est enfin respecté : le moteur descendait à 1,5 cm quel que soit ce minimum. Seul le business plan en change (trois groupes, trois pages de plus).
 - **Les reprises du carnet 2** se font dans les carnets suivants : les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3). Les moteurs et les critères sont relus avant la grille anti-compromis du carnet 5 (R5). Les moteurs « je le veux » et l'objectif boussole sont reportés à la cartographie du carnet 6 (R6). Les questions de l'interview entrent dans la grille d'entretien du carnet 7, et la personne interviewée parmi ses contacts (R7). Les expériences, la zone d'excellence et les compétences de vie sont citées par un renvoi écrit aux compétences prouvées du carnet de route, et l'objectif boussole y est reporté au chemin parcouru (R8).
@@ -639,58 +640,33 @@ Pour chaque PR de carnet :
 - **La reprise d'une entreprise** n'a pas de page dans le module : son ouverture renvoie au livret (exercice 25), à voir en séance.
 - **L'immersion** (PMSMP) demande une convention signée par un organisme comme France Travail. Le carnet 7 dit seulement « parlons-en en séance ». Qui peut la signer pour une personne salariée en bilan reste à préciser.
 - **L'option « Initiation à l'IA »** n'apparaît qu'en une ligne d'engagement, en fin de carnet 6. Le site dit que la personne explore ensuite ses pistes « en sachant ce que l'IA y déplace ». Au carnet 7, la grille d'entretien pose la question à chaque professionnel : « ce que l'IA déplace » (R7).
-- **Les liens des ressources** vieillissent : en R6, un podcast avait disparu et trois adresses avaient changé ; en R7, la page « marché du travail » de France Travail renvoyait vers MétierScope (remplacée par Data Emploi). En R8, Mon Compte Formation annonçait de nouvelles règles du CPF pour les formations validées à partir du 2 octobre 2026 : le carnet de route n'en dit rien de chiffré. En R9, l'outil d'aide au choix du statut de Bpifrance Création était en refonte (le module renvoie à l'accueil du site), et France Travail a une page des aides à la création plus précise que celle du livret. Les revérifier à chaque PR qui touche une page de ressources, et avant R11.
+- **Les liens des ressources** vieillissent : en R6, un podcast avait disparu et trois adresses avaient changé ; en R7, la page « marché du travail » de France Travail renvoyait vers MétierScope (remplacée par Data Emploi). En R8, Mon Compte Formation annonçait de nouvelles règles du CPF pour les formations validées à partir du 2 octobre 2026 : le carnet de route n'en dit rien de chiffré. En R9, l'outil d'aide au choix du statut de Bpifrance Création était en refonte (le module renvoie à l'accueil du site), et France Travail a une page des aides à la création plus précise que celle du livret. En R11 (9 octobre 2026), les 27 adresses des carnets, du module et du business plan répondent toutes, ouvertes une à une dans le navigateur quand le site bloque les robots (APEC, Cadremploi, CCI, médiation de la consommation) : MétierScope (centres d'intérêt) est toujours en ligne, et la page Notion des ressources redirige vers `notion.site`. Les revérifier à chaque PR qui touche une page de ressources.
 - **La personnalisation partie par partie du carnet 7 et du carnet de route** est à tester avec la vraie clé Gemini. Sans clé, les deux parties passent en mode de secours, et la partie personnalisée reprend sa place.
-- **Les noms des seuils dans le programme.** En séance 4, le programme parle de « revenu vital », de « revenu sécurisant » et de « délai de trésorerie », sans revenu cible. Les carnets disent minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. C'est un texte réglementaire : à aligner sur demande, au lot programme et site.
+- **Les noms des seuils dans le programme.** En séance 4, le programme parle de « revenu vital », de « revenu sécurisant » et de « délai de trésorerie », sans revenu cible. Les carnets disent minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. Le programme annonce aussi « vos 4 seuils financiers » en n'en nommant que trois. Le récapitulatif du site reprend les noms des carnets (livrable du carnet 4) : sans alignement, le site et le programme se contrediront. C'est un texte réglementaire : à aligner sur demande, au lot programme et site.
 - **Les modalités du test** (passation, personne qui fait la restitution) restent à préciser dans l'encadré « À savoir sur le test » du carnet 3.
-- **Les exemples du livret** décrivaient peut-être une personne réelle. Le carnet de route ne les reprend pas (R8). Le livret reste dans l'app jusqu'à R11, et l'historique git les garde ensuite.
+- **Les exemples du livret** décrivaient peut-être une personne réelle. Le carnet de route ne les reprend pas (R8). Le livret a quitté le dépôt et l'app en R11 : seul l'historique git les garde.
+
+- **La cohérence avec le programme et le site**, vérifiée en R11 sur le programme généré et sur `recap-site-parcours.md`.
+  - Conformes : la répartition 5 / 3 / 2 et le sujet de chaque séance, les livrables des trois temps (profil de fonctionnement, cartographie des énergies, quatre seuils ; matrice, trois scénarios, retours d'enquêtes ; feuilles de route A et B, premières actions sous 7 jours, document de synthèse), les 14 h d'accompagnement, le test restitué en séance 3, le message d'approche du carnet 7 (encadré « Pour demander »), « 7 carnets de bord guidés » puis le carnet de route, les 10 à 20 h de travail personnel sans module (19 h 30, aucun intervalle au-delà de 2 h 45).
+  - Écarts du programme, laissé tel quel (texte réglementaire) : les noms des seuils et la charge de travail d'une création (plus haut) ; la séance 9 annonce un carnet de route adapté à une reconversion (formations et financements) ou à une évolution interne (argumentaire), dont les modules n'existent pas encore (`chantier-modules-s9.md`, la page « Le module de votre projet » les renvoie à la séance 9) ; la trajectoire « Création » promet « une première offre pilote testable sur le terrain sous 15 jours » et « choix du statut juridique, dispositifs ACRE/ARCE, premiers clients », alors que le module prévoit un test sans délai, renvoie aux statuts (Bpifrance Création) et aux aides (France Travail) sans nommer l'ACRE ni l'ARCE, et laisse les premiers clients au livret complet (partie 4).
+  - Écarts du récapitulatif du site, écrit avant R1 : le carnet de route dit « garde-fous et soutiens », non plus « alliés » (R8) ; le carnet 6 s'intitule « L'exploration », non plus « Phase d'exploration » ; la liste du carnet 1 omet « Votre objectif, première version » et « Vos modèles et anti-modèles » ; des trois modules du carnet de route, seul le module création existe. À corriger dans le récapitulatif avant de le confier à l'agent du site.
+  - Le design system (`design-system/`, miroir du site) garde « Du chapitre 0 au chapitre… » dans la frise et un composant `NumeroChapitre` : au lot site.
+- **Le nombre de pages affiché dans l'app** (« Carnet 1 · L'état des lieux (14 pages) ») compte les pages du fichier, pas celles du PDF (17), qui ajoute les pages « (suite) » depuis les PR Champs. À corriger plus tard.
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R9 (module création) et la PR #68 (Champs 2 et 3) fusionnées :
+R11 clôt la restructuration : les carnets 1 à 7, le carnet de route, son module création et le livret business plan sont les seuls documents du dépôt et de l'app. Trois chantiers suivent, dans cet ordre.
+
+1. **Le redéploiement.** La prod tourne toujours sur la révision `00009-dzj` (PR #45) : aucun des nouveaux carnets n'y est. Après la fusion de R11, et sur demande de Nicolas, déployer `main` (`server/DEPLOY_CLOUD_RUN.md`), puis tester avec la vraie clé Gemini ce que le mode de secours ne montre pas (section 7) : la personnalisation d'un carnet en un appel, où `keep_fixed` rétablit ce qui est fixe ; celle du carnet 7 et du carnet de route, partie par partie ; celle du module création, en une fois ; celle du business plan, partie par partie.
+2. **Le lot programme et site.** Le programme est un texte réglementaire : il ne change que sur demande. Les écarts à trancher sont en section 7 (noms des seuils, charge de travail d'une création, modules annoncés en séance 9, promesses de la trajectoire « Création »). Corriger d'abord `recap-site-parcours.md` (section 7, « La cohérence avec le programme et le site »), puis le confier à l'agent du site. Le programme et le site partent ensemble.
+3. **Les modules reconversion et évolution interne** (`chantier-modules-s9.md`) : ils attendent les réponses de Nicolas et de Lysiane. Ils reprendront les compétences prouvées et les récits du carnet de route (`route.competences`, `route.recits`).
+
+Message à coller pour le redéploiement, une fois R11 fusionnée :
 
 ```text
-Reprends la restructuration des carnets avec la PR R11 : le nettoyage. Les anciens carnets (chap0 à chap6) et l'ancien livret de compétences disparaissent : les carnets 1 à 7, le carnet de route et son module création les remplacent.
+Redéploie l'app sur Cloud Run depuis main, R11 fusionnée (feuille de route, section 8, point 1).
 
-1. Prérequis
-- Vérifie que la PR R9 (module création, branche claude/demarrer-r9-2161dd) et la PR #68 (Champs 2 et 3, branche claude/champs-cases-etroites-bp) sont fusionnées dans main.
-- Crée ensuite une branche depuis main à jour. N'empile pas les branches.
-- D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch. Avant de pousser sur une branche dont la PR existe, vérifie qu'elle n'est pas déjà fusionnée.
-
-2. À lire, dans cet ordre
-- audit-carnets-2026-10/feuille-de-route-restructuration.md : sections 1 à 3 (l'état des PR et la ligne R11), la section 7 (ce qui reste ouvert, dont ce que R11 doit vérifier) et cette section 8.
-- audit-carnets-2026-10/carte-parcours-unifie.md : sections 6 (le budget de temps), 9 et 11 (ce qu'il faut mettre à jour ailleurs).
-- audit-carnets-2026-10/recap-site-parcours.md : ce que le site doit dire, pour vérifier que les carnets le tiennent.
-- CLAUDE.md : les passages sur les anciens carnets (« the former chap0–chap6 until the clean-up PR », la liste des scripts, la description de workbooks/).
-
-3. Ce qu'il faut faire
-- Supprimer workbooks/chap0.json à chap6.json et workbooks/livret.json, les scripts Scripts/main_generate_chap0.py à chap6.py et main_generate_livret.py, leurs entrées du catalogue (server/predefined_workbooks.py, celles qui portent « (ancien parcours) ») et de tests/test_cli_documents.py.
-- Repointer ce qui visait les anciens identifiants :
-  - server/templates/index.html : la présélection chap1, les profils d'exemple qui visent chap1, chap4 et chap6, le template_id par défaut "chap1" ;
-  - server/models.py : l'exemple 'chap1' d'une description de champ ;
-  - les tests qui s'en servent (tests/test_workbooks.py, test_pdf_compiler.py, test_api_generation_source.py, test_api_robustness.py) : les réécrire sur les nouveaux carnets, sans perdre ce qu'ils vérifient ;
-  - .jules/bolt.md et Agent.md, s'ils citent des chemins ou des identifiants disparus.
-- Mettre à jour CLAUDE.md (la liste des scripts, la description de workbooks/, « until the clean-up PR »). La CI prend tous les Scripts/main_generate_*.py : vérifie qu'elle ne cite aucun fichier supprimé.
-- Vérifier qu'un JSON exporté de l'ancienne app se compile toujours. Extrais le commit déployé (git archive) dans le scratchpad, produis-y un export comme l'ancienne UI (model_dump(mode="json") de la réponse de /api/templates/chap1), puis envoie-le à /api/compile de la branche par TestClient. Le format ne change pas : seuls les fichiers de référence disparaissent.
-- Vérifier la cohérence avec le programme (Scripts/workbook_generator/chapters/programme/, texte réglementaire : on ne le modifie que sur demande) et avec le récapitulatif du site : séances, livrables, durées, noms des seuils, charge de travail d'une création (section 7). Liste les écarts, sans toucher au programme.
-- Revérifier chaque lien des carnets et du module (section 7, « Les liens des ressources »), dans le navigateur intégré si la page s'affiche en JavaScript.
-- À proposer, sans le faire d'office : « votre référent·e » (point médian) dans TONE_RULES de server/gemini_service.py.
-
-4. Les règles à tenir
-- Ne rien supprimer dans assets/ sans mon accord.
-- Ne pas changer le contenu des nouveaux carnets, sauf un lien mort ou un renvoi qui viserait un ancien carnet.
-- Garder la tolérance du compilateur (alias de paramètres) : les JSON de l'app viennent d'un modèle.
-- Le programme est un texte réglementaire : signale les écarts, ne le modifie pas.
-
-5. Méthode
-a. Commence par me montrer la liste de ce qui sera supprimé, repointé et vérifié, avec les choix à trancher en fin de message. Attends ma réponse avant de supprimer quoi que ce soit.
-b. Fais les changements. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py.
-c. Vérifie l'app en local (python -m uvicorn server.app:app --port 8080) : le catalogue, la présélection, les profils d'exemple, la personnalisation d'un carnet en mode de secours.
-d. Mets à jour la feuille de route : section 1 (R9 fusionnée, R11 à ouvrir), section 7 (ce qui reste ouvert après le chantier) et section 8 (ce qui vient ensuite : le redéploiement, les modules reconversion et évolution interne, le lot programme et site). Mets aussi à jour la carte, sections 6 et 11.
-e. Commite sur la branche. J'ouvrirai la PR avec le bouton. Le redéploiement se fait ensuite, sur ma demande (server/DEPLOY_CLOUD_RUN.md).
-
-6. Environnement (Windows, dans un worktree)
-- Le Python du venv est ../../../.venv/Scripts/python.exe.
-- Pour importer le moteur hors des scripts : PYTHONPATH="Scripts;." (point-virgule sous Windows) et PYTHONIOENCODING=utf-8.
-- Les outils du scratchpad des sessions précédentes ont disparu : réécris si besoin un script qui rend chaque page en PNG et compare deux versions d'un PDF (image, texte et champs, page par page).
+1. Vérifie que la PR R11 (branche claude/r11-nettoyage) est fusionnée, puis exporte le commit de main avec git archive dans un dossier propre et déploie-le comme le dit server/DEPLOY_CLOUD_RUN.md (gcloud depuis PowerShell, jamais --allow-unauthenticated : la clé reste dans Secret Manager et l'accès derrière IAP).
+2. Vérifie la nouvelle révision : trafic à 100 %, politiques IAM et IAP inchangées, logs de démarrage, curl sans connexion (302).
+3. Dis-moi quoi tester dans le navigateur avec la vraie clé : un carnet personnalisé en un appel (ce qui est fixe doit revenir tel quel), le carnet 7 et le carnet de route partie par partie, le module création en une fois, le business plan partie par partie. Lis ensuite les logs de ces appels.
 ```

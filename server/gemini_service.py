@@ -99,7 +99,7 @@ TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les 
 - Vouvoiement. Phrases courtes, affirmatives et concrètes, tournées vers la décision et l'action.
 - Lexique à privilégier : action, décision, projet, livrable, marché, faisabilité, salaire, rythme de vie, arbitrage, « validé en séance ».
 - À proscrire : le registre du développement personnel (« quête de sens », « retrouver votre élan », « espace d'écoute bienveillant », « croyances limitantes », « syndrome de l'imposteur », ennéagramme, « lâcher prise », « épanouissement »).
-- Le métier : jamais « coach » ni « coaching ». Dire « consultant en transformation », « la personne qui vous accompagne » ou « votre référent·e ». Jamais « cabinet » pour parler de Marge de Manœuvre.
+- Le métier : jamais « coach » ni « coaching ». Dire « consultant en transformation », « la personne qui vous accompagne » ou « la personne référente ». Jamais « cabinet » pour parler de Marge de Manœuvre.
 - Tout l'accompagnement se fait à distance : jamais « présentiel ».
 - N'invente aucun chiffre, témoignage ou partenariat ; aucune statistique sans source.
 - Titres de page : une affirmation ponctuée, en minuscules sauf la première lettre et les noms propres (jamais de Majuscule À Chaque Mot), terminée par un point, un « ? » ou un « ! » (ex : « Votre situation actuelle. », « Mon rapport *à l'argent.* »).
