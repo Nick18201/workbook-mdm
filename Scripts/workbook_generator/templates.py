@@ -208,7 +208,7 @@ class PageLayout:
     def add_questions_group(
         self,
         questions,
-        min_box_height: float = 2.2 * cm,
+        min_box_height: float = 1.6 * cm,
         max_box_height: float = 7.5 * cm,
         safe_bottom_margin: float = None,
     ):
@@ -219,7 +219,8 @@ class PageLayout:
         Args:
             questions (list): List of QuestionItem instances, dicts, or tuples. A fixed
                 box_height is in points, or names the answer the box expects ('sentence'…).
-            min_box_height (float): Minimum height for each text area (default 2.2 cm).
+            min_box_height (float): Minimum height of a box that fits the page (default 1.6 cm,
+                two handwritten lines): a question that would get less continues on the next page.
             max_box_height (float): Maximum height for each text area (default 7.5 cm).
             safe_bottom_margin (float): Lowest point of the boxes (default: the page's bottom limit).
         """
@@ -259,16 +260,14 @@ class PageLayout:
                 q.box_height = box_height(q.box_height, self._question_box_width())
 
         overheads = [self._question_text_height(q.question, q.subtitle, q.example) for q in norm_questions]
-        min_auto_h = 1.5 * cm
-
         # Questions are placed in chunks that fit the current page (boxes of at least
-        # min_auto_h); the rest continues on new pages, each chunk auto-fitting its page.
+        # min_box_height); the rest continues on new pages, each chunk auto-fitting its page.
         start = 0
         while start < len(norm_questions):
             available = self.y_cursor - safe_bottom_margin
             used, count = 0, 0
             for q, overhead in zip(norm_questions[start:], overheads[start:]):
-                need = overhead + (q.box_height if q.box_height is not None else min_auto_h)
+                need = overhead + (q.box_height if q.box_height is not None else min_box_height)
                 if used + need > available:
                     break
                 used += need
@@ -303,7 +302,7 @@ class PageLayout:
         remaining_for_boxes = available_space - total_text_overhead - fixed_height_sum
 
         if n_auto > 0:
-            auto_box_h = max(1.5 * cm, min(max_box_height, remaining_for_boxes / n_auto))
+            auto_box_h = max(min_box_height, min(max_box_height, remaining_for_boxes / n_auto))
         else:
             auto_box_h = min_box_height
 
@@ -349,10 +348,12 @@ class PageLayout:
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 
-    def add_cards_grid(self, cards, columns=2, card_height=None, field_prefix="grid"):
+    def add_cards_grid(self, cards, columns=2, card_height=None, field_prefix="grid", answer=None):
         """
         Grid of pastel cards (1 to 4 columns), each with a title, a hint and an answer box.
-        Titles and hints wrap; a card is at least tall enough for its texts.
+        Titles and hints wrap; a card is at least tall enough for its texts. answer names
+        what the boxes expect ('sentence'…): a card then fits its texts and that answer,
+        and card_height, if given, is only a minimum.
         """
         if not cards:
             return self.y_cursor
@@ -366,7 +367,7 @@ class PageLayout:
         title_lead = title_size * 1.25
         sub_size = HINT_SIZE if cols <= 2 else 8.5
         sub_lead = sub_size * 1.4
-        min_box = 1.4 * cm
+        min_box = box_height(answer, inner_w, 1.4 * cm)
 
         parsed = []
         for idx, card in enumerate(cards):
@@ -389,7 +390,7 @@ class PageLayout:
         for r_idx in range(0, len(parsed), cols):
             row = parsed[r_idx:r_idx + cols]
             texts_h = max(texts_height(t, s) for t, s, _, _ in row)
-            default_h = 5.0 * cm if cols <= 2 else 4.4 * cm
+            default_h = 0 if answer else 5.0 * cm if cols <= 2 else 4.4 * cm
             h = max(card_height or default_h, 2 * pad + texts_h + 0.3 * cm + min_box)
             self._ensure_space(h)
             row_y = self.y_cursor - h
@@ -490,8 +491,9 @@ class PageLayout:
         Table: a white header row in PT Mono, then rows separated by rules. A dict cell is an
         answer field, an empty cell a check box; text cells wrap. The header repeats on
         continuation pages. field_height sets the height of the answer fields (one line by
-        default), in points or as the answer they expect ('sentence'…: the narrowest column
-        sets the row); fields taller than 1.2 cm take several lines.
+        default), in points or as the answer they expect ('sentence'…), which a field cell
+        may name for itself ({'answer': 'word'}): each answer is sized for its column, and
+        the tallest sets the row. Fields taller than 1.2 cm take several lines.
         """
         n_cols = len(headers)
         if n_cols == 0:
@@ -547,13 +549,16 @@ class PageLayout:
                 row = [row]
             cell_items = []
             row_h = 0.95 * cm
+            sized = field_height is not None
             for c_idx in range(n_cols):
                 w = widths[c_idx]
                 cell = row[c_idx] if c_idx < len(row) else ""
                 if isinstance(cell, dict):
                     cell_items.append(("input", cell, 0))
-                    if field_height:
-                        row_h = max(row_h, box_height(field_height, w - 6, 0) + 8)
+                    height = cell.get("answer") or field_height
+                    if height:
+                        sized = True
+                        row_h = max(row_h, box_height(height, w - 6, 0) + 8)
                 else:
                     c_str = str(cell).strip()
                     if not c_str:
@@ -573,9 +578,11 @@ class PageLayout:
                 w = widths[c_idx]
                 if kind == "input":
                     fid = value.get("field_id", f"{field_prefix}_r{r_idx+1}_c{c_idx+1}")
+                    # A word takes several lines only with room for two handwritten ones
+                    word = (value.get("answer") or field_height) == "word"
                     draw_answer_box(self.c, curr_x + 3, r_y + 4, w - 6, row_h - 8, fid,
                                     tooltip=value.get("placeholder", ""),
-                                    multiline=field_height is not None and row_h - 8 > 1.2 * cm)
+                                    multiline=sized and row_h - 8 > (1.6 * cm - 1 if word else 1.2 * cm))
                 elif kind == "empty":
                     fid = f"{field_prefix}_r{r_idx+1}_c{c_idx+1}"
                     create_checkbox(self.form, f"{fid}_chk", pos=(curr_x + w / 2 - 5.5, r_y + (row_h - 11) / 2),

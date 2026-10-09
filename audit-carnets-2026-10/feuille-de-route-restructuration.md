@@ -20,7 +20,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R7 · Carnet 7 · Confronter au terrain (`carnet-7.json`), en deux parties | Fusionné (PR #62) |
 | R8 · Carnet de route · Décider et agir (`carnet-de-route.json`), en deux parties | Fusionné (PR #63) |
 | R9 · Module création, le business plan court du carnet de route (`module-creation.json`) | Fusionné (PR #65) |
-| Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | PR #67, à fusionner |
+| Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | Fusionné (PR #67) |
+| Champs 2 et 3 : cases étroites des carnets et du module, business plan, minimum des groupes de questions | PR #68, à fusionner avant R11 |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
@@ -407,6 +408,8 @@ Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
 | **R8 · Carnet de route** | Deux parties. D'abord : profil en reports, compétences prouvées, deux récits. Ensuite : pistes A et B, feuilles de route à 30, 60 et 90 jours, premières actions, garde-fous et soutiens, chemin parcouru, préparation du suivi, place du module de projet. | Remplace le livret. Ses 28 exemples (un seul profil, peut-être une personne réelle) disparaissent au profit d'exemples contrastés tirés de métiers différents. |
 | **R9 · Module création** | Le business plan court, environ 12 pages : fondations, problème, offre, prix, point mort, test, synthèse. Il reprend les seuils, la grille anti-compromis et l'entretien prospects de l'app. | Il est personnalisable en une fois. |
 | **R10 · Livret business plan** | Le livret complet autonome, avec les refontes de l'audit (rapport `08-business_plan.md`), et la personnalisation partie par partie dans l'app. | Informations réglementaires renvoyées vers les sources officielles. |
+| **Champs** (PR #67) | Les réponses en 11 pt fixe, une case dimensionnée par la réponse qu'elle attend (`answer`), les cases de pleine et demi-largeur des carnets et du module. | Coût compilé, jamais estimé : 134 → 153 pages. |
+| **Champs 2 et 3** (PR #68) | Les cases étroites (trois colonnes, poids inégaux, tableaux) des carnets et du module, le livret business plan, la réponse par case de tableau et par `cards_grid`, le minimum des groupes de questions enfin respecté. | Choix validés case par case sur leur coût compilé : carnets 153 → 158 pages, module 21 → 22, business plan 48 → 55. |
 | **R11 · Nettoyage** | Supprimer `chap0` à `chap6.json` et `livret.json`, mettre à jour le catalogue de l'app, la CI et `test_cli_documents.py`. Vérifier la cohérence avec le programme et le récapitulatif du site. | Tant que R11 n'est pas fusionnée, les anciens carnets restent disponibles à côté des nouveaux. |
 | Plus tard | Modules reconversion et évolution interne | Voir `chantier-modules-s9.md`. |
 
@@ -528,6 +531,15 @@ Pour chaque PR de carnet :
   - une remarque d'une phrase sous un tableau (« En société ») peut devenir un paragraphe fixe plutôt qu'un encadré : 1,6 cm au lieu de 3,9 cm ;
   - quand la page est pleine, chaque lien d'une `link_card` tient sur une ligne, son adresse courte comprise ;
   - métiers déjà pris pour les exemples : ceux des carnets 1 à 7 et du carnet de route, plus sérigraphe, caviste, disquaire, vidéaste (module création).
+- **Les conventions ajoutées par Champs 2 et 3** (les cases étroites, le business plan) :
+  - un mot : un prénom, une date, un montant, un nombre, une valeur, une tendance, l'intitulé d'une piste ou d'un métier, une famille de scénario, un verbe (« garder, couper, déléguer ») ; une phrase : ce qui commence par « ce que », « pourquoi », « comment », une situation, une condition ;
+  - un tableau donne sa réponse par défaut dans `answer` (à la place de `field_height_cm`), et une case la sienne : `{"field_id": …, "placeholder": …, "answer": "word"}`. La ligne prend la plus haute réponse de ses cases : un prénom ne fait plus grandir la ligne. Une case « mot » ne passe en multiligne que si la ligne lui laisse 1,6 cm ;
+  - une phrase selon la largeur d'une colonne de tableau : 9,5 cm donne 1,7 cm (trois lignes), 7,35 cm donne 2,15 cm, 5,92 cm donne 2,6 cm, 5,03 cm donne 3,05 cm, 4,49 cm donne 3,5 cm, 3,96 cm donne 3,95 cm. Avant de couper une page, élargir la colonne de la phrase et rétrécir celles des mots. Un mot ne se coupe pas dans une cellule : « PROBABILITÉ » (en-tête) demande 2,2 cm de colonne, « Hypothèse » (cellule de texte) 2,05 cm ;
+  - dans une `fields_card` de trois colonnes égales, une phrase fait 3,05 cm ; avec les poids 1 / 1,6 / 1,6, les deux phrases font 2,6 cm et le mot garde 3,6 cm de large. Six questions en pleine largeur passent sur deux colonnes (2,15 cm) quand la page manque de place : 3 cm gagnés à la reprise du business plan ;
+  - quand une phrase de 150 caractères ferait plus de 3,5 cm dans un tableau qui compare trois pistes ou trois valeurs, la case garde une hauteur en cm qui tient ses exemples : grille anti-compromis et matrice de faisabilité à 2,6 cm, feuilles de route à 2,6 cm, compétences prouvées à 1,6 cm ;
+  - un `cards_grid` accepte `answer` : la carte prend ses textes plus la case de la réponse, et `card_height_cm` n'est plus qu'un minimum ;
+  - un `questions_group` respecte son `min_box_height_cm` (1,6 cm par défaut, une phrase en pleine largeur) : une question qui aurait moins passe à la page suivante. Pour couper un groupe en deux pages équilibrées, on le scinde en deux groupes séparés par un `page_break`, avec les mêmes identifiants ;
+  - le tableau de financement du module et celui du livret ont les mêmes colonnes : 3,2 / 2 / 5,95 / 5,95 cm.
 - **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm (1,1 cm de moins sous un titre de deux lignes). Ordres de grandeur, écart compris (pris avant le passage à 11 pt : une case « phrase » en demi-largeur fait maintenant 2,15 cm, 0,55 cm de plus par rangée) :
   - protocole et ancrage : 5,1 cm chacun (5,6 cm pour un avertissement de trois lignes) ;
   - météo : 7,6 cm ;
@@ -579,11 +591,12 @@ Pour chaque PR de carnet :
 
 ## 7. Ce qui reste ouvert
 
-- **La politique des champs** est tranchée, après un test de saisie dans Chrome : la taille automatique rendait les réponses illisibles, et Chrome ignore le blocage d'une case pleine. Les réponses se tapent en 11 pt fixe, une case pleine défile (sans barre de défilement), et chaque case se dimensionne par la réponse qu'elle attend. Reste à faire :
-  - les cases étroites (trois colonnes, tableaux) des carnets 1, 2, 4, 5, 6, 7 et du carnet de route, encore à 1,6 cm : deux à trois lignes de 25 caractères à 11 pt. Le carnet 6 (proches) et le carnet de route en ont le plus ;
-  - le livret et le business plan, passés en 11 pt fixe, mais dont les cases gardent leur hauteur ;
+- **La politique des champs** est tranchée, après un test de saisie dans Chrome : la taille automatique rendait les réponses illisibles, et Chrome ignore le blocage d'une case pleine. Les réponses se tapent en 11 pt fixe, une case pleine défile (sans barre de défilement), et chaque case se dimensionne par la réponse qu'elle attend (PR #67). Champs 2 et 3 l'appliquent aux cases étroites des carnets et du module, puis au business plan (conventions en section 5). Ce qui reste :
+  - quatre tableaux gardent une hauteur fixe plutôt qu'une phrase de 150 caractères, qui y ferait 3,95 cm et couperait le tableau : la grille anti-compromis (carnet 5) et la matrice de faisabilité (carnet 7) à 2,6 cm, les feuilles de route (carnet de route) à 2,6 cm, les compétences prouvées à 1,6 cm. Elles tiennent la longueur de leurs exemples. À revoir si les carnets remplis montrent des réponses coupées ;
+  - quelques coupes laissent une première page peu remplie, la page « (suite) » portant l'essentiel ; les plus nettes : la météo seule sur « Avant de commencer » (carnet de route), les consignes des entretiens prospects (module), l'introduction de « Mes risques et mes parades » et de « Trouver mes premiers clients » (business plan) ;
+  - l'ancien livret (`livret.json`) et les anciens `chap*` gardent leurs hauteurs : ils disparaissent en R11 ;
   - plus tard, une version de lecture : les réponses d'un carnet rempli, en entier, pour la personne qui accompagne, puisqu'une case pleine cache sa fin hors saisie et à l'impression.
-- **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm. Depuis R2, la ligne de vie et l'arbre de vie les tiennent aussi.
+- **Les champs trop bas** pour l'écriture à la main (51 à l'audit) : réglé. Les carnets, le module et le business plan passent tous le test (1,6 cm pour une phrase, 0,8 cm pour un mot, une info-bulle par champ), et aucune de leurs pages « (suite) » ne se réduit à un petit bloc. Le minimum d'un groupe de questions (`min_box_height_cm`) est enfin respecté : le moteur descendait à 1,5 cm quel que soit ce minimum. Seul le business plan en change (trois groupes, trois pages de plus).
 - **Les reprises du carnet 2** se font dans les carnets suivants : les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3). Les moteurs et les critères sont relus avant la grille anti-compromis du carnet 5 (R5). Les moteurs « je le veux » et l'objectif boussole sont reportés à la cartographie du carnet 6 (R6). Les questions de l'interview entrent dans la grille d'entretien du carnet 7, et la personne interviewée parmi ses contacts (R7). Les expériences, la zone d'excellence et les compétences de vie sont citées par un renvoi écrit aux compétences prouvées du carnet de route, et l'objectif boussole y est reporté au chemin parcouru (R8).
 - **Les reprises du carnet 3.**
   - La cartographie des énergies (`c3.energies`) est reportée au profil du carnet de route : quatre lignes, le critère retourné compris (R8). Le critère retourné l'est aussi aux fondations du module création (R9). Deux de ses lignes sont déjà reprises au récapitulatif du carnet 4 (R4), une autre avant la grille du carnet 5 (R5), deux à la cartographie du carnet 6 (R6). Elle remplace « Ce qui vide mes batteries » et « Mes sources de stress » : on la reporte, on ne repose pas la question.
@@ -634,13 +647,13 @@ Pour chaque PR de carnet :
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R9 (module création) fusionnée :
+Message à coller, une fois la PR R9 (module création) et la PR #68 (Champs 2 et 3) fusionnées :
 
 ```text
 Reprends la restructuration des carnets avec la PR R11 : le nettoyage. Les anciens carnets (chap0 à chap6) et l'ancien livret de compétences disparaissent : les carnets 1 à 7, le carnet de route et son module création les remplacent.
 
 1. Prérequis
-- Vérifie que la PR R9 (module création, branche claude/demarrer-r9-2161dd) est fusionnée dans main.
+- Vérifie que la PR R9 (module création, branche claude/demarrer-r9-2161dd) et la PR #68 (Champs 2 et 3, branche claude/champs-cases-etroites-bp) sont fusionnées dans main.
 - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
 - D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch. Avant de pousser sur une branche dont la PR existe, vérifie qu'elle n'est pas déjà fusionnée.
 

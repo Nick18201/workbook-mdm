@@ -70,7 +70,8 @@
               "Piste 1",
               {
                 "field_id": "c7_piste_1",
-                "placeholder": "Piste 1 : la piste retenue, et son numéro au carnet 6"
+                "placeholder": "Piste 1 : la piste retenue, et son numéro au carnet 6",
+                "answer": "word"
               },
               {
                 "field_id": "c7_piste_1_pourquoi",
@@ -81,7 +82,8 @@
               "Piste 2",
               {
                 "field_id": "c7_piste_2",
-                "placeholder": "Piste 2 : la piste retenue, et son numéro au carnet 6"
+                "placeholder": "Piste 2 : la piste retenue, et son numéro au carnet 6",
+                "answer": "word"
               },
               {
                 "field_id": "c7_piste_2_pourquoi",
@@ -92,7 +94,8 @@
               "Piste 3",
               {
                 "field_id": "c7_piste_3",
-                "placeholder": "Piste 3 : la piste retenue, et son numéro au carnet 6"
+                "placeholder": "Piste 3 : la piste retenue, et son numéro au carnet 6",
+                "answer": "word"
               },
               {
                 "field_id": "c7_piste_3_pourquoi",
@@ -102,10 +105,10 @@
           ],
           "col_widths_cm": [
             1.6,
-            6.5,
-            9.0
+            6.0,
+            9.5
           ],
-          "field_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "fields_card",
@@ -731,7 +734,7 @@
             2.8,
             2.8
           ],
-          "field_height_cm": 0.85
+          "answer": "word"
         },
         {
           "type": "fields_card",
@@ -1230,7 +1233,7 @@
             4.3,
             4.3
           ],
-          "field_height_cm": 2.2,
+          "field_height_cm": 2.6,
           "fixed": true,
           "data_id": "c7.matrice"
         },

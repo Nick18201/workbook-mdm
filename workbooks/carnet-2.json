@@ -655,17 +655,17 @@
               [
                 "Je choisis souvent…",
                 "c2_schema_choisis",
-                2.4
+                "sentence"
               ],
               [
                 "Je pars quand…",
                 "c2_schema_pars",
-                2.4
+                "sentence"
               ],
               [
                 "Je reste quand…",
                 "c2_schema_reste",
-                2.4
+                "sentence"
               ]
             ]
           ],

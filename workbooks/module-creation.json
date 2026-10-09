@@ -405,7 +405,7 @@
             7.8
           ],
           "field_prefix": "creation_dep",
-          "field_height_cm": 0.85
+          "answer": "word"
         },
         {
           "type": "table",
@@ -477,7 +477,7 @@
             7.8
           ],
           "field_prefix": "creation_charges",
-          "field_height_cm": 0.85
+          "answer": "word"
         },
         {
           "type": "fill_in_card",
@@ -650,8 +650,8 @@
             2.9
           ],
           "field_prefix": "creation_pm",
-          "field_height_cm": 0.85,
-          "fixed": true
+          "fixed": true,
+          "answer": "word"
         },
         {
           "type": "paragraphs",
@@ -911,7 +911,8 @@
               "Apport personnel (exercice 7)",
               {
                 "field_id": "creation_fin1_montant",
-                "placeholder": "Apport personnel : montant possible"
+                "placeholder": "Apport personnel : montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "creation_fin1_conditions",
@@ -926,7 +927,8 @@
               "Allocations de France Travail, si vous avez des droits",
               {
                 "field_id": "creation_fin2_montant",
-                "placeholder": "Allocations : montant possible"
+                "placeholder": "Allocations : montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "creation_fin2_conditions",
@@ -941,7 +943,8 @@
               "Prêt d'honneur : sans intérêt, sans garantie",
               {
                 "field_id": "creation_fin3_montant",
-                "placeholder": "Prêt d'honneur : montant possible"
+                "placeholder": "Prêt d'honneur : montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "creation_fin3_conditions",
@@ -956,7 +959,8 @@
               "Prêt bancaire",
               {
                 "field_id": "creation_fin4_montant",
-                "placeholder": "Prêt bancaire : montant possible"
+                "placeholder": "Prêt bancaire : montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "creation_fin4_conditions",
@@ -969,14 +973,14 @@
             ]
           ],
           "col_widths_cm": [
-            4.6,
-            3.0,
-            4.7,
-            4.7
+            3.2,
+            2.0,
+            5.95,
+            5.95
           ],
           "field_prefix": "creation_fin",
-          "field_height_cm": 1.6,
-          "fixed": true
+          "fixed": true,
+          "answer": "sentence"
         },
         {
           "type": "page_break"
@@ -1089,7 +1093,7 @@
             7.2
           ],
           "field_prefix": "creation_hyp",
-          "field_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",
@@ -1111,7 +1115,7 @@
               [
                 "Avec qui",
                 "creation_test_qui",
-                1.6,
+                "word",
                 1
               ]
             ],
@@ -1164,6 +1168,9 @@
           ]
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "table",
           "headers": [
             "La personne",
@@ -1175,7 +1182,8 @@
             [
               {
                 "field_id": "creation_prospect1",
-                "placeholder": "Personne 1"
+                "placeholder": "Personne 1",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect1_objection",
@@ -1183,7 +1191,8 @@
               },
               {
                 "field_id": "creation_prospect1_prix",
-                "placeholder": "Personne 1 : le prix qu'elle juge juste"
+                "placeholder": "Personne 1 : le prix qu'elle juge juste",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect1_declencheur",
@@ -1193,7 +1202,8 @@
             [
               {
                 "field_id": "creation_prospect2",
-                "placeholder": "Personne 2"
+                "placeholder": "Personne 2",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect2_objection",
@@ -1201,7 +1211,8 @@
               },
               {
                 "field_id": "creation_prospect2_prix",
-                "placeholder": "Personne 2 : le prix qu'elle juge juste"
+                "placeholder": "Personne 2 : le prix qu'elle juge juste",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect2_declencheur",
@@ -1211,7 +1222,8 @@
             [
               {
                 "field_id": "creation_prospect3",
-                "placeholder": "Personne 3"
+                "placeholder": "Personne 3",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect3_objection",
@@ -1219,7 +1231,8 @@
               },
               {
                 "field_id": "creation_prospect3_prix",
-                "placeholder": "Personne 3 : le prix qu'elle juge juste"
+                "placeholder": "Personne 3 : le prix qu'elle juge juste",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect3_declencheur",
@@ -1229,7 +1242,8 @@
             [
               {
                 "field_id": "creation_prospect4",
-                "placeholder": "Personne 4"
+                "placeholder": "Personne 4",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect4_objection",
@@ -1237,7 +1251,8 @@
               },
               {
                 "field_id": "creation_prospect4_prix",
-                "placeholder": "Personne 4 : le prix qu'elle juge juste"
+                "placeholder": "Personne 4 : le prix qu'elle juge juste",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect4_declencheur",
@@ -1247,7 +1262,8 @@
             [
               {
                 "field_id": "creation_prospect5",
-                "placeholder": "Personne 5"
+                "placeholder": "Personne 5",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect5_objection",
@@ -1255,7 +1271,8 @@
               },
               {
                 "field_id": "creation_prospect5_prix",
-                "placeholder": "Personne 5 : le prix qu'elle juge juste"
+                "placeholder": "Personne 5 : le prix qu'elle juge juste",
+                "answer": "word"
               },
               {
                 "field_id": "creation_prospect5_declencheur",
@@ -1264,13 +1281,13 @@
             ]
           ],
           "col_widths_cm": [
-            3.4,
-            5.0,
-            3.6,
-            5.0
+            2.7,
+            5.95,
+            2.5,
+            5.95
           ],
           "field_prefix": "creation_prospects",
-          "field_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "rating_grid",

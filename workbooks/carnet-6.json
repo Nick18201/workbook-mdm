@@ -215,11 +215,13 @@
             [
               {
                 "field_id": "c6_proche_1",
-                "placeholder": "Proche 1 : son prénom"
+                "placeholder": "Proche 1 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c6_proche_1_metiers",
-                "placeholder": "Proche 1 : les métiers suggérés"
+                "placeholder": "Proche 1 : les métiers suggérés",
+                "answer": "word"
               },
               {
                 "field_id": "c6_proche_1_raison",
@@ -229,11 +231,13 @@
             [
               {
                 "field_id": "c6_proche_2",
-                "placeholder": "Proche 2 : son prénom"
+                "placeholder": "Proche 2 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c6_proche_2_metiers",
-                "placeholder": "Proche 2 : les métiers suggérés"
+                "placeholder": "Proche 2 : les métiers suggérés",
+                "answer": "word"
               },
               {
                 "field_id": "c6_proche_2_raison",
@@ -243,11 +247,13 @@
             [
               {
                 "field_id": "c6_proche_3",
-                "placeholder": "Proche 3 : son prénom"
+                "placeholder": "Proche 3 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c6_proche_3_metiers",
-                "placeholder": "Proche 3 : les métiers suggérés"
+                "placeholder": "Proche 3 : les métiers suggérés",
+                "answer": "word"
               },
               {
                 "field_id": "c6_proche_3_raison",
@@ -260,8 +266,8 @@
             6.0,
             7.5
           ],
-          "field_height_cm": 1.6,
-          "data_id": "c6.proches"
+          "data_id": "c6.proches",
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",
@@ -468,6 +474,9 @@
           "columns": 2
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "paragraphs",
           "items": [
             "Cinq pistes réalistes : directes, avec vos compétences actuelles, ou passerelles courtes, après une formation courte."
@@ -487,11 +496,13 @@
               "R1",
               {
                 "field_id": "c6_piste_r_1",
-                "placeholder": "Piste réaliste 1 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste réaliste 1 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_1_origine",
-                "placeholder": "Piste réaliste 1 : d'où elle vient"
+                "placeholder": "Piste réaliste 1 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_1_attire",
@@ -502,11 +513,13 @@
               "R2",
               {
                 "field_id": "c6_piste_r_2",
-                "placeholder": "Piste réaliste 2 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste réaliste 2 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_2_origine",
-                "placeholder": "Piste réaliste 2 : d'où elle vient"
+                "placeholder": "Piste réaliste 2 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_2_attire",
@@ -517,11 +530,13 @@
               "R3",
               {
                 "field_id": "c6_piste_r_3",
-                "placeholder": "Piste réaliste 3 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste réaliste 3 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_3_origine",
-                "placeholder": "Piste réaliste 3 : d'où elle vient"
+                "placeholder": "Piste réaliste 3 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_3_attire",
@@ -532,11 +547,13 @@
               "R4",
               {
                 "field_id": "c6_piste_r_4",
-                "placeholder": "Piste réaliste 4 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste réaliste 4 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_4_origine",
-                "placeholder": "Piste réaliste 4 : d'où elle vient"
+                "placeholder": "Piste réaliste 4 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_4_attire",
@@ -547,11 +564,13 @@
               "R5",
               {
                 "field_id": "c6_piste_r_5",
-                "placeholder": "Piste réaliste 5 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste réaliste 5 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_5_origine",
-                "placeholder": "Piste réaliste 5 : d'où elle vient"
+                "placeholder": "Piste réaliste 5 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_r_5_attire",
@@ -565,8 +584,8 @@
             3.6,
             7.5
           ],
-          "field_height_cm": 1.6,
-          "data_id": "c6.pistes"
+          "data_id": "c6.pistes",
+          "answer": "sentence"
         }
       ]
     },
@@ -595,11 +614,13 @@
               "A1",
               {
                 "field_id": "c6_piste_a_1",
-                "placeholder": "Piste audacieuse 1 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste audacieuse 1 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_1_origine",
-                "placeholder": "Piste audacieuse 1 : d'où elle vient"
+                "placeholder": "Piste audacieuse 1 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_1_cherche",
@@ -610,11 +631,13 @@
               "A2",
               {
                 "field_id": "c6_piste_a_2",
-                "placeholder": "Piste audacieuse 2 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste audacieuse 2 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_2_origine",
-                "placeholder": "Piste audacieuse 2 : d'où elle vient"
+                "placeholder": "Piste audacieuse 2 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_2_cherche",
@@ -625,11 +648,13 @@
               "A3",
               {
                 "field_id": "c6_piste_a_3",
-                "placeholder": "Piste audacieuse 3 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste audacieuse 3 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_3_origine",
-                "placeholder": "Piste audacieuse 3 : d'où elle vient"
+                "placeholder": "Piste audacieuse 3 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_3_cherche",
@@ -640,11 +665,13 @@
               "A4",
               {
                 "field_id": "c6_piste_a_4",
-                "placeholder": "Piste audacieuse 4 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste audacieuse 4 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_4_origine",
-                "placeholder": "Piste audacieuse 4 : d'où elle vient"
+                "placeholder": "Piste audacieuse 4 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_4_cherche",
@@ -655,11 +682,13 @@
               "A5",
               {
                 "field_id": "c6_piste_a_5",
-                "placeholder": "Piste audacieuse 5 : le métier, le secteur ou l'activité"
+                "placeholder": "Piste audacieuse 5 : le métier, le secteur ou l'activité",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_5_origine",
-                "placeholder": "Piste audacieuse 5 : d'où elle vient"
+                "placeholder": "Piste audacieuse 5 : d'où elle vient",
+                "answer": "word"
               },
               {
                 "field_id": "c6_piste_a_5_cherche",
@@ -673,7 +702,7 @@
             3.6,
             7.5
           ],
-          "field_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "annotation",
@@ -710,7 +739,8 @@
             [
               {
                 "field_id": "c6_favorite_1",
-                "placeholder": "Favorite 1 : le numéro et le nom de la piste"
+                "placeholder": "Favorite 1 : le numéro et le nom de la piste",
+                "answer": "word"
               },
               {
                 "field_id": "c6_favorite_1_pourquoi",
@@ -724,7 +754,8 @@
             [
               {
                 "field_id": "c6_favorite_2",
-                "placeholder": "Favorite 2 : le numéro et le nom de la piste"
+                "placeholder": "Favorite 2 : le numéro et le nom de la piste",
+                "answer": "word"
               },
               {
                 "field_id": "c6_favorite_2_pourquoi",
@@ -738,7 +769,8 @@
             [
               {
                 "field_id": "c6_favorite_3",
-                "placeholder": "Favorite 3 : le numéro et le nom de la piste"
+                "placeholder": "Favorite 3 : le numéro et le nom de la piste",
+                "answer": "word"
               },
               {
                 "field_id": "c6_favorite_3_pourquoi",
@@ -755,7 +787,10 @@
             6.25,
             6.25
           ],
-          "field_height_cm": 1.6
+          "answer": "sentence"
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "contrast_example",

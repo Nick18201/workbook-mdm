@@ -173,7 +173,17 @@
               "question": "Ce que je veux vraiment, c'est…",
               "field_id": "bp1_envie",
               "subtitle": "Ce qui vous attire dans ce projet, pour vous."
-            },
+            }
+          ],
+          "min_box_height_cm": 2.2,
+          "max_box_height_cm": 4.2
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "questions_group",
+          "questions": [
             {
               "question": "Ce que je crois devoir faire, parce qu'on l'attend de moi, c'est…",
               "field_id": "bp1_attendu",
@@ -359,7 +369,7 @@
             6.0
           ],
           "field_prefix": "bp1_semaine",
-          "field_height_cm": 1.5
+          "answer": "word"
         },
         {
           "type": "callout",
@@ -566,13 +576,13 @@
             ]
           ],
           "col_widths_cm": [
-            2.6,
-            5.4,
-            4.2,
-            4.8
+            2.4,
+            4.9,
+            4.9,
+            4.9
           ],
           "field_prefix": "bp2_hyp",
-          "field_height_cm": 2.6
+          "answer": "sentence"
         },
         {
           "type": "annotation",
@@ -863,7 +873,8 @@
             [
               {
                 "field_id": "bp3_inspi1_projet",
-                "placeholder": "Nom du projet et lieu"
+                "placeholder": "Nom du projet et lieu",
+                "answer": "word"
               },
               {
                 "field_id": "bp3_inspi1_concept",
@@ -881,7 +892,8 @@
             [
               {
                 "field_id": "bp3_inspi2_projet",
-                "placeholder": "Nom du projet et lieu"
+                "placeholder": "Nom du projet et lieu",
+                "answer": "word"
               },
               {
                 "field_id": "bp3_inspi2_concept",
@@ -899,7 +911,8 @@
             [
               {
                 "field_id": "bp3_inspi3_projet",
-                "placeholder": "Nom du projet et lieu"
+                "placeholder": "Nom du projet et lieu",
+                "answer": "word"
               },
               {
                 "field_id": "bp3_inspi3_concept",
@@ -916,13 +929,13 @@
             ]
           ],
           "col_widths_cm": [
-            4.0,
-            4.4,
-            4.2,
-            4.4
+            2.0,
+            5.04,
+            5.03,
+            5.03
           ],
           "field_prefix": "bp3_inspi",
-          "field_height_cm": 2.2
+          "answer": "sentence"
         },
         {
           "type": "questions_group",
@@ -1187,11 +1200,13 @@
             [
               {
                 "field_id": "bp4_offre1_nom",
-                "placeholder": "Nom de l'offre"
+                "placeholder": "Nom de l'offre",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre1_public",
-                "placeholder": "Pour qui"
+                "placeholder": "Pour qui",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre1_contenu",
@@ -1199,21 +1214,25 @@
               },
               {
                 "field_id": "bp4_offre1_prix",
-                "placeholder": "Prix envisagé"
+                "placeholder": "Prix envisagé",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre1_marge",
-                "placeholder": "Prix moins ce que coûte la prestation"
+                "placeholder": "Prix moins ce que coûte la prestation",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "bp4_offre2_nom",
-                "placeholder": "Nom de l'offre"
+                "placeholder": "Nom de l'offre",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre2_public",
-                "placeholder": "Pour qui"
+                "placeholder": "Pour qui",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre2_contenu",
@@ -1221,21 +1240,25 @@
               },
               {
                 "field_id": "bp4_offre2_prix",
-                "placeholder": "Prix envisagé"
+                "placeholder": "Prix envisagé",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre2_marge",
-                "placeholder": "Prix moins ce que coûte la prestation"
+                "placeholder": "Prix moins ce que coûte la prestation",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "bp4_offre3_nom",
-                "placeholder": "Nom de l'offre"
+                "placeholder": "Nom de l'offre",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre3_public",
-                "placeholder": "Pour qui"
+                "placeholder": "Pour qui",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre3_contenu",
@@ -1243,23 +1266,25 @@
               },
               {
                 "field_id": "bp4_offre3_prix",
-                "placeholder": "Prix envisagé"
+                "placeholder": "Prix envisagé",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_offre3_marge",
-                "placeholder": "Prix moins ce que coûte la prestation"
+                "placeholder": "Prix moins ce que coûte la prestation",
+                "answer": "word"
               }
             ]
           ],
           "col_widths_cm": [
-            3.4,
-            3.2,
-            4.6,
-            2.8,
-            3.0
+            2.7,
+            2.6,
+            7.4,
+            2.1,
+            2.3
           ],
           "field_prefix": "bp4_offres",
-          "field_height_cm": 2.0
+          "answer": "sentence"
         },
         {
           "type": "text",
@@ -1410,6 +1435,9 @@
           "columns": 2
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "questions_group",
           "questions": [
             {
@@ -1499,12 +1527,12 @@
             ]
           ],
           "col_widths_cm": [
-            4.2,
-            6.4,
-            6.4
+            2.4,
+            7.35,
+            7.35
           ],
           "field_prefix": "bp4_parcours",
-          "field_height_cm": 2.3
+          "answer": "sentence"
         },
         {
           "type": "cards_grid",
@@ -1552,6 +1580,9 @@
           "box_height_cm": 1.8
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "table",
           "headers": [
             "Canal",
@@ -1564,11 +1595,13 @@
             [
               {
                 "field_id": "bp4_com1_canal",
-                "placeholder": "Canal"
+                "placeholder": "Canal",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com1_objectif",
-                "placeholder": "Se faire connaître, rassurer, vendre"
+                "placeholder": "Se faire connaître, rassurer, vendre",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com1_contenu",
@@ -1576,21 +1609,25 @@
               },
               {
                 "field_id": "bp4_com1_rythme",
-                "placeholder": "Rythme"
+                "placeholder": "Rythme",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com1_temps",
-                "placeholder": "Heures par semaine"
+                "placeholder": "Heures par semaine",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "bp4_com2_canal",
-                "placeholder": "Canal"
+                "placeholder": "Canal",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com2_objectif",
-                "placeholder": "Se faire connaître, rassurer, vendre"
+                "placeholder": "Se faire connaître, rassurer, vendre",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com2_contenu",
@@ -1598,21 +1635,25 @@
               },
               {
                 "field_id": "bp4_com2_rythme",
-                "placeholder": "Rythme"
+                "placeholder": "Rythme",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com2_temps",
-                "placeholder": "Heures par semaine"
+                "placeholder": "Heures par semaine",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "bp4_com3_canal",
-                "placeholder": "Canal"
+                "placeholder": "Canal",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com3_objectif",
-                "placeholder": "Se faire connaître, rassurer, vendre"
+                "placeholder": "Se faire connaître, rassurer, vendre",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com3_contenu",
@@ -1620,23 +1661,25 @@
               },
               {
                 "field_id": "bp4_com3_rythme",
-                "placeholder": "Rythme"
+                "placeholder": "Rythme",
+                "answer": "word"
               },
               {
                 "field_id": "bp4_com3_temps",
-                "placeholder": "Heures par semaine"
+                "placeholder": "Heures par semaine",
+                "answer": "word"
               }
             ]
           ],
           "col_widths_cm": [
-            3.2,
-            3.6,
-            4.6,
-            2.8,
-            2.8
+            2.6,
+            3.0,
+            7.35,
+            2.0,
+            2.15
           ],
           "field_prefix": "bp4_com",
-          "field_height_cm": 1.3
+          "answer": "sentence"
         },
         {
           "type": "question",
@@ -1767,24 +1810,27 @@
           "fixed": true
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "question",
           "question": "Les réussites qui montrent que je sais déjà faire une partie de ce métier",
           "field_id": "bp5_reussites",
-          "box_height_cm": 1.5
+          "answer": "sentence"
         },
         {
           "type": "question",
           "question": "La compétence qui me manque et qui me fait douter de tout le projet",
           "field_id": "bp5_doute",
           "subtitle": "Et ce que vous pouvez faire : vous former, vous associer, déléguer.",
-          "box_height_cm": 1.5
+          "answer": "sentence"
         },
         {
           "type": "question",
           "question": "Les personnes dont j'ai besoin autour de moi",
           "field_id": "bp5_entourage",
           "subtitle": "Une personne du métier, un pair, un expert-comptable, des proches qui soutiennent.",
-          "box_height_cm": 1.5
+          "answer": "sentence"
         }
       ],
       "part": 5
@@ -1807,42 +1853,36 @@
               [
                 "Pourquoi le cédant vend-il ?",
                 "bp5_reprise_cedant",
-                1.4
-              ]
-            ],
-            [
+                "sentence"
+              ],
               [
                 "Les trois derniers bilans : chiffre d'affaires, résultat, tendance",
                 "bp5_reprise_bilans",
-                1.4
+                "sentence"
               ]
             ],
             [
               [
                 "La clientèle : fidèle à l'entreprise, ou au cédant ?",
                 "bp5_reprise_clientele",
-                1.4
-              ]
-            ],
-            [
+                "sentence"
+              ],
               [
                 "Le bail : durée, loyer, conditions de cession",
                 "bp5_reprise_bail",
-                1.4
+                "sentence"
               ]
             ],
             [
               [
                 "Les salariés repris et leurs contrats",
                 "bp5_reprise_salaries",
-                1.4
-              ]
-            ],
-            [
+                "sentence"
+              ],
               [
                 "Le prix demandé, et ce qu'il comprend : stock, matériel, clientèle",
                 "bp5_reprise_prix",
-                1.4
+                "sentence"
               ]
             ]
           ],
@@ -2129,7 +2169,7 @@
             3.4
           ],
           "field_prefix": "bp5_dep",
-          "field_height_cm": 1.2
+          "answer": "word"
         },
         {
           "type": "fill_in_card",
@@ -2305,7 +2345,7 @@
             5.2
           ],
           "field_prefix": "bp5_charges",
-          "field_height_cm": 0.9
+          "answer": "word"
         },
         {
           "type": "fill_in_card",
@@ -2486,7 +2526,8 @@
             3.3,
             3.4
           ],
-          "field_prefix": "bp5_pm"
+          "field_prefix": "bp5_pm",
+          "answer": "word"
         },
         {
           "type": "callout",
@@ -2682,7 +2723,8 @@
               "Apport personnel",
               {
                 "field_id": "bp5_fin1_montant",
-                "placeholder": "Montant possible"
+                "placeholder": "Montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "bp5_fin1_conditions",
@@ -2697,7 +2739,8 @@
               "Allocations de France Travail, si vous avez des droits",
               {
                 "field_id": "bp5_fin2_montant",
-                "placeholder": "Montant possible"
+                "placeholder": "Montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "bp5_fin2_conditions",
@@ -2712,7 +2755,8 @@
               "Prêt d'honneur : sans intérêt, sans garantie",
               {
                 "field_id": "bp5_fin3_montant",
-                "placeholder": "Montant possible"
+                "placeholder": "Montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "bp5_fin3_conditions",
@@ -2727,7 +2771,8 @@
               "Prêt bancaire",
               {
                 "field_id": "bp5_fin4_montant",
-                "placeholder": "Montant possible"
+                "placeholder": "Montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "bp5_fin4_conditions",
@@ -2741,11 +2786,13 @@
             [
               {
                 "field_id": "bp5_fin5_source",
-                "placeholder": "Autre : financement participatif, aide locale…"
+                "placeholder": "Autre : financement participatif, aide locale…",
+                "answer": "word"
               },
               {
                 "field_id": "bp5_fin5_montant",
-                "placeholder": "Montant possible"
+                "placeholder": "Montant possible",
+                "answer": "word"
               },
               {
                 "field_id": "bp5_fin5_conditions",
@@ -2758,14 +2805,17 @@
             ]
           ],
           "col_widths_cm": [
-            4.6,
-            3.0,
-            4.7,
-            4.7
+            3.2,
+            2.0,
+            5.95,
+            5.95
           ],
           "field_prefix": "bp5_fin",
-          "field_height_cm": 1.3,
-          "fixed": true
+          "fixed": true,
+          "answer": "sentence"
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "link_card",
@@ -2793,9 +2843,6 @@
             ]
           ],
           "fixed": true
-        },
-        {
-          "type": "page_break"
         },
         {
           "type": "callout",
@@ -2955,6 +3002,9 @@
           "fixed": true
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "table",
           "headers": [
             "Risque",
@@ -2967,15 +3017,18 @@
             [
               {
                 "field_id": "bp6_risque1_nom",
-                "placeholder": "Le risque"
+                "placeholder": "Le risque",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque1_gravite",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque1_proba",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque1_prevention",
@@ -2989,15 +3042,18 @@
             [
               {
                 "field_id": "bp6_risque2_nom",
-                "placeholder": "Le risque"
+                "placeholder": "Le risque",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque2_gravite",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque2_proba",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque2_prevention",
@@ -3011,15 +3067,18 @@
             [
               {
                 "field_id": "bp6_risque3_nom",
-                "placeholder": "Le risque"
+                "placeholder": "Le risque",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque3_gravite",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque3_proba",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque3_prevention",
@@ -3033,15 +3092,18 @@
             [
               {
                 "field_id": "bp6_risque4_nom",
-                "placeholder": "Le risque"
+                "placeholder": "Le risque",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque4_gravite",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque4_proba",
-                "placeholder": "1, 2 ou 3"
+                "placeholder": "1, 2 ou 3",
+                "answer": "word"
               },
               {
                 "field_id": "bp6_risque4_prevention",
@@ -3054,14 +3116,14 @@
             ]
           ],
           "col_widths_cm": [
-            4.2,
-            2.1,
+            3.0,
+            1.7,
             2.3,
-            4.2,
-            4.2
+            5.05,
+            5.05
           ],
           "field_prefix": "bp6_risques",
-          "field_height_cm": 2.0
+          "answer": "sentence"
         },
         {
           "type": "question",
@@ -3098,29 +3160,29 @@
               [
                 "Objectif",
                 "bp6_palier1_objectif",
-                1.5
+                "sentence"
               ],
               [
                 "Résultat observable",
                 "bp6_palier1_resultat",
-                1.5
+                "sentence"
               ]
             ],
             [
               [
                 "Action 1",
                 "bp6_palier1_action1",
-                1.5
+                "sentence"
               ],
               [
                 "Action 2",
                 "bp6_palier1_action2",
-                1.5
+                "sentence"
               ],
               [
                 "Action 3",
                 "bp6_palier1_action3",
-                1.5
+                "sentence"
               ]
             ]
           ]
@@ -3133,29 +3195,29 @@
               [
                 "Objectif",
                 "bp6_palier2_objectif",
-                1.5
+                "sentence"
               ],
               [
                 "Résultat observable",
                 "bp6_palier2_resultat",
-                1.5
+                "sentence"
               ]
             ],
             [
               [
                 "Action 1",
                 "bp6_palier2_action1",
-                1.5
+                "sentence"
               ],
               [
                 "Action 2",
                 "bp6_palier2_action2",
-                1.5
+                "sentence"
               ],
               [
                 "Action 3",
                 "bp6_palier2_action3",
-                1.5
+                "sentence"
               ]
             ]
           ]
@@ -3171,29 +3233,29 @@
               [
                 "Objectif",
                 "bp6_palier3_objectif",
-                1.5
+                "sentence"
               ],
               [
                 "Résultat observable",
                 "bp6_palier3_resultat",
-                1.5
+                "sentence"
               ]
             ],
             [
               [
                 "Action 1",
                 "bp6_palier3_action1",
-                1.5
+                "sentence"
               ],
               [
                 "Action 2",
                 "bp6_palier3_action2",
-                1.5
+                "sentence"
               ],
               [
                 "Action 3",
                 "bp6_palier3_action3",
-                1.5
+                "sentence"
               ]
             ]
           ]
@@ -3275,7 +3337,7 @@
             }
           ],
           "columns": 2,
-          "card_height_cm": 4.6
+          "answer": "sentence"
         },
         {
           "type": "page_break"
@@ -3307,7 +3369,7 @@
             }
           ],
           "columns": 2,
-          "card_height_cm": 4.4
+          "answer": "sentence"
         },
         {
           "type": "rating_grid",
