@@ -250,4 +250,12 @@ Les carnets sont livrés. Le site a déjà repris ce récapitulatif ; trois poin
 
 Les modules reconversion et évolution interne n'existent pas encore : seul le module création est remis (voir « Le carnet de route » plus haut). Les phrases du site sur « le carnet de route de votre projet » restent justes, puisque la séance 9 et la personnalisation adaptent le carnet de route au projet.
 
+Le programme PDF a été aligné en même temps (PR #69 de `mdm-workbook`). Le site reprend ses textes mot pour mot ; à reporter avec le nouveau PDF :
+
+| Où | Aujourd'hui sur le site | Nouveau texte |
+|---|---|---|
+| `src/data/bilanMethod.ts`, description de S4 | « vos 4 seuils financiers, le revenu vital et le revenu sécurisant, le délai de trésorerie que vous pouvez tenir. » | « On pose les chiffres de votre sécurité financière : vos 4 seuils, le minimum vital, le minimum sécurisant, le revenu cible et la durée pendant laquelle vous pouvez accepter une baisse. Une transition viable se calcule, sans précariser l'équilibre de votre foyer. » |
+| Travail personnel (`bilanBetweenSessions.ts`, et partout où le site donne les 10 à 20 h) | « 10 à 20 h … selon les personnes » | Ajouter : « Un projet de création ajoute un module d'environ 2 h entre les séances 9 et 10. » |
+| `src/data/bilanProjects.ts`, trajectoire « Création » | « une offre pilote, testable sous 15 jours » ; « statut, ACRE ou ARCE, premiers clients » | Inchangé : le module création tient désormais ces promesses (test sur 15 jours au plus, ARCE et ACRE nommées). |
+
 Les quatre exercices de chaque carnet restent fidèles aux carnets livrés (le site en impose exactement quatre) : au carnet 1, l'objectif de départ figure dans le livrable, et « ce que vous en faites » couvre les modèles et anti-modèles.
