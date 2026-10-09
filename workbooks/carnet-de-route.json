@@ -158,37 +158,37 @@
               "Mon profil, en mots",
               "c4.profil",
               "route_profil",
-              1.6
+              "sentence"
             ],
             [
               "Mes deux forces",
               "c4.profil",
               "route_forces",
-              1.6
+              "sentence"
             ],
             [
               "Ce qui me recharge",
               "c3.energies",
               "route_recharge",
-              1.6
+              "sentence"
             ],
             [
               "Ce qui me coûte",
               "c3.energies",
               "route_coute",
-              1.6
+              "sentence"
             ],
             [
               "Pour mon énergie, j'ai besoin de…",
               "c3.energies",
               "route_besoin",
-              1.6
+              "sentence"
             ],
             [
               "Donc, mon poste devra…",
               "c3.energies",
               "route_critere",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
@@ -197,7 +197,7 @@
           "type": "question",
           "question": "Dans le scénario vers lequel je penche, mon profil est un atout quand…",
           "field_id": "route_profil_atout",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",
@@ -394,7 +394,7 @@
               "Ce qui, chez moi, fait penser mes proches à un métier",
               "c6.proches",
               "route_rappel_proches",
-              1.6
+              "sentence"
             ]
           ]
         },
@@ -405,13 +405,16 @@
               [
                 "Ce qu'on vient souvent me demander, et que je fais sans y penser",
                 "route_miroir",
-                1.6
+                "sentence"
               ]
             ]
           ],
           "title": "L'épreuve du miroir",
           "hint": "Ce qui vous semble si naturel qu'une personne débutante mettrait des mois à l'apprendre.",
           "question_labels": true
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "fields_card",
@@ -445,12 +448,12 @@
               [
                 "La compétence que je sous-estime",
                 "route_sous_estime",
-                1.6
+                "sentence"
               ],
               [
                 "La preuve que je la maîtrise",
                 "route_sous_estime_preuve",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -488,12 +491,12 @@
               [
                 "La situation : ce qui posait problème",
                 "route_recit_1_situation",
-                1.6
+                "sentence"
               ],
               [
                 "Le signal qui m'a fait agir",
                 "route_recit_1_signal",
-                1.6
+                "sentence"
               ]
             ],
             [
@@ -507,12 +510,12 @@
               [
                 "Le résultat : ce qui a changé ensuite",
                 "route_recit_1_resultat",
-                1.6
+                "sentence"
               ],
               [
                 "Ce récit prouve que je sais…",
                 "route_recit_1_preuve",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -543,12 +546,12 @@
               [
                 "La situation : ce qui posait problème",
                 "route_recit_2_situation",
-                1.6
+                "sentence"
               ],
               [
                 "Le signal qui m'a fait agir",
                 "route_recit_2_signal",
-                1.6
+                "sentence"
               ]
             ],
             [
@@ -562,12 +565,12 @@
               [
                 "Le résultat : ce qui a changé ensuite",
                 "route_recit_2_resultat",
-                1.6
+                "sentence"
               ],
               [
                 "Ce récit prouve que je sais…",
                 "route_recit_2_preuve",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -640,12 +643,12 @@
               [
                 "Ce que la séance a tranché",
                 "route_seance_9_tranche",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui reste ouvert",
                 "route_seance_9_ouvert",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -688,13 +691,13 @@
               "Mes trois valeurs",
               "c5.grille",
               "route_rappel_valeurs",
-              1.6
+              "sentence"
             ],
             [
               "Leurs conditions",
               "c5.grille",
               "route_rappel_conditions",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
@@ -848,18 +851,21 @@
           "exploitable": "A : le conseil en agriculture biologique, une passerelle courte ; mon minimum, à terme. B : mon poste actuel, avec le suivi des essais en plus : un tremplin, mon minimum tout de suite."
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "fields_card",
           "rows": [
             [
               [
                 "Le scénario que je laisse de côté",
                 "route_laisse",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qu'il me coûte de le laisser",
                 "route_laisse_cout",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -872,7 +878,7 @@
           "type": "question",
           "question": "Avec le recul, choisir m'apprend que…",
           "field_id": "route_choisir",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ]
@@ -898,7 +904,7 @@
               "Pour la piste A : ce qu'il faudrait pour y aller (formation, délai, coût)",
               "c7.matrice",
               "route_rappel_matrice_a",
-              1.6
+              "sentence"
             ]
           ]
         },
@@ -1058,12 +1064,12 @@
               [
                 "Le signal qui me fera passer à la piste B",
                 "route_bascule",
-                1.6
+                "sentence"
               ],
               [
                 "Ou la date à laquelle je la lance",
                 "route_bascule_date",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1126,25 +1132,28 @@
           ]
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "fields_card",
           "rows": [
             [
               [
                 "La formation ou la démarche visée",
                 "route_module_visee",
-                1.6
+                "sentence"
               ],
               [
                 "Son financement, ou la personne à voir",
                 "route_module_financement",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ma prochaine démarche",
                 "route_module_demarche",
-                1.6,
+                "sentence",
                 3
               ],
               [
@@ -1288,13 +1297,13 @@
               "Mes limites, hors argent",
               "c5.limites",
               "route_rappel_limites",
-              1.6
+              "sentence"
             ],
             [
               "Ce que m'ont appris les personnes rencontrées",
               "c7.enquetes",
               "route_rappel_enquetes",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
@@ -1306,12 +1315,12 @@
               [
                 "Mon principal risque de décrocher : la dispersion, le doute, la fatigue…",
                 "route_risque",
-                1.6
+                "sentence"
               ],
               [
                 "Ma parade : une règle simple, que je peux vérifier",
                 "route_parade",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1390,13 +1399,13 @@
               "Je voulais avoir clarifié…",
               "c2.boussole",
               "route_rappel_clarifier",
-              1.6
+              "sentence"
             ],
             [
               "Je saurai que j'ai réussi quand…",
               "c2.boussole",
               "route_rappel_reussite",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
@@ -1408,12 +1417,12 @@
               [
                 "Ce qui est clarifié",
                 "route_clarifie",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui reste ouvert",
                 "route_ouvert",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1562,6 +1571,9 @@
           "question_labels": true
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "contrast_example",
           "title": "Actuaire",
           "surface": "Ça va mieux.",
@@ -1574,12 +1586,12 @@
               [
                 "Ce que je veux pouvoir constater d'ici là",
                 "route_suivi_constater",
-                1.6
+                "sentence"
               ],
               [
                 "La question que je voudrai poser",
                 "route_suivi_question",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1622,5 +1634,6 @@
         ]
       }
     }
-  ]
+  ],
+  "title": "Décider et agir"
 }

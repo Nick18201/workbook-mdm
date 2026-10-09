@@ -111,7 +111,7 @@ TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les 
 # Iterate and customize receive whole workbooks, the reference ones included
 REFERENCE_BLOCKS_RULES = """BLOCS DES CARNETS DE RÉFÉRENCE :
 - Les carnets de référence utilisent aussi le gabarit 'recap' et des blocs que tu ne crées jamais toi-même : 'questions_group', 'heading', 'paragraphs', 'star_list', 'annotation', 'frise', 'fields_card', 'numbered_lines', 'rating_grid', 'info_cards', 'link_card', 'checklist_cards', 'fill_in_card', 'life_line', 'tree_of_life', 'protocol', 'anchor', 'contrast_example', 'energy', 'report', 'space', 'page_break'.
-- Quand tu en rencontres un, garde son type, ses clés, l'ordre de ses éléments et tous ses identifiants ('field_id', 'field_prefix', identifiants dans les listes) ; adapte seulement ses textes, sans les allonger.
+- Quand tu en rencontres un, garde son type, ses clés, l'ordre de ses éléments, tous ses identifiants ('field_id', 'field_prefix', identifiants dans les listes) et la taille de ses cases ('answer', ou 'word', 'sentence'… dans une liste) ; adapte seulement ses textes, sans les allonger.
 - Ne modifie jamais les blocs 'protocol' (avertissement avant un exercice à forte charge), 'anchor' (phrase d'ancrage qui le clôt), 'energy' (météo du jour) et 'report' (report d'une donnée écrite dans un autre carnet) : ils font partie du cadre, du protocole de sécurité et des renvois entre carnets. Garde les clés 'data_id', 'fixed' et 'part' là où elles sont. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
 - Dans une page 'summary', garde 'duration' et 'split' ; dans une page 'engagement', garde 'zones' et 'pistes'.
 - Pour ajouter du contenu, utilise uniquement les 8 blocs de base ('callout', 'cards_grid', 'scale', 'checklist', 'table', 'stat_boxes', 'question', 'text').
@@ -155,7 +155,7 @@ RÈGLES D'OR DE STRUCTURATION :
        - 'checklist' : liste de critères ou tâches à cocher (1 ou 2 colonnes)
        - 'table' : tableau structuré avec headers et cellules de saisie
        - 'stat_boxes' : rangée de 2 à 4 chiffres clés ou indicateurs phares
-       - 'question' : question ouverte avec champ de saisie
+       - 'question' : question ouverte avec champ de saisie ; 'answer' en donne la place : 'sentence' (une ou deux phrases), 'paragraph' (un paragraphe), 'long' (un récit)
    - Page avant-dernière (Conditionnelle) : 'engagement' (Fin de carnet : le livrable du carnet sur un post-it avec le tampon « Validé en séance », la date de la séance, puis 3 à 5 engagements à cocher).
      * Si include_engagement est False : Ne PAS inclure de page 'engagement'.
    - Dernière page : 'closing' (4e de couverture : la signature de Marge de Manœuvre et 2 ou 3 phrases courtes).
@@ -191,7 +191,7 @@ RÈGLES D'OR DE STRUCTURATION :
      * 'scale' : {"type": "scale", "label": "Niveau d'alignement ou de confiance :", "min_val": 0, "max_val": 10, "min_label": "0 · Décalage", "max_label": "10 · Confiance totale"}
      * 'table' : {"type": "table", "title": "Tableau d'évaluation", "headers": ["Pilier / Critère", "Niveau de risque", "Plan de parade ou levier"], "rows": [["Finances & Rémunération", "Modéré", "Maintien ARE, négociation"], ["Temps & Équilibre", "Faible", "Télétravail partiel"]]}
      * 'checklist' : {"type": "checklist", "title": "Critères de validation", "items": ["Premier prospect contacté", "Proposition relue à voix haute", "Date butoir fixée"]}
-     * 'question' : {"type": "question", "question": "Intitulé...", "subtitle": "Précision...", "example": "Pilote de projets à impact..."}
+     * 'question' : {"type": "question", "question": "Intitulé...", "subtitle": "Précision...", "example": "Pilote de projets à impact...", "answer": "paragraph"}
 
 6. FORMAT GLOBAL JSON ATTENDU :
 Produis UNIQUEMENT un objet JSON valide conforme à la structure suivante :
@@ -335,7 +335,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                             field_id="q_clarity_intent",
                             subtitle="Votre boussole directrice pour cette étape.",
                             example="Ex : Valider un scénario professionnel sans douter.",
-                            box_height_cm=3.0,
+                            answer="paragraph",
                         ),
                     ],
                 )
@@ -369,7 +369,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                             field_id="q_depot_charge",
                             subtitle="Ce qui peut attendre sans compromettre l'essentiel.",
                             example="Ex : Les urgences de messagerie de l'après-midi.",
-                            box_height_cm=3.0,
+                            answer="paragraph",
                         ),
                     ],
                 )
@@ -559,7 +559,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
                         field_id="q_arbitrage",
                         subtitle="La décision qui vous permet d'avancer dès aujourd'hui.",
                         example="Ex : Avancer sur le scénario A pendant 3 mois, avec le B en repli validé.",
-                        box_height_cm=3.0,
+                        answer="paragraph",
                     ),
                 ],
             )

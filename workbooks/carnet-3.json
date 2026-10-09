@@ -92,7 +92,7 @@
           "type": "question",
           "question": "En séance 2, j'ai vu que…",
           "field_id": "c3_seance_2",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         }
       ]
     },
@@ -316,7 +316,7 @@
             {
               "question": "Aujourd'hui, ce que j'en garde, c'est…",
               "field_id": "c3_q11_garde",
-              "box_height_cm": 1.6
+              "answer": "sentence"
             }
           ]
         }
@@ -434,7 +434,7 @@
               "question": "17. L'insomnie",
               "field_id": "c3_q17",
               "subtitle": "Il est 3 heures du matin, le sommeil ne vient pas. Sur quoi votre esprit boucle-t-il ces temps-ci ? Quelques mots suffisent, sans développer : nous en parlerons en séance.",
-              "box_height_cm": 1.6
+              "answer": "sentence"
             }
           ]
         },
@@ -464,48 +464,48 @@
               [
                 "Ce qui me donne de l'énergie au travail",
                 "c3_retiens_energie",
-                1.8
+                "sentence"
               ],
               [
                 "Je sais le faire, mais cela me coûte…",
                 "c3_retiens_coute",
-                1.8
+                "sentence"
               ]
             ],
             [
               [
                 "L'environnement où je travaille le mieux (rythme, cadre, entourage)",
                 "c3_retiens_cadre",
-                1.8
+                "sentence"
               ],
               [
                 "Pour garder mon énergie, j'ai besoin de…",
                 "c3_retiens_besoin",
-                1.8
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je ne veux plus subir (une interruption, un conflit, un imprévu…)",
                 "c3_retiens_irritant_1",
-                1.8
+                "sentence"
               ],
               [
                 "Donc, mon prochain poste devra…",
                 "c3_retiens_critere_1",
-                1.8
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je ne veux plus subir",
                 "c3_retiens_irritant_2",
-                1.8
+                "sentence"
               ],
               [
                 "Donc, mon prochain poste devra…",
                 "c3_retiens_critere_2",
-                1.8
+                "sentence"
               ]
             ]
           ],

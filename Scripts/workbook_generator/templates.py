@@ -10,7 +10,11 @@ from .components import (
     HINT_LEADING,
     HINT_SIZE,
     QUESTION_LEADING,
+    QUESTION_PAD,
     QUESTION_SIZE,
+    WORD_BOX_HEIGHT,
+    answer_height,
+    box_height,
     choice_scale_height,
     draw_answer_box,
     draw_choice_scale,
@@ -70,7 +74,7 @@ class LayoutConfig:
 
 @dataclass
 class QuestionConfig:
-    box_height: float = 3.0 * cm
+    box_height: float = 3.0 * cm  # or the answer it expects: 'sentence'… (components.answer_height)
     subtitle: str = None
     example: str = None
 
@@ -81,7 +85,7 @@ class QuestionItem:
     form_field_id: str
     subtitle: str = None
     example: str = None
-    box_height: float = None  # None for auto-fit
+    box_height: float = None  # None for auto-fit, or the answer it expects: 'sentence'…
 
 
 @dataclass
@@ -159,6 +163,10 @@ class PageLayout:
         """Vertical space taken by a question block, input box excluded (matches add_question_block)."""
         return question_text_height(self.target_width, question, subtitle, example) + 0.45 * cm
 
+    def _question_box_width(self):
+        """Width of the answer box of a question (draw_question)."""
+        return self.target_width - 2 * QUESTION_PAD
+
     def add_text(self, text, config: TextConfig = None):
         """Adds a paragraph of text, automatically wrapping and moving the cursor."""
         if config is None:
@@ -186,7 +194,7 @@ class PageLayout:
         if config is None:
             config = QuestionConfig()
 
-        box_h = config.box_height if config.box_height is not None else 3.0 * cm
+        box_h = box_height(config.box_height, self._question_box_width(), 3.0 * cm)
         # Keep the question, its hints and its answer box together on one page
         self._ensure_space(question_text_height(self.target_width, question, config.subtitle, config.example) + box_h)
         bottom = draw_question(
@@ -209,7 +217,8 @@ class PageLayout:
         so that boxes scale proportionally and never overflow the bottom margin.
 
         Args:
-            questions (list): List of QuestionItem instances, dicts, or tuples.
+            questions (list): List of QuestionItem instances, dicts, or tuples. A fixed
+                box_height is in points, or names the answer the box expects ('sentence'…).
             min_box_height (float): Minimum height for each text area (default 2.2 cm).
             max_box_height (float): Maximum height for each text area (default 7.5 cm).
             safe_bottom_margin (float): Lowest point of the boxes (default: the page's bottom limit).
@@ -243,6 +252,11 @@ class PageLayout:
                 norm_questions.append(
                     QuestionItem(question=str(q), form_field_id=f"q_{self.question_index}_{len(norm_questions)}")
                 )
+
+        # A box sized by the answer it expects ('sentence'…) gets its height in points
+        for q in norm_questions:
+            if isinstance(q.box_height, str):
+                q.box_height = box_height(q.box_height, self._question_box_width())
 
         overheads = [self._question_text_height(q.question, q.subtitle, q.example) for q in norm_questions]
         min_auto_h = 1.5 * cm
@@ -476,7 +490,8 @@ class PageLayout:
         Table: a white header row in PT Mono, then rows separated by rules. A dict cell is an
         answer field, an empty cell a check box; text cells wrap. The header repeats on
         continuation pages. field_height sets the height of the answer fields (one line by
-        default); fields taller than 1.2 cm take several lines.
+        default), in points or as the answer they expect ('sentence'…: the narrowest column
+        sets the row); fields taller than 1.2 cm take several lines.
         """
         n_cols = len(headers)
         if n_cols == 0:
@@ -532,13 +547,13 @@ class PageLayout:
                 row = [row]
             cell_items = []
             row_h = 0.95 * cm
-            if field_height and any(isinstance(cell, dict) for cell in row):
-                row_h = max(row_h, field_height + 8)
             for c_idx in range(n_cols):
                 w = widths[c_idx]
                 cell = row[c_idx] if c_idx < len(row) else ""
                 if isinstance(cell, dict):
                     cell_items.append(("input", cell, 0))
+                    if field_height:
+                        row_h = max(row_h, box_height(field_height, w - 6, 0) + 8)
                 else:
                     c_str = str(cell).strip()
                     if not c_str:
@@ -716,25 +731,27 @@ class PageLayout:
         """
         A pastel card of labelled answer boxes laid out in rows (an experience sheet, a job
         sheet, a contact card...). rows: lists of fields, each (label, field_id) or
-        (label, field_id, height_cm) or (label, field_id, height_cm, weight); boxes taller
-        than 1.2 cm are multiline. title is a pill label, hint a line of ink-muted text.
-        Labels are PT Mono markers, or short questions in DM Sans with question_labels.
+        (label, field_id, height) or (label, field_id, height, weight), the height in cm or
+        the answer the box expects ('sentence'…, sized for its width), like field_height
+        (in points) for the fields that give none; boxes taller than 1.2 cm are multiline.
+        title is a pill label, hint a line of ink-muted text. Labels are PT Mono markers,
+        or short questions in DM Sans with question_labels.
         """
         pad = PDFStyle.CARD_PADDING
         inner = self.target_width - 2 * pad
         col_gap, row_gap, label_gap = 0.4 * cm, 0.35 * cm, 3
 
-        def parse(field):
+        def parse(field, width):
             label, fid = field[0], field[1]
-            height = field[2] * cm if len(field) > 2 and field[2] else field_height
-            weight = field[3] if len(field) > 3 else 1
-            return label, fid, height, weight
+            height = field[2] if len(field) > 2 and field[2] else None
+            height = height * cm if isinstance(height, (int, float)) else height
+            return label, fid, box_height(height, width, box_height(field_height, width, WORD_BOX_HEIGHT))
 
         layout_rows = []
         for row in rows:
-            fields = [parse(f) for f in row]
-            total = sum(f[3] for f in fields)
-            widths = [(inner - col_gap * (len(fields) - 1)) * f[3] / total for f in fields]
+            weights = [f[3] if len(f) > 3 else 1 for f in row]
+            widths = [(inner - col_gap * (len(row) - 1)) * w / sum(weights) for w in weights]
+            fields = [parse(f, w) + (weight,) for f, w, weight in zip(row, widths, weights)]
             label_h = max((self._field_label_height(f[0], w, question_labels) for f, w in zip(fields, widths) if f[0]),
                           default=0)
             box_h = max(f[2] for f in fields)
@@ -1092,14 +1109,15 @@ class PageLayout:
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 
-    def add_anchor(self, field_id, box_height=1.6 * cm):
+    def add_anchor(self, field_id):
         """After a heavy exercise: « Pour clore », the anchoring sentence (ANCHOR_PROMPT) and its box."""
         pad = PDFStyle.CARD_PADDING
         inner = self.target_width - 2 * pad
+        box_h = answer_height("sentence", inner)
         label = "Pour clore"
         _, pill_h = label_pill_size(label)
         prompt_h = paragraph_height(ANCHOR_PROMPT, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
-        h = 2 * pad + pill_h + 0.25 * cm + prompt_h + 0.2 * cm + box_height
+        h = 2 * pad + pill_h + 0.25 * cm + prompt_h + 0.2 * cm + box_h
         self._ensure_space(h)
 
         top = self.y_cursor
@@ -1108,7 +1126,7 @@ class PageLayout:
         t = top - pad - pill_h - 0.25 * cm
         t -= draw_paragraph(self.c, ANCHOR_PROMPT, self.text_x + pad, t, inner, PDFStyle.FONT_HEADING_BOLD,
                             QUESTION_SIZE, PDFStyle.COLOR_INK, QUESTION_LEADING) + 0.2 * cm
-        draw_answer_box(self.c, self.text_x + pad, t - box_height, inner, box_height, field_id, tooltip=ANCHOR_PROMPT)
+        draw_answer_box(self.c, self.text_x + pad, t - box_h, inner, box_h, field_id, tooltip=ANCHOR_PROMPT)
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 
@@ -1160,7 +1178,7 @@ class PageLayout:
         _, pill_h = label_pill_size(label)
         prompt_h = paragraph_height(ENERGY_PROMPT, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
         reason_h = paragraph_height(ENERGY_REASON, inner, PDFStyle.FONT_HEADING_BOLD, QUESTION_SIZE, QUESTION_LEADING)
-        box_h = 1.6 * cm  # two handwritten lines
+        box_h = answer_height("sentence", inner)
         h = (2 * pad + pill_h + 0.25 * cm + prompt_h + 0.15 * cm + choice_scale_height(True) + 0.3 * cm
              + reason_h + 0.15 * cm + box_h)
         self._ensure_space(h)
@@ -1189,9 +1207,9 @@ class PageLayout:
         Data written in another carnet, copied here with its origin (« one piece of data,
         one entry »): a pastel card titled « À reporter », then per line its label, the
         origin on the right (« carnet 4 · p. 12 ») and a box; boxes taller than 1.2 cm are
-        multiline. lines: (label, origin, field_id, height_cm or None), laid out on 1 or 2
-        columns (short lines, e.g. the four zones). A card that does not fit continues on
-        the next page.
+        multiline. lines: (label, origin, field_id, height), the height in cm, the answer
+        the box expects ('sentence'…) or None (one line), laid out on 1 or 2 columns (short
+        lines, e.g. the four zones). A card that does not fit continues on the next page.
         """
         pad = PDFStyle.CARD_PADDING
         inner = self.target_width - 2 * pad
@@ -1215,7 +1233,9 @@ class PageLayout:
             label_w = col_w - origin_width(origin) - (0.4 * cm if origin else 0)
             label_h = paragraph_height(str(label), label_w, PDFStyle.FONT_HEADING_BOLD, self.REPORT_LABEL_SIZE,
                                        self.REPORT_LABEL_LEADING)
-            items.append((str(label), origin, field_id, label_w, label_h, height * cm if height else 0.85 * cm))
+            if isinstance(height, (int, float)):
+                height = height * cm if height else None
+            items.append((str(label), origin, field_id, label_w, label_h, box_height(height, col_w, WORD_BOX_HEIGHT)))
         # A row of the grid: its items, then the height of their labels and of their boxes
         rows = []
         for k in range(0, len(items), cols):

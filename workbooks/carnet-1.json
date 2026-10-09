@@ -255,36 +255,36 @@
               [
                 "Une phrase que je me répète (« il faut… »)",
                 "c1_sac_phrase",
-                2.0
+                "sentence"
               ],
               [
                 "Ce que je veux, moi",
                 "c1_sac_veux",
-                2.0
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je ne veux plus subir",
                 "c1_sac_subir",
-                2.0
+                "sentence"
               ],
               [
                 "Donc, mon prochain poste devra…",
                 "c1_sac_besoin",
-                2.0
+                "sentence"
               ]
             ],
             [
               [
                 "Ma plus grande peur face à ce changement",
                 "c1_sac_peur",
-                2.0
+                "sentence"
               ],
               [
                 "Ce que je ferais si elle se réalisait",
                 "c1_sac_parade",
-                2.0
+                "sentence"
               ]
             ]
           ],
@@ -358,6 +358,9 @@
           "data_id": "c1.domaines"
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "fields_card",
           "rows": [
             [
@@ -374,19 +377,19 @@
               [
                 "Mon travail actuel, ou le dernier, nourrit…",
                 "c1_domaines_nourrit",
-                1.6
+                "sentence"
               ],
               [
                 "… et il abîme…",
                 "c1_domaines_abime",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Donc, mon prochain projet devra…",
                 "c1_domaines_donc",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -511,41 +514,44 @@
               [
                 "Ce que l'on m'a transmis sur la réussite",
                 "c1_recu_reussite",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je choisis aujourd'hui",
                 "c1_choisi_reussite",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que l'on m'a transmis sur le travail",
                 "c1_recu_travail",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je choisis aujourd'hui",
                 "c1_choisi_travail",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que l'on attendait de moi",
                 "c1_recu_attentes",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je veux, moi",
                 "c1_choisi_veux",
-                1.6
+                "sentence"
               ]
             ]
           ],
           "question_labels": true,
           "data_id": "c1.heritage"
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "numbered_lines",
@@ -624,30 +630,33 @@
           "data_id": "c1.modeles"
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "fields_card",
           "rows": [
             [
               [
                 "Ce que je refuse de reproduire (une personne, une situation)",
                 "c1_antimodele_1",
-                1.6
+                "sentence"
               ],
               [
                 "Donc, dans mon prochain poste, je veux…",
                 "c1_antimodele_1_donc",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je refuse de reproduire (une personne, une situation)",
                 "c1_antimodele_2",
-                1.6
+                "sentence"
               ],
               [
                 "Donc, dans mon prochain poste, je veux…",
                 "c1_antimodele_2_donc",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -689,5 +698,6 @@
       },
       "fixed": true
     }
-  ]
+  ],
+  "title": "L'état des lieux"
 }

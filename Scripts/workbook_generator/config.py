@@ -88,6 +88,9 @@ class PDFStyle:
     SIZE_NUMBER = 60  # big chapter number
     SIZE_POSTIT = 14
     SIZE_ANNOTATION = 15
+    # Answers are typed in one fixed size, never shrunk to fit: a full box scrolls. An
+    # integer, since ReportLab writes the field's size as one.
+    SIZE_FIELD = 11
 
     LEADING_BODY = 1.5
     LEADING_TITLE = 1.05
@@ -112,6 +115,15 @@ class PDFStyle:
 
     LINE_WIDTH_FIELD = 1
     LINE_WIDTH_ARROW = 1.3
+
+    # Room for an answer typed at SIZE_FIELD (components.answer_height). Measured in Chrome:
+    # a line takes 1.11 em, a character of French text 0.44 em; a little more here, so that
+    # an answer of the announced length always fits.
+    FIELD_LEADING = 1.16
+    FIELD_CHAR_WIDTH = 0.46  # em, word wrapping included
+    # The expected answers a box is sized for, in characters ('word' is one line). A
+    # sentence: 4 lines in half a page width, 3 across it (the floor of handwriting).
+    ANSWER_CHARS = {"sentence": 150, "paragraph": 400, "long": 800}
 
     # E. Paths
     SCRIPTS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # .../Scripts
