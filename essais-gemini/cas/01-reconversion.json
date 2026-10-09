@@ -1,0 +1,11 @@
+{
+  "titre": "Reconversion : le carnet 4 pour une personne comptable qui vise l'ébénisterie",
+  "serie": 1,
+  "mode": "customize",
+  "but": "Un carnet sur l'argent : ses exemples doivent rester sans montant ni pourcentage, tirés d'un métier voisin, ni comptable ni ébéniste ; ce qui est fixe revient tel quel.",
+  "requete": {
+    "template_id": "carnet-4",
+    "beneficiary_context": "Comptable en cabinet depuis 15 ans, 42 ans, deux enfants au collège, un foyer à deux revenus. Envisage une reconversion vers l'ébénisterie : un CAP en un an, puis un atelier à son compte ou un poste chez un artisan. Craint la baisse de revenus pendant la formation et les premières années.",
+    "custom_instructions": "Adapter les exemples et les questions à une reconversion vers un métier manuel, avec une année de formation."
+  }
+}

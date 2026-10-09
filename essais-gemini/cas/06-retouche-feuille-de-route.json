@@ -1,0 +1,10 @@
+{
+  "titre": "Retouche : la pastille « Feuille de route » sur l'outil réseau créé au cas 3",
+  "serie": 1,
+  "mode": "iterate",
+  "but": "La consigne de la pastille doit donner un tableau à trois paliers (30, 60 et 90 jours) dont toutes les cases sont à remplir, et laisser le reste du document tel quel. Les deux tirages partent du même document (le 1er tirage du cas 3).",
+  "depuis": "creation",
+  "requete": {
+    "feedback": "Ajoute une feuille de route en tableau, à 30, 60 et 90 jours : pour chaque palier, mon objectif, le résultat que je pourrai constater et mes actions datées, toutes les cases à remplir"
+  }
+}

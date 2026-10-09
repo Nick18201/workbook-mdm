@@ -8,6 +8,7 @@ import os
 import json
 import logging
 import re
+import time
 from functools import lru_cache
 from typing import Any, Callable, List, NamedTuple, Optional
 from google import genai
@@ -50,6 +51,8 @@ from workbook_generator.primitives import plain_title
 from workbook_generator.spec import keep_fixed, part_of, put_part_back, tag_refs
 
 logger = logging.getLogger(__name__)
+# What each call costs goes to uvicorn's log, shown at the INFO level in production (Cloud Run)
+usage_logger = logging.getLogger("uvicorn.error")
 
 # Modèles essayés dans l'ordre, configurables sans redéploiement de code (ex: GEMINI_MODELS="gemini-x-flash,gemini-y-flash")
 GEMINI_MODELS = [
@@ -90,6 +93,7 @@ def _generate_json(
 
     for model_name in GEMINI_MODELS:
         try:
+            started = time.monotonic()
             response = client.models.generate_content(
                 model=model_name,
                 contents=user_prompt,
@@ -98,6 +102,7 @@ def _generate_json(
                     system_instruction=system_prompt,
                 ),
             )
+            _log_usage(label, model_name, response, time.monotonic() - started)
             raw_text = response.text.strip() if response.text else ""
             if not raw_text:
                 continue
@@ -117,6 +122,17 @@ def _generate_json(
 
     logger.error(f"{label}: all Gemini models failed ({last_err}). Falling back to heuristic.")
     return None
+
+
+def _log_usage(label: str, model_name: str, response: Any, seconds: float) -> None:
+    """Logs what a call cost: its tokens sent, received and of thinking, and how long it took."""
+    usage = getattr(response, "usage_metadata", None)
+    tokens = {kind: getattr(usage, f"{kind}_token_count", None) or 0 for kind in ("prompt", "candidates", "thoughts")}
+    usage_logger.info(
+        "Gemini %s (%s) : %.1f s, %d jetons envoyés, %d reçus, %d de réflexion",
+        label, model_name, seconds, tokens["prompt"], tokens["candidates"], tokens["thoughts"],
+        extra={"gemini_usage": dict(tokens, label=label, model=model_name, seconds=round(seconds, 1))},
+    )
 
 
 def _spec_json(spec: WorkbookSpec) -> str:

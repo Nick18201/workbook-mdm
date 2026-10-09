@@ -1,0 +1,11 @@
+{
+  "titre": "Carnet de route par parties : deux pistes d'une personne juriste",
+  "serie": 2,
+  "mode": "customize",
+  "but": "Le plus long carnet du bilan, partie par partie : ses reports (données des carnets précédents) et ses feuilles de route à 30, 60 et 90 jours gardés, aucun prénom écrit.",
+  "parties": [1, 2],
+  "requete": {
+    "template_id": "carnet-de-route",
+    "beneficiary_context": "Juriste en droit social dans un groupe industriel depuis 14 ans, 45 ans. Deux pistes après le carnet 7 : responsable des ressources humaines dans une PME, et médiation en entreprise (une formation de médiateur à suivre). Décision visée avant l'été."
+  }
+}

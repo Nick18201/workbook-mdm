@@ -1,0 +1,12 @@
+{
+  "titre": "Création : « Préparer mes rencontres réseau », un outil de 45 minutes hors de la suite des carnets",
+  "serie": 1,
+  "mode": "parse",
+  "but": "Le gabarit commun sur un outil thématique, sans numéro ni météo ; l'adresse web des notes reprise, aucune autre inventée ; aucun chiffre sans source ; les durées qui font 45 minutes.",
+  "requete": {
+    "raw_notes": "Outil à créer : préparer ses rencontres réseau (cafés, entretiens d'information) pendant la phase d'exploration.\nPublic : cadres en bilan qui hésitent à solliciter leur réseau (« je n'ose pas déranger », « je ne sais pas quoi demander »).\n\nContenu souhaité :\n1. Cartographier son réseau : anciens collègues, clients, fournisseurs, camarades de promotion, associations ; repérer dix personnes, en trois cercles (proches, connaissances, contacts à obtenir).\n2. Préparer la demande : un message d'approche court (qui je suis, pourquoi cette personne, ce que je demande : vingt minutes d'échange, pas un emploi).\n3. Préparer l'échange : cinq questions ouvertes sur le métier, le secteur, les compétences recherchées, les erreurs à éviter, à qui d'autre parler.\n4. Après l'échange : ce que j'ai appris, ce qui confirme ou fragilise ma piste, la personne suivante, le remerciement envoyé.\n\nRessource à citer : les conseils de l'Apec sur le réseau, https://www.apec.fr\nPour lever la peur de déranger : la plupart des gens aiment parler de leur métier, et une demande précise et courte est rarement refusée.",
+    "duration_min": 45,
+    "meteo_option": "none",
+    "include_engagement": true
+  }
+}
