@@ -55,6 +55,12 @@ CATALOGUE = [
      "puis les pistes A et B face aux critères, les feuilles de route à 30, 60 et 90 jours, le module du projet, "
      "les premières actions, les garde-fous et le chemin parcouru.",
      "route", BILAN),
+    ("module-creation", 8, "Carnet de route · Module création",
+     "Fondations, offre, prix, point mort face aux seuils, risque, financement et test",
+     "Pour une piste A de création d'activité, entre les séances 9 et 10 : le problème et l'offre, le prix, les "
+     "dépenses et les charges, le point mort face aux quatre seuils, le risque pour la personne, le financement, "
+     "le test et les entretiens prospects, puis la synthèse et la décision.",
+     "storefront", BILAN),
     # Former carnets 0 to 6 and the former livret, until the clean-up of the restructuring (R11)
     ("chap0", 0, "Carnet 0 · Le prélude (ancien parcours)", "Engagement, point de situation et entourage",
      "Poser le cadre et l'engagement, faire le point sur la situation actuelle, les domaines de vie et l'entourage.",

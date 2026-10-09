@@ -173,7 +173,10 @@ def test_data_ids_are_unique_and_name_their_carnet():
 
 def test_reports_point_to_declared_data():
     """A report to a carnet whose file exists must name a data id that file declares."""
-    declared = {raw["carnet"]: set(_declared_data_ids(raw)) for _, raw in _raw_workbooks() if "carnet" in raw}
+    declared = {}  # a carnet and its modules (module-creation.json is a module of the carnet de route)
+    for _, raw in _raw_workbooks():
+        if "carnet" in raw:
+            declared.setdefault(raw["carnet"], set()).update(_declared_data_ids(raw))
     for workbook_id, raw in _raw_workbooks():
         for page in raw.get("pages", []):
             for block in page.get("blocks") or []:
