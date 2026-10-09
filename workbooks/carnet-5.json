@@ -283,7 +283,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, revient sur des moments pénibles : frustration, épuisement, conflit intérieur. Choisissez des situations dont vous pouvez parler sans qu'elles vous submergent : un mot-clé suffit."
+          "text": "Cet exercice, sur deux pages, revient sur des moments où une valeur vous a manqué : frustration, épuisement, conflit intérieur. Un mot-clé suffit par situation."
         },
         {
           "type": "paragraphs",
@@ -484,8 +484,6 @@
               ]
             ]
           ],
-          "title": "Si vous le souhaitez",
-          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
           "question_labels": true,
           "fixed": true
         },
@@ -1213,7 +1211,7 @@
       "params": {
         "messages": [
           "Votre grille anti-compromis est prête.",
-          "Prochaine étape : la séance 5. Apportez ce carnet.",
+          "Prochaine étape : la séance 5. Renvoyez ce carnet complété d'ici là.",
           "Ensuite, le carnet 6 : l'exploration, avec les réponses de vos proches."
         ]
       },

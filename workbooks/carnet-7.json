@@ -1,21 +1,21 @@
 {
   "chapter_num": 7,
-  "chapter_title": "Confronter au terrain",
+  "chapter_title": "Explorer le terrain",
   "subtitle": "Bilan de compétences",
   "carnet": 7,
-  "pdf_title": "Marge de Manœuvre · Carnet 7 : Confronter au terrain",
+  "pdf_title": "Marge de Manœuvre · Carnet 7 : Explorer le terrain",
   "parts": [
-    "Confronter vos pistes",
+    "Explorer vos pistes",
     "Tirer les leçons du terrain"
   ],
   "pages": [
     {
       "template": "cover",
       "params": {
-        "cover_title": "Confronter *au terrain.*",
+        "cover_title": "Explorer *le terrain.*",
         "number": 7,
         "tagline": "Bilan de compétences",
-        "promise": "Trois pistes, confrontées au réel."
+        "promise": "Trois pistes, vérifiées sur le terrain."
       }
     },
     {
@@ -768,8 +768,6 @@
               ]
             ]
           ],
-          "title": "Si vous le souhaitez",
-          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
           "question_labels": true,
           "fixed": true
         },
@@ -1369,8 +1367,6 @@
               ]
             ]
           ],
-          "title": "Si vous le souhaitez",
-          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
           "question_labels": true,
           "fixed": true
         },
@@ -1411,12 +1407,12 @@
       "params": {
         "messages": [
           "Le terrain a parlé.",
-          "Prochaine étape : la séance 8. Apportez ce carnet.",
+          "Prochaine étape : la séance 8. Renvoyez ce carnet complété d'ici là.",
           "Ensuite, le carnet de route : choisir, puis agir."
         ]
       },
       "fixed": true
     }
   ],
-  "title": "Confronter au terrain"
+  "title": "Explorer le terrain"
 }

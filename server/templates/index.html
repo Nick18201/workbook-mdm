@@ -1380,7 +1380,7 @@ MA PROCHAINE ACTION :`;
       document.getElementById('conformity_toggle').innerText = list.classList.contains('hidden') ? 'Voir' : 'Masquer';
     }
 
-    // Nom des fichiers téléchargés : « Carnet_7_Confronter_au_terrain », le titre sinon, puis le bénéficiaire
+    // Nom des fichiers téléchargés : « Carnet_7_Explorer_le_terrain », le titre sinon, puis le bénéficiaire
     function fileBaseName(spec) {
       const slug = text => plainTitle(text || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
         .replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
@@ -2029,9 +2029,8 @@ MA PROCHAINE ACTION :`;
         case 'tree_of_life':
           return box(`<div class="font-bold text-slate-900 text-xs">Arbre de vie</div>${list(items.map(z => text(Array.isArray(z) ? z[0] : z)))}`);
         case 'protocol':
-          return box(`<div class="font-bold text-slate-900 text-xs"><span class="mi">shield</span> Avant de commencer</div>
-            <div class="text-[11px] text-slate-700">${escapeHtml(b.text || 'Les questions qui suivent sont franches et peuvent remuer.')}</div>
-            <div class="text-[11px] text-slate-500 italic">Texte fixe : droit de laisser l'exercice vierge.</div>`);
+          return box(`<div class="font-bold text-slate-900 text-xs"><span class="mi">info</span> Avant de commencer</div>
+            <div class="text-[11px] text-slate-700">${escapeHtml(b.text || "Les questions qui suivent sont franches : elles vont à l'essentiel de votre bilan.")}</div>`);
         case 'anchor':
           return box(`<div class="font-bold text-slate-900 text-xs">Pour clore : « Aujourd'hui, avec le recul, je sais que… » ${field}</div>`);
         case 'contrast_example':

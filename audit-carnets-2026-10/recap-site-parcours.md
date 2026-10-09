@@ -13,7 +13,7 @@ Ce récapitulatif s'adresse à l'agent qui s'occupe du site (dépôt `marge-de-m
 2. **Le carnet N prépare la séance N.** Le carnet 1 se remplit avant la séance 1, le carnet 2 entre les séances 1 et 2, et ainsi de suite. Le carnet 7 couvre deux intervalles (S6 → S7 et S7 → S8). Le carnet de route couvre le temps 3 (S8 → S9 et S9 → S10).
 3. **La séance 1 regroupe l'état des lieux et les héritages.** La séance libérée passe au temps 2. La répartition passe de 6 / 2 / 2 à **5 / 3 / 2** :
    - temps 1 (Comprendre) : 5 séances ;
-   - temps 2 (Confronter) : 3 séances ;
+   - temps 2 (Explorer) : 3 séances ;
    - temps 3 (Décider et agir) : 2 séances.
 4. **L'option « Initiation à l'IA » ouvre la séance 6**, puisque l'exploration passe de S7 à S6.
 5. **Le document du temps 3 s'appelle « carnet de route »**, comme le site le dit déjà. Le nom « livret de compétences » disparaît : son contenu entre dans le carnet de route.
@@ -67,7 +67,7 @@ Livrables du temps 1 : remplacer « Profil MBTI® complet » par « Profil de fo
 - chapter : « Carnet 5 »
 - title, description et objective : inchangés.
 
-### Temps 2 · Confronter (3 séances)
+### Temps 2 · Explorer (3 séances)
 
 L'option « Initiation à l'IA » (`isOption`) se place juste avant S6. Son texte dit « la séance 6 » au lieu de « la séance 7 ».
 
@@ -81,16 +81,16 @@ L'option « Initiation à l'IA » (`isOption`) se place juste avant S6. Son text
 **S7**
 - label : « Enquêtes terrain »
 - chapter : « Carnet 7 »
-- title : « Confronter vos pistes au terrain »
+- title : « Explorer vos pistes sur le terrain »
 - description : « On passe à une phase concrète. Vos trois pistes passent au crible de vos critères : valeurs, seuils financiers, énergie. Vous préparez vos enquêtes auprès de professionnels en poste (grille d'entretien, message d'approche, premiers contacts) et vous vérifiez salaires et débouchés dans votre bassin d'emploi. »
-- objective : « préparer une confrontation au réel qui vous apprend vraiment quelque chose. »
+- objective : « préparer une exploration du terrain qui vous apprend vraiment quelque chose. »
 
 **S8**
 - label : « Crash-test et scénarios »
 - chapter : « Carnet 7 »
 - title : « Tirer les leçons du terrain »
 - description : « On analyse ce que vos enquêtes confirment ou contredisent. La matrice de faisabilité croise vos compétences, le marché et les débouchés. Vos pistes sont classées en trois familles de scénarios : pistes directes, passerelles courtes, angles morts. »
-- objective : « confronter vos idées à la réalité et affiner vos projections. »
+- objective : « vérifier vos idées sur le terrain et affiner vos projections. »
 
 ### Temps 3 · Décider et agir (2 séances)
 
@@ -169,11 +169,11 @@ Le champ `chapter` passe de 0 à 6 à **1 à 7**. Les textes ci-dessous décrive
   - « Le regard de 3 proches »
   - « Ressources pour vos recherches »
   - « Les 10 pistes »
-- Livrable : « 10 pistes qualifiées » — « Dont 3 retenues en séance 6 pour être confrontées au terrain. »
+- Livrable : « 10 pistes qualifiées » — « Dont 3 retenues en séance 6 pour être explorées sur le terrain. »
 
-**Carnet 7 · Confronter au terrain** (nouveau, en deux parties)
+**Carnet 7 · Explorer le terrain** (nouveau, en deux parties)
 - Sous-titre : « Sonder le réel »
-- Objectif : « Passer vos 3 pistes au crible de vos critères et les confronter à des professionnels en poste. »
+- Objectif : « Passer vos 3 pistes au crible de vos critères et les vérifier auprès de professionnels en poste. »
 - Exercices :
   - « Fiches à critères de vos 3 pistes »
   - « Grille d'entretien et message d'approche »
@@ -259,3 +259,20 @@ Le programme PDF a été aligné en même temps (PR #69 de `mdm-workbook`). Le s
 | `src/data/bilanProjects.ts`, trajectoire « Création » | « une offre pilote, testable sous 15 jours » ; « statut, ACRE ou ARCE, premiers clients » | Inchangé : le module création tient désormais ces promesses (test sur 15 jours au plus, ARCE et ACRE nommées). |
 
 Les quatre exercices de chaque carnet restent fidèles aux carnets livrés (le site en impose exactement quatre) : au carnet 1, l'objectif de départ figure dans le livrable, et « ce que vous en faites » couvre les modèles et anti-modèles.
+
+## Mise à jour du 9 octobre 2026 (charte v2)
+
+Après les retours de Nicolas sur le carnet 1, le temps 2 du bilan s'appelle « Explorer » partout : le programme, les carnets et le site. Le programme PDF a changé sa page du temps 2 (PR « charte v2 » de `mdm-workbook`) ; à reporter avec le nouveau PDF :
+
+| Où | Aujourd'hui sur le site | Nouveau texte |
+|---|---|---|
+| `src/data/bilanMethod.ts`, temps 2 | « Confronter » ; « Confronter l'idée au terrain. » ; « Confronter vos pistes au marché : ouvrir les possibles, puis vérifier métiers, salaires et débouchés… » | « Explorer » ; « Explorer le terrain. » ; « Explorer vos pistes : ouvrir les possibles, puis vérifier métiers, salaires et débouchés… » |
+| `src/data/bilanMethod.ts`, S6 | « … les trois pistes que vous allez confronter au terrain. » | « … les trois pistes que vous allez explorer sur le terrain. » |
+| `src/data/bilanMethod.ts`, S7 | « Confronter vos pistes au terrain » ; objectif « préparer une confrontation au réel… » | « Explorer vos pistes sur le terrain » ; « préparer une exploration du terrain qui vous apprend vraiment quelque chose. » |
+| `src/data/bilanMethod.ts`, S8 | objectif « confronter vos idées à la réalité et affiner vos projections. » | « vérifier vos idées sur le terrain et affiner vos projections. » |
+| Livrables du temps 2 | « À l'issue du temps 2 (confronter) » | « À l'issue du temps 2 (explorer) » |
+| `src/data/bilanNotebooks.ts`, carnet 7 | « Confronter au terrain » ; « Trois pistes, confrontées au réel. » | « Explorer le terrain » ; « Trois pistes, vérifiées sur le terrain. » |
+
+Le ton change aussi (DA, section 7) : plus d'énergie et de pouvoir d'agir, aucune formule de précaution (« à votre rythme », « cela peut remuer »), et tout se fait à l'écran (le carnet se renvoie complété avant la séance, jamais « apportez », « imprimez »). Le site peut chercher ces formules dans ses textes.
+
+Trois passages du programme gardent le mot « confrontation », parce qu'ils décrivent la méthode ou les phases légales et non le nom du temps 2, en attendant la décision de Nicolas : les phases du Code du travail (« confronter les scénarios aux réalités du marché de l'emploi »), les enquêtes métiers (« confrontation au réel ») et le positionnement (« la confrontation au terrain »).

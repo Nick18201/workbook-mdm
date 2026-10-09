@@ -45,6 +45,9 @@ def test_each_prompt_carries_its_rules_and_no_other(section):
 
 @pytest.mark.parametrize("phrase", [
     "Crash", "L'Étoile", "Maintien ARE", "STRICTEMENT", "1. TITRE", "'meteo' standard", "8 blocs de base",
+    # The former safety line and the paper workflow (charter of 9 October 2026)
+    "trop lourd à faire hors séance", "Facultatif. Un mot suffit", "Apportez ce carnet", "à l'écran ou sur papier",
+    "protocole de sécurité", "Confronter",
 ])
 def test_the_former_recipe_is_gone(phrase):
     # The creation recipe from before the restructuration (page météo, crash test, plan A / B)
@@ -55,7 +58,9 @@ def test_the_former_recipe_is_gone(phrase):
 def test_the_rules_name_what_our_carnets_do():
     # A few rules, as the carnets apply them: they must reach Gemini word for word
     for rule in ("Exercice N · nom court · durée", "contrast_example", "épicène", "Ce qui m'étonne",
-                 "trop lourd à faire hors séance", "Aujourd'hui, avec le recul, je sais que…", "150 caractères",
+                 "Le droit de passer une question est dit une seule fois", "Aujourd'hui, avec le recul, je sais que…",
+                 "150 caractères", "pouvoir d'agir", "ni une thérapie ni une psychanalyse", "une auto-évaluation",
+                 "le renvoie complété avant la séance",
                  "jamais « présentiel »", "test des fonctionnements cognitifs",
                  "jamais une page « (suite) » qui ne porte qu'une case"):
         assert rule in CREATE

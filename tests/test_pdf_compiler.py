@@ -188,7 +188,9 @@ def test_opener_of_a_carnet_gives_its_duration_and_frame():
 
     assert "Comptez 2 h 45 d'écriture, hors entretiens et recherches." in text
     assert "En trois fois" in text
-    assert "Vous pouvez passer une question." in text
+    # The right to skip a question, said once, here; the carnet is sent back, never printed
+    assert "Si l'inspiration manque pour une question, passez-la : nous la reprendrons en séance." in text
+    assert "renvoyez-le complété avant la séance" in text and "papier" not in text
     # Outside the carnets of the bilan, no frame: the reference documents keep their opener
     other = _words(_open(WorkbookSpec(pages=[PageSpec(template="summary", title="S", params={"points": ["Un"]})]))[0])
     assert "passer une question" not in other
@@ -206,7 +208,7 @@ def test_end_of_carnet_has_guided_zones_and_the_thread_of_leads():
     assert not any(n.startswith("notes_") for n in names)
 
 
-def test_protocol_texts_are_fixed():
+def test_an_announcement_says_what_the_exercise_is_about_and_nothing_more():
     spec = WorkbookSpec(pages=[PageSpec(template="composite", title="Votre histoire.", blocks=[
         BlockSpec(type="protocol", text="Cet exercice revient sur votre enfance."),
         BlockSpec(type="question", question="Q ?", field_id="q"),
@@ -216,6 +218,7 @@ def test_protocol_texts_are_fixed():
     text = _words(page)
 
     assert "Cet exercice revient sur votre enfance." in text
-    assert "laissez-le vierge : nous l'aborderons ensemble." in text
+    # The right to skip is said once, in the opener: never again before an exercise
+    assert "vierge" not in text and "trop lourd" not in text
     assert "Aujourd'hui, avec le recul, je sais que…" in text
     assert "ancrage" in {w.field_name for w in page.widgets()}

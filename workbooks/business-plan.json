@@ -53,7 +53,7 @@
             "• « Indispensable » : avec les autres exercices indispensables, il suffit pour une première version de votre projet.",
             "• « Si utile » : il approfondit un point. S'il ne concerne pas votre projet, passez-le.",
             "Le parcours court tient en seize exercices : 1, 6 à 9, 19, puis 27 à 36.",
-            "Ce livret est à vous : la personne qui vous accompagne le lit avec vous en séance. Seule la synthèse (exercice 36) est faite pour être montrée à un financeur ou à une banque. Vous pouvez passer une question ; ce qui vous semble trop lourd se note pour la séance."
+            "Ce livret est à vous : la personne qui vous accompagne le lit avec vous en séance. Seule la synthèse (exercice 36) est faite pour être montrée à un financeur ou à une banque. Si l'inspiration manque pour une question, passez-la : nous la reprendrons en séance."
           ]
         },
         {
@@ -2616,7 +2616,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cette page parle de votre argent personnel, de votre foyer et de vos peurs. Elle est engageante."
+          "text": "Cette page parle de votre argent personnel, de votre foyer et de vos peurs : ce que vous pouvez risquer fixe le cadre de votre projet."
         },
         {
           "type": "callout",
@@ -3423,7 +3423,7 @@
       "part_title": "Fin du livret",
       "params": {
         "lines": [
-          "Je confronte mes hypothèses au terrain avant d'engager des frais.",
+          "Je teste mes hypothèses sur le terrain avant d'engager des frais.",
           "Je regarde mes chiffres et mes devis avec honnêteté.",
           "Je teste vite et j'accepte l'imperfection des débuts.",
           "Je protège ma santé, mon foyer et mon rythme de vie.",

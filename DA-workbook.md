@@ -16,7 +16,7 @@ Elle est tirée du code du site (`tailwind.config.mjs`, `global.css`, composants
 - **Marge de Manœuvre** est un organisme de bilans de compétences, **100 % à distance**. La méthode a été conçue par une psychologue du travail et un consultant en transformation. Chaque bénéficiaire est accompagné par une seule personne.
 - **Positionnement** : le passage à l'action réaliste (un projet piloté, le marché du travail, l'IA, un salaire et un rythme de vie sécurisés). Il rompt avec les bilans « quête de sens » et le développement personnel.
 - **Les workbooks** sont les « carnets de bord », travaillés entre les séances :
-  - sept carnets de bord, du carnet 1 au carnet 7 : le carnet N prépare la séance N (état des lieux et héritages, parcours, fonctionnements, argent, valeurs, exploration, confrontation au terrain) ;
+  - sept carnets de bord, du carnet 1 au carnet 7 : le carnet N prépare la séance N (état des lieux et héritages, parcours, fonctionnements, argent, valeurs, exploration, exploration du terrain) ;
   - puis le carnet de route du temps 3, avec un module propre au projet : création ou reprise, reconversion, ou évolution interne.
   - Chaque carnet contient un objectif, des exercices avec leur durée et **un livrable validé en séance**.
 - **Public** : des adultes en transition professionnelle, souvent fatigués ou inquiets. La priorité va à la lisibilité et au calme, sans tomber dans le mièvre.
@@ -191,9 +191,12 @@ Les quatre familles sont sur Google Fonts.
 
 ## 7. Ton et vocabulaire
 
+- **L'énergie** (retours de Nicolas sur le carnet 1, 9 octobre 2026) : le bilan donne envie et du pouvoir d'agir. Le plaisir de l'introspection, la clarté, un ton parlé, chaleureux et sérieux à la fois. L'humour viendra plus tard.
+- **Une personne capable d'agir**, jamais une personne fragile : aucune formule de précaution ou de soupçon (« prenez-le à votre rythme », « cela peut remuer », « trop lourd », « vos *vrais* doutes »). Un bilan n'est ni une thérapie ni une psychanalyse. Le droit de passer une question est dit une fois, dans l'ouverture de chaque carnet ; un exercice qui touche à l'intime s'ouvre sur une annonce factuelle.
+- **Tout à l'écran** : la personne remplit son carnet chez elle et le renvoie complété avant la séance, où on le travaille ensemble. Jamais « imprimez », « sur papier », « apportez ce carnet ». Les cases gardent leur taille.
 - **Vouvoiement.** Phrases courtes, affirmatives et concrètes. Les titres sont ponctués.
 - **Lexique** : action, décision, projet, livrable, marché, faisabilité, salaire, rythme de vie, arbitrage, « validé en séance ».
-- **À éviter** : le registre du développement personnel (« quête de sens », « retrouver votre élan », « espace d'écoute bienveillant », « croyances limitantes », « syndrome de l'imposteur », l'ennéagramme).
+- **À éviter** : le registre du développement personnel (« quête de sens », « retrouver votre élan », « espace d'écoute bienveillant », « croyances limitantes », « syndrome de l'imposteur », l'ennéagramme). Un mot cité entre guillemets, comme un message reçu (« épanouissement », « devoir »), n'est pas concerné ; les mots précis (héritages, croyances, figures d'attachement, prise de conscience) sont les bienvenus.
 - **Le métier** : dire « consultant en transformation », **jamais « coach »**. Pour parler de l'accompagnant : « la personne qui vous accompagne » ou « votre référent·e ».
 - **« Cabinet »** : jamais pour désigner Marge de Manœuvre.
 - **« Binôme »** : seulement pour parler de la conception de la méthode. Jamais d'une façon qui laisse croire que deux personnes sont présentes en séance.
@@ -235,7 +238,7 @@ Les quatre familles sont sur Google Fonts.
   - les échelles et les jauges sous forme de pastilles.
 - **Encadré** (conseil, rappel, exemple) : une carte pastel avec une étiquette.
 - **Exemple contrasté** : sous un sourcil « EXEMPLE · MÉTIER VOISIN », la même réponse « En surface » (carte blanche, texte `ink-muted`) puis « Exploitable » (carte pastel), reliées par une flèche bleue.
-- **Exercice à forte charge** : avant, une carte blanche « AVANT DE COMMENCER » avec un bouclier (l'avertissement, puis le droit de laisser l'exercice vierge) ; après, une carte pastel « POUR CLORE » avec la phrase d'ancrage « Aujourd'hui, avec le recul, je sais que… ».
+- **Exercice qui touche à l'intime** : avant, une carte blanche « AVANT DE COMMENCER » avec une pastille d'information (une annonce factuelle : de quoi parle l'exercice, à quoi il sert pour le bilan) ; après, une carte pastel « POUR CLORE » avec la phrase d'ancrage « Aujourd'hui, avec le recul, je sais que… ».
 - **Fin de carnet** : le post-it jasmin « LIVRABLE » et le tampon « Validé en séance », avec la date et une case à cocher, les engagements, puis trois zones courtes (ce qui m'étonne, à aborder en séance, ce que j'ai laissé vierge) et, des carnets 2 à 5, une idée de piste.
 - **Folio** : en PT Mono, en bas de page, par exemple « marge de manœuvre · carnet 3/7 · p. 12 » ou « marge de manœuvre · carnet de route · p. 4 ».
 

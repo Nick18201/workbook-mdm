@@ -27,8 +27,9 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | Programme : noms des seuils, charge d'une création, test du module création | Fusionné (PR #69) |
 | Carnet 7 : apports du support d'enquête métier de Lysiane | Fusionné (PR #73) |
 | App, lot 1 : les règles des carnets transmises à Gemini, contrôle de conformité, création au gabarit commun | Fusionné (PR #74) |
-| App, lot 2 : trois modes (adapter un carnet, créer depuis des notes, mettre en page un support), contrôle de couverture, bénéficiaire facultatif | En PR (section 8) |
-| Redéploiement de l'app (Cloud Run) | Après la fusion de R11, sur demande (section 8) |
+| App, lot 2 : trois modes (adapter un carnet, créer depuis des notes, mettre en page un support), contrôle de couverture, bénéficiaire facultatif | Fusionné (PR #75) |
+| Charte v2 : retours de Nicolas sur le carnet 1 (énergie, questions franches sans posture protectrice, tout à l'écran, « Explorer ») | En PR (section 8) |
+| Redéploiement de l'app (Cloud Run) | Fait le 9 octobre par Nicolas (révision `00010-hb4`, `main` 404108e, avant les lots de l'app) ; à refaire après la charte v2 (section 8) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme (écarts relevés en R11 : section 7) |
 
 **Avant chaque PR : vérifier que la précédente est fusionnée**, puis partir d'une branche à jour de `main`. Ne pas empiler les branches.
@@ -40,7 +41,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 - Séances réparties en 5 / 3 / 2. L'option « Initiation à l'IA » ouvre la séance 6.
 - Le « test des fonctionnements cognitifs », conçu et éprouvé par Lysiane Brand, remplace le MBTI partout. Seule exception : la certification MBTI® de Lysiane, dans sa présentation. Hexa3D est abandonné.
 - Pas de date de bascule : le nouveau parcours vaut pour les futurs bénéficiaires.
-- La charge émotionnelle suit la ligne de James Pennebaker : des questions franches, avec le protocole en trois temps (avertissement, optionnalité stricte, phrase d'ancrage).
+- La charge émotionnelle suit la ligne de James Pennebaker : des questions franches, avec le protocole en trois temps (avertissement, optionnalité stricte, phrase d'ancrage). Allégée le 9 octobre par la charte v2 (fin de cette section) : l'optionnalité est dite une fois, dans l'ouverture, et l'avertissement devient une annonce.
 
 **Prises le 8 octobre 2026, suite**
 1. **Le business plan existe en deux formats.**
@@ -400,6 +401,20 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
       - « Comment la réduire » reste une case d'une ligne : quelques mots y suffisent, et cinq cases de 1,6 cm ne tiendraient pas avec les deux tableaux ;
       - le livret garde « vos clients » et « votre expert-comptable » : il n'est pas du lot (R10).
 
+**Prises le 9 octobre 2026 : la charte v2 (retours de Nicolas sur le carnet 1)**
+
+Nicolas a relu le carnet 1 et en a tiré une orientation pour tout le système : de l'énergie, le plaisir de l'introspection, la clarté et le pouvoir d'agir ; un ton parlé, chaleureux et sérieux ; plus de posture « care », victimisante ou condescendante. Ses décisions :
+1. **Une personne capable d'agir.** Aucune formule de précaution ou de soupçon (« à votre rythme », « peut remuer », « trop lourd », « vos *vrais* doutes », « des domaines qui pèsent les uns sur les autres »). « La ligne Pennebaker est appliquée trop rigoureusement : on ne fait pas de la psychologie ni de la psychanalyse, mais un bilan. »
+2. **Le droit de passer une question est dit une fois, au début de chaque carnet**, jamais dans un exercice. La ligne fixe de l'ouverture devient « Si l'inspiration manque pour une question, passez-la : nous la reprendrons en séance. » La phrase « trop lourd à faire hors séance, laissez-le vierge » disparaît des onze blocs de protocole ; les sept cartes « Si vous le souhaitez » et les consignes « Un mot suffit, ou laissez la case vierge » deviennent des questions ordinaires.
+3. **L'exercice qui touche à l'intime s'ouvre sur une annonce factuelle** : de quoi il parle, à quoi il sert pour le bilan (les onze annonces réécrites, la pastille du bouclier remplacée par une pastille d'information). La phrase d'ancrage, tournée vers le présent, reste.
+4. **Tout à l'écran.** Le carnet se remplit chez soi et se renvoie complété avant la séance, où on le travaille ensemble : plus d'impression, plus d'« apportez ce carnet » ni de « relu ensemble ». Les cases gardent leur taille : seul le wording change.
+5. **« Explorer » partout** pour le temps 2 : le carnet 1 (les trois temps), le carnet 7 (« Explorer le terrain », première partie « Explorer vos pistes »), le programme (page du temps 2) et le site.
+6. **Le vocabulaire.** Les clichés du développement personnel restent proscrits ; un mot cité entre guillemets, comme un message reçu (« épanouissement »), est accepté ; les mots précis sont bienvenus (héritages, croyances, figures d'attachement, prise de conscience).
+7. **Pas d'exemple sur une auto-évaluation** (une notation, une échelle), comme sur un tri ou un test. Les libellés sont en « je », précis et actifs (« Les 5 mots que je veux associer au travail aujourd'hui »).
+8. **L'humour attend** : on l'ajoutera plus tard, sinon Gemini en fera trop.
+
+Les corrections de Nicolas sur le carnet 1 sont appliquées telles quelles, à quelques retouches près : coquilles (« consciemment »), une formule genrée tournée autrement (« vous avez été confronté enfant ou adolescent » devient « que vous avez reçus dans l'enfance et l'adolescence »), et les messages reçus mis entre guillemets.
+
 ## 3. Les PR, dans l'ordre
 
 Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
@@ -591,12 +606,14 @@ Pour chaque PR de carnet :
 ## 6. Les règles à garder en tête
 
 - **Le ton (DA, section 7).**
+  - De l'énergie et du pouvoir d'agir ; une personne capable d'agir, jamais fragile : aucune formule de précaution (charte v2, section 2).
+  - Tout à l'écran : le carnet se renvoie complété avant la séance.
   - Vouvoiement, phrases courtes et affirmatives, titres ponctués en casse de phrase.
   - Jamais « coach » : on dit « consultant en transformation » ou « la personne qui vous accompagne ».
   - Pas de registre de développement personnel, jamais « présentiel », aucun chiffre sans source.
 - **Pas de formule genrée.** « Ce qui m'étonne », et non « Ce qui m'a surpris ».
 - **Les exemples viennent d'un métier voisin**, jamais du métier de la personne, et d'un métier différent à chaque fois.
-- **Ne sont jamais personnalisés** : le cadre, le protocole, les textes réglementaires et les renvois entre carnets.
+- **Ne sont jamais personnalisés** : le cadre, les annonces, les textes réglementaires et les renvois entre carnets.
 - **Le programme est un texte réglementaire** : on le modifie seulement sur demande. Si un carnet change ce que le programme promet (séances, livrables, durées), le signaler à Nicolas et prévenir pour le site.
 
 ## 7. Ce qui reste ouvert
@@ -666,31 +683,40 @@ Pour chaque PR de carnet :
   - Le moteur sait en partie s'en passer : une couverture sans numéro prend un titre plus grand, une ouverture accepte un `num` vide, et un document hors carnets a son `folio` et son `pastel` au lieu de `carnet`.
   - À corriger : numéro et bénéficiaire facultatifs dans les deux modes (une personnalisation peut viser un thème ou un métier plutôt qu'une personne), un prompt et un mode de secours qui s'en passent, pas de surtitre « N. » sans numéro, des noms de fichier tirés du titre.
   - Fait pour la création (lot 1 de l'app, 9 octobre) : numéro et bénéficiaire facultatifs (confirmé par Nicolas), le prompt et le mode de secours s'en passent, aucun « Carnet N » ni « N. TITRE » sans numéro, un folio et un pastel à la place ; les fichiers téléchargés portent le titre (« Mes_enquetes_metiers.pdf »). Fait pour la personnalisation (lot 2 de l'app) : le prénom est facultatif, une personnalisation peut viser un profil, un métier ou un thème ; le prompt interdit alors tout prénom, le résultat retire celui que Gemini aurait écrit, et le mode de secours n'écrit plus « Pour X ». La mise en page d'un support prend aussi numéro et bénéficiaire facultatifs.
+- **Les suites de la charte v2** (9 octobre).
+  - Trois passages du programme gardent « confronter » ou « confrontation », parce qu'ils décrivent la méthode ou les phases légales, et non le nom du temps 2 : les phases du Code du travail (`page_objectifs.py`), les enquêtes métiers (`page_organisation_pedagogie.py`) et le positionnement (`page_projets.py`). À trancher par Nicolas.
+  - L'étiquette « Exercices & protocoles » de la carte des ouvertures, et la ligne « Une question vous pèse ? Notez-la en fin de carnet » du cadre du carnet 1 : gardées, Nicolas ne les a pas relevées.
+  - Le droit de passer une question est dit deux fois au carnet 1 : dans l'ouverture (ligne fixe de tous les carnets) et dans le cadre (texte de Nicolas). Les autres carnets ne le disent qu'une fois.
+  - L'humour, plus tard (section 2, charte v2).
+  - La carte du parcours garde, dans ses passages d'historique, le « protocole » d'avant la charte v2.
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-R11 clôt la restructuration : les carnets 1 à 7, le carnet de route, son module création et le livret business plan sont les seuls documents du dépôt et de l'app. Trois chantiers suivent, dans cet ordre.
+R11 a clos la restructuration (les carnets 1 à 7, le carnet de route, son module création et le livret business plan). Le chantier de l'app a suivi le 9 octobre, puis la charte v2. Où en est chaque chantier, dans l'ordre où les reprendre :
 
-**Le chantier de l'app (9 octobre).** Un test l'a lancé : le support d'enquête métier de Lysiane, collé dans la création depuis des notes, a perdu 30 % de son contenu, parce que le prompt suivait une recette d'avant la restructuration (page météo, « crash test », plan A et B). Nicolas veut que tout ce qui a guidé la conception des carnets guide aussi Gemini. Trois lots, une PR chacun :
-- **Lot 1, les règles des carnets pour Gemini** (fusionné, PR #74). `server/prompt_rules.py` rassemble les règles (DA section 7, carte sections 3, 4 et 8, sections 5 et 6 ci-dessus, protocole Pennebaker, politique des champs) et tous les prompts en sont faits. La création suit le gabarit commun (choix de Nicolas : la météo de l'énergie au choix, la longueur en durée d'écriture). `conformity.check_spec` contrôle chaque maquette (`/api/check`, liste « Règles des carnets » sous l'aperçu) ; les carnets de référence le passent. Mesuré avec la vraie clé avant et après (support de Lysiane, notes d'exemple, personnalisation du carnet 4).
-- **Lot 2, trois modes** : « Adapter un carnet », « Créer depuis des notes », « Mettre en page un support » (fidèle : chaque question gardée, dans l'ordre ; seules la typographie, les mots proscrits et les tailles de case changent ; les ajouts sont suggérés à part, à appliquer par « itérer », choix de Nicolas). Avec un contrôle de couverture question par question, le bénéficiaire facultatif en personnalisation et le comptage des pages relancé après une modification directe. Fait (en PR) :
-  - trois onglets dans l'app ; le mode fidèle a son prompt (`FIDELITY_RULES`, avec les seuls mots proscrits du ton, `VOCABULARY_RULES`), son point d'API (`/api/layout`) et ses suggestions, chacune une consigne que « Préparer » met dans « Ajuster » ;
-  - choix de Nicolas : une couverture (le seul titre) et un dos (sans message), sans ouverture, que le formulaire permet de retirer ; le tutoiement passe au vouvoiement, les textes en capitales en minuscules et les titres de page prennent leur point ;
-  - `coverage.py` lit un support collé depuis un PDF (en-têtes et numéros de page retirés, lignes coupées recollées, options et échelles reconnues) et retrouve chaque question et libellé dans la maquette par similarité de chaînes normalisées : « Couverture du support : 40/40 » sous l'aperçu, avec ce qui manque ou sort de l'ordre. Sur le support de Lysiane, le relevé trouve bien les 40 éléments (les lignes qui finissent par « ? » ou « : »), et les options sont contrôlées à part ;
-  - le mode de secours ne réécrit rien : une page par section, une case par question et par libellé, une section trop longue coupée en pages équilibrées. Sur le support de Lysiane : 40/40, 11/11 options, aucune page « (suite) » presque vide ; la seule remarque « à corriger » est « Présentiel », qu'il garde.
-  - mesure avec la vraie clé (9 octobre, un appel, 21 s, 4 504 jetons envoyés, 3 007 rendus, 230 de réflexion) sur le support de Lysiane : 40/40 questions et libellés, 10/11 options (« Présentiel » devenu « Sur place », noté par le contrôle), aucune remarque, aucune page « (suite) » presque vide. Gemini coupait chaque section en deux, même quand elle tenait sur une page (13 pages) : le moteur retire désormais une coupure inutile, en compilant la page seule (10 pages, deux coupures gardées, à 63 et 68 %). Il n'a proposé que deux ajouts, dont un exemple « tiré d'une enquête précédente » au lieu d'un métier voisin : les suggestions du gabarit commun complètent les siennes (ouverture, livrable). Reste, avec les améliorations notées après le lot 1, l'équilibrage des documents créés depuis des notes : y insérer la coupure qui équilibre une page « (suite) » presque vide.
-- **Lot 3, les essais avec le vrai Gemini** sur chaque mode, puis le redéploiement (par Nicolas). Chaque série d'appels est annoncée à Nicolas avant d'être lancée (coût).
+1. **La charte v2** (section 2, fin) : en PR, branche `claude/charte-v2`. À fusionner par Nicolas avant tout nouveau lot.
+2. **Le chantier de l'app.** Un test l'a lancé : le support d'enquête métier de Lysiane, collé dans la création depuis des notes, avait perdu 30 % de son contenu.
+   - **Lot 1, les règles des carnets pour Gemini** : fusionné (PR #74). `server/prompt_rules.py` rassemble les règles, `conformity.check_spec` contrôle chaque maquette (`/api/check`).
+   - **Lot 2, trois modes** : fusionné (PR #75). « Adapter un carnet », « Créer depuis des notes », « Mettre en page un support » (`/api/layout`, fidèle, suggestions à part) ; couverture du support (`coverage.py`, `/api/coverage`) ; bénéficiaire facultatif ; recomptage après une modification directe. Mesuré avec la vraie clé sur le support de Lysiane : 40/40, aucune remarque.
+   - **Lot 1 bis, cinq améliorations notées après le lot 1** :
+     - un bouton « Corriger ces points », qui envoie les remarques du contrôle à `/api/iterate` (un appel, à la demande) ;
+     - l'équilibrage des documents créés depuis des notes : essayer les coupures entre blocs et insérer le `page_break` qui équilibre une page « (suite) » presque vide (déjà fait pour le mode fidèle, `_drop_needless_breaks`, et pour son mode de secours) ;
+     - les règles que Gemini enfreint encore ou que le contrôle ne voit pas : « aucun montant » dans la consigne d'exemple contrasté de la création, les statistiques sans source, la cohérence des durées (sourcils, ouverture, durée demandée), une question sans taille de case, une adresse web absente des notes ;
+     - une mesure de stabilité : six cas versés au dépôt avec leur script (reconversion, notes lourdes, création, évolution interne, carnet 7 par parties, retouche « feuille de route » qui doit donner un tableau), deux tirages chacun, 12 à 14 appels, 150 000 à 200 000 jetons, sur accord ;
+     - des finitions : la pastille « Feuille de route 30-60-90 jours » à reformuler, un clic sur une remarque qui mène à la page de l'aperçu.
+   - **Lot 3, les essais avec le vrai Gemini** sur les trois modes : la personnalisation en un appel (ce qui est fixe revient tel quel), le carnet 7 et le carnet de route partie par partie, le module création, la retouche, et la charte v2 (le ton, les annonces) sur une création. Chaque série d'appels est annoncée à Nicolas avant d'être lancée (nombre d'appels, jetons).
+3. **Le redéploiement**, par Nicolas : la production tourne sur la révision `00010-hb4` (`main` 404108e), d'avant les lots de l'app et la charte v2. À refaire une fois la charte v2 fusionnée (`server/DEPLOY_CLOUD_RUN.md`), puis tester avec la vraie clé ce que le mode de secours ne montre pas.
+4. **Le lot site.** `recap-site-parcours.md` est à jour, ses deux « mises à jour du 9 octobre » comprises (R11, puis la charte v2 : « Explorer », le carnet 7, le ton). Le confier à l'agent du site avec le nouveau programme PDF : le programme et le site partent ensemble, et le PDF recopié dans `marge-de-manoeuvre/public/documents/` n'a pas encore été changé (le script ne le recopie que depuis la copie principale du dépôt).
+5. **Les modules reconversion et évolution interne** (`chantier-modules-s9.md`) : ils attendent les réponses de Nicolas et de Lysiane. Ils reprendront les compétences prouvées et les récits du carnet de route (`route.competences`, `route.recits`).
+6. **Plus tard** : la version de lecture (les réponses d'un carnet rempli, en entier, pour la personne qui accompagne : elle lit désormais des carnets renvoyés), et l'humour dans le ton.
 
-1. **Le redéploiement.** La prod tourne toujours sur la révision `00009-dzj` (PR #45) : aucun des nouveaux carnets n'y est. Après la fusion de R11, et sur demande de Nicolas, déployer `main` (`server/DEPLOY_CLOUD_RUN.md`), puis tester avec la vraie clé Gemini ce que le mode de secours ne montre pas (section 7) : la personnalisation d'un carnet en un appel, où `keep_fixed` rétablit ce qui est fixe ; celle du carnet 7 et du carnet de route, partie par partie ; celle du module création, en une fois ; celle du business plan, partie par partie.
-2. **Le lot site.** Le programme est aligné (PR #69 : noms des seuils, charge de travail d'une création ; le module création tient la trajectoire « Création »). `recap-site-parcours.md` est à jour : le confier à l'agent du site, qui a déjà repris sa première version, pour sa « Mise à jour du 9 octobre » (titres des carnets 5 et 6, séance 4, travail personnel d'une création, nouveau PDF du programme). Le programme et le site partent ensemble : le PDF recopié dans `marge-de-manoeuvre/public/documents/` n'a pas encore été changé.
-3. **Les modules reconversion et évolution interne** (`chantier-modules-s9.md`) : ils attendent les réponses de Nicolas et de Lysiane. Ils reprendront les compétences prouvées et les récits du carnet de route (`route.competences`, `route.recits`).
-
-Message à coller pour le redéploiement, une fois R11 fusionnée :
+Message à coller pour reprendre :
 
 ```text
-Redéploie l'app sur Cloud Run depuis main, R11 fusionnée (feuille de route, section 8, point 1).
+Reprends les chantiers de mdm-workbook (feuille de route, section 8).
 
-1. Vérifie que la PR R11 (branche claude/r11-nettoyage) est fusionnée, puis exporte le commit de main avec git archive dans un dossier propre et déploie-le comme le dit server/DEPLOY_CLOUD_RUN.md (gcloud depuis PowerShell, jamais --allow-unauthenticated : la clé reste dans Secret Manager et l'accès derrière IAP).
-2. Vérifie la nouvelle révision : trafic à 100 %, politiques IAM et IAP inchangées, logs de démarrage, curl sans connexion (302).
-3. Dis-moi quoi tester dans le navigateur avec la vraie clé : un carnet personnalisé en un appel (ce qui est fixe doit revenir tel quel), le carnet 7 et le carnet de route partie par partie, le module création en une fois, le business plan partie par partie. Lis ensuite les logs de ces appels.
+1. Lis CLAUDE.md, la section 8 de audit-carnets-2026-10/feuille-de-route-restructuration.md, puis tes mémoires chantier-app-gemini, retours-carnet-1-ton, gemini-depenses et worktree-separe.
+2. Vérifie l'état des PR (gh pr list --state all --limit 5) : la PR de la charte v2 (branche claude/charte-v2) doit être fusionnée avant tout nouveau lot. Ne pars jamais d'une branche non fusionnée.
+3. Travaille dans un worktree séparé, sur une nouvelle branche partie de main à jour ; vérifie git branch --show-current avant chaque commit.
+4. Propose-moi le prochain lot (lot 1 bis, lot 3 ou lot site) avec un plan, et attends mon « ok » avant d'écrire du code. Avant chaque série d'appels à Gemini, annonce leur nombre et leur taille en jetons, et attends mon accord.
 ```

@@ -101,11 +101,11 @@ def create_programme_page_deroule_2(c):
 
 
 def create_programme_page_deroule_3(c):
-    """Stage 2 « Confronter » (sessions 6 to 8) and its deliverables."""
+    """Stage 2 « Explorer » (sessions 6 to 8) and its deliverables."""
     layout = programme_layout(c, TITLE, "Déroulé · temps 2", lead=LEAD)
     add_temps_band(
-        layout, "02", "Temps 2 : confronter", "Confronter l'idée au terrain.",
-        "<i>Confronter vos pistes au marché : ouvrir les possibles, puis vérifier métiers, salaires et débouchés "
+        layout, "02", "Temps 2 : explorer", "Explorer le terrain.",
+        "<i>Explorer vos pistes : ouvrir les possibles, puis vérifier métiers, salaires et débouchés "
         "auprès de celles et ceux qui les exercent.</i>",
     )
     _sessions(layout, [
@@ -115,20 +115,20 @@ def create_programme_page_deroule_3(c):
             "description": (
                 "On ouvre le champ des possibles de manière structurée : 10 pistes qualifiées, 5 réalistes et 5 "
                 "audacieuses, cohérentes avec votre profil, vos compétences et vos aspirations. Vous choisissez les "
-                "trois pistes que vous allez confronter au terrain."
+                "trois pistes que vous allez explorer sur le terrain."
             ),
             "objective": "faire émerger des pistes alignées avec votre profil.",
         },
         {
             "badge": "S7",
-            "title": "Confronter vos pistes au terrain",
+            "title": "Explorer vos pistes sur le terrain",
             "description": (
                 "On passe à une phase concrète. Vos trois pistes passent au crible de vos critères : valeurs, seuils "
                 "financiers, énergie. Vous préparez vos enquêtes auprès de professionnels en poste (grille "
                 "d'entretien, message d'approche, premiers contacts) et vous vérifiez salaires et débouchés dans "
                 "votre bassin d'emploi."
             ),
-            "objective": "préparer une confrontation au réel qui vous apprend vraiment quelque chose.",
+            "objective": "préparer une exploration du terrain qui vous apprend vraiment quelque chose.",
         },
         {
             "badge": "S8",
@@ -138,10 +138,10 @@ def create_programme_page_deroule_3(c):
                 "compétences, le marché et les débouchés. Vos pistes sont classées en trois familles de scénarios : "
                 "pistes directes, passerelles courtes, angles morts."
             ),
-            "objective": "confronter vos idées à la réalité et affiner vos projections.",
+            "objective": "vérifier vos idées sur le terrain et affiner vos projections.",
         },
     ])
-    add_deliverables(layout, "À l'issue du temps 2 (confronter)", [
+    add_deliverables(layout, "À l'issue du temps 2 (explorer)", [
         "Matrice de faisabilité marché (adéquation compétences, marché, débouchés)",
         "3 scénarios professionnels documentés et comparés",
         "Retours d'enquêtes terrain auprès de professionnels en poste",

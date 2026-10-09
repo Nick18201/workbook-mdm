@@ -294,8 +294,6 @@
         },
         {
           "type": "fields_card",
-          "title": "Si vous le souhaitez",
-          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
           "rows": [
             [
               [
@@ -804,7 +802,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cette page parle de votre argent personnel, de votre foyer et de vos peurs. Elle est engageante."
+          "text": "Cette page parle de votre argent personnel, de votre foyer et de vos peurs : ce que vous pouvez risquer fixe le cadre de votre projet."
         },
         {
           "type": "fill_in_card",
@@ -1467,13 +1465,13 @@
       "part_title": "Fin du module · 5 min",
       "params": {
         "lines": [
-          "Je confronte mes hypothèses au terrain avant d'engager des frais.",
+          "Je teste mes hypothèses sur le terrain avant d'engager des frais.",
           "Je regarde mes chiffres et mes devis avec honnêteté.",
           "Je protège ma santé, mon foyer et mon rythme de vie."
         ],
         "field_prefix": "creation_livrable",
         "livrable_title": "Votre modèle économique et votre première offre",
-        "livrable_text": "Votre offre et votre prix (exercices 3 et 4), votre point mort face à vos seuils (exercice 6), votre test (exercice 9) et votre décision (exercice 10), relus en séance 10. Après le bilan, le livret « Mon business plan » prend le relais.",
+        "livrable_text": "Votre offre et votre prix (exercices 3 et 4), votre point mort face à vos seuils (exercice 6), votre test (exercice 9) et votre décision (exercice 10), travaillés en séance 10. Après le bilan, le livret « Mon business plan » prend le relais.",
         "zones": [
           "Ce qui m'étonne en relisant mes réponses",
           "À aborder en séance : un chiffre dont je doute, une décision que je n'ose pas prendre",
@@ -1487,7 +1485,7 @@
       "params": {
         "messages": [
           "Votre projet a son premier modèle.",
-          "Prochaine étape : la séance 10. Apportez ce module.",
+          "Prochaine étape : la séance 10. Renvoyez ce module complété d'ici là.",
           "Après le bilan, le livret « Mon business plan » prend le relais."
         ]
       }

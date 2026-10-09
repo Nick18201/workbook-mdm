@@ -45,7 +45,7 @@ CATALOGUE = [
      "Préparer la séance 6 : ce que la personne sait d'elle sur une page, les métiers suggérés par ses proches, "
      "les ressources pour explorer, puis dix pistes, cinq réalistes et cinq audacieuses, et ses trois favorites.",
      "travel_explore", BILAN),
-    ("carnet-7", 7, "Carnet 7 · Confronter au terrain",
+    ("carnet-7", 7, "Carnet 7 · Explorer le terrain",
      "Trois fiches à critères, enquêtes métier, comptes rendus et matrice de faisabilité",
      "Préparer les séances 7 et 8, en deux parties : les trois pistes retenues face aux critères (valeurs, "
      "minimum, énergie), la grille d'entretien et trois contacts, puis les comptes rendus d'enquête, ce que le "
