@@ -1,0 +1,1470 @@
+{
+  "chapter_title": "Module création",
+  "subtitle": "Bilan de compétences",
+  "carnet": "route",
+  "pdf_title": "Marge de Manœuvre · Carnet de route : module création",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Créer *votre activité.*",
+        "number": "",
+        "eyebrow": "Carnet de route · module création",
+        "tagline": "Bilan de compétences",
+        "promise": "Un modèle économique, une première offre."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "De votre piste *à votre modèle.*",
+      "params": {
+        "num": "",
+        "intro_text": "Ce module s'ajoute à votre carnet de route, entre les séances 9 et 10, quand votre piste A est une création d'activité. Il en fait un premier modèle économique : une offre, un prix, un point mort face à vos seuils, un test.<br/><br/><b>Seule la synthèse (exercice 10) est faite pour être montrée. Vos seuils et la page du risque restent à vous.</b>",
+        "points": [
+          "Exercice 1 · Vos fondations · 10 min",
+          "Exercice 2 · Le problème · 10 min",
+          "Exercice 3 · Votre offre · 10 min",
+          "Exercice 4 · Votre prix · 10 min",
+          "Exercice 5 · Vos dépenses et vos charges · 10 min",
+          "Exercice 6 · Votre point mort · 20 min",
+          "Exercice 7 · Le risque, pour vous · 10 min",
+          "Exercice 8 · Votre financement · 10 min",
+          "Exercice 9 · Votre test · 10 min",
+          "Exercice 10 · Votre synthèse et votre décision · 15 min",
+          "Fin du module · 5 min"
+        ],
+        "duration": "2 h",
+        "split": "En trois fois : l'idée, l'offre et le prix (40 min), vos chiffres et le risque (50 min), puis le test et la synthèse (30 min). Vos entretiens prospects se font hors temps d'écriture. Après le bilan, le livret « Mon business plan » approfondit chaque exercice, et traite la reprise d'une entreprise."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Votre projet, *en clair.*",
+      "part_title": "Exercice 1 · Vos fondations · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Reportez votre piste A et vos critères, puis dites votre activité avec vos mots."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma piste A",
+              "route.pistes",
+              "creation_rappel_piste"
+            ],
+            [
+              "Mes trois valeurs",
+              "c5.grille",
+              "creation_rappel_valeurs"
+            ],
+            [
+              "Pour mon énergie, mon poste devra…",
+              "c3.energies",
+              "creation_rappel_energie",
+              1.6
+            ],
+            [
+              "Leurs conditions",
+              "c5.grille",
+              "creation_rappel_conditions",
+              1.6
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "title": "Avec vos mots",
+          "hint": "Par exemple : je refuse de travailler le week-end, donc mon activité ouvrira du lundi au vendredi.",
+          "rows": [
+            [
+              [
+                "Ce que je crée",
+                "creation_activite",
+                1.6
+              ],
+              [
+                "Pour qui",
+                "creation_activite_public",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce que je veux vraiment, c'est…",
+                "creation_envie",
+                1.6
+              ],
+              [
+                "Ce que je crois devoir faire, parce qu'on l'attend de moi, c'est…",
+                "creation_attendu",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Je refuse…",
+                "creation_refus",
+                1.6
+              ],
+              [
+                "… donc mon activité devra…",
+                "creation_refus_donc",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "question",
+          "question": "Ce projet, je le fais pour moi, ou pour prouver quelque chose à quelqu'un : …",
+          "field_id": "creation_pour_qui",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Quel problème *résoudre ?*",
+      "part_title": "Exercice 2 · Le problème · 10 min",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Un projet viable soulage un problème réel, ressenti et prioritaire. Plus le problème est fréquent et coûteux pour votre clientèle, plus votre solution a de valeur.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Sérigraphe",
+          "surface": "Les clubs de sport veulent des maillots.",
+          "exploitable": "Quatre des six clubs interrogés commandent leurs maillots au dernier moment, puis attendent trois semaines ; deux ont joué un tournoi en maillots dépareillés."
+        },
+        {
+          "type": "question",
+          "question": "Le problème que j'ai observé",
+          "field_id": "creation_probleme",
+          "subtitle": "Ce qu'il coûte à votre clientèle : du temps, de l'argent, des tracas. Décrivez un cas précis.",
+          "box_height_cm": 3.0
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Qui le vit",
+                "creation_probleme_qui",
+                2.4
+              ],
+              [
+                "À quelle fréquence",
+                "creation_probleme_frequence",
+                2.4
+              ]
+            ],
+            [
+              [
+                "Comment fait votre clientèle aujourd'hui",
+                "creation_probleme_solutions",
+                2.4
+              ],
+              [
+                "Pourquoi cela ne suffit pas : trop cher, trop lent, trop compliqué…",
+                "creation_probleme_limites",
+                2.4
+              ]
+            ]
+          ],
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que je propose *concrètement.*",
+      "part_title": "Exercice 3 · Votre offre · 10 min",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Transformez le besoin observé en une offre concrète. Dire ce qui est inclus, et ce qui ne l'est pas, permet de vendre avec assurance et d'éviter le travail gratuit.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Caviste",
+          "surface": "Je vends du bon vin.",
+          "exploitable": "Des vins de petits domaines de la région, choisis pour un repas précis, avec une dégustation chaque samedi et la livraison dans le quartier."
+        },
+        {
+          "type": "question",
+          "question": "Mon produit ou mon service",
+          "field_id": "creation_offre",
+          "subtitle": "À quoi il sert, ce que la personne reçoit, comment cela se passe pour elle.",
+          "box_height_cm": 2.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Ce qui est inclus",
+              "subtitle": "Temps, livrables, délais, garanties.",
+              "field_id": "creation_offre_inclus"
+            },
+            {
+              "title": "Ce qui n'est pas inclus",
+              "subtitle": "Ce que vous ne faites pas, les conditions, les limites.",
+              "field_id": "creation_offre_exclus"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 4.4
+        },
+        {
+          "type": "question",
+          "question": "Mon activité en une phrase",
+          "field_id": "creation_phrase",
+          "subtitle": "Une trame : [mon activité] permet à [qui] de [résultat], sans [ce qui les gêne aujourd'hui].",
+          "box_height_cm": 1.6
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Fixer *votre prix.*",
+      "part_title": "Exercice 4 · Votre prix · 10 min",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Un prix juste se trouve au croisement de trois angles : vos coûts, la valeur pour votre clientèle, et les prix du marché. Revenez à cette page après l'exercice 6 : votre point mort dira si votre prix tient.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "fields_card",
+          "title": "Vos prix, en euros",
+          "hint": "Par vente ou par heure ; une fourchette suffit. Sous votre prix plancher, vous travaillez à perte. Votre prix cible paie votre travail et vos charges.",
+          "rows": [
+            [
+              [
+                "Mon prix plancher",
+                "creation_prix_plancher",
+                0.85
+              ],
+              [
+                "Mon prix cible",
+                "creation_prix_cible",
+                0.85
+              ],
+              [
+                "Les prix du marché",
+                "creation_prix_marche",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Le prix que j'ose annoncer à voix haute",
+                "creation_prix_ose",
+                0.85
+              ],
+              [
+                "Le prix que mes calculs demandent",
+                "creation_prix_calcule",
+                0.85
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "question",
+          "question": "L'écart vient de…",
+          "field_id": "creation_prix_ecart",
+          "box_height_cm": 1.6,
+          "example": "je n'ose pas dépasser les prix des brocantes, alors que mes meubles sont restaurés et garantis."
+        },
+        {
+          "type": "fields_card",
+          "title": "Si vous le souhaitez",
+          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "rows": [
+            [
+              [
+                "Le prix que je n'ose pas annoncer",
+                "creation_prix_pas_ose",
+                1.6
+              ],
+              [
+                "Ce que je crains d'entendre",
+                "creation_prix_crainte",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Pour annoncer mon prix, je m'appuie sur…",
+          "field_id": "creation_prix_appui",
+          "box_height_cm": 1.6,
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que coûte *votre activité.*",
+      "part_title": "Exercice 5 · Vos dépenses et vos charges · 10 min",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Les dépenses de démarrage se paient une fois, pour ouvrir. Les charges reviennent chaque mois, que vous vendiez ou non. Appuyez chaque montant sur un devis ou une source. Les achats liés aux ventes et les cotisations se calculent à l'exercice 6.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Dépense de démarrage",
+            "Montant (€)",
+            "Devis ou source"
+          ],
+          "rows": [
+            [
+              "Matériel et outils",
+              {
+                "field_id": "creation_dep1_montant",
+                "placeholder": "Matériel et outils : montant"
+              },
+              {
+                "field_id": "creation_dep1_source",
+                "placeholder": "Matériel et outils : devis ou source"
+              }
+            ],
+            [
+              "Aménagement du lieu",
+              {
+                "field_id": "creation_dep2_montant",
+                "placeholder": "Aménagement du lieu : montant"
+              },
+              {
+                "field_id": "creation_dep2_source",
+                "placeholder": "Aménagement du lieu : devis ou source"
+              }
+            ],
+            [
+              "Site internet et identité visuelle",
+              {
+                "field_id": "creation_dep3_montant",
+                "placeholder": "Site internet et identité visuelle : montant"
+              },
+              {
+                "field_id": "creation_dep3_source",
+                "placeholder": "Site internet et identité visuelle : devis ou source"
+              }
+            ],
+            [
+              "Stock de départ",
+              {
+                "field_id": "creation_dep4_montant",
+                "placeholder": "Stock de départ : montant"
+              },
+              {
+                "field_id": "creation_dep4_source",
+                "placeholder": "Stock de départ : devis ou source"
+              }
+            ],
+            [
+              {
+                "field_id": "creation_dep5_nom",
+                "placeholder": "Autre dépense"
+              },
+              {
+                "field_id": "creation_dep5_montant",
+                "placeholder": "Autre dépense : montant"
+              },
+              {
+                "field_id": "creation_dep5_source",
+                "placeholder": "Autre dépense : devis ou source"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            6.2,
+            3.0,
+            7.8
+          ],
+          "field_prefix": "creation_dep",
+          "field_height_cm": 0.85
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Charge du mois",
+            "Par mois (€)",
+            "Comment la réduire"
+          ],
+          "rows": [
+            [
+              "Assurances",
+              {
+                "field_id": "creation_charge1_montant",
+                "placeholder": "Assurances : par mois"
+              },
+              {
+                "field_id": "creation_charge1_reduire",
+                "placeholder": "Assurances : comment les réduire"
+              }
+            ],
+            [
+              "Loyer ou espace de travail",
+              {
+                "field_id": "creation_charge2_montant",
+                "placeholder": "Loyer : par mois"
+              },
+              {
+                "field_id": "creation_charge2_reduire",
+                "placeholder": "Loyer : comment le réduire"
+              }
+            ],
+            [
+              "Banque, logiciels et abonnements",
+              {
+                "field_id": "creation_charge3_montant",
+                "placeholder": "Banque, logiciels et abonnements : par mois"
+              },
+              {
+                "field_id": "creation_charge3_reduire",
+                "placeholder": "Banque, logiciels et abonnements : comment les réduire"
+              }
+            ],
+            [
+              "Comptabilité",
+              {
+                "field_id": "creation_charge4_montant",
+                "placeholder": "Comptabilité : par mois"
+              },
+              {
+                "field_id": "creation_charge4_reduire",
+                "placeholder": "Comptabilité : comment la réduire"
+              }
+            ],
+            [
+              "Déplacements et communication",
+              {
+                "field_id": "creation_charge5_montant",
+                "placeholder": "Déplacements et communication : par mois"
+              },
+              {
+                "field_id": "creation_charge5_reduire",
+                "placeholder": "Déplacements et communication : comment les réduire"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            6.2,
+            3.0,
+            7.8
+          ],
+          "field_prefix": "creation_charges",
+          "field_height_cm": 0.85
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Total de mes dépenses de démarrage :",
+              [
+                "creation_dep_total",
+                3.5,
+                "Total des dépenses de démarrage"
+              ],
+              "€"
+            ],
+            [
+              "Total de mes charges par mois :",
+              [
+                "creation_charges_total",
+                3.5,
+                "Total des charges par mois"
+              ],
+              "€"
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "callout",
+          "title": "Imprévus",
+          "text": "Ajoutez une marge pour imprévus, à fixer avec un cabinet comptable ou en séance.",
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre point mort, *pas à pas.*",
+      "part_title": "Exercice 6 · Votre point mort · 10 min",
+      "blocks": [
+        {
+          "type": "callout",
+          "title": "Définition",
+          "fixed": true,
+          "text": "Le point mort est le chiffre d'affaires à partir duquel votre activité paie toutes ses charges. En dessous, elle vous coûte ; au-dessus, elle commence à vous payer. Ici, nous y ajoutons votre rémunération minimale : c'est le chiffre d'affaires dont vous avez besoin pour vivre de votre activité."
+        },
+        {
+          "type": "text",
+          "text": "Exemple, pour un disquaire : 250 disques par mois × 22 € = 5 500 € de chiffre d'affaires.",
+          "style": "italic",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Par mois, montants en euros",
+            "Prudent",
+            "Réaliste",
+            "Ambitieux"
+          ],
+          "rows": [
+            [
+              "Nombre de ventes",
+              {
+                "field_id": "creation_pm_ventes_prudent",
+                "placeholder": "Nombre de ventes, prudent"
+              },
+              {
+                "field_id": "creation_pm_ventes_realiste",
+                "placeholder": "Nombre de ventes, réaliste"
+              },
+              {
+                "field_id": "creation_pm_ventes_ambitieux",
+                "placeholder": "Nombre de ventes, ambitieux"
+              }
+            ],
+            [
+              "× prix moyen (exercice 4)",
+              {
+                "field_id": "creation_pm_prix_prudent",
+                "placeholder": "Prix moyen, prudent"
+              },
+              {
+                "field_id": "creation_pm_prix_realiste",
+                "placeholder": "Prix moyen, réaliste"
+              },
+              {
+                "field_id": "creation_pm_prix_ambitieux",
+                "placeholder": "Prix moyen, ambitieux"
+              }
+            ],
+            [
+              "= chiffre d'affaires",
+              {
+                "field_id": "creation_pm_ca_prudent",
+                "placeholder": "Chiffre d'affaires, prudent"
+              },
+              {
+                "field_id": "creation_pm_ca_realiste",
+                "placeholder": "Chiffre d'affaires, réaliste"
+              },
+              {
+                "field_id": "creation_pm_ca_ambitieux",
+                "placeholder": "Chiffre d'affaires, ambitieux"
+              }
+            ],
+            [
+              "− achats liés aux ventes : marchandises, matières",
+              {
+                "field_id": "creation_pm_achats_prudent",
+                "placeholder": "Achats liés aux ventes, prudent"
+              },
+              {
+                "field_id": "creation_pm_achats_realiste",
+                "placeholder": "Achats liés aux ventes, réaliste"
+              },
+              {
+                "field_id": "creation_pm_achats_ambitieux",
+                "placeholder": "Achats liés aux ventes, ambitieux"
+              }
+            ],
+            [
+              "− charges du mois (exercice 5)",
+              {
+                "field_id": "creation_pm_charges_prudent",
+                "placeholder": "Charges du mois, prudent"
+              },
+              {
+                "field_id": "creation_pm_charges_realiste",
+                "placeholder": "Charges du mois, réaliste"
+              },
+              {
+                "field_id": "creation_pm_charges_ambitieux",
+                "placeholder": "Charges du mois, ambitieux"
+              }
+            ],
+            [
+              "− cotisations sociales : le taux de votre activité × le chiffre d'affaires",
+              {
+                "field_id": "creation_pm_cotisations_prudent",
+                "placeholder": "Cotisations sociales, prudent"
+              },
+              {
+                "field_id": "creation_pm_cotisations_realiste",
+                "placeholder": "Cotisations sociales, réaliste"
+              },
+              {
+                "field_id": "creation_pm_cotisations_ambitieux",
+                "placeholder": "Cotisations sociales, ambitieux"
+              }
+            ],
+            [
+              "= ce qui reste pour vous, avant impôt",
+              {
+                "field_id": "creation_pm_reste_prudent",
+                "placeholder": "Ce qui reste pour vous, prudent"
+              },
+              {
+                "field_id": "creation_pm_reste_realiste",
+                "placeholder": "Ce qui reste pour vous, réaliste"
+              },
+              {
+                "field_id": "creation_pm_reste_ambitieux",
+                "placeholder": "Ce qui reste pour vous, ambitieux"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            8.3,
+            2.9,
+            2.9,
+            2.9
+          ],
+          "field_prefix": "creation_pm",
+          "field_height_cm": 0.85,
+          "fixed": true
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "En société, le calcul change : vos cotisations portent sur la rémunération que vous vous versez, et l'entreprise peut payer ses propres impôts. Faites-le avec votre cabinet comptable."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "link_card",
+          "title": "Où vérifier",
+          "fixed": true,
+          "links": [
+            [
+              "Urssaf, micro-entreprise",
+              "https://www.autoentrepreneur.urssaf.fr",
+              "le taux de cotisation de votre activité (autoentrepreneur.urssaf.fr)."
+            ],
+            [
+              "Impots.gouv.fr, espace professionnel",
+              "https://www.impots.gouv.fr/professionnel",
+              "la TVA, sa franchise en base, et la cotisation foncière des entreprises (CFE) : ce qui vous concerne, et quand (impots.gouv.fr/professionnel)."
+            ],
+            [
+              "Bpifrance Création",
+              "https://bpifrance-creation.fr",
+              "les statuts et les régimes, comparés (bpifrance-creation.fr)."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Face à *vos seuils.*",
+      "part_title": "Exercice 6 · Face à vos seuils · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Ce qui reste pour vous doit atteindre votre minimum sécurisant, tout de suite ou à terme : dans la durée acceptable d'une baisse. Si vous montrez ce module, masquez cette page."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "title": "À garder pour vous",
+          "items": [
+            [
+              "Minimum vital",
+              "c4.seuils",
+              "creation_rappel_vital"
+            ],
+            [
+              "Minimum sécurisant",
+              "c4.seuils",
+              "creation_rappel_securisant"
+            ],
+            [
+              "Revenu cible",
+              "c4.seuils",
+              "creation_rappel_cible"
+            ],
+            [
+              "Durée acceptable d'une baisse",
+              "c4.seuils",
+              "creation_rappel_duree"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "rating_grid",
+          "title": "Dans mon scénario réaliste",
+          "items": [
+            [
+              "Mon minimum sécurisant atteint",
+              "creation_minimum"
+            ]
+          ],
+          "values": [
+            "Oui",
+            "À terme",
+            "Non",
+            "À vérifier"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "Il me faut",
+              [
+                "creation_ca_necessaire",
+                2.8,
+                "Le chiffre d'affaires qu'il me faut par mois"
+              ],
+              "€ de chiffre d'affaires par mois, soit",
+              [
+                "creation_ventes_necessaires",
+                1.6,
+                "Nombre de ventes par mois"
+              ],
+              "ventes."
+            ]
+          ],
+          "size": 11,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "title": "Si mon activité ne couvre pas mon minimum vital",
+          "rows": [
+            [
+              [
+                "Au bout de combien de mois",
+                "creation_delai",
+                0.85,
+                1
+              ],
+              [
+                "Ce que je ferai alors",
+                "creation_alors",
+                1.6,
+                3
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Ce que ces chiffres me disent de mon projet",
+          "field_id": "creation_lecture",
+          "box_height_cm": 1.6
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le risque, *pour vous.*",
+      "part_title": "Exercice 7 · Le risque, pour vous · 10 min",
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cette page parle de votre argent personnel, de votre foyer et de vos peurs. Elle est engageante."
+        },
+        {
+          "type": "fill_in_card",
+          "rows": [
+            [
+              "La somme que je peux perdre sans mettre mon foyer en difficulté :",
+              [
+                "creation_risque_somme",
+                3.0,
+                "La somme que je peux perdre"
+              ],
+              "€"
+            ]
+          ],
+          "size": 11
+        },
+        {
+          "type": "fields_card",
+          "hint": "Si vous ne vivez pas en couple : vos proches, soutiens ou regards critiques (carnet 5). Pour la tension, relisez vos tensions (carnet 5) et votre tendance face à l'argent (carnet 4).",
+          "title": "Autour de vous",
+          "rows": [
+            [
+              [
+                "Ce qu'en pense la personne qui partage ma vie",
+                "creation_risque_proche",
+                1.6
+              ],
+              [
+                "Ce qu'elle craint",
+                "creation_risque_proche_crainte",
+                1.6
+              ]
+            ],
+            [
+              [
+                "Ce qui me ferait le plus mal si le projet s'arrêtait",
+                "creation_risque_peur",
+                1.6
+              ],
+              [
+                "La tension que ce projet réveille",
+                "creation_risque_tension",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "anchor",
+          "field_id": "creation_risque_ancrage"
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Financer *le démarrage.*",
+      "part_title": "Exercice 8 · Votre financement · 10 min",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Le montant à financer couvre vos dépenses de démarrage et un matelas de trésorerie : vos charges du mois (exercice 5), pendant la durée que vous jugez acceptable (exercice 6).",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Dépenses de démarrage (€)",
+                "creation_fin_depenses",
+                0.85
+              ],
+              [
+                "Matelas : nombre de mois",
+                "creation_fin_mois",
+                0.85
+              ],
+              [
+                "Matelas (€)",
+                "creation_fin_matelas",
+                0.85
+              ],
+              [
+                "Total à financer (€)",
+                "creation_fin_total",
+                0.85
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Source",
+            "Montant possible (€)",
+            "Conditions",
+            "Ce que j'en pense"
+          ],
+          "rows": [
+            [
+              "Apport personnel (exercice 7)",
+              {
+                "field_id": "creation_fin1_montant",
+                "placeholder": "Apport personnel : montant possible"
+              },
+              {
+                "field_id": "creation_fin1_conditions",
+                "placeholder": "Apport personnel : conditions"
+              },
+              {
+                "field_id": "creation_fin1_avis",
+                "placeholder": "Apport personnel : ce que j'en pense"
+              }
+            ],
+            [
+              "Allocations de France Travail, si vous avez des droits",
+              {
+                "field_id": "creation_fin2_montant",
+                "placeholder": "Allocations : montant possible"
+              },
+              {
+                "field_id": "creation_fin2_conditions",
+                "placeholder": "Allocations : conditions"
+              },
+              {
+                "field_id": "creation_fin2_avis",
+                "placeholder": "Allocations : ce que j'en pense"
+              }
+            ],
+            [
+              "Prêt d'honneur : sans intérêt, sans garantie",
+              {
+                "field_id": "creation_fin3_montant",
+                "placeholder": "Prêt d'honneur : montant possible"
+              },
+              {
+                "field_id": "creation_fin3_conditions",
+                "placeholder": "Prêt d'honneur : conditions"
+              },
+              {
+                "field_id": "creation_fin3_avis",
+                "placeholder": "Prêt d'honneur : ce que j'en pense"
+              }
+            ],
+            [
+              "Prêt bancaire",
+              {
+                "field_id": "creation_fin4_montant",
+                "placeholder": "Prêt bancaire : montant possible"
+              },
+              {
+                "field_id": "creation_fin4_conditions",
+                "placeholder": "Prêt bancaire : conditions"
+              },
+              {
+                "field_id": "creation_fin4_avis",
+                "placeholder": "Prêt bancaire : ce que j'en pense"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.6,
+            3.0,
+            4.7,
+            4.7
+          ],
+          "field_prefix": "creation_fin",
+          "field_height_cm": 1.6,
+          "fixed": true
+        },
+        {
+          "type": "link_card",
+          "title": "Où vous renseigner",
+          "fixed": true,
+          "links": [
+            [
+              "France Travail",
+              "https://www.francetravail.fr/candidat/je-creereprends-une-entreprise/les-aides-financieres-creation-d.html",
+              "votre allocation, maintenue ou versée en capital (francetravail.fr)."
+            ],
+            [
+              "Initiative France",
+              "https://www.initiative-france.fr",
+              "prêts d'honneur et accompagnement (initiative-france.fr)."
+            ],
+            [
+              "Réseau Entreprendre",
+              "https://www.reseau-entreprendre.org",
+              "prêts d'honneur et mentorat (reseau-entreprendre.org)."
+            ],
+            [
+              "France Active",
+              "https://www.franceactive.org",
+              "financements et garanties (franceactive.org)."
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ma décision : la combinaison que je retiens",
+                "creation_fin_decision",
+                1.6
+              ],
+              [
+                "Le risque que j'accepte",
+                "creation_fin_risque",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Tester *avant de vous lancer.*",
+      "part_title": "Exercice 9 · Votre test · 10 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Le principe : la plus petite version de votre projet, testée vite et à moindre coût. On parle aussi de produit minimum viable (MVP, en anglais). Écrivez d'abord les trois paris dont dépend votre projet : le test et vos entretiens les vérifient."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Ce que je crois",
+            "Comment je la vérifie, auprès de qui"
+          ],
+          "rows": [
+            [
+              "Hypothèse 1",
+              {
+                "field_id": "creation_hyp1_croyance",
+                "placeholder": "Hypothèse 1 : ce que je crois"
+              },
+              {
+                "field_id": "creation_hyp1_test",
+                "placeholder": "Hypothèse 1 : comment je la vérifie"
+              }
+            ],
+            [
+              "Hypothèse 2",
+              {
+                "field_id": "creation_hyp2_croyance",
+                "placeholder": "Hypothèse 2 : ce que je crois"
+              },
+              {
+                "field_id": "creation_hyp2_test",
+                "placeholder": "Hypothèse 2 : comment je la vérifie"
+              }
+            ],
+            [
+              "Hypothèse 3",
+              {
+                "field_id": "creation_hyp3_croyance",
+                "placeholder": "Hypothèse 3 : ce que je crois"
+              },
+              {
+                "field_id": "creation_hyp3_test",
+                "placeholder": "Hypothèse 3 : comment je la vérifie"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            2.6,
+            7.2,
+            7.2
+          ],
+          "field_prefix": "creation_hyp",
+          "field_height_cm": 1.6
+        },
+        {
+          "type": "contrast_example",
+          "title": "Vidéaste",
+          "surface": "Si ça marche, je continue.",
+          "exploitable": "Je continue si trois des dix commerces contactés acceptent un premier film payant. Je revois l'offre si personne ne paie."
+        },
+        {
+          "type": "fields_card",
+          "title": "Mon test, et mes critères",
+          "rows": [
+            [
+              [
+                "Ce que je teste",
+                "creation_test",
+                1.6,
+                2
+              ],
+              [
+                "Avec qui",
+                "creation_test_qui",
+                1.6,
+                1
+              ]
+            ],
+            [
+              [
+                "Ses dates",
+                "creation_test_dates",
+                0.85
+              ],
+              [
+                "Son coût (€)",
+                "creation_test_cout",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Je continue si…",
+                "creation_critere_continue",
+                1.6
+              ],
+              [
+                "Je revois l'offre si…",
+                "creation_critere_revois",
+                1.6
+              ]
+            ]
+          ],
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que dit *votre public.*",
+      "part_title": "Exercice 9 · Vos entretiens prospects · hors temps d'écriture",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Interrogez au moins cinq personnes de votre public, une à une. Le but : comprendre ce qui les ferait acheter, pas leur vendre. Notez leurs réponses au fil des entretiens, avant ou après la séance 10.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "star_list",
+          "items": [
+            "« Racontez-moi la dernière fois que ce problème s'est posé. Comment avez-vous fait ? »",
+            "Les objections spontanées : ce qui les retient d'acheter aujourd'hui (le prix, le moment, la confiance, une autre solution).",
+            "Le prix perçu : le montant auquel l'offre leur semble une bonne affaire.",
+            "Le déclencheur d'achat : l'événement précis qui les déciderait."
+          ]
+        },
+        {
+          "type": "table",
+          "headers": [
+            "La personne",
+            "Ce qui la retient d'acheter",
+            "Le prix qu'elle juge juste",
+            "Ce qui la ferait acheter"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "creation_prospect1",
+                "placeholder": "Personne 1"
+              },
+              {
+                "field_id": "creation_prospect1_objection",
+                "placeholder": "Personne 1 : ce qui la retient"
+              },
+              {
+                "field_id": "creation_prospect1_prix",
+                "placeholder": "Personne 1 : le prix qu'elle juge juste"
+              },
+              {
+                "field_id": "creation_prospect1_declencheur",
+                "placeholder": "Personne 1 : ce qui la ferait acheter"
+              }
+            ],
+            [
+              {
+                "field_id": "creation_prospect2",
+                "placeholder": "Personne 2"
+              },
+              {
+                "field_id": "creation_prospect2_objection",
+                "placeholder": "Personne 2 : ce qui la retient"
+              },
+              {
+                "field_id": "creation_prospect2_prix",
+                "placeholder": "Personne 2 : le prix qu'elle juge juste"
+              },
+              {
+                "field_id": "creation_prospect2_declencheur",
+                "placeholder": "Personne 2 : ce qui la ferait acheter"
+              }
+            ],
+            [
+              {
+                "field_id": "creation_prospect3",
+                "placeholder": "Personne 3"
+              },
+              {
+                "field_id": "creation_prospect3_objection",
+                "placeholder": "Personne 3 : ce qui la retient"
+              },
+              {
+                "field_id": "creation_prospect3_prix",
+                "placeholder": "Personne 3 : le prix qu'elle juge juste"
+              },
+              {
+                "field_id": "creation_prospect3_declencheur",
+                "placeholder": "Personne 3 : ce qui la ferait acheter"
+              }
+            ],
+            [
+              {
+                "field_id": "creation_prospect4",
+                "placeholder": "Personne 4"
+              },
+              {
+                "field_id": "creation_prospect4_objection",
+                "placeholder": "Personne 4 : ce qui la retient"
+              },
+              {
+                "field_id": "creation_prospect4_prix",
+                "placeholder": "Personne 4 : le prix qu'elle juge juste"
+              },
+              {
+                "field_id": "creation_prospect4_declencheur",
+                "placeholder": "Personne 4 : ce qui la ferait acheter"
+              }
+            ],
+            [
+              {
+                "field_id": "creation_prospect5",
+                "placeholder": "Personne 5"
+              },
+              {
+                "field_id": "creation_prospect5_objection",
+                "placeholder": "Personne 5 : ce qui la retient"
+              },
+              {
+                "field_id": "creation_prospect5_prix",
+                "placeholder": "Personne 5 : le prix qu'elle juge juste"
+              },
+              {
+                "field_id": "creation_prospect5_declencheur",
+                "placeholder": "Personne 5 : ce qui la ferait acheter"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.4,
+            5.0,
+            3.6,
+            5.0
+          ],
+          "field_prefix": "creation_prospects",
+          "field_height_cm": 1.6
+        },
+        {
+          "type": "rating_grid",
+          "title": "Mes hypothèses face aux faits",
+          "items": [
+            [
+              "Hypothèse 1",
+              "creation_hyp1_faits"
+            ],
+            [
+              "Hypothèse 2",
+              "creation_hyp2_faits"
+            ],
+            [
+              "Hypothèse 3",
+              "creation_hyp3_faits"
+            ]
+          ],
+          "values": [
+            "Confirmée",
+            "À revoir",
+            "Fausse"
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre projet, *en une page.*",
+      "part_title": "Exercice 10 · Votre synthèse · 10 min",
+      "blocks": [
+        {
+          "type": "text",
+          "text": "La page à montrer à une banque, à un réseau de prêt d'honneur ou à un partenaire. Reprenez vos réponses, en quelques lignes par case.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "cards_grid",
+          "cards": [
+            {
+              "title": "Le projet et vos atouts",
+              "subtitle": "Ce que vous faites, pour qui, et ce qui vous rend crédible : vos compétences prouvées et vos récits (carnet de route, exercices 2 et 3).",
+              "field_id": "creation_syn_projet"
+            },
+            {
+              "title": "L'offre et son prix",
+              "subtitle": "Le problème que vous réglez, votre offre, votre prix.",
+              "field_id": "creation_syn_offre"
+            },
+            {
+              "title": "Le test",
+              "subtitle": "Ce que vous vérifiez, et vos critères de décision.",
+              "field_id": "creation_syn_test"
+            },
+            {
+              "title": "Les risques et vos parades",
+              "subtitle": "Les deux principaux, dont votre hypothèse la plus fragile. Vos garde-fous (carnet de route, exercice 8) sont déjà des parades.",
+              "field_id": "creation_syn_risques"
+            }
+          ],
+          "columns": 2,
+          "card_height_cm": 5.8
+        },
+        {
+          "type": "fields_card",
+          "title": "Les chiffres clés, en euros",
+          "rows": [
+            [
+              [
+                "Prix moyen",
+                "creation_syn_prix",
+                0.85
+              ],
+              [
+                "Point mort, par mois",
+                "creation_syn_point_mort",
+                0.85
+              ],
+              [
+                "Montant à financer",
+                "creation_syn_financer",
+                0.85
+              ],
+              [
+                "Apport personnel",
+                "creation_syn_apport",
+                0.85
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "question",
+          "question": "Les prochaines étapes",
+          "field_id": "creation_syn_etapes",
+          "subtitle": "Les objectifs de votre feuille de route, piste A, avec ce que le module y change.",
+          "box_height_cm": 1.6
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre *décision.*",
+      "part_title": "Exercice 10 · Votre décision · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre feuille de route, piste A, est écrite au carnet de route (exercice 5) : reportez-en les objectifs, puis dites ce que le module y change, d'après votre point mort (exercice 6) et vos critères de décision (exercice 9). Votre piste B, et le signal qui vous y fera passer, restent prêts."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes objectifs à 30, 60 et 90 jours",
+              "route.feuilles",
+              "creation_rappel_feuille",
+              1.6
+            ]
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Ce que le module change à ma feuille de route",
+          "field_id": "creation_feuille_change",
+          "subtitle": "Souvent, le test trouve sa place dans le palier de 60 jours.",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ma décision aujourd'hui",
+          "items": [
+            [
+              "Ma décision",
+              "creation_decision"
+            ]
+          ],
+          "values": [
+            "Je lance",
+            "Je teste encore",
+            "Je modifie",
+            "En pause"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Parce que…",
+          "field_id": "creation_decision_raison",
+          "box_height_cm": 1.6
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ce projet respecte…",
+          "items": [
+            [
+              "Mes trois valeurs",
+              "creation_viable_valeurs"
+            ]
+          ],
+          "values": [
+            "Oui",
+            "En partie",
+            "Non"
+          ],
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre module création.",
+      "part_title": "Fin du module · 5 min",
+      "params": {
+        "lines": [
+          "Je confronte mes hypothèses au terrain avant d'engager des frais.",
+          "Je regarde mes chiffres et mes devis avec honnêteté.",
+          "Je protège ma santé, mon foyer et mon rythme de vie."
+        ],
+        "field_prefix": "creation_livrable",
+        "livrable_title": "Votre modèle économique et votre première offre",
+        "livrable_text": "Votre offre et votre prix (exercices 3 et 4), votre point mort face à vos seuils (exercice 6), votre test (exercice 9) et votre décision (exercice 10), relus en séance 10. Après le bilan, le livret « Mon business plan » prend le relais.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "À aborder en séance : un chiffre dont je doute, une décision que je n'ose pas prendre",
+          "Ce que j'ai laissé vierge, à reprendre ensemble"
+        ]
+      }
+    },
+    {
+      "template": "closing",
+      "fixed": true,
+      "params": {
+        "messages": [
+          "Votre projet a son premier modèle.",
+          "Prochaine étape : la séance 10. Apportez ce module.",
+          "Après le bilan, le livret « Mon business plan » prend le relais."
+        ]
+      }
+    }
+  ]
+}

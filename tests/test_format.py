@@ -75,6 +75,22 @@ def test_report_to_its_own_carnet_names_the_page(tmp_path, monkeypatch):
     assert "CARNETDEROUTE·P.1" in _flat_text(compile_workbook_from_spec(route))
 
 
+def test_module_of_a_carnet_reports_the_pages_of_the_carnet(tmp_path, monkeypatch):
+    """A module shares the carnet de route's identity but declares no data: its reports name the carnet's pages."""
+    route = WorkbookSpec(carnet="route", pages=[
+        _page("Votre profil.", [_question("profil")]),
+        _page("Vos pistes.", [_question("pistes", data_id="route.pistes")]),
+    ])
+    module = WorkbookSpec(carnet="route", pages=[
+        _page("Vos fondations.", [BlockSpec(type="report", items=[["Ma piste A", "route.pistes", "m"]])]),
+    ])
+    for name, spec in [("carnet-de-route.json", route), ("carnet-de-route-module.json", module)]:
+        (tmp_path / name).write_text(json.dumps(spec.model_dump(exclude_unset=True)), encoding="utf-8")
+    monkeypatch.setattr(spec_module, "WORKBOOKS_DIR", str(tmp_path))
+
+    assert "CARNETDEROUTE·P.2" in _flat_text(compile_workbook_from_spec(module))
+
+
 # --- Fixed and adaptable ------------------------------------------------------------------
 
 def _base():
