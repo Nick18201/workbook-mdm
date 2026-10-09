@@ -21,7 +21,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R8 · Carnet de route · Décider et agir (`carnet-de-route.json`), en deux parties | Fusionné (PR #63) |
 | R9 · Module création, le business plan court du carnet de route (`module-creation.json`) | Fusionné (PR #65) |
 | Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | Fusionné (PR #67) |
-| Champs 2 et 3 : cases étroites des carnets et du module, business plan, minimum des groupes de questions | PR à ouvrir (branche `claude/champs-cases-etroites-bp`), à fusionner avant R11 |
+| Champs 2 et 3 : cases étroites des carnets et du module, business plan, minimum des groupes de questions | PR #68, à fusionner avant R11 |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
@@ -409,7 +409,7 @@ Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
 | **R9 · Module création** | Le business plan court, environ 12 pages : fondations, problème, offre, prix, point mort, test, synthèse. Il reprend les seuils, la grille anti-compromis et l'entretien prospects de l'app. | Il est personnalisable en une fois. |
 | **R10 · Livret business plan** | Le livret complet autonome, avec les refontes de l'audit (rapport `08-business_plan.md`), et la personnalisation partie par partie dans l'app. | Informations réglementaires renvoyées vers les sources officielles. |
 | **Champs** (PR #67) | Les réponses en 11 pt fixe, une case dimensionnée par la réponse qu'elle attend (`answer`), les cases de pleine et demi-largeur des carnets et du module. | Coût compilé, jamais estimé : 134 → 153 pages. |
-| **Champs 2 et 3** | Les cases étroites (trois colonnes, poids inégaux, tableaux) des carnets et du module, le livret business plan, la réponse par case de tableau et par `cards_grid`, le minimum des groupes de questions enfin respecté. | Choix validés case par case sur leur coût compilé : carnets 153 → 158 pages, module 21 → 22, business plan 48 → 55. |
+| **Champs 2 et 3** (PR #68) | Les cases étroites (trois colonnes, poids inégaux, tableaux) des carnets et du module, le livret business plan, la réponse par case de tableau et par `cards_grid`, le minimum des groupes de questions enfin respecté. | Choix validés case par case sur leur coût compilé : carnets 153 → 158 pages, module 21 → 22, business plan 48 → 55. |
 | **R11 · Nettoyage** | Supprimer `chap0` à `chap6.json` et `livret.json`, mettre à jour le catalogue de l'app, la CI et `test_cli_documents.py`. Vérifier la cohérence avec le programme et le récapitulatif du site. | Tant que R11 n'est pas fusionnée, les anciens carnets restent disponibles à côté des nouveaux. |
 | Plus tard | Modules reconversion et évolution interne | Voir `chantier-modules-s9.md`. |
 
@@ -647,13 +647,13 @@ Pour chaque PR de carnet :
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R9 (module création) et la PR Champs 2 et 3 fusionnées :
+Message à coller, une fois la PR R9 (module création) et la PR #68 (Champs 2 et 3) fusionnées :
 
 ```text
 Reprends la restructuration des carnets avec la PR R11 : le nettoyage. Les anciens carnets (chap0 à chap6) et l'ancien livret de compétences disparaissent : les carnets 1 à 7, le carnet de route et son module création les remplacent.
 
 1. Prérequis
-- Vérifie que la PR R9 (module création, branche claude/demarrer-r9-2161dd) et la PR Champs 2 et 3 (branche claude/champs-cases-etroites-bp) sont fusionnées dans main.
+- Vérifie que la PR R9 (module création, branche claude/demarrer-r9-2161dd) et la PR #68 (Champs 2 et 3, branche claude/champs-cases-etroites-bp) sont fusionnées dans main.
 - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
 - D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch. Avant de pousser sur une branche dont la PR existe, vérifie qu'elle n'est pas déjà fusionnée.
 
