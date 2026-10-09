@@ -3,6 +3,7 @@
   "serie": 1,
   "mode": "customize",
   "but": "Une exploration tournée vers la mobilité interne, sans perdre la structure du carnet ni ses éléments fixes ; des exemples d'un métier voisin, pas de la logistique.",
+  "reecrit_min": 0.4,
   "requete": {
     "template_id": "carnet-6",
     "beneficiary_context": "Responsable logistique dans un groupe de distribution alimentaire (un entrepôt de 120 personnes), 38 ans, 12 ans d'ancienneté. Ne veut pas quitter le groupe : vise une évolution interne (achats, supply chain au siège, amélioration continue, formation interne). Un entretien de parcours professionnel est prévu dans trois mois.",

@@ -84,13 +84,16 @@ AMOUNT = re.compile(r"\d[\d\s .,]*\s?(?:€|euros?\b|k€)|\b\d+\s?%", re.IGNOR
 GENERIC_JOB_WORDS = {"responsable", "chef", "cheffe", "charge", "chargee", "assistant", "assistante", "directeur",
                      "directrice", "manager", "gestion", "projet", "service", "agent", "agente", "conseiller",
                      "conseillere", "technicien", "technicienne", "metier", "poste", "entreprise", "activite"}
-# Words of a profile too common to say an example tells the person's own situation
+# Words of a profile too common, or that only name its situation, to say an example tells the
+# person's own facts: « sa situation, oui ; ses faits, non » (decision of 9 October 2026)
 COMMON_PROFILE_WORDS = GENERIC_JOB_WORDS | {
     "depuis", "apres", "avant", "pendant", "entre", "toujours", "encore", "autre", "autres", "chaque", "premier",
     "premiere", "annee", "annees", "temps", "travail", "metiers", "postes", "professionnel", "professionnels",
     "professionnelle", "personne", "personnes", "envisage", "souhaite", "aujourd", "quelques", "plusieurs",
-    "entreprises", "carnet", "carnets", "seance", "seances", "bilan", "bilans", "parcours"}
-# An example that shares this many words with the person's profile tells their story, not a neighbour's
+    "entreprises", "carnet", "carnets", "seance", "seances", "bilan", "bilans", "parcours",
+    "reconversion", "evolution", "interne", "mobilite", "transition", "retour", "emploi", "chomage", "salarie",
+    "salariee", "independant", "independante", "statut", "formation"}
+# An example that shares this many words with the person's profile tells their facts, not a neighbour's
 SHARED_PROFILE_WORDS = 2
 
 # Keys that hold no text a reader sees
@@ -443,7 +446,8 @@ def _stems(text) -> dict:
 def _check_examples(spec: WorkbookSpec, context: Optional[str], findings):
     """
     Contrast examples: an epicene neighbouring trade, never the person's own nor twice the
-    same, which tells that trade's situation rather than the person's (`context`), no amount.
+    same, which may share the person's situation but tells that trade's facts, not the
+    person's (`context`), no amount.
     """
     own = _plain_words(context) - GENERIC_JOB_WORDS
     profile = set(_stems(context))
@@ -471,10 +475,10 @@ def _check_examples(spec: WorkbookSpec, context: Optional[str], findings):
                 told = _stems(f"{block.surface or ''} {block.exploitable or ''}")
                 mirrored = [word for stem, word in told.items() if stem in profile]
                 if len(mirrored) >= SHARED_PROFILE_WORDS:
-                    findings.append(Finding(CHECK, i, "exemple-personne", f"l'exemple « {title} » reprend la situation de "
+                    findings.append(Finding(CHECK, i, "exemple-personne", f"l'exemple « {title} » reprend les faits de "
                                                                           f"la personne (« {' », « '.join(mirrored[:3])} ») : "
-                                                                          "le raconter avec les faits du métier voisin, "
-                                                                          "elle le recopierait"))
+                                                                          "sa situation, oui ; ses faits, non (elle les "
+                                                                          "recopierait) : le raconter avec les faits du métier voisin"))
             for text in examples:
                 match = AMOUNT.search(text or "")
                 if match:

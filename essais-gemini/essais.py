@@ -372,13 +372,21 @@ def measure_fixes(source_findings: list, findings: list, before: dict, spec: dic
     }
 
 
+def _target(measures: dict) -> str:
+    """The share of rewritten texts the level of the carnet aims at (lot 4: 25 % medium, 40 % strong), if any."""
+    aim = measures.get("reecrit_vise")
+    if not aim:
+        return ""
+    return f" (visé : {round(aim * 100)} %, {'atteint' if measures['part_reecrite'] >= aim else 'non atteint'})"
+
+
 def verdict(result: dict) -> str:
     """Ce que le cas attend, en quelques mots, pour le tableau du rapport."""
     m, mode = result["mesures"], result["mode"]
     if mode == "customize":
         structure = "structure gardée" if not m["structure"] else f"{len(m['structure'])} écart(s) de structure"
         return (f"{structure} ; fixe : {len(m['fixes_modifies'])} modifié(s), {len(m['fixes_perdus'])} perdu(s), "
-                f"rétablis ; {round(m['part_reecrite'] * 100)} % des textes réécrits")
+                f"rétablis ; {round(m['part_reecrite'] * 100)} % des textes réécrits{_target(m)}")
     if mode == "parse":
         return (f"{len(m['sourcils'])} exercices, {m['duree']} ; météo {m['meteo']}, annonces {m['annonces']}, "
                 f"ancrages {m['ancrages']}")
@@ -450,7 +458,7 @@ def run_one(client, usage, case, tirage, source=None) -> dict:
     if mode == "parse":
         measures = measure_created(spec)
     elif mode == "customize":
-        measures = measure_customized(base, spec, list(FIXED_LOG))
+        measures = dict(measure_customized(base, spec, list(FIXED_LOG)), reecrit_vise=case.get("reecrit_min"))
     elif mode == "iterate":
         measures = measure_retouch(base, spec)
     else:
@@ -647,7 +655,7 @@ def report(results, tirages, plafond, vrai) -> str:
             lines += [f"- Structure : {' ; '.join(m['structure']) or 'gardée'}",
                       f"- Fixe changé par Gemini puis rétabli : {', '.join(m['fixes_modifies']) or 'rien'} ; "
                       f"perdu puis rétabli : {', '.join(m['fixes_perdus']) or 'rien'}",
-                      f"- Textes réécrits : {round(m['part_reecrite'] * 100)} % ; prénom : {m['prenom'] or 'aucun'}"]
+                      f"- Textes réécrits : {round(m['part_reecrite'] * 100)} %{_target(m)} ; prénom : {m['prenom'] or 'aucun'}"]
         elif r["mode"] == "iterate":
             lines += [f"- Pages identiques : {m['pages_identiques']} ; fixe changé : "
                       f"{', '.join(m['fixes_changes']) or 'rien'}",

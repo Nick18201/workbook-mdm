@@ -514,9 +514,13 @@
       <div id="state_loading" class="hidden bg-white rounded-3xl p-12 text-center flex flex-col items-center justify-center min-h-[420px] shadow-xs">
         <div class="w-10 h-10 border-3 border-mdm-blue border-t-transparent rounded-full animate-spin mb-3"></div>
         <h3 class="text-lg font-extrabold tracking-tight text-slate-900" id="loading_text">Conception de la maquette…</h3>
-        <p class="text-xs text-slate-400 max-w-xs mt-1">
-          Génération page par page en cours.
-        </p>
+        <!-- L'attente d'un appel à Gemini : estimée d'après la taille de ce qu'il rédige (geminiSeconds) -->
+        <div id="loading_progress" class="hidden w-full max-w-xs mt-4">
+          <div class="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
+            <div id="loading_bar" class="h-full rounded-full bg-mdm-blue transition-[width] duration-500" style="width: 0%"></div>
+          </div>
+          <p id="loading_time" class="text-[11px] text-slate-500 mt-2 tabular-nums"></p>
+        </div>
       </div>
 
       <!-- State: Interactive Pages Preview -->
@@ -703,10 +707,14 @@
 
       let spec = null, lastRes = null, fallbackRes = null, failure = null;
       const summaries = [], notes = [];
+      setLoading(true, `Personnalisation${forWhom} : préparation...`);
+      const waits = await customizeWaits(templateId || "carnet-1", parts);
+      const totalWait = waits.reduce((sum, seconds) => sum + seconds, 0);
       for (const [k, part] of parts.entries()) {
         setLoading(true, part
           ? `Personnalisation${forWhom} : partie ${k + 1} sur ${parts.length}, « ${partTitles[part - 1]} »...`
           : `Personnalisation du carnet${forWhom} par Gemini...`);
+        startProgress(waits[k], waits.slice(0, k).reduce((sum, seconds) => sum + seconds, 0), totalWait);
         const payload = {
           template_id: spec ? null : (templateId || "carnet-1"),
           base_spec: spec,
@@ -1047,6 +1055,7 @@ Notes de la séance :
       currentCheckSources = rawNotes;
       currentCheckMinutes = durationMin;
       setLoading(true, "Analyse par Gemini...");
+      startProgress(geminiSeconds('parse', durationMin));
 
       const payload = {
         raw_notes: rawNotes,
@@ -1129,6 +1138,7 @@ MA PROCHAINE ACTION :`;
       }
 
       setLoading(true, "Mise en page du support...");
+      startProgress(geminiSeconds('layout', sourceText.length));
       const payload = {
         source_text: sourceText,
         chapter_title: document.getElementById('layout_title').value.trim() || null,
@@ -1203,6 +1213,7 @@ MA PROCHAINE ACTION :`;
       }
 
       setLoading(true, "Ajustement de la maquette par Gemini Flash...");
+      startProgress(geminiSeconds('iterate', JSON.stringify(currentWorkbookSpec).length));
 
       const payload = {
         current_spec: currentWorkbookSpec,
@@ -2011,6 +2022,7 @@ MA PROCHAINE ACTION :`;
       const preview = document.getElementById('state_preview');
       const buttons = ['btn_customize', 'btn_parse', 'btn_layout', 'btn_iterate'].map(id => document.getElementById(id));
 
+      stopProgress();  // a call to Gemini starts its own, after this
       if (isLoading) {
         empty.classList.add('hidden');
         preview.classList.add('hidden');
@@ -2024,6 +2036,61 @@ MA PROCHAINE ACTION :`;
         btn.disabled = isLoading;
         btn.classList.toggle('opacity-60', isLoading);
       });
+    }
+
+    // How long a call to Gemini takes, from the trials of lot 3 (essais-gemini/rapports): a creation
+    // 26 to 53 s, a laid out support 21 s, a customization or a retouch about 3.5 s per thousand
+    // characters of the spec it rewrites (the module création, 28,000 in one call: 111 s)
+    function geminiSeconds(kind, size) {
+      if (kind === 'parse') return 20 + 0.5 * (size || 60);  // size: the writing time, in minutes
+      if (kind === 'layout') return 10 + 2 * size / 1000;    // size: the characters of the support
+      return 5 + 3.5 * size / 1000;                          // size: the characters of the spec
+    }
+
+    function formatSeconds(seconds) {
+      const s = Math.max(0, Math.round(seconds));
+      return s < 60 ? `${s} s` : `${Math.floor(s / 60)} min ${String(s % 60).padStart(2, '0')}`;
+    }
+
+    // An indicative bar: the time elapsed against the time expected, held at 95 % until the answer.
+    // Over several calls (the parts of a workbook), `before` is the expected time of the calls done.
+    let progressTimer = null;
+
+    function startProgress(seconds, before = 0, total = seconds) {
+      stopProgress();
+      const started = Date.now();
+      document.getElementById('loading_progress').classList.remove('hidden');
+      const update = () => {
+        const elapsed = (Date.now() - started) / 1000;
+        const done = before + Math.min(0.95 * seconds, elapsed);
+        document.getElementById('loading_bar').style.width = `${Math.round(Math.min(0.95, done / total) * 100)}%`;
+        const left = total - before - elapsed;
+        document.getElementById('loading_time').innerText = left > 0
+          ? `${formatSeconds(elapsed)} écoulées · encore environ ${formatSeconds(left)}`
+          : `${formatSeconds(elapsed)} écoulées · un peu plus long que prévu, la réponse arrive`;
+      };
+      update();
+      progressTimer = setInterval(update, 500);
+    }
+
+    function stopProgress() {
+      clearInterval(progressTimer);
+      progressTimer = null;
+      const box = document.getElementById('loading_progress');
+      if (box) box.classList.add('hidden');
+    }
+
+    // The expected time of each call of a customization: one per part, by the size of its pages
+    async function customizeWaits(templateId, parts) {
+      try {
+        const res = await fetch(`/api/templates/${encodeURIComponent(templateId)}`);
+        if (!res.ok) throw new Error(res.status);
+        const reference = await res.json();
+        return parts.map(part => geminiSeconds('customize', JSON.stringify(
+          part ? { ...reference, pages: reference.pages.filter(page => page.part === part) } : reference).length));
+      } catch (err) {
+        return parts.map(() => 60);
+      }
     }
 
     // Titles mark their coral accent with *…* (rendered in the PDF): plain text for the previews

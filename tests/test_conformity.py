@@ -154,18 +154,21 @@ def test_each_example_takes_another_trade():
     assert [(f.level, f.page) for f in findings] == [(CHECK, 2)] and "p. 1" in findings[0].message
 
 
-def test_an_example_that_tells_the_person_s_own_situation_is_flagged():
-    # Gemini wrote the person's story under a neighbouring trade (essais du lot 3)
+def test_an_example_that_tells_the_person_s_own_facts_is_flagged():
+    # Gemini wrote the person's story under a neighbouring trade (essais du lot 3). Nicolas's line:
+    # « sa situation, oui ; ses faits, non » (a reconversion may be shared, not the foyer nor the atelier)
     context = ("Comptable en cabinet depuis 15 ans, un foyer à deux revenus. Envisage une reconversion vers "
-               "l'ébénisterie, puis un atelier à son compte.")
+               "l'ébénisterie, avec une année de formation, puis un atelier à son compte.")
     mirror = {"type": "contrast_example", "title": "Céramiste", "surface": "On s'en sort.",
               "exploitable": "Je crains de financer une année de reconversion sans revenu, avant d'ouvrir mon atelier."}
+    same_situation = {"type": "contrast_example", "title": "Géomètre", "surface": "Ça ira.",
+                      "exploitable": "Ma reconversion passe par une formation de dix mois : je garde mes relevés de chantier."}
     own_facts = {"type": "contrast_example", "title": "Libraire", "surface": "Ça va, je m'en sors.",
                  "exploitable": "En tension : le loyer passe, mais je repousse chaque réparation de la boutique."}
-    findings = check_spec(_spec({"template": "composite", "blocks": [mirror, own_facts]}), structure=False,
-                          context=context)
+    findings = check_spec(_spec({"template": "composite", "blocks": [mirror, same_situation, own_facts]}),
+                          structure=False, context=context)
     flagged = [f for f in findings if f.rule == "exemple-personne"]
-    assert len(flagged) == 1 and "Céramiste" in flagged[0].message and "« reconversion »" in flagged[0].message
+    assert len(flagged) == 1 and "Céramiste" in flagged[0].message and "« atelier »" in flagged[0].message
     assert flagged[0].level == CHECK
 
 

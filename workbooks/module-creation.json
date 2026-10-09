@@ -3,6 +3,10 @@
   "subtitle": "Bilan de compétences",
   "carnet": "route",
   "pdf_title": "Marge de Manœuvre · Carnet de route : module création",
+  "parts": [
+    "Construire votre modèle",
+    "Tester et décider"
+  ],
   "pages": [
     {
       "template": "cover",
@@ -41,6 +45,7 @@
       "template": "composite",
       "title": "Votre projet, *en clair.*",
       "part_title": "Exercice 1 · Vos fondations · 10 min",
+      "part": 1,
       "blocks": [
         {
           "type": "paragraphs",
@@ -138,6 +143,7 @@
       "template": "composite",
       "title": "Quel problème *résoudre ?*",
       "part_title": "Exercice 2 · Le problème · 10 min",
+      "part": 1,
       "blocks": [
         {
           "type": "text",
@@ -193,6 +199,7 @@
       "template": "composite",
       "title": "Ce que je propose *concrètement.*",
       "part_title": "Exercice 3 · Votre offre · 10 min",
+      "part": 1,
       "blocks": [
         {
           "type": "text",
@@ -242,6 +249,7 @@
       "template": "composite",
       "title": "Fixer *votre prix.*",
       "part_title": "Exercice 4 · Votre prix · 10 min",
+      "part": 1,
       "blocks": [
         {
           "type": "text",
@@ -324,6 +332,7 @@
       "template": "composite",
       "title": "Ce que coûte *votre activité.*",
       "part_title": "Exercice 5 · Vos dépenses et vos charges · 10 min",
+      "part": 1,
       "blocks": [
         {
           "type": "text",
@@ -513,6 +522,7 @@
       "template": "composite",
       "title": "Votre point mort, *pas à pas.*",
       "part_title": "Exercice 6 · Votre point mort · 10 min",
+      "part": 1,
       "blocks": [
         {
           "type": "callout",
@@ -687,6 +697,7 @@
       "template": "composite",
       "title": "Face à *vos seuils.*",
       "part_title": "Exercice 6 · Face à vos seuils · 10 min",
+      "part": 1,
       "blocks": [
         {
           "type": "paragraphs",
@@ -799,6 +810,7 @@
       "template": "composite",
       "title": "Le risque, *pour vous.*",
       "part_title": "Exercice 7 · Le risque, pour vous · 10 min",
+      "part": 2,
       "blocks": [
         {
           "type": "protocol",
@@ -862,6 +874,7 @@
       "template": "composite",
       "title": "Financer *le démarrage.*",
       "part_title": "Exercice 8 · Votre financement · 10 min",
+      "part": 2,
       "blocks": [
         {
           "type": "text",
@@ -1034,6 +1047,7 @@
       "template": "composite",
       "title": "Tester *avant de vous lancer.*",
       "part_title": "Exercice 9 · Votre test · 10 min",
+      "part": 2,
       "blocks": [
         {
           "type": "paragraphs",
@@ -1150,6 +1164,7 @@
       "template": "composite",
       "title": "Ce que dit *votre public.*",
       "part_title": "Exercice 9 · Vos entretiens prospects · hors temps d'écriture",
+      "part": 2,
       "blocks": [
         {
           "type": "text",
@@ -1316,6 +1331,7 @@
       "template": "composite",
       "title": "Votre projet, *en une page.*",
       "part_title": "Exercice 10 · Votre synthèse · 10 min",
+      "part": 2,
       "blocks": [
         {
           "type": "text",
@@ -1391,6 +1407,7 @@
       "template": "composite",
       "title": "Votre *décision.*",
       "part_title": "Exercice 10 · Votre décision · 5 min",
+      "part": 2,
       "blocks": [
         {
           "type": "paragraphs",
@@ -1463,6 +1480,7 @@
       "template": "engagement",
       "title": "Votre module création.",
       "part_title": "Fin du module · 5 min",
+      "part": 2,
       "params": {
         "lines": [
           "Je teste mes hypothèses sur le terrain avant d'engager des frais.",
