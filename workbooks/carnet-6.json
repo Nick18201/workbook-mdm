@@ -834,7 +834,7 @@
         "lines": [
           "Pour chacune de mes trois favorites, je repère une personne qui exerce ce métier, ou qui en connaît une.",
           "Si ma séance 6 s'ouvre par l'initiation à l'IA, j'apporte deux tâches de mon travail, actuel ou passé, à essayer ensemble.",
-          "J'apporte ce carnet à la séance 6."
+          "Je renvoie ce carnet complété avant la séance 6."
         ],
         "field_prefix": "c6_livrable",
         "livrable_title": "Vos dix pistes",

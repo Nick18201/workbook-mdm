@@ -60,6 +60,7 @@ def test_the_rules_name_what_our_carnets_do():
     for rule in ("Exercice N · nom court · durée", "contrast_example", "épicène", "Ce qui m'étonne",
                  "Le droit de passer une question est dit une seule fois", "Aujourd'hui, avec le recul, je sais que…",
                  "150 caractères", "pouvoir d'agir", "ni une thérapie ni une psychanalyse", "une auto-évaluation",
+                 "sans montant ni pourcentage",
                  "le renvoie complété avant la séance",
                  "jamais « présentiel »", "test des fonctionnements cognitifs",
                  "jamais une page « (suite) » qui ne porte qu'une case"):

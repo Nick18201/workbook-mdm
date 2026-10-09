@@ -193,19 +193,6 @@ def test_the_frame_number_and_beneficiary_are_the_consultant_s():
     assert all(p.part_title is not None for p in spec.pages)  # never « 7. TITRE »
 
 
-def test_a_needless_page_break_of_the_model_goes_and_a_needed_one_stays():
-    short = {"template": "composite", "title": "Court.", "blocks": [
-        {"type": "question", "question": "Une question ?", "field_id": "a", "answer": "sentence"},
-        {"type": "page_break"},
-        {"type": "question", "question": "Une autre ?", "field_id": "b", "answer": "sentence"}]}
-    long = {"template": "composite", "title": "Long.", "blocks": [
-        {"type": "question", "question": f"Question {k} ?", "field_id": f"q{k}", "answer": "paragraph"} for k in range(4)
-    ] + [{"type": "page_break"}] + [
-        {"type": "question", "question": f"Question {k} ?", "field_id": f"q{k}", "answer": "paragraph"} for k in range(4, 8)]}
-    spec = gemini_service._drop_needless_breaks(WorkbookSpec(pages=[short, long]))
-    assert [[b.type for b in p.blocks].count("page_break") for p in spec.pages] == [0, 1]
-
-
 def test_the_template_completes_the_model_s_suggestions_on_the_topics_it_left_aside():
     template = gemini_service._layout_suggestions(_layout().spec)
     merged = gemini_service._merge_suggestions(["Ajoute une durée indicative en tête de document."], template)

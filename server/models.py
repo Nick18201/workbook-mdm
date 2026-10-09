@@ -121,6 +121,13 @@ class CheckRequest(BaseModel):
     )
     structure: bool = Field(True, description="Contrôler aussi le gabarit commun des carnets")
     layout: bool = Field(True, description="Compiler la maquette pour repérer les pages « (suite) » presque vides")
+    sources: Optional[str] = Field(
+        None, max_length=MAX_NOTES_LENGTH,
+        description="Texte d'origine (notes, support) : une adresse web qu'il ne donne pas est signalée",
+    )
+    duration_min: Optional[int] = Field(
+        None, ge=10, le=300, description="Durée d'écriture demandée à la création, en minutes : l'ouverture doit la donner"
+    )
 
 
 class FindingInfo(BaseModel):

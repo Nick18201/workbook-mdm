@@ -1304,9 +1304,8 @@ class PageLayout:
         return self.y_cursor
 
     def render(self):
-        """Finishes the page with its folio (and, on a « (suite) » page, notes how full it is)."""
-        if self._continued:
-            used = (self.height - max(self.y_cursor, 0)) / self.height
-            document_style(self.c).continuations.append((self.c.getPageNumber(), round(used, 3)))
+        """Finishes the page with its folio, and notes how full it is (a « (suite) » page apart)."""
+        used = (self.height - max(self.y_cursor, 0)) / self.height
+        document_style(self.c).page_fills.append((self.c.getPageNumber(), round(used, 3), self._continued))
         draw_folio(self.c)
         self.c.showPage()

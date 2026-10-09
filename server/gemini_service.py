@@ -45,6 +45,7 @@ from workbook_generator.config import PDFStyle
 from workbook_generator.compiler import workbook_page_count
 from workbook_generator.conformity import DURATION, check_spec
 from workbook_generator.coverage import read_support, sentence_case, support_title
+from workbook_generator.pagination import balance_breaks
 from workbook_generator.primitives import plain_title
 from workbook_generator.spec import keep_fixed, part_of, put_part_back, tag_refs
 
@@ -185,9 +186,12 @@ def _parse_user_prompt(request: ParseRequest) -> str:
 
 
 def _finalize_created_spec(spec: WorkbookSpec, request: ParseRequest) -> WorkbookSpec:
-    """What the consultant chose for a document created from notes, whatever the model wrote."""
-    return WorkbookSpec(**_identity(spec.model_dump(exclude_unset=True, exclude_none=True),
-                                    request.chapter_num, request.beneficiary_name))
+    """
+    What the consultant chose for a document created from notes, whatever the model wrote,
+    its pages cut as our carnets are (pagination.balance_breaks).
+    """
+    return balance_breaks(WorkbookSpec(**_identity(spec.model_dump(exclude_unset=True, exclude_none=True),
+                                                   request.chapter_num, request.beneficiary_name)))
 
 
 def _identity(data: dict, chapter_num: Optional[int], beneficiary_name: Optional[str]) -> dict:
@@ -343,7 +347,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
             "livrable_title": "Vos réponses et votre prochain pas",
             "livrable_text": "Ce que vous retenez de la séance et ce que vous décidez d'essayer. Nous les relisons "
                              "ensemble à la prochaine séance.",
-            "lines": ["Je fais mon prochain pas avant la séance.", "J'apporte ce carnet à la prochaine séance."],
+            "lines": ["Je fais mon prochain pas avant la séance.", "Je renvoie ce carnet complété avant la séance."],
             "zones": ["Ce qui m'étonne en relisant mes réponses",
                       "À aborder en séance : une question restée sans réponse",
                       "Ce que j'ai laissé vierge, à reprendre ensemble"],
@@ -408,7 +412,9 @@ def _finalize_layout(data: dict, request: LayoutRequest) -> WorkbookSpec:
     """
     What the consultant chose, whatever the model wrote: the number and beneficiary, no
     « N. TITRE » eyebrow (the support's surtitle or nothing), and the frame: a cover with
-    the title alone and a back cover without message, or neither.
+    the title alone and a back cover without message, or neither. The model cuts sections
+    that would fit on one page: pagination.balance_breaks removes those breaks, and cuts
+    again a section whose « (suite) » page holds almost nothing.
     """
     data = _identity(data, request.chapter_num, request.beneficiary_name)
     if request.chapter_title:
@@ -425,7 +431,7 @@ def _finalize_layout(data: dict, request: LayoutRequest) -> WorkbookSpec:
         pages = ([{"template": "cover", "params": {"cover_title": title, "number": request.chapter_num or ""}}]
                  + pages + [{"template": "closing", "params": {"messages": []}}])
     data["pages"] = pages
-    return WorkbookSpec(**data)
+    return balance_breaks(WorkbookSpec(**data))
 
 
 def layout_support_with_gemini(request: LayoutRequest) -> GenerationResult:
@@ -441,7 +447,7 @@ def layout_support_with_gemini(request: LayoutRequest) -> GenerationResult:
         return GenerationResult(_build_fallback_layout(request), "no_api_key")
 
     def build(data: dict) -> LayoutResponse:
-        spec = _drop_needless_breaks(_finalize_layout(data.get("spec", data), request))
+        spec = _finalize_layout(data.get("spec", data), request)
         suggestions = [str(s) for s in data.get("suggestions") or [] if str(s).strip()]
         return LayoutResponse(
             spec=spec,
@@ -605,23 +611,6 @@ def _build_fallback_layout(request: LayoutRequest) -> LayoutResponse:
     )
 
 
-def _drop_needless_breaks(spec: WorkbookSpec) -> WorkbookSpec:
-    """
-    The model cuts sections that would fit on one page: a page whose blocks fit on one PDF
-    page without its page breaks loses them (compiled alone to know). A page that needs
-    more keeps the model's cuts.
-    """
-    pages = []
-    for page in spec.pages:
-        blocks = page.blocks or []
-        if page.template == "composite" and any(b.type == "page_break" for b in blocks):
-            whole = page.model_copy(update={"blocks": [b for b in blocks if b.type != "page_break"]})
-            if workbook_page_count(WorkbookSpec(pages=[whole])) == 1:
-                page = whole
-        pages.append(page)
-    return spec.model_copy(update={"pages": pages})
-
-
 # What a template suggestion is about (its first topic in this order): the model's
 # suggestions may already say it
 SUGGESTION_TOPICS = ("ouverture", "livrable", "annonce", "exemple contrasté", "durée", "tourne-la autrement")
@@ -717,8 +706,9 @@ Applique précisément ces modifications à la structure du livret tout en conse
 Génère la réponse JSON complète avec 'spec', 'changes_summary' et 'pedagogical_note'."""
 
     def build(data: dict) -> IterateResponse:
+        spec = WorkbookSpec(**data.get("spec", data))
         return IterateResponse(
-            spec=WorkbookSpec(**data.get("spec", data)),
+            spec=spec if _from_reference(request.current_spec) else balance_breaks(spec),
             changes_summary=data.get(
                 "changes_summary",
                 "Ajustements appliqués avec succès selon vos consignes.",
@@ -730,6 +720,12 @@ Génère la réponse JSON complète avec 'spec', 'changes_summary' et 'pedagogic
     if result is None:
         return GenerationResult(_build_fallback_iteration(request), "model_error")
     return GenerationResult(result)
+
+
+def _from_reference(spec: WorkbookSpec) -> bool:
+    """A reference workbook, customized or not: its fixed pages and blocks, or its data ids, say so."""
+    return any(page.fixed or page.data_id or any(block.fixed or block.data_id for block in page.blocks or [])
+               for page in spec.pages)
 
 
 def _build_fallback_iteration(request: IterateRequest) -> IterateResponse:
