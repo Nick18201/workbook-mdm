@@ -91,6 +91,10 @@ class TemplateInfo(BaseModel):
     parts: List[str] = Field(default_factory=list, description="Parties d'un long livret, personnalisées une à une")
 
 
+class PageCountResponse(BaseModel):
+    page_count: int = Field(..., description="Nombre de pages du PDF, pages « (suite) » comprises")
+
+
 class CustomizeRequest(BaseModel):
     template_id: Optional[str] = Field(None, max_length=50, description="Identifiant du modèle de base (ex: 'carnet-1')")
     base_spec: Optional[WorkbookSpec] = Field(None, description="Spécification de base si livret personnalisé ou importé")

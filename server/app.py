@@ -36,6 +36,7 @@ from server.models import (
     IterateResponse,
     CustomizeRequest,
     CustomizeResponse,
+    PageCountResponse,
     TemplateInfo,
 )
 from server.gemini_service import (
@@ -43,7 +44,7 @@ from server.gemini_service import (
     refine_spec_with_gemini,
     customize_spec_with_gemini,
 )
-from workbook_generator.compiler import compile_workbook_from_spec
+from workbook_generator.compiler import compile_workbook_from_spec, workbook_page_count
 from server.predefined_workbooks import (
     count_pages_in_background,
     get_predefined_info_list,
@@ -251,6 +252,20 @@ def api_compile_pdf(spec: WorkbookSpec):
     except Exception as e:
         logger.error("Erreur lors de la compilation du PDF : %s", e, exc_info=True)
         raise _internal_error("La compilation du PDF")
+
+
+@app.post("/api/page-count", response_model=PageCountResponse)
+def api_page_count(spec: WorkbookSpec):
+    """
+    Nombre de pages du PDF d'une spécification, pages « (suite) » comprises : le badge de
+    l'aperçu, après une génération, une personnalisation, un ajustement ou un import.
+    Il faut compiler la spécification (quelques dixièmes de seconde).
+    """
+    try:
+        return PageCountResponse(page_count=workbook_page_count(spec))
+    except Exception as e:
+        logger.error("Erreur lors du comptage des pages : %s", e, exc_info=True)
+        raise _internal_error("Le comptage des pages")
 
 
 @app.post("/api/quick-generate")
