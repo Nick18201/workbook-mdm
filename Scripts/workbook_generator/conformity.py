@@ -4,10 +4,11 @@ direction, common template of the carnets, conventions of the roadmap), checked 
 spec, those Gemini writes included. The reference workbooks pass it without a finding
 (tests/test_conformity.py): a finding on a generated spec is a gap to our own standards.
 
-Two levels: « à corriger » (a rule is broken: forbidden word, the paper workflow, a table
-with no box, a label the PDF cuts) and « à vérifier » (a likely gap a person should look at:
-an exercise without its duration, an intimate question without its announcement, a gendered
-turn of phrase, a precaution that treats the person as fragile).
+Two levels: « à corriger » (a rule is broken: forbidden word, the paper workflow, an
+invitation to leave a box blank, a table with no box, a label the PDF cuts) and « à vérifier »
+(a likely gap a person should look at: an exercise without its duration, an intimate question
+without its announcement, a gendered turn of phrase, a precaution that treats the person as
+fragile).
 """
 
 import re
@@ -51,8 +52,18 @@ FORBIDDEN_RE = [(rule, re.compile(pattern, re.IGNORECASE if rule != "mbti" else 
 
 # A precaution that treats the person as fragile (feedback on carnet 1, 9 October 2026: a
 # bilan, not psychology): say what the exercise is about and what it serves instead
-PRECAUTION = re.compile(r"à votre rythme|peu(?:t|vent) (?:vous )?remuer|trop lourd|submerg\w*|douloureu\w*"
-                        r"|laissez(?:-le|-la)? (?:la case )?vierge", re.IGNORECASE)
+PRECAUTION = re.compile(r"à votre rythme|peu(?:t|vent) (?:vous )?remuer|trop lourd|submerg\w*|douloureu\w*",
+                        re.IGNORECASE)
+
+# An invitation to leave a box blank (charte v2: the right to skip a question is said once,
+# in each carnet's opener, never in an exercise; carnet 3 said « Je laisse vierge ce qui me
+# pèse »). « Laissez sa ligne vierge » (a reply that did not come) and « Ce que j'ai laissé
+# vierge » (a past participle: what was skipped) do not invite the person to skip.
+BLANK_BOX = re.compile(
+    r"\b(?:je laisse|laissez|laisser|laisse)(?:-(?:la|le|les))?\s+"
+    r"(?:(?:la|les|une|des|cette|ces|ce|cet|votre|vos|ma|mon|mes)\s+[\w'’-]+\s+)?(?:vierges?|vides?|en blanc)\b",
+    re.IGNORECASE,
+)
 
 # A participle or adjective that agrees with the person who writes (feuille de route, section 6:
 # « Ce qui m'étonne », not « Ce qui m'a surpris »). « m'a donné » (me = to me) does not agree.
@@ -217,6 +228,12 @@ def _check_vocabulary(index, page, findings):
             findings.append(Finding(CHECK, index, "precaution", f"formule de précaution : « {match.group(0)} » (dire de "
                                                                  "quoi parle l'exercice et à quoi il sert ; le droit de "
                                                                  "passer une question est dit dans l'ouverture)"))
+        match = BLANK_BOX.search(text)
+        if match and "case-vierge" not in seen:
+            seen.add("case-vierge")
+            findings.append(Finding(FIX, index, "case-vierge", f"invitation à laisser une case vide : « {match.group(0)} »"
+                                                               " (le droit de passer une question est dit une fois, dans "
+                                                               "l'ouverture ; dire ce qu'on attend, ou combien de cases)"))
         match = GENDERED.search(text)
         if match and "genre" not in seen:
             seen.add("genre")

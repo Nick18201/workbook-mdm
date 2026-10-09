@@ -11,7 +11,7 @@
         "cover_title": "Mes fonctionnements *propres.*",
         "number": 3,
         "tagline": "Bilan de compétences",
-        "promise": "Comprendre ce qui vous donne de l'énergie, et ce qui vous use."
+        "promise": "Comprendre ce qui vous donne de l'énergie, et comment la garder."
       }
     },
     {
@@ -107,7 +107,7 @@
             "En séance 3, votre profil au test des fonctionnements cognitifs vous est restitué. Ce test est une version maison, conçue et éprouvée par Lysiane Brand, psychologue du travail.",
             "Il décrit quatre préférences : votre façon de puiser votre énergie, de recueillir l'information, de décider et de vous organiser. Il ne mesure ni vos compétences ni votre valeur, et aucun profil n'est meilleur qu'un autre.",
             "Les mises en situation de ce carnet ne calculent pas votre profil : elles nourrissent l'échange. C'est vous qui validez, en séance, le profil qui vous ressemble le plus. Vous l'écrirez au carnet 4.",
-            "Il n'y a ni bonne ni mauvaise réponse, ni question piège. Prenez vos exemples dans votre vie personnelle autant que professionnelle, et racontez le pourquoi et le comment."
+            "Il n'y a ni bonne ni mauvaise réponse : seulement la vôtre. Prenez vos exemples dans votre vie personnelle autant que professionnelle, et racontez le pourquoi et le comment."
           ],
           "size": 12
         },
@@ -405,7 +405,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Ces deux questions portent sur vos réactions sous pression : elles disent ce qui vous épuise, pas qui vous êtes. Partez d'un souvenir que vous regardez avec un peu de recul."
+          "text": "Ces deux questions portent sur vos réactions sous pression : elles montrent ce qui vous épuise, et donc ce dont votre prochain poste devra tenir compte."
         },
         {
           "type": "fields_card",
@@ -433,7 +433,7 @@
             {
               "question": "17. L'insomnie",
               "field_id": "c3_q17",
-              "subtitle": "Il est 3 heures du matin, le sommeil ne vient pas. Sur quoi votre esprit boucle-t-il ces temps-ci ? Quelques mots suffisent, sans développer : nous en parlerons en séance.",
+              "subtitle": "Il est 3 heures du matin, le sommeil ne vient pas. Sur quoi votre esprit boucle-t-il ces temps-ci ? Quelques mots suffisent : nous partirons de là en séance.",
               "answer": "sentence"
             }
           ]
@@ -527,7 +527,7 @@
       "part_title": "Fin de carnet · 10 min",
       "params": {
         "lines": [
-          "Je laisse vierge ce qui me pèse : nous en parlerons en séance.",
+          "Je pars de situations vécues, pas de ce que mon poste attend de moi.",
           "Je note les exemples qui me reviennent d'ici la séance 3.",
           "Je renvoie ce carnet complété avant la séance 3."
         ],
@@ -537,7 +537,7 @@
         "zones": [
           "Ce qui m'étonne en relisant mes réponses",
           "Les questions où j'ai hésité, à aborder pendant la restitution",
-          "Ce que j'ai laissé vierge, à reprendre ensemble"
+          "Les questions que j'ai passées, à reprendre ensemble"
         ],
         "pistes": true
       },

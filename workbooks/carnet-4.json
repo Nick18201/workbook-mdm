@@ -11,7 +11,7 @@
         "cover_title": "Mon rapport *à l'argent.*",
         "number": 4,
         "tagline": "Bilan de compétences",
-        "promise": "Vos seuils posés, pour choisir sans vous mettre en danger."
+        "promise": "Vos seuils posés, pour choisir en connaissance de cause."
       }
     },
     {
@@ -19,7 +19,7 @@
       "title": "L'argent *dans vos choix.*",
       "params": {
         "num": "4",
-        "intro_text": "Ce carnet prépare la séance 4. Il regarde ce que l'argent pèse dans vos choix professionnels : votre situation, votre histoire, ce que vous osez demander. Il touche à votre famille et à vos revenus, sans juger votre gestion : il repère ce qui peut soutenir ou freiner votre projet. Vous en tirez votre seuil de sécurité financière, en quatre seuils.<br/><br/><b>Des ordres de grandeur suffisent. N'indiquez ni vos comptes, ni vos dettes, ni les revenus de vos proches.</b>",
+        "intro_text": "Ce carnet prépare la séance 4. Il regarde la place de l'argent dans vos choix professionnels : votre situation, votre histoire, ce que vous osez demander. Il parle de votre famille et de vos revenus pour repérer ce qui peut soutenir ou freiner votre projet. Vous en tirez votre seuil de sécurité financière, en quatre seuils.<br/><br/><b>Des ordres de grandeur suffisent. N'indiquez ni vos comptes, ni vos dettes, ni les revenus de vos proches.</b>",
         "points": [
           "Avant de commencer · Météo et récapitulatif · 10 min",
           "Exercice 1 · Votre situation · 10 min",
@@ -156,7 +156,7 @@
           "type": "contrast_example",
           "title": "Libraire",
           "surface": "Ça va, je m'en sors.",
-          "exploitable": "En tension : le loyer passe, mais je repousse chaque réparation. Je peux changer de poste, pas me passer de salaire."
+          "exploitable": "Le loyer passe, mais je repousse chaque réparation. Je peux changer de poste, pas me passer de salaire."
         }
       ]
     },
@@ -216,7 +216,7 @@
           "type": "question",
           "question": "Dans la famille où vous avez grandi, l'argent créait-il des rapports de pouvoir, de protection ou de dépendance ?",
           "field_id": "c4_hist_pouvoir",
-          "subtitle": "Si cette question touche votre situation actuelle, gardez-la pour la séance : nous en parlerons de vive voix.",
+          "subtitle": "Votre situation actuelle, nous en parlerons de vive voix, en séance.",
           "box_height_cm": 3.5,
           "fixed": true
         },
@@ -374,7 +374,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "L'argent pèse aussi sur la façon dont vous défendez votre travail. Au carnet 2, l'« À lire » sur le bagage social le disait : un malaise venu de son milieu peut retenir de demander. Notez votre aisance dans chaque situation."
+            "L'argent joue aussi sur la façon dont vous défendez votre travail. Au carnet 2, l'« À lire » sur le bagage social le disait : un malaise venu de son milieu peut retenir de demander. Notez votre aisance dans chaque situation."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -425,7 +425,7 @@
                 "sentence"
               ],
               [
-                "Ce que je n'ose pas demander, viser ou négocier aujourd'hui",
+                "Ce que je veux oser demander, viser ou négocier",
                 "c4_nose_pas",
                 "sentence"
               ]
@@ -459,7 +459,7 @@
           "type": "contrast_example",
           "title": "Interprète",
           "surface": "Je n'ose pas trop négocier.",
-          "exploitable": "J'ai accepté le premier tarif de l'agence. Je n'ose pas demander le prix d'une mission avant de dire oui, de peur de passer pour quelqu'un d'intéressé."
+          "exploitable": "J'ai accepté le premier tarif de l'agence, de peur de passer pour quelqu'un d'intéressé. Je veux oser demander le prix d'une mission avant de dire oui."
         }
       ]
     },
@@ -471,7 +471,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Quatre repères pour juger chaque piste, de la séance 6 au carnet de route. Faites le calcul sur une feuille à part (logement, transport, enfants, assurances, remboursements), puis ne reportez ici que le total."
+            "Quatre repères pour juger chaque piste, de la séance 6 au carnet de route. Faites le calcul de votre côté (logement, transport, enfants, assurances, remboursements), puis ne reportez ici que le total."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -532,11 +532,11 @@
           "type": "contrast_example",
           "title": "Peintre en bâtiment",
           "surface": "Le plus possible.",
-          "exploitable": "Minimum vital : le loyer, la voiture et la cantine, sans sorties. Je l'ai calculé sur une feuille à part : une fourchette me suffit."
+          "exploitable": "Minimum vital : le loyer, la voiture et la cantine, sans sorties. Je l'ai calculé de mon côté : une fourchette me suffit."
         },
         {
           "type": "annotation",
-          "text": "Un chiffre concret rassure plus qu'une impression."
+          "text": "On décide mieux sur un chiffre que sur une impression."
         }
       ]
     },
@@ -596,7 +596,7 @@
               "title": "L'évitement",
               "subtitle": "l'argent comme inconfort",
               "text": "L'argent est un sujet pénible : on en parle peu, on remet les comptes à plus tard.",
-              "note": "Question clé : qu'est-ce que j'évite de ressentir quand j'évite l'argent ?",
+              "note": "Question clé : qu'est-ce que je laisse décider à ma place quand j'évite l'argent ?",
               "field_id": "c4_tendance_evitement"
             },
             {
@@ -679,7 +679,7 @@
         },
         {
           "type": "annotation",
-          "text": "Une tendance n'est ni un défaut ni une qualité : c'est un réflexe, qu'il vaut mieux connaître."
+          "text": "Une tendance n'est ni un défaut ni une qualité : c'est un réflexe. Le connaître, c'est pouvoir en jouer."
         }
       ]
     },
@@ -691,7 +691,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Rassemblez ce que l'argent pèse dans vos choix. Une phrase par case suffit."
+            "Rassemblez la place que vous voulez donner à l'argent dans vos choix. Une phrase par case suffit."
           ],
           "spacing_after_cm": 0.45
         },
@@ -705,14 +705,14 @@
                 "sentence"
               ],
               [
-                "Gagner davantage, ou plus que mes parents, me gênerait parce que…",
+                "Gagner davantage, ou plus que mes parents, ce serait pour moi…",
                 "c4_synth_gene",
                 "sentence"
               ]
             ],
             [
               [
-                "Mon « assez » est plutôt un chiffre, ou une sensation difficile à atteindre :",
+                "Mon « assez », c'est un chiffre précis ou une sensation :",
                 "c4_synth_assez",
                 "sentence"
               ],
@@ -760,7 +760,7 @@
         "zones": [
           "Ce qui m'étonne en relisant mes réponses",
           "À aborder en séance : ce que je préfère dire de vive voix, une question non tranchée",
-          "Ce que j'ai laissé vierge, à reprendre ensemble"
+          "Les questions que j'ai passées, à reprendre ensemble"
         ],
         "pistes": true
       },
