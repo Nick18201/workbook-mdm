@@ -73,6 +73,24 @@ def test_the_retouch_measure_finds_a_full_roadmap_table(essais):
     assert measures["pages_identiques"] == "1/1"
 
 
+def test_the_depth_of_a_customization_is_measured_by_kind_of_text(essais):
+    # Lot 4: a medium level rewrites the instructions and examples, a strong one also some questions
+    page = {"template": "composite", "title": "Un titre de page.", "blocks": [
+        {"type": "paragraphs", "items": ["Une consigne de départ."]},
+        {"type": "contrast_example", "title": "Ergonome", "surface": "Ça va bien.", "exploitable": "Une réponse précise."},
+        {"type": "question", "question": "Ce que je veux garder ?", "field_id": "q"},
+        {"type": "protocol", "text": "Une annonce fixe."},
+    ]}
+    customized = json.loads(json.dumps(page))
+    customized["blocks"][0]["items"] = ["Une consigne pour une personne libraire."]
+    customized["blocks"][1]["exploitable"] = "Une autre réponse précise."
+    customized["blocks"][3]["text"] = "Une annonce réécrite."  # fixed: not counted
+
+    depth = essais.rewritten_by_kind({"pages": [page]}, {"pages": [customized]})
+
+    assert depth == {"consignes": [1, 1], "exemples": [1, 2], "questions et amorces": [0, 1], "titres": [0, 1]}
+
+
 def test_each_call_logs_its_tokens(monkeypatch):
     usage = types.SimpleNamespace(prompt_token_count=1200, candidates_token_count=800, thoughts_token_count=None)
 

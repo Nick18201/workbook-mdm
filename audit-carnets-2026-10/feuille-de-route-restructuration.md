@@ -704,7 +704,7 @@ R11 a clos la restructuration (les carnets 1 à 7, le carnet de route, son modul
      - Le contrôle voit un chiffre sans source, les durées qui ne concordent pas (sourcils, ouverture, durée demandée), une case sans réponse attendue, une adresse web absente des notes ou du support (à corriger), « j'apporte ce carnet ». La consigne d'exemple contrasté dit « sans montant ni pourcentage ».
      - La pastille « Feuille de route » demande un tableau à 30, 60 et 90 jours, comme les feuilles de route du carnet de route (objectif, résultat constaté, actions datées), toutes les cases à remplir.
      - Appliqué aux références, l'équilibrage remplirait mieux la première page des entretiens prospects (module création, p. 13) et de « Mes risques et mes parades » (business plan, p. 38), deux coupes relevées en section 7 : à faire à la main si Nicolas le souhaite.
-   - **Lot 3, les essais avec le vrai Gemini** : en PR, branche `claude/lot-3`. Le bilan est dans `essais-gemini/rapports/2026-10-09-bilan.md`.
+   - **Lot 3, les essais avec le vrai Gemini** : fusionné (PR #78). Le bilan est dans `essais-gemini/rapports/2026-10-09-bilan.md`.
      - `essais-gemini/` : neuf cas fictifs et leur script (`essais.py`), qui les passe par l'API comme l'interface puis les mesure. Sans option, il affiche le plan (appels, jetons estimés) ; `--secours` tourne sans clé ; `--vrai` dépense, sur l'accord de Nicolas. Chaque appel inscrit ses jetons au journal (`_log_usage`), donc aussi dans les journaux de Cloud Run.
      - 25 appels, 378 468 jetons, tous servis par Gemini. La structure des personnalisations est gardée, et `keep_fixed` rétablit les consignes fixes que Gemini réécrit (carnets 6 et 7). Les créations suivent le gabarit et la charte v2. La retouche « Feuille de route » donne le tableau à 30, 60 et 90 jours ; « Corriger ces points » corrige 10 remarques sur 10.
      - Corrigé :
@@ -714,11 +714,16 @@ R11 a clos la restructuration (les carnets 1 à 7, le carnet de route, son modul
        - des libellés d'échelle trop longs ;
        - « je suis le plus fier » ;
        - le délai d'un appel, porté à 240 s (le module création en prend 111).
-     - À trancher par Nicolas (bilan, « À trancher ») :
-       - au carnet 4, des exemples dans la situation de la personne, la ligne proposée étant « la situation oui, ses faits non » ;
-       - une personnalisation légère (9 à 43 % des textes) ;
-       - un découpage du module création en parties.
-3. **Le redéploiement**, par Nicolas : la production tourne sur la révision `00010-hb4` (`main` 404108e), d'avant les lots de l'app et la charte v2. À faire une fois la PR du lot 3 fusionnée, en une fois (`server/DEPLOY_CLOUD_RUN.md`). Le délai d'un appel Gemini passe à 240 s par défaut, sous les 300 s de Cloud Run. Les jetons de chaque appel se lisent ensuite dans les journaux. Puis rejouer dans l'app ce que les essais n'ont pas couvert : un support mis en page, le carnet 7 en deux parties.
+     - Nicolas a tranché les trois questions du bilan, appliquées au lot 4.
+   - **Lot 4, les décisions sur le bilan du lot 3** : en PR, branche `claude/lot-4`. Le bilan du lot 3 a une suite pour ce lot (« Suite : le lot 4 »).
+     - Le module création se personnalise en deux parties, « Construire votre modèle » et « Tester et décider » : deux appels d'environ 70 s, au lieu d'un de 111 s, et le PDF ne change pas. Un test garde la règle : un document de plus de 24 000 caractères va par parties.
+     - La personnalisation a deux niveaux, définis dans le prompt :
+       - moyen, pour les carnets 1, 3 et 5 : les consignes et les exemples réécrits, les questions gardées ;
+       - fort, pour les autres carnets : une partie des questions et des amorces en plus.
+     - Les exemples suivent la ligne « sa situation, oui ; ses faits, non », dans les prompts et dans le contrôle.
+     - Pendant un appel à Gemini, l'interface affiche une barre indicative, le temps écoulé et le temps restant estimé, partie par partie. L'estimation vient de la taille de ce que Gemini rédige (mesures du lot 3).
+     - Essais : 6 appels, 101 619 jetons. Le script mesure désormais la profondeur d'une personnalisation par catégorie de texte, et `--refaire` reconstruit un rapport sans appel.
+3. **Le redéploiement**, par Nicolas : la production tourne sur la révision `00010-hb4` (`main` 404108e), d'avant les lots de l'app et la charte v2. À faire une fois la PR du lot 4 fusionnée, en une fois (`server/DEPLOY_CLOUD_RUN.md`). Le délai d'un appel Gemini passe à 240 s par défaut, sous les 300 s de Cloud Run. Les jetons de chaque appel se lisent ensuite dans les journaux. Puis rejouer dans l'app ce que les essais n'ont pas couvert : un support mis en page, et la barre d'attente sur de vrais appels.
 4. **Le lot site.** `recap-site-parcours.md` est à jour, ses deux « mises à jour du 9 octobre » comprises (R11, puis la charte v2 : « Explorer », le carnet 7, le ton). Le confier à l'agent du site avec le nouveau programme PDF : le programme et le site partent ensemble, et le PDF recopié dans `marge-de-manoeuvre/public/documents/` n'a pas encore été changé (le script ne le recopie que depuis la copie principale du dépôt).
 5. **Les modules reconversion et évolution interne** (`chantier-modules-s9.md`) : ils attendent les réponses de Nicolas et de Lysiane. Ils reprendront les compétences prouvées et les récits du carnet de route (`route.competences`, `route.recits`).
 6. **Plus tard** : la version de lecture (les réponses d'un carnet rempli, en entier, pour la personne qui accompagne : elle lit désormais des carnets renvoyés), et l'humour dans le ton.
@@ -729,7 +734,7 @@ Message à coller pour reprendre :
 Reprends les chantiers de mdm-workbook (feuille de route, section 8).
 
 1. Lis CLAUDE.md, la section 8 de audit-carnets-2026-10/feuille-de-route-restructuration.md, puis tes mémoires chantier-app-gemini, retours-carnet-1-ton, gemini-depenses et worktree-separe.
-2. Vérifie l'état des PR (gh pr list --state all --limit 5) : la PR du lot 3 (branche claude/lot-3) doit être fusionnée avant tout nouveau lot. Ne pars jamais d'une branche non fusionnée.
+2. Vérifie l'état des PR (gh pr list --state all --limit 5) : la PR du lot 4 (branche claude/lot-4) doit être fusionnée avant tout nouveau lot. Ne pars jamais d'une branche non fusionnée.
 3. Travaille dans un worktree séparé, sur une nouvelle branche partie de main à jour ; vérifie git branch --show-current avant chaque commit.
-4. Propose-moi le prochain lot (le lot site, ou ce que le bilan du lot 3 laisse à trancher) avec un plan, et attends mon « ok » avant d'écrire du code. Avant chaque série d'appels à Gemini, annonce leur nombre et leur taille en jetons, et attends mon accord.
+4. Propose-moi le prochain lot (le lot site, ou la suite de l'app) avec un plan, et attends mon « ok » avant d'écrire du code. Avant chaque série d'appels à Gemini, annonce leur nombre et leur taille en jetons, et attends mon accord.
 ```

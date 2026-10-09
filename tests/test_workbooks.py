@@ -119,6 +119,22 @@ def test_parts_are_named_and_hold_consecutive_pages():
             assert indexes == list(range(indexes[0], indexes[-1] + 1)), (workbook_id, part)
 
 
+# Gemini answers about 4 s per 1,000 characters of the spec it customizes (lot 3: the module
+# création, 28,000 characters in one call, took 111 s): a longer workbook goes part by part
+MAX_CHARS_PER_CALL = 24_000
+
+
+def test_a_long_workbook_is_customized_part_by_part():
+    for workbook_id, raw in _raw_workbooks():
+        size = len(json.dumps(raw, ensure_ascii=False, separators=(",", ":")))
+        if size <= MAX_CHARS_PER_CALL:
+            continue
+        assert raw.get("parts"), (workbook_id, size)
+        for part in range(1, len(raw["parts"]) + 1):
+            pages = [page for page in raw["pages"] if page.get("part") == part]
+            assert len(json.dumps(pages, ensure_ascii=False, separators=(",", ":"))) <= MAX_CHARS_PER_CALL, (workbook_id, part)
+
+
 def test_business_plan_is_customized_part_by_part(monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     client = TestClient(app)

@@ -1,8 +1,13 @@
 {
-  "titre": "Module création : une activité de prévention pour une personne kinésithérapeute",
+  "titre": "Module création par parties : une activité de prévention pour une personne kinésithérapeute",
   "serie": 2,
   "mode": "customize",
-  "but": "Le plus gros document personnalisé en un appel (17 pages) : sa durée face au délai de 120 s, sa structure gardée, des exemples sans montant.",
+  "but": "Le module création découpé en deux parties (lot 4) : chaque appel sous la minute, la structure gardée, le niveau fort, des exemples sans montant.",
+  "niveau": "fort",
+  "parties": [
+    1,
+    2
+  ],
   "requete": {
     "template_id": "module-creation",
     "beneficiary_context": "Kinésithérapeute en centre de rééducation depuis 11 ans, 37 ans. Veut créer une activité de prévention des troubles musculosquelettiques pour les entreprises (ateliers, diagnostics de postes), d'abord à côté de son poste, à temps partiel."

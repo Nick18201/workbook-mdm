@@ -767,8 +767,8 @@ RÈGLES D'OR :
    - Chaque page et chaque bloc porte une clé '_ref' (ex : "p3", "p3.b2") : recopie-la telle quelle sur la page ou le bloc correspondant.
 2. ADAPTER À LA PERSONNE, dans les limites de la section suivante :
    - Renseigne 'beneficiary_name' avec son prénom, s'il est donné.
-   - Exemples contrastés et 'example' : un métier voisin du sien, jamais le sien ni celui qu'elle vise (elle le recopierait), au nom épicène, le même au féminin (juriste, ergonome, géomètre, céramiste… ; jamais « luthier », « ferronnier », « statisticien »), différent à chaque fois ; l'exemple raconte la situation de ce métier voisin, avec ses faits à lui, jamais celle de la personne (ni son parcours, ni son projet, ni les mots de son profil) ; aucun montant, salaire ni pourcentage.
-   - Les consignes, sous-titres et questions font écho à sa situation, sans s'allonger.
+   - Exemples contrastés et 'example' : un métier voisin du sien, jamais le sien ni celui qu'elle vise (elle le recopierait), au nom épicène, le même au féminin (juriste, ergonome, géomètre, céramiste… ; jamais « luthier », « ferronnier », « statisticien »), différent à chaque fois ; sa situation, oui ; ses faits, non : l'exemple peut vivre la même situation qu'elle (une reconversion, une évolution), mais il raconte les faits du métier voisin, jamais les siens (ni son parcours, ni son projet, ni les mots de son profil) ; aucun montant, salaire ni pourcentage.
+   - Les consignes, sous-titres et questions font écho à sa situation, sans s'allonger, au niveau que la section suivante donne à ce carnet (moyen ou fort) : une personnalisation qui ne touche que les exemples est trop légère.
    - Applique les consignes du consultant, s'il en donne.
 3. LONGUEURS (le PDF coupe ce qui dépasse) : titre de page 25 à 45 caractères, question 120, exemple 90 (sans préfixe « Ex : »), libellé d'une ligne de 'rating_grid' 30, borne d'échelle 20.
 

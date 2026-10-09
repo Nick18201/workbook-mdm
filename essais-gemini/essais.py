@@ -225,6 +225,61 @@ def adaptable_texts(spec: dict) -> list:
     return texts
 
 
+# The kinds of text of a spec, to say how deep a customization goes (lot 4: a medium level
+# rewrites the instructions and the examples, a strong one also some questions and prompts)
+TEXT_KINDS = ("consignes", "exemples", "questions et amorces", "titres")
+_EXAMPLE_KEYS = {"surface", "exploitable", "example"}
+_INSTRUCTION_KEYS = {"intro_text", "subtitle", "hint", "text"}
+_TITLE_KEYS = {"title", "part_title", "cover_title", "promise", "points"}
+
+
+def _kind(key, block_type) -> str:
+    if key in _EXAMPLE_KEYS or (key == "title" and block_type == "contrast_example"):
+        return "exemples"
+    if key in _INSTRUCTION_KEYS or (key == "items" and block_type in ("paragraphs", "star_list")):
+        return "consignes"
+    if key in _TITLE_KEYS and block_type == "page":
+        return "titres"
+    return "questions et amorces"
+
+
+def _sorted_texts(value, key, block_type, out) -> None:
+    if isinstance(value, dict):
+        for k, v in value.items():
+            _sorted_texts(v, k, block_type, out)
+    elif isinstance(value, list):
+        for v in value:
+            _sorted_texts(v, key, block_type, out)
+    elif isinstance(value, str) and " " in value.strip():
+        out.setdefault(_kind(key, block_type), []).append(value)
+
+
+def texts_by_kind(spec: dict) -> dict:
+    """The adaptable texts (outside fixed pages and blocks) of a spec, by kind."""
+    from workbook_generator.spec import FIXED_BLOCK_TYPES
+
+    out = {}
+    for page in spec.get("pages") or []:
+        if page.get("fixed"):
+            continue
+        _sorted_texts({k: v for k, v in page.items() if k != "blocks"}, None, "page", out)
+        for block in page.get("blocks") or []:
+            if not (block.get("fixed") or block.get("type") in FIXED_BLOCK_TYPES):
+                _sorted_texts(block, None, block.get("type"), out)
+    return out
+
+
+def rewritten_by_kind(base: dict, spec: dict) -> dict:
+    """For each kind of text, how many of the reference's were rewritten, out of how many."""
+    before, after = texts_by_kind(base), texts_by_kind(spec)
+    return {kind: [sum(t not in set(after.get(kind, [])) for t in before[kind]), len(before[kind])]
+            for kind in TEXT_KINDS if before.get(kind)}
+
+
+def _depth(measures: dict) -> str:
+    return ", ".join(f"{kind} {done}/{total}" for kind, (done, total) in measures["reecrits"].items())
+
+
 def _blocks(spec: dict, *types) -> list:
     return [b for p in spec.get("pages") or [] for b in p.get("blocks") or [] if b.get("type") in types]
 
@@ -299,6 +354,7 @@ def measure_customized(base: dict, spec: dict, fixed_log: list) -> dict:
         "fixes_modifies": [ref for log in fixed_log for ref in log["modifies"]],
         "fixes_perdus": [ref for log in fixed_log for ref in log["perdus"]],
         "part_reecrite": round(rewritten, 2),
+        "reecrits": rewritten_by_kind(base, spec),
         "exemples": _examples(spec),
         "prenom": spec.get("beneficiary_name"),
     }
@@ -378,7 +434,7 @@ def verdict(result: dict) -> str:
     if mode == "customize":
         structure = "structure gardée" if not m["structure"] else f"{len(m['structure'])} écart(s) de structure"
         return (f"{structure} ; fixe : {len(m['fixes_modifies'])} modifié(s), {len(m['fixes_perdus'])} perdu(s), "
-                f"rétablis ; {round(m['part_reecrite'] * 100)} % des textes réécrits")
+                f"rétablis ; niveau {m['niveau'] or '?'}, réécrits : {_depth(m)}")
     if mode == "parse":
         return (f"{len(m['sourcils'])} exercices, {m['duree']} ; météo {m['meteo']}, annonces {m['annonces']}, "
                 f"ancrages {m['ancrages']}")
@@ -450,7 +506,7 @@ def run_one(client, usage, case, tirage, source=None) -> dict:
     if mode == "parse":
         measures = measure_created(spec)
     elif mode == "customize":
-        measures = measure_customized(base, spec, list(FIXED_LOG))
+        measures = dict(measure_customized(base, spec, list(FIXED_LOG)), niveau=case.get("niveau"))
     elif mode == "iterate":
         measures = measure_retouch(base, spec)
     else:
@@ -647,7 +703,7 @@ def report(results, tirages, plafond, vrai) -> str:
             lines += [f"- Structure : {' ; '.join(m['structure']) or 'gardée'}",
                       f"- Fixe changé par Gemini puis rétabli : {', '.join(m['fixes_modifies']) or 'rien'} ; "
                       f"perdu puis rétabli : {', '.join(m['fixes_perdus']) or 'rien'}",
-                      f"- Textes réécrits : {round(m['part_reecrite'] * 100)} % ; prénom : {m['prenom'] or 'aucun'}"]
+                      f"- Textes réécrits (niveau {m['niveau'] or '?'}) : {_depth(m)} ; prénom : {m['prenom'] or 'aucun'}"]
         elif r["mode"] == "iterate":
             lines += [f"- Pages identiques : {m['pages_identiques']} ; fixe changé : "
                       f"{', '.join(m['fixes_changes']) or 'rien'}",
@@ -682,6 +738,34 @@ def print_plan(cases, tirages):
           f"soit ~{_n(sent + received + thinking)}.")
 
 
+def redo_report(outdir: Path, name=None) -> Path:
+    """
+    The report of a past run, from its saved results, with today's measures of a
+    customization (its depth by kind of text, its level): no call. Its findings stay those of
+    the run. Written next to the results, and to rapports/ when the run was real.
+    """
+    from workbook_generator.spec import load_workbook
+
+    order = {case["id"]: k for k, case in enumerate(load_cases())}
+    cases = {case["id"]: case for case in load_cases()}
+    results = [json.loads(path.read_text(encoding="utf-8")) for path in outdir.glob("*-t*.json")]
+    results.sort(key=lambda r: (order.get(r["cas"], len(order)), r["tirage"]))
+    for result in results:
+        if result["mode"] == "customize":
+            base = load_workbook(result["requete"]["template_id"]).model_dump(exclude_unset=True, exclude_none=True)
+            result["mesures"]["reecrits"] = rewritten_by_kind(base, result["spec"])
+            result["mesures"]["niveau"] = cases.get(result["cas"], {}).get("niveau")
+        result["verdict"] = verdict(result)
+    real = not outdir.name.endswith("secours")
+    text = report(results, max((r["tirage"] for r in results), default=1), None, real)
+    (outdir / "rapport.md").write_text(text, encoding="utf-8")
+    if not real:
+        return outdir / "rapport.md"
+    path = HERE / "rapports" / f"{outdir.name[:4]}-{outdir.name[4:6]}-{outdir.name[6:8]}-{name or 'cas'}.md"
+    path.write_text(text, encoding="utf-8")
+    return path
+
+
 def main():
     parser = argparse.ArgumentParser(description="Essais du vrai Gemini sur les modes de l'app (lot 3).")
     parser.add_argument("--vrai", action="store_true", help="appeler le vrai Gemini : une dépense, à annoncer avant")
@@ -691,9 +775,13 @@ def main():
     parser.add_argument("--tirages", type=int, default=1, help="tirages par cas (2 pour la stabilité)")
     parser.add_argument("--plafond", type=int, help="jetons au plus, réflexion comprise")
     parser.add_argument("--nom", help="le nom du rapport, après sa date (ex : verification)")
+    parser.add_argument("--refaire", help="un dossier de sorties/ : refaire son rapport (mesures du jour), sans appel")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
 
+    if args.refaire:
+        print(f"Rapport refait : {redo_report(Path(args.refaire), args.nom).relative_to(ROOT)}")
+        return
     cases = load_cases(args.serie, args.cas)
     if not cases:
         sys.exit("Aucun cas ne correspond.")
