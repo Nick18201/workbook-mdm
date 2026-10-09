@@ -155,10 +155,23 @@ def _carnet_name(carnet):
     return "carnet de route" if carnet == PDFStyle.CARNET_ROUTE else f"carnet {carnet}"
 
 
+def _declared_data_ids(pages):
+    """The data ids that pages (spec or raw JSON) declare, on the page or on its blocks."""
+    def get(obj, key):
+        return obj.get(key) if isinstance(obj, dict) else getattr(obj, key, None)
+
+    ids = set()
+    for page in pages or []:
+        ids.update(d for d in [get(page, "data_id")] + [get(b, "data_id") for b in get(page, "blocks") or []] if d)
+    return ids
+
+
 @functools.lru_cache(maxsize=64)
-def _file_carnet(path, mtime):
+def _file_identity(path, mtime):
+    """(carnet, declares data) of a file of workbooks/."""
     with open(path, encoding="utf-8") as f:
-        return json.load(f).get("carnet")
+        raw = json.load(f)
+    return raw.get("carnet"), bool(_declared_data_ids(raw.get("pages")))
 
 
 @functools.lru_cache(maxsize=16)
@@ -170,13 +183,14 @@ def _file_data_pages(path, mtime):
 def reference_data_pages(carnet):
     """
     Where each data id of a carnet's reference workbook (workbooks/, the file whose
-    'carnet' is this one) is written: {data_id: page}. Empty when there is no such file.
-    Cached until the file changes.
+    'carnet' is this one and which declares data) is written: {data_id: page}. A module of
+    the carnet (module-creation.json, carnet « route ») shares its carnet but declares no
+    data. Empty when there is no such file. Cached until the file changes.
     """
     folder = spec_module.WORKBOOKS_DIR
     for name in sorted(os.listdir(folder)):
         path = os.path.join(folder, name)
-        if name.endswith(".json") and _file_carnet(path, os.path.getmtime(path)) == carnet:
+        if name.endswith(".json") and _file_identity(path, os.path.getmtime(path)) == (carnet, True):
             return _file_data_pages(path, os.path.getmtime(path))
     return {}
 
@@ -391,19 +405,21 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
 def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
     """
     Compiles a WorkbookSpec into a PDF: returns its bytes, or writes it to output_path
-    (a file path) and returns None. Reports name the page of their data: in the reference
-    workbook of the carnet it comes from, or in this document for its own data.
+    (a file path) and returns None. Reports name the page of their data: in this document
+    for the data it declares (a customized carnet may move it), otherwise in the reference
+    workbook of the carnet it comes from (a module of the carnet de route reports the carnet's).
     """
     own = {}
+    declared = _declared_data_ids(spec.pages)
     if spec.carnet is not None and any(
-        data_carnet(item[1]) == spec.carnet
+        item[1] in declared
         for page in spec.pages for block in page.blocks or [] if block.type == "report"
         for item in block.items or []
     ):
         own = workbook_data_pages(spec)
 
     def pages_of(carnet):
-        return own if carnet == spec.carnet else reference_data_pages(carnet)
+        return own if carnet == spec.carnet and own else reference_data_pages(carnet)
 
     return _compile(spec, output_path, pages_of)[0]
 

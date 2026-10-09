@@ -19,7 +19,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R6 · Carnet 6 · L'exploration (`carnet-6.json`) | Fusionné (PR #61) |
 | R7 · Carnet 7 · Confronter au terrain (`carnet-7.json`), en deux parties | Fusionné (PR #62) |
 | R8 · Carnet de route · Décider et agir (`carnet-de-route.json`), en deux parties | Fusionné (PR #63) |
-| Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | PR à ouvrir |
+| R9 · Module création, le business plan court du carnet de route (`module-creation.json`) | Fusionné (PR #65) |
+| Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | PR #67, à fusionner |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
@@ -330,6 +331,64 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
       - « Envie : oui, plutôt, non » reste une colonne fermée, comme le proposait le rapport 07 : c'est un palier, pas une question à rouvrir ;
       - la relecture de « Je m'autorise à » (rapport 07, fil rouge) : le carnet 6 l'a reportée aux pistes audacieuses, et la boussole relue au chemin parcouru la prolonge.
 
+**Prises pendant R9 (9 octobre 2026)**
+95. **Le module création est un module du carnet de route.**
+    - `module-creation.json` déclare `"carnet": "route"` : le pastel jasmin, le folio « carnet de route », le cadre et le mode d'emploi à l'ouverture. La couverture a pour sourcil « Carnet de route · module création », sans grand numéro.
+    - Il ne déclare aucune donnée. Le moteur cherche donc l'origine d'un report dans le fichier du carnet qui déclare des données (`compiler.reference_data_pages`). Un document ne prend ses propres pages que pour les données qu'il déclare : un carnet personnalisé dans l'app, pas un module. Le test des reports réunit un carnet et ses modules, et un test vérifie qu'un module reporte les pages du carnet de route.
+    - Au catalogue de l'app : « Carnet de route · Module création », dans « Bilan de Compétences », juste après le carnet de route.
+96. **Dix exercices, 2 h.**
+    - Vos fondations, le problème, votre offre, votre prix (4 × 10 min), vos dépenses et vos charges (10 min), votre point mort (10 min, puis 10 min face aux seuils), le risque pour vous (10 min), votre financement (10 min), votre test (10 min, les entretiens prospects hors temps d'écriture), votre synthèse et votre décision (10 min, puis 5 min), la fin du module (5 min).
+    - L'ouverture découpe en trois fois : l'idée, l'offre et le prix (40 min), vos chiffres et le risque (50 min), le test et la synthèse (30 min).
+    - L'intervalle entre les séances 9 et 10 passe à 3 h 45 pour une création, et le total du bilan à 21 h 30. C'est au-dessus des « 1 h 30 à 3 h entre deux séances » et des « 10 à 20 h » du programme, qui dit « selon les personnes ». Le texte réglementaire n'a pas changé (section 7).
+97. **Le module est un extrait du livret « Mon business plan »** : ses seize exercices indispensables, dans le même ordre et avec les mêmes formulations.
+    - Repris mot pour mot, et fixes : la définition du point mort, le principe du test, le texte du protocole, les encadrés réglementaires et les liens, les questions franches.
+    - Condensé : les dépenses de démarrage et les charges du mois sur une page, moins de lignes par tableau, les hypothèses avec le test, une synthèse en quatre cartes et quatre montants. Les « Si vous avez fait le bilan » deviennent de vrais reports.
+    - Restent dans le livret : la vision à trois ans, la semaine type, la cible, le marché, les concurrents, le modèle sur une page, la communication, le statut détaillé et la reprise d'activité. L'ouverture du module renvoie au livret pour une reprise.
+98. **Les reports, sans nouvelle saisie.**
+    - Exercice 1 : la piste A (`route.pistes`), « Pour mon énergie, mon poste devra… » (`c3.energies`), les trois valeurs et leurs conditions (`c5.grille`).
+    - Exercice 6 : les quatre seuils (`c4.seuils`), dans « À garder pour vous ». La page se masque si l'on montre le module.
+    - Exercice 10 : les objectifs à 30, 60 et 90 jours (`route.feuilles`). Le module n'écrit pas de seconde feuille de route : il dit ce qu'il change à celle du carnet de route, et la date du test, qui trouve souvent sa place dans le palier de 60 jours.
+99. **Le point mort face aux seuils.**
+    - « Mon minimum sécurisant atteint : oui / à terme / non / à vérifier », dans le scénario réaliste : l'échelle du carnet 7, où « à terme » veut dire dans la durée acceptable d'une baisse.
+    - La question du rapport 08 garde le minimum vital, le plancher : « Si mon activité ne couvre pas mon minimum vital au bout de … mois, je… ».
+    - Le matelas du financement couvre les charges pendant la durée acceptable d'une baisse : elle n'est pas redemandée à la page du risque.
+100. **La charge émotionnelle.**
+    - Le risque pour vous prend le protocole complet, page entière fixe : la somme que je peux perdre sans mettre mon foyer en difficulté, ce qu'en pense la personne qui partage ma vie · ce qu'elle craint, ce qui me ferait le plus mal si le projet s'arrêtait · la tension que ce projet réveille (l'aide renvoie aux tensions du carnet 5 et à la tendance face à l'argent du carnet 4), l'ancrage.
+    - Le prix suit la convention du carnet 4 : « Le prix que je n'ose pas annoncer » · « Ce que je crains d'entendre », facultatif, puis « Pour annoncer mon prix, je m'appuie sur… ».
+    - « Ce projet, je le fais pour moi, ou pour prouver quelque chose à quelqu'un » ferme l'exercice 1, fixe.
+101. **L'entretien prospects de l'app** entre dans l'exercice 9, sur sa propre page : deux questions sur des faits (du guide d'entretien du livret), puis les objections spontanées, le prix perçu et le déclencheur d'achat. Un tableau de cinq personnes, puis « Mes hypothèses face aux faits » (confirmée / à revoir / fausse). Les entretiens se font hors temps d'écriture, avant ou après la séance 10.
+102. **La synthèse se montre, la décision reste à vous.**
+    - La synthèse tient en quatre cartes (le projet et vos atouts, avec les compétences prouvées et les récits ; l'offre et son prix ; le test ; les risques et vos parades, avec les garde-fous du carnet de route), quatre montants (prix moyen, point mort, montant à financer, apport) et les prochaines étapes. Elle remplace le tableau des risques du livret.
+    - La décision : je lance / je teste encore / je modifie / en pause, puis « Parce que… », et « Ce projet respecte mes trois valeurs : oui / en partie / non ».
+103. **Les liens, vérifiés le 9 octobre 2026 dans le navigateur intégré.**
+    - Urssaf (autoentrepreneur.urssaf.fr), impots.gouv.fr pour les professionnels (la TVA et sa franchise, la CFE), Bpifrance Création (l'accueil : son outil d'aide au choix du statut est en refonte).
+    - France Travail : la page des aides à la création, qui nomme l'ARE, l'ARCE et l'Acre, plutôt que la page générale du livret. Initiative France, Réseau Entreprendre, France Active.
+    - Aucun taux, plafond ni montant n'est écrit dans le module.
+104. **Le module et le livret se renvoient l'un à l'autre.** L'ouverture, la fin et le dos du module disent que le livret prend le relais après le bilan. Le mode d'emploi du livret ajoute, dans son encadré fixe : « Votre module création est une première version des exercices indispensables. » La page du module du carnet de route dit : « Le module création (2 h), remis après la séance 9 ».
+105. **Écarté, avec la raison.**
+    - La semaine type (livret, exercice 3) : la cartographie des énergies du carnet 3 est relue au profil du carnet de route, et « Je refuse… donc mon activité devra… » retourne l'irritant. Le livret la garde.
+    - « La compétence qui me manque et qui me fait douter de tout le projet » (rapport 08, charge moyenne) : les compétences prouvées et « La compétence que je sous-estime » du carnet de route, « Ce qui me manque » sur les fiches du carnet 7.
+    - Le tableau des risques à gravité et probabilité (livret, exercice 34) : la carte « Les risques et vos parades » de la synthèse, la page du risque pour vous et les garde-fous du carnet de route en tiennent lieu.
+    - La météo d'entrée de l'app (« À l'idée de vendre mes prestations, je ressens ») : la météo de la partie 2 du carnet de route couvre l'intervalle.
+    - L'encadré de la tendance face à l'argent au financement : la page est pleine. La tendance est citée dans l'aide de la page du risque.
+    - Le guichet unique : le module s'arrête à la décision, avant l'immatriculation. Le livret le garde (exercice 26).
+    - La clôture du rapport 08 (« ce qui me permet d'avancer malgré ce risque ») : l'ancrage du gabarit commun, fixe, la remplace.
+106. **Second passage sur l'audit** (demandé par Nicolas).
+    - Corrigé :
+      - une case, une chose : « Ce que je crée » · « Pour qui » ; « Qui le vit » · « À quelle fréquence » ; « Comment fait votre clientèle aujourd'hui » · « Pourquoi cela ne suffit pas » ; le test en quatre cases (ce que je teste, avec qui, ses dates, son coût) et ses critères en deux, « Je continue si… » · « Je revois l'offre si… », comme l'exemple contrasté ; les chiffres clés de la synthèse en quatre montants d'une ligne ;
+      - « Si mon activité ne couvre pas mon minimum vital » : le nombre de mois dans une case d'une ligne, « Ce que je ferai alors » dans une case de 1,6 cm ;
+      - un seul « quand » pour le test : ses dates à l'exercice 9, plus à la décision ;
+      - l'énergie (rapport 08, partie 1, B) : « Ce qui m'y attire » (`route.pistes`), qui doublait « Ce que je veux vraiment », laisse sa place au critère d'énergie du carnet 3 (`c3.energies`) ;
+      - le fil rouge du rapport 08 : les récits d'action et les garde-fous du carnet de route nommés dans la synthèse, l'hypothèse la plus fragile comme premier risque, les soutiens et regards critiques (carnet 5) à la page du risque, la piste B et son signal à la décision, le point mort et les critères comme bases de la feuille de route ;
+      - le masculin générique : « vos clients » devient « votre clientèle », « votre expert-comptable ou votre conseiller » devient « un cabinet comptable ou en séance », « petits producteurs » devient « petits domaines », « un financeur » devient « une banque, un réseau de prêt d'honneur ou un partenaire » ;
+      - aucune règle fiscale écrite en dur (chantier des modules) : « la CFE, qui n'est pas due l'année de la création » devient « la cotisation foncière des entreprises (CFE) : ce qui vous concerne, et quand » ; « l'entreprise paie ses propres impôts » devient « peut payer », car une EURL peut rester à l'impôt sur le revenu ;
+      - la grille du point mort et l'échelle de la décision sont marquées fixes, comme une méthode.
+    - Écarté, avec la raison :
+      - « Comment je la vérifie, auprès de qui » reste une colonne : c'est une seule information, la façon de vérifier ;
+      - les prochaines étapes de la synthèse recopient la feuille de route : la synthèse est faite pour être montrée, elle reprend ce qui est écrit ailleurs ;
+      - « Comment la réduire » reste une case d'une ligne : quelques mots y suffisent, et cinq cases de 1,6 cm ne tiendraient pas avec les deux tableaux ;
+      - le livret garde « vos clients » et « votre expert-comptable » : il n'est pas du lot (R10).
+
 ## 3. Les PR, dans l'ordre
 
 Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
@@ -461,6 +520,14 @@ Pour chaque PR de carnet :
   - une série de valeurs recopiées de plusieurs carnets (les météos) tient dans une carte de petites cases (0,85 cm), avec un renvoi écrit, plutôt que dans un report par carnet ;
   - un choix exclusif en mots de quatre valeurs tient si chacune fait une douzaine de caractères au plus : « Évolution interne » chevauchait « Aucun module » ;
   - métiers déjà pris pour les exemples : ceux des carnets 1 à 7, plus analyste de données, responsable logistique, réceptionniste, agronome, céramiste, chauffagiste, typographe, actuaire (carnet de route).
+- **Les conventions ajoutées par le module création** (`workbooks/module-creation.json`) :
+  - un module du carnet de route déclare `"carnet": "route"` et aucune donnée : ses reports trouvent leur page dans `carnet-de-route.json`, et le test des tailles de case s'applique. Son sourcil de couverture passe par `eyebrow` (« Carnet de route · module création ») ;
+  - un module tiré du livret en garde l'ordre et les formulations ; ses exemples sont nouveaux, d'un métier au nom épicène, et aucun ne décrit un accompagnement individuel ;
+  - des montants qui vont ensemble (les prix, les totaux du financement) prennent une `fields_card` de cases d'une ligne (`question_labels`), l'unité dans le titre ou l'aide. Une `cards_grid`, ou une `fields_card` sans `question_labels`, met ses libellés en capitales et les coupe au-delà de deux lignes ;
+  - un tableau de calcul écrit son unité une fois, dans l'en-tête de sa première colonne (« Par mois, montants en euros »), et ses libellés tiennent sur une ligne ;
+  - une remarque d'une phrase sous un tableau (« En société ») peut devenir un paragraphe fixe plutôt qu'un encadré : 1,6 cm au lieu de 3,9 cm ;
+  - quand la page est pleine, chaque lien d'une `link_card` tient sur une ligne, son adresse courte comprise ;
+  - métiers déjà pris pour les exemples : ceux des carnets 1 à 7 et du carnet de route, plus sérigraphe, caviste, disquaire, vidéaste (module création).
 - **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm (1,1 cm de moins sous un titre de deux lignes). Ordres de grandeur, écart compris (pris avant le passage à 11 pt : une case « phrase » en demi-largeur fait maintenant 2,15 cm, 0,55 cm de plus par rangée) :
   - protocole et ancrage : 5,1 cm chacun (5,6 cm pour un avertissement de trois lignes) ;
   - météo : 7,6 cm ;
@@ -488,6 +555,13 @@ Pour chaque PR de carnet :
     - un récit (titre, rangées de 1,6, 2,6 et 1,6 cm), 11 cm ;
     - trois `info_cards` sur une rangée, deux à trois lignes de texte, 4,8 cm ; une `rating_grid` d'une ligne avec titre, 4 cm ; de huit lignes avec titre et bornes, 9,3 cm ;
     - une carte de dix cases de 0,85 cm sur deux rangées, avec titre, 6,1 cm.
+  - mesures du module création :
+    - une `fields_card` de cases d'une ligne, trois puis deux, avec titre et aide de deux lignes, 7,2 cm ; une rangée de quatre cases d'une ligne, sans titre, 3,7 cm ;
+    - deux tableaux de cinq lignes de 0,85 cm, 7,2 cm chacun ; un tableau de calcul de sept lignes de 0,85 cm, dont une sur deux lignes, 9,6 cm ; un tableau de quatre lignes de 1,6 cm, 9,3 cm ; de cinq lignes de 1,6 cm, l'en-tête sur deux lignes, 11,2 cm ;
+    - une `fill_in_card` d'une ligne, 2,7 cm, et de deux lignes, 4 cm ; une `fields_card` titrée d'une rangée (0,85 et 1,6 cm), 5,4 cm, et de trois rangées (1,6, 0,85 puis 1,6 cm), 9,3 cm ; deux rangées de cases de 2,4 cm sans titre, 8,6 cm ;
+    - une `link_card` de quatre liens d'une ligne, 5,5 cm, et de trois liens, dont deux sur deux lignes, 5,8 cm ;
+    - quatre `cards_grid` de 5,8 cm sur deux colonnes, 12,8 cm ; quatre montants d'une ligne avec titre, 4,2 cm ;
+    - une `rating_grid` de trois lignes avec titre, 5,7 cm.
 
   Une ouverture de neuf lignes, avec une introduction de sept lignes, ne tient que sous un titre d'une ligne. Une ouverture de dix lignes tient avec une introduction de quatre lignes, une phrase en gras de deux lignes et un découpage de trois lignes.
 - **Tester l'app en local** : `python -m uvicorn server.app:app --port 8080`. Sans clé Gemini, l'app fonctionne en mode de secours. Avec la vraie clé, tester la personnalisation des carnets 6, 7, du carnet de route et du module création, ceux qui s'y prêtent le plus (carte, section 8).
@@ -512,15 +586,16 @@ Pour chaque PR de carnet :
 - **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm. Depuis R2, la ligne de vie et l'arbre de vie les tiennent aussi.
 - **Les reprises du carnet 2** se font dans les carnets suivants : les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3). Les moteurs et les critères sont relus avant la grille anti-compromis du carnet 5 (R5). Les moteurs « je le veux » et l'objectif boussole sont reportés à la cartographie du carnet 6 (R6). Les questions de l'interview entrent dans la grille d'entretien du carnet 7, et la personne interviewée parmi ses contacts (R7). Les expériences, la zone d'excellence et les compétences de vie sont citées par un renvoi écrit aux compétences prouvées du carnet de route, et l'objectif boussole y est reporté au chemin parcouru (R8).
 - **Les reprises du carnet 3.**
-  - La cartographie des énergies (`c3.energies`) est reportée au profil du carnet de route : quatre lignes, le critère retourné compris (R8). Deux de ses lignes sont déjà reprises au récapitulatif du carnet 4 (R4), une autre avant la grille du carnet 5 (R5), deux à la cartographie du carnet 6 (R6). Elle remplace « Ce qui vide mes batteries » et « Mes sources de stress » : on la reporte, on ne repose pas la question.
+  - La cartographie des énergies (`c3.energies`) est reportée au profil du carnet de route : quatre lignes, le critère retourné compris (R8). Le critère retourné l'est aussi aux fondations du module création (R9). Deux de ses lignes sont déjà reprises au récapitulatif du carnet 4 (R4), une autre avant la grille du carnet 5 (R5), deux à la cartographie du carnet 6 (R6). Elle remplace « Ce qui vide mes batteries » et « Mes sources de stress » : on la reporte, on ne repose pas la question.
   - Les réponses à « Sous pression » (Q16 et Q17) restent dans le carnet 3, sans report.
 - **Les reprises du carnet 4.**
   - Les seuils (`c4.seuils`) et la tendance dominante (`c4.tendance`) sont reportés au récapitulatif du carnet 5, et ses tensions y renvoient (R5).
-  - Les seuils sont reportés à la cartographie du carnet 6, dans une carte « À garder pour vous » (R6). Sur chaque fiche du carnet 7, « Mon minimum est atteint : oui / à terme / non / à vérifier » et la rémunération observée, avec un renvoi à la cartographie (R7). Ils sont reportés aux pistes A et B du carnet de route, dans « À garder pour vous » (R8), et iront au module création (R9).
+  - Les seuils sont reportés à la cartographie du carnet 6, dans une carte « À garder pour vous » (R6). Sur chaque fiche du carnet 7, « Mon minimum est atteint : oui / à terme / non / à vérifier » et la rémunération observée, avec un renvoi à la cartographie (R7). Ils sont reportés aux pistes A et B du carnet de route, dans « À garder pour vous » (R8), et au point mort du module création, dans la même carte (R9).
+  - La tendance dominante (`c4.tendance`) est citée par un renvoi écrit à la page du risque du module création (R9).
   - Le profil validé et ses deux forces (`c4.profil`) sont reportés à la cartographie du carnet 6 (R6). Ils sont reportés au profil du carnet de route (R8).
   - Le livret business plan cite déjà les seuils, dans des encadrés fixes « Si vous avez fait le bilan ».
 - **Les reprises du carnet 5.**
-  - La grille anti-compromis (`c5.grille`) est reportée au carnet 6 : les valeurs au récapitulatif, leurs conditions à la cartographie (R6). Au carnet 7, les fiches jugent chaque piste sur ses trois conditions, et la grille d'entretien en reporte les trois questions (R7). Ses trois valeurs et leurs conditions sont reportées aux pistes A et B (R8). Elle ira au module création (R9).
+  - La grille anti-compromis (`c5.grille`) est reportée au carnet 6 : les valeurs au récapitulatif, leurs conditions à la cartographie (R6). Au carnet 7, les fiches jugent chaque piste sur ses trois conditions, et la grille d'entretien en reporte les trois questions (R7). Ses trois valeurs et leurs conditions sont reportées aux pistes A et B (R8), puis aux fondations du module création, dont la décision demande si le projet les respecte (R9).
   - Les limites hors argent (`c5.limites`) sont reportées à la cartographie du carnet 6 (R6). Elles sont reportées aux garde-fous du carnet de route (R8).
   - L'entourage (`c5.entourage`) est repris au retour des proches du carnet 6, par un renvoi écrit : une ligne par proche sollicité (R6). Il est cité aux soutiens du carnet de route, par un renvoi écrit (R8).
   - Les situations d'alignement (exercice 1) sont citées par un renvoi écrit aux récits d'action du carnet de route (R8).
@@ -540,14 +615,18 @@ Pour chaque PR de carnet :
   - Les questions plus franches restent dans le carnet 7, sans report.
 - **Les reprises du carnet de route.**
   - Les compétences prouvées et les récits (`route.competences`, `route.recits`) iront aux modules reconversion et évolution interne (`chantier-modules-s9.md`).
-  - Les pistes A et B, leurs feuilles de route et les premières actions (`route.pistes`, `route.feuilles`, `route.actions`) iront au module création (R9), au document de synthèse et au suivi à six mois.
+  - La piste A (`route.pistes`) est reportée aux fondations du module création, les objectifs de sa feuille de route (`route.feuilles`) à sa décision (R9). Les pistes, les feuilles de route et les premières actions iront au document de synthèse et au suivi à six mois.
+  - Le module création (R9) ne déclare aucune donnée : sa synthèse est une brique du document de synthèse, sans report.
   - Les deux météos du carnet de route (`route.meteo`, `route.meteo_2`) ferment la série du chemin parcouru. Le suivi à six mois n'a pas de document : la personne apporte son carnet de route.
 - **Les trois familles de scénarios** (pistes directes, passerelles courtes, angles morts) viennent du programme, qui ne les définit pas. Le carnet 7 les nomme, la séance 8 fait le classement, et le récapitulatif du carnet de route les définit (R8, décision 78). Le programme est un texte réglementaire : il garde ses mots, sauf demande.
 - **Le document de synthèse co-rédigé** n'a pas de modèle dans le dépôt. Ses briques sont les livrables des carnets, `route.livrable` compris. À créer si Nicolas le souhaite.
-- **La page « Le module de votre projet »** du carnet de route dit que le module création « vous est remis après la séance 9 » et que la reconversion et l'évolution interne se travaillent en séance 9. À revoir quand chaque module existera (R9, puis les modules à venir).
+- **La page « Le module de votre projet »** du carnet de route dit « Le module création (2 h), remis après la séance 9 » (R9), et que la reconversion et l'évolution interne se travaillent en séance 9. À revoir quand ces deux modules existeront (`chantier-modules-s9.md`).
+- **La charge de travail d'une création.** Avec le module (2 h), l'intervalle entre les séances 9 et 10 passe à 3 h 45 et le total du bilan à 21 h 30, au-dessus des « 1 h 30 à 3 h entre deux séances » et des « 10 à 20 h » du programme (« selon les personnes »). Texte réglementaire : à revoir sur demande, au lot programme et site. Autre voie : faire les exercices 8 à 10 après la séance 10, pendant le test.
+- **La personnalisation du module création** (pertinence forte) est à tester avec la vraie clé Gemini, en une fois. Sans clé, elle passe en mode de secours.
+- **La reprise d'une entreprise** n'a pas de page dans le module : son ouverture renvoie au livret (exercice 25), à voir en séance.
 - **L'immersion** (PMSMP) demande une convention signée par un organisme comme France Travail. Le carnet 7 dit seulement « parlons-en en séance ». Qui peut la signer pour une personne salariée en bilan reste à préciser.
 - **L'option « Initiation à l'IA »** n'apparaît qu'en une ligne d'engagement, en fin de carnet 6. Le site dit que la personne explore ensuite ses pistes « en sachant ce que l'IA y déplace ». Au carnet 7, la grille d'entretien pose la question à chaque professionnel : « ce que l'IA déplace » (R7).
-- **Les liens des ressources** vieillissent : en R6, un podcast avait disparu et trois adresses avaient changé ; en R7, la page « marché du travail » de France Travail renvoyait vers MétierScope (remplacée par Data Emploi). En R8, Mon Compte Formation annonçait de nouvelles règles du CPF pour les formations validées à partir du 2 octobre 2026 : le carnet de route n'en dit rien de chiffré. Les revérifier à chaque PR qui touche une page de ressources, et avant R11.
+- **Les liens des ressources** vieillissent : en R6, un podcast avait disparu et trois adresses avaient changé ; en R7, la page « marché du travail » de France Travail renvoyait vers MétierScope (remplacée par Data Emploi). En R8, Mon Compte Formation annonçait de nouvelles règles du CPF pour les formations validées à partir du 2 octobre 2026 : le carnet de route n'en dit rien de chiffré. En R9, l'outil d'aide au choix du statut de Bpifrance Création était en refonte (le module renvoie à l'accueil du site), et France Travail a une page des aides à la création plus précise que celle du livret. Les revérifier à chaque PR qui touche une page de ressources, et avant R11.
 - **La personnalisation partie par partie du carnet 7 et du carnet de route** est à tester avec la vraie clé Gemini. Sans clé, les deux parties passent en mode de secours, et la partie personnalisée reprend sa place.
 - **Les noms des seuils dans le programme.** En séance 4, le programme parle de « revenu vital », de « revenu sécurisant » et de « délai de trésorerie », sans revenu cible. Les carnets disent minimum vital, minimum sécurisant, revenu cible, durée acceptable d'une baisse. C'est un texte réglementaire : à aligner sur demande, au lot programme et site.
 - **Les modalités du test** (passation, personne qui fait la restitution) restent à préciser dans l'encadré « À savoir sur le test » du carnet 3.
@@ -555,75 +634,50 @@ Pour chaque PR de carnet :
 
 ## 8. Pour reprendre dans une nouvelle conversation
 
-Message à coller, une fois la PR R8 (carnet de route) fusionnée :
+Message à coller, une fois la PR R9 (module création) fusionnée :
 
 ```text
-Reprends la restructuration des carnets avec la PR R9 : le module création, le business plan court du carnet de route. Il se remplit entre les séances 9 et 10, par les personnes dont la piste A est une création d'activité.
+Reprends la restructuration des carnets avec la PR R11 : le nettoyage. Les anciens carnets (chap0 à chap6) et l'ancien livret de compétences disparaissent : les carnets 1 à 7, le carnet de route et son module création les remplacent.
 
 1. Prérequis
-- Vérifie que la PR R8 (carnet de route, branche claude/demarrage-r8-d0d57b) est fusionnée dans main.
+- Vérifie que la PR R9 (module création, branche claude/demarrer-r9-2161dd) est fusionnée dans main.
 - Crée ensuite une branche depuis main à jour. N'empile pas les branches.
 - D'autres sessions fusionnent parfois des PR pendant le travail. Avant de commiter, regarde si main a avancé (git fetch, puis git log HEAD..origin/main) et, si oui, synchronise la branche avec l'outil sync_with_base_branch. Avant de pousser sur une branche dont la PR existe, vérifie qu'elle n'est pas déjà fusionnée.
 
 2. À lire, dans cet ordre
-- audit-carnets-2026-10/feuille-de-route-restructuration.md, sections 2 à 7. La section 5 donne les conventions posées par les carnets 1 à 7 et le carnet de route, et les mesures qui disent si une page tient. La section 7 liste ce qui attend le module. Cette section 8 contient ce prompt.
-- audit-carnets-2026-10/carte-parcours-unifie.md :
-  - section 4 (gabarit commun) ;
-  - section 5, « Le business plan · deux formats » et, au carnet de route, « Le module de votre projet » ;
-  - sections 6 (budget : le module s'ajoute à la partie 2 du carnet de route), 7 (c4.seuils, c5.grille, et les données du carnet de route : route.pistes, route.feuilles) et 8 (pertinence forte : le module se personnalise en une fois ; la définition des seuils reste fixe).
-- audit-carnets-2026-10/chantier-modules-s9.md : le cadre commun aux modules (place, durée, reports sans nouvelle saisie, aucun chiffre réglementaire écrit en dur).
-- audit-carnets-2026-10/rapports/08-business_plan.md en entier, en particulier le parcours court de 12 pages qu'il propose (p. 4, 8, 9, 10, 20, 28 à 34 de l'ancien livret), la charge émotionnelle (le risque personnel) et le tableau des recommandations.
-- workbooks/business-plan.json (R10, le livret complet) : ses parties, ses « Indispensable / Si utile », ses encadrés fixes « Si vous avez fait le bilan », ses tableaux de calcul guidés, ses liens officiels. Le module en est un extrait, pas un second texte.
-- L'entretien prospects de l'ancienne app (objections, prix perçu, déclencheur d'achat) : git show 1696357:server/predefined_workbooks.py, fonction _build_business_plan_spec.
-- workbooks/carnet-de-route.json (R8), en particulier la page « Le module de votre projet » (exercice 6) et les pistes A et B, puis workbooks/carnet-4.json (les seuils) et workbooks/carnet-5.json (la grille).
-- La synthèse audit-carnets-2026-10/synthese.html : sections 02 (constats transversaux), 03 (charge de travail) et la fiche du livret projet.
+- audit-carnets-2026-10/feuille-de-route-restructuration.md : sections 1 à 3 (l'état des PR et la ligne R11), la section 7 (ce qui reste ouvert, dont ce que R11 doit vérifier) et cette section 8.
+- audit-carnets-2026-10/carte-parcours-unifie.md : sections 6 (le budget de temps), 9 et 11 (ce qu'il faut mettre à jour ailleurs).
+- audit-carnets-2026-10/recap-site-parcours.md : ce que le site doit dire, pour vérifier que les carnets le tiennent.
+- CLAUDE.md : les passages sur les anciens carnets (« the former chap0–chap6 until the clean-up PR », la liste des scripts, la description de workbooks/).
 
-3. Ce qu'il faut construire
-workbooks/module-creation.json, environ 12 pages : fondations, problème, offre, prix, point mort, test, synthèse. Une couverture, une ouverture, une fin en trois zones et un dos.
-- Les reports, sans nouvelle saisie : les quatre seuils (c4.seuils, dans une carte « À garder pour vous »), les trois valeurs et leurs conditions (c5.grille), la piste A et sa feuille de route (route.pistes, route.feuilles).
-- Le point mort face au minimum sécurisant et à la durée acceptable d'une baisse, sans chiffre personnel dans les exemples.
-- Le risque personnel (l'argent du foyer, la peur de l'échec) : le protocole, ou la convention du carnet 4, selon la charge que lui donne le rapport 08.
-- L'entretien prospects de l'app dans l'étape « test » : les objections, le prix perçu, le déclencheur d'achat.
-- Les informations réglementaires renvoyées vers les sources officielles (Urssaf, guichet unique, Bpifrance Création…), chaque lien vérifié. Aucun taux, plafond ni montant écrit en dur.
-- À trancher dans le plan :
-  - l'identité du fichier : "carnet": "route" (pastel jasmin, folio « carnet de route »), ou un folio et un pastel propres, comme le livret business plan. Le moteur cherche l'origine d'un report dans le premier fichier de workbooks/ dont le carnet est « route » (compiler.reference_data_pages) : un module qui déclarerait des données route.* les ferait chercher dans carnet-de-route.json. Proposer un module sans identifiant de données, ou adapter le moteur ;
-  - la durée cible : la carte dit « environ 3 h », le chantier des modules « environ 1 h 30 » ;
-  - ce que le module reprend mot pour mot du livret complet (et marque fixed), et ce qu'il condense ;
-  - comment le module et le livret complet se renvoient l'un à l'autre : après le bilan, le livret prend le relais ;
-  - sa place au catalogue de l'app : catégorie « Bilan de compétences » ou « Entrepreneuriat ».
+3. Ce qu'il faut faire
+- Supprimer workbooks/chap0.json à chap6.json et workbooks/livret.json, les scripts Scripts/main_generate_chap0.py à chap6.py et main_generate_livret.py, leurs entrées du catalogue (server/predefined_workbooks.py, celles qui portent « (ancien parcours) ») et de tests/test_cli_documents.py.
+- Repointer ce qui visait les anciens identifiants :
+  - server/templates/index.html : la présélection chap1, les profils d'exemple qui visent chap1, chap4 et chap6, le template_id par défaut "chap1" ;
+  - server/models.py : l'exemple 'chap1' d'une description de champ ;
+  - les tests qui s'en servent (tests/test_workbooks.py, test_pdf_compiler.py, test_api_generation_source.py, test_api_robustness.py) : les réécrire sur les nouveaux carnets, sans perdre ce qu'ils vérifient ;
+  - .jules/bolt.md et Agent.md, s'ils citent des chemins ou des identifiants disparus.
+- Mettre à jour CLAUDE.md (la liste des scripts, la description de workbooks/, « until the clean-up PR »). La CI prend tous les Scripts/main_generate_*.py : vérifie qu'elle ne cite aucun fichier supprimé.
+- Vérifier qu'un JSON exporté de l'ancienne app se compile toujours. Extrais le commit déployé (git archive) dans le scratchpad, produis-y un export comme l'ancienne UI (model_dump(mode="json") de la réponse de /api/templates/chap1), puis envoie-le à /api/compile de la branche par TestClient. Le format ne change pas : seuls les fichiers de référence disparaissent.
+- Vérifier la cohérence avec le programme (Scripts/workbook_generator/chapters/programme/, texte réglementaire : on ne le modifie que sur demande) et avec le récapitulatif du site : séances, livrables, durées, noms des seuils, charge de travail d'une création (section 7). Liste les écarts, sans toucher au programme.
+- Revérifier chaque lien des carnets et du module (section 7, « Les liens des ressources »), dans le navigateur intégré si la page s'affiche en JavaScript.
+- À proposer, sans le faire d'office : « votre référent·e » (point médian) dans TONE_RULES de server/gemini_service.py.
 
 4. Les règles à tenir
-- Aucune mention du MBTI, ni de code de type.
-- Un exemple contrasté par exercice, d'un métier au nom épicène, différent de ceux des carnets 1 à 7 et du carnet de route (liste en section 5 de la feuille de route). Jamais l'offre de MDM (un accompagnement individuel), que le rapport 08 a trouvée dans tous les exemples de l'ancien livret. Pas d'exemple sur un exercice de tri qu'il orienterait.
-- Aucun chiffre sans source, aucun chiffre personnel dans un exemple. Les seuils restent ceux de la personne : on les reporte, on ne les commente pas.
-- Le ton de la DA : vouvoiement, jamais « coach », pas de registre de développement personnel, pas de « déclic », ni « vibration » ni « effet whaou ».
-- Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je », ni point médian. « Celles et ceux » reste possible hors amorce.
-- Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière. La charge moyenne suit la convention du carnet 4 : question franche facultative, puis une clôture.
-- Une question qui demande deux choses a deux cases. Une réponse et son « pourquoi » vont dans deux cases.
-- Les tailles de case : par la réponse attendue, `"answer": "sentence"` sur une question ou `"sentence"` à la place d'une hauteur dans une liste (une phrase : 150 caractères en 11 pt) ; 0,85 cm pour un mot. Un montant prend une case d'une ligne, et son unité est écrite une fois. tests/test_workbooks.py vérifie les tailles des carnets du bilan : si le module n'en est pas un, vérifie-les à la main.
-- Un exercice qui ne tient pas sur une page se coupe entre deux blocs (`page_break`), en deux pages équilibrées, jamais un bloc seul en haut de la page « (suite) ». Avant de couper : une grille de deux colonnes, un libellé ou un exemple plus court. Mesure la hauteur des blocs avant de rendre (repères en section 5 de la feuille de route).
+- Ne rien supprimer dans assets/ sans mon accord.
+- Ne pas changer le contenu des nouveaux carnets, sauf un lien mort ou un renvoi qui viserait un ancien carnet.
+- Garder la tolérance du compilateur (alias de paramètres) : les JSON de l'app viennent d'un modèle.
+- Le programme est un texte réglementaire : signale les écarts, ne le modifie pas.
 
 5. Méthode
-a. Commence par me montrer le plan du module, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.
-b. Écris le JSON. Ajoute Scripts/main_generate_module_creation.py, la ligne de tests/test_cli_documents.py, l'entrée module-creation du catalogue (server/predefined_workbooks.py) et module_creation à la liste des scripts de CLAUDE.md. Mets à jour la page « Le module de votre projet » du carnet de route si le module change ce qu'elle annonce.
-c. Rends chaque page en PNG dans previews/ avec pymupdf et relis-les une à une. Mesure aussi la place libre en bas de chaque page.
-d. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py. Vérifie chaque lien, dans le navigateur intégré si la page s'affiche en JavaScript.
-e. Relis tout l'audit, point par point, dès ce premier tour :
-   - le rapport 08 (le parcours court, la charge émotionnelle, les informations réglementaires, les recommandations) ;
-   - la synthèse ;
-   - le chantier des modules.
-   Vérifie chaque point dans le JSON. Pour chaque page du parcours court du rapport 08, dis où elle va, ou pourquoi elle est retirée. Itère, puis dis-moi ce qui est traité, ce qui est écarté (avec la raison) et ce qui est reporté à une autre PR.
-f. Mets à jour la feuille de route :
-   - section 1 (état des PR : R8 fusionnée, R9 à ouvrir) ;
-   - section 2 (décisions prises pendant R9) ;
-   - section 5 (nouvelles conventions, s'il y en a) ;
-   - section 7 (ce qui reste ouvert) ;
-   - section 8 (le prompt de reprise pour R11, le nettoyage, rédigé sur ce modèle).
-   Mets aussi à jour la carte, section 5 (le module création) et section 6 (son budget).
-g. Commite sur la branche. J'ouvrirai la PR avec le bouton.
+a. Commence par me montrer la liste de ce qui sera supprimé, repointé et vérifié, avec les choix à trancher en fin de message. Attends ma réponse avant de supprimer quoi que ce soit.
+b. Fais les changements. Lance python -m pytest tests, puis génère tous les Scripts/main_generate_*.py.
+c. Vérifie l'app en local (python -m uvicorn server.app:app --port 8080) : le catalogue, la présélection, les profils d'exemple, la personnalisation d'un carnet en mode de secours.
+d. Mets à jour la feuille de route : section 1 (R9 fusionnée, R11 à ouvrir), section 7 (ce qui reste ouvert après le chantier) et section 8 (ce qui vient ensuite : le redéploiement, les modules reconversion et évolution interne, le lot programme et site). Mets aussi à jour la carte, sections 6 et 11.
+e. Commite sur la branche. J'ouvrirai la PR avec le bouton. Le redéploiement se fait ensuite, sur ma demande (server/DEPLOY_CLOUD_RUN.md).
 
 6. Environnement (Windows, dans un worktree)
 - Le Python du venv est ../../../.venv/Scripts/python.exe.
 - Pour importer le moteur hors des scripts : PYTHONPATH="Scripts;." (point-virgule sous Windows) et PYTHONIOENCODING=utf-8.
-- Les outils du scratchpad des sessions précédentes ont disparu : réécris si besoin un script qui mesure la hauteur de chaque bloc et la place libre (en enveloppant compiler._add_block et PageLayout.render ; compile d'abord une fois le livret, pour que les carnets lus par les reports ne se compilent pas au milieu de la mesure) et un script qui rend chaque page en PNG et signale les pages « (suite) ».
+- Les outils du scratchpad des sessions précédentes ont disparu : réécris si besoin un script qui rend chaque page en PNG et compare deux versions d'un PDF (image, texte et champs, page par page).
 ```

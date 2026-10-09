@@ -236,7 +236,11 @@ C'est l'actuel livret de compétences, recentré et renommé.
 
 ### Le business plan · deux formats
 
-- **Le module création du carnet de route** (S9 → S10, environ 3 h). C'est le parcours court de 12 pages proposé par l'audit : fondations, problème, offre, prix, point mort, test, synthèse. Il reprend les seuils et la grille anti-compromis, ainsi que l'entretien prospects de l'app (objections, prix perçu, déclencheur d'achat).
+- **Le module création du carnet de route** (S9 → S10, 2 h, `module-creation.json`, R9). C'est le parcours court proposé par l'audit, en 13 pages d'exercices : les seize exercices indispensables du livret, condensés en dix (fondations, problème, offre, prix, dépenses et charges, point mort face aux seuils, le risque pour vous, financement, test et entretiens prospects, synthèse et décision).
+  - Il reporte la piste A et sa feuille de route (`route.pistes`, `route.feuilles`), le critère d'énergie (`c3.energies`), les trois valeurs et leurs conditions (`c5.grille`), les quatre seuils (`c4.seuils`, « À garder pour vous »), sans nouvelle saisie.
+  - Il reprend l'entretien prospects de l'app (objections, prix perçu, déclencheur d'achat), sur une page qui se remplit au fil des entretiens, hors temps d'écriture.
+  - Seule la synthèse se montre. Le risque pour vous prend le protocole complet. Aucun taux ni montant : des liens officiels (Urssaf, impots.gouv.fr, Bpifrance Création, France Travail, réseaux de prêts d'honneur).
+  - Il déclare `"carnet": "route"` : la couleur et le folio du carnet de route. Le livret complet prend le relais après le bilan.
 - **Le livret projet complet**, outil autonome pour l'accompagnement à la création après le bilan. Il s'ouvre par un mode d'emploi et des renvois « Si vous avez fait le bilan : … ». Il intègre les refontes de l'audit : finances guidées, page « Le risque, pour vous », reprise d'activité, informations réglementaires renvoyées vers les sources officielles.
 
 ## 6. Le budget de temps
@@ -253,9 +257,10 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | S7 → S8 | Carnet 7, partie 2 | 2 h | `carnet-7.json` (R7), partie 2 | 2 h, affiché exercice par exercice (n'existait pas) ; les entretiens se font hors temps d'écriture |
 | S8 → S9 | Carnet de route, partie 1 | 1 h 30 | `carnet-de-route.json` (R8), partie 1, issue des thèmes 1, 3, 4 et 5 du livret | 1 h 30, affiché exercice par exercice (avant : 3 h 30 – 4 h 30 pour tout le livret) |
 | S9 → S10 | Carnet de route, partie 2 | 1 h 45 (+ module) | `carnet-de-route.json` (R8), partie 2, issue du thème 7 du livret et du plan d'action de l'app | 1 h 45, affiché exercice par exercice, plus le module de projet (n'existait pas) |
-| **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | 19 h 30 affichées, carnet par carnet (avant : ≈ 21 – 27 h) |
+| S9 → S10, création | Module création | 2 h | `module-creation.json` (R9), issu des exercices indispensables du livret business plan et de l'entretien prospects de l'app | 2 h, affiché exercice par exercice, entretiens prospects hors temps d'écriture (avant : 7 h 20 pour les indispensables du livret, 15 h pour tout le livret) |
+| **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | 19 h 30 affichées, carnet par carnet (avant : ≈ 21 – 27 h) ; 21 h 30 avec le module création |
 
-L'interview du carnet 2, les échanges avec les proches et les entretiens du carnet 7 se font hors temps d'écriture. Le module de projet s'ajoute pour les personnes concernées.
+L'interview du carnet 2, les échanges avec les proches, les entretiens du carnet 7 et les entretiens prospects du module création se font hors temps d'écriture. Le module de projet s'ajoute pour les personnes concernées : avec le module création, l'intervalle S9 → S10 passe à 3 h 45 et le total à 21 h 30, au-dessus de la fourchette du programme (feuille de route, section 7).
 
 ## 7. Les données qui circulent
 
@@ -274,7 +279,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | Compétences de vie | Carnet 2 | Carnet de route (compétences prouvées) | `c2.competences_vie` |
 | Première interview | Carnet 2 (facultatif) | Carnet 7 (grille d'entretien, contacts) | `c2.interview` |
 | Fil des pistes | Livrables des carnets 2 à 5 | Carnet 6 (dix pistes) | `c2.livrable` … `c5.livrable` (sur la page du livrable) |
-| Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route | `c3.energies` |
+| Cartographie des énergies | Carnet 3 | Carnet 6 · carnet de route · module création | `c3.energies` |
 | Profil de fonctionnement validé | Carnet 4 (récapitulatif) | Carnet 6 · carnet de route | `c4.profil` |
 | 4 seuils, tendance dominante | Carnet 4 | Carnet 5 (récapitulatif, tensions) · fiches du carnet 7 · carnet de route · module création | `c4.seuils`, `c4.tendance` |
 | Grille anti-compromis (3 valeurs) | Carnet 5 | Carnet 6 · fiches et enquêtes du carnet 7 · piste A et piste B · module création | `c5.grille` |
@@ -284,7 +289,7 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 | `c6.pistes` |
 | Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route | `c7.fiches`, `c7.enquetes`, `c7.matrice` |
 | Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · module évolution interne | `route.competences`, `route.recits` |
-| Pistes A et B, feuilles de route, actions | Carnet de route, partie 2 | Document de synthèse · suivi à 6 mois | `route.pistes`, `route.feuilles`, `route.actions` |
+| Pistes A et B, feuilles de route, actions | Carnet de route, partie 2 | Module création (la piste A et sa feuille de route) · document de synthèse · suivi à 6 mois | `route.pistes`, `route.feuilles`, `route.actions` |
 | Livrable de chaque carnet | Fin de chaque carnet | Document de synthèse, assemblé au fil du parcours | `c1.livrable` … `c7.livrable`, `route.livrable` |
 
 ## 8. Personnalisation dans l'app
