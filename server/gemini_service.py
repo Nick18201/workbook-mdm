@@ -440,12 +440,12 @@ def layout_support_with_gemini(request: LayoutRequest) -> GenerationResult:
         return GenerationResult(_build_fallback_layout(request), "no_api_key")
 
     def build(data: dict) -> LayoutResponse:
-        spec = _finalize_layout(data.get("spec", data), request)
+        spec = _drop_needless_breaks(_finalize_layout(data.get("spec", data), request))
         suggestions = [str(s) for s in data.get("suggestions") or [] if str(s).strip()]
         return LayoutResponse(
             spec=spec,
             changes_summary=data.get("changes_summary") or "Support mis en page tel quel.",
-            suggestions=suggestions or _layout_suggestions(spec),
+            suggestions=_merge_suggestions(suggestions, _layout_suggestions(spec)),
         )
 
     result = _generate_json(api_key, LAYOUT_SYSTEM_PROMPT, _layout_user_prompt(request), build, "layout")
@@ -602,6 +602,38 @@ def _build_fallback_layout(request: LayoutRequest) -> LayoutResponse:
                         "et chaque libellé a sa case ; les textes en capitales passent en minuscules.",
         suggestions=_layout_suggestions(spec),
     )
+
+
+def _drop_needless_breaks(spec: WorkbookSpec) -> WorkbookSpec:
+    """
+    The model cuts sections that would fit on one page: a page whose blocks fit on one PDF
+    page without its page breaks loses them (compiled alone to know). A page that needs
+    more keeps the model's cuts.
+    """
+    pages = []
+    for page in spec.pages:
+        blocks = page.blocks or []
+        if page.template == "composite" and any(b.type == "page_break" for b in blocks):
+            whole = page.model_copy(update={"blocks": [b for b in blocks if b.type != "page_break"]})
+            if workbook_page_count(WorkbookSpec(pages=[whole])) == 1:
+                page = whole
+        pages.append(page)
+    return spec.model_copy(update={"pages": pages})
+
+
+# What a template suggestion is about (its first topic in this order): the model's
+# suggestions may already say it
+SUGGESTION_TOPICS = ("ouverture", "livrable", "protocole", "exemple contrasté", "durée", "tourne-la autrement")
+
+
+def _merge_suggestions(model: List[str], template: List[str]) -> List[str]:
+    """The model's suggestions, then those of the common template on a topic it left aside."""
+    said = " ".join(model).lower()
+
+    def topic(suggestion):
+        return next((t for t in SUGGESTION_TOPICS if t in suggestion.lower()), None)
+
+    return model + [s for s in template if not (topic(s) and topic(s) in said)]
 
 
 def _layout_suggestions(spec: WorkbookSpec) -> List[str]:
