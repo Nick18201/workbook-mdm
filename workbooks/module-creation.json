@@ -67,16 +67,19 @@
               "Pour mon énergie, mon poste devra…",
               "c3.energies",
               "creation_rappel_energie",
-              1.6
+              "sentence"
             ],
             [
               "Leurs conditions",
               "c5.grille",
               "creation_rappel_conditions",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "fields_card",
@@ -87,36 +90,36 @@
               [
                 "Ce que je crée",
                 "creation_activite",
-                1.6
+                "sentence"
               ],
               [
                 "Pour qui",
                 "creation_activite_public",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je veux vraiment, c'est…",
                 "creation_envie",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je crois devoir faire, parce qu'on l'attend de moi, c'est…",
                 "creation_attendu",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Je refuse…",
                 "creation_refus",
-                1.6
+                "sentence"
               ],
               [
                 "… donc mon activité devra…",
                 "creation_refus_donc",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -126,7 +129,7 @@
           "type": "question",
           "question": "Ce projet, je le fais pour moi, ou pour prouver quelque chose à quelqu'un : …",
           "field_id": "creation_pour_qui",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ]
@@ -231,7 +234,7 @@
           "question": "Mon activité en une phrase",
           "field_id": "creation_phrase",
           "subtitle": "Une trame : [mon activité] permet à [qui] de [résultat], sans [ce qui les gêne aujourd'hui].",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         }
       ]
     },
@@ -286,7 +289,7 @@
           "type": "question",
           "question": "L'écart vient de…",
           "field_id": "creation_prix_ecart",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "example": "je n'ose pas dépasser les prix des brocantes, alors que mes meubles sont restaurés et garantis."
         },
         {
@@ -298,12 +301,12 @@
               [
                 "Le prix que je n'ose pas annoncer",
                 "creation_prix_pas_ose",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je crains d'entendre",
                 "creation_prix_crainte",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -314,7 +317,7 @@
           "type": "question",
           "question": "Pour annoncer mon prix, je m'appuie sur…",
           "field_id": "creation_prix_appui",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ]
@@ -762,6 +765,9 @@
           "fixed": true
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "fields_card",
           "title": "Si mon activité ne couvre pas mon minimum vital",
           "rows": [
@@ -775,7 +781,7 @@
               [
                 "Ce que je ferai alors",
                 "creation_alors",
-                1.6,
+                "sentence",
                 3
               ]
             ]
@@ -787,7 +793,7 @@
           "type": "question",
           "question": "Ce que ces chiffres me disent de mon projet",
           "field_id": "creation_lecture",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         }
       ]
     },
@@ -824,24 +830,24 @@
               [
                 "Ce qu'en pense la personne qui partage ma vie",
                 "creation_risque_proche",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qu'elle craint",
                 "creation_risque_proche_crainte",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce qui me ferait le plus mal si le projet s'arrêtait",
                 "creation_risque_peur",
-                1.6
+                "sentence"
               ],
               [
                 "La tension que ce projet réveille",
                 "creation_risque_tension",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -973,6 +979,9 @@
           "fixed": true
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "link_card",
           "title": "Où vous renseigner",
           "fixed": true,
@@ -1006,12 +1015,12 @@
               [
                 "Ma décision : la combinaison que je retiens",
                 "creation_fin_decision",
-                1.6
+                "sentence"
               ],
               [
                 "Le risque que j'accepte",
                 "creation_fin_risque",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1096,7 +1105,7 @@
               [
                 "Ce que je teste",
                 "creation_test",
-                1.6,
+                "sentence",
                 2
               ],
               [
@@ -1122,12 +1131,12 @@
               [
                 "Je continue si…",
                 "creation_critere_continue",
-                1.6
+                "sentence"
               ],
               [
                 "Je revois l'offre si…",
                 "creation_critere_revois",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1359,7 +1368,7 @@
           "question": "Les prochaines étapes",
           "field_id": "creation_syn_etapes",
           "subtitle": "Les objectifs de votre feuille de route, piste A, avec ce que le module y change.",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         }
       ]
     },
@@ -1383,7 +1392,7 @@
               "Mes objectifs à 30, 60 et 90 jours",
               "route.feuilles",
               "creation_rappel_feuille",
-              1.6
+              "sentence"
             ]
           ]
         },
@@ -1392,7 +1401,7 @@
           "question": "Ce que le module change à ma feuille de route",
           "field_id": "creation_feuille_change",
           "subtitle": "Souvent, le test trouve sa place dans le palier de 60 jours.",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "rating_grid",
@@ -1415,7 +1424,7 @@
           "type": "question",
           "question": "Parce que…",
           "field_id": "creation_decision_raison",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "rating_grid",
@@ -1466,5 +1475,6 @@
         ]
       }
     }
-  ]
+  ],
+  "title": "Module création"
 }

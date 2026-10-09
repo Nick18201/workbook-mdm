@@ -49,7 +49,8 @@ Décision du 8 octobre 2026 : ces deux modules viennent plus tard. Le 9 octobre,
   - La durée dans le sourcil.
   - Un exemple contrasté par exercice, d'un métier au nom épicène, absent des carnets et du module création. Pas d'exemple sur un choix qu'il orienterait.
   - La charge moyenne ou le protocole, selon la page.
-  - Des cases de 1,6 cm pour une phrase, 0,8 cm pour un mot, et aucune page « (suite) ».
+  - Des cases dimensionnées par la réponse attendue (`"answer": "sentence"`, ou `"sentence"` à la place d'une hauteur), 0,85 cm pour un mot.
+  - Un exercice trop long se coupe en deux pages équilibrées (`page_break`), jamais un bloc seul sur la page « (suite) ».
 
 ## 3. Ce qui a changé depuis le 8 octobre
 
