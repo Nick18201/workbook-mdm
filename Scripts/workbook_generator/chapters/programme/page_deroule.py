@@ -75,9 +75,9 @@ def create_programme_page_deroule_2(c):
             "badge": "S4",
             "title": "Poser sans tabou votre rapport à l'argent",
             "description": (
-                "On pose les chiffres de votre sécurité financière : vos 4 seuils financiers, le revenu vital et le "
-                "revenu sécurisant, le délai de trésorerie que vous pouvez tenir. Une transition viable se calcule, "
-                "sans précariser l'équilibre de votre foyer."
+                "On pose les chiffres de votre sécurité financière : vos 4 seuils, le minimum vital, le minimum "
+                "sécurisant, le revenu cible et la durée pendant laquelle vous pouvez accepter une baisse. Une "
+                "transition viable se calcule, sans précariser l'équilibre de votre foyer."
             ),
             "objective": "fixer le seuil de sécurité financière qui servira à arbitrer vos pistes.",
         },
