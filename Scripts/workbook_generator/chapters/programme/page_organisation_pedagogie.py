@@ -42,7 +42,8 @@ def create_programme_page_organisation_pedagogie(c):
         items=[
             "<b>Rythme et alternance :</b> Le bilan alterne des entretiens réguliers en visio et des temps dédiés de "
             "travail personnel : 10 à 20 h en tout selon les personnes, soit environ 1 h 30 à 3 h entre deux séances, "
-            "en plus des 14 h d'accompagnement.",
+            "en plus des 14 h d'accompagnement. Un projet de création ajoute un module d'environ 2 h entre les "
+            "séances 9 et 10.",
             "<b>Supports accessibles en continu :</b> Vos exercices s'appuient sur vos carnets guidés et l'espace "
             "Notion ressource, disponibles dès la formalisation de votre parcours.",
             "<b>Consignes personnalisées :</b> À l'issue de chaque séance, votre accompagnateur formule des consignes "
