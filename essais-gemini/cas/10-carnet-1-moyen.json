@@ -3,7 +3,7 @@
   "serie": 3,
   "mode": "customize",
   "but": "Le niveau moyen (carnets 1, 3 et 5, relevé le 9 octobre 2026) : tous les exemples réécrits, la consigne et le sous-titre de chaque exercice dans son vocabulaire et sa situation, les questions gardant leur sens ; sa situation, oui ; ses faits, non.",
-  "reecrit_min": 0.25,
+  "niveau": "moyen",
   "requete": {
     "template_id": "carnet-1",
     "beneficiary_context": "Responsable commerciale dans une PME de matériel médical depuis 11 ans, 46 ans. Lassée des objectifs trimestriels et des tournées, elle veut quitter la vente sans perdre le contact avec les soignants. Pas encore de piste précise."

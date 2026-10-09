@@ -3,7 +3,7 @@
   "serie": 2,
   "mode": "customize",
   "but": "Le plus long carnet du bilan, partie par partie : ses reports (données des carnets précédents) et ses feuilles de route à 30, 60 et 90 jours gardés, aucun prénom écrit.",
-  "reecrit_min": 0.4,
+  "niveau": "fort",
   "parties": [
     1,
     2

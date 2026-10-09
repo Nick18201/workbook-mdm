@@ -3,7 +3,7 @@
   "serie": 2,
   "mode": "customize",
   "but": "Le module création découpé en deux parties (lot 4) : chaque appel sous la minute, la structure gardée, le niveau fort, des exemples sans montant.",
-  "reecrit_min": 0.4,
+  "niveau": "fort",
   "parties": [
     1,
     2

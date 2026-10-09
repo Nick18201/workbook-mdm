@@ -3,7 +3,7 @@
   "serie": 1,
   "mode": "customize",
   "but": "La personnalisation partie par partie, comme l'interface l'enchaîne (chaque appel part du résultat du précédent) : les pages des autres parties inchangées, les données du carnet (data_id) gardées, le prénom renseigné.",
-  "reecrit_min": 0.4,
+  "niveau": "fort",
   "parties": [
     1,
     2
