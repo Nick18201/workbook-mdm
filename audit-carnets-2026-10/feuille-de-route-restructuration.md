@@ -23,8 +23,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | Fusionné (PR #67) |
 | Champs 2 et 3 : cases étroites des carnets et du module, business plan, minimum des groupes de questions | Fusionné (PR #68) |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
-| R11 · Nettoyage : plus de `chap0` à `chap6` ni de livret de compétences | Branche `claude/r11-nettoyage`, PR à ouvrir |
-| Programme : noms des seuils, charge d'une création, test du module création | PR #69, à fusionner (indépendante de R11) |
+| R11 · Nettoyage : plus de `chap0` à `chap6` ni de livret de compétences | Fusionné (PR #70) |
+| Programme : noms des seuils, charge d'une création, test du module création | Fusionné (PR #69) |
 | Redéploiement de l'app (Cloud Run) | Après la fusion de R11, sur demande (section 8) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme (écarts relevés en R11 : section 7) |
 
