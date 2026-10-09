@@ -219,7 +219,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - Puis la définition fixe des valeurs de la grille.
     - Chaque fiche note la rémunération observée et sa source, et les débouchés dans la zone. Aucun chiffre n'est écrit dans le carnet.
 67. **Une fiche par page, et trois rangées de critères fixes**, car une quatrième ne tient pas (mesuré).
-    - Ce que fait le métier, adaptable : la piste et son numéro, ses missions d'après mes recherches (deux lignes), puis « Ce que je sais déjà faire » et « Ce qui me manque ».
+    - Ce que fait le métier, adaptable : la piste et son numéro, ses missions d'après mes recherches (deux lignes), « Son quotidien, tel que je l'imagine », puis « Ce que je sais déjà faire » et « Ce qui me manque ».
+    - « Son quotidien, tel que je l'imagine » vient du support d'enquête de Lysiane (9 octobre) : l'image du métier écrite avant le terrain, que l'exercice 4 relit au lieu de la reconstruire après coup.
     - « Face à mes critères » est une `rating_grid` : « Valeur 1 (2, 3) : condition remplie » et « Mon minimum est atteint », sur une seule échelle, « Oui / À terme / Non / À vérifier ». « Mon minimum » est le minimum sécurisant ; « à terme », il est atteint dans la durée acceptable d'une baisse. « À vérifier » devient une question d'enquête.
     - Puis la rémunération observée, sa source (deux cases d'une ligne), les débouchés dans ma zone (une phrase, deux lignes), ce qui me rechargerait, ce qui me coûterait, ce qu'il me reste à vérifier, auprès de qui.
     - « Ce que cette piste dit de ce que je cherche » n'est pas redemandé : c'est une colonne des pistes audacieuses du carnet 6, citée par un renvoi.
@@ -234,6 +235,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
     - En plus : la rémunération pour débuter, et « Qui d'autre me conseilleriez-vous de rencontrer ? ».
     - L'IA y entre pour tout le monde, plutôt qu'en ligne sur les fiches : « Qu'est-ce qui change dans votre métier : les besoins, les recrutements, ce que l'IA déplace ? »
     - Puis le report des trois questions d'entretien de la grille (`c5.grille`), et un renvoi à ce qu'il reste à vérifier sur chaque fiche.
+    - Complétée le 9 octobre d'après le support d'enquête de Lysiane, toujours en sept questions (la page est pleine) : la semaine ordinaire « soirs, week-ends et déplacements compris », les difficultés « la première année surtout », le contrat à l'entrée, la rémunération et les évolutions « après quelques années » (ce qui renseigne le « à terme » des fiches). La consigne dit de noter les réponses à part, pour le compte rendu.
 70. **Les contacts.**
     - Trois personnes à solliciter dans les dix jours, une par piste si possible : les modèles (carnet 1), la personne de l'interview (carnet 2), celles repérées en fin de carnet 6, par des renvois écrits. La page se fait « dès le début de la partie 1, sans attendre vos fiches ».
     - Le message d'approche du rapport 06 finit sur « seulement votre regard sur ce métier » (« un regard de professionnel » s'accordait).
@@ -242,7 +244,9 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 71. **Un compte rendu par entretien**, sur deux pages (le premier, puis le deuxième et le troisième). `c7.enquetes` est posé sur le premier.
     - La personne, son métier, la piste, la date (quatre cases d'une ligne) ; ce qui confirme ; « Ce qui contredit, ou m'étonne » ; ce que j'ai appris sur mes critères ; la suite.
     - Une immersion ou un salon se notent de la même façon.
+    - Chaque compte rendu finit sur « Mon intérêt, après l'échange » : En baisse / Stable / En hausse (support de Lysiane, 9 octobre). L'attrait se lit à part de la faisabilité, que juge la matrice.
 72. **Ce que le terrain vous a appris** reprend les trois lignes de l'app (l'accès, le quotidien et le rythme, la rémunération et les débouchés), en « ce que j'imaginais » et « ce que le terrain montre ».
+    - « Ce que j'imaginais » se relit dans les fiches, écrites avant le terrain (9 octobre).
     - Les sept pistes non retenues trouvent leur place ici : une carte facultative « Une piste apparue ou revenue » (la piste, d'où elle vient, ce qui m'y attire).
     - Pas de quatrième fiche dans le PDF : l'app peut en ajouter.
 73. **La matrice de faisabilité est un tableau fixe** (`c7.matrice`) : une colonne par piste, cinq lignes. Une phrase la définit d'abord : « Une piste est faisable quand vos compétences, le marché et les débouchés de votre zone le permettent, tout de suite ou après une passerelle. »

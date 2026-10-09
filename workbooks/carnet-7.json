@@ -237,6 +237,13 @@
             ],
             [
               [
+                "Son quotidien, tel que je l'imagine",
+                "c7_fiche_1_quotidien",
+                "sentence"
+              ]
+            ],
+            [
+              [
                 "Ce que je sais déjà faire",
                 "c7_fiche_1_acquis",
                 "sentence"
@@ -353,6 +360,13 @@
               [
                 "Ses missions, d'après mes recherches",
                 "c7_fiche_2_missions",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Son quotidien, tel que je l'imagine",
+                "c7_fiche_2_quotidien",
                 "sentence"
               ]
             ],
@@ -478,6 +492,13 @@
             ],
             [
               [
+                "Son quotidien, tel que je l'imagine",
+                "c7_fiche_3_quotidien",
+                "sentence"
+              ]
+            ],
+            [
+              [
                 "Ce que je sais déjà faire",
                 "c7_fiche_3_acquis",
                 "sentence"
@@ -582,7 +603,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Une enquête, c'est un échange d'une vingtaine de minutes avec une personne qui exerce le métier. Gardez cette grille sous les yeux : les questions communes, puis les vôtres, avec ce qu'il vous reste à vérifier sur chaque fiche (exercice 1). Vous n'avez pas à raconter votre bilan : vous choisissez ce que vous dites de vous."
+            "Une enquête, c'est un échange d'une vingtaine de minutes avec une personne qui exerce le métier. Gardez cette grille sous les yeux : les questions communes, puis les vôtres, avec ce qu'il vous reste à vérifier sur chaque fiche (exercice 1). Notez les réponses à part, pour votre compte rendu. Vous n'avez pas à raconter votre bilan : vous choisissez ce que vous dites de vous."
           ],
           "spacing_after_cm": 0.45
         },
@@ -594,10 +615,10 @@
           "type": "star_list",
           "items": [
             "« Quel a été votre parcours jusqu'à ce métier ? »",
-            "« Racontez-moi une semaine ordinaire. Qu'aimez-vous le plus, et que ne disent pas les fiches de poste ? »",
-            "« Quelles sont les difficultés, les contraintes cachées ? »",
+            "« Racontez-moi une semaine ordinaire, soirs, week-ends et déplacements compris. Qu'aimez-vous le plus, et que ne disent pas les fiches de poste ? »",
+            "« Quelles difficultés, quelles contraintes cachées, la première année surtout ? »",
             "« Qu'est-ce qui change dans votre métier : les besoins, les recrutements, ce que l'IA déplace ? »",
-            "« Comment y entre-t-on aujourd'hui, et à quelle rémunération peut-on s'attendre pour débuter ? »",
+            "« Comment y entre-t-on aujourd'hui, avec quel contrat ? Quelle rémunération pour débuter, puis après quelques années, avec quelles évolutions ? »",
             "« Quel conseil donneriez-vous à quelqu'un qui veut se lancer ? »",
             "« Qui d'autre me conseilleriez-vous de rencontrer ? »"
           ]
@@ -902,6 +923,20 @@
           "title": "Entretien 1",
           "question_labels": true,
           "data_id": "c7.enquetes"
+        },
+        {
+          "type": "rating_grid",
+          "items": [
+            [
+              "Mon intérêt, après l'échange",
+              "c7_entretien_1_interet"
+            ]
+          ],
+          "values": [
+            "En baisse",
+            "Stable",
+            "En hausse"
+          ]
         }
       ],
       "part": 2
@@ -969,6 +1004,20 @@
           "question_labels": true
         },
         {
+          "type": "rating_grid",
+          "items": [
+            [
+              "Mon intérêt, après l'échange",
+              "c7_entretien_2_interet"
+            ]
+          ],
+          "values": [
+            "En baisse",
+            "Stable",
+            "En hausse"
+          ]
+        },
+        {
           "type": "page_break"
         },
         {
@@ -1029,6 +1078,20 @@
           "question_labels": true
         },
         {
+          "type": "rating_grid",
+          "items": [
+            [
+              "Mon intérêt, après l'échange",
+              "c7_entretien_3_interet"
+            ]
+          ],
+          "values": [
+            "En baisse",
+            "Stable",
+            "En hausse"
+          ]
+        },
+        {
           "type": "annotation",
           "text": "Un entretien de plus ? Une feuille à part, les mêmes rubriques."
         }
@@ -1043,7 +1106,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Relisez vos comptes rendus. Pour chaque thème : ce que vous imaginiez avant le terrain, espoir ou crainte, puis ce que le terrain montre."
+            "Relisez vos fiches (exercice 1), écrites avant le terrain, puis vos comptes rendus. Pour chaque thème : ce que vous imaginiez, espoir ou crainte, puis ce que le terrain montre."
           ],
           "spacing_after_cm": 0.45
         },
