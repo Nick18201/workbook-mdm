@@ -21,14 +21,6 @@ DOCUMENTS = [
     ("main_generate_carnet_7", "generate_workbook_carnet_7"),
     ("main_generate_carnet_de_route", "generate_workbook_carnet_de_route"),
     ("main_generate_module_creation", "generate_workbook_module_creation"),
-    ("main_generate_chap0", "generate_workbook_chap0"),
-    ("main_generate_chap1", "generate_workbook_chap1"),
-    ("main_generate_chap2", "generate_workbook_chap2"),
-    ("main_generate_chap3", "generate_workbook_chap3"),
-    ("main_generate_chap4", "generate_workbook_chap4"),
-    ("main_generate_chap5", "generate_workbook_chap5"),
-    ("main_generate_chap6", "generate_workbook_chap6"),
-    ("main_generate_livret", "build_livret_competences"),
     ("main_generate_business_plan", "generate_workbook_business_plan"),
 ]
 

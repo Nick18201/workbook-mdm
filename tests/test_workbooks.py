@@ -55,10 +55,10 @@ def test_workbook_file_keeps_only_what_it_sets(workbook_id):
 
 def test_app_compiles_a_reference_workbook_like_the_cli():
     client = TestClient(app)
-    spec = client.get("/api/templates/chap2").json()
+    spec = client.get("/api/templates/carnet-2").json()
     pdf = client.post("/api/compile", json=spec)
     cli = io.BytesIO()
-    build_reference_workbook("chap2", cli)
+    build_reference_workbook("carnet-2", cli)
 
     app_doc = pymupdf.open(stream=pdf.content, filetype="pdf")
     cli_doc = pymupdf.open(stream=cli.getvalue(), filetype="pdf")
@@ -95,9 +95,9 @@ def test_business_plan_is_customized_part_by_part(monkeypatch):
 
 
 def test_customized_copy_does_not_change_the_reference():
-    copy = get_predefined_spec("chap1")
+    copy = get_predefined_spec("carnet-1")
     copy.pages[0].params["promise"] = "Autre promesse."
-    assert get_predefined_spec("chap1").pages[0].params["promise"] != "Autre promesse."
+    assert get_predefined_spec("carnet-1").pages[0].params["promise"] != "Autre promesse."
 
 
 # One block of each type, with its smallest content

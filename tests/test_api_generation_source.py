@@ -105,12 +105,12 @@ def test_gemini_client_is_reused_and_has_a_timeout(client, monkeypatch):
 
 def test_iterate_and_customize_flag_fallback(client, monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
-    spec = client.get("/api/templates/chap1").json()
+    spec = client.get("/api/templates/carnet-1").json()
 
     iterate = client.post("/api/iterate", json={"current_spec": spec, "feedback": "Allège la page 3"})
     customize = client.post(
         "/api/customize",
-        json={"template_id": "chap1", "beneficiary_name": "Alex", "beneficiary_context": "Ingénieur"},
+        json={"template_id": "carnet-1", "beneficiary_name": "Alex", "beneficiary_context": "Ingénieur"},
     )
 
     for r in (iterate, customize):

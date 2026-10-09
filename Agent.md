@@ -1,11 +1,11 @@
-# Contexte et Architecture du Projet "Workbook MDM" (Livret de Compétences)
+# Contexte et Architecture du Projet "Workbook MDM" (carnets de bord)
 
 Ce document sert de référence technique pour tout agent IA (ou développeur) intervenant sur le dépôt.
 
 ## 🏗️ Architecture Actuelle
 Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carnets de bord) dynamiquement via Python et la librairie `reportlab`. L'architecture est modulaire, isolant les contenus de la structure visuelle.
 
-- **`workbooks/`** : Le contenu des carnets (`chap0.json` à `chap6.json`), du livret et du business plan, un fichier JSON par document au format `WorkbookSpec` (`spec.py`). C'est la **source unique** des PDF et de l'app web : l'app propose ces mêmes fichiers à la personnalisation, et un livret créé dans l'app s'exporte en JSON pour rejoindre ce dossier.
+- **`workbooks/`** : Le contenu des carnets (`carnet-1.json` à `carnet-7.json`, `carnet-de-route.json` et son `module-creation.json`) et du livret business plan (`business-plan.json`), un fichier JSON par document au format `WorkbookSpec` (`spec.py`). C'est la **source unique** des PDF et de l'app web : l'app propose ces mêmes fichiers à la personnalisation, et un livret créé dans l'app s'exporte en JSON pour rejoindre ce dossier.
 - **`Scripts/main_generate_*.py`** : Les scripts d'entrée. Chacun compile un fichier de `workbooks/` avec `workbook_generator.compiler` ; seul le programme (`main_generate_programme.py`) assemble encore ses pages en Python avec `DocumentBuilder`.
 - **`Scripts/workbook_generator/`** : Le cœur graphique et applicatif :
   - `document_builder.py` : Contient la classe `DocumentBuilder` qui est le standard exclusif pour l'orchestration des documents (instanciation du canvas, gestion des accès fichiers, enregistrement des polices, pastel dominant et folio du carnet, fond ivoire des pages).
@@ -21,14 +21,14 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
   - **`chapters/programme/`** : La brochure du programme publiée sur le site, seul document resté en Python (avec ses blocs propres dans `common.py`). Règle : un dossier par document, scindé en sous-fichiers, jamais un fichier unique.
 - **`assets/`** : Contient les `fonts/` (DM Sans, Manrope, PT Mono, Instrument Serif, Material Symbols Outlined, avec leurs licences) et `illustrations/` (les logos CPF, France Travail, Qualiopi).
 - **`DA-workbook.md` et `design-system/`** : La direction artistique « Éditorial & Affirmé » (couleurs, typographie, éléments signature, ton et vocabulaire). Toute page doit s'y conformer.
-- **Fichiers racines** : Entrées PDF statiques (ex: `Workbook_Chapitre_1.pdf`) ou temporaires, ignorées par git.
+- **Fichiers racines** : Entrées PDF statiques (ex: `Carnet_1.pdf`) ou temporaires, ignorées par git.
 
 ## 📝 Conventions de Nommage
-- **Fichiers & Dossiers** : Principalement en `snake_case` (ex: `main_generate_chap1.py`, `workbook_generator`).
+- **Fichiers & Dossiers** : Principalement en `snake_case` (ex: `main_generate_carnet_1.py`, `workbook_generator`).
 - **Génération de Pages** : Le format standard d'une fonction de rendu de page est `create_<nom_de_la_page>_page(c)` (ex: `create_concept_page(c)`).
 - **Variables Canvas** : L'instance `reportlab.pdfgen.canvas.Canvas` responsable du dessin de la page doit toujours être nommée `c` et passée pour premier argument.
 - **Positionnement Y** : Lors de calculs de layouts verticaux, la variable contenant la hauteur courante est invariablement nommée `y_pos`.
-- **Fichiers en Sortie** : `Workbook_Chapitre_<N>.pdf`.
+- **Fichiers en Sortie** : `Carnet_<N>.pdf`, `Carnet_de_route.pdf`, `Module_creation.pdf`.
 
 ## 🎨 Direction artistique et ton
 - **Une seule palette** : fond ivoire, cartes pastel, zones à remplir blanches bordées en `line-strong`, titres à l'encre dont le dernier mot (ou les `*mots marqués*`) est en corail, repères en PT Mono. Jamais de couleur codée en dur : toujours `PDFStyle`.
@@ -40,9 +40,9 @@ Le projet génère des livrets pédagogiques au format PDF ("workbooks", ou carn
 1. **Environnement virtuel** : Travaillez dans le `.venv` existant (`.venv\Scripts\activate` sous Windows), installé depuis `requirements-dev.txt`.
 2. **Dépendances** : Les versions sont figées dans `requirements.txt` / `requirements-dev.txt` (voir `CLAUDE.md` pour les régénérer).
 3. **Arborescence d'Exécution** : Lancez toujours les scripts depuis la **racine du dépôt** (pour que le ciblage des `assets/` et la sauvegarde des Pdfs se fassent au bon endroit).
-4. **Tester / Compiler un chapitre** :
+4. **Tester / Compiler un carnet** :
    ```bash
-   python Scripts/main_generate_chap1.py
+   python Scripts/main_generate_carnet_1.py
    ```
    *Astuce : Le lancement direct d'un script dans `Scripts/` ajoutera automatiquement le sous-dossier au `sys.path`, permettant la résolution des imports `from workbook_generator.xxx ...`.*
 5. **Vérifier** : `python -m pytest tests` (dont `tests/test_cli_documents.py`, qui construit les carnets et vérifie que rien ne sort de la page), et la planche `python Scripts/test_all_templates.py`.

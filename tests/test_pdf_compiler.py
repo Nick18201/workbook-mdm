@@ -170,7 +170,7 @@ def test_cards_fit_the_answer_they_expect():
 
 
 def test_predefined_workbook_pdf_stays_light():
-    pdf = compile_workbook_from_spec(get_predefined_spec("chap1"))
+    pdf = compile_workbook_from_spec(get_predefined_spec("carnet-1"))
 
     assert len(pdf) < 1_500_000
 

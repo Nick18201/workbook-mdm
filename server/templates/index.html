@@ -502,8 +502,8 @@
         opt.innerText = `${t.title} (${t.page_count} pages)`;
         select.appendChild(opt);
       });
-      if (templates.some(t => t.id === 'chap1')) {
-        select.value = 'chap1';
+      if (templates.some(t => t.id === 'carnet-1')) {
+        select.value = 'carnet-1';
       }
       onTemplateChange();
     }
@@ -537,20 +537,20 @@
       {
         name: "Alexandre Martin",
         context: "Directeur Marketing de 42 ans en reconversion vers la création d'un atelier d'ébénisterie et de mobilier design éco-conçu. Enjeux : transition de revenus, légitimité créative, aménagement d'un atelier et rythme familial.",
-        instructions: "Adapter tous les exemples à l'artisanat du bois et à la création de marque. Accentuer l'objectif boussole et ce que le métier de ses parents lui a transmis.",
-        template: "chap1"
+        instructions: "Adapter tous les exemples à l'artisanat du bois et à la création de marque. Accentuer l'objectif de départ et ce que le métier de ses parents lui a transmis.",
+        template: "carnet-1"
       },
       {
         name: "Sarah Benali",
         context: "Directrice des Opérations RH (39 ans) souhaitant devenir Consultante indépendante en stratégie RSE & transition écologique des PME. Enjeux : tarification de ses offres, positionnement différenciant, trouver ses 3 premiers clients.",
-        instructions: "Adapter les exemples au conseil RSE et aux PME. Insister sur le minimum financier acceptable et la tarification de ses offres.",
-        template: "chap4"
+        instructions: "Adapter les exemples au conseil RSE et aux PME. Insister sur les quatre seuils et la tarification de ses offres.",
+        template: "carnet-4"
       },
       {
         name: "Julien Thomas",
         context: "Ingénieur aéronautique (45 ans) en reconversion vers la formation de managers de terrain. Enjeux : quitter le confort du salariat, apprendre à animer des groupes, développer son réseau.",
-        instructions: "Orienter les fiches métiers vers la formation de managers et le réseau. Insister sur le retour des proches.",
-        template: "chap6"
+        instructions: "Orienter les fiches et les enquêtes vers la formation de managers. Insister sur les contacts à solliciter.",
+        template: "carnet-7"
       },
       {
         name: "Élodie Garnier",
@@ -610,7 +610,7 @@
           ? `Personnalisation pour ${beneficiaryName} : partie ${k + 1} sur ${parts.length}, « ${partTitles[part - 1]} »...`
           : `Personnalisation du livret pour ${beneficiaryName} par Gemini Flash...`);
         const payload = {
-          template_id: spec ? null : (templateId || "chap1"),
+          template_id: spec ? null : (templateId || "carnet-1"),
           base_spec: spec,
           beneficiary_name: beneficiaryName,
           beneficiary_context: beneficiaryContext,

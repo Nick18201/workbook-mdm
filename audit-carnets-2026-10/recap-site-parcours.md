@@ -1,6 +1,6 @@
 # Nouveau découpage des séances et des carnets : récapitulatif pour le site
 
-Ce récapitulatif s'adresse à l'agent qui s'occupe du site (dépôt `marge-de-manoeuvre`). Il a été rédigé le 8 octobre 2026 à partir du dépôt `mdm-workbook`. La carte complète du parcours est dans `audit-carnets-2026-10/carte-parcours-unifie.md`.
+Ce récapitulatif s'adresse à l'agent qui s'occupe du site (dépôt `marge-de-manoeuvre`). Il a été rédigé le 8 octobre 2026 à partir du dépôt `mdm-workbook`, et mis à jour le 9 octobre 2026 (R11) sur les carnets livrés : voir « Mise à jour du 9 octobre » en fin de document. La carte complète du parcours est dans `audit-carnets-2026-10/carte-parcours-unifie.md`.
 
 ## À lire d'abord
 
@@ -151,7 +151,7 @@ Le champ `chapter` passe de 0 à 6 à **1 à 7**. Les textes ci-dessous décrive
   - « Vos tendances face à l'argent »
 - Livrable : « Seuil de sécurité financière » — « Minimum vital, minimum sécurisant, revenu cible et durée acceptable d'une baisse, pour arbitrer vos pistes. »
 
-**Carnet 5 · Valeurs & moteurs profonds**
+**Carnet 5 · Valeurs et moteurs profonds**
 - Sous-titre : « Le socle non négociable »
 - Objectif : « Identifier vos 3 valeurs non négociables et les traduire en critères observables sur le terrain. »
 - Exercices :
@@ -161,7 +161,7 @@ Le champ `chapter` passe de 0 à 6 à **1 à 7**. Les textes ci-dessous décrive
   - « Grille anti-compromis »
 - Livrable : « Grille anti-compromis » — « Pour chaque valeur : la condition observable, le signal d'alerte et la question à poser en entretien. »
 
-**Carnet 6 · Phase d'exploration**
+**Carnet 6 · L'exploration**
 - Sous-titre : « Ouvrir les possibles »
 - Objectif : « Générer 10 pistes qualifiées (5 réalistes, 5 audacieuses) à partir de tout ce que vous avez appris sur vous. »
 - Exercices :
@@ -182,8 +182,8 @@ Le champ `chapter` passe de 0 à 6 à **1 à 7**. Les textes ci-dessous décrive
 - Livrable : « Retours d'enquêtes et matrice de faisabilité » — « Ce que le terrain confirme ou contredit, et vos 3 scénarios comparés en séance 8. »
 
 **Le carnet de route** (temps 3, après le carnet 7)
-- Une partie commune : compétences prouvées, deux récits d'action, piste A et piste B, feuilles de route à 30, 60 et 90 jours, premières actions sous 7 jours, garde-fous et alliés.
-- Un module selon le projet : création (business plan), reconversion (formation et financement), évolution interne (argumentaire de repositionnement).
+- Une partie commune : compétences prouvées, deux récits d'action, piste A et piste B, feuilles de route à 30, 60 et 90 jours, premières actions sous 7 jours, garde-fous et soutiens, chemin parcouru.
+- Un module selon le projet. Seul le module création (le business plan court, 2 h, entre les séances 9 et 10) existe. La reconversion (formation et financement) et l'évolution interne (argumentaire de repositionnement) se travaillent en séance 9, en attendant leurs modules : ne pas présenter ces deux modules comme des documents remis.
 - Le site présente déjà « le carnet de route de votre projet » (section « Trois projets possibles ») : ce cadre reste juste.
 
 ## Le MBTI : supprimer toute mention
@@ -237,3 +237,25 @@ Relevé fait en lecture seule le 8 octobre 2026, au commit `89967a1`.
 | `src/data/comparisons/chance.ts` | Rien à changer si le titre « Mon rapport à l'argent » est gardé. |
 
 Pour être exhaustif, chercher aussi dans `src/` : « chapitre 0 », « Chapitre », « prélude », « séance 7 », « septième séance », « livret de compétences », « MBTI », « ISFJ », « officiel », « Hexa3D », et le champ `chapter:`.
+
+## Mise à jour du 9 octobre 2026 (R11)
+
+Les carnets sont livrés. Le site a déjà repris ce récapitulatif ; trois points ont changé depuis, à reporter dans `src/data/bilanNotebooks.ts` et son test :
+
+| Où | Aujourd'hui sur le site | Dans les carnets |
+|---|---|---|
+| Carnet 5, `title` | « Valeurs & moteurs profonds » | « Valeurs et moteurs profonds » |
+| Carnet 6, `title` | « Phase d'exploration » | « L'exploration » |
+| Carnet de route | (le site ne détaille pas sa partie commune) | « garde-fous et soutiens », plus « alliés » |
+
+Les modules reconversion et évolution interne n'existent pas encore : seul le module création est remis (voir « Le carnet de route » plus haut). Les phrases du site sur « le carnet de route de votre projet » restent justes, puisque la séance 9 et la personnalisation adaptent le carnet de route au projet.
+
+Le programme PDF a été aligné en même temps (PR #69 de `mdm-workbook`). Le site reprend ses textes mot pour mot ; à reporter avec le nouveau PDF :
+
+| Où | Aujourd'hui sur le site | Nouveau texte |
+|---|---|---|
+| `src/data/bilanMethod.ts`, description de S4 | « vos 4 seuils financiers, le revenu vital et le revenu sécurisant, le délai de trésorerie que vous pouvez tenir. » | « On pose les chiffres de votre sécurité financière : vos 4 seuils, le minimum vital, le minimum sécurisant, le revenu cible et la durée pendant laquelle vous pouvez accepter une baisse. Une transition viable se calcule, sans précariser l'équilibre de votre foyer. » |
+| Travail personnel (`bilanBetweenSessions.ts`, et partout où le site donne les 10 à 20 h) | « 10 à 20 h … selon les personnes » | Ajouter : « Un projet de création ajoute un module d'environ 2 h entre les séances 9 et 10. » |
+| `src/data/bilanProjects.ts`, trajectoire « Création » | « une offre pilote, testable sous 15 jours » ; « statut, ACRE ou ARCE, premiers clients » | Inchangé : le module création tient désormais ces promesses (test sur 15 jours au plus, ARCE et ACRE nommées). |
+
+Les quatre exercices de chaque carnet restent fidèles aux carnets livrés (le site en impose exactement quatre) : au carnet 1, l'objectif de départ figure dans le livrable, et « ce que vous en faites » couvre les modèles et anti-modèles.
