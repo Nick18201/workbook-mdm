@@ -47,7 +47,7 @@ L'agent DOIT respecter scrupuleusement les directives de [`Agent.md`](file:///c:
 
 | N° | Gabarit | Appel API (`workbook_generator`) | Usage |
 |:---|:---|:---|:---|
-| **1** | **Couverture** | `create_cover_page(c, title, number, tagline, promise)` | Logotype, illustration de la table de travail (au pastel du carnet), gros numéro PT Mono, titre avec mot d'accent, promesse sur un post-it |
+| **1** | **Couverture** | `create_cover_page(c, title, number, tagline, promise)` | Toute en typographie : signature, frise des sept carnets, numéro géant en DM Sans 800 terminé par le point corail (« route. » pour le carnet de route), disque au pastel du carnet, titre avec mot d'accent, promesse en Instrument Serif |
 | **2** | **Ouverture de carnet** | `create_standard_summary_page(c, num, title, intro, points, duration, split)` | Sourcil, gros numéro, titre, objectif, encadré EXERCICES & PROTOCOLES à puces étoile, durée, découpage et cadre |
 | **3** | **Questions Auto-Fit** | `PageLayout.add_questions_group(questions)` | 1 à 4 questions sur cartes pastel, boîtes auto-dimensionnées |
 | **4** | **Météo Intérieure** | `create_standard_meteo_page(c, title, part_title, ...)` | Humeur et pictogrammes météo, jauge d'énergie 0-10 en pastilles, réflexion |

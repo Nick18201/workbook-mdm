@@ -136,7 +136,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - 'deep' (Complet) : STRICTEMENT PLUS DE 10 PAGES (11 à 14 pages).
      Parcours d'introspection approfondi et complet : Couverture, Sommaire, (Météo si demandée), Matrice 4 piliers, Passerelle freins/leviers, Enquête exploratoire terrain, Tableau d'évaluation / Crash test, Matrice d'arbitrage de cap, Feuille de route 30-60-90j, Questions d'ancrage, (Engagement si demandé), Clôture.
 3. Structure & Enchaînement des pages :
-   - Page 1 : 'cover' (Couverture : numéro et titre du carnet, et la promesse du carnet sur un post-it)
+   - Page 1 : 'cover' (Couverture : grand numéro et titre du carnet, et la promesse du carnet sous le titre)
    - Page 2 : 'summary' (Sommaire fidèle des étapes du livret avec numéros et courtes descriptions)
    - Page 3 (Conditionnelle selon l'option Page Météo demandée) :
      * Si Check-in = 'none' : NE METS AUCUNE PAGE MÉTÉO NI ICE-BREAKER ! Passe immédiatement aux exercices de fond après le sommaire.
@@ -175,7 +175,7 @@ RÈGLES D'OR DE STRUCTURATION :
    - Sois synthétique, concret et orienté passage à l'action.
 
 5. STRUCTURE DES PARAMÈTRES PAR GABARIT (dans "params") :
-   - 'cover' : {"subtitle": "Carnet 4 : Mon rapport à l'argent", "title": "BILAN DE COMPÉTENCES", "promise": "Phrase de 3 à 8 mots sur ce que le carnet apporte (post-it)"}
+   - 'cover' : {"subtitle": "Carnet 4 : Mon rapport à l'argent", "title": "BILAN DE COMPÉTENCES", "promise": "Phrase de 3 à 8 mots sur ce que le carnet apporte"}
    - 'summary' : {"intro_text": "Court texte d'introduction...", "points": [{"label": "01", "desc": "Titre et résumé de l'étape"}]}
    - 'meteo' : {"emotion_prompt": "Aujourd'hui, je me sens :", "energy_prompt": "Mon niveau d'énergie :", "thought_prompt": "Ce qui prend le plus de place dans ma tête :"}
    - 'quadrants' : {"instruction": "Consigne...", "quadrants": [{"title": "Professionnel", "subtitle": "Sens, Mission"}, {"title": "Personnel", "subtitle": "Santé, Équilibre"}, {"title": "Social", "subtitle": "Relations"}, {"title": "Cadre", "subtitle": "Limites, Règles"}]}

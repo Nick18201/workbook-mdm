@@ -49,31 +49,47 @@ def _rgb(color):
     return tuple(round(v * 255) for v in color.rgb())
 
 
-def test_cover_illustration_takes_the_document_pastel():
+def _cover(carnet, number, title="Un *titre.*", promise=None):
     buffer = io.BytesIO()
-    builder = DocumentBuilder(buffer, carnet=7)
-    builder.add_page(create_cover_page, "Confronter *au terrain.*", 7, None, None, "Un salaire et un rythme de vie.")
+    builder = DocumentBuilder(buffer, carnet=carnet)
+    builder.add_page(create_cover_page, title, number, None, None, promise)
+    builder.add_page(lambda c: (draw_folio(c), c.showPage()))
     builder.save()
-    page = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")[0]
+    return pymupdf.open(stream=buffer.getvalue(), filetype="pdf")
+
+
+def test_cover_takes_the_document_pastel():
+    page = _cover(7, 7, "Confronter *au terrain.*", "Trois pistes, confrontées au réel.")[0]
 
     fills = {tuple(round(v * 255) for v in d["fill"]) for d in page.get_drawings() if d.get("fill")}
-    assert _rgb(PDFStyle.COLOR_BLUE) in fills  # the open notebook of the illustration
-    assert _rgb(PDFStyle.PASTELS["blush"]) in fills  # carnet 7's pastel...
-    assert _rgb(PDFStyle.PASTELS["lilac"]) not in fills  # ...in place of the SVG's placeholder
-    assert "Un salaire et un rythme de vie." in " ".join(page.get_text().split())
+    assert _rgb(PDFStyle.PASTELS["blush"]) in fills  # carnet 7's disc
+    assert _rgb(PDFStyle.COLOR_CORAL) in fills  # the full stop of the number, this carnet in the row
+    assert "Trois pistes, confrontées au réel." in " ".join(page.get_text().split())
+
+
+@pytest.mark.parametrize("carnet, number, hero, row", [
+    (3, 3, "3", "CARNET3SUR7"),
+    (3, "03", "3", "CARNET3SUR7"),  # an LLM spec may pad it
+    ("route", "", "route", "APRÈSLES7CARNETS"),
+    (None, "Module 3", None, None),  # too long for a giant number: a larger title instead
+    (None, None, None, None),
+])
+def test_cover_sets_the_number_giant(carnet, number, hero, row):
+    page = _cover(carnet, number)[0]
+    spans = [s for b in page.get_text("dict")["blocks"] for line in b.get("lines", []) for s in line["spans"]]
+    giant = [s["text"].strip() for s in spans if s["size"] > 100]
+
+    assert giant == ([hero] if hero else [])
+    if row:
+        assert row in "".join(page.get_text().split()).upper()
 
 
 @pytest.mark.parametrize("carnet, eyebrow, folio", [
-    (3, "CARNETDEBORD·CARNET3", "CARNET3/7"),
+    (3, "CARNETDEBORD", "CARNET3/7"),
     ("route", "CARNETDEROUTE", "CARNETDEROUTE·P.2"),
 ])
 def test_carnet_names_its_cover_and_folio(carnet, eyebrow, folio):
-    buffer = io.BytesIO()
-    builder = DocumentBuilder(buffer, carnet=carnet)
-    builder.add_page(create_cover_page, "Un *titre.*", None if carnet == "route" else carnet)
-    builder.add_page(lambda c: (draw_folio(c), c.showPage()))
-    builder.save()
-    doc = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")
+    doc = _cover(carnet, None if carnet == "route" else carnet)
 
     # Tracked capitals come out letter by letter: compare without spaces
     assert eyebrow in "".join(doc[0].get_text().split()).upper()

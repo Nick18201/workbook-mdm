@@ -28,12 +28,12 @@ Propositions pour le générateur de carnets de bord. Elles ne viennent pas du s
 
 ## Gabarits
 
-- **Couverture** :
-  - fond `surface` et logotype ;
-  - le `numero` du carnet en `brand-blue` ;
-  - le titre en `titre-section` avec un mot en `brand-coral` (« Mon rapport *à l'argent.* ») ;
-  - un disque pastel coupé par le bord ;
-  - un post-it qui porte la promesse du carnet.
+- **Couverture** (toute en typographie) :
+  - la signature « marge de manœuvre. » et le sous-titre en `sourcil` ;
+  - la frise des sept carnets (faits en `ink`, celui-ci en `brand-coral`, à venir en contour), puis « CARNET 3 SUR 7 » ;
+  - le numéro du carnet en très grand, DM Sans 800 en `ink`, terminé par le point `brand-coral` de la signature (« 4. » ; « route. » pour le carnet de route) ;
+  - un disque pastel coupé par le bord droit, derrière le numéro ;
+  - le titre en `titre-section` avec un mot en `brand-coral` (« Mon rapport *à l'argent.* »), puis la promesse en `annotation`.
 - **Ouverture de carnet** :
   - `sourcil` « CARNET DE BORD · CARNET 4 » (« CARNET DE ROUTE » pour le carnet de route) ;
   - `numero` et sous-titre en `etiquette` ;
