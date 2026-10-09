@@ -39,16 +39,23 @@ from server.models import (
     CustomizeRequest,
     CustomizeResponse,
     CheckRequest,
+    CoverageRequest,
+    CoverageResponse,
     FindingInfo,
+    LayoutRequest,
+    LayoutResponse,
+    MissingElement,
     PageCountResponse,
     TemplateInfo,
 )
 from workbook_generator.conformity import check_spec
+from workbook_generator.coverage import check_coverage
 from workbook_generator.primitives import plain_title
 from server.gemini_service import (
     parse_notes_with_gemini,
     refine_spec_with_gemini,
     customize_spec_with_gemini,
+    layout_support_with_gemini,
 )
 from workbook_generator.compiler import compile_workbook_from_spec, workbook_page_count
 from server.predefined_workbooks import (
@@ -82,6 +89,7 @@ _FIELD_LABELS = {
     "beneficiary_name": "Nom du bénéficiaire",
     "beneficiary_context": "Contexte du bénéficiaire",
     "custom_instructions": "Consignes spécifiques",
+    "source_text": "Texte du support",
 }
 
 
@@ -203,6 +211,22 @@ def api_iterate_spec(request: IterateRequest, response: Response):
         raise _internal_error("L'ajustement du livret")
 
 
+@app.post("/api/layout", response_model=LayoutResponse, response_model_exclude_unset=True)
+def api_layout_support(request: LayoutRequest, response: Response):
+    """
+    Met en page un support déjà écrit, tel quel : chaque question, consigne et case
+    gardée, dans l'ordre ; seules changent la typographie, les mots proscrits et la taille
+    des cases. Les ajouts possibles reviennent à part, dans 'suggestions'.
+    """
+    try:
+        result, fallback_reason = layout_support_with_gemini(request)
+        response.headers.update(_generation_headers(fallback_reason))
+        return result
+    except Exception as e:
+        logger.error("Erreur lors de la mise en page du support : %s", e, exc_info=True)
+        raise _internal_error("La mise en page du support")
+
+
 @app.get("/api/templates", response_model=list[TemplateInfo])
 def api_list_templates():
     """
@@ -297,6 +321,22 @@ def api_check_spec(request: CheckRequest):
     except Exception as e:
         logger.error("Erreur lors du contrôle de conformité : %s", e, exc_info=True)
         raise _internal_error("Le contrôle de conformité")
+
+
+@app.post("/api/coverage", response_model=CoverageResponse)
+def api_coverage(request: CoverageRequest):
+    """
+    Couverture d'un support par sa maquette : chaque question et chaque libellé du support
+    retrouvé, dans l'ordre, puis leurs options (« Couverture : 40/40 » sous l'aperçu).
+    """
+    try:
+        coverage = check_coverage(request.spec, request.source_text)
+        return CoverageResponse(
+            **coverage._asdict() | {"missing": [MissingElement(**m._asdict()) for m in coverage.missing]}
+        )
+    except Exception as e:
+        logger.error("Erreur lors du contrôle de couverture : %s", e, exc_info=True)
+        raise _internal_error("Le contrôle de couverture")
 
 
 @app.post("/api/quick-generate")

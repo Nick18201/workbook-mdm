@@ -133,8 +133,14 @@ class FindingInfo(BaseModel):
 class CustomizeRequest(BaseModel):
     template_id: Optional[str] = Field(None, max_length=50, description="Identifiant du modèle de base (ex: 'carnet-1')")
     base_spec: Optional[WorkbookSpec] = Field(None, description="Spécification de base si livret personnalisé ou importé")
-    beneficiary_name: str = Field(..., max_length=MAX_NAME_LENGTH, description="Prénom ou nom complet du bénéficiaire")
-    beneficiary_context: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Profil, métier actuel, projet visé, défis majeurs")
+    beneficiary_name: Optional[str] = Field(
+        None, max_length=MAX_NAME_LENGTH,
+        description="Prénom du bénéficiaire (facultatif : une personnalisation peut viser un métier ou un thème)",
+    )
+    beneficiary_context: str = Field(
+        ..., max_length=MAX_INSTRUCTION_LENGTH,
+        description="Profil, métier ou thème : métier actuel, projet visé, défis majeurs",
+    )
     custom_instructions: Optional[str] = Field(None, max_length=MAX_INSTRUCTION_LENGTH, description="Consignes spécifiques d'adaptation souhaitées")
     part: Optional[int] = Field(
         None, ge=1, le=MAX_PARTS, description="Partie à personnaliser d'un livret découpé en parties (tout le livret si omis)"
@@ -153,3 +159,48 @@ class CustomizeResponse(BaseModel):
     pedagogical_note: Optional[str] = Field(None, description="Conseil pédagogique pour l'accompagnement")
 
 
+class LayoutRequest(BaseModel):
+    """A finished support, laid out as it was written (« Mettre en page un support »)."""
+
+    source_text: str = Field(
+        ..., min_length=1, max_length=MAX_NOTES_LENGTH, description="Texte du support, copié-collé d'un PDF ou d'un document"
+    )
+    chapter_title: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Titre (vide : celui du support)")
+    chapter_num: Optional[int] = Field(
+        None, ge=0, le=20,
+        description="Numéro du carnet (1 à 7 : un carnet du bilan) ; vide ou 0 : un document hors de la suite des carnets",
+    )
+    beneficiary_name: Optional[str] = Field(None, max_length=MAX_NAME_LENGTH, description="Prénom du bénéficiaire")
+    frame: bool = Field(
+        True, description="Une couverture (le seul titre) et un dos (sans message) : le cadre de la mise en page"
+    )
+
+
+class LayoutResponse(BaseModel):
+    spec: WorkbookSpec = Field(..., description="Le support mis en page")
+    changes_summary: str = Field(..., description="Ce qui a changé : typographie, mots proscrits remplacés, tailles de case")
+    suggestions: List[str] = Field(
+        default_factory=list,
+        description="Les ajouts qui rapprocheraient le support de nos carnets, chacun une consigne pour « Ajuster »",
+    )
+
+
+class CoverageRequest(BaseModel):
+    spec: WorkbookSpec = Field(..., description="Spécification à contrôler")
+    source_text: str = Field(..., min_length=1, max_length=MAX_NOTES_LENGTH, description="Texte du support d'origine")
+
+
+class MissingElement(BaseModel):
+    kind: str = Field(..., description="« question », « libellé » ou « option »")
+    text: str = Field(..., description="L'élément, tel que le support l'écrit")
+    of: Optional[str] = Field(None, description="Pour une option : sa question")
+    note: Optional[str] = Field(None, description="Une piste (un mot proscrit, sans doute remplacé)")
+
+
+class CoverageResponse(BaseModel):
+    total: int = Field(..., description="Questions et libellés du support")
+    found: int = Field(..., description="Questions et libellés retrouvés dans la maquette")
+    options_total: int = Field(..., description="Options des questions du support")
+    options_found: int = Field(..., description="Options retrouvées")
+    missing: List[MissingElement] = Field(default_factory=list, description="Ce que la maquette a perdu")
+    out_of_order: List[str] = Field(default_factory=list, description="Éléments retrouvés hors de l'ordre du support")

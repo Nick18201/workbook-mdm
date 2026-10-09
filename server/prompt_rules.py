@@ -1,8 +1,10 @@
 """
 The rules that guided the reference carnets, written for Gemini: one source for every
-prompt (creation from notes, customization, retouching). Each section names the document
-it comes from; a rule added to the carnets is added here too, and tests/test_prompts.py
-checks that each prompt carries the sections it needs.
+prompt (creation from notes, faithful layout of a support, customization, retouching).
+Each section names the document it comes from; a rule added to the carnets is added here
+too, and tests/test_prompts.py checks that each prompt carries the sections it needs, and
+no other (a faithful layout gets the forbidden words, not the whole tone, which would have
+it rewrite the support).
 
 Sources: DA-workbook.md (section 7, tone), audit-carnets-2026-10/carte-parcours-unifie.md
 (sections 3, 4 and 8), audit-carnets-2026-10/feuille-de-route-restructuration.md (sections 5
@@ -16,18 +18,23 @@ from workbook_generator.spec import load_workbook
 
 # --- Tone and vocabulary (DA-workbook.md, section 7; feuille de route, section 6) -----
 
+# The forbidden words, also the only wording a faithful layout changes (FIDELITY_RULES)
+VOCABULARY_RULES = """MOTS PROSCRITS (charte, section 7) :
+- Le registre du développement personnel : « quête de sens », « retrouver votre élan », « espace d'écoute bienveillant », « croyances limitantes », « syndrome de l'imposteur », ennéagramme, « lâcher prise », « épanouissement ».
+- Le métier : jamais « coach » ni « coaching ». Dire « consultant en transformation », « la personne qui vous accompagne » ou « la personne référente ». Jamais « cabinet » pour parler de Marge de Manœuvre. « Binôme » jamais d'une façon qui laisse croire que deux personnes sont en séance.
+- Tout l'accompagnement se fait à distance : jamais « présentiel ».
+- Le test du bilan s'appelle « test des fonctionnements cognitifs » : jamais « MBTI » ni type en quatre lettres (ISFJ…).
+- Le tutoiement : toujours le vouvoiement, sauf dans un message cité entre guillemets.
+"""
+
 TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les textes du document) :
 - Vouvoiement. Phrases courtes, affirmatives et concrètes, tournées vers la décision et l'action.
 - Lexique à privilégier : action, décision, projet, livrable, marché, faisabilité, salaire, rythme de vie, arbitrage, « validé en séance ».
-- À proscrire : le registre du développement personnel (« quête de sens », « retrouver votre élan », « espace d'écoute bienveillant », « croyances limitantes », « syndrome de l'imposteur », ennéagramme, « lâcher prise », « épanouissement »).
-- Le métier : jamais « coach » ni « coaching ». Dire « consultant en transformation », « la personne qui vous accompagne » ou « la personne référente ». Jamais « cabinet » pour parler de Marge de Manœuvre. « Binôme » jamais d'une façon qui laisse croire que deux personnes sont en séance.
-- Tout l'accompagnement se fait à distance : jamais « présentiel ».
 - N'invente aucun chiffre, témoignage, partenariat ni adresse web ; aucune statistique sans source ; aucun montant, salaire ni règle fiscale écrits en dur (renvoyer à la source officielle, ou « à voir en séance »).
 - Formules non genrées : les amorces en « je » n'ont ni participe ni adjectif qui s'accorde avec la personne. Écrire « Ce qui m'étonne » (pas « Ce qui m'a surpris »), « ce qui m'a fait agir ainsi » (pas « ce qui m'a poussé »), « votre clientèle » (pas « vos clients »). Les exemples prennent des métiers au nom épicène (juriste, ergonome, géomètre).
 - Titres de page : une affirmation ponctuée, en minuscules sauf la première lettre et les noms propres, terminée par un point, un « ? » ou un « ! » (« Votre situation actuelle. »). Le dernier mot s'affiche en corail ; pour un autre groupe de mots, l'entourer d'astérisques (« Mon rapport *à l'argent.* »). Un titre dont le premier mot finit par une apostrophe se marque en entier (« *L'exploration.* »). 25 à 45 caractères.
-- Le test du bilan s'appelle « test des fonctionnements cognitifs » : jamais « MBTI » ni type en quatre lettres (ISFJ…).
 - Typographie française : guillemets « », espace avant : ; ! ?, « œ » (cœur, manœuvre). Aucun émoji ni pictogramme (la police du PDF ne les affiche pas).
-"""
+""" + VOCABULARY_RULES
 
 # --- The common template of a carnet (carte, section 4; feuille de route, section 5) ---
 
@@ -42,6 +49,10 @@ TEMPLATE_RULES = """LE GABARIT COMMUN DE NOS CARNETS (carte du parcours, section
 
 # --- The exercises (carte, section 4; feuille de route, sections 5 and 6) -------------
 
+# The room on a page (the measures of our carnets), also for a faithful layout
+SPACE_RULES = """- La place (mesures de nos carnets) : une page d'exercice offre environ 23 cm sous son titre. Comptez 1 cm par ligne de consigne, 5 cm pour l'exemple contrasté, 3,7 cm pour une question et sa case d'une phrase (5 cm pour un paragraphe), 2,7 cm par rangée de 'fields_card' à deux cases d'une phrase côte à côte, 4 cm pour une 'rating_grid' d'une ligne. Un exercice qui dépasse une page se coupe entre deux blocs par un 'page_break', en deux pages à peu près égales : jamais une page « (suite) » qui ne porte qu'une case. Pour gagner de la place, mettez deux cases d'une phrase côte à côte dans une 'fields_card'.
+"""
+
 EXERCISE_RULES = """LES EXERCICES (conventions de nos carnets) :
 - Des formats variés, choisis pour ce qu'on demande : des questions ('question', 'questions_group'), des informations courtes côte à côte ('fields_card'), un choix exclusif en mots ('rating_grid' d'une ligne, suivie d'une case « Parce que… »), une échelle ('scale'), un tableau qui croise des données ('table' : une colonne par donnée, une ligne par critère), une liste à cocher ('checklist'), des étapes ou des questions à garder sous les yeux ('star_list'), un modèle de message ('callout').
 - Une case, une information. Une question qui demande deux choses a deux cases (« Le scénario vers lequel je penche » · « Pourquoi lui ») ; une donnée et sa source vont dans deux cases côte à côte ; le lieu, le trajet, le télétravail prennent chacun une case d'une ligne, sous un titre de carte.
@@ -51,8 +62,7 @@ EXERCISE_RULES = """LES EXERCICES (conventions de nos carnets) :
 - Les cases restent vides : jamais de réponse, d'objectif ni d'action préremplis. Une feuille de route se fait avec un 'table' (une ligne par palier), jamais avec le gabarit 'roadmap'.
 - Pas de tableau sans case à remplir : chaque cellule à remplir est une case {"field_id": …, "placeholder": …}.
 - Questions courtes (120 caractères au plus), consignes en une ou deux phrases.
-- La place (mesures de nos carnets) : une page d'exercice offre environ 23 cm sous son titre. Comptez 1 cm par ligne de consigne, 5 cm pour l'exemple contrasté, 3,7 cm pour une question et sa case d'une phrase (5 cm pour un paragraphe), 2,7 cm par rangée de 'fields_card' à deux cases d'une phrase côte à côte, 4 cm pour une 'rating_grid' d'une ligne. Un exercice qui dépasse une page se coupe entre deux blocs par un 'page_break', en deux pages à peu près égales : jamais une page « (suite) » qui ne porte qu'une case. Pour gagner de la place, mettez deux cases d'une phrase côte à côte dans une 'fields_card'.
-"""
+""" + SPACE_RULES
 
 # --- Heavy questions: James Pennebaker's line, with a safety net ----------------------
 
@@ -112,6 +122,27 @@ PERSONALIZATION_RULES = """CE QUE LA PERSONNALISATION CHANGE (carte du parcours,
   * carnets 2 et 4 : moyenne (vocabulaire du secteur ; sa situation : reconversion, évolution, retour à l'emploi ; au carnet 4, son statut : salarié, indépendant, demandeur d'emploi, et jamais un chiffre personnel) ;
   * carnets 1, 3 et 5 : faible (au plus les exemples ; au carnet 3, ne touche jamais les questions du test des fonctionnements cognitifs, la restitution en serait faussée).
 - Ne préremplis jamais une case : la personne écrit ses réponses. N'ajoute ni ne retire de page, de bloc ou de question, sauf si le consultant le demande.
+"""
+
+# --- A faithful layout of a finished support (choices of 9 October 2026) --------------
+
+FIDELITY_RULES = """MISE EN PAGE FIDÈLE D'UN SUPPORT DÉJÀ ÉCRIT :
+- Le support est fini : tu le mets en page dans nos carnets, tu ne le réécris pas. Chaque titre, consigne, question, libellé à compléter et option est repris, dans l'ordre du support, mot pour mot.
+- Ne changent que :
+  * la typographie française : guillemets « », apostrophes, espaces, « œ » ; un texte écrit tout en capitales passe en minuscules, sauf la première lettre, les sigles et les noms propres ; un titre de page finit par un point (« Comprendre la réalité du métier. ») ;
+  * les mots proscrits (liste ci-dessous), remplacés au plus près (« présentiel » → « sur place », « coach » → « la personne qui vous accompagne »), et le tutoiement, passé au vouvoiement ;
+  * la taille des cases : 'answer' selon la réponse attendue (règles des cases ci-dessous).
+- Ce qui n'est pas du contenu disparaît : les en-têtes et pieds de page répétés (logo, « marge de manœuvre »), les numéros de page.
+- Un élément du support, un bloc :
+  * une question suivie d'une case → 'question', ou 'questions_group' pour plusieurs questions qui se suivent ;
+  * un libellé à compléter (« Date : », « Métier exploré : ») → une case de 'fields_card', deux libellés courts côte à côte par rangée ; sans les deux-points ;
+  * une question ou un libellé suivi d'options (une par ligne, ou après des cases ☐) → 'checklist' : son 'title' est la question, ses 'items' les options, dans l'ordre ;
+  * une suite de nombres (1 2 3 … 10) sous une question → 'scale' de ces bornes, la question en 'label' ;
+  * un tableau → 'table', chaque cellule à remplir étant une case ;
+  * une consigne → 'paragraphs' ; une liste de conseils → 'star_list'.
+- Une page du document par page ou par section du support : son titre devient le titre de la page ('title'), son surtitre éventuel le sourcil ('part_title', tel quel ; "" s'il n'y en a pas). Une section trop longue pour une page se coupe par un 'page_break', en deux pages équilibrées (la place, ci-dessous).
+- N'ajoute rien : ni exemple contrasté, ni protocole, ni météo, ni durée, ni page d'ouverture ou de livrable, ni question, ni consigne de ton cru. N'en retire rien, ne fusionne pas deux questions, n'en reformule aucune.
+- Ce qui rapprocherait le support de nos carnets va dans 'suggestions', une consigne par ajout, rédigée pour que le consultant l'applique telle quelle avec « Ajuster » : un exemple contrasté tiré d'un métier voisin, le protocole avant une question à forte charge, une durée par page, une page d'ouverture, une page de livrable, une formule genrée à tourner autrement (« Ajoute un exemple contrasté à la page 3, tiré d'un métier voisin. »).
 """
 
 

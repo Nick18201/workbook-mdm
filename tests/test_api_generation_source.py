@@ -118,6 +118,14 @@ def test_iterate_and_customize_flag_fallback(client, monkeypatch):
         assert r.headers["X-MDM-Generation"] == "fallback"
 
 
+def test_customize_needs_no_beneficiary(client, monkeypatch):
+    # A customization may aim at a trade or a theme rather than a person
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    r = client.post("/api/customize", json={"template_id": "carnet-6", "beneficiary_context": "Le métier de libraire"})
+    assert r.status_code == 200
+    assert "beneficiary_name" not in r.json()["spec"]
+
+
 def test_customize_never_changes_what_is_fixed(client, monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
     base = {"carnet": 3, "pages": [{"template": "composite", "title": "Sous pression.", "blocks": [

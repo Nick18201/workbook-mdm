@@ -1,7 +1,7 @@
 """
-Gemini: turns a consultant's notes into a document (WorkbookSpec), customizes a reference
-workbook for a person, and retouches a document on request. The rules every prompt carries
-live in prompt_rules.py.
+Gemini: turns a consultant's notes into a document (WorkbookSpec), lays out a finished
+support as it was written, customizes a reference workbook for a person or a trade, and
+retouches a document on request. The rules every prompt carries live in prompt_rules.py.
 """
 
 import os
@@ -23,6 +23,8 @@ from .models import (
     IterateResponse,
     CustomizeRequest,
     CustomizeResponse,
+    LayoutRequest,
+    LayoutResponse,
 )
 from .predefined_workbooks import get_predefined_spec
 from .prompt_rules import (
@@ -31,12 +33,18 @@ from .prompt_rules import (
     CHARGE_RULES,
     EXAMPLE_PAGE,
     EXERCISE_RULES,
+    FIDELITY_RULES,
     PERSONALIZATION_RULES,
     REFERENCE_BLOCKS_RULES,
+    SPACE_RULES,
     TEMPLATE_RULES,
     TONE_RULES,
+    VOCABULARY_RULES,
 )
 from workbook_generator.config import PDFStyle
+from workbook_generator.compiler import workbook_page_count
+from workbook_generator.conformity import DURATION, check_spec
+from workbook_generator.coverage import read_support, sentence_case, support_title
 from workbook_generator.primitives import plain_title
 from workbook_generator.spec import keep_fixed, part_of, put_part_back, tag_refs
 
@@ -177,13 +185,18 @@ def _parse_user_prompt(request: ParseRequest) -> str:
 
 
 def _finalize_created_spec(spec: WorkbookSpec, request: ParseRequest) -> WorkbookSpec:
+    """What the consultant chose for a document created from notes, whatever the model wrote."""
+    return WorkbookSpec(**_identity(spec.model_dump(exclude_unset=True, exclude_none=True),
+                                    request.chapter_num, request.beneficiary_name))
+
+
+def _identity(data: dict, chapter_num: Optional[int], beneficiary_name: Optional[str]) -> dict:
     """
-    What the consultant chose, whatever the model wrote: a carnet of the bilan (1 to 7)
-    takes its number, pastel and folio from the carnet; any other document shows no
-    number and keeps a folio (its short title) and a pastel; no beneficiary unless given.
+    A carnet of the bilan (1 to 7) takes its number, pastel and folio from the carnet; any
+    other document shows no number and keeps a folio (its short title) and a pastel; no
+    beneficiary unless given.
     """
-    data = spec.model_dump(exclude_unset=True, exclude_none=True)
-    num = request.chapter_num or None
+    num = chapter_num or None
     title = plain_title(data.get("chapter_title") or data.get("title") or "").rstrip(".!?… ")
     pastel, folio = data.pop("pastel", None), data.pop("folio", None)
     data.pop("carnet", None)
@@ -197,8 +210,8 @@ def _finalize_created_spec(spec: WorkbookSpec, request: ParseRequest) -> Workboo
             data["folio"] = folio or title
         if pastel in PDFStyle.PASTELS:
             data["pastel"] = pastel
-    if request.beneficiary_name:
-        data["beneficiary_name"] = request.beneficiary_name
+    if beneficiary_name:
+        data["beneficiary_name"] = beneficiary_name
     else:
         data.pop("beneficiary_name", None)
     for page in data.get("pages") or []:
@@ -209,7 +222,7 @@ def _finalize_created_spec(spec: WorkbookSpec, request: ParseRequest) -> Workboo
             params["num"] = str(num) if num else ""
         elif not num and page.get("template") != "closing" and page.get("part_title") is None:
             page["part_title"] = ""  # never « 1. TITRE » on a document without a number
-    return WorkbookSpec(**data)
+    return data
 
 
 def parse_notes_with_gemini(request: ParseRequest) -> GenerationResult:
@@ -340,6 +353,315 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
     ]}))
     spec = WorkbookSpec(chapter_title=title, subtitle="Bilan de compétences", pages=pages)
     return _finalize_created_spec(spec, request)
+
+
+# --- A finished support, laid out as it was written ------------------------------------
+
+LAYOUT_SYSTEM_PROMPT = """Tu es ingénieur pédagogique pour Marge de Manœuvre (bilans de compétences 100 % à distance, tournés vers la décision et l'action).
+On te donne le texte d'un support déjà écrit par la personne qui accompagne (un questionnaire, une fiche d'enquête, une grille), copié depuis un PDF ou un document. Tu le mets en page dans le format de nos carnets, un PDF que la personne accompagnée remplit seule, sans le réécrire.
+
+""" + "\n".join((FIDELITY_RULES, VOCABULARY_RULES, ANSWER_RULES, "LA PLACE SUR UNE PAGE :\n" + SPACE_RULES, BLOCKS_DOC)) + """
+FORMAT DE RÉPONSE : uniquement un objet JSON, de cette forme :
+{
+  "spec": {
+    "chapter_title": "Mon enquête terrain",
+    "folio": "Mon enquête terrain",
+    "pastel": "mint",
+    "pages": [
+      {"template": "cover", "params": {"cover_title": "Mon enquête *terrain.*"}},
+      {"template": "composite", "title": "Ce que fait la personne rencontrée.", "part_title": "Le terrain", "blocks": [
+        {"type": "paragraphs", "items": ["La consigne du support, telle quelle."]},
+        {"type": "fields_card", "rows": [[["Date", "enq_date", "word"], ["Lieu", "enq_lieu", "word"]]]},
+        {"type": "questions_group", "questions": [{"question": "La question du support, telle quelle ?", "field_id": "enq_q1", "answer": "paragraph"}]}
+      ]},
+      {"template": "closing", "params": {"messages": []}}
+    ]
+  },
+  "changes_summary": "Ce que tu as changé, en une à trois phrases : textes en capitales, mots proscrits remplacés (lesquels, par quoi), vouvoiement.",
+  "suggestions": ["Ajoute un exemple contrasté à la page 3, tiré d'un métier voisin.", "…"]
+}
+'pastel' : sky, lilac, mint, almond, blush ou jasmine.
+"""
+
+
+def _layout_user_prompt(request: LayoutRequest) -> str:
+    """The support, then what the consultant chose in the form."""
+    num = request.chapter_num
+    choices = [
+        f"Titre du document : {request.chapter_title}" if request.chapter_title
+        else "Titre du document : celui du support (son premier titre ou surtitre), en casse de phrase.",
+        f"Numéro de carnet : {num} (\"chapter_num\": {num})." if num
+        else "Numéro de carnet : aucun ; \"folio\" (le titre court) et \"pastel\" en tête.",
+        f"Bénéficiaire : {request.beneficiary_name} (\"beneficiary_name\")." if request.beneficiary_name
+        else "Bénéficiaire : non précisé. N'écris aucun prénom.",
+        "Couverture et dos : oui. La première page est {\"template\": \"cover\", \"params\": {\"cover_title\": "
+        "\"<le titre du document, avec un point>\"}}, sans promesse ; la dernière {\"template\": \"closing\", "
+        "\"params\": {\"messages\": []}}. Aucune autre page que celles du support." if request.frame
+        else "Couverture et dos : non. Seulement les pages du support.",
+    ]
+    return ("TEXTE DU SUPPORT :\n---\n" + request.source_text + "\n---\n\nSES CHOIX :\n- " + "\n- ".join(choices)
+            + "\n\nMets ce support en page, fidèlement, et réponds avec son JSON.")
+
+
+def _finalize_layout(data: dict, request: LayoutRequest) -> WorkbookSpec:
+    """
+    What the consultant chose, whatever the model wrote: the number and beneficiary, no
+    « N. TITRE » eyebrow (the support's surtitle or nothing), and the frame: a cover with
+    the title alone and a back cover without message, or neither.
+    """
+    data = _identity(data, request.chapter_num, request.beneficiary_name)
+    if request.chapter_title:
+        data["chapter_title"] = data["title"] = request.chapter_title
+    data["subtitle"] = ""  # no tagline: the cover carries the title alone
+    pages = data.get("pages") or []
+    cover = next((p for p in pages if p.get("template") == "cover"), None)
+    pages = [p for p in pages if p.get("template") not in ("cover", "closing")]
+    for page in pages:
+        if page.get("part_title") is None:
+            page["part_title"] = ""
+    if request.frame:
+        title = (cover or {}).get("params", {}).get("cover_title") or _layout_title(data.get("chapter_title", ""))
+        pages = ([{"template": "cover", "params": {"cover_title": title, "number": request.chapter_num or ""}}]
+                 + pages + [{"template": "closing", "params": {"messages": []}}])
+    data["pages"] = pages
+    return WorkbookSpec(**data)
+
+
+def layout_support_with_gemini(request: LayoutRequest) -> GenerationResult:
+    """
+    Lays out a finished support as it was written: every question, instruction and box
+    kept, in order; only the typography, the forbidden words and the size of the boxes
+    change, and the additions are suggested apart. Without a key, or when every model
+    fails, the fallback builds the pages from the text of the support, rewriting nothing.
+    """
+    api_key = os.environ.get("GEMINI_API_KEY")  # from Secret Manager in production
+    if not api_key:
+        logger.warning("GEMINI_API_KEY not found. Using the fallback layout.")
+        return GenerationResult(_build_fallback_layout(request), "no_api_key")
+
+    def build(data: dict) -> LayoutResponse:
+        spec = _drop_needless_breaks(_finalize_layout(data.get("spec", data), request))
+        suggestions = [str(s) for s in data.get("suggestions") or [] if str(s).strip()]
+        return LayoutResponse(
+            spec=spec,
+            changes_summary=data.get("changes_summary") or "Support mis en page tel quel.",
+            suggestions=_merge_suggestions(suggestions, _layout_suggestions(spec)),
+        )
+
+    result = _generate_json(api_key, LAYOUT_SYSTEM_PROMPT, _layout_user_prompt(request), build, "layout")
+    if result is None:
+        return GenerationResult(_build_fallback_layout(request), "model_error")
+    return GenerationResult(result)
+
+
+# A label this short (« Date », « Métier exploré », « Nom de l'entreprise ») takes a one-line box;
+# a longer one (« Ma prochaine étape concrète »), or one that asks for a reflection, is a question
+SHORT_LABEL_WORDS = 3
+REFLECTIVE_LABEL = re.compile(r"^(?:ce qu|ma |mon |mes |pourquoi|comment)", re.IGNORECASE)
+FIELDS_CARD_ROWS = 6
+# Rough height (cm) of each element on a page, to cut a long section into balanced pages
+UNIT_HEIGHTS = {"question": 3.8, "field": 1.1, "scale": 2.6}
+# A section is cut into this many pages at most
+MAX_PARTS_PER_SECTION = 4
+
+
+def _layout_title(text: str) -> str:
+    """A page title in our typography: sentence case, a final point."""
+    text = sentence_case(text.strip()).rstrip(" :")
+    return text if not text or text.endswith((".", "?", "!", "…")) else text + "."
+
+
+def _support_units(section, prefix: str) -> list:
+    """The elements of a section, in its order, as (kind, text, extra, field id)."""
+    units = []
+    for k, item in enumerate(section.items, start=1):
+        text, fid = sentence_case(item.text), f"{prefix}_{k}"
+        bare = text.rstrip(" :")
+        if item.kind == "text":
+            units.append(("text", text, None, fid))
+        elif item.kind == "bullet":
+            units.append(("text", "• " + text, None, fid))
+        elif item.scale:
+            units.append(("scale", bare, item.scale, fid))
+        elif item.options:
+            units.append(("choice", bare if item.kind == "label" else text, item.options, fid))
+        elif (item.kind == "label" and len(re.findall(r"[^\W\d_]{2,}", bare)) <= SHORT_LABEL_WORDS
+              and not REFLECTIVE_LABEL.match(bare)):
+            units.append(("field", bare, None, fid))
+        else:
+            units.append(("question", bare if item.kind == "label" else text, None, fid))
+    return units
+
+
+def _unit_height(unit) -> float:
+    kind = unit[0]
+    if kind == "text":
+        return 0.5 * (len(unit[1]) // 95 + 1) + 0.3
+    if kind == "choice":
+        return 1.3 + 0.7 * len(unit[2])
+    return UNIT_HEIGHTS[kind]
+
+
+def _chunks(units: list, parts: int) -> list:
+    """The units cut into `parts` runs of about the same height; an instruction stays with what follows."""
+    if parts <= 1:
+        return [units]
+    target = sum(_unit_height(u) for u in units) / parts
+    chunks, height = [[]], 0.0
+    for unit in units:
+        h = _unit_height(unit)
+        if chunks[-1] and height + h / 2 > target and len(chunks) < parts:
+            carried = []
+            while chunks[-1] and chunks[-1][-1][0] == "text":
+                carried.insert(0, chunks[-1].pop())
+            if chunks[-1]:
+                chunks.append(carried)
+                height = sum(_unit_height(u) for u in carried)
+            else:
+                chunks[-1] = carried
+        chunks[-1].append(unit)
+        height += h
+    return chunks
+
+
+def _units_blocks(units: list) -> List[BlockSpec]:
+    """The blocks of a run of units: nothing added, nothing reworded."""
+    blocks = []
+    for i, (kind, text, extra, fid) in enumerate(units):
+        same = bool(blocks) and i > 0 and units[i - 1][0] == kind
+        if kind == "text":
+            if same:
+                blocks[-1].items.append(text)
+            else:
+                blocks.append(BlockSpec(type="paragraphs", items=[text]))
+        elif kind == "field":
+            if same and len(blocks[-1].rows[-1]) < 2:
+                blocks[-1].rows[-1].append([text, fid, "word"])
+            elif same and len(blocks[-1].rows) < FIELDS_CARD_ROWS:
+                blocks[-1].rows.append([[text, fid, "word"]])
+            else:
+                blocks.append(BlockSpec(type="fields_card", rows=[[[text, fid, "word"]]]))
+        elif kind == "question":
+            question = QuestionItemSpec(question=text, field_id=fid)
+            if same:
+                blocks[-1].questions.append(question)
+            else:
+                blocks.append(BlockSpec(type="questions_group", questions=[question]))
+        elif kind == "choice":
+            blocks.append(BlockSpec(type="checklist", title=text, items=list(extra), field_prefix=fid))
+        elif kind == "scale":
+            blocks.append(BlockSpec(type="scale", label=text, min_val=extra[0], max_val=extra[1], field_id=fid))
+    # A group of questions shares out what is left of the page when it closes it; elsewhere,
+    # each of its boxes takes a sentence
+    for block in blocks[:-1]:
+        for question in block.questions or []:
+            question.answer = "sentence"
+    return blocks
+
+
+def _section_page(section, units: list, parts: int, title: str) -> PageSpec:
+    """The page of a section, cut by page breaks into `parts` balanced pages."""
+    blocks = []
+    for chunk in _chunks(units, parts):
+        if blocks:
+            blocks.append(BlockSpec(type="page_break"))
+        blocks += _units_blocks(chunk)
+    heading = section.title or section.eyebrow or title
+    eyebrow = sentence_case(section.eyebrow) if section.title else ""
+    return PageSpec(template="composite", title=_layout_title(heading), part_title=eyebrow, blocks=blocks)
+
+
+def _build_fallback_layout(request: LayoutRequest) -> LayoutResponse:
+    """
+    The support laid out without a model, from its reading (coverage.read_support): one
+    page per section, its instructions as paragraphs, one box per question and per label,
+    options as a checklist, a run of numbers as a scale. No word changes: a forbidden word
+    stays, and the conformity check flags it. A section too long for a page is compiled
+    alone to count its pages, then cut into that many balanced pages, as our carnets do.
+    """
+    sections = read_support(request.source_text)
+    title = (request.chapter_title or sentence_case(support_title(sections)) or "Mon support").strip()
+    pages = []
+    for s, section in enumerate(sections, start=1):
+        units = _support_units(section, f"sup{s}")
+        if not units:
+            continue
+        parts = 1
+        page = _section_page(section, units, parts, title)
+        while parts < min(MAX_PARTS_PER_SECTION, len(units)):
+            count = workbook_page_count(WorkbookSpec(pages=[page]))
+            if count <= parts:
+                break
+            parts = max(count, parts + 1)
+            page = _section_page(section, units, parts, title)
+        pages.append(page)
+    spec = _finalize_layout(WorkbookSpec(chapter_title=title, pages=pages).model_dump(exclude_unset=True), request)
+    return LayoutResponse(
+        spec=spec,
+        changes_summary="Mode de secours : le texte du support est repris tel quel, sans aucun mot changé. Chaque question "
+                        "et chaque libellé a sa case ; les textes en capitales passent en minuscules.",
+        suggestions=_layout_suggestions(spec),
+    )
+
+
+def _drop_needless_breaks(spec: WorkbookSpec) -> WorkbookSpec:
+    """
+    The model cuts sections that would fit on one page: a page whose blocks fit on one PDF
+    page without its page breaks loses them (compiled alone to know). A page that needs
+    more keeps the model's cuts.
+    """
+    pages = []
+    for page in spec.pages:
+        blocks = page.blocks or []
+        if page.template == "composite" and any(b.type == "page_break" for b in blocks):
+            whole = page.model_copy(update={"blocks": [b for b in blocks if b.type != "page_break"]})
+            if workbook_page_count(WorkbookSpec(pages=[whole])) == 1:
+                page = whole
+        pages.append(page)
+    return spec.model_copy(update={"pages": pages})
+
+
+# What a template suggestion is about (its first topic in this order): the model's
+# suggestions may already say it
+SUGGESTION_TOPICS = ("ouverture", "livrable", "protocole", "exemple contrasté", "durée", "tourne-la autrement")
+
+
+def _merge_suggestions(model: List[str], template: List[str]) -> List[str]:
+    """The model's suggestions, then those of the common template on a topic it left aside."""
+    said = " ".join(model).lower()
+
+    def topic(suggestion):
+        return next((t for t in SUGGESTION_TOPICS if t in suggestion.lower()), None)
+
+    return model + [s for s in template if not (topic(s) and topic(s) in said)]
+
+
+def _layout_suggestions(spec: WorkbookSpec) -> List[str]:
+    """What the common template of our carnets would add, as instructions for « Ajuster »."""
+    findings = check_spec(spec)
+    rules = {f.rule for f in findings}
+    templates = {p.template for p in spec.pages}
+    suggestions = []
+    if "summary" not in templates:
+        suggestions.append("Ajoute une page d'ouverture après la couverture : le but du support en deux ou trois phrases, "
+                           "la liste de ses pages avec leur durée et la durée d'écriture totale.")
+    if not any(DURATION.search(p.part_title or "") for p in spec.pages if p.template == "composite"):
+        suggestions.append("Donne à chaque page un sourcil « Exercice N · nom court · durée ».")
+    if "exemple" in rules:
+        suggestions.append("Ajoute un exemple contrasté (« En surface » / « Exploitable »), tiré d'un métier voisin, "
+                           "aux pages qui demandent une réponse rédigée.")
+    for f in findings:
+        if f.rule == "charge":
+            suggestions.append(f"Page {f.page} : une question touche à ce qui pèse ; ajoute le protocole avant l'exercice "
+                               "et la phrase d'ancrage après.")
+        elif f.rule == "genre":
+            quoted = re.search(r"« [^»]* »", f.message)
+            suggestions.append(f"Page {f.page} : {quoted.group(0) if quoted else 'une formule'} s'accorde avec la "
+                               "personne ; tourne-la autrement (« Ce qui m'étonne »).")
+    if "engagement" not in templates:
+        suggestions.append("Termine par la page du livrable : ce que le support produit, deux à quatre engagements et "
+                           "les trois zones guidées.")
+    return suggestions
 
 
 ITERATE_SYSTEM_PROMPT = """Tu es ingénieur pédagogique pour Marge de Manœuvre (bilans de compétences 100 % à distance, tournés vers la décision et l'action).
@@ -482,19 +804,22 @@ def customize_spec_with_gemini(request: CustomizeRequest) -> GenerationResult:
     base_tagged = tag_refs(base_spec)
     sent = part_of(base_tagged, request.part) if request.part else base_tagged
     base_spec_json = json.dumps(sent, ensure_ascii=False)
+    name = request.beneficiary_name
+    who = (f"- Prénom : {name} (\"beneficiary_name\")" if name
+           else "- Prénom : non précisé. N'écris aucun prénom : la personnalisation vise un profil, un métier ou un thème.")
     user_prompt = f"""Voici le livret pédagogique de référence (modèle existant) à personnaliser :
 ---
 {base_spec_json}
 ---
 {_part_scope(base_spec, request.part)}
-PROFIL DU BÉNÉFICIAIRE :
-- Nom / Prénom : {request.beneficiary_name}
-- Contexte & Métier / Projet : {request.beneficiary_context}
-- Consignes spécifiques d'adaptation du consultant : {request.custom_instructions or "Adapter harmonieusement l'ensemble des exemples et questions au profil du bénéficiaire."}
+PROFIL VISÉ :
+{who}
+- Profil, métier ou thème : {request.beneficiary_context}
+- Consignes spécifiques d'adaptation du consultant : {request.custom_instructions or "Adapter les exemples et les questions à ce profil."}
 
 MISSION :
-Personnalise ce livret de référence pour {request.beneficiary_name}.
-Adapte les exemples concrets, contextualise les questions et affine les exercices pour que le livret lui parle immédiatement.
+Personnalise ce livret de référence pour {name or "ce profil"}.
+Adapte les exemples concrets, contextualise les questions et affine les exercices pour que le livret parle immédiatement à la personne.
 Respecte scrupuleusement la structure des gabarits et les longueurs maximales de texte.
 Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_note'."""
 
@@ -502,11 +827,14 @@ Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_n
         spec = keep_fixed(sent, data.get("spec", data))
         if request.part:
             spec = put_part_back(base_spec.model_dump(exclude_unset=True, exclude_none=True), request.part, spec)
+        if name:
+            spec["beneficiary_name"] = name
+        else:
+            spec.pop("beneficiary_name", None)  # no first name the consultant did not give
         return CustomizeResponse(
             spec=WorkbookSpec(**spec),
             customizations_summary=data.get(
-                "customizations_summary",
-                f"Livret adapté avec succès pour {request.beneficiary_name} ({request.beneficiary_context}).",
+                "customizations_summary", f"Livret adapté{f' pour {name}' if name else ''} ({request.beneficiary_context})."
             ),
             pedagogical_note=data.get("pedagogical_note", ""),
         )
@@ -524,16 +852,20 @@ def _build_fallback_customization(
     Personnalisation déterministe hors-ligne lorsque l'API Gemini est indisponible.
     Comme celle de Gemini, elle ne touche pas à ce qui est fixe.
     """
+    name = request.beneficiary_name
     spec_dict = tag_refs(base_spec)
-    spec_dict["beneficiary_name"] = request.beneficiary_name
+    if name:
+        spec_dict["beneficiary_name"] = name
+    else:
+        spec_dict.pop("beneficiary_name", None)
 
-    # Contextualiser la couverture
+    # Contextualiser la couverture (seulement pour une personne nommée)
     pages = spec_dict.get("pages", [])
-    if pages and pages[0].get("template") == "cover":
+    if name and pages and pages[0].get("template") == "cover":
         cov_params = pages[0].get("params", {})
         sub = cov_params.get("subtitle", "")
         if "pour" not in sub.lower():
-            cov_params["subtitle"] = f"{sub} · Pour {request.beneficiary_name}"
+            cov_params["subtitle"] = f"{sub} · Pour {name}"
         pages[0]["params"] = cov_params
 
     # Contextualiser l'introduction du sommaire si présente
@@ -541,7 +873,8 @@ def _build_fallback_customization(
         sum_params = pages[1].get("params", {})
         old_intro = sum_params.get("intro_text", "")
         if request.beneficiary_context and "adapté" not in old_intro.lower():
-            sum_params["intro_text"] = f"{old_intro} (Livret personnalisé pour {request.beneficiary_name} - {request.beneficiary_context[:60]})."
+            target = f"pour {name} - " if name else ": "
+            sum_params["intro_text"] = f"{old_intro} (Livret adapté {target}{request.beneficiary_context[:60]})."
         pages[1]["params"] = sum_params
 
     # Injection du contexte dans un exemple de question si disponible
@@ -557,11 +890,8 @@ def _build_fallback_customization(
             base_spec.model_dump(exclude_unset=True, exclude_none=True), request.part,
             part_of(new_spec.model_dump(exclude_unset=True, exclude_none=True), request.part),
         ))
-    summary = (
-        f"Version personnalisée pour {request.beneficiary_name} générée avec succès. "
-        f"Profil intégré ({request.beneficiary_context})."
-    )
-    pedagogical_note = f"Ce livret servira de support personnalisé pour votre travail avec {request.beneficiary_name}."
+    summary = f"Version adaptée{f' pour {name}' if name else ''}. Profil intégré ({request.beneficiary_context})."
+    pedagogical_note = f"Ce livret servira de support adapté pour votre travail{f' avec {name}' if name else ''}."
 
     return CustomizeResponse(
         spec=new_spec,

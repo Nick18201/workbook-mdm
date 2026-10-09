@@ -6,34 +6,41 @@ import pytest
 
 import server.gemini_service as gemini_service
 from server import prompt_rules
-from server.models import ParseRequest
+from server.models import CustomizeRequest, LayoutRequest, ParseRequest
 from workbook_generator.conformity import check_spec
 from workbook_generator.spec import WorkbookSpec
 
 CREATE = gemini_service.SYSTEM_PROMPT
 ITERATE = gemini_service.ITERATE_SYSTEM_PROMPT
 CUSTOMIZE = gemini_service.CUSTOMIZE_SYSTEM_PROMPT
+LAYOUT = gemini_service.LAYOUT_SYSTEM_PROMPT
+PROMPTS = {"création": CREATE, "ajustement": ITERATE, "personnalisation": CUSTOMIZE, "mise en page": LAYOUT}
 
-# The sections each prompt must carry: creating needs the whole template, retouching the
-# rules of an exercise and of the existing blocks, customizing what may change and what not
+# The sections each prompt carries, and no other: creating needs the whole template,
+# retouching the rules of an exercise and of the existing blocks, customizing what may
+# change and what not; a faithful layout only the forbidden words, the boxes, the room on
+# a page and the blocks (the tone, the template and the exercises would have it rewrite)
 SECTIONS = {
-    "TONE_RULES": (CREATE, ITERATE, CUSTOMIZE),
-    "TEMPLATE_RULES": (CREATE,),
-    "EXERCISE_RULES": (CREATE, ITERATE),
-    "CHARGE_RULES": (CREATE, ITERATE),
-    "ANSWER_RULES": (CREATE, ITERATE),
-    "BLOCKS_DOC": (CREATE, ITERATE),
-    "EXAMPLE_PAGE": (CREATE,),
-    "REFERENCE_BLOCKS_RULES": (ITERATE, CUSTOMIZE),
-    "PERSONALIZATION_RULES": (CUSTOMIZE,),
+    "TONE_RULES": ("création", "ajustement", "personnalisation"),
+    "VOCABULARY_RULES": ("création", "ajustement", "personnalisation", "mise en page"),
+    "TEMPLATE_RULES": ("création",),
+    "EXERCISE_RULES": ("création", "ajustement"),
+    "SPACE_RULES": ("création", "ajustement", "mise en page"),
+    "CHARGE_RULES": ("création", "ajustement"),
+    "ANSWER_RULES": ("création", "ajustement", "mise en page"),
+    "BLOCKS_DOC": ("création", "ajustement", "mise en page"),
+    "EXAMPLE_PAGE": ("création",),
+    "REFERENCE_BLOCKS_RULES": ("ajustement", "personnalisation"),
+    "PERSONALIZATION_RULES": ("personnalisation",),
+    "FIDELITY_RULES": ("mise en page",),
 }
 
 
 @pytest.mark.parametrize("section", list(SECTIONS))
-def test_each_prompt_carries_its_rules(section):
+def test_each_prompt_carries_its_rules_and_no_other(section):
     text = getattr(prompt_rules, section)
-    for prompt in SECTIONS[section]:
-        assert text in prompt
+    for name, prompt in PROMPTS.items():
+        assert (text in prompt) is (name in SECTIONS[section]), name
 
 
 @pytest.mark.parametrize("phrase", [
@@ -41,7 +48,7 @@ def test_each_prompt_carries_its_rules(section):
 ])
 def test_the_former_recipe_is_gone(phrase):
     # The creation recipe from before the restructuration (page météo, crash test, plan A / B)
-    for prompt in (CREATE, ITERATE, CUSTOMIZE):
+    for prompt in PROMPTS.values():
         assert phrase not in prompt
 
 
@@ -54,6 +61,17 @@ def test_the_rules_name_what_our_carnets_do():
         assert rule in CREATE
     assert "jamais un chiffre personnel" in CUSTOMIZE
     assert "ne touche jamais les questions du test" in CUSTOMIZE
+
+
+def test_the_faithful_layout_keeps_the_support_and_suggests_apart():
+    for rule in ("mot pour mot", "dans l'ordre du support", "N'ajoute rien", "ne fusionne pas deux questions",
+                 "'suggestions'", "« Ajuster »", "jamais « présentiel »", "passé au vouvoiement",
+                 "les numéros de page", "'checklist'", "'scale'", "un titre de page finit par un point"):
+        assert rule in LAYOUT
+    framed = gemini_service._layout_user_prompt(LayoutRequest(source_text="Une question ?"))
+    bare = gemini_service._layout_user_prompt(LayoutRequest(source_text="Une question ?", frame=False, chapter_num=7))
+    assert "Une question ?" in framed and "Couverture et dos : oui" in framed and "Numéro de carnet : aucun" in framed
+    assert "Couverture et dos : non" in bare and "Numéro de carnet : 7" in bare
 
 
 def test_the_example_page_comes_from_carnet_7():
@@ -149,3 +167,38 @@ def test_the_fallback_keeps_the_questions_of_the_notes_and_protects_heavy_ones()
     asked = [q.question for b in blocks for q in b.questions or []]
     assert asked == ["Quelle demande allez-vous refuser ?"]
     assert {"protocol", "anchor"} <= {b.type for b in blocks}
+
+
+# --- Customization without a beneficiary: a profile, a trade or a theme ---------------
+
+CARNET = {"carnet": 6, "pages": [
+    {"template": "cover", "params": {"cover_title": "L'*exploration.*", "subtitle": "Carnet 6"}},
+    {"template": "composite", "title": "Vos pistes.", "blocks": [
+        {"type": "question", "question": "Q ?", "field_id": "q", "subtitle": "À adapter."}]},
+]}
+
+
+def test_customization_without_a_first_name(monkeypatch):
+    prompts = _gemini_answers(monkeypatch, {"spec": dict(CARNET, beneficiary_name="Inventé")})
+    result, reason = gemini_service.customize_spec_with_gemini(
+        CustomizeRequest(base_spec=CARNET, beneficiary_context="Le métier de libraire"))
+    assert reason is None
+    assert "Prénom : non précisé" in prompts[0]["contents"] and "pour ce profil" in prompts[0]["contents"]
+    assert result.spec.beneficiary_name is None  # a first name the consultant did not give is dropped
+
+
+def test_customization_with_a_first_name_keeps_it(monkeypatch):
+    prompts = _gemini_answers(monkeypatch, {"spec": CARNET})
+    result, _ = gemini_service.customize_spec_with_gemini(
+        CustomizeRequest(base_spec=CARNET, beneficiary_name="Alex", beneficiary_context="Libraire"))
+    assert "Prénom : Alex" in prompts[0]["contents"]
+    assert result.spec.beneficiary_name == "Alex"
+
+
+def test_the_fallback_customization_names_no_one(monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    result, reason = gemini_service.customize_spec_with_gemini(
+        CustomizeRequest(template_id="carnet-1", beneficiary_context="Le métier de libraire"))
+    assert reason == "no_api_key"
+    assert result.spec.beneficiary_name is None
+    assert "Pour" not in str(result.spec.pages[0].params) and "None" not in result.customizations_summary
