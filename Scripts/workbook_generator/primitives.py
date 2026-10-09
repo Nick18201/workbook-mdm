@@ -8,15 +8,13 @@ argument is the top of a text block. Every primitive restores the canvas state i
 """
 
 import functools
-import io
 import os
 import re
+import struct
 from contextlib import contextmanager
 
-from reportlab.graphics import renderPDF
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
-from svglib.svglib import svg2rlg
 
 from .config import PDFStyle
 from .document_builder import document_pastel, document_style
@@ -641,25 +639,83 @@ def draw_frise(c, x, y, width, steps, start_label="", end_label="", background=N
     return y - lowest
 
 
-# --- Illustration ------------------------------------------------------------
-
-@functools.lru_cache(maxsize=8)
-def _cover_drawing(pastel_hex):
-    """The cover SVG as a ReportLab drawing, its placeholder lilac turned into pastel_hex."""
-    with open(PDFStyle.PATH_COVER_ILLUSTRATION, encoding="utf-8") as f:
-        svg = f.read()
-    svg = re.sub(re.escape(PDFStyle.COVER_ILLUSTRATION_PASTEL), pastel_hex, svg, flags=re.IGNORECASE)
-    return svg2rlg(io.BytesIO(svg.encode("utf-8")))
-
-
-def draw_cover_illustration(c):
+def draw_carnet_progress(c, x, y, carnet):
     """
-    The cover illustration (assets/illustrations/couverture.svg, the work table seen from
-    above) across the top 500 pt of the page, in the document pastel. It leaves the top left
-    corner to the logotype and the bottom left to the promise post-it.
+    Where a carnet stands in the bilan: one disc per carnet de bord (done in ink, this one in
+    coral and larger, to come outlined), then the arrow of the carnet de route, then « Carnet 3
+    sur 7 » or « Après les 7 carnets ». (x, y) is the left end of the row, on its axis. The
+    three states differ by shape too, so the row reads in black and white.
     """
-    drawing = _cover_drawing("#" + document_pastel(c).hexval()[2:])
-    renderPDF.draw(drawing, c, 0, A4[1] - drawing.height)
+    r, gap = 5.5, 21
+    current = PDFStyle.CARNET_COUNT + 1 if carnet == PDFStyle.CARNET_ROUTE else int(carnet)
+    for i in range(1, PDFStyle.CARNET_COUNT + 1):
+        cx = x + r + (i - 1) * gap
+        if i < current:
+            draw_disc(c, cx, y, r, PDFStyle.COLOR_INK)
+        elif i == current:
+            draw_disc(c, cx, y, r + 1.2, PDFStyle.COLOR_CORAL)
+        else:
+            c.saveState()
+            c.setStrokeColor(PDFStyle.COLOR_INK)
+            c.setLineWidth(0.9)
+            c.circle(cx, y, r - 0.45, stroke=1, fill=0)
+            c.restoreState()
+    arrow_x = x + PDFStyle.CARNET_COUNT * gap - 2
+    on_route = carnet == PDFStyle.CARNET_ROUTE
+    draw_filled_arrow(c, arrow_x, y - 6.6, width=19, color=PDFStyle.COLOR_CORAL if on_route else PDFStyle.COLOR_INK)
+    label = (f"Après les {PDFStyle.CARNET_COUNT} carnets" if on_route
+             else f"Carnet {carnet} sur {PDFStyle.CARNET_COUNT}")
+    return arrow_x + 32 + draw_eyebrow(c, arrow_x + 32, y - 3, label) - x
+
+
+# --- Display type (covers) ---------------------------------------------------
+
+@functools.lru_cache(maxsize=256)
+def _glyph_box(font, char):
+    """
+    (advance, x_min, x_max, y_max) of a glyph in 1/1000 em, read from the glyf table of a
+    TrueType font; None for an empty glyph or a font without outlines (Helvetica fallbacks).
+    """
+    face = pdfmetrics.getFont(font).face
+    try:
+        glyph = face.charToGlyph[ord(char)]
+        start, end = face.glyphPos[glyph], face.glyphPos[glyph + 1]
+        glyf = face.get_table_pos("glyf")[0]
+        data = face._ttf_data
+    except (AttributeError, IndexError, KeyError):
+        return None
+    if end <= start:
+        return None
+    _, x_min, _, x_max, y_max = struct.unpack(">hhhhh", data[glyf + start:glyf + start + 10])
+    scale = 1000.0 / face.unitsPerEm
+    return pdfmetrics.stringWidth(char, font, 1000), x_min * scale, x_max * scale, y_max * scale
+
+
+def ink_metrics(text, font, size, tracking=0.0):
+    """
+    (left bearing, ink width, ink height above the baseline) of one line: giant type is placed
+    by its ink, since its side bearings grow with it. Without glyph outlines: the advance width
+    and 0.72 em.
+    """
+    text = french_typography(str(text).strip())
+    advance = text_width(text, font, size, tracking)
+    boxes = [_glyph_box(font, ch) for ch in text]
+    if not text or boxes[0] is None or boxes[-1] is None:
+        return 0.0, advance, 0.72 * size
+    left = boxes[0][1] * size / 1000
+    right = (boxes[-1][0] - boxes[-1][2]) * size / 1000
+    return left, advance - left - right, max(b[3] for b in boxes if b) * size / 1000
+
+
+def draw_display(c, x, y, text, size, color=None, font=None, tracking=-0.04):
+    """
+    Giant display text (DM Sans 800 by default) whose ink starts exactly at x; y is its
+    baseline. Returns its ink width.
+    """
+    font = font or PDFStyle.FONT_HEADING
+    left, ink_width, _ = ink_metrics(text, font, size, tracking)
+    draw_text(c, x - left, y, str(text).strip(), font, size, color or PDFStyle.COLOR_INK, tracking)
+    return ink_width
 
 
 # --- Brand -------------------------------------------------------------------

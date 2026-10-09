@@ -214,12 +214,15 @@ Les quatre familles sont sur Google Fonts.
 - Les bénéficiaires impriment parfois en noir et blanc. La hiérarchie ne doit donc **jamais tenir à la seule couleur** : les sourcils, les numéros et les filets doivent rester lisibles en gris.
 
 **Gabarits suggérés**
-- **Couverture** :
-  - fond crème et logotype ;
-  - le gros numéro du carnet en PT Mono bleu, puis le titre en DM Sans 800 avec un mot d'accent (« Mon rapport ***à l'argent.*** ») ;
-  - un disque pastel coupé par le bord, et un post-it qui porte la promesse du carnet.
-  - Illustration retenue le 2026-10-07 : la table de travail vue du dessus (`assets/illustrations/couverture.svg`), faite des formes de la DA (disques, pilules, traits à l'encre arrondis, étoiles). Le disque pastel prend la couleur du carnet, et le post-it de la promesse est collé sur les carnets fermés.
-  - Ne pas reprendre l'illustration de l'ancien livret (voir section 9).
+- **Couverture** (choix du 9 octobre 2026) : une couverture toute en typographie.
+  - En tête, la signature « marge de manœuvre. » avec son point corail, et le sous-titre en PT Mono à droite.
+  - Dessous, dans un carnet du bilan, la frise des sept carnets : un point par carnet (à l'encre pour ceux qui sont faits, en corail et plus grand pour celui-ci, en contour pour ceux qui viennent), puis la flèche du carnet de route et « CARNET 3 SUR 7 ». Les trois états diffèrent aussi par la forme : la frise se lit en noir et blanc.
+  - Le numéro du carnet en très grand, en DM Sans 800 à l'encre, aligné sur la marge. Son point final est le point corail de la signature (« 4. »), comme le « marge. » du site. Le carnet de route écrit « route. ».
+  - Derrière le numéro, un grand disque du pastel du carnet, coupé par le bord droit.
+  - En bas : le sourcil « CARNET DE BORD », le titre avec son mot d'accent (« Mon rapport ***à l'argent.*** »), puis la promesse en Instrument Serif italique.
+  - Un livret sans numéro (portfolio, business plan) prend un titre plus grand à la place du numéro.
+  - Le gros numéro en PT Mono bleu reste celui de l'ouverture de carnet.
+  - L'illustration de la table de travail, retenue le 2026-10-07, est abandonnée : identique d'un carnet à l'autre, elle ne les distinguait pas, et elle passait mal en noir et blanc. Ne pas reprendre non plus l'illustration de l'ancien livret (voir section 9).
 - **Ouverture de carnet** :
   - un sourcil « CARNET DE BORD · CARNET 3 » (« CARNET DE ROUTE » pour le carnet de route), puis le gros numéro et le sous-titre en PT Mono ;
   - le titre, puis l'objectif en Manrope ;
