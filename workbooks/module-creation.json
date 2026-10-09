@@ -310,7 +310,7 @@
                 "sentence"
               ],
               [
-                "Ce que je crains d'entendre",
+                "L'objection que j'imagine",
                 "creation_prix_crainte",
                 "sentence"
               ]
@@ -1484,7 +1484,7 @@
       "params": {
         "lines": [
           "Je teste mes hypothèses sur le terrain avant d'engager des frais.",
-          "Je regarde mes chiffres et mes devis avec honnêteté.",
+          "Je m'appuie sur mes chiffres et mes devis pour décider.",
           "Je protège ma santé, mon foyer et mon rythme de vie."
         ],
         "field_prefix": "creation_livrable",
