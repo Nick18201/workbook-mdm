@@ -210,17 +210,22 @@ def test_answer_sizes_in_files_are_known():
                     given += [field[2] for row in block.get("rows", []) for field in row if len(field) > 2]
                 if block["type"] == "report":
                     given += [item[3] for item in block.get("items", []) if len(item) > 3]
+                if block["type"] == "table":
+                    given += [cell.get("answer") for row in block.get("rows", []) for cell in row
+                              if isinstance(cell, dict)]
                 for value in given:
                     assert not isinstance(value, str) or value in ANSWERS, (workbook_id, page.get("title"), value)
 
 
 CARNET_IDS = [workbook_id for workbook_id, raw in _raw_workbooks() if "carnet" in raw]
+# The documents written in: the carnets, their module and the business plan
+WRITTEN_IDS = CARNET_IDS + ["business-plan"]
 CM = 72 / 2.54
 FIELD_INSET = 3  # draw_answer_box lays its field 3 pt inside the drawn box
 
 
 @functools.lru_cache(maxsize=None)
-def _carnet_pdf(workbook_id):
+def _workbook_pdf(workbook_id):
     buffer = io.BytesIO()
     build_reference_workbook(workbook_id, buffer)
     return buffer.getvalue()
@@ -234,24 +239,25 @@ def _used_share(page):
     return max(bottoms, default=0) / page.rect.height
 
 
-@pytest.mark.parametrize("workbook_id", CARNET_IDS)
-def test_carnet_exercises_split_into_balanced_pages(workbook_id):
+@pytest.mark.parametrize("workbook_id", WRITTEN_IDS)
+def test_exercises_split_into_balanced_pages(workbook_id):
     """
     An exercise too long for one page is cut between two blocks (page_break), so that its
     « (suite) » page is a page of its own: never a small block left alone at its top.
     """
-    for page in pymupdf.open(stream=_carnet_pdf(workbook_id), filetype="pdf"):
+    for page in pymupdf.open(stream=_workbook_pdf(workbook_id), filetype="pdf"):
         if "(suite)" in page.get_text():
             assert _used_share(page) >= 0.4, page.number + 1
 
 
-@pytest.mark.parametrize("workbook_id", CARNET_IDS)
-def test_carnet_fields_leave_room_to_write_by_hand(workbook_id):
+@pytest.mark.parametrize("workbook_id", WRITTEN_IDS)
+def test_fields_leave_room_to_write_by_hand(workbook_id):
     """
-    A carnet is filled on screen or printed: a box for a sentence leaves two handwritten
-    lines (1.6 cm), a one-line box room for a word (0.8 cm), and every field has a tooltip.
+    A carnet or the business plan is filled on screen or printed: a box for a sentence
+    leaves two handwritten lines (1.6 cm), a one-line box room for a word (0.8 cm), and
+    every field has a tooltip.
     """
-    for page in pymupdf.open(stream=_carnet_pdf(workbook_id), filetype="pdf"):
+    for page in pymupdf.open(stream=_workbook_pdf(workbook_id), filetype="pdf"):
         for widget in page.widgets():
             where = (page.number + 1, widget.field_name)
             assert widget.field_label, where

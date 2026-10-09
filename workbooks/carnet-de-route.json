@@ -54,6 +54,9 @@
           "data_id": "route.meteo"
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "paragraphs",
           "items": [
             "En séance 8, vous avez tiré de votre matrice (carnet 7, exercice 5) trois scénarios, classés en trois familles : les pistes directes, avec vos compétences actuelles ; les passerelles courtes, après une formation courte ; les angles morts, des pistes que vous ne regardiez pas, apparues en chemin. Notez-les, avec leur famille."
@@ -77,7 +80,8 @@
               },
               {
                 "field_id": "route_scenario_1_famille",
-                "placeholder": "Scénario 1 : sa famille"
+                "placeholder": "Scénario 1 : sa famille",
+                "answer": "word"
               }
             ],
             [
@@ -88,7 +92,8 @@
               },
               {
                 "field_id": "route_scenario_2_famille",
-                "placeholder": "Scénario 2 : sa famille"
+                "placeholder": "Scénario 2 : sa famille",
+                "answer": "word"
               }
             ],
             [
@@ -99,7 +104,8 @@
               },
               {
                 "field_id": "route_scenario_3_famille",
-                "placeholder": "Scénario 3 : sa famille"
+                "placeholder": "Scénario 3 : sa famille",
+                "answer": "word"
               }
             ]
           ],
@@ -108,7 +114,7 @@
             10.2,
             4.5
           ],
-          "field_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "fields_card",
@@ -117,16 +123,18 @@
               [
                 "Le scénario vers lequel je penche",
                 "route_penche",
-                1.6
+                "word"
               ],
               [
                 "Pourquoi lui",
                 "route_penche_pourquoi",
+                "sentence",
                 1.6
               ],
               [
                 "Ce qui me fait encore hésiter",
                 "route_hesite",
+                "sentence",
                 1.6
               ]
             ]
@@ -423,17 +431,17 @@
               [
                 "Scénario 1",
                 "route_porte_1",
-                1.6
+                "word"
               ],
               [
                 "Scénario 2",
                 "route_porte_2",
-                1.6
+                "word"
               ],
               [
                 "Scénario 3",
                 "route_porte_3",
-                1.6
+                "word"
               ]
             ]
           ],
@@ -741,11 +749,13 @@
               "L'intitulé, et son numéro de scénario",
               {
                 "field_id": "route_piste_a",
-                "placeholder": "Piste A : l'intitulé, et son numéro de scénario"
+                "placeholder": "Piste A : l'intitulé, et son numéro de scénario",
+                "answer": "word"
               },
               {
                 "field_id": "route_piste_b",
-                "placeholder": "Piste B : l'intitulé, et son numéro de scénario"
+                "placeholder": "Piste B : l'intitulé, et son numéro de scénario",
+                "answer": "word"
               }
             ],
             [
@@ -776,8 +786,8 @@
             6.5,
             6.5
           ],
-          "field_height_cm": 1.6,
-          "data_id": "route.pistes"
+          "data_id": "route.pistes",
+          "answer": "sentence"
         }
       ]
     },
@@ -817,22 +827,26 @@
               "Mes trois valeurs : lesquelles elle respecte",
               {
                 "field_id": "route_piste_a_valeurs",
-                "placeholder": "Piste A : les valeurs qu'elle respecte"
+                "placeholder": "Piste A : les valeurs qu'elle respecte",
+                "answer": "word"
               },
               {
                 "field_id": "route_piste_b_valeurs",
-                "placeholder": "Piste B : les valeurs qu'elle respecte"
+                "placeholder": "Piste B : les valeurs qu'elle respecte",
+                "answer": "word"
               }
             ],
             [
               "Mon minimum sécurisant : atteint quand ?",
               {
                 "field_id": "route_piste_a_minimum",
-                "placeholder": "Piste A : quand j'atteins mon minimum sécurisant"
+                "placeholder": "Piste A : quand j'atteins mon minimum sécurisant",
+                "answer": "word"
               },
               {
                 "field_id": "route_piste_b_minimum",
-                "placeholder": "Piste B : quand j'atteins mon minimum sécurisant"
+                "placeholder": "Piste B : quand j'atteins mon minimum sécurisant",
+                "answer": "word"
               }
             ]
           ],
@@ -841,8 +855,8 @@
             6.5,
             6.5
           ],
-          "field_height_cm": 1.6,
-          "fixed": true
+          "fixed": true,
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",
@@ -1159,7 +1173,7 @@
               [
                 "Sa date",
                 "route_module_demarche_date",
-                1.6,
+                "word",
                 1
               ]
             ]
@@ -1217,11 +1231,13 @@
               },
               {
                 "field_id": "route_action_1_date",
-                "placeholder": "Action 1 : la date"
+                "placeholder": "Action 1 : la date",
+                "answer": "word"
               },
               {
                 "field_id": "route_action_1_previens",
-                "placeholder": "Action 1 : la personne que je préviens"
+                "placeholder": "Action 1 : la personne que je préviens",
+                "answer": "word"
               }
             ],
             [
@@ -1232,11 +1248,13 @@
               },
               {
                 "field_id": "route_action_2_date",
-                "placeholder": "Action 2 : la date"
+                "placeholder": "Action 2 : la date",
+                "answer": "word"
               },
               {
                 "field_id": "route_action_2_previens",
-                "placeholder": "Action 2 : la personne que je préviens"
+                "placeholder": "Action 2 : la personne que je préviens",
+                "answer": "word"
               }
             ],
             [
@@ -1247,11 +1265,13 @@
               },
               {
                 "field_id": "route_action_3_date",
-                "placeholder": "Action 3 : la date"
+                "placeholder": "Action 3 : la date",
+                "answer": "word"
               },
               {
                 "field_id": "route_action_3_previens",
-                "placeholder": "Action 3 : la personne que je préviens"
+                "placeholder": "Action 3 : la personne que je préviens",
+                "answer": "word"
               }
             ]
           ],
@@ -1261,8 +1281,8 @@
             2.8,
             4.2
           ],
-          "field_height_cm": 1.6,
-          "data_id": "route.actions"
+          "data_id": "route.actions",
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",
@@ -1337,7 +1357,8 @@
             [
               {
                 "field_id": "route_allie_1",
-                "placeholder": "Soutien 1 : son prénom"
+                "placeholder": "Soutien 1 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "route_allie_1_demande",
@@ -1345,13 +1366,15 @@
               },
               {
                 "field_id": "route_allie_1_point",
-                "placeholder": "Soutien 1 : notre premier point, le"
+                "placeholder": "Soutien 1 : notre premier point, le",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "route_allie_2",
-                "placeholder": "Soutien 2 : son prénom"
+                "placeholder": "Soutien 2 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "route_allie_2_demande",
@@ -1359,16 +1382,17 @@
               },
               {
                 "field_id": "route_allie_2_point",
-                "placeholder": "Soutien 2 : notre premier point, le"
+                "placeholder": "Soutien 2 : notre premier point, le",
+                "answer": "word"
               }
             ]
           ],
           "col_widths_cm": [
-            4.6,
-            8.3,
+            3.4,
+            9.5,
             4.2
           ],
-          "field_height_cm": 0.85
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",
@@ -1554,16 +1578,18 @@
               [
                 "Ce que me disent mes météos",
                 "route_meteos_remarque",
+                "sentence",
                 1.6
               ],
               [
                 "Le domaine qui a le plus bougé",
                 "route_domaine_bouge",
-                1.6
+                "word"
               ],
               [
                 "Ce qui l'explique",
                 "route_domaine_bouge_pourquoi",
+                "sentence",
                 1.6
               ]
             ]

@@ -249,7 +249,8 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
         cols = _as_number(b_data.get("columns"), 2, int)
         c_h = _height_pt(b_data.get("card_height_cm"))
         prefix = b_data.get("field_prefix") or f"p{page_idx}_g{b_idx}"
-        layout.add_cards_grid(cards, columns=cols, card_height=c_h, field_prefix=prefix)
+        layout.add_cards_grid(cards, columns=cols, card_height=c_h, field_prefix=prefix,
+                              answer=normalize_answer(b_data.get("answer")))
     elif b_type == "scale":
         min_val, max_val = _scale_bounds(b_data)
         layout.add_scale_gauge(
@@ -279,6 +280,10 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
             ["1. Faisabilité & Cap", "Observations recueillies", "Maintenir"],
             ["2. Valeur & Adhésion", "Observations recueillies", "Ajuster"],
         ]
+        # A cell may name its own answer ('word' for a first name in a row of sentences)
+        rows = [[{**cell, "answer": normalize_answer(cell["answer"])}
+                 if isinstance(cell, dict) and "answer" in cell else cell for cell in row]
+                if isinstance(row, (list, tuple)) else row for row in rows]
         widths = b_data.get("col_widths_cm")
         col_widths = [_length_pt(w, 0) for w in widths] if isinstance(widths, list) else None
         prefix = b_data.get("field_prefix") or f"p{page_idx}_tbl_{b_idx}"

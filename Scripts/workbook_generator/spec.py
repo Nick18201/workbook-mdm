@@ -123,7 +123,9 @@ class BlockSpec(BaseModel):
     One block of a composite page, i.e. one PageLayout.add_* call (see templates.py).
     Lengths are in centimetres (*_cm), colors are PDFStyle color or pastel names ('sky').
     An answer box is sized by the answer it expects ('answer', or instead of a height in a
-    list: 'word', 'sentence', 'paragraph', 'long'), for its width; a height in cm wins.
+    list: 'word', 'sentence', 'paragraph', 'long'), for its width; a height in cm wins. A
+    field cell of a table ({'field_id', 'placeholder'}) may name its own 'answer': the
+    tallest answer of a row sets its height.
     Tuples of the Python API are lists: a fields_card field is [label, field_id, height_cm
     or answer, weight], a frise step [icon, title, marker], a link [name, url, description], a
     checklist_cards group [title, items], a numbered_lines card [title, field_prefix, hint,
@@ -195,7 +197,7 @@ class BlockSpec(BaseModel):
     box_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur de la zone de saisie en cm")
     answer: Optional[Answer] = Field(
         None,
-        description="Réponse attendue (question, fields_card, table) : 'word', 'sentence', 'paragraph' ou 'long'",
+        description="Réponse attendue (question, fields_card, table, cards_grid) : 'word', 'sentence', 'paragraph' ou 'long'",
     )
     field_prefix: Optional[str] = Field(None, description="Préfixe d'identifiants AcroForm")
     # Blocks of the reference workbooks

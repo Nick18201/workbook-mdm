@@ -124,6 +124,51 @@ def test_answer_boxes_are_sized_for_the_answer_they_expect():
     assert not fields["mot"].field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE
 
 
+def test_a_table_row_takes_the_tallest_answer_of_its_cells():
+    """A first name in a row of sentences is a word: it never sets the height of the row."""
+    def table(prefix, name_answer):
+        return BlockSpec(type="table", headers=["Prénom", "Ce que je lui demande"], answer="sentence",
+                         col_widths_cm=[3.0, 14.0], rows=[[{"field_id": f"{prefix}_prenom", "answer": name_answer},
+                                                            {"field_id": f"{prefix}_demande"}]])
+
+    page = _open(WorkbookSpec(pages=[PageSpec(template="composite", title="Tableaux", blocks=[
+        table("mot", "mot"), table("phrase", "sentence"),  # « mot » is the French name of 'word'
+    ])]))[0]
+    fields = {w.field_name: w for w in page.widgets()}
+
+    assert fields["mot_demande"].rect.height == fields["mot_prenom"].rect.height  # one row, one height
+    assert fields["phrase_prenom"].rect.height > 2 * fields["mot_prenom"].rect.height  # a sentence in 3 cm
+    assert fields["mot_demande"].rect.height + 6 >= 1.6 * CM - 0.5
+    assert fields["mot_demande"].field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE
+
+
+def test_a_questions_group_never_shrinks_a_box_below_its_minimum():
+    """A question that would get less than min_box_height_cm continues on the next page."""
+    questions = [{"question": f"Question {i} ?", "field_id": f"q{i}"} for i in range(8)]
+    doc = _open(WorkbookSpec(pages=[PageSpec(template="composite", title="Groupe", blocks=[
+        BlockSpec(type="questions_group", questions=questions, min_box_height_cm=3.0, max_box_height_cm=4.0),
+    ])]))
+    heights = [w.rect.height + 6 for page in doc for w in page.widgets()]
+
+    assert len(heights) == 8 and doc.page_count == 2
+    assert min(heights) >= 3.0 * CM - 0.5
+
+
+def test_cards_fit_the_answer_they_expect():
+    def grid(prefix, **kwargs):
+        return BlockSpec(type="cards_grid", columns=2, field_prefix=prefix,
+                         cards=[{"title": "Le cadre", "field_id": f"{prefix}_a"},
+                                {"title": "Le test", "field_id": f"{prefix}_b"}], **kwargs)
+
+    page = _open(WorkbookSpec(pages=[PageSpec(template="composite", title="Cartes", blocks=[
+        grid("phrase", answer="sentence"), grid("basse", card_height_cm=3.0, answer="paragraph"),
+    ])]))[0]
+    height = {w.field_name: w.rect.height + 6 for w in page.widgets()}
+
+    assert abs(height["phrase_a"] - 2.15 * CM) < 0.1 * CM  # a sentence in half the width
+    assert height["basse_a"] > 4 * CM  # card_height_cm is only a minimum
+
+
 def test_predefined_workbook_pdf_stays_light():
     pdf = compile_workbook_from_spec(get_predefined_spec("chap1"))
 

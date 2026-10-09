@@ -200,19 +200,19 @@
               [
                 "La situation, en quelques mots",
                 "c5_align_1",
-                1.6,
+                "sentence",
                 1.2
               ],
               [
                 "Ce que j'y trouvais",
                 "c5_align_1_trouvais",
-                1.6,
+                "sentence",
                 1.2
               ],
               [
                 "La valeur respectée",
                 "c5_align_1_valeur",
-                1.6,
+                "word",
                 0.7
               ]
             ],
@@ -220,19 +220,19 @@
               [
                 "La situation, en quelques mots",
                 "c5_align_2",
-                1.6,
+                "sentence",
                 1.2
               ],
               [
                 "Ce que j'y trouvais",
                 "c5_align_2_trouvais",
-                1.6,
+                "sentence",
                 1.2
               ],
               [
                 "La valeur respectée",
                 "c5_align_2_valeur",
-                1.6,
+                "word",
                 0.7
               ]
             ],
@@ -240,24 +240,27 @@
               [
                 "La situation, en quelques mots",
                 "c5_align_3",
-                1.6,
+                "sentence",
                 1.2
               ],
               [
                 "Ce que j'y trouvais",
                 "c5_align_3_trouvais",
-                1.6,
+                "sentence",
                 1.2
               ],
               [
                 "La valeur respectée",
                 "c5_align_3_valeur",
-                1.6,
+                "word",
                 0.7
               ]
             ]
           ],
           "question_labels": true
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "contrast_example",
@@ -303,7 +306,7 @@
               [
                 "La valeur qui manquait",
                 "c5_desalign_1_valeur",
-                1.6,
+                "word",
                 0.6
               ]
             ],
@@ -331,7 +334,7 @@
               [
                 "La valeur qui manquait",
                 "c5_desalign_2_valeur",
-                1.6,
+                "word",
                 0.6
               ]
             ],
@@ -366,7 +369,7 @@
               [
                 "La valeur qui manquait",
                 "c5_desalign_3_valeur",
-                1.6,
+                "word",
                 0.6
               ]
             ],
@@ -437,7 +440,7 @@
               [
                 "La valeur qui l'a emporté",
                 "c5_choix_valeur",
-                1.6,
+                "word",
                 0.6
               ]
             ],
@@ -782,7 +785,7 @@
               [
                 "La tension",
                 "c5_tension_nom",
-                1.6,
+                "word",
                 0.6
               ],
               [
@@ -933,15 +936,18 @@
               "Ma valeur, en un ou deux mots",
               {
                 "field_id": "c5_grille_1_valeur",
-                "placeholder": "Valeur 1 : la valeur"
+                "placeholder": "Valeur 1 : la valeur",
+                "answer": "word"
               },
               {
                 "field_id": "c5_grille_2_valeur",
-                "placeholder": "Valeur 2 : la valeur"
+                "placeholder": "Valeur 2 : la valeur",
+                "answer": "word"
               },
               {
                 "field_id": "c5_grille_3_valeur",
-                "placeholder": "Valeur 3 : la valeur"
+                "placeholder": "Valeur 3 : la valeur",
+                "answer": "word"
               }
             ],
             [
@@ -1011,7 +1017,7 @@
             4.3,
             4.3
           ],
-          "field_height_cm": 2.2,
+          "field_height_cm": 2.6,
           "fixed": true,
           "data_id": "c5.grille"
         },
@@ -1053,7 +1059,8 @@
             [
               {
                 "field_id": "c5_soutien_1",
-                "placeholder": "Soutien 1 : son prénom"
+                "placeholder": "Soutien 1 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c5_soutien_1_apport",
@@ -1061,13 +1068,15 @@
               },
               {
                 "field_id": "c5_soutien_1_envoi",
-                "placeholder": "Soutien 1 : question envoyée le"
+                "placeholder": "Soutien 1 : question envoyée le",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "c5_soutien_2",
-                "placeholder": "Soutien 2 : son prénom"
+                "placeholder": "Soutien 2 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c5_soutien_2_apport",
@@ -1075,13 +1084,15 @@
               },
               {
                 "field_id": "c5_soutien_2_envoi",
-                "placeholder": "Soutien 2 : question envoyée le"
+                "placeholder": "Soutien 2 : question envoyée le",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "c5_soutien_3",
-                "placeholder": "Soutien 3 : son prénom"
+                "placeholder": "Soutien 3 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c5_soutien_3_apport",
@@ -1089,13 +1100,15 @@
               },
               {
                 "field_id": "c5_soutien_3_envoi",
-                "placeholder": "Soutien 3 : question envoyée le"
+                "placeholder": "Soutien 3 : question envoyée le",
+                "answer": "word"
               }
             ],
             [
               {
                 "field_id": "c5_soutien_4",
-                "placeholder": "Soutien 4 : son prénom"
+                "placeholder": "Soutien 4 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c5_soutien_4_apport",
@@ -1103,16 +1116,20 @@
               },
               {
                 "field_id": "c5_soutien_4_envoi",
-                "placeholder": "Soutien 4 : question envoyée le"
+                "placeholder": "Soutien 4 : question envoyée le",
+                "answer": "word"
               }
             ]
           ],
           "col_widths_cm": [
-            4.6,
-            8.5,
+            3.4,
+            9.7,
             4.0
           ],
-          "field_height_cm": 0.85
+          "answer": "sentence"
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "table",
@@ -1125,7 +1142,8 @@
             [
               {
                 "field_id": "c5_critique_1",
-                "placeholder": "Regard critique 1 : son prénom"
+                "placeholder": "Regard critique 1 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c5_critique_1_crainte",
@@ -1139,7 +1157,8 @@
             [
               {
                 "field_id": "c5_critique_2",
-                "placeholder": "Regard critique 2 : son prénom"
+                "placeholder": "Regard critique 2 : son prénom",
+                "answer": "word"
               },
               {
                 "field_id": "c5_critique_2_crainte",
@@ -1156,7 +1175,7 @@
             6.25,
             6.25
           ],
-          "field_height_cm": 0.85
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",

@@ -594,34 +594,34 @@
               [
                 "Modèle 1 : la personne",
                 "c1_modele_1",
-                1.6
+                "word"
               ],
               [
                 "Ce que j'admire",
                 "c1_modele_1_admire",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je veux retrouver",
                 "c1_modele_1_retrouver",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Modèle 2 : la personne",
                 "c1_modele_2",
-                1.6
+                "word"
               ],
               [
                 "Ce que j'admire",
                 "c1_modele_2_admire",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je veux retrouver",
                 "c1_modele_2_retrouver",
-                1.6
+                "sentence"
               ]
             ]
           ],
