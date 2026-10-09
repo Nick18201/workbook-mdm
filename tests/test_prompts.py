@@ -67,6 +67,10 @@ def test_the_rules_name_what_our_carnets_do():
         assert rule in CREATE
     assert "jamais un chiffre personnel" in CUSTOMIZE
     assert "ne touche jamais les questions du test" in CUSTOMIZE
+    # What the trials of the real Gemini showed (lot 3): examples that told the person's story, gendered trades
+    assert "raconte la situation de ce métier voisin" in CREATE and "le même au féminin" in CREATE
+    assert "raconte la situation de ce métier voisin" in CUSTOMIZE and "le même au féminin" in CUSTOMIZE
+    assert "une borne d'échelle en 20" in CUSTOMIZE
 
 
 def test_the_faithful_layout_keeps_the_support_and_suggests_apart():

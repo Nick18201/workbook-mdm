@@ -56,8 +56,10 @@ PRECAUTION = re.compile(r"à votre rythme|peu(?:t|vent) (?:vous )?remuer|trop lo
 
 # A participle or adjective that agrees with the person who writes (feuille de route, section 6:
 # « Ce qui m'étonne », not « Ce qui m'a surpris »). « m'a donné » (me = to me) does not agree.
+# An adverb may come between (« dont je suis le plus fier »).
 GENDERED = re.compile(
     r"\b(?:m'a|m'ont|me suis|je suis|je me sens|je me sentais|je me suis senti|j'étais|je serais)\s+"
+    r"(?:(?:le|la|les)\s+)?(?:(?:plus|moins|très|si|trop|vraiment|assez|bien|tellement)\s+)?"
     r"(?:surpris|poussé|touché|marqué|blessé|déçu|motivé|freiné|bloqué|découragé|encouragé|rassuré|étonné|inspiré"
     r"|attiré|lassé|ennuyé|stressé|angoissé|épuisé|fatigué|perdu|seul|prêt|fier|heureux|content|inquiet|légitimé"
     r"|allé|né|devenu|resté|parti|venu|arrivé|tombé|entré|sorti|passé|retourné|coincé|senti)e?s?\b",
@@ -82,6 +84,13 @@ AMOUNT = re.compile(r"\d[\d\s .,]*\s?(?:€|euros?\b|k€)|\b\d+\s?%", re.IGNOR
 GENERIC_JOB_WORDS = {"responsable", "chef", "cheffe", "charge", "chargee", "assistant", "assistante", "directeur",
                      "directrice", "manager", "gestion", "projet", "service", "agent", "agente", "conseiller",
                      "conseillere", "technicien", "technicienne", "metier", "poste", "entreprise", "activite"}
+# Words of a profile too common to say an example tells the person's own situation
+COMMON_PROFILE_WORDS = GENERIC_JOB_WORDS | {
+    "depuis", "apres", "avant", "pendant", "entre", "toujours", "encore", "autre", "autres", "chaque", "premier",
+    "premiere", "annee", "annees", "temps", "travail", "metiers", "postes", "professionnel", "professionnels",
+    "professionnelle", "personne", "personnes", "envisage", "souhaite", "aujourd", "quelques", "plusieurs"}
+# An example that shares this many words with the person's profile tells their story, not a neighbour's
+SHARED_PROFILE_WORDS = 2
 
 # Keys that hold no text a reader sees
 NON_TEXT_KEYS = {"field_id", "field_prefix", "data_id", "type", "template", "color", "variant", "answer", "_ref",
@@ -419,9 +428,25 @@ def _plain_words(text):
     return set(re.findall(r"[a-z]{5,}", text))
 
 
+def _stems(text) -> dict:
+    """Each word of five letters or more but the common ones, by its first six letters without accents
+    (« reconversion » and « reconverti » share one), with the word as written."""
+    stems = {}
+    for word in re.findall(r"[^\W\d_]{5,}", text or ""):
+        plain = "".join(ch for ch in unicodedata.normalize("NFD", word.lower()) if unicodedata.category(ch) != "Mn")
+        if plain not in COMMON_PROFILE_WORDS:
+            stems.setdefault(plain[:6], word.lower())
+    return stems
+
+
 def _check_examples(spec: WorkbookSpec, context: Optional[str], findings):
-    """Contrast examples: an epicene neighbouring trade, never the person's own, no amount."""
+    """
+    Contrast examples: an epicene neighbouring trade, never the person's own nor twice the
+    same, which tells that trade's situation rather than the person's (`context`), no amount.
+    """
     own = _plain_words(context) - GENERIC_JOB_WORDS
+    profile = set(_stems(context))
+    trades = {}
     for i, page in enumerate(spec.pages, start=1):
         for block in page.blocks or []:
             examples = [block.example] if block.example else []
@@ -436,6 +461,19 @@ def _check_examples(spec: WorkbookSpec, context: Optional[str], findings):
                 if shared:
                     findings.append(Finding(CHECK, i, "metier-personne", f"exemple tiré du métier de la personne : « {title} »"
                                                                          " (prendre un métier voisin, elle le recopierait)"))
+                trade = title.strip().lower()
+                if trade in trades:
+                    findings.append(Finding(CHECK, i, "exemple-repete", f"le métier « {title} » sert déjà d'exemple "
+                                                                        f"p. {trades[trade]} (un métier différent à chaque exemple)"))
+                elif trade:
+                    trades[trade] = i
+                told = _stems(f"{block.surface or ''} {block.exploitable or ''}")
+                mirrored = [word for stem, word in told.items() if stem in profile]
+                if len(mirrored) >= SHARED_PROFILE_WORDS:
+                    findings.append(Finding(CHECK, i, "exemple-personne", f"l'exemple « {title} » reprend la situation de "
+                                                                          f"la personne (« {' », « '.join(mirrored[:3])} ») : "
+                                                                          "le raconter avec les faits du métier voisin, "
+                                                                          "elle le recopierait"))
             for text in examples:
                 match = AMOUNT.search(text or "")
                 if match:
@@ -484,7 +522,7 @@ def check_spec(spec: WorkbookSpec, structure: bool = True, context: Optional[str
     The findings of a spec, page by page. `structure=False` skips the common template of a
     carnet (cover, opener, deliverable, eyebrows, contrast example, writing times), for a
     document laid out as it was written. `context` describes the person (customization): an
-    example taken from their own trade is then flagged. `layout=True` compiles the spec to
+    example taken from their own trade, or that tells their situation, is then flagged. `layout=True` compiles the spec to
     find the « (suite) » pages that hold almost nothing. `sources` is the text the document
     comes from (notes, support): a web address it does not give is flagged. `duration_min`
     is the writing time asked for a document created from notes.

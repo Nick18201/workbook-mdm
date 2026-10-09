@@ -35,6 +35,10 @@ for _path in (ROOT, ROOT / "Scripts"):
         sys.path.insert(0, str(_path))
 
 CHARS_PER_TOKEN = 3.5  # du français et du JSON mêlés, pour les estimations
+# Recalés sur la série 1 du 9 octobre 2026 (14 appels) : les réponses dépassent de 15 % la taille
+# de la maquette envoyée, et la réflexion du modèle ajoute environ un quart des jetons reçus
+RECEIVED_FACTOR = 1.15
+THINKING_SHARE = 0.25
 GUESSED_SPEC_CHARS = 15_000  # un document créé, pour estimer une retouche avant de l'avoir
 FEEDBACK_MAX = 4800  # comme « Corriger ces points » dans l'interface
 REF = "_ref"
@@ -86,8 +90,18 @@ def load_cases(serie=None, ids=None) -> list:
     return cases
 
 
+def _source_size(case) -> int:
+    """La taille de la maquette dont part une retouche : celle d'un lancement réel, sinon une estimation."""
+    name = f"{case['depuis']}-t{case.get('depuis_tirage', 1)}.json"
+    for run in sorted((HERE / "sorties").glob("*"), reverse=True):
+        if not run.name.endswith("secours") and (run / name).is_file():
+            spec = json.loads((run / name).read_text(encoding="utf-8"))["spec"]
+            return len(json.dumps(spec, ensure_ascii=False))
+    return GUESSED_SPEC_CHARS
+
+
 def estimate(case) -> tuple:
-    """Les appels d'un tirage, et les jetons envoyés et reçus estimés, sans appeler Gemini."""
+    """Les appels d'un tirage, et les jetons envoyés, reçus et de réflexion estimés, sans appeler Gemini."""
     from server import gemini_service as gs
     from server.models import CustomizeRequest, ParseRequest
 
@@ -105,16 +119,18 @@ def estimate(case) -> tuple:
                 gs.customize_spec_with_gemini(CustomizeRequest(**dict(request, part=part)))
                 received.append(prompts[-1][1])  # la maquette revient, à peu près de la même taille
         else:
-            prompts.append((len(gs.ITERATE_SYSTEM_PROMPT), GUESSED_SPEC_CHARS + FEEDBACK_MAX // 2))
-            received.append(GUESSED_SPEC_CHARS + 1500)
+            size = _source_size(case)
+            prompts.append((len(gs.ITERATE_SYSTEM_PROMPT), size + FEEDBACK_MAX // 2))
+            received.append(size + 1500)
     finally:
         gs._generate_json = real
         if key is None:
             os.environ.pop("GEMINI_API_KEY", None)
         else:
             os.environ["GEMINI_API_KEY"] = key
-    sent = sum(system + user for system, user in prompts)
-    return len(prompts), round(sent / CHARS_PER_TOKEN), round(sum(received) / CHARS_PER_TOKEN)
+    sent = sum(system + user for system, user in prompts) / CHARS_PER_TOKEN
+    answers = sum(received) / CHARS_PER_TOKEN * RECEIVED_FACTOR
+    return len(prompts), round(sent), round(answers), round(answers * THINKING_SHARE)
 
 
 # --- Ce que l'on observe pendant un appel -------------------------------------------------
@@ -288,6 +304,25 @@ def measure_customized(base: dict, spec: dict, fixed_log: list) -> dict:
     }
 
 
+def fixed_altered(before: dict, spec: dict) -> list:
+    """Les pages et les blocs fixes de `before` qui ont changé dans `spec` (appariés par position)."""
+    from workbook_generator.spec import FIXED_BLOCK_TYPES
+
+    altered = []
+    for i, (page, out) in enumerate(zip(before.get("pages") or [], spec.get("pages") or []), start=1):
+        if page.get("fixed"):
+            if _page_key(page) != _page_key(out):
+                altered.append(f"p{i}")
+            continue
+        blocks, out_blocks = page.get("blocks") or [], out.get("blocks") or []
+        if [b.get("type") for b in blocks] != [b.get("type") for b in out_blocks]:
+            continue  # des blocs ajoutés ou retirés : la position ne dit plus rien
+        for k, (block, out_block) in enumerate(zip(blocks, out_blocks), start=1):
+            if (block.get("fixed") or block.get("type") in FIXED_BLOCK_TYPES) and _page_key(block) != _page_key(out_block):
+                altered.append(f"p{i}.b{k}")
+    return altered
+
+
 def measure_retouch(before: dict, spec: dict) -> dict:
     old_pages = {_page_key(p) for p in before.get("pages") or []}
     kept = sum(_page_key(p) in old_pages for p in spec.get("pages") or [])
@@ -309,6 +344,7 @@ def measure_retouch(before: dict, spec: dict) -> dict:
         "pages_identiques": f"{kept}/{len(before.get('pages') or [])}",
         "nouveaux_tableaux": tables,
         "gabarit_roadmap": sum(p.get("template") == "roadmap" for p in spec.get("pages") or []),
+        "fixes_changes": fixed_altered(before, spec),
     }
 
 
@@ -332,6 +368,7 @@ def measure_fixes(source_findings: list, findings: list, before: dict, spec: dic
         "restees": [f["message"] for f in source_findings if f["message"] in after],
         "nouvelles": [f["message"] for f in findings if f["message"] not in {s["message"] for s in source_findings}],
         "pages_identiques": f"{sum(_page_key(p) in old_pages for p in spec.get('pages') or [])}/{len(before.get('pages') or [])}",
+        "fixes_changes": fixed_altered(before, spec),
     }
 
 
@@ -351,8 +388,10 @@ def verdict(result: dict) -> str:
             return "aucun tableau ajouté" + (" (gabarit roadmap)" if m["gabarit_roadmap"] else "")
         t = tables[0]
         return (f"tableau de {t['lignes']} lignes, paliers 30-60-90 {'oui' if t['paliers_30_60_90'] else 'non'}, "
-                f"toutes les cases {'oui' if t['toutes_les_cases'] else 'non'} ; pages identiques {m['pages_identiques']}")
-    return f"remarques {m['avant']} → {m['apres']} ; pages identiques {m['pages_identiques']}"
+                f"toutes les cases {'oui' if t['toutes_les_cases'] else 'non'} ; pages identiques {m['pages_identiques']}"
+                f" ; fixe changé : {len(m['fixes_changes'])}")
+    return (f"remarques {m['avant']} → {m['apres']} ; pages identiques {m['pages_identiques']} ; "
+            f"fixe changé : {len(m['fixes_changes'])}")
 
 
 # --- Un cas, un tirage --------------------------------------------------------------------
@@ -434,16 +473,24 @@ def _spent(result) -> int:
     return sum(result["jetons"].values())
 
 
-def _find_source(case_id, results, outdir, vrai):
-    """Le 1er tirage d'un cas « depuis » : de ce lancement, sinon du plus récent de sorties/."""
-    for result in results:
-        if result["cas"] == case_id and result["tirage"] == 1:
+def _find_source(case_id, results, outdir, vrai, tirage=1):
+    """
+    Un tirage (le 1er par défaut) d'un cas « depuis » : de ce lancement, sinon (avec le vrai
+    Gemini) du plus récent lancement réel de sorties/. En secours, tout tirage de ce lancement fait l'affaire.
+    """
+    same = [result for result in results if result["cas"] == case_id]
+    for result in same:
+        if result["tirage"] == tirage:
             return result
+    if not vrai:
+        if same:
+            return same[0]
+        raise Stop(f"le cas « {case_id} » n'a pas encore tourné : lancez-le avant celui qui en part")
     runs = sorted((p for p in (HERE / "sorties").glob("*") if p.is_dir() and p != outdir), reverse=True)
     for run in runs:
-        if vrai and run.name.endswith("secours"):
+        if run.name.endswith("secours"):
             continue
-        path = run / f"{case_id}-t1.json"
+        path = run / f"{case_id}-t{tirage}.json"
         if path.is_file():
             return json.loads(path.read_text(encoding="utf-8"))
     raise Stop(f"le cas « {case_id} » n'a pas encore tourné : lancez-le avant celui qui en part")
@@ -475,12 +522,13 @@ def run(cases, outdir, tirages=1, vrai=False, plafond=None, pdf=True) -> list:
     results, spent = [], 0
     try:
         for case in cases:
-            calls, sent, received = estimate(case)
+            calls, sent, received, thinking = estimate(case)
             for tirage in range(1, tirages + 1):
-                if plafond and spent + sent + received > plafond:
+                if plafond and spent + sent + received + thinking > plafond:
                     raise Stop(f"plafond : {spent} jetons dépensés, le cas « {case['id']} » en demanderait "
-                               f"~{sent + received} de plus (plafond {plafond})")
-                source = _find_source(case["depuis"], results, outdir, vrai) if case.get("depuis") else None
+                               f"~{sent + received + thinking} de plus (plafond {plafond})")
+                source = (_find_source(case["depuis"], results, outdir, vrai, case.get("depuis_tirage", 1))
+                          if case.get("depuis") else None)
                 result = run_one(client, usage, case, tirage, source)
                 results.append(result)
                 spent += _spent(result)
@@ -510,6 +558,10 @@ def _n(value) -> str:
 
 def _s(seconds) -> str:
     return f"{seconds} s".replace(".", ",")
+
+
+def _d(value) -> str:
+    return str(value).replace(".", ",")
 
 
 def stability(results) -> list:
@@ -574,7 +626,8 @@ def report(results, tirages, plafond, vrai) -> str:
                   "| Cas | Pages | Remarques (à corriger + à vérifier) | Forme | Textes communs |",
                   "|---|---|---|---|---|"]
         for row in rows:
-            lines.append(f"| {row['cas']} | {row['pages']} | {row['remarques']} | {row['forme']} | {row['textes_communs']} |")
+            lines.append(f"| {row['cas']} | {row['pages']} | {row['remarques']} | {_d(row['forme'])} "
+                         f"| {_d(row['textes_communs'])} |")
     lines += ["", "## Détail", ""]
     seen = set()
     for r in results:
@@ -596,10 +649,12 @@ def report(results, tirages, plafond, vrai) -> str:
                       f"perdu puis rétabli : {', '.join(m['fixes_perdus']) or 'rien'}",
                       f"- Textes réécrits : {round(m['part_reecrite'] * 100)} % ; prénom : {m['prenom'] or 'aucun'}"]
         elif r["mode"] == "iterate":
-            lines += [f"- Pages identiques : {m['pages_identiques']}",
+            lines += [f"- Pages identiques : {m['pages_identiques']} ; fixe changé : "
+                      f"{', '.join(m['fixes_changes']) or 'rien'}",
                       f"- Nouveaux tableaux : {json.dumps(m['nouveaux_tableaux'], ensure_ascii=False) or 'aucun'}"]
         else:
-            lines += [f"- Remarques : {m['avant']} → {m['apres']} ; pages identiques : {m['pages_identiques']}"]
+            lines += [f"- Remarques : {m['avant']} → {m['apres']} ; pages identiques : {m['pages_identiques']} ; "
+                      f"fixe changé : {', '.join(m['fixes_changes']) or 'rien'}"]
             lines += [f"- Restée : {message}" for message in m["restees"]]
             lines += [f"- Nouvelle : {message}" for message in m["nouvelles"]]
         if r["remarques"]:
@@ -614,17 +669,17 @@ def report(results, tirages, plafond, vrai) -> str:
 
 
 def print_plan(cases, tirages):
-    total_calls = total_sent = total_received = 0
+    totals = [0, 0, 0, 0]
     print(f"Plan : {len(cases)} cas × {tirages} tirage(s), sans appel (estimation à {CHARS_PER_TOKEN} caractères par jeton)")
     for case in cases:
-        calls, sent, received = estimate(case)
-        total_calls += calls * tirages
-        total_sent += sent * tirages
-        total_received += received * tirages
+        estimated = estimate(case)
+        totals = [total + value * tirages for total, value in zip(totals, estimated)]
+        calls, sent, received, thinking = estimated
         print(f"- {case['id']} ({case['mode']}) : {calls} appel(s) par tirage, ~{_n(sent)} jetons envoyés, "
-              f"~{_n(received)} reçus")
-    print(f"Total : {total_calls} appels, ~{_n(total_sent)} jetons envoyés, ~{_n(total_received)} reçus, "
-          f"plus la réflexion du modèle, soit ~{_n(total_sent + total_received)} hors réflexion.")
+              f"~{_n(received)} reçus, ~{_n(thinking)} de réflexion")
+    calls, sent, received, thinking = totals
+    print(f"Total : {calls} appels, ~{_n(sent)} jetons envoyés, ~{_n(received)} reçus, ~{_n(thinking)} de réflexion, "
+          f"soit ~{_n(sent + received + thinking)}.")
 
 
 def main():

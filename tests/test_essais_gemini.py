@@ -41,8 +41,8 @@ def test_every_case_runs_in_fallback_mode(essais, tmp_path, monkeypatch):
 
 def test_the_plan_calls_nothing(essais, monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
-    calls, sent, received = essais.estimate(essais.load_cases(ids=["carnet-7-parties"])[0])
-    assert calls == 2 and sent > 5000 and received > 3000
+    calls, sent, received, thinking = essais.estimate(essais.load_cases(ids=["carnet-7-parties"])[0])
+    assert calls == 2 and sent > 5000 and received > 3000 and 0 < thinking < received
     assert "GEMINI_API_KEY" not in __import__("os").environ
 
 
