@@ -1,0 +1,13 @@
+{
+  "titre": "Notes lourdes : après un licenciement et un épuisement, un document de 60 minutes",
+  "serie": 1,
+  "mode": "parse",
+  "but": "La charte v2 sur un sujet lourd : des questions franches, l'annonce avant les exercices intimes et la phrase d'ancrage après, sans formule de précaution ; la météo de l'énergie, puisque les notes parlent de fatigue ; les durées qui font 60 minutes.",
+  "requete": {
+    "raw_notes": "Séance 2 avec Karim, 49 ans. Licencié économique en juin après 18 ans comme responsable de production chez un équipementier automobile (plan social, site fermé). Quatre mois d'arrêt maladie avant le licenciement : épuisement, il parle de burn-out. Se sent coupable d'avoir « lâché » son équipe au moment de la fermeture. Dort mal, beaucoup de fatigue en fin de journée, mais dit que les séances lui redonnent de l'élan.\nIl a été très ému en évoquant le dernier jour sur le site et le pot de départ annulé.\n\nÀ travailler avant la séance 3 :\n- relire les 18 ans : ce qu'il a construit, les équipes formées, les crises gérées (l'incendie de 2015, le passage en 3x8) ;\n- ce que la fermeture lui a pris, et ce qu'elle lui laisse : il dit « je ne sais plus ce que je vaux » ;\n- ses appuis : sa compagne, son club de vélo, deux anciens collègues avec qui il échange ;\n- ce qu'il ne veut plus : les cadences intenables, le reporting permanent ;\n- ses envies encore floues : transmettre (formateur en lycée professionnel ?), travailler dehors, une PME à taille humaine.\n\nIl veut « comprendre ce qui s'est passé » avant de se projeter. Il a demandé qu'on aille au fond : des questions franches sur l'épuisement et la culpabilité, sans le ménager.\nContrat de sécurisation professionnelle en cours, 12 mois. Décision visée : décembre.",
+    "beneficiary_name": "Karim",
+    "duration_min": 60,
+    "meteo_option": "auto",
+    "include_engagement": true
+  }
+}

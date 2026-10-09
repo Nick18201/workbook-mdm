@@ -8,7 +8,7 @@ import server.gemini_service as gemini_service
 from server import prompt_rules
 from server.models import CustomizeRequest, LayoutRequest, ParseRequest
 from workbook_generator.conformity import check_spec
-from workbook_generator.spec import WorkbookSpec
+from workbook_generator.spec import WorkbookSpec, load_workbook
 
 CREATE = gemini_service.SYSTEM_PROMPT
 ITERATE = gemini_service.ITERATE_SYSTEM_PROMPT
@@ -67,6 +67,21 @@ def test_the_rules_name_what_our_carnets_do():
         assert rule in CREATE
     assert "jamais un chiffre personnel" in CUSTOMIZE
     assert "ne touche jamais les questions du test" in CUSTOMIZE
+    # What the trials of the real Gemini showed (lot 3): examples that told the person's story, gendered trades
+    assert "raconte la situation de ce métier voisin" in CREATE and "le même au féminin" in CREATE
+    assert "raconte la situation de ce métier voisin" in CUSTOMIZE and "le même au féminin" in CUSTOMIZE
+    assert "une borne d'échelle en 20" in CUSTOMIZE
+
+
+def test_a_part_knows_the_trades_the_other_parts_took():
+    # Each part is a call of its own: carnet 7 took « Scénographe » in both (essais du lot 3)
+    spec = load_workbook("carnet-7")
+    scope = gemini_service._part_scope(spec, 2)
+    part_1 = {b.title for p in spec.pages if p.part == 1 for b in p.blocks or [] if b.type == "contrast_example"}
+    part_2 = {b.title for p in spec.pages if p.part == 2 for b in p.blocks or [] if b.type == "contrast_example"}
+    assert part_1 and all(trade in scope for trade in part_1)
+    assert not any(trade in scope for trade in part_2 - part_1)
+    assert gemini_service._part_scope(spec, None) == ""
 
 
 def test_the_faithful_layout_keeps_the_support_and_suggests_apart():

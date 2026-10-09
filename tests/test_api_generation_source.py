@@ -154,6 +154,32 @@ def test_customize_never_changes_what_is_fixed(client, monkeypatch):
     assert "_ref" not in r.text
 
 
+def test_customize_keeps_the_scale_labels_the_pdf_would_cut(client, monkeypatch):
+    # Gemini lengthened the lines of carnet 4's rating grid beyond what the PDF shows (essais du lot 3)
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    base = {"pages": [{"template": "composite", "title": "Mon aisance.", "blocks": [
+        {"type": "rating_grid", "field_prefix": "a", "items": [["Demander une augmentation", "a_1"], ["Fixer un prix", "a_2"]]},
+        {"type": "scale", "label": "Mon envie", "min_label": "Pas du tout", "max_label": "Tout à fait"},
+    ]}]}
+    answer = {"spec": {"pages": [{"template": "composite", "title": "Mon aisance.", "_ref": "p1", "blocks": [
+        {"type": "rating_grid", "field_prefix": "a", "_ref": "p1.b1",
+         "items": [["Demander un maintien de salaire en formation", "a_1"], ["Chiffrer un devis", "a_2"]]},
+        {"type": "scale", "label": "Mon envie", "_ref": "p1.b2", "min_label": "Pas du tout",
+         "max_label": "Tout à fait prêt à me lancer"},
+    ]}]}}
+
+    class Response:
+        text = json.dumps(answer)
+
+    monkeypatch.setattr(gemini_service.genai, "Client", _fake_genai_client(Response))
+
+    r = client.post("/api/customize", json={"base_spec": base, "beneficiary_context": "Comptable"})
+    grid, scale = r.json()["spec"]["pages"][0]["blocks"]
+
+    assert grid["items"] == [["Demander une augmentation", "a_1"], ["Chiffrer un devis", "a_2"]]
+    assert scale["max_label"] == "Tout à fait"
+
+
 def test_customize_one_part_leaves_the_rest_as_it_was(client, monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
     base = {"parts": ["Les fondations", "Le test"], "pages": [

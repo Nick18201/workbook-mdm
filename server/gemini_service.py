@@ -8,6 +8,7 @@ import os
 import json
 import logging
 import re
+import time
 from functools import lru_cache
 from typing import Any, Callable, List, NamedTuple, Optional
 from google import genai
@@ -43,13 +44,15 @@ from .prompt_rules import (
 )
 from workbook_generator.config import PDFStyle
 from workbook_generator.compiler import workbook_page_count
-from workbook_generator.conformity import DURATION, check_spec
+from workbook_generator.conformity import DURATION, RATING_LABEL_MAX, SCALE_BOUND_MAX, check_spec
 from workbook_generator.coverage import read_support, sentence_case, support_title
 from workbook_generator.pagination import balance_breaks
 from workbook_generator.primitives import plain_title
 from workbook_generator.spec import keep_fixed, part_of, put_part_back, tag_refs
 
 logger = logging.getLogger(__name__)
+# What each call costs goes to uvicorn's log, shown at the INFO level in production (Cloud Run)
+usage_logger = logging.getLogger("uvicorn.error")
 
 # Modèles essayés dans l'ordre, configurables sans redéploiement de code (ex: GEMINI_MODELS="gemini-x-flash,gemini-y-flash")
 GEMINI_MODELS = [
@@ -57,8 +60,9 @@ GEMINI_MODELS = [
     for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash").split(",")
     if m.strip()
 ]
-# Délai maximal d'un appel Gemini (une analyse prend ~30 s ; Cloud Run coupe la requête à 300 s)
-GEMINI_TIMEOUT_S = float(os.environ.get("GEMINI_TIMEOUT_S", "120"))
+# Délai maximal d'un appel Gemini (une analyse prend ~30 s, le module création personnalisé
+# ~110 s, essais du lot 3 ; Cloud Run coupe la requête à 300 s)
+GEMINI_TIMEOUT_S = float(os.environ.get("GEMINI_TIMEOUT_S", "240"))
 
 
 @lru_cache(maxsize=4)
@@ -90,6 +94,7 @@ def _generate_json(
 
     for model_name in GEMINI_MODELS:
         try:
+            started = time.monotonic()
             response = client.models.generate_content(
                 model=model_name,
                 contents=user_prompt,
@@ -98,6 +103,7 @@ def _generate_json(
                     system_instruction=system_prompt,
                 ),
             )
+            _log_usage(label, model_name, response, time.monotonic() - started)
             raw_text = response.text.strip() if response.text else ""
             if not raw_text:
                 continue
@@ -117,6 +123,17 @@ def _generate_json(
 
     logger.error(f"{label}: all Gemini models failed ({last_err}). Falling back to heuristic.")
     return None
+
+
+def _log_usage(label: str, model_name: str, response: Any, seconds: float) -> None:
+    """Logs what a call cost: its tokens sent, received and of thinking, and how long it took."""
+    usage = getattr(response, "usage_metadata", None)
+    tokens = {kind: getattr(usage, f"{kind}_token_count", None) or 0 for kind in ("prompt", "candidates", "thoughts")}
+    usage_logger.info(
+        "Gemini %s (%s) : %.1f s, %d jetons envoyés, %d reçus, %d de réflexion",
+        label, model_name, seconds, tokens["prompt"], tokens["candidates"], tokens["thoughts"],
+        extra={"gemini_usage": dict(tokens, label=label, model=model_name, seconds=round(seconds, 1))},
+    )
 
 
 def _spec_json(spec: WorkbookSpec) -> str:
@@ -750,7 +767,7 @@ RÈGLES D'OR :
    - Chaque page et chaque bloc porte une clé '_ref' (ex : "p3", "p3.b2") : recopie-la telle quelle sur la page ou le bloc correspondant.
 2. ADAPTER À LA PERSONNE, dans les limites de la section suivante :
    - Renseigne 'beneficiary_name' avec son prénom, s'il est donné.
-   - Exemples contrastés et 'example' : un métier voisin du sien, jamais le sien ni celui qu'elle vise (elle le recopierait), au nom épicène (juriste, ergonome, géomètre…), différent à chaque fois ; aucun montant, salaire ni pourcentage.
+   - Exemples contrastés et 'example' : un métier voisin du sien, jamais le sien ni celui qu'elle vise (elle le recopierait), au nom épicène, le même au féminin (juriste, ergonome, géomètre, céramiste… ; jamais « luthier », « ferronnier », « statisticien »), différent à chaque fois ; l'exemple raconte la situation de ce métier voisin, avec ses faits à lui, jamais celle de la personne (ni son parcours, ni son projet, ni les mots de son profil) ; aucun montant, salaire ni pourcentage.
    - Les consignes, sous-titres et questions font écho à sa situation, sans s'allonger.
    - Applique les consignes du consultant, s'il en donne.
 3. LONGUEURS (le PDF coupe ce qui dépasse) : titre de page 25 à 45 caractères, question 120, exemple 90 (sans préfixe « Ex : »), libellé d'une ligne de 'rating_grid' 30, borne d'échelle 20.
@@ -771,10 +788,15 @@ def _part_scope(spec: WorkbookSpec, part: Optional[int]) -> str:
         return ""
     titles = spec.parts or []
     name = f", « {titles[part - 1]} »" if part <= len(titles) else ""
+    # Each part is a call of its own: it does not see the trades the other parts' examples took
+    taken = sorted({block.title for page in spec.pages if page.part != part for block in page.blocks or []
+                    if block.type == "contrast_example" and block.title})
     return (
         f"Ce livret est long : tu n'en reçois que la partie {part} sur {max(len(titles), part)}{name}. "
         "Personnalise ces pages seulement et renvoie-les toutes, dans le même ordre : "
         "les autres parties sont personnalisées à part."
+        + (f" Les exemples des autres parties prennent déjà ces métiers : {', '.join(taken)} ; prends-en d'autres."
+           if taken else "")
     )
 
 
@@ -821,7 +843,7 @@ Respecte scrupuleusement la structure des gabarits et les longueurs maximales de
 Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_note'."""
 
     def build(data: dict) -> CustomizeResponse:
-        spec = keep_fixed(sent, data.get("spec", data))
+        spec = _keep_labels_that_fit(sent, keep_fixed(sent, data.get("spec", data)))
         if request.part:
             spec = put_part_back(base_spec.model_dump(exclude_unset=True, exclude_none=True), request.part, spec)
         if name:
@@ -840,6 +862,29 @@ Génère le JSON complet avec 'spec', 'customizations_summary' et 'pedagogical_n
     if result is None:
         return GenerationResult(_build_fallback_customization(request, base_spec), "model_error")
     return GenerationResult(result)
+
+
+def _keep_labels_that_fit(base: dict, spec: dict) -> dict:
+    """
+    A scale label the PDF would cut (a line of a 'rating_grid', a bound of a 'scale') comes
+    back as the reference wrote it, on the same page and block: Gemini lengthens some.
+    """
+    for page, base_page in zip(spec.get("pages") or [], base.get("pages") or []):
+        for block, base_block in zip(page.get("blocks") or [], base_page.get("blocks") or []):
+            if block.get("type") != base_block.get("type"):
+                continue
+            if block["type"] == "rating_grid":
+                items = block.get("items") or []
+                for k, (item, base_item) in enumerate(zip(items, base_block.get("items") or [])):
+                    label = item[0] if isinstance(item, list) and item else item
+                    base_label = base_item[0] if isinstance(base_item, list) and base_item else base_item
+                    if isinstance(label, str) and len(label) > RATING_LABEL_MAX and isinstance(base_label, str):
+                        items[k] = [base_label] + item[1:] if isinstance(item, list) else base_label
+            if block["type"] == "scale":
+                for key in ("min_label", "max_label"):
+                    if len(block.get(key) or "") > SCALE_BOUND_MAX and base_block.get(key):
+                        block[key] = base_block[key]
+    return spec
 
 
 def _build_fallback_customization(

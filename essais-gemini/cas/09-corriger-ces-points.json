@@ -1,0 +1,8 @@
+{
+  "titre": "« Corriger ces points » sur un document créé de la série 1",
+  "serie": 2,
+  "mode": "corriger",
+  "but": "Le bouton « Corriger ces points » : ses remarques, telles que l'interface les range dans « Ajuster », doivent disparaître sans que le reste change, ni ce qui est fixe (l'ajustement n'a que son prompt pour le garder). Le document de départ est celui de la série 1 qui a le plus de remarques : le 2e tirage du carnet 4 personnalisé (5 à corriger, 5 à vérifier).",
+  "depuis": "reconversion",
+  "depuis_tirage": 2
+}

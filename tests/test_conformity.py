@@ -141,6 +141,32 @@ def test_a_gendered_turn_of_phrase_is_flagged():
     neutral = {"template": "composite", "blocks": [{"type": "question", "question": "Ce que cette personne m'a appris"}]}
     assert (CHECK, "genre") in _rules(_spec(page), structure=False)
     assert (CHECK, "genre") not in _rules(_spec(neutral), structure=False)
+    # An adverb in between, as Gemini wrote it (essais du lot 3)
+    proud = {"template": "composite", "blocks": [{"type": "question", "question": "La compétence dont je suis le plus fier"}]}
+    assert (CHECK, "genre") in _rules(_spec(proud), structure=False)
+
+
+def test_each_example_takes_another_trade():
+    # Carnet 7 customized by Gemini took « Scénographe » three times (essais du lot 3)
+    example = {"type": "contrast_example", "title": "Scénographe", "surface": "Ça va.", "exploitable": "Une piste vérifiée."}
+    pages = [{"template": "composite", "blocks": [example]}, {"template": "composite", "blocks": [dict(example)]}]
+    findings = [f for f in check_spec(_spec(*pages), structure=False) if f.rule == "exemple-repete"]
+    assert [(f.level, f.page) for f in findings] == [(CHECK, 2)] and "p. 1" in findings[0].message
+
+
+def test_an_example_that_tells_the_person_s_own_situation_is_flagged():
+    # Gemini wrote the person's story under a neighbouring trade (essais du lot 3)
+    context = ("Comptable en cabinet depuis 15 ans, un foyer à deux revenus. Envisage une reconversion vers "
+               "l'ébénisterie, puis un atelier à son compte.")
+    mirror = {"type": "contrast_example", "title": "Céramiste", "surface": "On s'en sort.",
+              "exploitable": "Je crains de financer une année de reconversion sans revenu, avant d'ouvrir mon atelier."}
+    own_facts = {"type": "contrast_example", "title": "Libraire", "surface": "Ça va, je m'en sors.",
+                 "exploitable": "En tension : le loyer passe, mais je repousse chaque réparation de la boutique."}
+    findings = check_spec(_spec({"template": "composite", "blocks": [mirror, own_facts]}), structure=False,
+                          context=context)
+    flagged = [f for f in findings if f.rule == "exemple-personne"]
+    assert len(flagged) == 1 and "Céramiste" in flagged[0].message and "« reconversion »" in flagged[0].message
+    assert flagged[0].level == CHECK
 
 
 def test_a_commitment_to_bring_the_carnet_is_the_paper_workflow():

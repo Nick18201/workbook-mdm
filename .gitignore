@@ -22,3 +22,6 @@ Thumbs.db
 
 # PNG previews written by Scripts/test_composite_page.py
 previews/
+
+# Specs and PDFs written by the trials of the real Gemini (essais-gemini/essais.py)
+essais-gemini/sorties/
