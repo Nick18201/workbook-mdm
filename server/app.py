@@ -6,6 +6,7 @@ import io
 import os
 import sys
 import logging
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse, Response
@@ -44,15 +45,25 @@ from server.gemini_service import (
 )
 from workbook_generator.compiler import compile_workbook_from_spec
 from server.predefined_workbooks import (
+    count_pages_in_background,
     get_predefined_info_list,
     get_predefined_spec,
 )
+
+
+@asynccontextmanager
+async def lifespan(app):
+    # Le nombre de pages des modèles (/api/templates) se compte en compilant chacun d'eux
+    count_pages_in_background()
+    yield
+
 
 app = FastAPI(
 
     title="MDM Workbook Generator API",
     description="Générateur de livrets pédagogiques PDF piloté par IA pour Marge de Manœuvre",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # Pas de CORS : l'interface est servie par cette même application (même origine).

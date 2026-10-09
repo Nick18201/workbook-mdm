@@ -414,6 +414,16 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
     for the data it declares (a customized carnet may move it), otherwise in the reference
     workbook of the carnet it comes from (a module of the carnet de route reports the carnet's).
     """
+    return _compile_with_reports(spec, output_path)[0]
+
+
+def workbook_page_count(spec: WorkbookSpec) -> int:
+    """Number of pages of the compiled spec, its « (suite) » pages included."""
+    return _compile_with_reports(spec, io.BytesIO())[2]
+
+
+def _compile_with_reports(spec: WorkbookSpec, output_path):
+    """Compiles the spec, its reports naming the page of their data (see compile_workbook_from_spec)."""
     own = {}
     declared = _declared_data_ids(spec.pages)
     if spec.carnet is not None and any(
@@ -426,7 +436,7 @@ def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
     def pages_of(carnet):
         return own if carnet == spec.carnet and own else reference_data_pages(carnet)
 
-    return _compile(spec, output_path, pages_of)[0]
+    return _compile(spec, output_path, pages_of)
 
 
 def workbook_data_pages(spec: WorkbookSpec) -> dict:
@@ -435,7 +445,7 @@ def workbook_data_pages(spec: WorkbookSpec) -> dict:
 
 
 def _compile(spec: WorkbookSpec, output_path, pages_of):
-    """Compiles the spec; returns (PDF bytes or None, {data_id: page})."""
+    """Compiles the spec; returns (PDF bytes or None, {data_id: page}, number of pages)."""
     # Gemini or the consultant may write emojis: ReportLab would drop them and leave gaps
     spec = _without_unsupported_glyphs(spec)
     data_pages = {}
@@ -766,13 +776,31 @@ def _compile(spec: WorkbookSpec, output_path, pages_of):
         builder.add_page(renderers.get(page.template, make_questions_renderer)(page, page_idx))
 
     builder.save()
+    # save() ends the last page if needed: the canvas then stands on the page after the last one
+    page_count = builder.canvas.getPageNumber() - 1
     if buffer is None:
-        return None, data_pages
+        return None, data_pages, page_count
     pdf_bytes = buffer.getvalue()
     buffer.close()
-    return pdf_bytes, data_pages
+    return pdf_bytes, data_pages, page_count
 
 
 def build_reference_workbook(workbook_id, output_path):
     """Compiles the reference workbook workbooks/<workbook_id>.json into output_path (a path or a BytesIO)."""
     compile_workbook_from_spec(load_workbook(workbook_id), output_path)
+
+
+@functools.lru_cache(maxsize=64)
+def _file_page_count(path, mtime):
+    with open(path, encoding="utf-8") as f:
+        return workbook_page_count(WorkbookSpec.model_validate(json.load(f)))
+
+
+def reference_page_count(workbook_id):
+    """
+    Number of pages of the compiled reference workbook workbooks/<workbook_id>.json, more
+    than its pages in the file when a page continues on « (suite) » pages. Compiling takes
+    up to a few tenths of a second: cached until the file changes.
+    """
+    path = spec_module.workbook_path(workbook_id)
+    return _file_page_count(path, os.path.getmtime(path))

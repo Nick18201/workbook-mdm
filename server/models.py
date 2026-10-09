@@ -85,7 +85,7 @@ class TemplateInfo(BaseModel):
     title: str = Field(..., description="Titre du livret")
     subtitle: str = Field(..., description="Sous-titre de couverture")
     description: str = Field(..., description="Brève description pédagogique")
-    page_count: int = Field(..., description="Nombre de pages du livret")
+    page_count: int = Field(..., description="Nombre de pages du PDF, pages « (suite) » comprises")
     icon: str = Field(..., description="Nom d'une icône Material Symbols Outlined pour l'affichage")
     category: str = Field("Bilan de Compétences", description="Catégorie du modèle")
     parts: List[str] = Field(default_factory=list, description="Parties d'un long livret, personnalisées une à une")

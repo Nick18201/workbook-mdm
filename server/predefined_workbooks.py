@@ -4,10 +4,12 @@ Leur contenu est celui des PDF : les fichiers workbooks/<id>.json, compilés par
 moteur (workbook_generator.compiler). Ce module n'ajoute que leur fiche d'affichage.
 """
 
+import threading
 from functools import lru_cache
 from typing import List, Optional
 
 from server.models import TemplateInfo, WorkbookSpec
+from workbook_generator.compiler import reference_page_count
 from workbook_generator.spec import load_workbook
 
 BILAN = "Bilan de Compétences"
@@ -82,11 +84,26 @@ def get_predefined_spec(template_id: str) -> Optional[WorkbookSpec]:
     return WorkbookSpec.model_validate(spec.model_dump(exclude_unset=True))
 
 
+# Compter les pages compile chaque livret (quelques secondes pour le catalogue, puis en cache) :
+# un seul calcul à la fois, pour qu'une requête attende celui du démarrage au lieu de le refaire
+_page_count_lock = threading.Lock()
+
+
 def get_predefined_info_list() -> List[TemplateInfo]:
-    """Retourne la liste des résumés de tous les modèles pré-intégrés."""
+    """
+    Retourne la liste des résumés de tous les modèles pré-intégrés. Leur nombre de pages est
+    celui du PDF, pages « (suite) » comprises.
+    """
+    with _page_count_lock:
+        page_counts = {entry[0]: reference_page_count(entry[0]) for entry in CATALOGUE}
     return [
         TemplateInfo(id=template_id, chapter_num=num, title=title, subtitle=subtitle, description=description,
-                     page_count=len(_reference_spec(template_id).pages), icon=icon, category=category,
+                     page_count=page_counts[template_id], icon=icon, category=category,
                      parts=_reference_spec(template_id).parts or [])
         for template_id, num, title, subtitle, description, icon, category in CATALOGUE
     ]
+
+
+def count_pages_in_background():
+    """Calcule les nombres de pages dès le démarrage du serveur, sans le retarder."""
+    threading.Thread(target=get_predefined_info_list, name="nombres-de-pages", daemon=True).start()
