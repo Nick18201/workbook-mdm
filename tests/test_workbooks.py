@@ -10,7 +10,8 @@ from fastapi.testclient import TestClient
 from server.app import app
 from server.predefined_workbooks import CATALOGUE, get_predefined_spec
 from workbook_generator import components, forms
-from workbook_generator.compiler import build_reference_workbook, compile_workbook_from_spec
+from workbook_generator import spec as spec_module
+from workbook_generator.compiler import build_reference_workbook, compile_workbook_from_spec, reference_page_count
 from workbook_generator.spec import (
     ANSWERS,
     WORKBOOKS_DIR,
@@ -65,6 +66,32 @@ def test_app_compiles_a_reference_workbook_like_the_cli():
     assert pdf.status_code == 200
     assert app_doc.page_count == cli_doc.page_count
     assert [p.get_text() for p in app_doc] == [p.get_text() for p in cli_doc]
+
+
+def test_app_shows_the_page_count_of_the_pdf():
+    """The catalogue counts the PDF's pages, its « (suite) » pages included, not the file's."""
+    info = next(t for t in TestClient(app).get("/api/templates").json() if t["id"] == "carnet-7")
+    cli = io.BytesIO()
+    build_reference_workbook("carnet-7", cli)
+
+    assert info["page_count"] == pymupdf.open(stream=cli.getvalue(), filetype="pdf").page_count
+    assert info["page_count"] > len(load_workbook("carnet-7").pages)  # carnet 7 has « (suite) » pages
+
+
+def test_page_count_is_counted_again_when_the_file_changes(tmp_path, monkeypatch):
+    monkeypatch.setattr(spec_module, "WORKBOOKS_DIR", str(tmp_path))
+    path = tmp_path / "essai.json"
+
+    def write(pages):
+        page = {"template": "composite", "title": "Une page.", "part_title": "",
+                "blocks": [{"type": "question", "question": "Une question ?", "field_id": "q"}]}
+        path.write_text(json.dumps({"pages": [page] * pages}), encoding="utf-8")
+        os.utime(path, (pages, pages))  # a new date, as an edit gives
+
+    write(1)
+    assert reference_page_count("essai") == 1
+    write(2)
+    assert reference_page_count("essai") == 2
 
 
 def test_parts_are_named_and_hold_consecutive_pages():
