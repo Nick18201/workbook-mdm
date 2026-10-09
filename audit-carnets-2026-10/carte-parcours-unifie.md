@@ -46,8 +46,8 @@ Toujours 10 séances de 1 h 20 et un suivi de 40 min à 6 mois. La répartition 
 | | S3 | Votre fonctionnement cognitif | Carnet 3 | |
 | | S4 | Votre rapport à l'argent | Carnet 4 | |
 | | S5 | Vos valeurs et vos moteurs | Carnet 5 | |
-| 2 · Confronter | S6 | Explorer : 10 pistes, 5 réalistes et 5 audacieuses ; choix des 3 pistes à confronter | Carnet 6 | Matrice de faisabilité · 3 scénarios comparés · Retours d'enquêtes terrain |
-| | S7 | Confronter : les 3 pistes passées au crible de vos critères, enquêtes préparées et lancées, salaires et débouchés | Carnet 7, partie 1 | |
+| 2 · Explorer | S6 | Explorer : 10 pistes, 5 réalistes et 5 audacieuses ; choix des 3 pistes à explorer sur le terrain | Carnet 6 | Matrice de faisabilité · 3 scénarios comparés · Retours d'enquêtes terrain |
+| | S7 | Explorer le terrain : les 3 pistes passées au crible de vos critères, enquêtes préparées et lancées, salaires et débouchés | Carnet 7, partie 1 | |
 | | S8 | Tirer les leçons du terrain : ce que les enquêtes confirment ou contredisent, matrice de faisabilité, 3 familles de scénarios (pistes directes, passerelles courtes, angles morts) | Carnet 7, partie 2 | |
 | 3 · Décider et agir | S9 | Choisir, et adapter le carnet de route au projet (formation pour une reconversion, modèle économique pour une création, argumentaire pour une évolution interne) | Carnet de route, partie 1 | Feuilles de route A et B · Premières actions sous 7 jours · Document de synthèse co-rédigé · Suivi à 6 mois |
 | | S10 | Synthèse, piste A (projet d'élan) et piste B (refuge et tremplin), premières actions | Carnet de route, partie 2 | |
@@ -184,9 +184,9 @@ Récapitule S5 et prépare S6 « Explorer ».
 | Les ressources | PDF C6 | Placées avant les pistes. Liens à jour. |
 | Dix pistes | PDF C6 ex. 4 | 5 réalistes et 5 audacieuses. Elles partent du fil des pistes, des suggestions des proches et de « Je m'autorise à » (carnet 1). Une colonne « d'où vient cette piste ». |
 
-**Sortie** : **10 pistes qualifiées**. La séance 6 en retient 3 à confronter.
+**Sortie** : **10 pistes qualifiées**. La séance 6 en retient 3 à explorer sur le terrain.
 
-### Carnet 7 · Confronter au terrain · en deux parties · cible 1 h 45, puis 2 h
+### Carnet 7 · Explorer le terrain · en deux parties · cible 1 h 45, puis 2 h
 
 **Partie 1 · S6 → S7 · deux semaines.** Prépare S7.
 
@@ -310,7 +310,7 @@ L'app a deux usages : créer un livret de toutes pièces, puis exporter son JSON
 
 Deux règles valent partout :
 - **les exemples viennent d'un métier voisin**, jamais du métier de la personne, sinon ils sont recopiés ;
-- **ne sont jamais modifiés** : le cadre, le protocole de sécurité, les textes réglementaires et les renvois entre carnets.
+- **ne sont jamais modifiés** : le cadre, les annonces des exercices qui touchent à l'intime, les textes réglementaires et les renvois entre carnets.
 
 ## 9. Les décisions
 

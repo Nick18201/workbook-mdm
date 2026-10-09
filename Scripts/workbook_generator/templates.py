@@ -56,12 +56,13 @@ from .primitives import (
 
 logger = logging.getLogger(__name__)
 
-# Fixed texts of the common template of the carnets (never customized). The safety
-# protocol of a heavy exercise follows James Pennebaker's expressive writing: a warning,
-# a strict right to leave it blank, and an anchoring sentence to close it.
-PROTOCOL_WARNING = "Les questions qui suivent sont franches et peuvent remuer. Prenez-les à votre rythme."
-PROTOCOL_OPTIONAL = ("Si cet exercice vous semble trop lourd à faire hors séance, laissez-le vierge : "
-                     "nous l'aborderons ensemble.")
+# Fixed texts of the common template of the carnets (never customized). An exercise that
+# touches on the intimate (family, personal money, fears) opens on an announcement, a
+# factual sentence: what it is about and what it serves in the bilan, never a safety
+# warning; it closes on an anchoring sentence turned to the present. The right to skip a
+# question is said once, in each carnet's opener (components.OPENER_FRAME). A bilan, not
+# psychology: decided on 9 October 2026, after the feedback on carnet 1.
+PROTOCOL_WARNING = "Les questions qui suivent sont franches : elles vont à l'essentiel de votre bilan."
 ANCHOR_PROMPT = "Aujourd'hui, avec le recul, je sais que…"
 ENERGY_PROMPT = "Votre niveau d'énergie aujourd'hui :"
 ENERGY_REASON = "Ce chiffre s'explique surtout par…"
@@ -1092,31 +1093,27 @@ class PageLayout:
 
     def add_protocol(self, text=None):
         """
-        Before a heavy exercise: a white card with a shield badge, « Avant de commencer »,
-        the warning (`text`, or PROTOCOL_WARNING) and the right to leave it blank.
+        Before an exercise that touches on the intimate: a white card with an info badge,
+        « Avant de commencer » and the announcement (`text`, or PROTOCOL_WARNING).
         """
         pad = PDFStyle.CARD_PADDING
         badge = 1.0 * cm
         text_x = self.text_x + pad + badge + 0.4 * cm
         inner = self.text_x + self.target_width - pad - text_x
         label = "Avant de commencer"
-        warning = str(text or PROTOCOL_WARNING)
+        announcement = str(text or PROTOCOL_WARNING)
         size, leading = PDFStyle.SIZE_BODY, PDFStyle.SIZE_BODY * PDFStyle.LEADING_BODY
         _, pill_h = label_pill_size(label)
-        warning_h = paragraph_height(warning, inner, PDFStyle.FONT_BODY, size, leading)
-        optional_h = paragraph_height(PROTOCOL_OPTIONAL, inner, PDFStyle.FONT_BODY_BOLD, size, leading)
-        h = 2 * pad + max(badge, pill_h + 0.25 * cm + warning_h + 0.1 * cm + optional_h)
+        announcement_h = paragraph_height(announcement, inner, PDFStyle.FONT_BODY, size, leading)
+        h = 2 * pad + max(badge, pill_h + 0.25 * cm + announcement_h)
         self._ensure_space(h)
 
         top = self.y_cursor
         draw_white_card(self.c, self.text_x, top - h, self.target_width, h)
-        draw_icon_badge(self.c, self.text_x + pad + badge / 2, top - pad - badge / 2, "shield", diameter=badge)
+        draw_icon_badge(self.c, self.text_x + pad + badge / 2, top - pad - badge / 2, "info", diameter=badge)
         draw_label_pill(self.c, text_x, top - pad - pill_h, label, max_width=inner)
-        t = top - pad - pill_h - 0.25 * cm
-        t -= draw_paragraph(self.c, warning, text_x, t, inner, PDFStyle.FONT_BODY, size, PDFStyle.COLOR_INK,
-                            leading) + 0.1 * cm
-        draw_paragraph(self.c, PROTOCOL_OPTIONAL, text_x, t, inner, PDFStyle.FONT_BODY_BOLD, size, PDFStyle.COLOR_INK,
-                       leading)
+        draw_paragraph(self.c, announcement, text_x, top - pad - pill_h - 0.25 * cm, inner, PDFStyle.FONT_BODY, size,
+                       PDFStyle.COLOR_INK, leading)
         self.y_cursor -= h + PDFStyle.GAP_BLOCK
         return self.y_cursor
 

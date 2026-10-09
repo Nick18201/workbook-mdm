@@ -364,10 +364,12 @@ def _point_text(point):
     return str(point).strip()
 
 
-# Fixed lines of a carnet's opener: the frame is never customized
-OPENER_FRAME = ("Vos réponses vous appartiennent : seule la personne qui vous accompagne les lit. "
-                "Vous pouvez passer une question.")
-OPENER_HOW_TO = "Remplissez ce PDF à l'écran ou sur papier. Nous le relisons ensemble en séance."
+# Fixed lines of a carnet's opener: the frame is never customized. The right to skip a
+# question is said here, once per carnet, and never again in an exercise; everything is
+# done on screen: the carnet is sent back complete before the session
+OPENER_FRAME = ("Seule la personne qui vous accompagne lit vos réponses. "
+                "Si l'inspiration manque pour une question, passez-la : nous la reprendrons en séance.")
+OPENER_HOW_TO = "Remplissez-le à l'écran, puis renvoyez-le complété avant la séance."
 NOTE_SIZE = PDFStyle.SIZE_BODY_SMALL
 NOTE_LEADING = NOTE_SIZE * 1.45
 NOTE_INDENT = 0.7 * cm
@@ -542,7 +544,7 @@ def create_standard_engagement_page(
 
     # 1. The deliverable on a post-it, with the stamp
     livrable_title = livrable_title or "La synthèse de ce carnet"
-    livrable_text = livrable_text or "À relire avec la personne qui vous accompagne lors de la prochaine séance."
+    livrable_text = livrable_text or "À travailler avec la personne qui vous accompagne, à la prochaine séance."
     note_w = width * 0.62
     pad = 0.6 * cm
     inner = note_w - 2 * pad
@@ -645,7 +647,7 @@ def create_closing_page(c, messages=None):
     if messages is None:
         messages = [
             "Ce carnet reste le vôtre.",
-            "Gardez-le à portée de main pour la prochaine séance.",
+            "Renvoyez-le complété avant la prochaine séance.",
         ]
     y -= 1.4 * cm
     for msg in messages:
@@ -938,7 +940,7 @@ def create_standard_enquete_page(
     c,
     title="Fiche enquête réseau et métier.",
     part_title="Exploration du terrain",
-    intro_text="Interrogez un professionnel ou un pair pour confronter vos hypothèses à la réalité du terrain, sans chercher à vendre.",
+    intro_text="Interrogez un professionnel ou un pair pour vérifier vos hypothèses sur le terrain, sans chercher à vendre.",
     questions=None,
     field_prefix="enquete",
 ):

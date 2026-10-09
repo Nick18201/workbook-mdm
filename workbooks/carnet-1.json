@@ -19,7 +19,7 @@
       "title": "Fixer votre point *de départ.*",
       "params": {
         "num": "1",
-        "intro_text": "Ce carnet prépare la séance 1. Il fait un état des lieux rapide de votre situation, puis regarde ce que vous avez reçu de votre milieu sur le travail. Il servira de référence pour mesurer le chemin parcouru.<br/><br/>La question centrale de votre bilan : <b>quelle place voulez-vous donner au travail dans votre vie, et sous quelle forme ?</b>",
+        "intro_text": "Ce carnet prépare la séance 1. Il fait un état des lieux rapide de votre situation, puis s'intéresse à vos héritages (famille, milieu social d'origine) sur le sujet du travail.<br/><br/>La question centrale de votre bilan : <b>quelle place voulez-vous donner au travail dans votre vie, et sous quelle forme ?</b>",
         "points": [
           "À lire · Bienvenue et cadre de travail · 5 min",
           "Avant de commencer · Météo et engagement · 10 min",
@@ -45,7 +45,7 @@
           "items": [
             "Vous commencez un bilan de compétences : vous avez décidé de faire le point sur votre parcours, puis de passer à l'action.",
             "Sept carnets de bord, puis un carnet de route, accompagnent vos dix séances. Chaque carnet prépare la séance qui suit : celui-ci prépare la séance 1.",
-            "Vous les remplissez entre les séances, et nous les relisons ensemble. Ils gardent la trace de vos idées, de vos constats et de vos décisions."
+            "Vous les remplissez chez vous, sur votre temps d'introspection, puis nous les travaillons ensemble en séance. Ils retracent vos prises de conscience, vos idées et vos décisions."
           ],
           "size": 12
         },
@@ -63,7 +63,7 @@
             ],
             [
               "travel_explore",
-              "Confronter",
+              "Explorer",
               "Carnets 6 et 7"
             ],
             [
@@ -111,8 +111,8 @@
             },
             {
               "title": "2. Franchise",
-              "subtitle": "Vos vrais doutes comptent.",
-              "text": "Ce sont vos vraies contraintes qui rendent un projet réaliste. Vous pouvez aussi passer une question : laissez-la vierge, nous en parlerons en séance."
+              "subtitle": "Vos doutes comptent.",
+              "text": "C'est la connaissance de vos contraintes et de vos doutes qui rend un projet réaliste. Il est important de les nommer dans vos carnets et en séance. Si l'inspiration manque pour une question, vous pouvez bien sûr la passer : nous la reprendrons en séance."
             },
             {
               "title": "3. Action",
@@ -132,8 +132,7 @@
             "Une question vous pèse ? Notez-la en fin de carnet, dans « À aborder en séance » : nous la traiterons ensemble.",
             "Remplissez chaque carnet en plusieurs fois, entre deux séances : 1 h 30 à 3 h d'écriture selon les carnets.",
             "Enregistrez ce fichier sur votre ordinateur avant de le remplir, puis ouvrez-le avec Acrobat Reader (gratuit) ou votre navigateur. Sur téléphone ou tablette, utilisez l'application Acrobat Reader. Enregistrez après chaque session de travail.",
-            "Vous préférez écrire à la main ? Imprimez-le : chaque case a la place nécessaire.",
-            "Apportez votre carnet à chaque séance : nous le relisons ensemble."
+            "Pensez bien à renvoyer votre carnet complété pour chaque séance."
           ]
         }
       ]
@@ -203,7 +202,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, parle de votre situation, de ce qui vous pèse et de votre plus grande peur face au changement. Il peut remuer. Prenez-le à votre rythme."
+          "text": "Cet exercice, sur deux pages, parle de votre situation, de ce qui pèse et de votre plus grande peur face au changement : les nommer, c'est déjà savoir par où commencer."
         },
         {
           "type": "paragraphs",
@@ -311,7 +310,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Votre vie se compose de domaines qui pèsent les uns sur les autres. Notez votre satisfaction dans chacun, de 1 à 10. Cette photographie sert de référence : vous la referez à la fin du bilan."
+            "Votre vie se compose de différents domaines qui s'entre-influencent. Notez votre satisfaction dans chacun, de 1 à 10. Cette photographie sert de référence : vous la referez à la fin du bilan."
           ],
           "spacing_after_cm": 0.45
         },
@@ -394,12 +393,6 @@
             ]
           ],
           "question_labels": true
-        },
-        {
-          "type": "contrast_example",
-          "title": "Cariste",
-          "surface": "Ça va à peu près partout.",
-          "exploitable": "Santé : 3. Les horaires décalés m'épuisent. Donc, mon prochain poste devra suivre un rythme de journée."
         }
       ]
     },
@@ -449,12 +442,12 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, parle de votre famille et du travail des adultes qui ont pris soin de vous. Il peut réveiller des souvenirs forts. Si votre histoire familiale est absente ou douloureuse, pensez aux adultes qui ont compté dans votre enfance, ou passez à l'exercice suivant."
+          "text": "Cet exercice vous fait repenser aux messages sur le travail que vous avez reçus dans l'enfance et l'adolescence : « épanouissement », « passion », « plaisir », « devoir », « loyauté », « identité », « épuisement »… Ce que vous avez vu chez vos figures d'attachement compte, consciemment et inconsciemment."
         },
         {
           "type": "paragraphs",
           "items": [
-            "Votre milieu vous a transmis des modèles, des messages et des attentes sur le travail. Ils orientent encore vos choix, parfois sans que vous le sachiez.",
+            "Votre milieu vous a transmis des modèles, des croyances et des attentes sur le travail. Ils orientent encore vos choix, parfois sans que vous le sachiez.",
             "Pensez au travail de vos parents, ou des adultes qui ont pris soin de vous. Lisez les quatre questions, puis fermez les yeux une minute avant d'écrire."
           ],
           "spacing_after_cm": 0.45
@@ -557,11 +550,11 @@
           "type": "numbered_lines",
           "cards": [
             [
-              "Cinq mots reçus sur le travail",
+              "5 mots que j'associe au travail d'après mes héritages",
               "c1_mots_recus"
             ],
             [
-              "Cinq mots pour mon futur travail",
+              "Les 5 mots que je veux associer au travail aujourd'hui",
               "c1_mots_choisis"
             ]
           ],
@@ -582,7 +575,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Les personnes que vous admirez, et celles que vous refusez d'imiter, disent beaucoup de ce que vous cherchez. Elles peuvent être réelles ou de fiction. Les personnes réelles pourront devenir vos premiers contacts sur le terrain, aux carnets 2 et 7."
+            "Les personnes que vous admirez, et celles que vous refusez d'imiter, disent beaucoup de ce que vous cherchez. Il peut s'agir de proches, d'amis, de collègues, de personnages de fiction : des personnes qui vous inspirent, vous donnent envie, dont vous appréciez les qualités… Les personnes réelles pourront devenir vos premiers contacts sur le terrain, aux carnets 2 et 7."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -683,7 +676,7 @@
         ],
         "field_prefix": "c1_livrable",
         "livrable_title": "Votre point de départ",
-        "livrable_text": "Votre situation, ce qui pèse et ce qui tient, vos domaines de vie notés, votre objectif et ce que vous vous autorisez, votre héritage, vos modèles. Relus ensemble en séance 1."
+        "livrable_text": "Votre situation, ce qui pèse et ce qui tient, vos domaines de vie notés, votre objectif et ce que vous vous autorisez, votre héritage, vos modèles. Travaillés ensemble en séance 1."
       },
       "data_id": "c1.livrable"
     },
@@ -692,7 +685,7 @@
       "params": {
         "messages": [
           "Votre point de départ est posé.",
-          "Prochaine étape : la séance 1. Apportez ce carnet.",
+          "Prochaine étape : la séance 1. Renvoyez ce carnet complété d'ici là.",
           "Ensuite, le carnet 2 : votre parcours."
         ]
       },

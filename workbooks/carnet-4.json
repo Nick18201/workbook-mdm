@@ -167,7 +167,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, parle de votre famille et de souvenirs parfois lourds : le manque, la gêne, les rapports de pouvoir. Avancez à votre rythme."
+          "text": "Cet exercice, sur deux pages, parle de votre famille et de ce qu'elle vous a appris de l'argent : le manque, la gêne, les rapports de pouvoir, la fierté aussi."
         },
         {
           "type": "paragraphs",
@@ -285,7 +285,7 @@
           "type": "question",
           "question": "Un souvenir d'argent qui me reste :",
           "field_id": "c4_exp_souvenir",
-          "subtitle": "Un manque, une fierté, une comparaison, une gêne. Un mot suffit, ou laissez la case vierge pour la séance.",
+          "subtitle": "Un manque, une fierté, une comparaison, une gêne.",
           "answer": "sentence",
           "fixed": true
         },
@@ -735,7 +735,6 @@
           "type": "question",
           "question": "Ce qui me fait le plus peur dans le manque d'argent, c'est…",
           "field_id": "c4_synth_peur",
-          "subtitle": "Un mot suffit, ou laissez la case vierge pour la séance.",
           "answer": "sentence",
           "fixed": true
         },
@@ -757,7 +756,7 @@
         ],
         "field_prefix": "c4_livrable",
         "livrable_title": "Votre seuil de sécurité financière",
-        "livrable_text": "Vos quatre seuils (exercice 5) et votre tendance dominante (exercice 6). Relus ensemble en séance 4, ils serviront à juger chaque piste, jusqu'au carnet de route.",
+        "livrable_text": "Vos quatre seuils (exercice 5) et votre tendance dominante (exercice 6). Travaillés ensemble en séance 4, ils serviront à juger chaque piste, jusqu'au carnet de route.",
         "zones": [
           "Ce qui m'étonne en relisant mes réponses",
           "À aborder en séance : ce que je préfère dire de vive voix, une question non tranchée",
@@ -772,7 +771,7 @@
       "params": {
         "messages": [
           "Votre seuil de sécurité financière est posé.",
-          "Prochaine étape : la séance 4. Apportez ce carnet.",
+          "Prochaine étape : la séance 4. Renvoyez ce carnet complété d'ici là.",
           "Ensuite, le carnet 5 : vos valeurs et vos moteurs profonds."
         ]
       },

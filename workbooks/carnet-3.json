@@ -405,7 +405,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Ces deux questions touchent à des moments difficiles. Vos réactions sous pression disent ce qui vous épuise, pas qui vous êtes. Partez d'un souvenir que vous regardez avec un peu de recul."
+          "text": "Ces deux questions portent sur vos réactions sous pression : elles disent ce qui vous épuise, pas qui vous êtes. Partez d'un souvenir que vous regardez avec un peu de recul."
         },
         {
           "type": "fields_card",
@@ -548,7 +548,7 @@
       "params": {
         "messages": [
           "Votre cartographie des énergies est prête.",
-          "Prochaine étape : la séance 3, la restitution du test. Apportez ce carnet.",
+          "Prochaine étape : la séance 3, la restitution du test. Renvoyez ce carnet complété d'ici là.",
           "Ensuite, le carnet 4 : votre rapport à l'argent."
         ]
       },

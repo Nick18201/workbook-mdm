@@ -465,8 +465,6 @@
               ]
             ]
           ],
-          "title": "Si vous le souhaitez",
-          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
           "question_labels": true,
           "fixed": true
         }
@@ -883,8 +881,6 @@
               ]
             ]
           ],
-          "title": "Si vous le souhaitez",
-          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
           "question_labels": true,
           "fixed": true
         },
@@ -1655,7 +1651,7 @@
       "params": {
         "messages": [
           "Le bilan s'achève, votre projet commence.",
-          "Prochaine étape : la séance 10. Apportez ce carnet.",
+          "Prochaine étape : la séance 10. Renvoyez ce carnet complété d'ici là.",
           "Dans six mois, le suivi : votre feuille de route en main."
         ]
       }

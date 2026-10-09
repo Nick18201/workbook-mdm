@@ -51,12 +51,12 @@ def _cover(carnet, number, title="Un *titre.*", promise=None):
 
 
 def test_cover_takes_the_document_pastel():
-    page = _cover(7, 7, "Confronter *au terrain.*", "Trois pistes, confrontées au réel.")[0]
+    page = _cover(7, 7, "Explorer *le terrain.*", "Trois pistes, vérifiées sur le terrain.")[0]
 
     fills = {tuple(round(v * 255) for v in d["fill"]) for d in page.get_drawings() if d.get("fill")}
     assert _rgb(PDFStyle.PASTELS["blush"]) in fills  # carnet 7's disc
     assert _rgb(PDFStyle.COLOR_CORAL) in fills  # the full stop of the number, this carnet in the row
-    assert "Trois pistes, confrontées au réel." in " ".join(page.get_text().split())
+    assert "Trois pistes, vérifiées sur le terrain." in " ".join(page.get_text().split())
 
 
 @pytest.mark.parametrize("carnet, number, hero, row", [

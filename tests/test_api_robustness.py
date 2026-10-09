@@ -148,6 +148,6 @@ def test_check_lists_what_breaks_our_rules(client):
 def test_downloads_are_named_after_their_title(client):
     spec = client.get("/api/templates/carnet-7").json()
     r = client.post("/api/compile", json=spec)
-    assert "filename=Carnet_7_Confronter_au_terrain.pdf" in r.headers["Content-Disposition"]
+    assert "filename=Carnet_7_Explorer_le_terrain.pdf" in r.headers["Content-Disposition"]
     r = client.post("/api/compile", json={"chapter_title": "Mes enquêtes *métiers.*", "pages": [{"template": "cover"}]})
     assert "filename=Mes_enquetes_metiers.pdf" in r.headers["Content-Disposition"]

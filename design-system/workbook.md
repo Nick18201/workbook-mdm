@@ -11,7 +11,7 @@ Propositions pour le générateur de carnets de bord. Elles ne viennent pas du s
   - Carnet 4 · Mon rapport à l'argent
   - Carnet 5 · Valeurs et moteurs profonds
   - Carnet 6 · L'exploration
-  - Carnet 7 · Confronter au terrain
+  - Carnet 7 · Explorer le terrain
 - **Ensuite**, le carnet de route du temps 3, avec un module propre au projet : création ou reprise, reconversion, ou évolution interne.
 - **Chaque carnet** contient un objectif, des exercices avec leur durée, et un livrable validé en séance avec la personne qui accompagne.
 - **Ils se travaillent entre les séances.** Le composant PageCarnet montre comment le site présente un carnet.
@@ -46,7 +46,7 @@ Propositions pour le générateur de carnets de bord. Elles ne viennent pas du s
   - les échelles et les jauges en pastilles `radius-full`.
 - **Encadré** (conseil, rappel, exemple) : une CartePastel avec une Etiquette.
 - **Exemple contrasté** : « En surface » sur `surface-card`, « Exploitable » sur une CartePastel, tirés d'un métier voisin.
-- **Exercice à forte charge** : « AVANT DE COMMENCER » (avertissement et droit de laisser vierge), puis « POUR CLORE » (phrase d'ancrage).
+- **Exercice qui touche à l'intime** : « AVANT DE COMMENCER » (une annonce factuelle), puis « POUR CLORE » (phrase d'ancrage). Le droit de passer une question est dit une fois, dans l'ouverture du carnet.
 - **Fin de carnet** : le PostIt « LIVRABLE » en `pastel-jasmine` et le Tampon « Validé en séance », avec la date et une case à cocher, puis trois zones courtes guidées.
 - **Folio** en `sourcil`, par exemple « marge de manœuvre · carnet 4/7 · p. 12 » ou « marge de manœuvre · carnet de route · p. 4 ».
 

@@ -24,12 +24,15 @@ VOCABULARY_RULES = """MOTS PROSCRITS (charte, section 7) :
 - Le métier : jamais « coach » ni « coaching ». Dire « consultant en transformation », « la personne qui vous accompagne » ou « la personne référente ». Jamais « cabinet » pour parler de Marge de Manœuvre. « Binôme » jamais d'une façon qui laisse croire que deux personnes sont en séance.
 - Tout l'accompagnement se fait à distance : jamais « présentiel ».
 - Le test du bilan s'appelle « test des fonctionnements cognitifs » : jamais « MBTI » ni type en quatre lettres (ISFJ…).
-- Le tutoiement : toujours le vouvoiement, sauf dans un message cité entre guillemets.
+- Le tutoiement : toujours le vouvoiement.
+- Le papier : tout se fait à l'écran. Jamais « imprimez », « sur papier », « apportez ce carnet » : la personne remplit son carnet chez elle et le renvoie complété avant la séance, où on le travaille ensemble.
+Un mot cité entre guillemets (un message reçu, une parole rapportée : « épanouissement », « Si tu ne connaissais pas mon métier… ») n'est pas concerné.
 """
 
 TONE_RULES = """TON ET VOCABULAIRE (charte de Marge de Manœuvre, pour TOUS les textes du document) :
-- Vouvoiement. Phrases courtes, affirmatives et concrètes, tournées vers la décision et l'action.
-- Lexique à privilégier : action, décision, projet, livrable, marché, faisabilité, salaire, rythme de vie, arbitrage, « validé en séance ».
+- Vouvoiement. Un ton parlé, chaleureux et sérieux à la fois, qui donne de l'énergie : le plaisir de l'introspection, la clarté, le pouvoir d'agir sur sa vie. Phrases courtes, affirmatives et concrètes, tournées vers la décision et l'action.
+- Une personne capable d'agir, jamais une personne fragile : aucune formule de précaution ou de soupçon (« prenez-le à votre rythme », « cela peut remuer », « trop lourd », « vos vrais doutes », « des domaines qui pèsent les uns sur les autres »). Un bilan n'est ni une thérapie ni une psychanalyse.
+- Lexique à privilégier : action, décision, projet, livrable, marché, faisabilité, salaire, rythme de vie, arbitrage, « validé en séance », prise de conscience, héritages, pouvoir d'agir.
 - N'invente aucun chiffre, témoignage, partenariat ni adresse web ; aucune statistique sans source ; aucun montant, salaire ni règle fiscale écrits en dur (renvoyer à la source officielle, ou « à voir en séance »).
 - Formules non genrées : les amorces en « je » n'ont ni participe ni adjectif qui s'accorde avec la personne. Écrire « Ce qui m'étonne » (pas « Ce qui m'a surpris »), « ce qui m'a fait agir ainsi » (pas « ce qui m'a poussé »), « votre clientèle » (pas « vos clients »). Les exemples prennent des métiers au nom épicène (juriste, ergonome, géomètre).
 - Titres de page : une affirmation ponctuée, en minuscules sauf la première lettre et les noms propres, terminée par un point, un « ? » ou un « ! » (« Votre situation actuelle. »). Le dernier mot s'affiche en corail ; pour un autre groupe de mots, l'entourer d'astérisques (« Mon rapport *à l'argent.* »). Un titre dont le premier mot finit par une apostrophe se marque en entier (« *L'exploration.* »). 25 à 45 caractères.
@@ -44,7 +47,7 @@ TEMPLATE_RULES = """LE GABARIT COMMUN DE NOS CARNETS (carte du parcours, section
 3. Météo de l'énergie, seulement si elle est demandée : une page 'composite' titrée « Avant de *commencer.* », sourcil « Météo · 2 min », avec le seul bloc {"type": "energy", "field_prefix": "<préfixe>_meteo"} (ses textes sont fixes).
 4. Les exercices : une page 'composite' par exercice (deux pages pour un exercice long, coupées par un 'page_break'). Sourcil ('part_title') « Exercice N · nom court · durée » (« Exercice 2 · Vos contraintes · 15 min » ; « Exercice 3 · Nom · facultatif · 10 min » pour un exercice facultatif). La page s'ouvre sur une phrase qui dit à quoi sert l'exercice (bloc 'paragraphs').
 5. Fin ('engagement'), titre « Votre livrable. », sourcil « Fin de carnet · 5 min » : 'livrable_title' (ce que le document produit, nommé), 'livrable_text' (une ou deux phrases : ce qu'il contient et ce qu'on en fait en séance), 'lines' (deux à quatre engagements concrets, en « je »), 'zones' : toujours ces trois-là, la deuxième précisée pour ce document : « Ce qui m'étonne en relisant mes réponses », « À aborder en séance : … », « Ce que j'ai laissé vierge, à reprendre ensemble ». 'field_prefix' : « <préfixe>_livrable ».
-6. Dos ('closing') : 'messages', deux ou trois phrases courtes (90 caractères au plus) : la prochaine étape (« Prochaine étape : la séance 6. Apportez ce carnet. »).
+6. Dos ('closing') : 'messages', deux ou trois phrases courtes (90 caractères au plus) : la prochaine étape (« Prochaine étape : la séance 6. Renvoyez ce carnet complété d'ici là. »).
 """
 
 # --- The exercises (carte, section 4; feuille de route, sections 5 and 6) -------------
@@ -56,8 +59,8 @@ SPACE_RULES = """- La place (mesures de nos carnets) : une page d'exercice offre
 EXERCISE_RULES = """LES EXERCICES (conventions de nos carnets) :
 - Des formats variés, choisis pour ce qu'on demande : des questions ('question', 'questions_group'), des informations courtes côte à côte ('fields_card'), un choix exclusif en mots ('rating_grid' d'une ligne, suivie d'une case « Parce que… »), une échelle ('scale'), un tableau qui croise des données ('table' : une colonne par donnée, une ligne par critère), une liste à cocher ('checklist'), des étapes ou des questions à garder sous les yeux ('star_list'), un modèle de message ('callout').
 - Une case, une information. Une question qui demande deux choses a deux cases (« Le scénario vers lequel je penche » · « Pourquoi lui ») ; une donnée et sa source vont dans deux cases côte à côte ; le lieu, le trajet, le télétravail prennent chacun une case d'une ligne, sous un titre de carte.
-- Des amorces en « je » : « Ce que je veux garder… », « Pour me lancer, je commence par… ».
-- Un exemple contrasté par exercice qui demande une réponse rédigée : le bloc 'contrast_example', placé après la consigne et avant les cases. 'title' : un métier voisin de celui de la personne, jamais le sien (elle le recopierait), au nom épicène, différent à chaque exercice. 'surface' : la réponse vague (« C'était intéressant. »). 'exploitable' : la réponse concrète, utilisable en séance. Pas d'exemple sur un exercice de tri ou un test (il orienterait la réponse). Un exemple de plus peut aller dans 'example' d'une question (90 caractères au plus, sans préfixe « Ex : »).
+- Des amorces en « je », précises et actives : « Ce que je veux garder… », « Pour me lancer, je commence par… », « Les 5 mots que je veux associer au travail aujourd'hui » (pas « Cinq mots pour mon futur travail »).
+- Un exemple contrasté par exercice qui demande une réponse rédigée : le bloc 'contrast_example', placé après la consigne et avant les cases. 'title' : un métier voisin de celui de la personne, jamais le sien (elle le recopierait), au nom épicène, différent à chaque exercice. 'surface' : la réponse vague (« C'était intéressant. »). 'exploitable' : la réponse concrète, utilisable en séance. Pas d'exemple sur un exercice de tri, un test ou une auto-évaluation (une notation, une échelle) : il orienterait la réponse. Un exemple de plus peut aller dans 'example' d'une question (90 caractères au plus, sans préfixe « Ex : »).
 - Les irritants se retournent en critères : « Ce qui m'agace dans mon poste » → « donc mon prochain poste devra… ».
 - Les cases restent vides : jamais de réponse, d'objectif ni d'action préremplis. Une feuille de route se fait avec un 'table' (une ligne par palier), jamais avec le gabarit 'roadmap'.
 - Pas de tableau sans case à remplir : chaque cellule à remplir est une case {"field_id": …, "placeholder": …}.
@@ -66,10 +69,10 @@ EXERCISE_RULES = """LES EXERCICES (conventions de nos carnets) :
 
 # --- Heavy questions: James Pennebaker's line, with a safety net ----------------------
 
-CHARGE_RULES = """CHARGE ÉMOTIONNELLE (ligne de l'écriture expressive de James Pennebaker) :
-- Les questions franches sont posées (« Ma plus grande peur face à ce changement », « Ce que je n'ai jamais osé dire à mon manager »), avec un filet : la personne remplit seule, entre deux séances.
-- Forte charge (peur, échec, honte, conflit, épuisement, deuil, licenciement, famille…) : un bloc {"type": "protocol", "text": "Cette page parle de … : une phrase d'avertissement."} ouvre la première page de l'exercice (la phrase « Si cet exercice vous semble trop lourd à faire hors séance, laissez-le vierge : nous l'aborderons ensemble. » s'ajoute seule), et un bloc {"type": "anchor", "field_id": "<préfixe>_ancrage"} ferme sa dernière page (la phrase d'ancrage « Aujourd'hui, avec le recul, je sais que… » est fixe).
-- Charge moyenne : la question franche est facultative, dans une 'fields_card' titrée « Si vous le souhaitez », 'hint' « Facultatif. Un mot suffit, ou laissez la case vierge pour la séance. », marquée "fixed": true ; puis une clôture d'une phrase (une 'question' marquée "fixed": true, 'answer' 'sentence' : « Avec le recul, … »).
+CHARGE_RULES = """LES QUESTIONS FRANCHES (un bilan, pas une thérapie : retours de Nicolas sur le carnet 1, 9 octobre 2026) :
+- Les questions franches sont posées (« Ma plus grande peur face à ce changement », « Ce que je n'ai jamais osé dire à mon manager ») : un bilan sert à décider, il nomme les contraintes et les doutes.
+- Le droit de passer une question est dit une seule fois, dans l'ouverture de chaque carnet (texte fixe). Ne le répète jamais dans un exercice : ni « facultatif », ni « laissez la case vierge », ni « si vous le souhaitez ».
+- Un exercice qui touche à l'intime (famille, argent personnel, peurs, échecs, conflits, épuisement) s'ouvre sur une annonce : un bloc {"type": "protocol", "text": "Cet exercice parle de … : ce que vous en tirez sert à …"}, une phrase factuelle qui dit de quoi il parle et à quoi il sert pour le bilan, sans formule de précaution. Il se clôt sur la phrase d'ancrage, tournée vers le présent : un bloc {"type": "anchor", "field_id": "<préfixe>_ancrage"} (« Aujourd'hui, avec le recul, je sais que… », texte fixe).
 """
 
 # --- The boxes (field policy, PR #67 and #68; feuille de route, section 5) ----------
@@ -108,7 +111,7 @@ Ne crée jamais toi-même : 'report' (il reporte une donnée d'un autre carnet),
 
 REFERENCE_BLOCKS_RULES = """BLOCS DÉJÀ PRÉSENTS DANS LE DOCUMENT :
 - Garde le type de chaque bloc, ses clés, l'ordre de ses éléments, tous ses identifiants ('field_id', 'field_prefix', identifiants dans les listes) et la taille de ses cases ('answer', ou 'word', 'sentence'… dans une liste ; 'answer' d'une cellule de tableau {"field_id": …, "answer": "word"}) ; adapte seulement ses textes, sans les allonger.
-- Ne modifie jamais les blocs 'protocol' (avertissement avant un exercice à forte charge), 'anchor' (phrase d'ancrage qui le clôt), 'energy' (météo du jour) et 'report' (report d'une donnée écrite dans un autre carnet) : ils font partie du cadre, du protocole de sécurité et des renvois entre carnets. Garde les clés 'data_id', 'fixed' et 'part' là où elles sont. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
+- Ne modifie jamais les blocs 'protocol' (annonce d'un exercice qui touche à l'intime), 'anchor' (phrase d'ancrage qui le clôt), 'energy' (météo du jour) et 'report' (report d'une donnée écrite dans un autre carnet) : ils font partie du cadre, des annonces et des renvois entre carnets. Garde les clés 'data_id', 'fixed' et 'part' là où elles sont. Dans un 'contrast_example', tu peux réécrire 'title', 'surface' et 'exploitable', avec un exemple tiré d'un métier voisin de celui du bénéficiaire, jamais de son propre métier.
 - Dans une page 'summary', garde 'duration' et 'split' ; dans une page 'engagement', garde 'zones' et 'pistes'.
 """
 
@@ -116,7 +119,7 @@ REFERENCE_BLOCKS_RULES = """BLOCS DÉJÀ PRÉSENTS DANS LE DOCUMENT :
 
 PERSONALIZATION_RULES = """CE QUE LA PERSONNALISATION CHANGE (carte du parcours, section 8) :
 - S'adaptent : les exemples (d'un métier voisin, jamais le sien), les consignes, sous-titres et questions pour qu'ils parlent de sa situation, le vocabulaire de son secteur, les intitulés de pistes, les ressources de son secteur.
-- Ne changent jamais : ce qui porte "fixed": true, le cadre, le protocole de sécurité, la météo, les reports et les renvois entre carnets, les définitions, les textes réglementaires, les identifiants et la taille des cases.
+- Ne changent jamais : ce qui porte "fixed": true, le cadre, les annonces des exercices qui touchent à l'intime, la météo, les reports et les renvois entre carnets, les définitions, les textes réglementaires, les identifiants et la taille des cases.
 - Selon le carnet ('carnet' en tête du document) :
   * carnets 6 et 7, carnet de route et ses modules, business plan : pertinence forte (pistes pré-intitulées, ressources et contacts du secteur, exemples) ;
   * carnets 2 et 4 : moyenne (vocabulaire du secteur ; sa situation : reconversion, évolution, retour à l'emploi ; au carnet 4, son statut : salarié, indépendant, demandeur d'emploi, et jamais un chiffre personnel) ;
@@ -142,7 +145,7 @@ FIDELITY_RULES = """MISE EN PAGE FIDÈLE D'UN SUPPORT DÉJÀ ÉCRIT :
   * une consigne → 'paragraphs' ; une liste de conseils → 'star_list'.
 - Une page du document par page ou par section du support : son titre devient le titre de la page ('title'), son surtitre éventuel le sourcil ('part_title', tel quel ; "" s'il n'y en a pas). Une section trop longue pour une page se coupe par un 'page_break', en deux pages équilibrées (la place, ci-dessous).
 - N'ajoute rien : ni exemple contrasté, ni protocole, ni météo, ni durée, ni page d'ouverture ou de livrable, ni question, ni consigne de ton cru. N'en retire rien, ne fusionne pas deux questions, n'en reformule aucune.
-- Ce qui rapprocherait le support de nos carnets va dans 'suggestions', une consigne par ajout, rédigée pour que le consultant l'applique telle quelle avec « Ajuster » : un exemple contrasté tiré d'un métier voisin, le protocole avant une question à forte charge, une durée par page, une page d'ouverture, une page de livrable, une formule genrée à tourner autrement (« Ajoute un exemple contrasté à la page 3, tiré d'un métier voisin. »).
+- Ce qui rapprocherait le support de nos carnets va dans 'suggestions', une consigne par ajout, rédigée pour que le consultant l'applique telle quelle avec « Ajuster » : un exemple contrasté tiré d'un métier voisin, une annonce avant un exercice qui touche à l'intime, une durée par page, une page d'ouverture, une page de livrable, une formule genrée à tourner autrement (« Ajoute un exemple contrasté à la page 3, tiré d'un métier voisin. »).
 """
 
 

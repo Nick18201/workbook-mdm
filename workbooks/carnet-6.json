@@ -19,7 +19,7 @@
       "title": "Ouvrir *le champ.*",
       "params": {
         "num": "6",
-        "intro_text": "Ce carnet prépare la séance 6. Il rassemble sur une page ce que vous savez de vous, recueille les réponses de vos proches, puis ouvre dix pistes : cinq réalistes, cinq audacieuses. En séance 6, vous en retiendrez trois à confronter au terrain.<br/><br/><b>Une piste n'est pas une décision : notez-la, même si elle vous semble improbable.</b>",
+        "intro_text": "Ce carnet prépare la séance 6. Il rassemble sur une page ce que vous savez de vous, recueille les réponses de vos proches, puis ouvre dix pistes : cinq réalistes, cinq audacieuses. En séance 6, vous en retiendrez trois à explorer sur le terrain.<br/><br/><b>Une piste n'est pas une décision : notez-la, même si elle vous semble improbable.</b>",
         "points": [
           "Avant de commencer · Météo et récapitulatif · 10 min",
           "Exercice 1 · Votre cartographie · 20 min",
@@ -194,7 +194,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, recueille le regard de vos proches. Il peut toucher, surtout quand une réponse reprend ce qu'on attend de vous depuis longtemps. Ces pages vous appartiennent : vous choisissez ce que vous y notez, et ce que vous en partagez."
+          "text": "Cet exercice, sur deux pages, recueille le regard de vos proches : ce qu'ils voient de vous, et parfois ce qu'on attend de vous depuis longtemps. Vous choisissez ce que vous en partagez en séance."
         },
         {
           "type": "paragraphs",
@@ -814,8 +814,6 @@
               ]
             ]
           ],
-          "title": "Si vous le souhaitez",
-          "hint": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
           "question_labels": true,
           "fixed": true
         },
@@ -840,7 +838,7 @@
         ],
         "field_prefix": "c6_livrable",
         "livrable_title": "Vos dix pistes",
-        "livrable_text": "Cinq pistes réalistes et cinq audacieuses, avec leur origine et ce qui vous y attire (exercice 4), et vos trois favorites. En séance 6, vous en retiendrez trois à confronter au terrain.",
+        "livrable_text": "Cinq pistes réalistes et cinq audacieuses, avec leur origine et ce qui vous y attire (exercice 4), et vos trois favorites. En séance 6, vous en retiendrez trois à explorer sur le terrain.",
         "zones": [
           "Ce qui m'étonne en relisant mes réponses",
           "À aborder en séance : une piste que je n'ose pas défendre, une suggestion qui me gêne",
@@ -854,8 +852,8 @@
       "params": {
         "messages": [
           "Vos dix pistes sont prêtes.",
-          "Prochaine étape : la séance 6. Apportez ce carnet.",
-          "Ensuite, le carnet 7 : confronter trois pistes au terrain."
+          "Prochaine étape : la séance 6. Renvoyez ce carnet complété d'ici là.",
+          "Ensuite, le carnet 7 : explorer trois pistes sur le terrain."
         ]
       },
       "fixed": true

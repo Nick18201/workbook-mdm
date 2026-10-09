@@ -124,7 +124,7 @@ def _spec_json(spec: WorkbookSpec) -> str:
 
 
 SYSTEM_PROMPT = """Tu es ingénieur pédagogique pour Marge de Manœuvre (bilans de compétences 100 % à distance, tournés vers la décision et l'action).
-À partir des notes d'un consultant, tu conçois un document que la personne accompagnée remplit seule, entre deux séances (un PDF à remplir à l'écran ou sur papier) : un carnet de bord, ou un outil sur un thème précis (« Mes enquêtes métiers », « Préparer mon entretien »).
+À partir des notes d'un consultant, tu conçois un document que la personne accompagnée remplit seule, chez elle, entre deux séances (un PDF à remplir à l'écran, renvoyé complété avant la séance) : un carnet de bord, ou un outil sur un thème précis (« Mes enquêtes métiers », « Préparer mon entretien »).
 Les notes donnent le fond : garde leurs thèmes, leurs questions et leurs exercices, sans en perdre ; reformule-les seulement pour suivre nos règles. La forme suit nos carnets, décrits ci-dessous.
 
 """ + "\n".join((TEMPLATE_RULES, EXERCISE_RULES, CHARGE_RULES, ANSWER_RULES, BLOCKS_DOC, EXAMPLE_PAGE, TONE_RULES)) + """
@@ -301,8 +301,8 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         "Exercice 2 · Votre prochain pas · 10 min",
     ] + (["Fin de carnet · 5 min"] if request.include_engagement else [])
     pages.append(PageSpec(template="summary", title="Avant la prochaine *séance.*", params={
-        "intro_text": "Ce carnet reprend les questions de votre dernière séance. Répondez à votre rythme : "
-                      "nous relirons vos réponses ensemble.",
+        "intro_text": "Ce carnet reprend les questions de votre dernière séance. Renvoyez-le complété avant la "
+                      "prochaine : nous travaillerons vos réponses ensemble.",
         "points": points,
         "duration": _duration_text(first + 10 + (2 if energy else 0) + end),
         "split": "En une fois, ou en deux : l'exercice 1, puis la suite.",
@@ -311,7 +311,8 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
         pages.append(PageSpec(template="composite", title="Avant de *commencer.*", part_title="Météo · 2 min",
                               blocks=[BlockSpec(type="energy", field_prefix="doc_meteo")]))
 
-    blocks = [BlockSpec(type="protocol", text="Certaines questions de cette page touchent à ce qui pèse.")] if heavy else []
+    blocks = [BlockSpec(type="protocol", text="Cette page pose des questions franches : y répondre aide à décider.")
+              ] if heavy else []
     blocks += [
         BlockSpec(type="paragraphs", items=["Les questions de la séance, à reprendre avec vos mots : "
                                             "des faits, des exemples, ce que vous en tirez."]),
@@ -349,7 +350,7 @@ def _build_fallback_spec(request: ParseRequest) -> WorkbookSpec:
             "field_prefix": "doc_livrable",
         }))
     pages.append(PageSpec(template="closing", params={"messages": [
-        "Ce carnet reste le vôtre.", "Prochaine étape : la séance. Apportez ce carnet.",
+        "Ce carnet reste le vôtre.", "Prochaine étape : la séance. Renvoyez ce carnet complété d'ici là.",
     ]}))
     spec = WorkbookSpec(chapter_title=title, subtitle="Bilan de compétences", pages=pages)
     return _finalize_created_spec(spec, request)
@@ -623,7 +624,7 @@ def _drop_needless_breaks(spec: WorkbookSpec) -> WorkbookSpec:
 
 # What a template suggestion is about (its first topic in this order): the model's
 # suggestions may already say it
-SUGGESTION_TOPICS = ("ouverture", "livrable", "protocole", "exemple contrasté", "durée", "tourne-la autrement")
+SUGGESTION_TOPICS = ("ouverture", "livrable", "annonce", "exemple contrasté", "durée", "tourne-la autrement")
 
 
 def _merge_suggestions(model: List[str], template: List[str]) -> List[str]:
@@ -652,8 +653,8 @@ def _layout_suggestions(spec: WorkbookSpec) -> List[str]:
                            "aux pages qui demandent une réponse rédigée.")
     for f in findings:
         if f.rule == "charge":
-            suggestions.append(f"Page {f.page} : une question touche à ce qui pèse ; ajoute le protocole avant l'exercice "
-                               "et la phrase d'ancrage après.")
+            suggestions.append(f"Page {f.page} : une question touche à l'intime ; ajoute une annonce avant l'exercice "
+                               "(ce dont il parle, à quoi il sert) et la phrase d'ancrage après.")
         elif f.rule == "genre":
             quoted = re.search(r"« [^»]* »", f.message)
             suggestions.append(f"Page {f.page} : {quoted.group(0) if quoted else 'une formule'} s'accorde avec la "

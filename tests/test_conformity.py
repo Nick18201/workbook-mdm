@@ -106,6 +106,36 @@ def test_a_heavy_question_needs_the_protocol_or_to_be_optional():
     assert (CHECK, "charge") not in _rules(_spec(optional), structure=False)
 
 
+def test_the_paper_workflow_is_flagged():
+    # Everything is done on screen: the carnet is sent back complete before the session
+    for text in ("Apportez ce carnet à la séance.", "Vous préférez écrire à la main ? Imprimez-le.",
+                 "Remplissez ce PDF à l'écran ou sur papier."):
+        page = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [text]}]}
+        assert (FIX, "papier") in _rules(_spec(page), structure=False), text
+    ok = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [
+        "Ce que vous apportez à une équipe. Renvoyez ce carnet complété d'ici là."]}]}
+    assert (FIX, "papier") not in _rules(_spec(ok), structure=False)
+
+
+def test_a_precaution_that_treats_the_person_as_fragile_is_flagged():
+    for text in ("Il peut remuer. Prenez-le à votre rythme.", "Si cet exercice vous semble trop lourd, passez-le.",
+                 "Un mot suffit, ou laissez la case vierge pour la séance."):
+        page = {"template": "composite", "blocks": [{"type": "protocol", "text": text}]}
+        assert (CHECK, "precaution") in _rules(_spec(page), structure=False), text
+    factual = {"template": "composite", "blocks": [{"type": "protocol", "text": (
+        "Cet exercice parle de votre famille : ce que vous en avez retenu oriente encore vos choix.")}]}
+    assert (CHECK, "precaution") not in _rules(_spec(factual), structure=False)
+
+
+def test_a_forbidden_word_quoted_as_a_message_received_is_accepted():
+    quoted = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [
+        "Les messages reçus sur le travail : « épanouissement », « passion », « devoir »…"]}]}
+    ours = {"template": "composite", "blocks": [{"type": "paragraphs", "items": [
+        "Ce carnet vise votre épanouissement."]}]}
+    assert (FIX, "dev-perso") not in _rules(_spec(quoted), structure=False)
+    assert (FIX, "dev-perso") in _rules(_spec(ours), structure=False)
+
+
 def test_a_gendered_turn_of_phrase_is_flagged():
     page = {"template": "composite", "blocks": [{"type": "question", "question": "Ce qui m'a surpris"}]}
     neutral = {"template": "composite", "blocks": [{"type": "question", "question": "Ce que cette personne m'a appris"}]}

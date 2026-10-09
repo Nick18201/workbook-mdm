@@ -4,9 +4,10 @@ direction, common template of the carnets, conventions of the roadmap), checked 
 spec, those Gemini writes included. The reference workbooks pass it without a finding
 (tests/test_conformity.py): a finding on a generated spec is a gap to our own standards.
 
-Two levels: « à corriger » (a rule is broken: forbidden word, a table with no box, a label
-the PDF cuts) and « à vérifier » (a likely gap a person should look at: an exercise without
-its duration, a heavy question without the protocol, a gendered turn of phrase).
+Two levels: « à corriger » (a rule is broken: forbidden word, the paper workflow, a table
+with no box, a label the PDF cuts) and « à vérifier » (a likely gap a person should look at:
+an exercise without its duration, an intimate question without its announcement, a gendered
+turn of phrase, a precaution that treats the person as fragile).
 """
 
 import re
@@ -37,9 +38,21 @@ FORBIDDEN = (
                   r"|ennéagramme|retrouver votre élan|espace d'écoute bienveillant",
      "registre du développement personnel, à proscrire"),
     ("tutoiement", r"\b(?:tu|toi|tes)\b", "vouvoiement : jamais de tutoiement"),
+    ("papier", r"\bimprim(?:ez|er)\b|\bsur papier\b|\bapportez(?:-le|-la)?\s+(?:ce|votre|vos|le|la)\s+"
+               r"(?:carnet|module|livret|document)s?\b|\bapportez-le\b",
+     "tout se fait à l'écran : le carnet se renvoie complété avant la séance (jamais « imprimez », « sur papier », "
+     "« apportez ce carnet »)"),
 )
+# Rules a quoted word escapes: a message to a relative (« Si tu ne connaissais pas… »), a
+# message received and cited (« épanouissement », « passion »…)
+QUOTE_EXEMPT = {"tutoiement", "dev-perso"}
 FORBIDDEN_RE = [(rule, re.compile(pattern, re.IGNORECASE if rule != "mbti" else 0), message)
                 for rule, pattern, message in FORBIDDEN]
+
+# A precaution that treats the person as fragile (feedback on carnet 1, 9 October 2026: a
+# bilan, not psychology): say what the exercise is about and what it serves instead
+PRECAUTION = re.compile(r"à votre rythme|peu(?:t|vent) (?:vous )?remuer|trop lourd|submerg\w*|douloureu\w*"
+                        r"|laissez(?:-le|-la)? (?:la case )?vierge", re.IGNORECASE)
 
 # A participle or adjective that agrees with the person who writes (feuille de route, section 6:
 # « Ce qui m'étonne », not « Ce qui m'a surpris »). « m'a donné » (me = to me) does not agree.
@@ -147,10 +160,16 @@ def _check_vocabulary(index, page, findings):
     for text in _page_texts(page):
         for rule, pattern, message in FORBIDDEN_RE:
             # A quoted message (to a relative: « Si tu ne connaissais pas… ») may say « tu »
-            match = pattern.search(QUOTED.sub("", text) if rule == "tutoiement" else text)
+            match = pattern.search(QUOTED.sub("", text) if rule in QUOTE_EXEMPT else text)
             if match and rule not in seen:
                 seen.add(rule)
                 findings.append(Finding(FIX, index, rule, f"{message} (« {match.group(0)} »)"))
+        match = PRECAUTION.search(text)
+        if match and "precaution" not in seen:
+            seen.add("precaution")
+            findings.append(Finding(CHECK, index, "precaution", f"formule de précaution : « {match.group(0)} » (dire de "
+                                                                 "quoi parle l'exercice et à quoi il sert ; le droit de "
+                                                                 "passer une question est dit dans l'ouverture)"))
         match = GENDERED.search(text)
         if match and "genre" not in seen:
             seen.add("genre")
@@ -252,7 +271,7 @@ def _check_examples(spec: WorkbookSpec, context: Optional[str], findings):
 
 
 def _check_heavy_questions(spec: WorkbookSpec, findings):
-    """A heavy question needs the protocol in its exercise, or to be optional and fixed (medium charge)."""
+    """A question that touches on the intimate needs the announcement of its exercise, or to be fixed."""
     protected = set()
     for i, page in enumerate(spec.pages, start=1):
         if any(b.type in ("protocol", "anchor") for b in page.blocks or []):
@@ -263,8 +282,8 @@ def _check_heavy_questions(spec: WorkbookSpec, findings):
         for text, block in _questions(page):
             match = HEAVY.search(text or "")
             if match and not (block is not None and block.fixed):
-                findings.append(Finding(CHECK, i, "charge", f"question à forte charge sans protocole (« {match.group(0)} ») :"
-                                                            " avertissement avant, phrase d'ancrage après"))
+                findings.append(Finding(CHECK, i, "charge", f"question qui touche à l'intime sans annonce (« {match.group(0)} ») :"
+                                                            " une phrase factuelle avant l'exercice (bloc 'protocol')"))
                 break
 
 
