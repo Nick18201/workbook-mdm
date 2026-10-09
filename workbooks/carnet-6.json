@@ -70,12 +70,12 @@
               [
                 "Ce que la séance a confirmé",
                 "c6_seance_confirme",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qu'elle a déplacé",
                 "c6_seance_deplace",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -135,16 +135,19 @@
               "Mes trois conditions",
               "c5.grille",
               "c6_carto_conditions",
-              1.6
+              "sentence"
             ],
             [
               "Mes limites, hors argent",
               "c5.limites",
               "c6_carto_limites",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "report",
@@ -179,7 +182,7 @@
           "field_id": "c6_carto_portrait",
           "subtitle": "Relisez cette page, et votre journée dans cinq ans (carnet 3, question 7).",
           "example": "un travail où j'organise mes journées, au contact du public, avec des échéances connues.",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ]
@@ -309,12 +312,12 @@
               [
                 "La suggestion qui m'a le plus fait réagir",
                 "c6_proches_reaction",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qu'elle a touché chez moi",
                 "c6_proches_touche",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -459,7 +462,7 @@
               "Je m'autorise à…",
               "c1.autorisation",
               "c6_rappel_autorisation",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
@@ -767,12 +770,12 @@
               [
                 "Le métier que je n'ai jamais osé envisager",
                 "c6_jamais_ose",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui m'en empêche",
                 "c6_jamais_ose_frein",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -785,7 +788,7 @@
           "type": "question",
           "question": "Ce que je garde de mes pistes audacieuses, même si je ne les exerce pas…",
           "field_id": "c6_audace_garde",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ]
@@ -822,5 +825,6 @@
       },
       "fixed": true
     }
-  ]
+  ],
+  "title": "L'exploration"
 }

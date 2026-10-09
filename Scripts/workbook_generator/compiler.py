@@ -29,7 +29,7 @@ from .config import PDFStyle
 from .document_builder import DocumentBuilder
 from .primitives import plain_title
 from . import spec as spec_module
-from .spec import MAX_SCALE_STEPS, WorkbookSpec, data_carnet, load_workbook
+from .spec import MAX_SCALE_STEPS, WorkbookSpec, data_carnet, load_workbook, normalize_answer
 from .templates import LayoutConfig, PageLayout, QuestionConfig, QuestionItem, TextConfig
 from .utils import strip_unsupported_glyphs
 
@@ -49,6 +49,21 @@ def _height_pt(height_cm, default=None):
     if height_cm is None or not height_cm > 0:
         return default
     return min(height_cm, MAX_BLOCK_HEIGHT_CM) * cm
+
+
+def _box_height(b_data, key, default=None):
+    """
+    Height of the answer boxes of a block: `key` in cm, or the answer they expect ('sentence'…,
+    sized by the layout for their width), or default.
+    """
+    return _height_pt(b_data.get(key)) or normalize_answer(b_data.get("answer")) or default
+
+
+def _list_box_height(value):
+    """A box height given in a list (fields_card, report): cm, or the answer the box expects."""
+    if isinstance(value, str):
+        return normalize_answer(value)
+    return min(_as_number(value, 0), MAX_BLOCK_HEIGHT_CM) or None
 
 
 def _length_pt(value_cm, default=None):
@@ -127,7 +142,7 @@ def _question_items(raw_questions, prefix):
                 form_field_id=str(q.get("field_id") or f"{prefix}{i + 1}"),
                 subtitle=str(q.get("subtitle")) if q.get("subtitle") else None,
                 example=str(example) if example else None,
-                box_height=_height_pt(q.get("box_height_cm")),
+                box_height=_box_height(q, "box_height_cm"),
             ))
         else:
             items.append(QuestionItem(question=str(q), form_field_id=f"{prefix}{i + 1}"))
@@ -181,12 +196,12 @@ def _report_lines(items, page_idx, b_idx, pages_of):
     for k, item in enumerate(items or [], start=1):
         item = list(item) if isinstance(item, (list, tuple)) else [str(item)]
         item += [None] * (4 - len(item))
-        label, data_id, field_id, height_cm = item[:4]
+        label, data_id, field_id, height = item[:4]
         lines.append((
             str(label or ""),
             _origin(data_id, pages_of) if data_id else "",
             str(field_id or f"p{page_idx}_report_{b_idx}_{k}"),
-            min(_as_number(height_cm, 0), MAX_BLOCK_HEIGHT_CM) or None,
+            _list_box_height(height),
         ))
     return lines
 
@@ -254,7 +269,7 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
         col_widths = [_length_pt(w, 0) for w in widths] if isinstance(widths, list) else None
         prefix = b_data.get("field_prefix") or f"p{page_idx}_tbl_{b_idx}"
         layout.add_table(headers, rows, col_widths=col_widths, field_prefix=prefix,
-                         field_height=_height_pt(b_data.get("field_height_cm")))
+                         field_height=_box_height(b_data, "field_height_cm"))
     elif b_type == "stat_boxes":
         layout.add_stat_boxes(b_data.get("stats") or [])
     elif b_type == "question":
@@ -263,7 +278,7 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
         cfg = QuestionConfig(
             subtitle=b_data.get("subtitle"),
             example=b_data.get("example"),
-            box_height=_height_pt(b_data.get("box_height_cm"), default=3.0 * cm),
+            box_height=_box_height(b_data, "box_height_cm", 3.0 * cm),
         )
         layout.add_question_block(q_text, f_id, config=cfg)
     elif b_type == "text":
@@ -304,9 +319,13 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
                          end_label=b_data.get("end_label") or "")
     elif b_type == "fields_card":
         kwargs = given("title", "hint", "question_labels")
-        if b_data.get("field_height_cm") is not None:
-            kwargs["field_height"] = _height_pt(b_data["field_height_cm"], 0.85 * cm)
-        layout.add_fields_card(b_data.get("rows") or [], color=_color(b_data.get("color")), **kwargs)
+        field_height = _box_height(b_data, "field_height_cm")
+        if field_height is not None:
+            kwargs["field_height"] = field_height
+        rows = [[list(f[:2]) + [_list_box_height(f[2])] + list(f[3:])
+                 if isinstance(f, (list, tuple)) and len(f) > 2 else f for f in row]
+                for row in b_data.get("rows") or [] if isinstance(row, (list, tuple))]
+        layout.add_fields_card(rows, color=_color(b_data.get("color")), **kwargs)
     elif b_type == "numbered_lines":
         kwargs = given("count", "start")
         if b_data.get("line_height_cm") is not None:

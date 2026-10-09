@@ -2,7 +2,10 @@ import pymupdf
 
 from server.models import BlockSpec, PageSpec, WorkbookSpec
 from workbook_generator.compiler import compile_workbook_from_spec
+from workbook_generator.config import PDFStyle
 from server.predefined_workbooks import get_predefined_spec
+
+CM = 72 / 2.54
 
 
 def _open(spec):
@@ -87,6 +90,38 @@ def test_table_answer_fields_take_several_lines_when_tall_enough():
     assert fields["haute_croyance"].rect.height > 2 * fields["basse_croyance"].rect.height
     assert fields["haute_croyance"].field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE
     assert not fields["basse_croyance"].field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE
+
+
+def test_answers_are_typed_in_a_fixed_size():
+    """
+    Never the automatic size (0) of PDF viewers, which shrinks a long answer down to
+    unreadable; a full box scrolls rather than refusing the text.
+    """
+    templates = ("questions", "meteo", "quadrants", "two_columns", "enquete", "roadmap", "engagement")
+    doc = _open(WorkbookSpec(pages=[PageSpec(template=t, title=t) for t in templates]))
+    fields = [w for page in doc for w in page.widgets() if w.field_type == pymupdf.PDF_WIDGET_TYPE_TEXT]
+
+    assert fields
+    for w in fields:
+        assert 0 < w.text_fontsize <= PDFStyle.SIZE_FIELD, w.field_name
+        assert not w.field_flags & pymupdf.PDF_TX_FIELD_IS_DO_NOT_SCROLL, w.field_name
+
+
+def test_answer_boxes_are_sized_for_the_answer_they_expect():
+    page = _open(WorkbookSpec(pages=[PageSpec(template="composite", title="Tailles", blocks=[
+        BlockSpec(type="question", question="Q1 ?", field_id="phrase", answer="phrase"),  # its French name
+        BlockSpec(type="question", question="Q2 ?", field_id="paragraphe", answer="paragraph"),
+        BlockSpec(type="fields_card", rows=[
+            [["Pleine largeur", "pleine", "sentence"]],
+            [["Demi-largeur", "demi", "sentence"], ["Un mot", "mot", "word"]],
+        ]),
+    ])]))[0]
+    fields = {w.field_name: w for w in page.widgets()}
+    height = {name: w.rect.height + 6 for name, w in fields.items()}  # the drawn box
+
+    assert height["paragraphe"] > height["phrase"] >= 1.6 * CM - 0.5  # two handwritten lines at least
+    assert height["demi"] > height["pleine"]  # a narrower box takes more lines
+    assert not fields["mot"].field_flags & pymupdf.PDF_TX_FIELD_IS_MULTILINE
 
 
 def test_predefined_workbook_pdf_stays_light():

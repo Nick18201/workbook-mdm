@@ -148,6 +148,35 @@ def draw_question(c, x, top, width, question, field_name, box_height, subtitle=N
     return top - total
 
 
+ANSWER_BOX_PAD = 3  # between a box drawn by draw_answer_box and its field
+FIELD_TEXT_INSET = 2  # between a field's edge and its text, in PDF viewers
+# What an answer box may expect (PDFStyle.ANSWER_CHARS): the names spec.Answer accepts
+ANSWER_SIZES = ("word", *PDFStyle.ANSWER_CHARS)
+WORD_BOX_HEIGHT = 0.85 * cm
+
+
+def answer_height(answer, width):
+    """
+    Height of an answer box `width` wide (draw_answer_box) for the answer it expects: 'word'
+    (one line), 'sentence', 'paragraph' or 'long' (PDFStyle.ANSWER_CHARS characters, typed at
+    PDFStyle.SIZE_FIELD). The narrower the box, the taller. Never below what handwriting
+    needs: two lines (1.6 cm) beyond a word.
+    """
+    if answer == "word":
+        return WORD_BOX_HEIGHT
+    inset = 2 * (ANSWER_BOX_PAD + FIELD_TEXT_INSET)
+    per_line = max(1, int((width - inset) / (PDFStyle.SIZE_FIELD * PDFStyle.FIELD_CHAR_WIDTH)))
+    lines = -(-PDFStyle.ANSWER_CHARS[answer] // per_line)
+    return max(lines * PDFStyle.SIZE_FIELD * PDFStyle.FIELD_LEADING + inset, 1.6 * cm)
+
+
+def box_height(height, width, default=None):
+    """A box height given in points, or as the answer it expects ('sentence'…) for a box `width` wide."""
+    if isinstance(height, str):
+        return answer_height(height, width) if height in ANSWER_SIZES else default
+    return default if height is None else height
+
+
 def draw_answer_box(c, x, y, width, height, field_name, tooltip="", multiline=True, value="", font_size=None):
     """
     White rounded box bordered in line-strong, with a transparent form field on top.
@@ -155,12 +184,13 @@ def draw_answer_box(c, x, y, width, height, field_name, tooltip="", multiline=Tr
     one line per explicit line break, so a long line would be cut at the edge.
     """
     draw_field_box(c, x, y, width, height)
-    pad = 3
-    if value and multiline and font_size:
+    pad = ANSWER_BOX_PAD
+    if value and multiline:
         # Form fields are drawn in Helvetica, ReportLab's default form font
+        size = font_size or PDFStyle.SIZE_FIELD
         value = "\n".join(
             line for paragraph in str(value).split("\n")
-            for line in (simpleSplit(paragraph, "Helvetica", font_size, width - 2 * pad - 6) or [""])
+            for line in (simpleSplit(paragraph, "Helvetica", size, width - 2 * pad - 6) or [""])
         )
     create_input_field(
         c.acroForm, field_name, pos=(x + pad, y + pad), size=(width - 2 * pad, height - 2 * pad),

@@ -18,7 +18,8 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R5 · Carnet 5 · Valeurs et moteurs profonds (`carnet-5.json`) | Fusionné (PR #60) |
 | R6 · Carnet 6 · L'exploration (`carnet-6.json`) | Fusionné (PR #61) |
 | R7 · Carnet 7 · Confronter au terrain (`carnet-7.json`), en deux parties | Fusionné (PR #62) |
-| R8 · Carnet de route · Décider et agir (`carnet-de-route.json`), en deux parties | PR à ouvrir |
+| R8 · Carnet de route · Décider et agir (`carnet-de-route.json`), en deux parties | Fusionné (PR #63) |
+| Champs : police fixe de 11 pt, cases dimensionnées par la réponse attendue | PR à ouvrir |
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme |
 
@@ -398,7 +399,8 @@ Pour chaque PR de carnet :
   - le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière ;
   - `fixed: true` sur la page entière quand tout y est fixe, sur le bloc sinon ; un paragraphe qui renvoie à un autre carnet (« vous la préciserez au carnet 2 ») est fixe, comme le dos ;
   - deux lignes manuscrites pour une réponse en phrase (case de 1,6 cm au moins), une ligne pour un mot (0,8 cm) ; `tests/test_workbooks.py` le vérifie pour chaque carnet, avec une info-bulle sur chaque champ ;
-  - une page ne déborde jamais sur une page « (suite) » : passer des cases en grille de deux colonnes, raccourcir un libellé ou un exemple, plutôt que de descendre sous ces hauteurs.
+  - une case se dimensionne par la réponse qu'elle attend, tapée en 11 pt fixe : `"answer": "sentence"` sur une question, ou `"sentence"` à la place de la hauteur dans une `fields_card` ou un report. Une phrase, c'est 150 caractères : 1,6 cm en pleine largeur, 2,15 cm (quatre lignes) en demi-largeur. Une hauteur en cm reste possible pour une case plus grande ;
+  - un exercice qui ne tient pas sur une page se coupe entre deux blocs (`page_break`), en deux pages équilibrées : jamais un bloc seul en haut de la page « (suite) », un test le vérifie. Avant de couper, essayer une grille de deux colonnes, un libellé ou un exemple plus court.
 - **Les conventions ajoutées par le carnet 2** (`workbooks/carnet-2.json`) :
   - un exercice sur plusieurs pages donne sa durée page par page, et l'ouverture leur somme (exercice 1 : 15 min, puis 3 × 10 min) ;
   - une partie facultative a pour sourcil « Exercice N · nom · facultatif · durée », ou « Pour aller plus loin · nom · facultatif » quand elle se fait hors temps d'écriture ; `split` dit qu'elle s'ajoute au total ;
@@ -412,7 +414,7 @@ Pour chaque PR de carnet :
   - des lignes de report courtes (les quatre zones) se mettent en deux colonnes, avec `"columns": 2`. Chaque ligne réserve la place de son origine (« CARNET 2 · P. 00 »), si bien qu'un numéro de page ne change jamais la mise en page ;
   - un texte dont la formulation ne doit pas bouger (un test, sa consigne) se marque `fixed` sur la page entière, ouverture comprise ;
   - une question qui demande deux choses a deux cases, ou une échelle suivie d'un « pourquoi » (bloc `scale`, bornes de 20 caractères au plus, sinon elles sont tronquées) ;
-  - une réponse en quelques mots dans une carte de question prend 1,6 cm, car ces cases sont toujours multilignes ;
+  - une réponse en quelques mots dans une carte de question prend `"answer": "sentence"` (1,6 cm), car ces cases sont toujours multilignes ;
   - quand un exemple pourrait orienter la réponse (un test), il porte sur un sujet absent du carnet ;
   - métiers déjà pris pour les exemples : ceux des carnets 1 et 2, plus architecte (carnet 3).
 - **Les conventions ajoutées par le carnet 4** (`workbooks/carnet-4.json`) :
@@ -459,7 +461,7 @@ Pour chaque PR de carnet :
   - une série de valeurs recopiées de plusieurs carnets (les météos) tient dans une carte de petites cases (0,85 cm), avec un renvoi écrit, plutôt que dans un report par carnet ;
   - un choix exclusif en mots de quatre valeurs tient si chacune fait une douzaine de caractères au plus : « Évolution interne » chevauchait « Aucun module » ;
   - métiers déjà pris pour les exemples : ceux des carnets 1 à 7, plus analyste de données, responsable logistique, réceptionniste, agronome, céramiste, chauffagiste, typographe, actuaire (carnet de route).
-- **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm (1,1 cm de moins sous un titre de deux lignes). Ordres de grandeur, écart compris :
+- **Mesurer avant de rendre.** Sous un titre d'une ligne, une page offre 23,4 cm (1,1 cm de moins sous un titre de deux lignes). Ordres de grandeur, écart compris (pris avant le passage à 11 pt : une case « phrase » en demi-largeur fait maintenant 2,15 cm, 0,55 cm de plus par rangée) :
   - protocole et ancrage : 5,1 cm chacun (5,6 cm pour un avertissement de trois lignes) ;
   - météo : 7,6 cm ;
   - exemple contrasté : 4,8 cm (5,3 cm sur quatre lignes) ;
@@ -503,7 +505,10 @@ Pour chaque PR de carnet :
 
 ## 7. Ce qui reste ouvert
 
-- **La politique des champs** : police fixe avec défilement, ou police automatique. À trancher après un test de saisie dans de vrais lecteurs PDF (Acrobat, Aperçu, navigateur).
+- **La politique des champs** est tranchée, après un test de saisie dans Chrome : la taille automatique rendait les réponses illisibles, et Chrome ignore le blocage d'une case pleine. Les réponses se tapent en 11 pt fixe, une case pleine défile (sans barre de défilement), et chaque case se dimensionne par la réponse qu'elle attend. Reste à faire :
+  - les cases étroites (trois colonnes, tableaux) des carnets 1, 2, 4, 5, 6, 7 et du carnet de route, encore à 1,6 cm : deux à trois lignes de 25 caractères à 11 pt. Le carnet 6 (proches) et le carnet de route en ont le plus ;
+  - le livret et le business plan, passés en 11 pt fixe, mais dont les cases gardent leur hauteur ;
+  - plus tard, une version de lecture : les réponses d'un carnet rempli, en entier, pour la personne qui accompagne, puisqu'une case pleine cache sa fin hors saisie et à l'impression.
 - **Les 51 champs trop bas** pour l'écriture à la main : les agrandir au fil des PR de carnet. Depuis R1, un test le vérifie pour chaque nouveau carnet (1,6 cm pour une phrase, 0,8 cm pour un mot), et la case « Ce chiffre s'explique surtout par… » de la météo passe de 1,2 à 1,6 cm. Depuis R2, la ligne de vie et l'arbre de vie les tiennent aussi.
 - **Les reprises du carnet 2** se font dans les carnets suivants : les compétences de vie et les expériences au carnet de route, l'interview au carnet 7, l'objectif boussole au chemin parcouru. Le fil rouge, les quatre zones et un moteur sont repris au récapitulatif du carnet 3 (R3). Les moteurs et les critères sont relus avant la grille anti-compromis du carnet 5 (R5). Les moteurs « je le veux » et l'objectif boussole sont reportés à la cartographie du carnet 6 (R6). Les questions de l'interview entrent dans la grille d'entretien du carnet 7, et la personne interviewée parmi ses contacts (R7). Les expériences, la zone d'excellence et les compétences de vie sont citées par un renvoi écrit aux compétences prouvées du carnet de route, et l'objectif boussole y est reporté au chemin parcouru (R8).
 - **Les reprises du carnet 3.**
@@ -595,8 +600,8 @@ workbooks/module-creation.json, environ 12 pages : fondations, problème, offre,
 - Aucune formule genrée : ni participe ni adjectif accordé dans les amorces en « je », ni point médian. « Celles et ceux » reste possible hors amorce.
 - Le protocole ouvre la première page d'un exercice lourd, l'ancrage ferme la dernière. La charge moyenne suit la convention du carnet 4 : question franche facultative, puis une clôture.
 - Une question qui demande deux choses a deux cases. Une réponse et son « pourquoi » vont dans deux cases.
-- Les tailles de case : 1,6 cm au moins pour une phrase, 0,8 cm pour un mot. Un montant prend une case d'une ligne, et son unité est écrite une fois. tests/test_workbooks.py vérifie les tailles des carnets du bilan : si le module n'en est pas un, vérifie-les à la main.
-- Aucune page « (suite) ». S'il manque de la place : une grille de deux colonnes, un libellé ou un exemple plus court. Mesure la hauteur des blocs avant de rendre (repères en section 5 de la feuille de route).
+- Les tailles de case : par la réponse attendue, `"answer": "sentence"` sur une question ou `"sentence"` à la place d'une hauteur dans une liste (une phrase : 150 caractères en 11 pt) ; 0,85 cm pour un mot. Un montant prend une case d'une ligne, et son unité est écrite une fois. tests/test_workbooks.py vérifie les tailles des carnets du bilan : si le module n'en est pas un, vérifie-les à la main.
+- Un exercice qui ne tient pas sur une page se coupe entre deux blocs (`page_break`), en deux pages équilibrées, jamais un bloc seul en haut de la page « (suite) ». Avant de couper : une grille de deux colonnes, un libellé ou un exemple plus court. Mesure la hauteur des blocs avant de rendre (repères en section 5 de la feuille de route).
 
 5. Méthode
 a. Commence par me montrer le plan du module, page par page, avec les durées et leur total, et les choix à trancher en fin de message. Attends ma réponse avant d'écrire le JSON.

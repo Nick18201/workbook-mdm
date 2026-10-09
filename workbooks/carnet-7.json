@@ -114,7 +114,7 @@
               [
                 "Ce que la séance a déplacé",
                 "c7_seance_6_deplace",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -229,19 +229,19 @@
               [
                 "Ses missions, d'après mes recherches",
                 "c7_fiche_1_missions",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je sais déjà faire",
                 "c7_fiche_1_acquis",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui me manque",
                 "c7_fiche_1_manque",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -296,7 +296,7 @@
               [
                 "Les débouchés dans ma zone",
                 "c7_fiche_1_debouches",
-                1.6,
+                "sentence",
                 2
               ]
             ],
@@ -304,24 +304,24 @@
               [
                 "Ce qui me rechargerait",
                 "c7_fiche_1_recharge",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui me coûterait",
                 "c7_fiche_1_coute",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce qu'il me reste à vérifier",
                 "c7_fiche_1_verifier",
-                1.6
+                "sentence"
               ],
               [
                 "Auprès de qui",
                 "c7_fiche_1_aupres",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -350,19 +350,19 @@
               [
                 "Ses missions, d'après mes recherches",
                 "c7_fiche_2_missions",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je sais déjà faire",
                 "c7_fiche_2_acquis",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui me manque",
                 "c7_fiche_2_manque",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -416,7 +416,7 @@
               [
                 "Les débouchés dans ma zone",
                 "c7_fiche_2_debouches",
-                1.6,
+                "sentence",
                 2
               ]
             ],
@@ -424,24 +424,24 @@
               [
                 "Ce qui me rechargerait",
                 "c7_fiche_2_recharge",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui me coûterait",
                 "c7_fiche_2_coute",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce qu'il me reste à vérifier",
                 "c7_fiche_2_verifier",
-                1.6
+                "sentence"
               ],
               [
                 "Auprès de qui",
                 "c7_fiche_2_aupres",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -470,19 +470,19 @@
               [
                 "Ses missions, d'après mes recherches",
                 "c7_fiche_3_missions",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce que je sais déjà faire",
                 "c7_fiche_3_acquis",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui me manque",
                 "c7_fiche_3_manque",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -536,7 +536,7 @@
               [
                 "Les débouchés dans ma zone",
                 "c7_fiche_3_debouches",
-                1.6,
+                "sentence",
                 2
               ]
             ],
@@ -544,24 +544,24 @@
               [
                 "Ce qui me rechargerait",
                 "c7_fiche_3_recharge",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui me coûterait",
                 "c7_fiche_3_coute",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Ce qu'il me reste à vérifier",
                 "c7_fiche_3_verifier",
-                1.6
+                "sentence"
               ],
               [
                 "Auprès de qui",
                 "c7_fiche_3_aupres",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -740,7 +740,7 @@
               [
                 "Ce qui pourrait me faire repousser ce contact",
                 "c7_repousser",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -753,7 +753,7 @@
           "type": "question",
           "question": "Pour me lancer, je commence par…",
           "field_id": "c7_lancer",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ],
@@ -797,12 +797,12 @@
               [
                 "Ce que la séance a confirmé",
                 "c7_seance_7_confirme",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qu'elle a déplacé",
                 "c7_seance_7_deplace",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -887,12 +887,12 @@
               [
                 "Ce que j'ai appris sur mes critères",
                 "c7_entretien_1_criteres",
-                1.6
+                "sentence"
               ],
               [
                 "La suite : une personne, une démarche",
                 "c7_entretien_1_suite",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -953,17 +953,20 @@
               [
                 "Ce que j'ai appris sur mes critères",
                 "c7_entretien_2_criteres",
-                1.6
+                "sentence"
               ],
               [
                 "La suite : une personne, une démarche",
                 "c7_entretien_2_suite",
-                1.6
+                "sentence"
               ]
             ]
           ],
           "title": "Entretien 2",
           "question_labels": true
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "fields_card",
@@ -1010,12 +1013,12 @@
               [
                 "Ce que j'ai appris sur mes critères",
                 "c7_entretien_3_criteres",
-                1.6
+                "sentence"
               ],
               [
                 "La suite : une personne, une démarche",
                 "c7_entretien_3_suite",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1048,40 +1051,43 @@
               [
                 "L'accès au métier : ce que j'imaginais",
                 "c7_imaginais_acces",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que le terrain montre",
                 "c7_terrain_acces",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Le quotidien, le rythme : ce que j'imaginais",
                 "c7_imaginais_quotidien",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que le terrain montre",
                 "c7_terrain_quotidien",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "La rémunération, les débouchés : ce que j'imaginais",
                 "c7_imaginais_remuneration",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que le terrain montre",
                 "c7_terrain_remuneration",
-                1.6
+                "sentence"
               ]
             ]
           ],
           "question_labels": true
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "fields_card",
@@ -1102,7 +1108,7 @@
               [
                 "Ce qui m'y attire",
                 "c7_piste_apparue_attire",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1263,12 +1269,12 @@
               [
                 "Le compromis qu'elle me demande",
                 "c7_compromis",
-                1.6
+                "sentence"
               ],
               [
                 "À quelle condition je l'accepterais",
                 "c7_compromis_condition",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1288,12 +1294,12 @@
               [
                 "La piste qu'il me coûterait le plus de lâcher",
                 "c7_lacher",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qu'elle représente pour moi",
                 "c7_lacher_sens",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1306,7 +1312,7 @@
           "type": "question",
           "question": "Avec le recul, le terrain m'apprend que…",
           "field_id": "c7_terrain_appris",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ],
@@ -1345,5 +1351,6 @@
       },
       "fixed": true
     }
-  ]
+  ],
+  "title": "Confronter au terrain"
 }

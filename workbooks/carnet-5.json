@@ -85,12 +85,12 @@
               [
                 "Ce que l'argent protège pour moi",
                 "c5_argent_protege",
-                1.6
+                "sentence"
               ],
               [
                 "En séance 4, j'ai vu que…",
                 "c5_seance_4",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -269,7 +269,7 @@
           "type": "question",
           "question": "Je suis à ma place quand…",
           "field_id": "c5_align_place",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         }
       ]
     },
@@ -297,7 +297,7 @@
               [
                 "La situation, en quelques mots",
                 "c5_desalign_1",
-                1.6,
+                "sentence",
                 1.4
               ],
               [
@@ -311,7 +311,7 @@
               [
                 "Donc, dans mon prochain poste, j'ai besoin de…",
                 "c5_desalign_1_besoin",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -325,7 +325,7 @@
               [
                 "La situation, en quelques mots",
                 "c5_desalign_2",
-                1.6,
+                "sentence",
                 1.4
               ],
               [
@@ -339,7 +339,7 @@
               [
                 "Donc, dans mon prochain poste, j'ai besoin de…",
                 "c5_desalign_2_besoin",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -360,7 +360,7 @@
               [
                 "La situation, en quelques mots",
                 "c5_desalign_3",
-                1.6,
+                "sentence",
                 1.4
               ],
               [
@@ -374,7 +374,7 @@
               [
                 "Donc, dans mon prochain poste, j'ai besoin de…",
                 "c5_desalign_3_besoin",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -388,12 +388,12 @@
               [
                 "Une fois où j'ai agi contre l'une de mes valeurs",
                 "c5_desalign_contre",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui m'a fait agir ainsi",
                 "c5_desalign_pourquoi",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -431,7 +431,7 @@
               [
                 "Le choix, en quelques mots",
                 "c5_choix",
-                1.6,
+                "sentence",
                 1.4
               ],
               [
@@ -445,12 +445,12 @@
               [
                 "J'ai choisi…, qui me permettait de garder…",
                 "c5_choix_option_1",
-                1.6
+                "sentence"
               ],
               [
                 "J'ai renoncé à…, qui me permettait de garder…",
                 "c5_choix_option_2",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -463,18 +463,21 @@
           "exploitable": "J'ai choisi de rester à la clinique, qui me gardait l'équipe et les gardes partagées. J'ai renoncé à mon cabinet, qui me laissait choisir mes soins. L'entraide l'a emporté."
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "fields_card",
           "rows": [
             [
               [
                 "Le choix que je regrette encore",
                 "c5_choix_regret",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qu'il dit de ce qui compte pour moi",
                 "c5_choix_regret_dit",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -487,7 +490,7 @@
           "type": "question",
           "question": "Avec le recul, ces choix m'apprennent que…",
           "field_id": "c5_choix_recul",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ]
@@ -770,6 +773,9 @@
           "fixed": true
         },
         {
+          "type": "page_break"
+        },
+        {
           "type": "fields_card",
           "rows": [
             [
@@ -782,7 +788,7 @@
               [
                 "Une situation où elle est apparue",
                 "c5_tension_situation",
-                1.6,
+                "sentence",
                 1.4
               ]
             ],
@@ -790,24 +796,24 @@
               [
                 "Jusqu'ici, je privilégie…",
                 "c5_tension_privilegie",
-                1.6
+                "sentence"
               ],
               [
                 "… au détriment de…",
                 "c5_tension_detriment",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Le compromis acceptable pour moi",
                 "c5_tension_compromis",
-                1.6
+                "sentence"
               ],
               [
                 "La valeur que j'affiche et que je ne m'accorde pas (facultatif)",
                 "c5_tension_affichee",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -843,25 +849,25 @@
               "Mes moteurs « je le veux »",
               "c2.moteurs",
               "c5_rappel_moteurs",
-              1.6
+              "sentence"
             ],
             [
               "Mes critères : mon poste devra…",
               "c2.criteres",
               "c5_rappel_criteres",
-              1.6
+              "sentence"
             ],
             [
               "Ne plus subir… donc mon poste devra…",
               "c1.sac_a_dos",
               "c5_rappel_subir",
-              1.6
+              "sentence"
             ],
             [
               "Pour mon énergie, mon poste devra…",
               "c3.energies",
               "c5_rappel_energie",
-              1.6
+              "sentence"
             ]
           ],
           "columns": 2
@@ -873,24 +879,24 @@
               [
                 "Au travail : respect, éthique, charge de travail",
                 "c5_limite_travail",
-                1.6
+                "sentence"
               ],
               [
                 "Face aux demandes urgentes ou non rémunérées",
                 "c5_limite_demandes",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Pour ma santé : sommeil, sport, déconnexion le soir",
                 "c5_limite_sante",
-                1.6
+                "sentence"
               ],
               [
                 "Pour mes proches : du temps partagé, sans écran",
                 "c5_limite_proches",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -1194,5 +1200,6 @@
       },
       "fixed": true
     }
-  ]
+  ],
+  "title": "Valeurs et moteurs profonds"
 }

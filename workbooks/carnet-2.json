@@ -69,24 +69,24 @@
               [
                 "En séance 1, j'ai vu que…",
                 "c2_seance_1",
-                1.6
+                "sentence"
               ],
               [
                 "D'ici la fin de mon bilan, je veux avoir clarifié…",
                 "c2_boussole_clarifier",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "… pour pouvoir…",
                 "c2_boussole_pouvoir",
-                1.6
+                "sentence"
               ],
               [
                 "Je saurai que j'ai réussi quand…",
                 "c2_boussole_reussite",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -500,30 +500,33 @@
               [
                 "Le travail que j'aurais voulu mieux faire",
                 "c2_empeche_mieux",
-                1.6
+                "sentence"
               ],
               [
                 "Ce qui m'en empêchait (les moyens, les délais, les règles…)",
                 "c2_empeche_frein",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Le travail que j'ai dû mal faire, et qui me reste en travers",
                 "c2_empeche_travers",
-                1.6
+                "sentence"
               ],
               [
                 "Donc, pour faire un travail que je juge bien fait, j'ai besoin de…",
                 "c2_empeche_besoin",
-                1.6
+                "sentence"
               ]
             ]
           ],
           "question_labels": true,
           "fixed": true,
           "data_id": "c2.travail_empeche"
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "contrast_example",
@@ -672,7 +675,7 @@
           "type": "question",
           "question": "Le schéma que je répète, et qui me coûte le plus :",
           "field_id": "c2_schema_cout",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         },
         {
@@ -820,12 +823,12 @@
               [
                 "Ce que mes sommets ont en commun",
                 "c2_vie_sommets",
-                1.8
+                "sentence"
               ],
               [
                 "Ce qui m'aide à traverser les moments difficiles",
                 "c2_vie_traverser",
-                1.8
+                "sentence"
               ]
             ],
             [
@@ -843,7 +846,7 @@
           "question": "La vallée dont je parle le moins :",
           "field_id": "c2_vie_vallee",
           "subtitle": "Facultatif. Un mot suffit, ou laissez la case vierge pour la séance.",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         },
         {
@@ -877,73 +880,82 @@
               [
                 "1. Vie familiale et personnelle",
                 "c2_vecu_1",
-                1.6
+                "sentence"
               ],
               [
                 "La compétence cachée",
                 "c2_competence_1",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "2. Défis et épreuves (facultatif)",
                 "c2_vecu_2",
-                1.6
+                "sentence"
               ],
               [
                 "La compétence cachée",
                 "c2_competence_2",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "3. Engagements et loisirs",
                 "c2_vecu_3",
-                1.6
+                "sentence"
               ],
               [
                 "La compétence cachée",
                 "c2_competence_3",
-                1.6
-              ]
-            ],
-            [
-              [
-                "4. Voyages et déménagements",
-                "c2_vecu_4",
-                1.6
-              ],
-              [
-                "La compétence cachée",
-                "c2_competence_4",
-                1.6
-              ]
-            ],
-            [
-              [
-                "5. Une autre expérience marquante",
-                "c2_vecu_5",
-                1.6
-              ],
-              [
-                "La compétence cachée",
-                "c2_competence_5",
-                1.6
-              ]
-            ],
-            [
-              [
-                "Les compétences que j'ai envie d'utiliser dans mon prochain poste",
-                "c2_competences_envie",
-                1.6
+                "sentence"
               ]
             ]
           ],
           "hint": "À chaque ligne, une expérience précise (organiser une fête de famille, aider un proche, tenir une association…), puis la compétence qu'elle a fait naître.",
           "question_labels": true,
           "data_id": "c2.competences_vie"
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "4. Voyages et déménagements",
+                "c2_vecu_4",
+                "sentence"
+              ],
+              [
+                "La compétence cachée",
+                "c2_competence_4",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "5. Une autre expérience marquante",
+                "c2_vecu_5",
+                "sentence"
+              ],
+              [
+                "La compétence cachée",
+                "c2_competence_5",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Les compétences que j'ai envie d'utiliser dans mon prochain poste",
+                "c2_competences_envie",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
         },
         {
           "type": "contrast_example",
@@ -1133,5 +1145,6 @@
       },
       "fixed": true
     }
-  ]
+  ],
+  "title": "Mon parcours"
 }

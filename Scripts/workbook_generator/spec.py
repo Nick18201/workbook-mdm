@@ -10,7 +10,7 @@ import os
 import re
 from typing import Annotated, Any, Dict, List, Literal, Optional, Union
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from .config import PDFStyle
 
@@ -33,6 +33,23 @@ DATA_ID_PATTERN = r"^(c[1-7]|route)\.[a-z0-9_]+$"
 # Blocks customization never changes, wherever they are: the safety protocol, the weather
 # of the day (the same in every carnet) and the reports between carnets
 FIXED_BLOCK_TYPES = ("protocol", "anchor", "energy", "report")
+
+
+# The answer a box expects, which sets its height for its width (components.answer_height):
+# a word (one line), a sentence, a paragraph or a long answer
+Answer = Literal["word", "sentence", "paragraph", "long"]
+ANSWERS = Answer.__args__
+# The French names an LLM or a consultant may give instead
+ANSWER_ALIASES = {"mot": "word", "phrase": "sentence", "paragraphe": "paragraph", "récit": "long", "recit": "long"}
+
+
+def normalize_answer(value):
+    """The expected answer a value names ('sentence', or « phrase »…), or None."""
+    if not isinstance(value, str):
+        return None
+    value = value.strip().lower()
+    value = ANSWER_ALIASES.get(value, value)
+    return value if value in ANSWERS else None
 
 
 def data_carnet(data_id):
@@ -68,7 +85,16 @@ class QuestionItemSpec(BaseModel):
     field_id: str = Field(..., description="Identifiant unique pour le champ interactif AcroForm")
     subtitle: Optional[str] = Field(None, description="Sous-titre d'aide ou de précision (1 ligne)")
     example: Optional[str] = Field(None, description="Exemple concret pour guider la réponse (1 ligne)")
+    answer: Optional[Answer] = Field(
+        None, description="Réponse attendue, qui donne la hauteur de la zone : 'word', 'sentence', 'paragraph', 'long'"
+    )
     box_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur fixe de la zone de saisie en cm")
+
+    @field_validator("answer", mode="before")
+    @classmethod
+    def known_answer(cls, value):
+        """« phrase » is a 'sentence'; an answer no size names is dropped, not refused."""
+        return normalize_answer(value)
 
 
 class QuadrantItemSpec(BaseModel):
@@ -96,8 +122,10 @@ class BlockSpec(BaseModel):
     """
     One block of a composite page, i.e. one PageLayout.add_* call (see templates.py).
     Lengths are in centimetres (*_cm), colors are PDFStyle color or pastel names ('sky').
-    Tuples of the Python API are lists: a fields_card field is [label, field_id, height_cm,
-    weight], a frise step [icon, title, marker], a link [name, url, description], a
+    An answer box is sized by the answer it expects ('answer', or instead of a height in a
+    list: 'word', 'sentence', 'paragraph', 'long'), for its width; a height in cm wins.
+    Tuples of the Python API are lists: a fields_card field is [label, field_id, height_cm
+    or answer, weight], a frise step [icon, title, marker], a link [name, url, description], a
     checklist_cards group [title, items], a numbered_lines card [title, field_prefix, hint,
     first number (optional: one list over two cards, 1 then 6)],
     a fill_in_card line a list of texts and boxes [field_id, width_cm, tooltip], a life_line
@@ -109,7 +137,7 @@ class BlockSpec(BaseModel):
     the two versions of an answer) and 'energy' (the weather of the day, 'field_prefix').
     Their fixed texts live in templates.py, so a customization cannot change them.
     A 'report' line copies a piece of data written in another carnet: its items are
-    [label, data_id, field_id, height_cm], and the origin (« carnet 4 · p. 12 ») is
+    [label, data_id, field_id, height_cm or answer], and the origin (« carnet 4 · p. 12 ») is
     resolved when the PDF is built; 'columns': 2 lays short lines side by side. 'data_id' names the data a block produces, 'fixed'
     keeps a block out of customization (see keep_fixed).
     """
@@ -165,6 +193,10 @@ class BlockSpec(BaseModel):
     subtitle: Optional[str] = Field(None, description="Sous-titre d'aide ou de précision")
     example: Optional[str] = Field(None, description="Exemple d'illustration")
     box_height_cm: Optional[float] = Field(None, gt=0, le=20, description="Hauteur de la zone de saisie en cm")
+    answer: Optional[Answer] = Field(
+        None,
+        description="Réponse attendue (question, fields_card, table) : 'word', 'sentence', 'paragraph' ou 'long'",
+    )
     field_prefix: Optional[str] = Field(None, description="Préfixe d'identifiants AcroForm")
     # Blocks of the reference workbooks
     questions: Optional[List[QuestionItemSpec]] = Field(None, description="Questions (questions_group)")
@@ -204,6 +236,12 @@ class BlockSpec(BaseModel):
     data_id: Optional[str] = Field(
         None, pattern=DATA_ID_PATTERN, description="Identifiant de la donnée écrite dans ce bloc (ex : 'c4.seuils')"
     )
+
+    @field_validator("answer", mode="before")
+    @classmethod
+    def known_answer(cls, value):
+        """« phrase » is a 'sentence'; an answer no size names is dropped, not refused."""
+        return normalize_answer(value)
 
     @model_validator(mode="after")
     def check_reports(self):

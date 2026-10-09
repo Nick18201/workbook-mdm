@@ -1,3 +1,4 @@
+import functools
 import io
 import json
 import os
@@ -8,9 +9,17 @@ from fastapi.testclient import TestClient
 
 from server.app import app
 from server.predefined_workbooks import CATALOGUE, get_predefined_spec
-from workbook_generator import forms
+from workbook_generator import components, forms
 from workbook_generator.compiler import build_reference_workbook, compile_workbook_from_spec
-from workbook_generator.spec import WORKBOOKS_DIR, BlockSpec, PageSpec, WorkbookSpec, data_carnet, load_workbook
+from workbook_generator.spec import (
+    ANSWERS,
+    WORKBOOKS_DIR,
+    BlockSpec,
+    PageSpec,
+    WorkbookSpec,
+    data_carnet,
+    load_workbook,
+)
 
 WORKBOOK_IDS = sorted(name[:-5] for name in os.listdir(WORKBOOKS_DIR) if name.endswith(".json"))
 
@@ -99,7 +108,7 @@ BLOCKS = {
     "checklist": {"items": ["Case"]},
     "table": {"headers": ["A", "B"], "rows": [["1", "2"]]},
     "stat_boxes": {"stats": [{"value": "3", "label": "pistes"}]},
-    "question": {"question": "Question ?", "field_id": "q"},
+    "question": {"question": "Question ?", "field_id": "q", "answer": "paragraph"},
     "text": {"text": "Texte.", "style": "italic", "spacing_after_cm": 0.3},
     "questions_group": {"questions": [{"question": "Q1 ?", "field_id": "g1"}]},
     "heading": {"text": "Intertitre"},
@@ -107,7 +116,8 @@ BLOCKS = {
     "star_list": {"items": ["Un", "Deux"]},
     "annotation": {"text": "À la main."},
     "frise": {"steps": [["flag", "Départ", "Repère"], ["route", "Arrivée", "Repère"]]},
-    "fields_card": {"rows": [[["Nom", "nom"], ["Date", "date", 0.85, 0.5]]], "color": "mint"},
+    "fields_card": {"rows": [[["Nom", "nom"], ["Date", "date", 0.85, 0.5]], [["Pourquoi", "pourquoi", "sentence"]]],
+                    "color": "mint"},
     "numbered_lines": {"cards": [["Pistes", "piste"], ["Les suivantes", "piste", "", 3]], "count": 2},
     "rating_grid": {"items": [["Domaine", "note"]], "field_prefix": "grille"},
     "info_cards": {"cards": [{"title": "Profil", "text": "Texte.", "field_id": "profil"}], "check_label": "Me correspond"},
@@ -120,7 +130,7 @@ BLOCKS = {
     "anchor": {"field_id": "ancrage"},
     "contrast_example": {"title": "Chef de rayon", "surface": "J'aime le contact.", "exploitable": "Je fidélise."},
     "energy": {"field_prefix": "meteo"},
-    "report": {"items": [["Vos quatre seuils", "c4.seuils", "report_seuils"],
+    "report": {"items": [["Vos quatre seuils", "c4.seuils", "report_seuils", "sentence"],
                          ["Votre zone à risque", "c2.zones", "report_zone"]], "columns": 2},
     "space": {"height_cm": 0.5},
     "page_break": {},
@@ -183,9 +193,53 @@ def test_reports_point_to_declared_data():
                         assert item[1] in declared[source], (workbook_id, item[1])
 
 
+def test_answer_sizes_of_the_format_are_those_of_the_layout():
+    assert set(ANSWERS) == set(components.ANSWER_SIZES)
+
+
+def test_answer_sizes_in_files_are_known():
+    """An answer size given in a list is not validated: a typo would leave a one-line box."""
+    for workbook_id, raw in _raw_workbooks():
+        for page in raw["pages"]:
+            for block in page.get("blocks") or []:
+                given = [block.get("answer")] + [q.get("answer") for q in block.get("questions") or []]
+                if block["type"] == "fields_card":
+                    given += [field[2] for row in block.get("rows", []) for field in row if len(field) > 2]
+                if block["type"] == "report":
+                    given += [item[3] for item in block.get("items", []) if len(item) > 3]
+                for value in given:
+                    assert not isinstance(value, str) or value in ANSWERS, (workbook_id, page.get("title"), value)
+
+
 CARNET_IDS = [workbook_id for workbook_id, raw in _raw_workbooks() if "carnet" in raw]
 CM = 72 / 2.54
 FIELD_INSET = 3  # draw_answer_box lays its field 3 pt inside the drawn box
+
+
+@functools.lru_cache(maxsize=None)
+def _carnet_pdf(workbook_id):
+    buffer = io.BytesIO()
+    build_reference_workbook(workbook_id, buffer)
+    return buffer.getvalue()
+
+
+def _used_share(page):
+    """How far down the content of a page goes, the folio aside (share of its height)."""
+    limit = page.rect.height - 60
+    bottoms = [b[3] for b in page.get_text("blocks") if b[3] < limit]
+    bottoms += [d["rect"].y1 for d in page.get_drawings() if d["rect"].y1 < limit]
+    return max(bottoms, default=0) / page.rect.height
+
+
+@pytest.mark.parametrize("workbook_id", CARNET_IDS)
+def test_carnet_exercises_split_into_balanced_pages(workbook_id):
+    """
+    An exercise too long for one page is cut between two blocks (page_break), so that its
+    « (suite) » page is a page of its own: never a small block left alone at its top.
+    """
+    for page in pymupdf.open(stream=_carnet_pdf(workbook_id), filetype="pdf"):
+        if "(suite)" in page.get_text():
+            assert _used_share(page) >= 0.4, page.number + 1
 
 
 @pytest.mark.parametrize("workbook_id", CARNET_IDS)
@@ -194,9 +248,7 @@ def test_carnet_fields_leave_room_to_write_by_hand(workbook_id):
     A carnet is filled on screen or printed: a box for a sentence leaves two handwritten
     lines (1.6 cm), a one-line box room for a word (0.8 cm), and every field has a tooltip.
     """
-    buffer = io.BytesIO()
-    build_reference_workbook(workbook_id, buffer)
-    for page in pymupdf.open(stream=buffer.getvalue(), filetype="pdf"):
+    for page in pymupdf.open(stream=_carnet_pdf(workbook_id), filetype="pdf"):
         for widget in page.widgets():
             where = (page.number + 1, widget.field_name)
             assert widget.field_label, where

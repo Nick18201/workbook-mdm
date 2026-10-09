@@ -20,6 +20,17 @@ def reserve_field_name(form, name):
     return unique
 
 
+def field_font_size(height, multiline):
+    """
+    Size of the text typed in a field `height` high: PDFStyle.SIZE_FIELD, smaller only in a
+    one-line field too low for it. Never 0, the automatic size of PDF viewers: it shrinks the
+    text as it grows, down to unreadable.
+    """
+    if multiline:
+        return PDFStyle.SIZE_FIELD
+    return max(6, min(PDFStyle.SIZE_FIELD, int(height - 4)))
+
+
 def create_input_field(
     form,
     name,
@@ -30,11 +41,13 @@ def create_input_field(
     value="",
     fill_color=None,
     font_size=None,
-    do_not_scroll=True,
+    do_not_scroll=False,
     framed=True,
 ):
     """
-    Text field with auto-scaling font size. framed=True: the widget draws its own white box
+    Text field typed in a fixed size (field_font_size). A full field scrolls: viewers draw
+    no scroll bar, and Chrome ignores do_not_scroll anyway, so a box is sized for the answer
+    it expects (components.answer_height). framed=True: the widget draws its own white box
     with a `line-strong` border. framed=False: a transparent, borderless widget, to lay over
     a box drawn on the page (primitives.draw_field_box, rounded like the art direction).
     Form fields always use page coordinates: canvas translations and rotations do not apply.
@@ -49,16 +62,8 @@ def create_input_field(
         flag_parts.append("doNotScroll")
     flags = " ".join(flag_parts)
 
-    # Font Size:
-    # If font_size is None, use 0 (Auto/Fit) for multiline fields.
-    # In the PDF standard, fontSize=0 instructs the PDF viewer to scale down
-    # text dynamically to fit the bounding box without triggering scrollbars.
-    # For single-line fields, use 0 if standard height (<= 28 pt), or 11 pt if tall.
     if font_size is None:
-        if multiline:
-            font_size = 0
-        else:
-            font_size = 0 if height <= 28 else 11
+        font_size = field_font_size(height, multiline)
 
     if framed:
         frame = dict(

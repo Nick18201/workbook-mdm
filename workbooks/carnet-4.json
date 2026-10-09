@@ -77,19 +77,19 @@
               [
                 "Les deux forces de mon profil où je me reconnais le plus",
                 "c4_forces",
-                1.6
+                "sentence"
               ],
               [
                 "En séance 3, j'ai vu que…",
                 "c4_seance_3",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Mon profil se voit dans mes choix d'argent (dépenser, épargner, négocier) quand…",
                 "c4_pont",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -134,7 +134,7 @@
           "question": "Parce que…",
           "field_id": "c4_situation_pourquoi",
           "subtitle": "Ce qui l'explique, et la marge que cela vous laisse pour changer de travail.",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "report",
@@ -150,7 +150,7 @@
           "type": "question",
           "question": "Ma note aujourd'hui, et ce qui l'a fait bouger, ou non :",
           "field_id": "c4_note_argent",
-          "box_height_cm": 1.6
+          "answer": "sentence"
         },
         {
           "type": "contrast_example",
@@ -227,12 +227,12 @@
               [
                 "De cette histoire, je garde…",
                 "c4_hist_garde",
-                1.6
+                "sentence"
               ],
               [
                 "Je laisse…",
                 "c4_hist_laisse",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -286,14 +286,14 @@
           "question": "Un souvenir d'argent qui me reste :",
           "field_id": "c4_exp_souvenir",
           "subtitle": "Un manque, une fierté, une comparaison, une gêne. Un mot suffit, ou laissez la case vierge pour la séance.",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         },
         {
           "type": "question",
           "question": "Avec le recul, ce souvenir m'apprend que…",
           "field_id": "c4_exp_recul",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         }
       ]
@@ -422,17 +422,20 @@
               [
                 "La situation la plus difficile pour moi, et pourquoi",
                 "c4_aisance_difficile",
-                1.6
+                "sentence"
               ],
               [
                 "Ce que je n'ose pas demander, viser ou négocier aujourd'hui",
                 "c4_nose_pas",
-                1.6
+                "sentence"
               ]
             ]
           ],
           "question_labels": true,
           "fixed": true
+        },
+        {
+          "type": "page_break"
         },
         {
           "type": "fields_card",
@@ -441,12 +444,12 @@
               [
                 "Une envie à laquelle j'ai renoncé pour des raisons d'argent",
                 "c4_renoncement",
-                1.6
+                "sentence"
               ],
               [
                 "Je ne veux plus accepter un poste seulement pour…",
                 "c4_retournement",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -514,12 +517,12 @@
               [
                 "Ce que j'accepte pendant la transition",
                 "c4_transition_accepte",
-                2.0
+                "sentence"
               ],
               [
                 "Ce que je n'accepte pas",
                 "c4_transition_refuse",
-                2.0
+                "sentence"
               ]
             ]
           ],
@@ -656,12 +659,12 @@
               [
                 "Elle m'aide quand…",
                 "c4_tendance_aide",
-                2.0
+                "sentence"
               ],
               [
                 "Elle me freine quand…",
                 "c4_tendance_frein",
-                2.0
+                "sentence"
               ]
             ]
           ],
@@ -699,24 +702,24 @@
               [
                 "Si j'avais plus d'argent, je m'autoriserais à…",
                 "c4_synth_autoriser",
-                1.6
+                "sentence"
               ],
               [
                 "Gagner davantage, ou plus que mes parents, me gênerait parce que…",
                 "c4_synth_gene",
-                1.6
+                "sentence"
               ]
             ],
             [
               [
                 "Mon « assez » est plutôt un chiffre, ou une sensation difficile à atteindre :",
                 "c4_synth_assez",
-                1.6
+                "sentence"
               ],
               [
                 "Pour ma prochaine piste, l'argent doit me permettre de…",
                 "c4_synth_piste",
-                1.6
+                "sentence"
               ]
             ]
           ],
@@ -733,7 +736,7 @@
           "question": "Ce qui me fait le plus peur dans le manque d'argent, c'est…",
           "field_id": "c4_synth_peur",
           "subtitle": "Un mot suffit, ou laissez la case vierge pour la séance.",
-          "box_height_cm": 1.6,
+          "answer": "sentence",
           "fixed": true
         },
         {
@@ -775,5 +778,6 @@
       },
       "fixed": true
     }
-  ]
+  ],
+  "title": "Mon rapport à l'argent"
 }
