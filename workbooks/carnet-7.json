@@ -788,7 +788,7 @@
       "params": {
         "lines": [
           "Je sollicite mes trois contacts dans les dix jours, sans attendre la séance 7.",
-          "Une personne ne répond pas ? J'en sollicite une autre, sans le prendre pour moi.",
+          "Une personne ne répond pas ? J'en sollicite une autre.",
           "Je renvoie la partie 1 complétée avant la séance 7."
         ],
         "field_prefix": "c7_partie_1",
@@ -1091,7 +1091,7 @@
         },
         {
           "type": "annotation",
-          "text": "Un entretien de plus ? Une feuille à part, les mêmes rubriques."
+          "text": "Un entretien de plus ? Les mêmes rubriques, dans un document joint au carnet."
         }
       ],
       "part": 2
@@ -1177,7 +1177,7 @@
             ]
           ],
           "title": "Une piste apparue ou revenue",
-          "hint": "Facultatif. Une piste qu'un entretien a fait apparaître, ou l'une de vos dix pistes du carnet 6.",
+          "hint": "Si un entretien a fait apparaître une piste, ou revenir l'une de vos dix pistes du carnet 6.",
           "question_labels": true,
           "fixed": true
         },

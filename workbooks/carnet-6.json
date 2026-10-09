@@ -194,7 +194,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, recueille le regard de vos proches : ce qu'ils voient de vous, et parfois ce qu'on attend de vous depuis longtemps. Vous choisissez ce que vous en partagez en séance."
+          "text": "Cet exercice, sur deux pages, recueille le regard de vos proches : ce qu'ils voient de vous, et parfois ce qu'on attend de vous depuis longtemps. Faire la part des deux ouvre de nouvelles pistes."
         },
         {
           "type": "paragraphs",
@@ -321,7 +321,7 @@
                 "sentence"
               ],
               [
-                "Ce qu'elle a touché chez moi",
+                "Ce qu'elle m'apprend sur ce que je cherche",
                 "c6_proches_touche",
                 "sentence"
               ]
@@ -808,7 +808,7 @@
                 "sentence"
               ],
               [
-                "Ce qui m'en empêche",
+                "Ce qu'il me faudrait pour l'envisager",
                 "c6_jamais_ose_frein",
                 "sentence"
               ]
@@ -833,7 +833,7 @@
       "params": {
         "lines": [
           "Pour chacune de mes trois favorites, je repère une personne qui exerce ce métier, ou qui en connaît une.",
-          "Si ma séance 6 s'ouvre par l'initiation à l'IA, j'apporte deux tâches de mon travail, actuel ou passé, à essayer ensemble.",
+          "Si ma séance 6 s'ouvre par l'initiation à l'IA, je prépare deux tâches de mon travail, actuel ou passé, à essayer ensemble.",
           "Je renvoie ce carnet complété avant la séance 6."
         ],
         "field_prefix": "c6_livrable",

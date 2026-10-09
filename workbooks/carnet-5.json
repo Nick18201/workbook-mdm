@@ -283,7 +283,7 @@
       "blocks": [
         {
           "type": "protocol",
-          "text": "Cet exercice, sur deux pages, revient sur des moments où une valeur vous a manqué : frustration, épuisement, conflit intérieur. Un mot-clé suffit par situation."
+          "text": "Cet exercice, sur deux pages, revient sur des moments où une valeur vous a manqué : frustration, épuisement, conflit intérieur. Chacun deviendra un besoin pour votre prochain poste. Un mot-clé suffit par situation."
         },
         {
           "type": "paragraphs",
@@ -645,7 +645,7 @@
           "type": "fill_in_card",
           "rows": [
             [
-              "Une valeur me manque :",
+              "Il manque à la liste :",
               [
                 "c5_valeur_libre_1",
                 3.6,
@@ -812,7 +812,7 @@
                 "sentence"
               ],
               [
-                "La valeur que j'affiche et que je ne m'accorde pas (facultatif)",
+                "La valeur que j'affiche et que je ne m'accorde pas",
                 "c5_tension_affichee",
                 "sentence"
               ]
@@ -1191,7 +1191,7 @@
       "params": {
         "lines": [
           "J'envoie la question à mes trois proches avant la séance 5.",
-          "J'emporte ma grille à chaque échange sur une piste : ses questions servent à la vérifier.",
+          "Je relis ma grille avant chaque échange sur une piste : ses questions servent à la vérifier.",
           "Je renvoie ce carnet complété avant la séance 5."
         ],
         "field_prefix": "c5_livrable",
