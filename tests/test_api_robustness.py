@@ -64,17 +64,24 @@ def test_raw_blocks_in_params_cannot_blow_up_a_scale():
     assert len(radios) == 11
 
 
-def test_internal_errors_do_not_leak_exception_details(client, monkeypatch):
+@pytest.mark.parametrize(
+    "endpoint, function, message",
+    [
+        ("/api/compile", "compile_workbook_from_spec", "La compilation du PDF a échoué"),
+        ("/api/page-count", "workbook_page_count", "Le comptage des pages a échoué"),
+    ],
+)
+def test_internal_errors_do_not_leak_exception_details(client, monkeypatch, endpoint, function, message):
     def boom(spec):
         raise RuntimeError("C:\\secret\\path token=abc")
 
-    monkeypatch.setattr(app_module, "compile_workbook_from_spec", boom)
+    monkeypatch.setattr(app_module, function, boom)
 
-    r = client.post("/api/compile", json={"pages": []})
+    r = client.post(endpoint, json={"pages": []})
 
     assert r.status_code == 500
     assert "secret" not in r.text
-    assert "La compilation du PDF a échoué" in r.json()["detail"]
+    assert message in r.json()["detail"]
 
 
 def test_customize_requires_a_known_base(client, monkeypatch):

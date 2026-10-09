@@ -78,6 +78,19 @@ def test_app_shows_the_page_count_of_the_pdf():
     assert info["page_count"] > len(load_workbook("carnet-7").pages)  # carnet 7 has « (suite) » pages
 
 
+def test_app_shows_the_page_count_of_the_pdf_of_its_spec():
+    """The preview's badge, for a spec generated, customized, adjusted or imported: the PDF's pages."""
+    client = TestClient(app)
+    spec = client.get("/api/templates/carnet-7").json()  # as the UI holds it after a customization
+    pdf = client.post("/api/compile", json=spec)
+
+    r = client.post("/api/page-count", json=spec)
+
+    assert r.status_code == 200
+    assert r.json() == {"page_count": pymupdf.open(stream=pdf.content, filetype="pdf").page_count}
+    assert r.json()["page_count"] > len(spec["pages"])  # carnet 7 has « (suite) » pages
+
+
 def test_page_count_is_counted_again_when_the_file_changes(tmp_path, monkeypatch):
     monkeypatch.setattr(spec_module, "WORKBOOKS_DIR", str(tmp_path))
     path = tmp_path / "essai.json"

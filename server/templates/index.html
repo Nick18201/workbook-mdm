@@ -302,8 +302,8 @@
       <!-- Top Action bar when spec ready -->
       <div id="ready_bar" class="hidden bg-white/95 rounded-2xl p-4 border border-indigo-100 shadow-md flex flex-wrap items-center justify-between gap-3">
         <div class="flex flex-wrap items-center gap-2">
-          <span id="page_count_badge" class="px-2.5 py-1 bg-blue-50 text-mdm-blue text-xs font-bold rounded-lg border border-blue-100">
-            6 Pages
+          <span id="page_count_badge" title="Pages du PDF, pages « (suite) » comprises" class="px-2.5 py-1 bg-blue-50 text-mdm-blue text-xs font-bold rounded-lg border border-blue-100">
+            … Pages
           </span>
           <span id="iteration_badge" class="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-lg border border-emerald-100">
             Version 1
@@ -1056,13 +1056,36 @@ Notes de la séance :
       a.remove();
     }
 
+    // Le PDF a souvent plus de pages que la maquette (pages « (suite) ») : le serveur le compile pour les compter
+    let pageCountRequest = 0;
+
+    async function showPdfPageCount(spec) {
+      const badge = document.getElementById('page_count_badge');
+      const request = ++pageCountRequest;
+      badge.classList.remove('hidden');
+      badge.innerText = '… Pages';
+      try {
+        const res = await fetch('/api/page-count', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(spec)
+        });
+        if (!res.ok) throw new Error(res.status);
+        const data = await res.json();
+        if (request === pageCountRequest) badge.innerText = `${data.page_count} Pages`;
+      } catch (err) {
+        // Une maquette que le serveur ne sait pas compiler : pas de nombre plutôt qu'un faux
+        if (request === pageCountRequest) badge.classList.add('hidden');
+      }
+    }
+
     function renderPreview(spec, changesSummary = null, pedagogicalNote = null) {
       const container = document.getElementById('state_preview');
       container.innerHTML = '';
 
       // 1. Ready bar
       document.getElementById('ready_bar').classList.remove('hidden');
-      document.getElementById('page_count_badge').innerText = `${spec.pages.length} Pages`;
+      showPdfPageCount(spec);
       document.getElementById('iteration_badge').innerText = `Version ${iterationCount}`;
       const benefBadge = document.getElementById('beneficiary_badge');
       if (benefBadge) {
