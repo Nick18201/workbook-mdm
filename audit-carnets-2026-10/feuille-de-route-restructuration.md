@@ -25,6 +25,7 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | R11 · Nettoyage : plus de `chap0` à `chap6` ni de livret de compétences | Fusionné (PR #70) |
 | Programme : noms des seuils, charge d'une création, test du module création | Fusionné (PR #69) |
+| Livret de compétences : retour en livret autonome, comme le business plan (`livret-competences.json`) | En PR (section 2, fin, et section 8) |
 | Carnet 7 : apports du support d'enquête métier de Lysiane | Fusionné (PR #73) |
 | App, lot 1 : les règles des carnets transmises à Gemini, contrôle de conformité, création au gabarit commun | Fusionné (PR #74) |
 | App, lot 2 : trois modes (adapter un carnet, créer depuis des notes, mettre en page un support), contrôle de couverture, bénéficiaire facultatif | Fusionné (PR #75) |
@@ -415,6 +416,19 @@ Nicolas a relu le carnet 1 et en a tiré une orientation pour tout le système :
 
 Les corrections de Nicolas sur le carnet 1 sont appliquées telles quelles, à quelques retouches près : coquilles (« consciemment »), une formule genrée tournée autrement (« vous avez été confronté enfant ou adolescent » devient « que vous avez reçus dans l'enfance et l'adolescence »), et les messages reçus mis entre guillemets.
 
+**Prises le 11 octobre 2026 : le livret de compétences revient**
+
+R11 avait retiré l'ancien livret de compétences, que le carnet de route remplaçait dans le parcours. Nicolas le veut de nouveau, aligné sur les carnets. Le plan qu'il a validé :
+1. **Un livret autonome, comme le business plan.** Il est hors des 14 h, pour l'après-bilan (candidatures, entretiens, évolution interne) ou un accompagnement sans bilan. La partie 1 du carnet de route (« Prouver ») en est la version courte, comme le module création l'est du business plan. Il renvoie aux carnets par des encadrés fixes « Si vous avez fait le bilan », jamais par des reports, et ne déclare aucune donnée. Le programme, le site et le carnet de route ne changent pas.
+2. **Son nom** : « Livret de compétences · Votre portfolio » dans l'app, `livret-competences.json`. La couverture garde « Votre portfolio de compétences. » et la promesse « Vos compétences, prouvées par des faits. » ; « augmenté » disparaît (audit, rapport 07). Sa teinte : amande, choisie par Nicolas parmi menthe, amande, rose poudré et jasmin, montrées côte à côte.
+3. **Onze exercices en trois parties, 3 h 05**, que l'app personnalise une à une (niveau fort) :
+   - « Ce que vous savez faire » : votre façon de travailler, le travail réel, le travail bien fait (le travail empêché, avec annonce et ancrage), vos savoir-faire ;
+   - « Ce qui le prouve » : avec les autres, vos niveaux (apprendre, faire, améliorer, transmettre, comme au carnet de route), trois récits d'action ;
+   - « Le montrer, le faire grandir » : vos compétences transférables, ce qu'il vous reste à apprendre (Mon Compte Formation, Mon CEP), pour un entretien, votre portfolio en une page (le livrable).
+4. **Ce qui ne revient pas** : les thèmes 6 et 7 de l'ancien livret (projection, cadre de sécurité, pistes A et B, petit pas), qui sont le travail de décision du bilan, et ses 28 exemples d'un seul profil. Chaque exercice a son exemple contrasté, d'un métier épicène chaque fois différent, sauf le portfolio : c'est la page qui se montre.
+
+Choix de mise en page : chaque tableau a une colonne courte pour la compétence (« un verbe, un objet ») et une colonne large pour la preuve et ce qu'il en reste, au lieu de trois colonnes étroites (3 cm par ligne). « Ce qui vous manque » devient « Ce qu'il vous reste à apprendre » (la condition plutôt que le manque, charte v2).
+
 ## 3. Les PR, dans l'ordre
 
 Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.
@@ -731,6 +745,7 @@ R11 a clos la restructuration (les carnets 1 à 7, le carnet de route, son modul
 3. **Le redéploiement**, par Nicolas : la production tourne sur la révision `00010-hb4` (`main` 404108e), d'avant les lots de l'app et la charte v2. À faire une fois la PR du lot 4 fusionnée, en une fois (`server/DEPLOY_CLOUD_RUN.md`). Le délai d'un appel Gemini passe à 240 s par défaut, sous les 300 s de Cloud Run. Les jetons de chaque appel se lisent ensuite dans les journaux. Puis rejouer dans l'app ce que les essais n'ont pas couvert : un support mis en page, et la barre d'attente sur de vrais appels.
 4. **Le lot site.** `recap-site-parcours.md` est à jour, ses deux « mises à jour du 9 octobre » comprises (R11, puis la charte v2 : « Explorer », le carnet 7, le ton). Le confier à l'agent du site avec le nouveau programme PDF : le programme et le site partent ensemble, et le PDF recopié dans `marge-de-manoeuvre/public/documents/` n'a pas encore été changé (le script ne le recopie que depuis la copie principale du dépôt).
 5. **Les modules reconversion et évolution interne** (`chantier-modules-s9.md`) : ils attendent les réponses de Nicolas et de Lysiane. Ils reprendront les compétences prouvées et les récits du carnet de route (`route.competences`, `route.recits`).
+   - **Le livret de compétences** (section 2, fin) : en PR, branche `claude/livret-competences`. Le livret complet, autonome, à côté du carnet de route : 21 pages, 3 h 05, trois parties. Les modules pourront y renvoyer pour aller plus loin (récits, entretien), comme le module création renvoie au business plan.
 6. **Plus tard** : la version de lecture (les réponses d'un carnet rempli, en entier, pour la personne qui accompagne : elle lit désormais des carnets renvoyés), et l'humour dans le ton.
 
 Message à coller pour reprendre :

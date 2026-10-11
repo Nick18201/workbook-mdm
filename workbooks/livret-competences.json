@@ -1,0 +1,1333 @@
+{
+  "chapter_num": 0,
+  "chapter_title": "Votre portfolio de compétences",
+  "subtitle": "Livret de compétences",
+  "folio": "livret de compétences",
+  "pastel": "almond",
+  "pdf_title": "Marge de Manœuvre · Livret de compétences : votre portfolio",
+  "parts": [
+    "Ce que vous savez faire",
+    "Ce qui le prouve",
+    "Le montrer, le faire grandir"
+  ],
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Votre portfolio *de compétences.*",
+        "number": null,
+        "eyebrow": "Livret de compétences",
+        "tagline": "Candidater, évoluer, vous présenter",
+        "promise": "Vos compétences, prouvées par des faits."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Construire votre *portfolio.*",
+      "params": {
+        "num": "",
+        "intro_text": "Ce livret rassemble ce que vous savez faire et ce qui le prouve : des situations, des résultats, des récits. Il se termine sur une page à montrer, votre portfolio, et sur une présentation prête pour un entretien.<br/><br/><b>Vos savoir-faire, vos récits et votre portfolio peuvent se montrer. Ce qui vous coûte et le travail empêché restent à vous.</b>",
+        "points": [
+          "Exercice 1 · Votre façon de travailler · 10 min",
+          "Exercice 2 · Le travail réel · 20 min",
+          "Exercice 3 · Le travail bien fait · 10 min",
+          "Exercice 4 · Vos savoir-faire · 20 min",
+          "Exercice 5 · Avec les autres · 15 min",
+          "Exercice 6 · Vos niveaux · 15 min",
+          "Exercice 7 · Trois récits d'action · 35 min",
+          "Exercice 8 · Vos compétences transférables · 15 min",
+          "Exercice 9 · Ce qu'il vous reste à apprendre · 10 min",
+          "Exercice 10 · Pour un entretien · 15 min",
+          "Exercice 11 · Votre portfolio, en une page · 15 min",
+          "Fin du livret · 5 min"
+        ],
+        "duration": "3 h 05",
+        "split": "En trois fois, une partie à chaque fois : ce que vous savez faire (exercices 1 à 4, 1 h), ce qui le prouve (exercices 5 à 7, 1 h 05), puis le montrer et le faire grandir (exercices 8 à 11 et la fin, 1 h)."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Comment utiliser *ce livret.*",
+      "part_title": "Mode d'emploi",
+      "fixed": true,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une compétence prouvée tient en trois éléments : un verbe et un objet (« réorganiser un planning »), une situation où vous l'avez mise en œuvre, ce qu'il en reste (un résultat, une trace). Ce livret les cherche dans votre travail réel, en fait des récits, puis une page à montrer.",
+            "• Partie 1 · Ce que vous savez faire : votre façon de travailler, le travail réel, vos savoir-faire.",
+            "• Partie 2 · Ce qui le prouve : avec les autres, vos niveaux, trois récits.",
+            "• Partie 3 · Le montrer, le faire grandir : ce qui se transfère, ce qu'il reste à apprendre, l'entretien, votre portfolio.",
+            "Ce livret est à vous : la personne qui vous accompagne le relit avec vous. Votre portfolio, vos récits et votre présentation sont faits pour être montrés ; le reste sert à les écrire. Si l'inspiration manque pour une question, passez-la : nous la reprendrons ensemble."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "info_cards",
+          "columns": 3,
+          "cards": [
+            {
+              "title": "Vous préparez",
+              "subtitle": "des candidatures.",
+              "text": "Les trois parties, dans l'ordre : votre portfolio et votre présentation en sortent."
+            },
+            {
+              "title": "Vous visez",
+              "subtitle": "une évolution en interne.",
+              "text": "Soignez les exercices 4 à 7 : vos preuves appuient votre demande."
+            },
+            {
+              "title": "Vous changez",
+              "subtitle": "de métier.",
+              "text": "Les exercices 8 et 9 comptent double : ce qui se transfère, ce qu'il reste à apprendre."
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "Si vous avez fait le bilan",
+          "text": "Le livret renvoie à vos carnets quand ils servent : votre travail réel et votre travail empêché (carnet 2), votre cartographie des énergies (carnet 3), votre profil (carnet 4), vos pistes (carnets 6 et 7). Votre carnet de route en est une première version : ses compétences prouvées et ses deux récits. Reprenez-les : inutile de tout réécrire.",
+          "fixed": true
+        },
+        {
+          "type": "annotation",
+          "text": "Une preuve vaut mieux qu'un adjectif."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre façon *de travailler.*",
+      "part_title": "Exercice 1 · Votre façon de travailler · 10 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Avant les savoir-faire, la manière : ce que vous apportez sans y penser, et le cadre où vous donnez le meilleur. Une page, en mots simples, sans étiquette."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "callout",
+          "title": "Si vous avez fait le bilan",
+          "text": "Reprenez votre profil validé (carnet 4) et votre cartographie des énergies (carnet 3) : recopiez-les ici, sans les réécrire.",
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mes deux forces, celles qu'on me reconnaît",
+                "lc_forces",
+                "sentence"
+              ],
+              [
+                "Ce qu'elles apportent à une équipe",
+                "lc_forces_apport",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce qui me recharge au travail",
+                "lc_recharge",
+                "sentence"
+              ],
+              [
+                "Ce qui me coûte",
+                "lc_coute",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Donc, mon prochain poste devra…",
+                "lc_critere",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Libraire",
+          "surface": "Je suis à l'écoute.",
+          "exploitable": "Je repère ce qu'une personne cherche en deux questions. Le samedi, au milieu des clients, ça me recharge ; une journée entière en réserve m'éteint. Donc, mon prochain poste devra garder du contact."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que votre fiche de poste *ne dit pas.*",
+      "part_title": "Exercice 2 · Le travail réel · 20 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "La fiche de poste décrit le travail prévu. Le travail réel, c'est ce que vous faites pour que ça marche malgré tout : vos rattrapages, vos arbitrages, vos astuces. C'est là que se cachent vos compétences les plus solides. Prenez votre poste actuel, ou le dernier."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "callout",
+          "title": "Si vous avez fait le bilan",
+          "text": "Reprenez vos fiches d'expérience (carnet 2, exercice 1) : leur ligne « Ce que la fiche de poste ne dit pas » en est la première version.",
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Chaque semaine, sans que ce soit écrit nulle part, je…",
+                "lc_reel_1",
+                "sentence"
+              ],
+              [
+                "Ce que ça évite, ou ce que ça permet",
+                "lc_reel_1_effet",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Chaque semaine, sans que ce soit écrit nulle part, je…",
+                "lc_reel_2",
+                "sentence"
+              ],
+              [
+                "Ce que ça évite, ou ce que ça permet",
+                "lc_reel_2_effet",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Chaque semaine, sans que ce soit écrit nulle part, je…",
+                "lc_reel_3",
+                "sentence"
+              ],
+              [
+                "Ce que ça évite, ou ce que ça permet",
+                "lc_reel_3_effet",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Ce que je fais, et qui n'est écrit nulle part",
+          "question_labels": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Secrétaire de mairie",
+          "surface": "Je gère l'accueil et les dossiers.",
+          "exploitable": "Chaque semaine, sans que ce soit écrit nulle part, je relis les dossiers d'urbanisme avant l'envoi : ils ne reviennent plus incomplets."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Un outil, un raccourci ou une méthode que j'ai créés ou adaptés",
+                "lc_astuce_1",
+                "sentence"
+              ],
+              [
+                "Ce qu'ils ont changé",
+                "lc_astuce_1_effet",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Un outil, un raccourci ou une méthode que j'ai créés ou adaptés",
+                "lc_astuce_2",
+                "sentence"
+              ],
+              [
+                "Ce qu'ils ont changé",
+                "lc_astuce_2_effet",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Mes astuces maison",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le travail *bien fait.*",
+      "part_title": "Exercice 3 · Le travail bien fait · 10 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cette page revient sur un travail que vous n'avez pas pu faire comme vous l'entendiez : le travail empêché. Ce que vous n'avez pas pu bien faire dit ce à quoi vous tenez ; la page en tire vos conditions pour bien travailler."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le travail que j'aurais voulu mieux faire",
+                "lc_empeche_mieux",
+                "sentence"
+              ],
+              [
+                "Ce qui m'en empêchait : les moyens, les délais, les règles…",
+                "lc_empeche_frein",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que j'aurais fait, si j'avais pu",
+                "lc_empeche_ideal",
+                "sentence"
+              ],
+              [
+                "Donc, pour faire un travail que je juge bien fait, j'ai besoin de…",
+                "lc_empeche_besoin",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Kinésithérapeute",
+          "surface": "On manque de temps.",
+          "exploitable": "J'aurais voulu montrer les exercices à chaque patient, pas seulement les lui donner sur une feuille. J'ai besoin de séances assez longues pour expliquer."
+        },
+        {
+          "type": "anchor",
+          "field_id": "lc_empeche_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos savoir-faire, *prouvés.*",
+      "part_title": "Exercice 4 · Vos savoir-faire · 20 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un savoir-faire se dit avec un verbe et un objet : « réorganiser un stock », pas « logistique ». Notez-en cinq, tirés des exercices 2 et 3 : vos gestes de métier, vos outils, vos méthodes. Pour chacun, où vous l'avez prouvé et ce qu'il en reste."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "callout",
+          "title": "Si vous avez fait le bilan",
+          "text": "Votre tableau de compétences prouvées (carnet de route, exercice 2) en donne une première version : reprenez-le, puis complétez.",
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Mon savoir-faire : un verbe, un objet",
+            "Où je l'ai prouvé (le poste, l'année), et ce qu'il en reste : un résultat, une trace"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "lc_savoir_1",
+                "placeholder": "Savoir-faire 1 : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_savoir_1_preuve",
+                "placeholder": "Savoir-faire 1 : où je l'ai prouvé, et ce qu'il en reste"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_savoir_2",
+                "placeholder": "Savoir-faire 2 : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_savoir_2_preuve",
+                "placeholder": "Savoir-faire 2 : où je l'ai prouvé, et ce qu'il en reste"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_savoir_3",
+                "placeholder": "Savoir-faire 3 : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_savoir_3_preuve",
+                "placeholder": "Savoir-faire 3 : où je l'ai prouvé, et ce qu'il en reste"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_savoir_4",
+                "placeholder": "Savoir-faire 4 : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_savoir_4_preuve",
+                "placeholder": "Savoir-faire 4 : où je l'ai prouvé, et ce qu'il en reste"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_savoir_5",
+                "placeholder": "Savoir-faire 5 : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_savoir_5_preuve",
+                "placeholder": "Savoir-faire 5 : où je l'ai prouvé, et ce qu'il en reste"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            5.6,
+            11.5
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Photographe",
+          "surface": "Retouche photo.",
+          "exploitable": "Retoucher en série les photos d'un catalogue · studio, 2024 · livré en deux jours au lieu d'une semaine, le client est revenu."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Coopérer, transmettre, *apprendre.*",
+      "part_title": "Exercice 5 · Avec les autres · 15 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre valeur tient aussi à votre façon de travailler avec les autres : expliquer, apaiser, convaincre, former. Même règle qu'à l'exercice 4. Vos compétences de vie comptent : une association, un rôle d'aidant, un sport en équipe."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "callout",
+          "title": "Si vous avez fait le bilan",
+          "text": "Reprenez vos compétences de vie (carnet 2, exercice 6) et ce que vos proches voient chez vous (carnet 6, exercice 2).",
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Ma compétence : un verbe, un objet",
+            "Où je l'ai prouvée, et ce qu'il en reste : un résultat, une trace"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "lc_autres_1",
+                "placeholder": "Compétence 1 avec les autres : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_autres_1_preuve",
+                "placeholder": "Compétence 1 avec les autres : où je l'ai prouvée, et ce qu'il en reste"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_autres_2",
+                "placeholder": "Compétence 2 avec les autres : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_autres_2_preuve",
+                "placeholder": "Compétence 2 avec les autres : où je l'ai prouvée, et ce qu'il en reste"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_autres_3",
+                "placeholder": "Compétence 3 avec les autres : un verbe, un objet",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_autres_3_preuve",
+                "placeholder": "Compétence 3 avec les autres : où je l'ai prouvée, et ce qu'il en reste"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            5.6,
+            11.5
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Bibliothécaire",
+          "surface": "Bon relationnel.",
+          "exploitable": "Former six collègues au nouveau logiciel de prêt · médiathèque, 2023 · plus aucun appel au support, l'équipe me demande la suite."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La dernière chose que j'ai apprise par moi-même, et comment",
+                "lc_apprendre",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos niveaux, *de 1 à 4.*",
+      "part_title": "Exercice 6 · Vos niveaux · 15 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une compétence ne se juge pas en bon ou mauvais : elle progresse par paliers. Votre niveau, de 1 à 4 :",
+            "• 1 · Apprendre : vous faites avec des consignes et une personne référente.",
+            "• 2 · Faire : vous menez le travail courant et réglez les imprévus habituels sans aide.",
+            "• 3 · Améliorer : vous simplifiez les méthodes, vous aidez vos pairs.",
+            "• 4 · Transmettre : vous formez, on vient vous consulter."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Comptable",
+          "surface": "Excel : bon niveau.",
+          "exploitable": "Construire un tableau de rapprochement bancaire · 3, améliorer · j'ai créé le modèle que toute l'équipe utilise."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Une compétence clé, des exercices 4 ou 5",
+            "Niveau, de 1 à 4",
+            "Un fait qui le montre"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "lc_niveau_1_competence",
+                "placeholder": "Compétence clé 1",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_1",
+                "placeholder": "Compétence clé 1 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_1_fait",
+                "placeholder": "Compétence clé 1 : un fait qui le montre"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_niveau_2_competence",
+                "placeholder": "Compétence clé 2",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_2",
+                "placeholder": "Compétence clé 2 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_2_fait",
+                "placeholder": "Compétence clé 2 : un fait qui le montre"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_niveau_3_competence",
+                "placeholder": "Compétence clé 3",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_3",
+                "placeholder": "Compétence clé 3 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_3_fait",
+                "placeholder": "Compétence clé 3 : un fait qui le montre"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_niveau_4_competence",
+                "placeholder": "Compétence clé 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_4",
+                "placeholder": "Compétence clé 4 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_niveau_4_fait",
+                "placeholder": "Compétence clé 4 : un fait qui le montre"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            6.3,
+            2.8,
+            8.0
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qu'on vient souvent me demander, et que je fais sans y penser",
+                "lc_miroir",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce qui me semble évident, et qu'une personne débutante mettrait des mois à apprendre",
+                "lc_evident",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "L'épreuve du miroir",
+          "hint": "Ce qui vous paraît naturel est souvent votre meilleure compétence.",
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La compétence que je sous-estime",
+                "lc_sous_estime",
+                "sentence"
+              ],
+              [
+                "La preuve que je la maîtrise",
+                "lc_sous_estime_preuve",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Un premier *récit.*",
+      "part_title": "Exercice 7 · Récit 1 · 15 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un récit prouve mieux qu'une liste : une situation vécue, même modeste, où vous avez su agir. Quatre temps : la situation, le signal qui vous a fait agir, ce que vous avez fait pas à pas, le résultat. Le premier porte sur un savoir-faire de l'exercice 4."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "callout",
+          "title": "Si vous avez fait le bilan",
+          "text": "Les deux récits de votre carnet de route (exercice 3) peuvent devenir les deux premiers : reprenez-les. Cherchez aussi dans les sommets de votre ligne de vie (carnet 2, exercice 5).",
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Machiniste de théâtre",
+          "surface": "J'ai sauvé une représentation.",
+          "exploitable": "Vendredi, 19 h : le rideau bloque, le public entre à 20 h. J'ai repéré le câble sorti de sa poulie, je l'ai remis en place avec l'équipe, puis testé deux fois. À 20 h 05, le spectacle commençait."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation : ce qui posait problème",
+                "lc_recit_1_situation",
+                "sentence"
+              ],
+              [
+                "Le signal qui m'a fait agir",
+                "lc_recit_1_signal",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai fait, pas à pas : mes gestes, mes choix, les personnes que j'ai mobilisées",
+                "lc_recit_1_actions",
+                "paragraph"
+              ]
+            ],
+            [
+              [
+                "Le résultat : ce qui a changé ensuite",
+                "lc_recit_1_resultat",
+                "sentence"
+              ],
+              [
+                "Ce récit prouve que je sais…",
+                "lc_recit_1_preuve",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Récit 1 · un savoir-faire",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Un deuxième récit, *avec d'autres.*",
+      "part_title": "Exercice 7 · Récit 2 · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une situation avec d'autres personnes : convaincre, apaiser, transmettre, faire travailler ensemble."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation : ce qui posait problème",
+                "lc_recit_2_situation",
+                "sentence"
+              ],
+              [
+                "Le signal qui m'a fait agir",
+                "lc_recit_2_signal",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai fait, pas à pas : mes paroles, mes choix, les personnes que j'ai mobilisées",
+                "lc_recit_2_actions",
+                "paragraph"
+              ]
+            ],
+            [
+              [
+                "Le résultat : ce qui a changé ensuite",
+                "lc_recit_2_resultat",
+                "sentence"
+              ],
+              [
+                "Ce récit prouve que je sais…",
+                "lc_recit_2_preuve",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Récit 2 · avec d'autres",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Un troisième récit, *quand ça résistait.*",
+      "part_title": "Exercice 7 · Récit 3 · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "La fois où vous avez cru ne pas y arriver : un apprentissage difficile, un changement de poste, un projet mal parti. Et ce qui vous a permis de passer."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La situation : ce qui résistait",
+                "lc_recit_3_situation",
+                "sentence"
+              ],
+              [
+                "Le moment où j'ai cru ne pas y arriver",
+                "lc_recit_3_signal",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que j'ai fait, pas à pas, et ce qui m'a permis de passer",
+                "lc_recit_3_actions",
+                "paragraph"
+              ]
+            ],
+            [
+              [
+                "Le résultat : ce qui a changé ensuite",
+                "lc_recit_3_resultat",
+                "sentence"
+              ],
+              [
+                "Ce récit prouve que je sais…",
+                "lc_recit_3_preuve",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Récit 3 · quand ça résistait",
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Ce que vous avez déjà traversé dit ce que vous saurez traverser."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos compétences, *ailleurs.*",
+      "part_title": "Exercice 8 · Vos compétences transférables · 15 min",
+      "part": 3,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une compétence transférable se décroche de votre poste pour servir ailleurs : dans un autre secteur, un autre métier, une autre organisation. Choisissez-en trois parmi vos exercices 4 à 7, puis cherchez où elles ouvriraient une porte."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Ma compétence transférable",
+            "Sa preuve : un récit, une ligne des exercices 4 ou 5",
+            "Où elle servirait : un secteur, un métier"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "lc_transfert_1",
+                "placeholder": "Compétence transférable 1",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_transfert_1_preuve",
+                "placeholder": "Compétence transférable 1 : sa preuve"
+              },
+              {
+                "field_id": "lc_transfert_1_ou",
+                "placeholder": "Compétence transférable 1 : où elle servirait"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_transfert_2",
+                "placeholder": "Compétence transférable 2",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_transfert_2_preuve",
+                "placeholder": "Compétence transférable 2 : sa preuve"
+              },
+              {
+                "field_id": "lc_transfert_2_ou",
+                "placeholder": "Compétence transférable 2 : où elle servirait"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_transfert_3",
+                "placeholder": "Compétence transférable 3",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_transfert_3_preuve",
+                "placeholder": "Compétence transférable 3 : sa preuve"
+              },
+              {
+                "field_id": "lc_transfert_3_ou",
+                "placeholder": "Compétence transférable 3 : où elle servirait"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.5,
+            6.3,
+            6.3
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Architecte",
+          "surface": "De la polyvalence.",
+          "exploitable": "Conduire une réunion de chantier où chacun repart avec sa tâche · l'extension d'une école, 2022 · servirait en coordination de projets culturels."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le métier, le secteur ou la piste qui m'attire le plus",
+                "lc_cible",
+                "sentence"
+              ],
+              [
+                "La compétence qui m'y ouvre la porte",
+                "lc_cible_porte",
+                "sentence"
+              ]
+            ]
+          ],
+          "hint": "Si vous avez fait le bilan : l'une de vos pistes (carnets 6 et 7).",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce qu'il vous reste *à apprendre.*",
+      "part_title": "Exercice 9 · Ce qu'il vous reste à apprendre · 10 min",
+      "part": 3,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Pour la piste qui vous attire (exercice 8), notez ce qu'il vous reste à apprendre, et le chemin le plus court : une formation, une mission, une personne qui vous montre. Commencez par le plus utile."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "La compétence à acquérir",
+            "Mon chemin : une formation, une mission, une personne",
+            "Pour quand"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "lc_apprendre_1",
+                "placeholder": "Compétence à acquérir 1",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_apprendre_1_chemin",
+                "placeholder": "Compétence à acquérir 1 : mon chemin"
+              },
+              {
+                "field_id": "lc_apprendre_1_quand",
+                "placeholder": "Compétence à acquérir 1 : pour quand",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_apprendre_2",
+                "placeholder": "Compétence à acquérir 2",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_apprendre_2_chemin",
+                "placeholder": "Compétence à acquérir 2 : mon chemin"
+              },
+              {
+                "field_id": "lc_apprendre_2_quand",
+                "placeholder": "Compétence à acquérir 2 : pour quand",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_apprendre_3",
+                "placeholder": "Compétence à acquérir 3",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_apprendre_3_chemin",
+                "placeholder": "Compétence à acquérir 3 : mon chemin"
+              },
+              {
+                "field_id": "lc_apprendre_3_quand",
+                "placeholder": "Compétence à acquérir 3 : pour quand",
+                "answer": "word"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            6.0,
+            8.1,
+            3.0
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Fleuriste",
+          "surface": "Faire une formation.",
+          "exploitable": "Tenir la comptabilité d'une boutique : un module court de gestion, choisi sur Mon Compte Formation, et deux samedis avec la personne qui tient les comptes de la coopérative. Pour juin."
+        },
+        {
+          "type": "link_card",
+          "title": "Pour vous former",
+          "links": [
+            [
+              "Mon Compte Formation",
+              "https://www.moncompteformation.gouv.fr",
+              "vos droits à la formation et les formations que vous pouvez suivre (moncompteformation.gouv.fr)."
+            ],
+            [
+              "Le conseil en évolution professionnelle",
+              "https://mon-cep.org",
+              "un conseil pour construire votre projet de formation, près de chez vous (mon-cep.org)."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Pour un *entretien.*",
+      "part_title": "Exercice 10 · Pour un entretien · 15 min",
+      "part": 3,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un entretien se prépare à voix haute. Trois outils : une présentation d'une minute, vos récits en trois phrases, une réponse prête à la question que vous redoutez."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que je fais, en une phrase",
+                "lc_pitch_quoi",
+                "sentence"
+              ],
+              [
+                "Mes deux preuves les plus fortes",
+                "lc_pitch_preuves",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que je cherche, et ce que j'y apporte",
+                "lc_pitch_cherche",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Me présenter en une minute",
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Juriste",
+          "surface": "Rigueur, motivation, sens du service.",
+          "exploitable": "Juriste en droit social, je rends le droit du travail utilisable par les managers : mes fiches pratiques répondent à leurs questions avant qu'ils m'appellent. Je cherche une équipe RH où transmettre."
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Récit 1 : la situation, ce que j'ai fait, le résultat",
+                "lc_oral_1",
+                "paragraph"
+              ]
+            ],
+            [
+              [
+                "Récit 2 : la situation, ce que j'ai fait, le résultat",
+                "lc_oral_2",
+                "paragraph"
+              ]
+            ],
+            [
+              [
+                "Récit 3 : la situation, ce que j'ai fait, le résultat",
+                "lc_oral_3",
+                "paragraph"
+              ]
+            ]
+          ],
+          "title": "Mes récits en trois phrases",
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La question que je redoute",
+                "lc_question",
+                "sentence"
+              ],
+              [
+                "Ma réponse, avec une preuve",
+                "lc_question_reponse",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Dites-les à voix haute, une fois : on entend vite ce qui manque."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre portfolio, *en une page.*",
+      "part_title": "Exercice 11 · Votre portfolio, en une page · 15 min",
+      "part": 3,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "La page à montrer : à une entreprise qui recrute, à votre responsable, à un jury. Reprenez vos meilleures preuves, une ligne par compétence, de la plus forte à la moins forte."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Ma compétence",
+            "Ma preuve : une situation, un résultat",
+            "Niveau, de 1 à 4",
+            "Envie : oui, plutôt, non"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "lc_portfolio_1",
+                "placeholder": "Compétence 1",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_1_preuve",
+                "placeholder": "Compétence 1 : ma preuve"
+              },
+              {
+                "field_id": "lc_portfolio_1_niveau",
+                "placeholder": "Compétence 1 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_1_envie",
+                "placeholder": "Compétence 1 : envie de l'utiliser",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_portfolio_2",
+                "placeholder": "Compétence 2",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_2_preuve",
+                "placeholder": "Compétence 2 : ma preuve"
+              },
+              {
+                "field_id": "lc_portfolio_2_niveau",
+                "placeholder": "Compétence 2 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_2_envie",
+                "placeholder": "Compétence 2 : envie de l'utiliser",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_portfolio_3",
+                "placeholder": "Compétence 3",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_3_preuve",
+                "placeholder": "Compétence 3 : ma preuve"
+              },
+              {
+                "field_id": "lc_portfolio_3_niveau",
+                "placeholder": "Compétence 3 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_3_envie",
+                "placeholder": "Compétence 3 : envie de l'utiliser",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_portfolio_4",
+                "placeholder": "Compétence 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_4_preuve",
+                "placeholder": "Compétence 4 : ma preuve"
+              },
+              {
+                "field_id": "lc_portfolio_4_niveau",
+                "placeholder": "Compétence 4 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_4_envie",
+                "placeholder": "Compétence 4 : envie de l'utiliser",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_portfolio_5",
+                "placeholder": "Compétence 5",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_5_preuve",
+                "placeholder": "Compétence 5 : ma preuve"
+              },
+              {
+                "field_id": "lc_portfolio_5_niveau",
+                "placeholder": "Compétence 5 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_5_envie",
+                "placeholder": "Compétence 5 : envie de l'utiliser",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "lc_portfolio_6",
+                "placeholder": "Compétence 6",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_6_preuve",
+                "placeholder": "Compétence 6 : ma preuve"
+              },
+              {
+                "field_id": "lc_portfolio_6_niveau",
+                "placeholder": "Compétence 6 : mon niveau, de 1 à 4",
+                "answer": "word"
+              },
+              {
+                "field_id": "lc_portfolio_6_envie",
+                "placeholder": "Compétence 6 : envie de l'utiliser",
+                "answer": "word"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.6,
+            8.1,
+            2.2,
+            2.2
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui relie ces compétences, en une phrase",
+                "lc_portfolio_fil",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin du livret · 5 min",
+      "part": 3,
+      "params": {
+        "lines": [
+          "Avant chaque entretien, je relis mon portfolio et mes trois récits.",
+          "Après chaque mission marquante, j'ajoute une ligne à mon portfolio.",
+          "Je renvoie ce livret complété avant notre séance de relecture."
+        ],
+        "signature_label": "Date de la séance",
+        "field_prefix": "lc_livrable",
+        "livrable_title": "Votre portfolio de compétences",
+        "livrable_text": "Votre portfolio (exercice 11), vos trois récits (exercice 7) et votre présentation (exercice 10). Ils se montrent : en entretien, à votre responsable, à un jury.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes compétences",
+          "À aborder en séance : la compétence dont je doute encore, la question que je redoute",
+          "Les questions que j'ai passées, à reprendre ensemble"
+        ]
+      }
+    },
+    {
+      "template": "closing",
+      "fixed": true,
+      "params": {
+        "messages": [
+          "Vos preuves sont écrites : à vous de les montrer.",
+          "Ajoutez-y chaque nouvelle mission : votre portfolio grandit avec vous."
+        ]
+      }
+    }
+  ]
+}

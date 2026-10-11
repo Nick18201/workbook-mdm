@@ -243,6 +243,11 @@ C'est l'actuel livret de compétences, recentré et renommé.
   - Il déclare `"carnet": "route"` : la couleur et le folio du carnet de route. Le livret complet prend le relais après le bilan.
 - **Le livret projet complet**, outil autonome pour l'accompagnement à la création après le bilan. Il s'ouvre par un mode d'emploi et des renvois « Si vous avez fait le bilan : … ». Il intègre les refontes de l'audit : finances guidées, page « Le risque, pour vous », reprise d'activité, informations réglementaires renvoyées vers les sources officielles.
 
+### Le livret de compétences · deux formats (11 octobre 2026)
+
+- **La partie 1 du carnet de route** (« Prouver et préparer le choix ») est la version courte, dans le parcours : le profil en reports, cinq compétences prouvées, deux récits.
+- **Le livret complet** (`livret-competences.json`), outil autonome comme le livret projet : hors des 14 h, pour l'après-bilan (candidatures, entretiens, évolution interne) ou un accompagnement sans bilan. Onze exercices en trois parties, 3 h 05 : ce que vous savez faire (le travail réel, le travail bien fait, vos savoir-faire), ce qui le prouve (vos niveaux, trois récits), puis le montrer et le faire grandir (compétences transférables, ce qu'il reste à apprendre, l'entretien, le portfolio en une page). Il renvoie aux carnets par des encadrés « Si vous avez fait le bilan : … », sans report. Il reprend les bonnes pages de l'ancien livret avec les refontes de l'audit (rapport 07), sans ses thèmes 6 et 7 (projection, cadre de sécurité, pistes A et B), qui sont le travail de décision du bilan.
+
 ## 6. Le budget de temps
 
 | Intervalle | Carnet | Cible | Correspond aujourd'hui à | Estimation actuelle |
@@ -304,7 +309,7 @@ L'app a deux usages : créer un livret de toutes pièces, puis exporter son JSON
 
 | Pertinence | Carnets | Ce qui s'adapte | Ce qui reste fixe |
 |---|---|---|---|
-| Forte | Carnets 6 et 7, carnet de route et ses modules, business plan | Pistes pré-intitulées, ressources du secteur, nombre de fiches, contacts suggérés, exemples, module de projet | Gabarit, protocole, critères des fiches, définitions des seuils |
+| Forte | Carnets 6 et 7, carnet de route et ses modules, business plan, livret de compétences | Pistes pré-intitulées, ressources du secteur, nombre de fiches, contacts suggérés, exemples, module de projet | Gabarit, protocole, critères des fiches, définitions des seuils |
 | Moyenne | Carnets 2 et 4 | Vocabulaire du secteur, situation (reconversion, évolution, retour à l'emploi), nombre de fiches d'expérience, exemples. Au carnet 4, le statut (salarié, indépendant, demandeur d'emploi), jamais de chiffres personnels | Protocole, questions franches, carte des seuils |
 | Faible | Carnets 1, 3 et 5 | Au plus le prénom et les exemples. Avant la séance 1, on connaît peu la personne | Le cadre et les héritages (carnet 1), les questions du test des fonctionnements cognitifs (carnet 3 : les personnaliser biaiserait la restitution), la liste de valeurs et l'entonnoir (carnet 5) |
 

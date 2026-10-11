@@ -274,8 +274,8 @@ def test_answer_sizes_in_files_are_known():
 
 
 CARNET_IDS = [workbook_id for workbook_id, raw in _raw_workbooks() if "carnet" in raw]
-# The documents written in: the carnets, their module and the business plan
-WRITTEN_IDS = CARNET_IDS + ["business-plan"]
+# The documents written in: the carnets, their module and the two full livrets
+WRITTEN_IDS = CARNET_IDS + ["business-plan", "livret-competences"]
 CM = 72 / 2.54
 FIELD_INSET = 3  # draw_answer_box lays its field 3 pt inside the drawn box
 
