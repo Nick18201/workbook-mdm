@@ -63,6 +63,12 @@ CATALOGUE = [
      "dépenses et les charges, le point mort face aux quatre seuils, le risque pour la personne, le financement, "
      "le test et les entretiens prospects, puis la synthèse et la décision.",
      "storefront", BILAN),
+    ("livret-competences", 98, "Livret de compétences · Votre portfolio",
+     "Travail réel, savoir-faire, niveaux, récits d'action, entretien et portfolio en une page",
+     "Le livret complet, après le bilan ou sans lui, en trois parties : ce que la personne sait faire, ce qui le "
+     "prouve (niveaux et trois récits), puis ce qui se transfère, ce qu'il reste à apprendre, la préparation d'un "
+     "entretien et le portfolio à montrer.",
+     "workspace_premium", BILAN),
     ("business-plan", 99, "Mon business plan · De l'idée au projet viable",
      "Fondations, offre, marché, modèle économique, moyens et test",
      "Le livret complet pour structurer une création d'activité, tester son marché et obtenir ses premières ventes.",
