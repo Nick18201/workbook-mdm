@@ -17,6 +17,7 @@ from workbook_generator.chapters.programme import (
     create_programme_page_deroule_3,
     create_programme_page_deroule_4,
     create_programme_page_projets,
+    create_programme_page_modules_livrets,
     create_programme_page_organisation_pedagogie,
     create_programme_page_accompagnateurs,
     create_programme_page_tarifs,
@@ -32,7 +33,7 @@ def build_programme_pdf(
     with_closing=False,
 ):
     """
-    Orchestre la génération du PDF Programme du Bilan de Compétences (12 pages)
+    Orchestre la génération du PDF Programme du Bilan de Compétences (13 pages)
     conforme à 100% à la charte graphique des Workbooks de Marge de Manœuvre
     et aux exigences réglementaires Qualiopi.
     """
@@ -61,19 +62,22 @@ def build_programme_pdf(
     # --- PAGE 7 : BÉNÉFICES & TRAJECTOIRES (LES 3 PROJETS : RECONVERSION, CRÉATION, ÉVOLUTION) ---
     builder.add_page(create_programme_page_projets)
 
-    # --- PAGE 8 : ORGANISATION PRATIQUE & MOYENS PÉDAGOGIQUES (100% VISIO, NOTION, CARNETS) ---
+    # --- PAGE 8 : LE MODULE DE VOTRE PROJET (S9 → S10) ET LE LIVRET POUR LA SUITE ---
+    builder.add_page(create_programme_page_modules_livrets)
+
+    # --- PAGE 9 : ORGANISATION PRATIQUE & MOYENS PÉDAGOGIQUES (100% VISIO, NOTION, CARNETS) ---
     builder.add_page(create_programme_page_organisation_pedagogie)
 
-    # --- PAGE 9 : VOS ACCOMPAGNATEURS (LYSIANE BRAND & NICOLAS BLUM FERRACCI) ---
+    # --- PAGE 10 : VOS ACCOMPAGNATEURS (LYSIANE BRAND & NICOLAS BLUM FERRACCI) ---
     builder.add_page(create_programme_page_accompagnateurs)
 
-    # --- PAGE 10 : FORMULE UNIQUE (1 800 €), TARIFS & FINANCEMENT CPF ---
+    # --- PAGE 11 : FORMULE UNIQUE (1 800 €), TARIFS & FINANCEMENT CPF ---
     builder.add_page(create_programme_page_tarifs)
 
-    # --- PAGE 11 : INFORMATIONS PRATIQUES (QUALIOPI INDICATEUR 1) ---
+    # --- PAGE 12 : INFORMATIONS PRATIQUES (QUALIOPI INDICATEUR 1) ---
     builder.add_page(create_programme_page_infos_pratiques)
 
-    # --- PAGE 12 : INDICATEURS DE RÉSULTATS & SATISFACTION (SESSION 2025) ---
+    # --- PAGE 13 : INDICATEURS DE RÉSULTATS & SATISFACTION (SESSION 2025) ---
     builder.add_page(create_programme_page_indicateurs_satisfaction)
 
     # --- PAGE DE CLÔTURE OPTIONNELLE ---
@@ -94,7 +98,8 @@ def build_programme_pdf(
             "programme-tarifs-bilan.pdf",
         )
     )
-    if os.path.exists(os.path.dirname(site_pdf_path)):
+    # Only a file can be copied (the tests build into a BytesIO)
+    if isinstance(output_filename, (str, os.PathLike)) and os.path.exists(os.path.dirname(site_pdf_path)):
         try:
             shutil.copy2(output_filename, site_pdf_path)
             print(f"Synchronisé avec le site public: {site_pdf_path}")

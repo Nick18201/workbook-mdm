@@ -40,6 +40,17 @@ def test_cli_document_stays_on_its_pages(module, function):
         assert "MARGE DE MANŒUVRE" in page.get_text(), page.number
 
 
+def test_programme_keeps_its_pages():
+    # Its pages are written to fit: a block that no longer fits starts a « (suite) » page
+    buffer = io.BytesIO()
+    importlib.import_module("main_generate_programme").build_programme_pdf(buffer)
+    doc = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")
+
+    _assert_nothing_off_page(doc)
+    assert len(doc) == 13
+    assert "(suite)" not in " ".join(page.get_text() for page in list(doc)[5:])  # from the temps 3 on
+
+
 def _rgb(color):
     return tuple(round(v * 255) for v in color.rgb())
 
