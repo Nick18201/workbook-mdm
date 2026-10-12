@@ -482,6 +482,38 @@ def put_part_back(base: dict, part: int, customized: dict) -> dict:
     return out
 
 
+# --- A retouch of some pages only (/api/iterate with 'pages'): faster, and the rest cannot move ---
+
+def pages_of(data: dict, numbers: List[int]) -> dict:
+    """The spec (a dict) reduced to the pages of these numbers (from 1), in their order."""
+    out = {key: value for key, value in data.items() if key != "pages"}
+    pages = data.get("pages") or []
+    out["pages"] = [pages[n - 1] for n in numbers]
+    return out
+
+
+def put_pages_back(base: dict, numbers: List[int], edited: dict) -> dict:
+    """
+    `base` (a spec dict) whose pages of these numbers are replaced, where they were, by those
+    of `edited` (pages_of, retouched): one for one, or any number for a single page (« coupe
+    cette page en deux »). The rest of the document, its head included, stays as it was; a
+    replaced page keeps its part. Raises ValueError when the count does not match.
+    """
+    new_pages = [page for page in edited.get("pages") or [] if isinstance(page, dict)]
+    if not new_pages or (len(numbers) > 1 and len(new_pages) != len(numbers)):
+        raise ValueError(f"{len(numbers)} page(s) envoyée(s), {len(new_pages)} reçue(s)")
+    groups = {numbers[0]: new_pages} if len(numbers) == 1 else {n: [page] for n, page in zip(numbers, new_pages)}
+    pages = []
+    for number, page in enumerate(base.get("pages") or [], start=1):
+        if number not in groups:
+            pages.append(page)
+            continue
+        for new in groups[number]:
+            new = {key: value for key, value in new.items() if key != "part"}
+            pages.append(dict(new, part=page["part"]) if page.get("part") is not None else new)
+    return dict(base, pages=pages)
+
+
 def workbook_path(workbook_id: str) -> str:
     """Path of a reference workbook's JSON file (workbooks/<id>.json)."""
     return os.path.join(WORKBOOKS_DIR, f"{workbook_id}.json")

@@ -48,7 +48,7 @@ from workbook_generator.conformity import DURATION, RATING_LABEL_MAX, SCALE_BOUN
 from workbook_generator.coverage import read_support, sentence_case, support_title
 from workbook_generator.pagination import balance_breaks
 from workbook_generator.primitives import plain_title
-from workbook_generator.spec import keep_fixed, part_of, put_part_back, tag_refs
+from workbook_generator.spec import keep_fixed, pages_of, part_of, put_pages_back, put_part_back, tag_refs
 
 logger = logging.getLogger(__name__)
 # What each call costs goes to uvicorn's log, shown at the INFO level in production (Cloud Run)
@@ -704,7 +704,9 @@ def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
         )
         return GenerationResult(_build_fallback_iteration(request), "no_api_key")
 
-    current_json = _spec_json(request.current_spec)
+    current = request.current_spec.model_dump(exclude_unset=True, exclude_none=True)
+    numbers = request.pages or []
+    current_json = json.dumps(pages_of(current, numbers) if numbers else current, ensure_ascii=False)
 
     notes_context = (
         f"\nNOTES DE SÉANCE D'ORIGINE :\n{request.raw_notes}\n"
@@ -715,7 +717,7 @@ def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
     user_prompt = f"""Voici la spécification actuelle du livret pédagogique :
 ---
 {current_json}
----{notes_context}
+---{notes_context}{_pages_scope(request.current_spec, numbers)}
 CONSIGNE D'AJUSTEMENT OU RETOUCHE :
 "{request.feedback}"
 
@@ -723,7 +725,8 @@ Applique précisément ces modifications à la structure du livret tout en conse
 Génère la réponse JSON complète avec 'spec', 'changes_summary' et 'pedagogical_note'."""
 
     def build(data: dict) -> IterateResponse:
-        spec = WorkbookSpec(**data.get("spec", data))
+        answer = data.get("spec", data)
+        spec = WorkbookSpec(**(put_pages_back(current, numbers, answer) if numbers else answer))
         return IterateResponse(
             spec=spec if _from_reference(request.current_spec) else balance_breaks(spec),
             changes_summary=data.get(
@@ -737,6 +740,26 @@ Génère la réponse JSON complète avec 'spec', 'changes_summary' et 'pedagogic
     if result is None:
         return GenerationResult(_build_fallback_iteration(request), "model_error")
     return GenerationResult(result)
+
+
+def _pages_scope(spec: WorkbookSpec, numbers: list) -> str:
+    """Tells Gemini it only gets some pages of the document (nothing for a whole document)."""
+    if not numbers:
+        return ""
+    names = ", ".join(f"page {n} « {plain_title(spec.pages[n - 1].title) or spec.pages[n - 1].template} »"
+                      for n in numbers)
+    one = len(numbers) == 1
+    return (
+        f"\nPÉRIMÈTRE : tu ne reçois que {'la page visée' if one else 'les pages visées'} par la consigne, "
+        f"sur les {len(spec.pages)} du document : {names}. Applique la consigne à "
+        + ("cette page seulement et renvoie-la dans 'spec.pages' (deux pages si la consigne demande de la couper)."
+           if one else "ces pages seulement et renvoie-les toutes dans 'spec.pages', dans le même ordre, une pour une.")
+        + " Les autres pages ne changent pas."
+        + ("" if any(spec.pages[n - 1].template == "summary" for n in numbers) else
+           " Sauf si la consigne le demande, ne change ni le nom ni la durée d'un exercice : l'ouverture du "
+           "document, que tu ne reçois pas, les donne.")
+        + "\n"
+    )
 
 
 def _from_reference(spec: WorkbookSpec) -> bool:
