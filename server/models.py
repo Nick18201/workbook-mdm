@@ -89,6 +89,21 @@ class IterateRequest(BaseModel):
     current_spec: WorkbookSpec = Field(..., description="Spécification actuelle du livret à modifier")
     feedback: str = Field(..., max_length=MAX_INSTRUCTION_LENGTH, description="Consigne d'ajustement ou feedback utilisateur")
     raw_notes: Optional[str] = Field(None, max_length=MAX_NOTES_LENGTH, description="Notes de séance brutes d'origine pour contexte")
+    pages: Optional[List[int]] = Field(
+        None, max_length=MAX_PAGES,
+        description="Pages à retoucher, à partir de 1 (vide : tout le document) : Gemini ne reçoit qu'elles, "
+                    "le reste du document ne change pas",
+    )
+
+    @model_validator(mode="after")
+    def check_pages(self):
+        if self.pages:
+            count = len(self.current_spec.pages)
+            outside = [n for n in self.pages if not 1 <= n <= count]
+            if outside:
+                raise ValueError(f"page {outside[0]} : le document compte {count} pages")
+            self.pages = sorted(set(self.pages))
+        return self
 
 
 class IterateResponse(BaseModel):

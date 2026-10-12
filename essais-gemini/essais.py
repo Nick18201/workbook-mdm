@@ -40,7 +40,7 @@ CHARS_PER_TOKEN = 3.5  # du français et du JSON mêlés, pour les estimations
 RECEIVED_FACTOR = 1.15
 THINKING_SHARE = 0.25
 GUESSED_SPEC_CHARS = 15_000  # un document créé, pour estimer une retouche avant de l'avoir
-FEEDBACK_MAX = 4800  # comme « Corriger ces points » dans l'interface
+FEEDBACK_MAX = 4800  # comme la retouche de l'atelier, dans l'interface
 REF = "_ref"
 FIX = "à corriger"
 
@@ -404,8 +404,14 @@ def measure_retouch(before: dict, spec: dict) -> dict:
     }
 
 
+def fixes_pages(findings: list):
+    """Les pages que l'atelier envoie avec ces remarques : les leurs, ou tout le document si l'une n'en a pas."""
+    pages = [f.get("page") for f in findings]
+    return sorted(set(pages)) if pages and all(pages) else None
+
+
 def fixes_text(findings: list) -> str:
-    """La consigne que « Corriger ces points » range dans « Ajuster »."""
+    """La consigne que l'atelier envoie quand toutes ces remarques sont choisies « Corriger avec l'IA »."""
     text = "Corrige ces points relevés par le contrôle des règles des carnets, sans rien changer d'autre :"
     for f in findings:
         line = f"\n- {f'Page {f['page']} : ' if f.get('page') else ''}{f['message']}"
@@ -492,7 +498,10 @@ def run_one(client, usage, case, tirage, source=None) -> dict:
         base = load_workbook(request["template_id"]).model_dump(exclude_unset=True, exclude_none=True)
     else:
         base = source["spec"]
-        request["feedback"] = request.get("feedback") or fixes_text(source["remarques"])
+        if not request.get("feedback"):
+            # Comme l'atelier : toutes les remarques choisies, et seulement leurs pages envoyées
+            request["feedback"] = fixes_text(source["remarques"])
+            request["pages"] = fixes_pages(source["remarques"])
         request["raw_notes"] = (source.get("requete") or {}).get("raw_notes")
         responses.append(_post(client, "/api/iterate", dict(request, current_spec=base)))
         spec = responses[-1].json()["spec"]

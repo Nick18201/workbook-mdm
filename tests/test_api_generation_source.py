@@ -226,3 +226,75 @@ def test_customize_one_part_leaves_the_rest_as_it_was(client, monkeypatch):
     assert two["title"] == "Deux, adaptée." and two["part"] == 2
     assert two["blocks"][0]["text"] == "Avertissement."  # fixed, even part by part
     assert two["blocks"][1]["subtitle"] == "Adapté."
+
+
+def _recording_client(answer, prompts):
+    class Response:
+        text = json.dumps(answer)
+
+    class Models:
+        def generate_content(self, **kwargs):
+            prompts.append(kwargs["contents"])
+            return Response
+
+    class Client:
+        def __init__(self, **kwargs):
+            self.models = Models()
+
+    return Client
+
+
+RETOUCH_BASE = {"chapter_title": "Mes *enquêtes.*", "parts": ["Avant", "Après"], "pages": [
+    {"template": "cover", "params": {"cover_title": "Mes *enquêtes.*"}},
+    {"template": "composite", "title": "Une.", "part": 1, "blocks": [
+        {"type": "question", "question": "Q1 ?", "field_id": "a", "subtitle": "Texte de la page 2."}]},
+    {"template": "composite", "title": "Deux.", "part": 2, "blocks": [
+        {"type": "question", "question": "Q2 ?", "field_id": "b", "subtitle": "Texte de la page 3."}]},
+    {"template": "closing", "params": {}},
+]}
+
+
+def test_a_retouch_of_one_page_sends_it_alone_and_puts_it_back(client, monkeypatch):
+    # « Retoucher cette page » : Gemini only gets the page, may cut it in two, and the rest cannot move
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    answer = {"spec": {"chapter_title": "Autre titre", "pages": [
+        {"template": "composite", "title": "Deux, début.", "blocks": [
+            {"type": "question", "question": "Q2 ?", "field_id": "b", "subtitle": "Allégé."}]},
+        {"template": "composite", "title": "Deux, suite.", "blocks": [
+            {"type": "question", "question": "Q3 ?", "field_id": "c"}]},
+    ]}, "changes_summary": "Page coupée en deux."}
+    prompts = []
+    monkeypatch.setattr(gemini_service.genai, "Client", _recording_client(answer, prompts))
+
+    r = client.post("/api/iterate", json={"current_spec": RETOUCH_BASE, "feedback": "Coupe-la en deux", "pages": [3]})
+    spec = r.json()["spec"]
+
+    assert r.status_code == 200 and r.headers["X-MDM-Generation"] == "ai"
+    assert "Texte de la page 3." in prompts[0] and "Texte de la page 2." not in prompts[0]
+    assert "page 3 « Deux. »" in prompts[0] and "sur les 4 du document" in prompts[0]
+    assert spec["chapter_title"] == "Mes *enquêtes.*"
+    assert [page["template"] for page in spec["pages"]] == ["cover", "composite", "composite", "composite", "closing"]
+    assert spec["pages"][1] == RETOUCH_BASE["pages"][1]
+    assert [page["title"] for page in spec["pages"][2:4]] == ["Deux, début.", "Deux, suite."]
+    assert spec["pages"][2]["part"] == spec["pages"][3]["part"] == 2
+
+
+def test_a_retouch_of_several_pages_must_give_them_back_one_for_one(client, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    answer = {"spec": {"pages": [{"template": "composite", "title": "Une et deux.", "blocks": []}]}}
+    monkeypatch.setattr(gemini_service.genai, "Client", _recording_client(answer, []))
+
+    r = client.post("/api/iterate", json={"current_spec": RETOUCH_BASE, "feedback": "Fusionne", "pages": [2, 3]})
+
+    assert r.headers["X-MDM-Generation"] == "fallback"
+    assert r.headers["X-MDM-Fallback-Reason"] == "model_error"
+    assert [page.get("title", "") for page in r.json()["spec"]["pages"]] == ["", "Une.", "Deux.", ""]
+
+
+def test_a_retouch_refuses_a_page_outside_the_document(client, monkeypatch):
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+
+    r = client.post("/api/iterate", json={"current_spec": RETOUCH_BASE, "feedback": "Allège", "pages": [2, 9]})
+
+    assert r.status_code == 422
+    assert "page 9 : le document compte 4 pages" in r.json()["detail"]
