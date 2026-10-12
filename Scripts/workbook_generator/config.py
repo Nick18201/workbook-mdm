@@ -50,8 +50,13 @@ class PDFStyle:
     # Dominant pastel of each carnet of the bilan, by stage of the programme (chosen on
     # 2026-10-08): cool tints for stage 1 (carnets 1 to 5), warm ones for stage 2 (carnets
     # 6 and 7), jasmine for the carnet de route (stage 3). Lilac for any other document.
+    # The carnet 0 is offered before the bilan, in exchange for an e-mail address: it prepares
+    # the free first call, as the carnet N prepares the session N. Jasmine too (chosen on
+    # 2026-10-12 over sky and linen): the door in and the way out share a tint.
     CARNET_ROUTE = "route"
+    CARNET_OFFERED = 0
     CARNET_PASTELS = {
+        CARNET_OFFERED: "jasmine",
         1: "sky", 2: "lilac", 3: "mint", 4: "sky", 5: "lilac",
         6: "almond", 7: "blush",
         CARNET_ROUTE: "jasmine",

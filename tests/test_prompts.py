@@ -73,7 +73,7 @@ def test_the_rules_name_what_our_carnets_do():
         assert "sa situation, oui ; ses faits, non" in prompt
     assert "le même au féminin" in CREATE and "le même au féminin" in CUSTOMIZE
     assert "une borne d'échelle en 20" in CUSTOMIZE
-    assert "moyen, carnets 1, 3 et 5" in CUSTOMIZE and "fort, carnets 2, 4, 6 et 7" in CUSTOMIZE
+    assert "moyen, carnets 0, 1, 3 et 5" in CUSTOMIZE and "fort, carnets 2, 4, 6 et 7" in CUSTOMIZE
     assert "faible" not in prompt_rules.PERSONALIZATION_RULES
 
 

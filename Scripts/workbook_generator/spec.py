@@ -304,8 +304,8 @@ class PageSpec(BaseModel):
     )
 
 
-# A carnet of the bilan: 1 to 7, or the carnet de route
-Carnet = Union[Annotated[int, Field(ge=1, le=PDFStyle.CARNET_COUNT)], Literal["route"]]
+# A carnet of the bilan: 1 to 7, or the carnet de route; 0 is the carnet offered before it
+Carnet = Union[Annotated[int, Field(ge=PDFStyle.CARNET_OFFERED, le=PDFStyle.CARNET_COUNT)], Literal["route"]]
 
 
 class WorkbookSpec(BaseModel):

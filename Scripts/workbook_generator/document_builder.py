@@ -12,7 +12,7 @@ class DocumentStyle:
     """Per-document settings, kept on the canvas (not on PDFStyle) so that concurrent builds stay apart."""
     pastel: str = PDFStyle.DEFAULT_PASTEL
     folio: str = ""  # e.g. "carnet 3/7" or a short title; the page number is added after it
-    carnet: object = None  # 1 to 7 or PDFStyle.CARNET_ROUTE for a carnet of the bilan, else None
+    carnet: object = None  # 0 to 7 or PDFStyle.CARNET_ROUTE for a carnet of the bilan, else None
     # Pages of PageLayout as (page number, share of the page height their content uses, True
     # on a « (suite) » page): a continuation that holds one small block is a layout to fix
     page_fills: list = field(default_factory=list)
@@ -30,20 +30,25 @@ def document_pastel(c):
 
 
 def carnet_folio(carnet):
-    """Folio of a carnet of the bilan: « carnet 3/7 » or « carnet de route »."""
+    """Folio of a carnet of the bilan: « carnet 3/7 », « carnet de route » or « carnet 0 »."""
     if carnet == PDFStyle.CARNET_ROUTE:
         return "carnet de route"
+    if carnet == PDFStyle.CARNET_OFFERED:
+        return f"carnet {carnet}"
     return f"carnet {carnet}/{PDFStyle.CARNET_COUNT}"
 
 
 def carnet_eyebrow(c, number=None):
     """
-    Eyebrow of a cover or an opener: « Carnet de route » for the carnet de route,
-    « Carnet de bord · carnet N » for a numbered document, « Carnet de bord » otherwise.
+    Eyebrow of a cover or an opener: « Carnet de route » for the carnet de route, « Avant le
+    bilan · carnet 0 » for the carnet offered before it, « Carnet de bord · carnet N » for a
+    numbered document, « Carnet de bord » otherwise.
     """
     carnet = document_style(c).carnet
     if carnet == PDFStyle.CARNET_ROUTE:
         return "Carnet de route"
+    if carnet == PDFStyle.CARNET_OFFERED:
+        return f"Avant le bilan · carnet {carnet}"
     if number in (None, "") and carnet is not None:
         number = carnet
     return f"Carnet de bord · carnet {number}" if number not in (None, "") else "Carnet de bord"
@@ -69,8 +74,9 @@ class DocumentBuilder:
     Orchestrates the creation and setup of a PDF workbook.
     Handles font registration, file permission checks, and the fluid chaining of pages.
 
-    carnet: a carnet of the bilan, 1 to 7 or "route" (PDFStyle.CARNET_ROUTE), which sets its
-    pastel and the folio « carnet N/7 » or « carnet de route ». Otherwise pastel is a
+    carnet: a carnet of the bilan, 1 to 7 or "route" (PDFStyle.CARNET_ROUTE), or the carnet 0
+    offered before it, which sets its pastel and the folio « carnet N/7 », « carnet de route »
+    or « carnet 0 ». Otherwise pastel is a
     PDFStyle.PASTELS key (lilac by default) and folio what the page footer shows between
     the brand and the page number (a short title).
     """

@@ -12,6 +12,7 @@ from workbook_generator.primitives import draw_folio
 
 # (script module, generator function) of the CLI documents built from workbooks/
 DOCUMENTS = [
+    ("main_generate_carnet_0", "generate_workbook_carnet_0"),
     ("main_generate_carnet_1", "generate_workbook_carnet_1"),
     ("main_generate_carnet_2", "generate_workbook_carnet_2"),
     ("main_generate_carnet_3", "generate_workbook_carnet_3"),
@@ -77,6 +78,7 @@ def test_cover_takes_the_document_pastel():
     (3, 3, "3", "CARNET3SUR7"),
     (3, "03", "3", "CARNET3SUR7"),  # an LLM spec may pad it
     ("route", "", "route", "APRÈSLES7CARNETS"),
+    (0, 0, "0", "AVANTLECARNET1"),
     (None, "Module 3", None, None),  # too long for a giant number: a larger title instead
     (None, None, None, None),
 ])
@@ -93,6 +95,7 @@ def test_cover_sets_the_number_giant(carnet, number, hero, row):
 @pytest.mark.parametrize("carnet, eyebrow, folio", [
     (3, "CARNETDEBORD", "CARNET3/7"),
     ("route", "CARNETDEROUTE", "CARNETDEROUTE·P.2"),
+    (0, "CARNETDEBORD", "CARNET0·P.2"),
 ])
 def test_carnet_names_its_cover_and_folio(carnet, eyebrow, folio):
     doc = _cover(carnet, None if carnet == "route" else carnet)
@@ -100,6 +103,21 @@ def test_carnet_names_its_cover_and_folio(carnet, eyebrow, folio):
     # Tracked capitals come out letter by letter: compare without spaces
     assert eyebrow in "".join(doc[0].get_text().split()).upper()
     assert folio in "".join(doc[1].get_text().split()).upper()
+
+
+def test_carnet_0_comes_before_any_session():
+    # Offered before the bilan: its answers stay in the file, nothing is sent back nor validated
+    buffer = io.BytesIO()
+    importlib.import_module("main_generate_carnet_0").generate_workbook_carnet_0(buffer)
+    doc = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")
+    text = " ".join(" ".join(page.get_text() for page in doc).split())
+    flat = "".join(text.split()).upper()
+
+    assert "Vos réponses restent dans ce fichier, sur votre ordinateur" in text
+    assert "AVANTLEPREMIERÉCHANGE" in flat and "AVANTLAPROCHAINESÉANCE" not in flat
+    assert "VALIDÉENSÉANCE" not in flat and "renvoyez" not in text.lower()
+    assert _rgb(PDFStyle.PASTELS["jasmine"]) in {
+        tuple(round(v * 255) for v in d["fill"]) for d in doc[0].get_drawings() if d.get("fill")}
 
 
 def test_pdf_declares_its_language():

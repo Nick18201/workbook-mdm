@@ -1453,7 +1453,8 @@ MA PROCHAINE ACTION :`;
       const spec = currentWorkbookSpec;
       document.getElementById('hd_title').innerHTML = markedTitle(spec.chapter_title || spec.title) || 'Sans titre';
       const bits = [];
-      if (Number.isInteger(spec.carnet)) bits.push(`Carnet ${spec.carnet}/7`);
+      if (spec.carnet === 0) bits.push('Carnet 0');
+      else if (Number.isInteger(spec.carnet)) bits.push(`Carnet ${spec.carnet}/7`);
       else if (spec.carnet === 'route') bits.push('Carnet de route');
       else if (spec.folio) bits.push(spec.folio);
       if (spec.beneficiary_name) bits.push(`pour ${spec.beneficiary_name}`);
@@ -1815,7 +1816,7 @@ MA PROCHAINE ACTION :`;
             <p class="b-p">${ed(P(xk), livrableText, { ph: 'Ce que le carnet produit' })}</p>
           </div>` : ''}
         ${Array.isArray(lines) && lines.length ? `<div><p class="b-title">Mes engagements</p><ul class="checks">${lines.map((l, j) => `<li>${itemEd(P(lk, j), l)}</li>`).join('')}</ul></div>` : ''}
-        <div><p class="b-title">Avant la prochaine séance</p><div class="fields">${zoneRows.join('')}</div></div>`;
+        <div><p class="b-title">${currentWorkbookSpec.carnet === 0 ? 'Avant le premier échange' : 'Avant la prochaine séance'}</p><div class="fields">${zoneRows.join('')}</div></div>`;
     }
 
     function closingHtml(page, i) {
