@@ -1,0 +1,1011 @@
+{
+  "chapter_title": "Module évolution interne",
+  "subtitle": "Bilan de compétences",
+  "carnet": "route",
+  "pdf_title": "Marge de Manœuvre · Carnet de route : module évolution interne",
+  "parts": [
+    "Préparer votre demande",
+    "Porter votre demande"
+  ],
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Évoluer *de l'intérieur.*",
+        "number": "",
+        "eyebrow": "Carnet de route · module évolution interne",
+        "tagline": "Bilan de compétences",
+        "promise": "Une demande préparée, des preuves, un plan d'échanges."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Préparer *votre demande.*",
+      "params": {
+        "num": "",
+        "intro_text": "Ce module s'ajoute à votre carnet de route, entre les séances 9 et 10, quand votre piste A se joue dans votre entreprise : un autre poste, d'autres missions, une autre organisation de votre travail. Il prépare votre demande : ce qu'elle apporte, vos preuves, vos conditions, le bon moment, les objections.<br/><br/><b>Votre argumentaire peut se montrer. Vos seuils, votre point de repli et vos interlocuteurs restent à vous.</b>",
+        "points": [
+          "Exercice 1 · Ce qui bloque, ce que vous demandez · 15 min",
+          "Exercice 2 · Ce que l'entreprise y gagne · 10 min",
+          "Exercice 3 · Vos preuves · 15 min",
+          "Exercice 4 · Vos conditions · 15 min",
+          "Exercice 5 · Vos interlocuteurs, le bon moment · 10 min",
+          "Exercice 6 · Votre plan d'échanges · 10 min",
+          "Exercice 7 · Les objections · 10 min",
+          "Exercice 8 · Si la réponse est non, votre décision · 15 min",
+          "Fin du module · 5 min"
+        ],
+        "duration": "1 h 45",
+        "split": "En trois fois : votre demande et ce qu'elle apporte (25 min), vos preuves et vos conditions (30 min), puis vos interlocuteurs, vos échanges et la suite (50 min). Vos échanges informels au travail se font hors temps d'écriture."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Ce que vous *demandez.*",
+      "part_title": "Exercice 1 · Ce qui bloque, ce que vous demandez · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une demande solide part de ce qui vous empêche de bien travailler aujourd'hui. Reportez ce que vous en savez déjà, puis partez d'une situation récente."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma piste A",
+              "route.pistes",
+              "evol_rappel_piste"
+            ],
+            [
+              "En séance 9",
+              "route.module",
+              "evol_rappel_module",
+              "sentence"
+            ],
+            [
+              "Pour bien travailler, j'ai besoin de…",
+              "c2.travail_empeche",
+              "evol_rappel_besoin",
+              "sentence"
+            ],
+            [
+              "Ma limite au travail",
+              "c5.limites",
+              "evol_rappel_limite",
+              "sentence"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Une situation récente où mon travail a été empêché",
+                "evol_bloque_situation",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce qui dépend de moi",
+                "evol_bloque_moi",
+                "sentence"
+              ],
+              [
+                "Ce qui dépend de l'organisation",
+                "evol_bloque_organisation",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Aujourd'hui",
+          "question_labels": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Gestionnaire de paie",
+          "surface": "Je voudrais évoluer.",
+          "exploitable": "Je demande la paie des deux filiales, où les erreurs reviennent chaque mois. Je garde mes clôtures. Je propose de transmettre l'accueil des intérimaires à la nouvelle recrue, que je forme d'ici l'été."
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ma demande",
+          "items": [
+            [
+              "Ce que je demande",
+              "evol_demande_type"
+            ]
+          ],
+          "values": [
+            "Un poste",
+            "Des missions",
+            "Mon rythme",
+            "Un mélange"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "L'intitulé du poste, ou le périmètre de missions visé",
+                "evol_demande_intitule",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce qui change par rapport à aujourd'hui",
+                "evol_demande_change",
+                "sentence"
+              ],
+              [
+                "Ce que je garde",
+                "evol_demande_garde",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que je propose de transmettre, ou d'arrêter",
+                "evol_demande_transmettre",
+                "sentence",
+                2
+              ],
+              [
+                "Pour quand",
+                "evol_demande_quand",
+                "word",
+                1
+              ]
+            ]
+          ],
+          "title": "Ma demande, précisément",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce que l'entreprise *y gagne.*",
+      "part_title": "Exercice 2 · Ce que l'entreprise y gagne · 10 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une demande se reçoit mieux quand elle règle un problème de l'entreprise. Dites lequel, pour qui, et ce que coûte de ne rien changer.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "contrast_example",
+          "title": "Responsable qualité",
+          "surface": "Ce serait mieux pour tout le monde.",
+          "exploitable": "Les réclamations sur les retards arrivent chez trois personnes, et certaines restent sans réponse. Si je les centralise, la clientèle a une réponse sous deux jours, et la direction le tableau qu'elle demande depuis janvier."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le besoin, ou le problème, que ma demande règle",
+                "evol_gain_besoin",
+                "sentence"
+              ],
+              [
+                "Pour qui : une équipe, la clientèle, la direction",
+                "evol_gain_qui",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que coûte de ne rien changer : du temps, de l'argent, des départs",
+                "evol_gain_cout",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que je sais des priorités de l'entreprise",
+                "evol_gain_priorites",
+                "sentence"
+              ],
+              [
+                "D'où je le sais",
+                "evol_gain_source",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Côté entreprise",
+          "hint": "Ses priorités se lisent dans les objectifs de votre équipe, un projet annoncé, un recrutement, une réorganisation.",
+          "question_labels": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos preuves, *face au besoin.*",
+      "part_title": "Exercice 3 · Vos preuves · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Pour chaque besoin de l'entreprise, une preuve que vous savez y répondre, et ce qu'elle a donné. Vos preuves sont prêtes : vos compétences prouvées et vos récits (carnet de route, exercices 2 et 3)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Le besoin (exercice 2)",
+            "Ma preuve : une compétence, un récit",
+            "Ce qu'elle a donné : un résultat, une trace"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "evol_preuve_1_besoin",
+                "placeholder": "Besoin 1",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_preuve_1",
+                "placeholder": "Besoin 1 : ma preuve"
+              },
+              {
+                "field_id": "evol_preuve_1_resultat",
+                "placeholder": "Besoin 1 : ce qu'elle a donné"
+              }
+            ],
+            [
+              {
+                "field_id": "evol_preuve_2_besoin",
+                "placeholder": "Besoin 2",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_preuve_2",
+                "placeholder": "Besoin 2 : ma preuve"
+              },
+              {
+                "field_id": "evol_preuve_2_resultat",
+                "placeholder": "Besoin 2 : ce qu'elle a donné"
+              }
+            ],
+            [
+              {
+                "field_id": "evol_preuve_3_besoin",
+                "placeholder": "Besoin 3",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_preuve_3",
+                "placeholder": "Besoin 3 : ma preuve"
+              },
+              {
+                "field_id": "evol_preuve_3_resultat",
+                "placeholder": "Besoin 3 : ce qu'elle a donné"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.5,
+            6.3,
+            6.3
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Cuisiniste",
+          "surface": "Je suis quelqu'un de fiable.",
+          "exploitable": "Besoin : former les nouvelles recrues du magasin. Preuve : j'ai formé les deux personnes arrivées l'an dernier. Résultat : leurs premiers projets signés au bout d'un mois, sans erreur de cotes."
+        },
+        {
+          "type": "question",
+          "question": "La preuve qui me manque encore, et comment l'obtenir avant le rendez-vous",
+          "field_id": "evol_preuve_manque",
+          "answer": "sentence"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Vos conditions, *vos limites.*",
+      "part_title": "Exercice 4 · Vos conditions · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Avant de demander, fixez ce que vous visez, votre point de repli et ce que vous ne négociez pas. Si vous montrez ce module, masquez cette page."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Minimum sécurisant",
+              "c4.seuils",
+              "evol_rappel_securisant"
+            ],
+            [
+              "Revenu cible",
+              "c4.seuils",
+              "evol_rappel_cible"
+            ],
+            [
+              "Mes trois valeurs",
+              "c5.grille",
+              "evol_rappel_valeurs"
+            ],
+            [
+              "Leurs conditions",
+              "c5.grille",
+              "evol_rappel_conditions",
+              "sentence"
+            ]
+          ],
+          "title": "À garder pour vous",
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que je demande",
+                "evol_remu_demande",
+                0.85
+              ],
+              [
+                "Mon point de repli",
+                "evol_remu_repli",
+                0.85
+              ]
+            ],
+            [
+              [
+                "Le salaire observé pour ce poste",
+                "evol_remu_repere",
+                0.85
+              ],
+              [
+                "Sa source : la grille de ma convention, des offres, une enquête",
+                "evol_remu_source",
+                0.85
+              ]
+            ]
+          ],
+          "title": "Ma rémunération",
+          "hint": "En euros bruts, par an ou par mois, comme sur votre fiche de paie.",
+          "question_labels": true
+        },
+        {
+          "type": "link_card",
+          "title": "Où vérifier",
+          "fixed": true,
+          "links": [
+            [
+              "Code du travail numérique",
+              "https://code.travail.gouv.fr/outils/convention-collective",
+              "votre convention collective et ses grilles de salaires (code.travail.gouv.fr)."
+            ]
+          ]
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mes horaires, ma charge, le télétravail : ce que je demande",
+                "evol_orga_demande",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce que je ne négocie pas",
+                "evol_orga_non_negociable",
+                "sentence"
+              ],
+              [
+                "Ce que je peux céder",
+                "evol_orga_cede",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Mon organisation",
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Prothésiste dentaire",
+          "surface": "Moins de pression.",
+          "exploitable": "Je demande : les livraisons urgentes groupées le jeudi, une demi-journée par semaine au calme pour les pièces complexes. Je ne négocie pas : partir à 18 h. Je peux céder : les retouches du lundi matin."
+        },
+        {
+          "type": "question",
+          "question": "Si j'obtiens le poste, mais pas mes conditions, je…",
+          "field_id": "evol_conditions_arbitrage",
+          "answer": "sentence"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Qui convaincre, *et quand.*",
+      "part_title": "Exercice 5 · Vos interlocuteurs, le bon moment · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Une demande passe par plusieurs personnes : celle qui décide, celles qui influencent, soutiennent ou freinent. Pour chacune, ce qui compte pour elle.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Son prénom, ou sa fonction",
+            "Ce qui compte pour elle"
+          ],
+          "rows": [
+            [
+              "Qui décide",
+              {
+                "field_id": "evol_acteur_decide",
+                "placeholder": "Qui décide : son prénom ou sa fonction",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_acteur_decide_enjeu",
+                "placeholder": "Qui décide : ce qui compte pour elle"
+              }
+            ],
+            [
+              "Qui influence",
+              {
+                "field_id": "evol_acteur_influence",
+                "placeholder": "Qui influence : son prénom ou sa fonction",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_acteur_influence_enjeu",
+                "placeholder": "Qui influence : ce qui compte pour elle"
+              }
+            ],
+            [
+              "Qui me soutient",
+              {
+                "field_id": "evol_acteur_soutient",
+                "placeholder": "Qui me soutient : son prénom ou sa fonction",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_acteur_soutient_enjeu",
+                "placeholder": "Qui me soutient : ce qui compte pour elle"
+              }
+            ],
+            [
+              "Qui peut freiner",
+              {
+                "field_id": "evol_acteur_freine",
+                "placeholder": "Qui peut freiner : son prénom ou sa fonction",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_acteur_freine_enjeu",
+                "placeholder": "Qui peut freiner : ce qui compte pour elle"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.3,
+            4.3,
+            9.5
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Standardiste",
+          "surface": "Ma hiérarchie décidera.",
+          "exploitable": "Décide : la direction de l'hôpital, qui veut moins d'appels perdus. Influence : la responsable de l'accueil, qui doit couvrir les soirées. Soutient : l'équipe de nuit, que je soulagerais."
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "L'entretien de parcours professionnel",
+              "subtitle": "fait pour en parler",
+              "text": "Il porte sur vos compétences, vos souhaits d'évolution et vos besoins de formation : venez-y avec votre demande écrite."
+            },
+            {
+              "title": "L'entretien annuel",
+              "subtitle": "si votre entreprise en tient un",
+              "text": "Le moment des objectifs : proposez les vôtres, ceux de votre nouveau périmètre."
+            },
+            {
+              "title": "Un poste ouvert",
+              "subtitle": "une offre interne, un départ",
+              "text": "Votre demande répond à un besoin visible : candidatez vite, preuves à l'appui."
+            },
+            {
+              "title": "Un besoin nouveau",
+              "subtitle": "un projet, une réorganisation",
+              "text": "Proposez-vous avant qu'on cherche ailleurs, avec ce que vous y apporteriez."
+            }
+          ],
+          "columns": 2,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le moment que je choisis",
+                "evol_moment",
+                "word",
+                1
+              ],
+              [
+                "Pourquoi celui-là",
+                "evol_moment_pourquoi",
+                "sentence",
+                2
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "callout",
+          "title": "Si votre évolution demande une formation",
+          "text": "La période de reconversion peut la financer, avec un accord écrit entre votre employeur et vous : votre contrat continue. Le plan de formation de l'entreprise et votre compte personnel de formation aussi. Les conditions se vérifient auprès des ressources humaines.",
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre plan *d'échanges.*",
+      "part_title": "Exercice 6 · Votre plan d'échanges · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un rendez-vous se prépare : les échanges informels avant lui, la demande de rendez-vous, puis ce que vous direz en trois phrases."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Avec qui",
+            "Pour quoi faire",
+            "Quand"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "evol_echange_1",
+                "placeholder": "Échange 1 : avec qui",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_echange_1_but",
+                "placeholder": "Échange 1 : pour quoi faire"
+              },
+              {
+                "field_id": "evol_echange_1_quand",
+                "placeholder": "Échange 1 : quand",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "evol_echange_2",
+                "placeholder": "Échange 2 : avec qui",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_echange_2_but",
+                "placeholder": "Échange 2 : pour quoi faire"
+              },
+              {
+                "field_id": "evol_echange_2_quand",
+                "placeholder": "Échange 2 : quand",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "evol_echange_3",
+                "placeholder": "Échange 3 : avec qui",
+                "answer": "word"
+              },
+              {
+                "field_id": "evol_echange_3_but",
+                "placeholder": "Échange 3 : pour quoi faire"
+              },
+              {
+                "field_id": "evol_echange_3_quand",
+                "placeholder": "Échange 3 : quand",
+                "answer": "word"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.8,
+            9.5,
+            3.8
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "À qui",
+                "evol_rdv_qui",
+                "word",
+                1
+              ],
+              [
+                "L'objet de mon message",
+                "evol_rdv_objet",
+                "sentence",
+                2
+              ]
+            ]
+          ],
+          "title": "Ma demande de rendez-vous",
+          "hint": "Par exemple : « Je souhaite vous parler de l'évolution de mon poste. Pouvez-vous m'accorder trente minutes d'ici la fin du mois ? »",
+          "question_labels": true
+        },
+        {
+          "type": "callout",
+          "title": "Votre bilan",
+          "text": "Votre bilan vous appartient : ses résultats ne sont communiqués à personne sans votre accord. Vous n'avez pas à en parler pour faire votre demande. Si vous le faites, dites ce que vous en retirez, pas ce qu'il contient.",
+          "fixed": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le besoin",
+                "evol_argument_besoin",
+                "sentence"
+              ],
+              [
+                "Ma proposition",
+                "evol_argument_proposition",
+                "sentence"
+              ],
+              [
+                "Ce que je demande",
+                "evol_argument_demande",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Mon argumentaire en trois phrases",
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Orthoptiste",
+          "surface": "J'aimerais évoluer, si c'est possible.",
+          "exploitable": "Le centre attend trois semaines pour un bilan de la vue des enfants. Je propose d'ouvrir deux matinées dédiées, que je coordonne. Je demande cette coordination, et la prime qui va avec."
+        },
+        {
+          "type": "question",
+          "question": "Si l'on me demande « pourquoi maintenant ? », je réponds…",
+          "field_id": "evol_pourquoi_maintenant",
+          "answer": "sentence"
+        },
+        {
+          "type": "annotation",
+          "text": "Dites-le à voix haute avant le rendez-vous : trois phrases, pas plus."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Les objections, *préparées.*",
+      "part_title": "Exercice 7 · Les objections · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une objection dit une crainte : répondez à la crainte, avec une preuve, plutôt qu'à la phrase. Les plus fréquentes :",
+            "• « Ce n'est pas le moment. »",
+            "• « Il n'y a pas de budget. »",
+            "• « On a besoin de vous là où vous êtes. »",
+            "• « Ce poste n'existe pas. »"
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "contrast_example",
+          "title": "Podologue",
+          "surface": "« Ce n'est pas le moment. » Je n'insiste pas.",
+          "exploitable": "La crainte : désorganiser le cabinet en pleine saison. Ma réponse : je commence en septembre, et je forme d'ici là la personne qui reprend mes consultations du samedi, comme l'été dernier."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "L'objection que j'attends",
+            "La crainte qu'elle exprime",
+            "Ma réponse, et ma preuve"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "evol_objection_1",
+                "placeholder": "Objection 1"
+              },
+              {
+                "field_id": "evol_objection_1_crainte",
+                "placeholder": "Objection 1 : la crainte qu'elle exprime"
+              },
+              {
+                "field_id": "evol_objection_1_reponse",
+                "placeholder": "Objection 1 : ma réponse, et ma preuve"
+              }
+            ],
+            [
+              {
+                "field_id": "evol_objection_2",
+                "placeholder": "Objection 2"
+              },
+              {
+                "field_id": "evol_objection_2_crainte",
+                "placeholder": "Objection 2 : la crainte qu'elle exprime"
+              },
+              {
+                "field_id": "evol_objection_2_reponse",
+                "placeholder": "Objection 2 : ma réponse, et ma preuve"
+              }
+            ],
+            [
+              {
+                "field_id": "evol_objection_3",
+                "placeholder": "Objection 3"
+              },
+              {
+                "field_id": "evol_objection_3_crainte",
+                "placeholder": "Objection 3 : la crainte qu'elle exprime"
+              },
+              {
+                "field_id": "evol_objection_3_reponse",
+                "placeholder": "Objection 3 : ma réponse, et ma preuve"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            5.0,
+            5.0,
+            7.1
+          ],
+          "answer": "sentence"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Si la réponse *est non.*",
+      "part_title": "Exercice 8 · Si la réponse est non · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un non est une information : il dit ce qui manque, ou pas encore. Préparez la suite avant le rendez-vous, pour répondre sans improviser."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma piste B",
+              "route.pistes",
+              "evol_rappel_piste_b"
+            ]
+          ]
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Quand je reposerai la question",
+                "evol_non_quand",
+                "word",
+                1
+              ],
+              [
+                "À quelle condition",
+                "evol_non_condition",
+                "sentence",
+                2
+              ]
+            ],
+            [
+              [
+                "Le signal qui me fera passer à ma piste B",
+                "evol_non_signal",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "callout",
+          "title": "Si votre demande est mal reçue",
+          "text": "Des reproches, une mise à l'écart après votre demande : parlez-en aux ressources humaines, aux représentants du personnel ou au service de prévention et de santé au travail. Et parlons-en en séance.",
+          "fixed": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Géographe",
+          "surface": "S'ils refusent, je partirai.",
+          "exploitable": "Si c'est non en mars, je redemande en septembre, après le vote du budget, avec le bilan de l'atlas que je mène. Si c'est encore non, ma piste B : le poste ouvert à l'agglomération."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce que je crains le plus dans cette démarche",
+                "evol_crainte",
+                "sentence"
+              ],
+              [
+                "La réaction que je redoute",
+                "evol_reaction",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Pour mener cette démarche, je m'appuie sur…",
+          "field_id": "evol_appui",
+          "answer": "sentence",
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre *décision.*",
+      "part_title": "Exercice 8 · Votre décision · 5 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Votre feuille de route, piste A, est écrite au carnet de route (exercice 5) : reportez-en les objectifs, puis dites ce que ce module y change. Votre piste B reste prête."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes objectifs à 30, 60 et 90 jours",
+              "route.feuilles",
+              "evol_rappel_feuille",
+              "sentence"
+            ]
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Ce que le module change à ma feuille de route",
+          "field_id": "evol_feuille_change",
+          "subtitle": "Souvent, la demande de rendez-vous trouve sa place dans le palier de 30 jours.",
+          "answer": "sentence"
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ma décision aujourd'hui",
+          "items": [
+            [
+              "Ma décision",
+              "evol_decision"
+            ]
+          ],
+          "values": [
+            "Je demande",
+            "Je prépare",
+            "Je modifie",
+            "En pause"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Parce que…",
+          "field_id": "evol_decision_raison",
+          "answer": "sentence"
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre module évolution interne.",
+      "part_title": "Fin du module · 5 min",
+      "part": 2,
+      "params": {
+        "lines": [
+          "Je demande mon rendez-vous à la date que je me suis fixée.",
+          "J'appuie chaque demande sur une preuve.",
+          "Je protège mes horaires et ma charge pendant la démarche."
+        ],
+        "field_prefix": "evol_livrable",
+        "livrable_title": "Votre argumentaire et votre plan de négociation",
+        "livrable_text": "Ce que votre demande apporte (exercice 2), vos preuves (exercice 3), votre plan d'échanges (exercice 6) et vos réponses aux objections (exercice 7), travaillés en séance 10. Après le bilan, le livret de compétences approfondit vos preuves.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "À aborder en séance : la réaction que je redoute, ce que je n'ose pas demander",
+          "Les questions que j'ai passées, à reprendre ensemble"
+        ]
+      }
+    },
+    {
+      "template": "closing",
+      "fixed": true,
+      "params": {
+        "messages": [
+          "Votre demande est prête.",
+          "Prochaine étape : la séance 10. Renvoyez ce module complété d'ici là.",
+          "Après le bilan, le livret de compétences prend le relais pour vos preuves."
+        ]
+      }
+    }
+  ],
+  "title": "Module évolution interne"
+}

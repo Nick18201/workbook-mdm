@@ -1,0 +1,1216 @@
+{
+  "chapter_title": "Module reconversion",
+  "subtitle": "Bilan de compétences",
+  "carnet": "route",
+  "pdf_title": "Marge de Manœuvre · Carnet de route : module reconversion",
+  "parts": [
+    "Choisir et financer votre formation",
+    "Tenir, planifier, candidater"
+  ],
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Changer *de métier.*",
+        "number": "",
+        "eyebrow": "Carnet de route · module reconversion",
+        "tagline": "Bilan de compétences",
+        "promise": "Une formation choisie, financée, tenable."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "De votre piste *à votre métier.*",
+      "params": {
+        "num": "",
+        "intro_text": "Ce module s'ajoute à votre carnet de route, entre les séances 9 et 10, quand votre piste A demande de changer de métier. Il en fait un plan : la formation la plus courte qui vous ouvre le métier, son financement, votre calendrier, puis votre candidature.<br/><br/><b>Votre plan et votre candidature peuvent se montrer, à un financeur ou en entretien. Vos seuils et votre budget restent à vous.</b>",
+        "points": [
+          "Exercice 1 · Ce que demande le métier · 15 min",
+          "Exercice 2 · Le chemin le plus court · 5 min",
+          "Exercice 3 · Vos formations repérées · 15 min",
+          "Exercice 4 · Votre financement · 15 min",
+          "Exercice 5 · Tenir pendant la formation · 15 min",
+          "Exercice 6 · Votre calendrier · 10 min",
+          "Exercice 7 · Votre candidature · 15 min",
+          "Exercice 8 · Garde-fous et décision · 10 min",
+          "Fin du module · 5 min"
+        ],
+        "duration": "1 h 45",
+        "split": "En trois fois : le métier et vos formations (35 min), le financement et votre budget (30 min), puis le calendrier, la candidature et la décision (40 min). Vos appels aux organismes et aux financeurs se font hors temps d'écriture."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Ce que demande *le métier.*",
+      "part_title": "Exercice 1 · Ce que demande le métier · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Reportez votre piste A, ce que la séance 9 a posé et ce que le terrain vous a appris. Puis écrivez ce que le métier exige pour y entrer, et d'où vous le savez."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma piste A",
+              "route.pistes",
+              "reconv_rappel_piste"
+            ],
+            [
+              "En séance 9",
+              "route.module",
+              "reconv_rappel_module",
+              "sentence"
+            ],
+            [
+              "Ce qui me manque",
+              "c7.fiches",
+              "reconv_rappel_manque",
+              "sentence"
+            ],
+            [
+              "Pour y aller, il faudrait…",
+              "c7.matrice",
+              "reconv_rappel_chemin",
+              "sentence"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "rating_grid",
+          "title": "Pour entrer dans ce métier",
+          "items": [
+            [
+              "Un diplôme ou un titre est",
+              "reconv_diplome"
+            ]
+          ],
+          "values": [
+            "Obligatoire",
+            "Attendu",
+            "Inutile",
+            "À vérifier"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le diplôme, le titre ou la certification",
+                "reconv_diplome_nom",
+                "sentence"
+              ],
+              [
+                "Ma source : une fiche métier, des offres, une personne rencontrée",
+                "reconv_diplome_source",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "link_card",
+          "title": "Où vérifier",
+          "fixed": true,
+          "links": [
+            [
+              "MétierScope (France Travail)",
+              "https://candidat.francetravail.fr/metierscope/",
+              "accès et diplômes (candidat.francetravail.fr/metierscope)."
+            ],
+            [
+              "France compétences",
+              "https://www.francecompetences.fr/recherche-resultats/",
+              "les certifications enregistrées (francecompetences.fr)."
+            ]
+          ]
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "L'écart à combler : ce que vous savez déjà faire pour ce métier, preuve à l'appui, et ce qu'il vous reste à acquérir. C'est lui qui dit la formation qu'il vous faut."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "contrast_example",
+          "title": "Audioprothésiste",
+          "surface": "Il me manque presque tout.",
+          "exploitable": "Je sais déjà : conseiller une clientèle âgée, au comptoir de la pharmacie depuis six ans ; expliquer un appareil, ma fiche de démonstration sert à toute l'équipe. Il me manque : l'acoustique, l'anatomie de l'oreille, le diplôme d'État."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Ce que je sais déjà faire, et sa preuve",
+            "Ce qu'il me reste à acquérir"
+          ],
+          "rows": [
+            [
+              "Compétence 1",
+              {
+                "field_id": "reconv_acquis_1",
+                "placeholder": "Compétence 1 : ce que je sais déjà faire, et sa preuve"
+              },
+              {
+                "field_id": "reconv_manque_1",
+                "placeholder": "Compétence 1 : ce qu'il me reste à acquérir"
+              }
+            ],
+            [
+              "Compétence 2",
+              {
+                "field_id": "reconv_acquis_2",
+                "placeholder": "Compétence 2 : ce que je sais déjà faire, et sa preuve"
+              },
+              {
+                "field_id": "reconv_manque_2",
+                "placeholder": "Compétence 2 : ce qu'il me reste à acquérir"
+              }
+            ],
+            [
+              "Compétence 3",
+              {
+                "field_id": "reconv_acquis_3",
+                "placeholder": "Compétence 3 : ce que je sais déjà faire, et sa preuve"
+              },
+              {
+                "field_id": "reconv_manque_3",
+                "placeholder": "Compétence 3 : ce qu'il me reste à acquérir"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            2.7,
+            7.2,
+            7.2
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "question",
+          "question": "La compétence qui me manque le plus, et comment je l'acquiers",
+          "field_id": "reconv_manque_principal",
+          "answer": "sentence"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Le chemin *le plus court.*",
+      "part_title": "Exercice 2 · Le chemin le plus court · 5 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Le principe : la formation la plus courte qui vous ouvre le métier. Avant une formation longue, regardez les chemins plus courts : votre écart (exercice 1) dit lequel vous est ouvert."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "Sans formation",
+              "subtitle": "le chemin direct",
+              "text": "Une candidature directe, un poste passerelle, une immersion qui débouche sur une embauche : quand vos compétences prouvées suffisent."
+            },
+            {
+              "title": "Une formation courte",
+              "subtitle": "la compétence qui manque",
+              "text": "Une certification du Répertoire spécifique, un bloc de compétences : pour l'écart, pas pour tout le métier."
+            },
+            {
+              "title": "Une certification",
+              "subtitle": "titre ou diplôme",
+              "text": "Inscrite au répertoire national (RNCP), souvent en alternance : quand le métier exige le titre, ou qu'il vous manque plusieurs compétences."
+            },
+            {
+              "title": "La validation des acquis",
+              "subtitle": "de l'expérience (VAE)",
+              "text": "Votre expérience, même hors emploi, reconnue par tout ou partie d'un titre : quand vous faites déjà une partie du métier."
+            }
+          ],
+          "columns": 2
+        },
+        {
+          "type": "rating_grid",
+          "title": "Votre chemin",
+          "items": [
+            [
+              "Mon chemin le plus court",
+              "reconv_chemin"
+            ]
+          ],
+          "values": [
+            "Direct",
+            "Court",
+            "Certifiant",
+            "VAE"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Parce que…",
+          "field_id": "reconv_chemin_raison",
+          "answer": "sentence"
+        },
+        {
+          "type": "link_card",
+          "title": "Pour la VAE",
+          "fixed": true,
+          "links": [
+            [
+              "France VAE",
+              "https://vae.gouv.fr",
+              "les certifications ouvertes à la VAE, et un accompagnement pas à pas (vae.gouv.fr)."
+            ]
+          ]
+        }
+      ],
+      "fixed": true
+    },
+    {
+      "template": "composite",
+      "title": "Comparer, *puis choisir.*",
+      "part_title": "Exercice 3 · Vos formations repérées · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "text",
+          "text": "Comparez deux ou trois formations qui mènent au métier, sur ce qui compte : la certification, le rythme, le coût, ce qu'elles donnent. Vos appels aux organismes se font hors temps d'écriture.",
+          "spacing_after_cm": 0.4
+        },
+        {
+          "type": "table",
+          "headers": [
+            "",
+            "Formation 1",
+            "Formation 2",
+            "Formation 3"
+          ],
+          "rows": [
+            [
+              "L'organisme et l'intitulé",
+              {
+                "field_id": "reconv_formation_1_intitule",
+                "placeholder": "Formation 1 : l'organisme et l'intitulé"
+              },
+              {
+                "field_id": "reconv_formation_2_intitule",
+                "placeholder": "Formation 2 : l'organisme et l'intitulé"
+              },
+              {
+                "field_id": "reconv_formation_3_intitule",
+                "placeholder": "Formation 3 : l'organisme et l'intitulé"
+              }
+            ],
+            [
+              "La certification, et son enregistrement vérifié",
+              {
+                "field_id": "reconv_formation_1_certification",
+                "placeholder": "Formation 1 : la certification, vérifiée"
+              },
+              {
+                "field_id": "reconv_formation_2_certification",
+                "placeholder": "Formation 2 : la certification, vérifiée"
+              },
+              {
+                "field_id": "reconv_formation_3_certification",
+                "placeholder": "Formation 3 : la certification, vérifiée"
+              }
+            ],
+            [
+              "La durée, le rythme, à distance ou sur place",
+              {
+                "field_id": "reconv_formation_1_rythme",
+                "placeholder": "Formation 1 : la durée et le rythme"
+              },
+              {
+                "field_id": "reconv_formation_2_rythme",
+                "placeholder": "Formation 2 : la durée et le rythme"
+              },
+              {
+                "field_id": "reconv_formation_3_rythme",
+                "placeholder": "Formation 3 : la durée et le rythme"
+              }
+            ],
+            [
+              "Le coût, et les prochaines dates",
+              {
+                "field_id": "reconv_formation_1_cout",
+                "placeholder": "Formation 1 : le coût et les dates"
+              },
+              {
+                "field_id": "reconv_formation_2_cout",
+                "placeholder": "Formation 2 : le coût et les dates"
+              },
+              {
+                "field_id": "reconv_formation_3_cout",
+                "placeholder": "Formation 3 : le coût et les dates"
+              }
+            ],
+            [
+              "Les résultats publiés : réussite, emploi",
+              {
+                "field_id": "reconv_formation_1_resultats",
+                "placeholder": "Formation 1 : les résultats publiés"
+              },
+              {
+                "field_id": "reconv_formation_2_resultats",
+                "placeholder": "Formation 2 : les résultats publiés"
+              },
+              {
+                "field_id": "reconv_formation_3_resultats",
+                "placeholder": "Formation 3 : les résultats publiés"
+              }
+            ],
+            [
+              "Ce qu'en disent des personnes qui l'ont suivie",
+              {
+                "field_id": "reconv_formation_1_avis",
+                "placeholder": "Formation 1 : ce qu'en disent ses anciens"
+              },
+              {
+                "field_id": "reconv_formation_2_avis",
+                "placeholder": "Formation 2 : ce qu'en disent ses anciens"
+              },
+              {
+                "field_id": "reconv_formation_3_avis",
+                "placeholder": "Formation 3 : ce qu'en disent ses anciens"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.4,
+            4.23,
+            4.23,
+            4.24
+          ],
+          "field_height_cm": 1.6
+        },
+        {
+          "type": "contrast_example",
+          "title": "Barista",
+          "surface": "Une formation reconnue, pas trop chère.",
+          "exploitable": "Certification enregistrée au Répertoire spécifique, vérifiée sur France compétences ; trois semaines à temps plein ; session de mars ; deux personnes de la promotion précédente travaillent en salle depuis."
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes trois valeurs",
+              "c5.grille",
+              "reconv_rappel_valeurs"
+            ],
+            [
+              "Leurs conditions",
+              "c5.grille",
+              "reconv_rappel_conditions",
+              "sentence"
+            ]
+          ],
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La formation que je retiens",
+                "reconv_formation_choix",
+                "word"
+              ]
+            ],
+            [
+              [
+                "Pourquoi elle, face à mes valeurs et à mon écart",
+                "reconv_formation_pourquoi",
+                "sentence"
+              ],
+              [
+                "Ce qu'il me reste à vérifier, auprès de qui",
+                "reconv_formation_verifier",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "callout",
+          "title": "Démarchage",
+          "text": "Le démarchage pour le compte personnel de formation est interdit : un appel, un SMS ou un courriel qui vous propose une formation « financée par votre CPF » est à ignorer. Inscrivez-vous depuis Mon Compte Formation, et ne donnez jamais vos identifiants.",
+          "fixed": true
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Financer *votre formation.*",
+      "part_title": "Exercice 4 · Votre financement · 15 min",
+      "part": 1,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Selon votre situation, plusieurs dispositifs paient la formation, et parfois votre revenu pendant ce temps. Repérez ceux qui vous concernent. Leurs conditions et leurs montants changent : leur source fait foi."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "En poste",
+              "subtitle": "dans le privé",
+              "text": "Votre compte personnel de formation (CPF). Le projet de transition professionnelle : Transitions Pro finance une formation certifiante, votre contrat est suspendu, votre salaire peut être maintenu. La période de reconversion, avec l'accord écrit de votre employeur. Le plan de formation de l'entreprise."
+            },
+            {
+              "title": "En recherche d'emploi",
+              "subtitle": "avec France Travail",
+              "text": "Votre CPF. Les aides de France Travail à la formation, et votre allocation pendant une formation qu'il valide. Les formations financées par votre région."
+            },
+            {
+              "title": "À votre compte",
+              "subtitle": "travail indépendant, profession libérale",
+              "text": "Votre CPF. Le fonds d'assurance formation (FAF) de votre profession, auquel vous cotisez."
+            },
+            {
+              "title": "Dans la fonction publique",
+              "subtitle": "titulaire, ou sous contrat",
+              "text": "Votre CPF, le congé de formation professionnelle, le plan de formation de votre administration : son service des ressources humaines vous dit ce qui s'ouvre à vous."
+            }
+          ],
+          "columns": 2,
+          "fixed": true
+        },
+        {
+          "type": "callout",
+          "title": "Avant toute démission",
+          "text": "Démissionner d'un CDI pour vous former peut vous ouvrir l'allocation chômage, dans un ordre précis : d'abord un rendez-vous de conseil en évolution professionnelle, puis l'accord de Transitions Pro sur le sérieux de votre projet, et seulement après, votre lettre. Les conditions se vérifient sur demission-reconversion.gouv.fr.",
+          "fixed": true
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Vos enquêtes du carnet 7 nourrissent un dossier de financement : elles montrent que vous connaissez le métier, et qu'il recrute."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Le dispositif",
+            "Ce que je dois vérifier",
+            "Auprès de qui",
+            "Fait le"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "reconv_fin_1",
+                "placeholder": "Dispositif 1",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_fin_1_verifier",
+                "placeholder": "Dispositif 1 : ce que je dois vérifier"
+              },
+              {
+                "field_id": "reconv_fin_1_qui",
+                "placeholder": "Dispositif 1 : auprès de qui",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_fin_1_date",
+                "placeholder": "Dispositif 1 : fait le",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "reconv_fin_2",
+                "placeholder": "Dispositif 2",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_fin_2_verifier",
+                "placeholder": "Dispositif 2 : ce que je dois vérifier"
+              },
+              {
+                "field_id": "reconv_fin_2_qui",
+                "placeholder": "Dispositif 2 : auprès de qui",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_fin_2_date",
+                "placeholder": "Dispositif 2 : fait le",
+                "answer": "word"
+              }
+            ],
+            [
+              {
+                "field_id": "reconv_fin_3",
+                "placeholder": "Dispositif 3",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_fin_3_verifier",
+                "placeholder": "Dispositif 3 : ce que je dois vérifier"
+              },
+              {
+                "field_id": "reconv_fin_3_qui",
+                "placeholder": "Dispositif 3 : auprès de qui",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_fin_3_date",
+                "placeholder": "Dispositif 3 : fait le",
+                "answer": "word"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            3.6,
+            7.2,
+            3.9,
+            2.4
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Cartographe",
+          "surface": "Je vais utiliser mon CPF.",
+          "exploitable": "CPF : solde vérifié le 3 mai, il couvre une partie du coût. Projet de transition professionnelle : conseil en évolution professionnelle le 20 mai, dossier à Transitions Pro avant le 15 juin ; mon salaire pendant la formation en dépend."
+        },
+        {
+          "type": "link_card",
+          "title": "Où vous renseigner",
+          "fixed": true,
+          "links": [
+            [
+              "Mon Compte Formation",
+              "https://www.moncompteformation.gouv.fr",
+              "vos droits, votre inscription, toujours depuis ce site (moncompteformation.gouv.fr)."
+            ],
+            [
+              "Transitions Pro",
+              "https://www.transitionspro.fr",
+              "la transition professionnelle, la démission-reconversion (transitionspro.fr)."
+            ],
+            [
+              "Le conseil en évolution professionnelle",
+              "https://mon-cep.org",
+              "un conseil gratuit, avant tout dossier (mon-cep.org)."
+            ],
+            [
+              "France Travail",
+              "https://www.francetravail.fr/candidat/en-formation.html",
+              "financer une formation, votre revenu pendant (francetravail.fr)."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Tenir *pendant la formation.*",
+      "part_title": "Exercice 5 · Tenir pendant la formation · 15 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "protocol",
+          "text": "Cette page parle de votre revenu et de votre foyer pendant la formation : ce que vous pouvez tenir fixe le rythme de votre projet."
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Minimum vital",
+              "c4.seuils",
+              "reconv_rappel_vital"
+            ],
+            [
+              "Minimum sécurisant",
+              "c4.seuils",
+              "reconv_rappel_securisant"
+            ],
+            [
+              "Durée acceptable d'une baisse",
+              "c4.seuils",
+              "reconv_rappel_duree"
+            ]
+          ],
+          "title": "À garder pour vous",
+          "columns": 2
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mon revenu pendant la formation, par mois",
+                "reconv_revenu",
+                0.85,
+                1.4
+              ],
+              [
+                "D'où il vient",
+                "reconv_revenu_source",
+                0.85,
+                1
+              ],
+              [
+                "Sa durée, en mois",
+                "reconv_revenu_duree",
+                0.85,
+                1
+              ]
+            ]
+          ],
+          "title": "Pendant la formation",
+          "hint": "En euros nets : un salaire maintenu, une allocation, une rémunération d'alternance…",
+          "question_labels": true
+        },
+        {
+          "type": "rating_grid",
+          "title": "Face à mes seuils",
+          "items": [
+            [
+              "Mon minimum sécurisant atteint",
+              "reconv_tenir_minimum"
+            ],
+            [
+              "Dans ma durée acceptable",
+              "reconv_tenir_duree"
+            ]
+          ],
+          "values": [
+            "Oui",
+            "Juste",
+            "Non",
+            "À vérifier"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "question",
+          "question": "Si c'est trop juste, ce que j'ajuste",
+          "field_id": "reconv_ajuste",
+          "subtitle": "Le rythme, un temps partiel, la date d'entrée, l'épargne, une aide.",
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Ascensoriste",
+          "surface": "Je me débrouillerai.",
+          "exploitable": "En alternance, mon revenu passe sous mon minimum sécurisant pendant huit mois, dans ma durée acceptable. J'ajuste : j'entre en janvier plutôt qu'en septembre, le temps de mettre deux mois de loyer de côté."
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui m'inquiète le plus dans ce changement",
+                "reconv_inquiete",
+                "sentence"
+              ],
+              [
+                "Ce qu'en pense la personne qui partage ma vie",
+                "reconv_proche",
+                "sentence"
+              ]
+            ]
+          ],
+          "hint": "Si vous ne vivez pas en couple : un proche, une personne qui compte pour vous.",
+          "question_labels": true,
+          "fixed": true
+        },
+        {
+          "type": "anchor",
+          "field_id": "reconv_ancrage"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre calendrier, *à rebours.*",
+      "part_title": "Exercice 6 · Votre calendrier · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Partez de la date d'entrée en formation, et remontez : chaque étape a son délai. Un dossier de financement se dépose souvent des mois avant l'entrée : demandez le délai au financeur."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Étape",
+            "Ma date visée",
+            "Auprès de qui"
+          ],
+          "rows": [
+            [
+              "Conseil en évolution professionnelle",
+              {
+                "field_id": "reconv_cal_cep_date",
+                "placeholder": "Conseil en évolution professionnelle : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_cep_qui",
+                "placeholder": "Conseil en évolution professionnelle : auprès de qui",
+                "answer": "word"
+              }
+            ],
+            [
+              "Dossier de financement déposé",
+              {
+                "field_id": "reconv_cal_dossier_date",
+                "placeholder": "Dossier de financement déposé : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_dossier_qui",
+                "placeholder": "Dossier de financement déposé : auprès de qui",
+                "answer": "word"
+              }
+            ],
+            [
+              "Réponse du financeur",
+              {
+                "field_id": "reconv_cal_reponse_date",
+                "placeholder": "Réponse du financeur : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_reponse_qui",
+                "placeholder": "Réponse du financeur : auprès de qui",
+                "answer": "word"
+              }
+            ],
+            [
+              "Immersion, si elle n'est pas faite",
+              {
+                "field_id": "reconv_cal_immersion_date",
+                "placeholder": "Immersion, si elle n'est pas faite : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_immersion_qui",
+                "placeholder": "Immersion, si elle n'est pas faite : auprès de qui",
+                "answer": "word"
+              }
+            ],
+            [
+              "Entrée en formation",
+              {
+                "field_id": "reconv_cal_entree_date",
+                "placeholder": "Entrée en formation : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_entree_qui",
+                "placeholder": "Entrée en formation : auprès de qui",
+                "answer": "word"
+              }
+            ],
+            [
+              "Stage ou période en entreprise",
+              {
+                "field_id": "reconv_cal_stage_date",
+                "placeholder": "Stage ou période en entreprise : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_stage_qui",
+                "placeholder": "Stage ou période en entreprise : auprès de qui",
+                "answer": "word"
+              }
+            ],
+            [
+              "Certification",
+              {
+                "field_id": "reconv_cal_certification_date",
+                "placeholder": "Certification : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_certification_qui",
+                "placeholder": "Certification : auprès de qui",
+                "answer": "word"
+              }
+            ],
+            [
+              "Premier poste dans le métier",
+              {
+                "field_id": "reconv_cal_poste_date",
+                "placeholder": "Premier poste dans le métier : ma date visée",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_cal_poste_qui",
+                "placeholder": "Premier poste dans le métier : auprès de qui",
+                "answer": "word"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            7.1,
+            4.0,
+            6.0
+          ],
+          "fixed": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Accessoiriste",
+          "surface": "Je commence la formation à la rentrée.",
+          "exploitable": "Entrée le 2 septembre. Donc : conseil en évolution professionnelle en avril, dossier déposé avant le 15 mai, une semaine d'immersion au théâtre en juin, pendant que j'attends la réponse."
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "question",
+          "question": "L'étape dont tout dépend, et ce que je fais pour la tenir",
+          "field_id": "reconv_cal_cle",
+          "answer": "sentence"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Mes objectifs à 30, 60 et 90 jours",
+              "route.feuilles",
+              "reconv_rappel_feuille",
+              "sentence"
+            ]
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Ce que ce calendrier change à ma feuille de route",
+          "field_id": "reconv_feuille_change",
+          "subtitle": "Souvent, le dossier de financement trouve sa place dans le palier de 30 jours.",
+          "answer": "sentence"
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre *candidature.*",
+      "part_title": "Exercice 7 · Votre candidature · 15 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "La personne qui recrute lit d'abord où vous allez. Votre CV porte le métier visé, et votre parcours devient une suite logique : ce que vous emportez de vos métiers d'avant. Vos preuves sont prêtes : vos compétences prouvées et vos récits (carnet de route, exercices 2 et 3)."
+          ],
+          "spacing_after_cm": 0.45,
+          "fixed": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Le titre de mon CV : le métier visé, pas l'ancien",
+                "reconv_cv_titre",
+                "word"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "D'où je viens",
+                "reconv_phrase_origine",
+                "sentence"
+              ],
+              [
+                "Ce que j'emporte",
+                "reconv_phrase_emporte",
+                "sentence"
+              ],
+              [
+                "Où je vais, et pourquoi",
+                "reconv_phrase_cap",
+                "sentence"
+              ]
+            ]
+          ],
+          "title": "Ma phrase de reconversion",
+          "hint": "Trois temps, à dire en moins d'une minute.",
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Fiscaliste",
+          "surface": "Je souhaite me reconvertir dans la fiscalité.",
+          "exploitable": "Huit ans en agence bancaire : je lis un bilan, j'explique un chiffre à une clientèle inquiète. J'emporte ce sens du conseil vers la fiscalité des particuliers, avec le diplôme que je prépare cette année."
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Ma compétence transférable",
+            "Sa preuve : une compétence prouvée, un récit",
+            "Ce qu'elle apporte au métier visé"
+          ],
+          "rows": [
+            [
+              {
+                "field_id": "reconv_transfert_1",
+                "placeholder": "Compétence transférable 1",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_transfert_1_preuve",
+                "placeholder": "Compétence transférable 1 : sa preuve"
+              },
+              {
+                "field_id": "reconv_transfert_1_apport",
+                "placeholder": "Compétence transférable 1 : ce qu'elle apporte"
+              }
+            ],
+            [
+              {
+                "field_id": "reconv_transfert_2",
+                "placeholder": "Compétence transférable 2",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_transfert_2_preuve",
+                "placeholder": "Compétence transférable 2 : sa preuve"
+              },
+              {
+                "field_id": "reconv_transfert_2_apport",
+                "placeholder": "Compétence transférable 2 : ce qu'elle apporte"
+              }
+            ],
+            [
+              {
+                "field_id": "reconv_transfert_3",
+                "placeholder": "Compétence transférable 3",
+                "answer": "word"
+              },
+              {
+                "field_id": "reconv_transfert_3_preuve",
+                "placeholder": "Compétence transférable 3 : sa preuve"
+              },
+              {
+                "field_id": "reconv_transfert_3_apport",
+                "placeholder": "Compétence transférable 3 : ce qu'elle apporte"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            4.5,
+            6.3,
+            6.3
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "La question que je redoute en entretien",
+                "reconv_question",
+                "sentence"
+              ],
+              [
+                "Ma réponse, avec une preuve",
+                "reconv_question_reponse",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "annotation",
+          "text": "Dites votre phrase à voix haute, montre en main : moins d'une minute."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Garde-fous *et décision.*",
+      "part_title": "Exercice 8 · Garde-fous et décision · 10 min",
+      "part": 2,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un projet de reconversion a ses aléas : un financement refusé, une session complète, un revenu trop juste. Préparez votre réponse à chacun avant qu'il arrive, et gardez votre piste B prête."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Si…",
+            "Ma réponse"
+          ],
+          "rows": [
+            [
+              "Mon financement est refusé",
+              {
+                "field_id": "reconv_si_refus",
+                "placeholder": "Si mon financement est refusé : ma réponse"
+              }
+            ],
+            [
+              "La formation est complète, ou reportée",
+              {
+                "field_id": "reconv_si_complet",
+                "placeholder": "Si la formation est complète : ma réponse"
+              }
+            ],
+            [
+              "Mon revenu devient trop juste",
+              {
+                "field_id": "reconv_si_revenu",
+                "placeholder": "Si mon revenu devient trop juste : ma réponse"
+              }
+            ],
+            [
+              "Un autre aléa, et ma réponse",
+              {
+                "field_id": "reconv_si_autre",
+                "placeholder": "Un autre aléa, et ma réponse"
+              }
+            ]
+          ],
+          "col_widths_cm": [
+            5.6,
+            11.5
+          ],
+          "answer": "sentence"
+        },
+        {
+          "type": "contrast_example",
+          "title": "Ostéopathe",
+          "surface": "Si ça ne passe pas, j'aviserai.",
+          "exploitable": "Si Transitions Pro refuse en juin, je fais un recours et je vise la rentrée suivante, en gardant mon poste. Si l'école est complète, je m'inscris sur la liste d'attente de la seconde."
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "report",
+          "items": [
+            [
+              "Ma piste B",
+              "route.pistes",
+              "reconv_rappel_piste_b"
+            ]
+          ]
+        },
+        {
+          "type": "question",
+          "question": "Le signal qui me fera passer à ma piste B",
+          "field_id": "reconv_signal_b",
+          "answer": "sentence"
+        },
+        {
+          "type": "rating_grid",
+          "title": "Ma décision aujourd'hui",
+          "items": [
+            [
+              "Ma décision",
+              "reconv_decision"
+            ]
+          ],
+          "values": [
+            "Je me lance",
+            "Je vérifie",
+            "Je modifie",
+            "En pause"
+          ],
+          "fixed": true
+        },
+        {
+          "type": "question",
+          "question": "Parce que…",
+          "field_id": "reconv_decision_raison",
+          "answer": "sentence"
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre module reconversion.",
+      "part_title": "Fin du module · 5 min",
+      "part": 2,
+      "params": {
+        "lines": [
+          "Je vérifie chaque dispositif à sa source avant de compter dessus.",
+          "Je dépose mon dossier de financement à la date que je me suis fixée.",
+          "Je garde ma piste B ouverte jusqu'à la réponse du financeur."
+        ],
+        "field_prefix": "reconv_livrable",
+        "livrable_title": "Votre plan d'action sécurisé",
+        "livrable_text": "Le chemin et la formation retenus (exercices 2 et 3), leur financement (exercice 4), votre budget et votre calendrier (exercices 5 et 6), votre candidature (exercice 7), travaillés en séance 10. Après le bilan, le livret de compétences approfondit votre candidature.",
+        "zones": [
+          "Ce qui m'étonne en relisant mes réponses",
+          "À aborder en séance : un dossier, une date, un dispositif dont je doute",
+          "Les questions que j'ai passées, à reprendre ensemble"
+        ]
+      }
+    },
+    {
+      "template": "closing",
+      "fixed": true,
+      "params": {
+        "messages": [
+          "Votre reconversion a son plan.",
+          "Prochaine étape : la séance 10. Renvoyez ce module complété d'ici là.",
+          "Après le bilan, le livret de compétences prend le relais pour vos candidatures."
+        ]
+      }
+    }
+  ],
+  "title": "Module reconversion"
+}
