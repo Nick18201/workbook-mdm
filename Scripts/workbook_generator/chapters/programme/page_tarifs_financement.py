@@ -17,7 +17,9 @@ from workbook_generator.utils import cached_image_reader
 from .common import CARD_GAP, PAD, _draw_items, _items_height, add_card, programme_layout, rich
 
 INCLUS = [
-    "<b>7 carnets de bord guidés</b> (vous les gardez définitivement)",
+    "<b>7 carnets de bord guidés et le carnet de route</b>, avec le module de votre projet (vous les gardez "
+    "définitivement)",
+    "<b>Un livret pour la suite</b>, selon votre projet : « Mon business plan » ou le livret de compétences",
     "<b>L'espace Notion de ressources</b> accessible jusqu'au suivi à 6 mois",
     "<b>Le copilote IA</b> dédié pour challenger et nourrir vos réflexions",
     "<b>Le test des fonctionnements cognitifs</b> et sa restitution approfondie",

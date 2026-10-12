@@ -163,9 +163,9 @@ def create_programme_page_deroule_4(c):
             "title": "Faire un choix cohérent avec votre introspection et le marché",
             "description": (
                 "On fait des choix. On identifie les pistes prioritaires et les moyens d'y accéder. Votre carnet de "
-                "route s'adapte ensuite à votre projet : formations et financements pour une reconversion, modèle "
-                "économique et première offre pour une création, argumentaire de repositionnement pour une évolution "
-                "interne."
+                "route s'adapte à votre projet, avec un module préparé avant la séance 10 : formations et financements "
+                "pour une reconversion, modèle économique et première offre pour une création, argumentaire de "
+                "repositionnement pour une évolution interne."
             ),
             "objective": "passer d'une réflexion à un projet clair et réaliste.",
         },
@@ -193,6 +193,7 @@ def create_programme_page_deroule_4(c):
     add_deliverables(layout, "À l'issue du temps 3 (décider et agir)", [
         "Feuilles de route piste A (projet d'élan) et piste B (refuge et tremplin)",
         "Premières actions concrètes à mener sous 7 jours",
+        "Livrable du module de votre projet, et livret remis pour la suite",
         "Document de synthèse officiel co-rédigé (confidentiel et strictement personnel)",
         "Entretien individuel de suivi à 6 mois inclus",
     ])

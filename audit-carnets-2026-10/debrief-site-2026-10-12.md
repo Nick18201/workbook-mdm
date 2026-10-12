@@ -29,7 +29,7 @@ Ce debrief fait le point sur tous les documents du bilan tels qu'ils sont livré
 
 Les pages sont celles du PDF interactif, pages de suite comprises. Les temps d'écriture sont ceux qu'annonce l'ouverture de chaque carnet.
 
-**Le travail personnel.** Les carnets 1 à 7 et le carnet de route demandent 19 h 30 d'écriture, dans la fourchette « 10 à 20 h » du site. Un module ajoute 1 h 45 à 2 h : avec lui, le parcours passe à 21 h 15 ou 21 h 30, au-dessus des 20 h annoncées. Le programme PDF dit aujourd'hui « Un projet de création ajoute un module d'environ 2 h entre les séances 9 et 10. » ; il faudra l'étendre aux trois modules (section 8).
+**Le travail personnel.** Les carnets 1 à 7 et le carnet de route demandent 19 h 30 d'écriture, dans la fourchette « 10 à 20 h » du site. Un module ajoute 1 h 45 à 2 h : avec lui, le parcours passe à 21 h 15 ou 21 h 30, au-dessus des 20 h annoncées. Le programme PDF le dit désormais des trois modules : « Selon votre projet, un module de 1 h 45 à 2 h s'ajoute entre les séances 9 et 10. » (section 8).
 
 ## 3. Ce que tous les carnets ont en commun
 
@@ -120,7 +120,7 @@ Hors des 14 h, ils servent après le bilan ou sans lui. Les modules y renvoient 
 
 **Mon business plan · De l'idée au projet viable.** 15 h, en six parties : fondations et cible ; problème et offre ; marché et positionnement ; modèle économique et vente ; moyens, finances et cadre ; test et décision. Les exercices indispensables suffisent pour une première version (7 h 20) ; une reprise d'entreprise ajoute 45 min. Livrable : « Votre modèle, vos chiffres, votre test et votre feuille de route, validés partie par partie en séance. »
 
-Le site ne présente aucun des deux livrets aujourd'hui. Les ajouter est une décision commerciale (section 8).
+Le site ne présente aucun des deux livrets aujourd'hui. Décision de Nicolas, le 12 octobre : ils sont **inclus dans la formule, selon le projet**, remis à la fin du bilan (« Mon business plan » pour une création, le livret de compétences pour tout autre projet), à travailler en autonomie, hors des 14 h et du travail personnel du bilan. Le programme PDF le dit (page « Un module, puis un livret. », et « Inclus dans cet accompagnement »). Ils restent aussi utilisables sans bilan.
 
 ## 6. Les carnets personnalisés
 
@@ -192,15 +192,15 @@ Le reste du site emploie « confronter » comme verbe ordinaire (`needs.ts`, `em
 
 ### Les modules et les projets (`src/data/bilanProjects.ts`)
 
-Les trois cartes « Trois projets possibles » restent justes ; leurs livrables peuvent prendre ceux des modules :
+Les trois cartes « Trois projets possibles » restent justes ; leurs livrables peuvent prendre ceux des modules. Le programme PDF l'a fait le 12 octobre : le site peut reprendre ses mots (colonne de droite).
 
-| Projet | Livrable aujourd'hui | Livrable du module |
-|---|---|---|
-| Reconversion | « Plan d'action sécurisé et enquêtes validées » | « Votre plan d'action sécurisé » : déjà aligné |
-| Création | « Modèle passé au crash-test et plan de lancement » | « Votre modèle économique et votre première offre » |
-| Évolution interne | « Stratégie de repositionnement interne » | « Votre argumentaire et votre plan de négociation » |
+| Projet | Livrable aujourd'hui | Livrable du module | Programme PDF, 12 octobre |
+|---|---|---|---|
+| Reconversion | « Plan d'action sécurisé et enquêtes validées » | « Votre plan d'action sécurisé » : déjà aligné | « Plan d'action sécurisé et enquêtes validées » (inchangé) |
+| Création | « Modèle passé au crash-test et plan de lancement » | « Votre modèle économique et votre première offre » | « Modèle économique et première offre, passés au crash-test de vos seuils » |
+| Évolution interne | « Stratégie de repositionnement interne » | « Votre argumentaire et votre plan de négociation » | « Argumentaire de repositionnement et plan de négociation » |
 
-Un point de la carte reconversion vieillit : « les seules formations courtes utiles, finançables CPF ». Le module cherche « la formation la plus courte qui vous ouvre le métier », financée selon la situation de la personne (CPF, projet de transition professionnelle, période de reconversion, plan de formation, France Travail), et le CPF est plafonné depuis 2026. Proposition : « la formation la plus courte qui ouvre le métier, et son financement. » Les points de la carte évolution interne peuvent citer l'entretien de parcours professionnel, qui remplace l'entretien professionnel.
+Un point de la carte reconversion vieillit : « les seules formations courtes utiles, finançables CPF ». Le module cherche « la formation la plus courte qui vous ouvre le métier », financée selon la situation de la personne (CPF, projet de transition professionnelle, période de reconversion, plan de formation, France Travail), et le CPF est plafonné depuis 2026. Le programme PDF dit désormais : « la formation la plus courte qui ouvre le métier, et son financement. » Sa carte évolution interne cite l'entretien de parcours professionnel, qui remplace l'entretien professionnel : « un argumentaire solide pour l'entretien annuel, l'entretien de parcours professionnel ou la mobilité interne. » Chaque trajectoire du programme nomme aussi son module (« Trajectoire 1 · module reconversion »).
 
 ### Le reste
 
@@ -213,8 +213,8 @@ Un point de la carte reconversion vieillit : « les seules formations courtes ut
 ## 8. Les décisions qui restent à Nicolas
 
 1. **Annoncer les modules reconversion et évolution interne maintenant, ou après leur relecture avec Lysiane ?** Ils sont fusionnés (PR #86) et proposés dans l'app, mais leurs questions ouvertes attendent vos réponses (`chantier-modules-s9.md`, section 7 : la pratique en séance 9, la fonction publique, la confidentialité quand l'employeur finance le bilan).
-2. **Le programme PDF** (texte réglementaire, modifié seulement à votre demande) : étendre la phrase du module création aux trois modules (« Selon votre projet, un module de 1 h 45 à 2 h s'ajoute entre les séances 9 et 10. »), et dire la personnalisation à 40 % ? Le programme parle déjà de « bilan de compétences sur mesure » et de « consignes personnalisées ».
-3. **Le temps de travail personnel** : 19 h 30 pour le parcours, 21 h 15 à 21 h 30 avec un module, face aux « 10 à 20 h » du site et du programme. Garder la fourchette, ou la porter à « 10 à 22 h » ?
-4. **Les deux livrets autonomes sur le site** : pour qui, à quel moment, à quel prix ? Les modules les annoncent déjà à la personne, « après le bilan ».
+2. **Le programme PDF** : tranché le 12 octobre. La phrase du module vaut pour les trois (« Selon votre projet, un module de 1 h 45 à 2 h s'ajoute entre les séances 9 et 10. »), une page présente les modules et les livrets, et les 40 % n'y entrent pas pour l'instant. Le site reprend les mêmes mots, et le PDF recopié part avec lui.
+3. **Le temps de travail personnel** : tranché le 12 octobre, la fourchette « 10 à 20 h » reste, et le module s'y ajoute (point 2).
+4. **Les deux livrets autonomes sur le site** : inclus dans la formule, selon le projet, remis à la fin du bilan (section 5). Reste à dire où le site les présente (page bilan, kit « Inclus dans le bilan »), et s'ils se proposent aussi sans bilan, à quel prix.
 5. **Dire l'IA ou non** dans le texte sur la personnalisation, et ce que le site dit des données : l'outil reçoit le carnet vierge et le profil rédigé par la personne qui accompagne (prénom facultatif), jamais le carnet rempli.
 6. **Les carnets créés sur mesure.** L'app sait aussi créer un carnet complet à partir de notes de séance, au gabarit des carnets, ou mettre en page un support existant. Le site peut l'annoncer (« pour un besoin que les carnets ne couvrent pas, un carnet complémentaire, créé pour vous »), ou le garder pour un usage interne.

@@ -23,7 +23,7 @@ Décision du 8 octobre 2026 : ces deux modules viennent plus tard. Le 9 octobre,
   - préfixes de champs `reconv_` et `evol_` ;
   - deux parties chacun, pour que l'app les personnalise en deux appels : « Choisir et financer votre formation » puis « Tenir, planifier, candidater » ; « Préparer votre demande » puis « Porter votre demande » ;
   - un script CLI chacun (`Scripts/main_generate_module_reconversion.py`, `main_generate_module_evolution_interne.py`), construit par la CI.
-- **Durée.** 1 h 45 chacun (section 6, choix 2). Avec l'un d'eux, l'intervalle S9 → S10 passe à 3 h 30 et le total du bilan à 21 h 15, au-dessus des « 1 h 30 à 3 h entre deux séances » et des « 10 à 20 h » du programme. Le programme ne le dit que pour la création (PR #69) : à étendre aux trois modules si vous le décidez.
+- **Durée.** 1 h 45 chacun (section 6, choix 2). Avec l'un d'eux, l'intervalle S9 → S10 passe à 3 h 30 et le total du bilan à 21 h 15, au-dessus des « 1 h 30 à 3 h entre deux séances » et des « 10 à 20 h » du programme. Le programme ne le disait que pour la création (PR #69) ; depuis le 12 octobre, il le dit des trois modules (« Selon votre projet, un module de 1 h 45 à 2 h s'ajoute entre les séances 9 et 10. ») et leur consacre une page, avec les deux livrets.
 - **Ce que le programme promet** (`Scripts/workbook_generator/chapters/programme/page_projets.py`), et où les modules le tiennent :
 
 | Promesse du programme | Module reconversion |
@@ -172,7 +172,7 @@ Les brouillons répondent par défaut ; vos réponses les ajusteront.
 5. **Vos sources de confiance** : sites officiels, bases de formations, interlocuteurs. Les liens actuels sont tous officiels.
 6. **Les moments que vous recommandez** pour une demande d'évolution, au-delà des quatre cartes (entretien de parcours professionnel, entretien annuel, poste ouvert, besoin nouveau).
 7. **La confidentialité quand l'employeur finance le bilan**, et pour un agent de l'État (le document de synthèse y est communicable aux ressources humaines, sauf opposition expresse) : l'encadré dit « sans votre accord » ; faut-il une phrase pour la fonction publique ?
-8. **Le programme et le site** : étendre la phrase « Un projet de création ajoute un module d'environ 2 h entre les séances 9 et 10. » aux trois modules (texte réglementaire, à votre demande seulement), puis le dire au site (`recap-site-parcours.md` : « seul le module création existe » n'est plus vrai).
+8. **Le programme et le site** : fait pour le programme le 12 octobre, à votre demande (la phrase du module étendue aux trois, une page « Un module, puis un livret. », feuille de route, section 7). Reste le site (`recap-site-parcours.md` : « seul le module création existe » n'est plus vrai).
 
 ## 8. La suite
 
