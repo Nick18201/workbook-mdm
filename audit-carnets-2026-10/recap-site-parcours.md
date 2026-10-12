@@ -2,6 +2,8 @@
 
 Ce récapitulatif s'adresse à l'agent qui s'occupe du site (dépôt `marge-de-manoeuvre`). Il a été rédigé le 8 octobre 2026 à partir du dépôt `mdm-workbook`, et mis à jour le 9 octobre 2026 (R11) sur les carnets livrés : voir « Mise à jour du 9 octobre » en fin de document. La carte complète du parcours est dans `audit-carnets-2026-10/carte-parcours-unifie.md`.
 
+**Mise à jour du 12 octobre 2026** : `debrief-site-2026-10-12.md` fait l'état de tous les documents (les trois modules du carnet de route existent désormais, le livret de compétences revient en livret autonome), présente la personnalisation des carnets et reprend ce que le site n'a pas encore changé. Là où les deux textes divergent, le debrief fait foi.
+
 ## À lire d'abord
 
 - **Le nouveau parcours vaut pour les futurs bénéficiaires.** Il n'y a pas de date de bascule : le site peut être mis à jour dès que les changements sont prêts.
