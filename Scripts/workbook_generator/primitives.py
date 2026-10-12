@@ -643,7 +643,8 @@ def draw_carnet_progress(c, x, y, carnet):
     """
     Where a carnet stands in the bilan: one disc per carnet de bord (done in ink, this one in
     coral and larger, to come outlined), then the arrow of the carnet de route, then « Carnet 3
-    sur 7 » or « Après les 7 carnets ». (x, y) is the left end of the row, on its axis. The
+    sur 7 », « Après les 7 carnets » or, for the carnet 0, all outlined and « Avant le carnet
+    1 ». (x, y) is the left end of the row, on its axis. The
     three states differ by shape too, so the row reads in black and white.
     """
     r, gap = 5.5, 21
@@ -663,8 +664,12 @@ def draw_carnet_progress(c, x, y, carnet):
     arrow_x = x + PDFStyle.CARNET_COUNT * gap - 2
     on_route = carnet == PDFStyle.CARNET_ROUTE
     draw_filled_arrow(c, arrow_x, y - 6.6, width=19, color=PDFStyle.COLOR_CORAL if on_route else PDFStyle.COLOR_INK)
-    label = (f"Après les {PDFStyle.CARNET_COUNT} carnets" if on_route
-             else f"Carnet {carnet} sur {PDFStyle.CARNET_COUNT}")
+    if on_route:
+        label = f"Après les {PDFStyle.CARNET_COUNT} carnets"
+    elif carnet == PDFStyle.CARNET_OFFERED:
+        label = "Avant le carnet 1"
+    else:
+        label = f"Carnet {carnet} sur {PDFStyle.CARNET_COUNT}"
     return arrow_x + 32 + draw_eyebrow(c, arrow_x + 32, y - 3, label) - x
 
 

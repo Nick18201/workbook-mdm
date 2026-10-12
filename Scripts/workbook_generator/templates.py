@@ -979,8 +979,13 @@ class PageLayout:
         def item_text(name, description):
             return f"{name} : {description}" if description else name
 
-        # 8 pt of slack: the name is set in semibold, wider than the regular text it is measured in
-        items_h = [paragraph_height(item_text(n, d), inner - text_x_offset - 8, PDFStyle.FONT_BODY, size, leading)
+        def wrap_width(name):
+            # The name is set in semibold, wider than the regular text it is measured in: 8 pt of
+            # slack at least, the whole difference for a long name
+            extra = text_width(name, PDFStyle.FONT_BODY_BOLD, size) - text_width(name, PDFStyle.FONT_BODY, size)
+            return inner - text_x_offset - max(8, extra)
+
+        items_h = [paragraph_height(item_text(n, d), wrap_width(n), PDFStyle.FONT_BODY, size, leading)
                    for n, _, d in links]
         h = 2 * pad + pill_h + 0.3 * cm + sum(items_h) + 0.2 * cm * (len(links) - 1)
         self._ensure_space(h)
@@ -997,8 +1002,10 @@ class PageLayout:
             draw_text(self.c, x + text_x_offset, baseline, name, PDFStyle.FONT_BODY_BOLD, size, PDFStyle.COLOR_BLUE)
             self.c.linkURL(url, (x + text_x_offset, baseline - 2, x + text_x_offset + name_w, baseline + size), relative=0)
             if description:
-                rest = wrap_text(f"{name} : {description}", PDFStyle.FONT_BODY, size, inner - text_x_offset - 8)
-                first = rest[0][len(name):] if rest[0].startswith(name) else rest[0]
+                rest = wrap_text(f"{name} : {description}", PDFStyle.FONT_BODY, size, wrap_width(name))
+                # The lines are typeset (« 30 min » takes a no-break space): cut the name as typeset
+                typeset = french_typography(name)
+                first = rest[0][len(typeset):] if rest[0].startswith(typeset) else rest[0]
                 draw_text(self.c, x + text_x_offset + name_w, baseline, first, PDFStyle.FONT_BODY, size, PDFStyle.COLOR_INK)
                 for k, line in enumerate(rest[1:], start=1):
                     draw_text(self.c, x + text_x_offset, baseline - k * leading, line, PDFStyle.FONT_BODY, size,

@@ -1,0 +1,424 @@
+{
+  "chapter_num": 0,
+  "chapter_title": "Mesurer votre marge",
+  "subtitle": "Bilan de compétences",
+  "carnet": 0,
+  "pdf_title": "Marge de Manœuvre · Carnet 0 : Mesurer votre marge",
+  "pages": [
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Mesurer votre *marge.*",
+        "number": 0,
+        "tagline": "Bilan de compétences",
+        "eyebrow": "Offert · 30 minutes",
+        "promise": "Repérer vos leviers, et ce que vous pouvez déjà bouger."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "Trente minutes *pour vous.*",
+      "params": {
+        "num": "0",
+        "intro_text": "Ce carnet vous est offert. Il prépare le premier échange de 30 minutes, si vous le réservez, et il vous sert même si vous ne le réservez pas.<br/><br/>La question qu'il vous aide à poser : <b>qu'est-ce qui vous fait bouger, et de quelle marge disposez-vous pour le faire ?</b>",
+        "points": [
+          "Avant de commencer · Météo du jour · 2 min",
+          "Exercice 1 · Ce qui vous fait bouger · 5 min",
+          "Exercice 2 · Votre semaine, côté énergie · 8 min",
+          "Exercice 3 · Votre marge de manœuvre · 8 min",
+          "Exercice 4 · Les chemins possibles · 3 min",
+          "Fin de carnet · Votre question de départ · 2 min",
+          "À lire · Le bilan, en une page · 2 min"
+        ],
+        "duration": "30 min",
+        "split": "En une fois, au calme : il est fait pour ça."
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Avant de *commencer.*",
+      "part_title": "Météo du jour · 2 min",
+      "blocks": [
+        {
+          "type": "energy",
+          "field_prefix": "c0_meteo"
+        },
+        {
+          "type": "heading",
+          "text": "En pratique"
+        },
+        {
+          "type": "star_list",
+          "items": [
+            "Enregistrez ce fichier sur votre ordinateur avant de le remplir, puis ouvrez-le avec Acrobat Reader (gratuit) ou votre navigateur. Enregistrez à la fin.",
+            "Écrivez comme vous parleriez : quelques mots justes valent mieux qu'une belle phrase.",
+            "Il n'y a pas de bonne réponse. Il y a la vôtre, aujourd'hui."
+          ]
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Ce qui vous fait *bouger.*",
+      "part_title": "Exercice 1 · Ce qui vous fait bouger · 5 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Une envie de changement part souvent d'un détail : une réunion de trop, une idée qui revient, une occasion. Partez de là, avec des faits."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "questions_group",
+          "questions": [
+            {
+              "question": "Ce qui m'a fait ouvrir ce carnet aujourd'hui :",
+              "field_id": "c0_declic",
+              "subtitle": "Un fait précis plutôt qu'une impression générale.",
+              "answer": "sentence"
+            },
+            {
+              "question": "Depuis quand j'y pense, et ce qui a relancé l'idée :",
+              "field_id": "c0_depuis",
+              "answer": "sentence"
+            },
+            {
+              "question": "Ce que je veux que ça change, concrètement :",
+              "field_id": "c0_changer",
+              "subtitle": "Dans votre semaine, votre travail, votre façon de vivre.",
+              "answer": "paragraph"
+            }
+          ]
+        },
+        {
+          "type": "contrast_example",
+          "title": "Muséographe",
+          "surface": "J'en ai marre.",
+          "exploitable": "Mardi, on a reporté l'exposition pour la troisième fois. Ce jour-là, j'ai compris que je voulais voir aboutir ce que je prépare."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre semaine, *côté énergie.*",
+      "part_title": "Exercice 2 · Votre semaine, côté énergie · 8 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Repensez à votre dernière semaine de travail, jour après jour. Notez trois moments qui vous ont donné de l'énergie, et trois qui vous en ont coûté : une tâche, un échange, un lieu, une heure de la journée."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Un moment qui m'a donné de l'énergie",
+                "c0_plus_1",
+                "sentence"
+              ],
+              [
+                "Un moment qui m'en a coûté",
+                "c0_moins_1",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Un deuxième",
+                "c0_plus_2",
+                "sentence"
+              ],
+              [
+                "Un deuxième",
+                "c0_moins_2",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Un troisième",
+                "c0_plus_3",
+                "sentence"
+              ],
+              [
+                "Un troisième",
+                "c0_moins_3",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "page_break"
+        },
+        {
+          "type": "paragraphs",
+          "items": [
+            "Relisez vos six moments. Ce qui revient dit ce que votre prochaine façon de travailler devra garder, et ce qu'elle devra éviter."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Ce qui revient dans mes moments d'énergie",
+                "c0_plus_commun",
+                "sentence"
+              ],
+              [
+                "Donc, ma prochaine façon de travailler devra…",
+                "c0_plus_donc",
+                "sentence"
+              ]
+            ],
+            [
+              [
+                "Ce qui revient dans ce qui me coûte",
+                "c0_moins_commun",
+                "sentence"
+              ],
+              [
+                "Donc, je ne veux plus…",
+                "c0_moins_donc",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Scénographe",
+          "surface": "Les réunions m'épuisent.",
+          "exploitable": "Les réunions de production qui ne tranchent rien m'épuisent ; les répétitions où l'on décide sur le plateau me donnent de l'élan. Donc, ma prochaine façon de travailler devra laisser plus de place au plateau."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Votre marge *de manœuvre.*",
+      "part_title": "Exercice 3 · Votre marge de manœuvre · 8 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Six leviers rendent un changement possible. Notez chacun de 1 à 5, tel que vous le voyez aujourd'hui. Pas besoin de chiffres : votre lecture suffit."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "rating_grid",
+          "min_label": "1 · Peu de marge",
+          "max_label": "5 · Beaucoup de marge",
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "items": [
+            [
+              "1. Du temps pour un projet",
+              "c0_marge_temps"
+            ],
+            [
+              "2. Une réserve pour une transition",
+              "c0_marge_reserve"
+            ],
+            [
+              "3. De l'énergie disponible",
+              "c0_marge_energie"
+            ],
+            [
+              "4. Des savoir-faire qui voyagent",
+              "c0_marge_savoirs"
+            ],
+            [
+              "5. Un réseau qui ouvre des portes",
+              "c0_marge_reseau"
+            ],
+            [
+              "6. De la liberté (lieu, horaires)",
+              "c0_marge_liberte"
+            ]
+          ],
+          "field_prefix": "c0_marge"
+        },
+        {
+          "type": "fields_card",
+          "rows": [
+            [
+              [
+                "Mon levier le plus solide, et ce qu'il me permet déjà",
+                "c0_levier_solide",
+                "sentence"
+              ],
+              [
+                "Le levier que je veux renforcer en premier",
+                "c0_levier_renforcer",
+                "sentence"
+              ]
+            ]
+          ],
+          "question_labels": true
+        },
+        {
+          "type": "contrast_example",
+          "title": "Botaniste",
+          "surface": "Je n'ai pas de réseau.",
+          "exploitable": "Je connais peu de monde dans le paysage, mais trois anciens collègues du jardin botanique y travaillent aujourd'hui : c'est par eux que je commence."
+        }
+      ]
+    },
+    {
+      "template": "composite",
+      "title": "Les chemins *possibles.*",
+      "part_title": "Exercice 4 · Les chemins possibles · 3 min",
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Changer ne veut pas toujours dire changer de métier. Cochez ce qui vous attire aujourd'hui, même vaguement : une case, plusieurs, ou la dernière."
+          ],
+          "spacing_after_cm": 0.45
+        },
+        {
+          "type": "checklist_cards",
+          "groups": [
+            [
+              "Ce qui m'attire",
+              [
+                "Ajuster mon poste actuel : d'autres missions, un autre rythme",
+                "Évoluer dans mon entreprise : un autre poste, d'autres responsabilités",
+                "Changer de métier, avec ou sans formation",
+                "Créer mon activité",
+                "Je ne sais pas encore : c'est justement ce que je veux trouver"
+              ]
+            ]
+          ],
+          "columns": 1,
+          "field_prefix": "c0_chemins"
+        },
+        {
+          "type": "question",
+          "question": "Ce qu'il me faudrait savoir pour avancer :",
+          "field_id": "c0_savoir",
+          "subtitle": "Une information, une vérification, un avis : ce qui vous ferait passer de l'envie au premier pas.",
+          "answer": "paragraph"
+        }
+      ]
+    },
+    {
+      "template": "engagement",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 2 min",
+      "params": {
+        "lines": [
+          "Je relis mes réponses dans une semaine, à tête reposée.",
+          "J'en parle à une personne qui me connaît bien.",
+          "Je réserve un premier échange de 30 minutes, gratuit, pour aller plus loin."
+        ],
+        "signature_label": "Rempli le",
+        "field_prefix": "c0_livrable",
+        "livrable_title": "Votre question de départ",
+        "livrable_text": "Ce qui vous fait bouger, votre énergie, vos leviers et les chemins qui vous attirent : de quoi poser une vraie question.",
+        "zones": [
+          "La question que je veux poser au premier échange",
+          "Ce qui m'étonne en relisant mes réponses"
+        ]
+      }
+    },
+    {
+      "template": "composite",
+      "title": "Le bilan, *en une page.*",
+      "part_title": "À lire · Le bilan, en une page · 2 min",
+      "fixed": true,
+      "blocks": [
+        {
+          "type": "paragraphs",
+          "items": [
+            "Un bilan de compétences reprend ce carnet là où il s'arrête. Dix séances de 1 h 20 en visio avec la même personne, un suivi à six mois, et entre les séances, sept carnets comme celui-ci, adaptés à votre situation, puis un carnet de route."
+          ],
+          "size": 12
+        },
+        {
+          "type": "frise",
+          "steps": [
+            [
+              "psychology",
+              "Comprendre",
+              "Carnets 1 à 5"
+            ],
+            [
+              "travel_explore",
+              "Explorer",
+              "Carnets 6 et 7"
+            ],
+            [
+              "flag",
+              "Décider et agir",
+              "Carnet de route"
+            ]
+          ],
+          "start_label": "Premier échange",
+          "end_label": "Suivi à 6 mois"
+        },
+        {
+          "type": "info_cards",
+          "cards": [
+            {
+              "title": "Vos réponses vous appartiennent",
+              "text": "La synthèse du bilan n'est remise qu'à vous. Rien n'est transmis à un employeur sans votre accord."
+            },
+            {
+              "title": "Finançable par votre CPF",
+              "text": "Le simulateur du site vous dit ce que votre compte personnel de formation couvre."
+            }
+          ],
+          "columns": 2
+        },
+        {
+          "type": "link_card",
+          "title": "Aller plus loin",
+          "links": [
+            [
+              "Réserver mon échange gratuit (30 min)",
+              "https://margedemanoeuvre.fr/contact/?source=carnet-0",
+              "un premier échange en visio, sans engagement."
+            ],
+            [
+              "Faire le test des valeurs",
+              "https://margedemanoeuvre.fr/test-des-valeurs/",
+              "ce qui compte vraiment pour vous, en quelques minutes."
+            ],
+            [
+              "Simuler mon financement CPF",
+              "https://margedemanoeuvre.fr/simulateur-cpf/",
+              "le reste à payer selon votre solde."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Vous savez ce qui vous fait bouger, et de quelle marge vous disposez.",
+          "Pour aller plus loin : un premier échange de 30 minutes, gratuit.",
+          "margedemanoeuvre.fr"
+        ]
+      },
+      "fixed": true
+    }
+  ],
+  "title": "Mesurer votre marge"
+}

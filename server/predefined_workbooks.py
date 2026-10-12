@@ -16,6 +16,11 @@ BILAN = "Bilan de Compétences"
 
 # Fiche de chaque livret : (id, numéro, titre, sous-titre, description, icône, catégorie)
 CATALOGUE = [
+    ("carnet-0", 0, "Carnet 0 · Mesurer votre marge", "Offert avant le bilan : déclic, énergie, leviers et chemins",
+     "Le carnet offert en échange d'une adresse e-mail, avant le premier échange : ce qui fait bouger la personne, "
+     "sa semaine côté énergie, ses six leviers de marge de manœuvre, les chemins qui l'attirent et la question "
+     "à poser au premier échange.",
+     "door_open", BILAN),
     ("carnet-1", 1, "Carnet 1 · L'état des lieux", "Cadre, point de situation, domaines de vie et héritages",
      "Préparer la séance 1 : cadre de travail, état des lieux rapide, domaines de vie, objectif de départ "
      "et ce que la personne a reçu de son milieu sur le travail.",

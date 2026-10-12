@@ -342,6 +342,8 @@ Deux règles valent partout :
 - On parle d'un « test des fonctionnements cognitifs », version maison conçue et éprouvée par Lysiane Brand. La mention « MBTI » disparaît de tous les supports (carnets, programme, site, app, prompts), y compris les codes de type (ISFJ…) : c'est une marque soumise à licence. Seule exception : la certification MBTI® de Lysiane reste dans sa présentation.
 - Hexa3D est abandonné et disparaît de tous les supports.
 
+**Prise le 12 octobre 2026.** Un carnet 0 revient, hors du parcours : offert en échange d'une adresse e-mail, il prépare le premier échange gratuit, comme le carnet N prépare la séance N. Il ne compte ni dans les 14 h ni dans le temps d'écriture, ne déclare aucune donnée, et le carnet 1 ne change pas (`carnet-0-offert.md`).
+
 **Prises le 8 octobre 2026, suite** (détail dans `feuille-de-route-restructuration.md`, section 2)
 1. **Le business plan en deux formats** : le module création du carnet de route (environ 12 pages, personnalisé en une fois) et le livret complet autonome, pour l'accompagnement après le bilan (personnalisé partie par partie dans l'app).
 2. **Les retraits sont validés** : vision à 360°, quatre des huit questions de « Faire le point », arbre de vie facultatif, 3 fiches métiers obligatoires au lieu de 10.

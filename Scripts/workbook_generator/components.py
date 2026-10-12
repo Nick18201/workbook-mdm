@@ -370,6 +370,11 @@ def _point_text(point):
 OPENER_FRAME = ("Seule la personne qui vous accompagne lit vos réponses. "
                 "Si l'inspiration manque pour une question, passez-la : nous la reprendrons en séance.")
 OPENER_HOW_TO = "Remplissez-le à l'écran, puis renvoyez-le complété avant la séance."
+# The carnet 0 is filled in before any contact: its answers stay in the file
+OPENER_FRAME_OFFERED = ("Vos réponses restent dans ce fichier, sur votre ordinateur : personne d'autre ne les lit. "
+                        "Si une question ne vous inspire pas, passez-la.")
+OPENER_HOW_TO_OFFERED = ("Remplissez-le à l'écran et enregistrez-le : gardez-le ouvert pendant le premier "
+                         "échange, si vous le réservez.")
 NOTE_SIZE = PDFStyle.SIZE_BODY_SMALL
 NOTE_LEADING = NOTE_SIZE * 1.45
 NOTE_INDENT = 0.7 * cm
@@ -382,11 +387,16 @@ def _opener_notes(c, duration=None, split=None):
     advised split, then, in a carnet of the bilan, the frame and how to fill in the PDF.
     """
     notes = []
-    timing = [f"Comptez {duration} d'écriture, hors entretiens et recherches." if duration else "", split or ""]
+    carnet = document_style(c).carnet
+    # The carnet 0 asks for no interview nor research
+    outside = "" if carnet == PDFStyle.CARNET_OFFERED else ", hors entretiens et recherches"
+    timing = [f"Comptez {duration} d'écriture{outside}." if duration else "", split or ""]
     timing = " ".join(t.strip() for t in timing if t and t.strip())
     if timing:
         notes.append(("schedule", timing))
-    if document_style(c).carnet is not None:
+    if carnet == PDFStyle.CARNET_OFFERED:
+        notes += [("lock", OPENER_FRAME_OFFERED), ("edit_note", OPENER_HOW_TO_OFFERED)]
+    elif carnet is not None:
         notes += [("lock", OPENER_FRAME), ("edit_note", OPENER_HOW_TO)]
     return notes
 
@@ -531,9 +541,12 @@ def create_standard_engagement_page(
     checklist, and three short guided zones (END_ZONES, or `zones`) down to the bottom of
     the page. With pistes, one more line collects the leads that came up (the thread of
     leads, carnets 2 to 5). signature_label names the date field (former signature block).
+    The carnet 0 comes before any session: no stamp nor validation, and its zones prepare
+    the first call.
     """
     x, width = content_frame()
     form = c.acroForm
+    offered = document_style(c).carnet == PDFStyle.CARNET_OFFERED
     y = draw_page_head(c, title or "Votre livrable.", eyebrow=part_title or "Fin de carnet") - 0.7 * cm
 
     lines = []
@@ -550,8 +563,8 @@ def create_standard_engagement_page(
     inner = note_w - 2 * pad
     title_h = paragraph_height(livrable_title, inner, PDFStyle.FONT_HEADING_BOLD, 13, 13 * 1.3)
     text_h = paragraph_height(livrable_text, inner, PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY)
-    _, stamp_h = stamp_size()
-    note_h = pad + 10 + 0.25 * cm + title_h + 0.15 * cm + text_h + 0.45 * cm + stamp_h + pad
+    stamp_h = 0 if offered else stamp_size()[1] + 0.45 * cm
+    note_h = pad + 10 + 0.25 * cm + title_h + 0.15 * cm + text_h + stamp_h + pad
     note_x, note_y = x + 0.2 * cm, y - note_h
     with postit(c, note_x, note_y, note_w, note_h, angle=-1):
         top = note_h - pad
@@ -561,8 +574,9 @@ def create_standard_engagement_page(
                               PDFStyle.COLOR_INK, 13 * 1.3)
         top -= 0.15 * cm
         draw_paragraph(c, livrable_text, pad, top, inner, PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY, PDFStyle.COLOR_INK)
-        stamp_w, _ = stamp_size()
-        draw_stamp(c, pad + stamp_w / 2 + 2, pad + stamp_h / 2)
+        if not offered:
+            stamp_w, stamp_box_h = stamp_size()
+            draw_stamp(c, pad + stamp_w / 2 + 2, pad + stamp_box_h / 2)
 
     # 2. Validation, beside the post-it
     side_x = note_x + note_w + 0.9 * cm
@@ -572,10 +586,12 @@ def create_standard_engagement_page(
                  tracking=PDFStyle.TRACKING_LABEL)
     draw_answer_box(c, side_x, side_top - 0.45 * cm - 0.95 * cm, side_w, 0.95 * cm,
                     f"date_{field_prefix}", tooltip=signature_label or "Date de la séance", multiline=False)
-    check_y = side_top - 0.45 * cm - 0.95 * cm - 0.85 * cm
-    create_checkbox(form, f"valide_{field_prefix}", pos=(side_x, check_y), size=12, tooltip="Livrable validé en séance")
-    draw_paragraph(c, "Livrable validé en séance", side_x + 18, check_y + 13, side_w - 18,
-                   PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY_SMALL, PDFStyle.COLOR_INK)
+    if not offered:
+        check_y = side_top - 0.45 * cm - 0.95 * cm - 0.85 * cm
+        create_checkbox(form, f"valide_{field_prefix}", pos=(side_x, check_y), size=12,
+                        tooltip="Livrable validé en séance")
+        draw_paragraph(c, "Livrable validé en séance", side_x + 18, check_y + 13, side_w - 18,
+                       PDFStyle.FONT_BODY, PDFStyle.SIZE_BODY_SMALL, PDFStyle.COLOR_INK)
 
     # 3. Commitments
     y = note_y - 1.0 * cm
@@ -607,7 +623,8 @@ def create_standard_engagement_page(
             _finish_page(c)
             y = draw_page_head(c, title or "Votre livrable.", eyebrow=part_title or "Fin de carnet",
                                suffix="(suite)") - 0.7 * cm
-        draw_eyebrow(c, x, y - 8, "Avant la prochaine séance", max_width=width)
+        draw_eyebrow(c, x, y - 8, "Avant le premier échange" if offered else "Avant la prochaine séance",
+                     max_width=width)
         y -= head_h
         box_h = (y - PDFStyle.CONTENT_BOTTOM - sum(labels_h) - gap * (len(entries) - 1)) / len(entries)
         box_h = min(ZONE_MAX_BOX, box_h)
