@@ -21,6 +21,8 @@ DOCUMENTS = [
     ("main_generate_carnet_7", "generate_workbook_carnet_7"),
     ("main_generate_carnet_de_route", "generate_workbook_carnet_de_route"),
     ("main_generate_module_creation", "generate_workbook_module_creation"),
+    ("main_generate_module_reconversion", "generate_workbook_module_reconversion"),
+    ("main_generate_module_evolution_interne", "generate_workbook_module_evolution_interne"),
     ("main_generate_business_plan", "generate_workbook_business_plan"),
     ("main_generate_livret_competences", "generate_workbook_livret_competences"),
 ]

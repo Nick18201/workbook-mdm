@@ -1115,12 +1115,12 @@
             {
               "title": "Se reconvertir",
               "subtitle": "par une formation",
-              "text": "La formation visée, son financement, son calendrier : nous les travaillons en séance 9."
+              "text": "Le module reconversion (1 h 45), remis après la séance 9 : la formation visée, son financement, votre calendrier, votre candidature."
             },
             {
               "title": "Évoluer",
               "subtitle": "dans votre entreprise",
-              "text": "Le poste visé, vos preuves, vos interlocuteurs : nous les travaillons en séance 9."
+              "text": "Le module évolution interne (1 h 45), remis après la séance 9 : votre demande, vos preuves, vos interlocuteurs, vos échanges."
             }
           ],
           "columns": 3
@@ -1176,7 +1176,8 @@
           ],
           "title": "Ce que la séance 9 a posé",
           "hint": "Par exemple : une formation en alternance, avec votre compte formation ; ou un rendez-vous avec votre responsable pour un nouveau poste.",
-          "question_labels": true
+          "question_labels": true,
+          "data_id": "route.module"
         },
         {
           "type": "link_card",

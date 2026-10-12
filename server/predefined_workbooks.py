@@ -63,6 +63,18 @@ CATALOGUE = [
      "dépenses et les charges, le point mort face aux quatre seuils, le risque pour la personne, le financement, "
      "le test et les entretiens prospects, puis la synthèse et la décision.",
      "storefront", BILAN),
+    ("module-reconversion", 8, "Carnet de route · Module reconversion",
+     "Le métier visé, le chemin le plus court, la formation, son financement, le budget et la candidature",
+     "Pour une piste A qui demande de changer de métier, entre les séances 9 et 10 : ce que le métier exige, le "
+     "chemin le plus court, les formations comparées, leur financement selon le statut, le budget face aux seuils, "
+     "le calendrier à rebours, la candidature, puis les garde-fous et la décision.",
+     "school", BILAN),
+    ("module-evolution-interne", 8, "Carnet de route · Module évolution interne",
+     "Ce qui bloque, la demande, ses preuves, les conditions, les interlocuteurs et les objections",
+     "Pour une piste A qui se joue dans l'entreprise, entre les séances 9 et 10 : ce qui bloque et la demande "
+     "(poste, missions ou rythme), ce que l'entreprise y gagne, les preuves, les conditions et le point de repli, "
+     "les interlocuteurs et le bon moment, le plan d'échanges, les objections, puis la suite si c'est non.",
+     "trending_up", BILAN),
     ("livret-competences", 98, "Livret de compétences · Votre portfolio",
      "Travail réel, savoir-faire, niveaux, récits d'action, entretien et portfolio en une page",
      "Le livret complet, après le bilan ou sans lui, en trois parties : ce que la personne sait faire, ce qui le "

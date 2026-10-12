@@ -230,7 +230,7 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | Garde-fous et soutiens | App (carnet 6) | Importer. Les soutiens viennent de l'entourage noté au carnet 5. |
 | Le chemin parcouru | Audit | Relire l'objectif boussole, renoter les domaines de vie du carnet 1, comparer les météos. |
 | Préparer le suivi à 6 mois | Audit | Ce qu'il faut relire et apporter à l'entretien de suivi. |
-| Le module de votre projet | Programme (S9) | Selon le projet : création (module court du business plan), reconversion (formation et financement, à créer), évolution interne (argumentaire, à créer). |
+| Le module de votre projet | Programme (S9) | Selon le projet : création (module court du business plan), reconversion (formation et financement), évolution interne (argumentaire de repositionnement). La carte « Ce que la séance 9 a posé » (`route.module`) est reportée en tête des deux derniers. |
 
 **Sortie** : les **feuilles de route A et B** et les **premières actions** (livrables du programme). Le document de synthèse co-rédigé reste un document à part, mais ses briques sont prêtes (section 7).
 
@@ -242,6 +242,14 @@ C'est l'actuel livret de compétences, recentré et renommé.
   - Seule la synthèse se montre. Le risque pour vous prend le protocole complet. Aucun taux ni montant : des liens officiels (Urssaf, impots.gouv.fr, Bpifrance Création, France Travail, réseaux de prêts d'honneur).
   - Il déclare `"carnet": "route"` : la couleur et le folio du carnet de route. Le livret complet prend le relais après le bilan.
 - **Le livret projet complet**, outil autonome pour l'accompagnement à la création après le bilan. Il s'ouvre par un mode d'emploi et des renvois « Si vous avez fait le bilan : … ». Il intègre les refontes de l'audit : finances guidées, page « Le risque, pour vous », reprise d'activité, informations réglementaires renvoyées vers les sources officielles.
+
+### Les modules reconversion et évolution interne (12 octobre 2026)
+
+Brouillons aboutis, rédigés avec les propositions par défaut du chantier (`chantier-modules-s9.md`, sections 4 à 6), à relire par Nicolas et Lysiane.
+
+- **Le module reconversion** (S9 → S10, 1 h 45, `module-reconversion.json`), « Changer de métier. » : ce que demande le métier et l'écart à combler, le chemin le plus court (direct, formation courte, certification, VAE), les formations comparées, leur financement selon la situation (en poste, en recherche d'emploi, à votre compte, dans la fonction publique) avec l'encadré « Avant toute démission », tenir pendant la formation face aux seuils (annonce et ancrage), le calendrier à rebours, la candidature (titre de CV, phrase de reconversion, compétences transférables, la question redoutée), garde-fous et décision. Livrable : « Votre plan d'action sécurisé », comme le promet le programme.
+- **Le module évolution interne** (S9 → S10, 1 h 45, `module-evolution-interne.json`), « Évoluer de l'intérieur. » : ce qui bloque et la demande (un poste, des missions, un rythme), ce que l'entreprise y gagne, les preuves, les conditions et le point de repli (« À garder pour vous »), les interlocuteurs et le bon moment (dont l'entretien de parcours professionnel), le plan d'échanges avec l'encadré sur la confidentialité du bilan, les objections, puis si la réponse est non (charge moyenne) et la décision. Livrable : « Votre argumentaire et votre plan de négociation ».
+- Comme le module création : `"carnet": "route"`, aucune donnée déclarée, deux parties pour la personnalisation, aucun chiffre réglementaire écrit en dur, des liens officiels vérifiés le 12 octobre 2026.
 
 ### Le livret de compétences · deux formats (11 octobre 2026)
 
@@ -263,7 +271,9 @@ C'est l'actuel livret de compétences, recentré et renommé.
 | S8 → S9 | Carnet de route, partie 1 | 1 h 30 | `carnet-de-route.json` (R8), partie 1, issue des thèmes 1, 3, 4 et 5 du livret | 1 h 30, affiché exercice par exercice (avant : 3 h 30 – 4 h 30 pour tout le livret) |
 | S9 → S10 | Carnet de route, partie 2 | 1 h 45 (+ module) | `carnet-de-route.json` (R8), partie 2, issue du thème 7 du livret et du plan d'action de l'app | 1 h 45, affiché exercice par exercice, plus le module de projet (n'existait pas) |
 | S9 → S10, création | Module création | 2 h | `module-creation.json` (R9), issu des exercices indispensables du livret business plan et de l'entretien prospects de l'app | 2 h, affiché exercice par exercice, entretiens prospects hors temps d'écriture (avant : 7 h 20 pour les indispensables du livret, 15 h pour tout le livret) |
-| **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | 19 h 30 affichées, carnet par carnet (avant : ≈ 21 – 27 h) ; 21 h 30 avec le module création |
+| S9 → S10, reconversion | Module reconversion | 1 h 45 | `module-reconversion.json` (12 octobre) | 1 h 45, affiché exercice par exercice, appels aux organismes et aux financeurs hors temps d'écriture (n'existait pas) |
+| S9 → S10, évolution interne | Module évolution interne | 1 h 45 | `module-evolution-interne.json` (12 octobre) | 1 h 45, affiché exercice par exercice, échanges informels hors temps d'écriture (n'existait pas) |
+| **Total** | | **≈ 19 h 30**, dans les 10-20 h du programme | | 19 h 30 affichées, carnet par carnet (avant : ≈ 21 – 27 h) ; 21 h 30 avec le module création, 21 h 15 avec un des deux autres |
 
 L'interview du carnet 2, les échanges avec les proches, les entretiens du carnet 7 et les entretiens prospects du module création se font hors temps d'écriture. Le module de projet s'ajoute pour les personnes concernées : avec le module création, l'intervalle S9 → S10 passe à 3 h 45 et le total à 21 h 30, au-dessus de la fourchette du programme, qui le dit désormais (PR #69 : « Un projet de création ajoute un module d'environ 2 h entre les séances 9 et 10. »).
 
@@ -295,8 +305,9 @@ Pour chaque donnée : où elle est écrite (une seule fois), où elle est report
 | Retour des proches (métiers suggérés, et pourquoi) | Carnet 6 | Carnet de route (preuve extérieure) | `c6.proches` |
 | 10 pistes | Carnet 6 | Séance 6 (3 pistes retenues) · carnet 7 | `c6.pistes` |
 | Fiches, comptes rendus, matrice | Carnet 7 | Séance 8 (3 scénarios) · carnet de route | `c7.fiches`, `c7.enquetes`, `c7.matrice` |
-| Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · module évolution interne | `route.competences`, `route.recits` |
-| Pistes A et B, feuilles de route, actions | Carnet de route, partie 2 | Module création (la piste A et sa feuille de route) · document de synthèse · suivi à 6 mois | `route.pistes`, `route.feuilles`, `route.actions` |
+| Compétences prouvées, récits | Carnet de route, partie 1 | Partie 2 · modules reconversion et évolution interne (renvoi écrit) | `route.competences`, `route.recits` |
+| Pistes A et B, feuilles de route, actions | Carnet de route, partie 2 | Les trois modules (la piste A, la piste B, la feuille de route) · document de synthèse · suivi à 6 mois | `route.pistes`, `route.feuilles`, `route.actions` |
+| Ce que la séance 9 a posé (la démarche visée, son financement, la prochaine démarche) | Carnet de route, partie 2 (exercice 6) | Modules reconversion et évolution interne | `route.module` |
 | Livrable de chaque carnet | Fin de chaque carnet | Document de synthèse, assemblé au fil du parcours | `c1.livrable` … `c7.livrable`, `route.livrable` |
 
 ## 8. Personnalisation dans l'app

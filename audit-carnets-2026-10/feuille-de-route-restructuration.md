@@ -25,11 +25,12 @@ Ce document prépare le chantier qui suit l'unification. Il a été écrit le 8 
 | R10 · Livret business plan : refonte et personnalisation partie par partie | Fusionné (PR #56), mené en parallèle de R1 à R8 (le livret ne reporte aucune donnée des carnets) |
 | R11 · Nettoyage : plus de `chap0` à `chap6` ni de livret de compétences | Fusionné (PR #70) |
 | Programme : noms des seuils, charge d'une création, test du module création | Fusionné (PR #69) |
-| Livret de compétences : retour en livret autonome, comme le business plan (`livret-competences.json`) | En PR (section 2, fin, et section 8) |
+| Livret de compétences : retour en livret autonome, comme le business plan (`livret-competences.json`) | Fusionné (PR #84) |
+| Modules reconversion et évolution interne : brouillons aboutis (`module-reconversion.json`, `module-evolution-interne.json`), trace de la séance 9 (`route.module`) | En PR, à relire par Nicolas et Lysiane (`chantier-modules-s9.md`, section 1) |
 | Carnet 7 : apports du support d'enquête métier de Lysiane | Fusionné (PR #73) |
 | App, lot 1 : les règles des carnets transmises à Gemini, contrôle de conformité, création au gabarit commun | Fusionné (PR #74) |
 | App, lot 2 : trois modes (adapter un carnet, créer depuis des notes, mettre en page un support), contrôle de couverture, bénéficiaire facultatif | Fusionné (PR #75) |
-| Charte v2 : retours de Nicolas sur le carnet 1 (énergie, questions franches sans posture protectrice, tout à l'écran, « Explorer ») | En PR (section 8) |
+| Charte v2 : retours de Nicolas sur le carnet 1 (énergie, questions franches sans posture protectrice, tout à l'écran, « Explorer ») | Fusionné (PR #76) |
 | Redéploiement de l'app (Cloud Run) | Fait le 9 octobre par Nicolas (révision `00010-hb4`, `main` 404108e, avant les lots de l'app) ; à refaire après la charte v2 (section 8) |
 | Site (`marge-de-manoeuvre`) | À faire par l'agent du site, avec `recap-site-parcours.md`, en même temps que le programme (écarts relevés en R11 : section 7) |
 
@@ -570,6 +571,14 @@ Pour chaque PR de carnet :
   - une remarque d'une phrase sous un tableau (« En société ») peut devenir un paragraphe fixe plutôt qu'un encadré : 1,6 cm au lieu de 3,9 cm ;
   - quand la page est pleine, chaque lien d'une `link_card` tient sur une ligne, son adresse courte comprise ;
   - métiers déjà pris pour les exemples : ceux des carnets 1 à 7 et du carnet de route, plus sérigraphe, caviste, disquaire, vidéaste (module création).
+- **Les conventions ajoutées par les modules reconversion et évolution interne** (`workbooks/module-reconversion.json`, `workbooks/module-evolution-interne.json`) :
+  - un module reporte en tête ce que la séance 9 a posé (`route.module`, la carte « Ce que la séance 9 a posé » du carnet de route) : la personne relit ce qu'elle a noté en séance au lieu de le réécrire ;
+  - dans un report sur deux colonnes qui cite le carnet de route, l'origine (« CARNET DE ROUTE · P. 19 ») est plus longue : le libellé tient sur une ligne jusqu'à une douzaine de caractères (« En séance 9 », « Ma piste A ») ;
+  - des preuves qui vont dans la colonne d'un tableau (compétences prouvées, récits) passent par un renvoi écrit (« carnet de route, exercices 2 et 3 ») plutôt que par un report d'une seule ligne, comme les prénoms au carnet 6 ;
+  - un dispositif réglementaire se nomme, se décrit sans chiffre et renvoie à sa source ; une règle d'ordre (la démission-reconversion) ou d'interdiction (le démarchage pour le CPF) va dans un encadré fixe ;
+  - les cartes par situation (en poste, en recherche d'emploi, à votre compte, dans la fonction publique) sont des `info_cards` fixes sur deux colonnes ;
+  - une page qui touche à l'argent du foyer pendant une formation prend l'annonce (`protocol`) et l'ancrage, comme le risque du module création ; une crainte sur une démarche au travail prend la charge moyenne : la question franche et sa clôture, fixes ;
+  - métiers déjà pris pour les exemples : ceux des carnets 1 à 7, du carnet de route et du module création, plus audioprothésiste, barista, cartographe, ascensoriste, accessoiriste, fiscaliste, ostéopathe (module reconversion), gestionnaire de paie, responsable qualité, cuisiniste, prothésiste dentaire, standardiste, orthoptiste, podologue, géographe (module évolution interne).
 - **Les conventions ajoutées par Champs 2 et 3** (les cases étroites, le business plan) :
   - un mot : un prénom, une date, un montant, un nombre, une valeur, une tendance, l'intitulé d'une piste ou d'un métier, une famille de scénario, un verbe (« garder, couper, déléguer ») ; une phrase : ce qui commence par « ce que », « pourquoi », « comment », une situation, une condition ;
   - un tableau donne sa réponse par défaut dans `answer` (à la place de `field_height_cm`), et une case la sienne : `{"field_id": …, "placeholder": …, "answer": "word"}`. La ligne prend la plus haute réponse de ses cases : un prénom ne fait plus grandir la ligne. Une case « mot » ne passe en multiligne que si la ligne lui laisse 1,6 cm ;
@@ -667,13 +676,15 @@ Pour chaque PR de carnet :
   - « Ma zone de recherche » n'a pas d'identifiant, et le carnet de route ne la cite pas : la feuille de route s'en sert sans la recopier.
   - Les questions plus franches restent dans le carnet 7, sans report.
 - **Les reprises du carnet de route.**
-  - Les compétences prouvées et les récits (`route.competences`, `route.recits`) iront aux modules reconversion et évolution interne (`chantier-modules-s9.md`).
+  - Les compétences prouvées et les récits (`route.competences`, `route.recits`) sont cités par un renvoi écrit aux modules reconversion (la candidature, exercice 7) et évolution interne (vos preuves, exercice 3) : ils remplissent la colonne « preuve » d'un tableau.
+  - Ce que la séance 9 a posé (`route.module`, nouvel identifiant) est reporté en tête des modules reconversion et évolution interne. Le module création ne le reporte pas : ses fondations partent de la piste A.
   - La piste A (`route.pistes`) est reportée aux fondations du module création, les objectifs de sa feuille de route (`route.feuilles`) à sa décision (R9). Les pistes, les feuilles de route et les premières actions iront au document de synthèse et au suivi à six mois.
   - Le module création (R9) ne déclare aucune donnée : sa synthèse est une brique du document de synthèse, sans report.
   - Les deux météos du carnet de route (`route.meteo`, `route.meteo_2`) ferment la série du chemin parcouru. Le suivi à six mois n'a pas de document : la personne rouvre son carnet de route.
 - **Les trois familles de scénarios** (pistes directes, passerelles courtes, angles morts) viennent du programme, qui ne les définit pas. Le carnet 7 les nomme, la séance 8 fait le classement, et le récapitulatif du carnet de route les définit (R8, décision 78). Le programme est un texte réglementaire : il garde ses mots, sauf demande.
 - **Le document de synthèse co-rédigé** n'a pas de modèle dans le dépôt. Ses briques sont les livrables des carnets, `route.livrable` compris. À créer si Nicolas le souhaite.
-- **La page « Le module de votre projet »** du carnet de route dit « Le module création (2 h), remis après la séance 9 » (R9), et que la reconversion et l'évolution interne se travaillent en séance 9. À revoir quand ces deux modules existeront (`chantier-modules-s9.md`).
+- **La page « Le module de votre projet »** du carnet de route présente les trois modules, chacun avec sa durée, remis après la séance 9 (création 2 h, reconversion et évolution interne 1 h 45).
+- **La charge de travail d'une reconversion ou d'une évolution interne.** Avec un module de 1 h 45, l'intervalle entre les séances 9 et 10 passe à 3 h 30 et le total du bilan à 21 h 15. Le programme ne parle que de la création (« Un projet de création ajoute un module d'environ 2 h entre les séances 9 et 10. ») : à étendre aux trois modules si Nicolas le décide (texte réglementaire), puis au site.
 - **La charge de travail d'une création.** Avec le module (2 h), l'intervalle entre les séances 9 et 10 passe à 3 h 45 et le total du bilan à 21 h 30, au-dessus des « 1 h 30 à 3 h entre deux séances » et des « 10 à 20 h » du programme (« selon les personnes »). Tranché par Nicolas le 9 octobre : le programme le dit (« Un projet de création ajoute un module d'environ 2 h entre les séances 9 et 10. », PR #69), le module garde sa place avant la séance 10. Reste au site à le dire aussi.
 - **La personnalisation du module création** (pertinence forte) est à tester avec la vraie clé Gemini, en une fois. Sans clé, elle passe en mode de secours.
 - **La reprise d'une entreprise** n'a pas de page dans le module : son ouverture renvoie au livret (exercice 25), à voir en séance.
@@ -744,8 +755,8 @@ R11 a clos la restructuration (les carnets 1 à 7, le carnet de route, son modul
      - Essais : 6 appels, 101 619 jetons. Le script mesure désormais la profondeur d'une personnalisation par catégorie de texte, et `--refaire` reconstruit un rapport sans appel.
 3. **Le redéploiement**, par Nicolas : la production tourne sur la révision `00010-hb4` (`main` 404108e), d'avant les lots de l'app et la charte v2. À faire une fois la PR du lot 4 fusionnée, en une fois (`server/DEPLOY_CLOUD_RUN.md`). Le délai d'un appel Gemini passe à 240 s par défaut, sous les 300 s de Cloud Run. Les jetons de chaque appel se lisent ensuite dans les journaux. Puis rejouer dans l'app ce que les essais n'ont pas couvert : un support mis en page, et la barre d'attente sur de vrais appels.
 4. **Le lot site.** `recap-site-parcours.md` est à jour, ses deux « mises à jour du 9 octobre » comprises (R11, puis la charte v2 : « Explorer », le carnet 7, le ton). Le confier à l'agent du site avec le nouveau programme PDF : le programme et le site partent ensemble, et le PDF recopié dans `marge-de-manoeuvre/public/documents/` n'a pas encore été changé (le script ne le recopie que depuis la copie principale du dépôt).
-5. **Les modules reconversion et évolution interne** (`chantier-modules-s9.md`) : ils attendent les réponses de Nicolas et de Lysiane. Ils reprendront les compétences prouvées et les récits du carnet de route (`route.competences`, `route.recits`).
-   - **Le livret de compétences** (section 2, fin) : en PR, branche `claude/livret-competences`. Le livret complet, autonome, à côté du carnet de route : 21 pages, 3 h 05, trois parties. Les modules pourront y renvoyer pour aller plus loin (récits, entretien), comme le module création renvoie au business plan.
+5. **Les modules reconversion et évolution interne** (`chantier-modules-s9.md`) : brouillons aboutis, en PR (branche `claude/modules-reconversion-evolution`), rédigés le 12 octobre avec les propositions par défaut de la section 6 du chantier. Chacun fait 1 h 45 et deux parties ; ils reportent ce que la séance 9 a posé (`route.module`) et renvoient au livret de compétences pour aller plus loin. Restent les réponses de Nicolas et de Lysiane (section 7 du chantier), la relecture des textes réglementaires, et l'essai de leur personnalisation avec la vraie clé.
+   - **Le livret de compétences** (section 2, fin) : fusionné (PR #84). Le livret complet, autonome, à côté du carnet de route : 21 pages, 3 h 05, trois parties. Les deux modules y renvoient pour aller plus loin (candidature, preuves), comme le module création renvoie au business plan.
 6. **Plus tard** : la version de lecture (les réponses d'un carnet rempli, en entier, pour la personne qui accompagne : elle lit désormais des carnets renvoyés), et l'humour dans le ton.
 
 Message à coller pour reprendre :
