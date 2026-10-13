@@ -27,6 +27,21 @@ def test_reference_workbooks_pass_the_check(workbook_id):
     assert [f for f in check_spec(load_workbook(workbook_id), layout=True) if f.rule not in allowed] == []
 
 
+def test_a_carnet_in_one_file_per_part_has_the_template_in_each_part():
+    """Each file is a carnet: its opener gives its time, it ends with its deliverable."""
+    data = load_workbook("carnet-7").model_dump(exclude_unset=True)
+    second_opener = next(i for i, p in enumerate(data["pages"]) if p["template"] == "summary" and p["part"] == 2)
+    del data["pages"][second_opener]["params"]["duration"]
+    data["pages"] = [p for p in data["pages"] if not (p["template"] == "engagement" and p["part"] == 1)]
+
+    findings = check_spec(WorkbookSpec.model_validate(data))
+
+    # The opener of part 2 moves up a page once the end of part 1 is gone: the finding follows it
+    assert [(f.page, f.rule) for f in findings if f.page] == [(second_opener, "duree")]
+    assert [f.message for f in findings if not f.page] == [
+        "partie 1 : pas de page de livrable (« engagement ») avant le dos"]
+
+
 def test_a_continuation_page_holding_one_small_block_is_flagged():
     long_page = {"template": "composite", "title": "Un long exercice.", "part_title": "Exercice 1 · Long · 30 min",
                  "blocks": [{"type": "question", "question": f"Question {k}", "field_id": f"q{k}", "answer": "sentence"}

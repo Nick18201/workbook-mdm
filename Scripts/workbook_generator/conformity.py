@@ -15,7 +15,7 @@ import re
 import unicodedata
 from typing import Iterator, List, NamedTuple, Optional
 
-from .spec import BlockSpec, PageSpec, WorkbookSpec
+from .spec import BlockSpec, PageSpec, WorkbookSpec, page_parts, part_document, part_numbers
 
 FIX = "à corriger"
 CHECK = "à vérifier"
@@ -537,13 +537,27 @@ def _check_layout(spec: WorkbookSpec, findings):
                                     "couper l'exercice en deux pages équilibrées ('page_break'), ou le resserrer"))
 
 
+def _files(spec: WorkbookSpec):
+    """
+    The files the person fills, each with the common template of a carnet: the whole spec, or
+    each part of a carnet in one file per part, as (its pages in the spec, from 1, the
+    document, the label of a finding on the whole file).
+    """
+    if not spec.part_files:
+        return [(list(range(1, len(spec.pages) + 1)), spec, "")]
+    parts = page_parts(spec)
+    return [([i for i, n in enumerate(parts, start=1) if n == part], part_document(spec, part), f"partie {part} : ")
+            for part in part_numbers(spec) if part in parts]
+
+
 def check_spec(spec: WorkbookSpec, structure: bool = True, context: Optional[str] = None,
                layout: bool = False, sources: Optional[str] = None,
                duration_min: Optional[int] = None) -> List[Finding]:
     """
     The findings of a spec, page by page. `structure=False` skips the common template of a
     carnet (cover, opener, deliverable, eyebrows, contrast example, writing times), for a
-    document laid out as it was written. `context` describes the person (customization): an
+    document laid out as it was written; a carnet in one file per part has it in each part.
+    `context` describes the person (customization): an
     example taken from their own trade, or that tells their situation, is then flagged. `layout=True` compiles the spec to
     find the « (suite) » pages that hold almost nothing. `sources` is the text the document
     comes from (notes, support): a web address it does not give is flagged. `duration_min`
@@ -555,8 +569,13 @@ def check_spec(spec: WorkbookSpec, structure: bool = True, context: Optional[str
         _check_statistics(i, page, findings)
         _check_blocks(i, page, findings)
     if structure:
-        _check_structure(spec, findings)
-        _check_durations(spec, duration_min, findings)
+        for numbers, document, label in _files(spec):
+            found = []
+            _check_structure(document, found)
+            _check_durations(document, duration_min, found)
+            # A page of the file is a page of the spec; a finding on the whole file names its part
+            findings += [f._replace(page=numbers[f.page - 1]) if f.page else f._replace(message=label + f.message)
+                         for f in found]
     if sources:
         _check_addresses(spec, sources, findings)
     _check_examples(spec, context, findings)

@@ -431,6 +431,16 @@ R11 avait retiré l'ancien livret de compétences, que le carnet de route rempla
 
 Choix de mise en page : chaque tableau a une colonne courte pour la compétence (« un verbe, un objet ») et une colonne large pour la preuve et ce qu'il en reste, au lieu de trois colonnes étroites (3 cm par ligne). « Ce qui vous manque » devient « Ce qu'il vous reste à apprendre » (la condition plutôt que le manque, charte v2).
 
+**Prises le 13 octobre 2026 : un fichier par partie pour le carnet 7 et le carnet de route**
+
+L'app du bilan (dépôt MDM_Appsheet, lot 2 de son plan) envoie un carnet par séance, dix jours avant, puis reçoit le dépôt et l'analyse. Un fichier pour deux séances y créait trois cas particuliers : le même fichier déposé deux fois (le second remplace le premier, et son analyse), pas de PDF vierge à envoyer avant la séance 8 ou 10, une analyse qui ne sait pas quelle partie commenter. Nicolas a décidé de scinder ces deux carnets. Les décisions 62 et 79 (« Un seul fichier en deux parties ») sont remplacées :
+1. **Un fichier par partie, une seule source.** `carnet-7.json` et `carnet-de-route.json` restent uniques, avec leurs `parts`, et déclarent `"part_files": true` ; le générateur exporte une partie à la fois. Les fichiers : `Carnet_7_partie_1.pdf` (séance 7), `Carnet_7_partie_2.pdf` (séance 8), `Carnet_de_route_partie_1.pdf` (séance 9), `Carnet_de_route_partie_2.pdf` (séance 10). Le nom est la clé de la table Wordbooks de l'app : il donne le JSON (`Carnet_7` → `carnet-7.json`) et la partie (les pages dont `part` vaut N). Une version personnalisée garde ce nom, suivi du bénéficiaire.
+2. **Chaque fichier se lit comme un carnet complet** : sa couverture (« Explorer *vos pistes.* », « Tirer les leçons *du terrain.* », « Prouver et préparer *le choix.* », « Décider *et agir.* »), son ouverture (ses seuls exercices, son temps : 1 h 45, puis 2 h ; 1 h 30, puis 1 h 45), la météo et le récapitulatif (« Avant de commencer », puis « Avant de reprendre »), ses exercices, son livrable (« Votre livrable. », et « Votre carnet de route. » pour finir), son dos. Le folio et les sourcils de la couverture et de l'ouverture disent la partie (« carnet 7/7 · partie 1 »).
+3. **Rien ne change pour l'analyse** : les identifiants de champ et de donnée restent ceux d'aujourd'hui, chacun dans un seul fichier. Les exercices gardent leur numéro (1 à 6, 1 à 9).
+4. **Les textes ne parlent plus d'une partie du même fichier** (« Je renvoie ce carnet complété avant la séance 7 », « Fin de carnet ») ; un renvoi à l'autre partie la nomme (« Relisez vos contacts (partie 1, exercice 2) »).
+5. **Les reports citent le bon fichier** : « carnet 7 · partie 2 · p. 9 », la page du fichier de la partie.
+6. **Ne changent pas** : les carnets 0 à 6, les trois modules (le module création garde ses parties : il se travaille d'un bloc avant la séance 10), le livret de compétences et « Mon business plan ». Les anciens `Carnet_7.pdf` et `Carnet_de_route.pdf` restent pour les personnes en cours de bilan ; l'app les archivera quand elle basculera.
+
 ## 3. Les PR, dans l'ordre
 
 Une PR par ligne, fusionnée par Nicolas avant de passer à la suivante.

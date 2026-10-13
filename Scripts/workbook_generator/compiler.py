@@ -29,7 +29,15 @@ from .config import PDFStyle
 from .document_builder import DocumentBuilder, document_style
 from .primitives import plain_title
 from . import spec as spec_module
-from .spec import MAX_SCALE_STEPS, WorkbookSpec, data_carnet, load_workbook, normalize_answer
+from .spec import (
+    MAX_SCALE_STEPS,
+    WorkbookSpec,
+    data_carnet,
+    load_workbook,
+    normalize_answer,
+    part_document,
+    part_numbers,
+)
 from .templates import LayoutConfig, PageLayout, QuestionConfig, QuestionItem, TextConfig
 from .utils import strip_unsupported_glyphs
 
@@ -175,37 +183,44 @@ def _file_identity(path, mtime):
 
 
 @functools.lru_cache(maxsize=16)
-def _file_data_pages(path, mtime):
+def _file_data_locations(path, mtime):
     with open(path, encoding="utf-8") as f:
-        return workbook_data_pages(WorkbookSpec.model_validate(json.load(f)))
+        return workbook_data_locations(WorkbookSpec.model_validate(json.load(f)))
 
 
-def reference_data_pages(carnet):
+def reference_data_locations(carnet):
     """
     Where each data id of a carnet's reference workbook (workbooks/, the file whose
-    'carnet' is this one and which declares data) is written: {data_id: page}. A module of
-    the carnet (module-creation.json, carnet « route ») shares its carnet but declares no
-    data. Empty when there is no such file. Cached until the file changes.
+    'carnet' is this one and which declares data) is written: {data_id: (part, page)}, the
+    part None unless the carnet has one file per part. A module of the carnet
+    (module-creation.json, carnet « route ») shares its carnet but declares no data. Empty
+    when there is no such file. Cached until the file changes.
     """
     folder = spec_module.WORKBOOKS_DIR
     for name in sorted(os.listdir(folder)):
         path = os.path.join(folder, name)
         if name.endswith(".json") and _file_identity(path, os.path.getmtime(path)) == (carnet, True):
-            return _file_data_pages(path, os.path.getmtime(path))
+            return _file_data_locations(path, os.path.getmtime(path))
     return {}
 
 
-def _origin(data_id, pages_of=None):
-    """« carnet 4 · p. 12 », or « carnet 4 » when the page is unknown (pages_of: carnet -> {data_id: page})."""
+def _origin(data_id, locations_of=None):
+    """
+    « carnet 4 · p. 12 », « carnet 7 · partie 2 · p. 4 » for a carnet in one file per part, or
+    « carnet 4 » when the page is unknown (locations_of: carnet -> {data_id: (part, page)}).
+    """
     try:
         carnet = data_carnet(data_id)
     except (ValueError, IndexError):
         return ""
-    page = (pages_of(carnet) if pages_of else {}).get(data_id)
-    return f"{_carnet_name(carnet)} · p. {page}" if page else _carnet_name(carnet)
+    location = (locations_of(carnet) if locations_of else {}).get(data_id)
+    if not location:
+        return _carnet_name(carnet)
+    part, page = location
+    return " · ".join([_carnet_name(carnet)] + ([f"partie {part}"] if part else []) + [f"p. {page}"])
 
 
-def _report_lines(items, page_idx, b_idx, pages_of):
+def _report_lines(items, page_idx, b_idx, locations_of):
     lines = []
     for k, item in enumerate(items or [], start=1):
         item = list(item) if isinstance(item, (list, tuple)) else [str(item)]
@@ -213,17 +228,17 @@ def _report_lines(items, page_idx, b_idx, pages_of):
         label, data_id, field_id, height = item[:4]
         lines.append((
             str(label or ""),
-            _origin(data_id, pages_of) if data_id else "",
+            _origin(data_id, locations_of) if data_id else "",
             str(field_id or f"p{page_idx}_report_{b_idx}_{k}"),
             _list_box_height(height),
         ))
     return lines
 
 
-def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
+def _add_block(layout, b_data, page_idx, b_idx, locations_of=None):
     """
-    Adds one spec block to the page: one PageLayout.add_* call (see BlockSpec). pages_of
-    resolves the origin of reports (carnet -> {data_id: page}); without it, a report
+    Adds one spec block to the page: one PageLayout.add_* call (see BlockSpec). locations_of
+    resolves the origin of reports (carnet -> {data_id: (part, page)}); without it, a report
     names the carnet only.
     """
     b_type = b_data.get("type", "")
@@ -399,7 +414,7 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
     elif b_type == "energy":
         layout.add_energy_check(b_data.get("field_prefix") or f"p{page_idx}_meteo_{b_idx}")
     elif b_type == "report":
-        layout.add_report(_report_lines(b_data.get("items"), page_idx, b_idx, pages_of), title=b_data.get("title"),
+        layout.add_report(_report_lines(b_data.get("items"), page_idx, b_idx, locations_of), title=b_data.get("title"),
                           columns=_as_number(b_data.get("columns"), 1, int))
     elif b_type == "space":
         layout.add_space(_length_pt(b_data.get("height_cm"), 0))
@@ -407,14 +422,16 @@ def _add_block(layout, b_data, page_idx, b_idx, pages_of=None):
         layout.page_break()
 
 
-def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None) -> bytes:
+def compile_workbook_from_spec(spec: WorkbookSpec, output_path=None, part=None) -> bytes:
     """
     Compiles a WorkbookSpec into a PDF: returns its bytes, or writes it to output_path
     (a file path) and returns None. Reports name the page of their data: in this document
     for the data it declares (a customized carnet may move it), otherwise in the reference
     workbook of the carnet it comes from (a module of the carnet de route reports the carnet's).
+    `part`: only the file of that part, for a carnet sent in one file per part (part_files),
+    its folio and eyebrows naming the part; ValueError for any other document.
     """
-    return _compile_with_reports(spec, output_path)[0]
+    return _compile_with_reports(spec, output_path, part)[0]
 
 
 def workbook_page_count(spec: WorkbookSpec) -> int:
@@ -439,8 +456,10 @@ def workbook_continuations(spec: WorkbookSpec) -> list:
     return [{k: fill[k] for k in ("pdf_page", "page", "used")} for fill in workbook_page_fills(spec) if fill["continued"]]
 
 
-def _compile_with_reports(spec: WorkbookSpec, output_path):
-    """Compiles the spec, its reports naming the page of their data (see compile_workbook_from_spec)."""
+def _compile_with_reports(spec: WorkbookSpec, output_path, part=None):
+    """Compiles the spec, or the file of one part, its reports naming where their data is (see compile_workbook_from_spec)."""
+    if part is not None and not spec.part_files:
+        raise ValueError("ce document ne se découpe pas en un fichier par partie")
     own = {}
     declared = _declared_data_ids(spec.pages)
     if spec.carnet is not None and any(
@@ -448,12 +467,13 @@ def _compile_with_reports(spec: WorkbookSpec, output_path):
         for page in spec.pages for block in page.blocks or [] if block.type == "report"
         for item in block.items or []
     ):
-        own = workbook_data_pages(spec)
+        own = workbook_data_locations(spec)
 
-    def pages_of(carnet):
-        return own if carnet == spec.carnet and own else reference_data_pages(carnet)
+    def locations_of(carnet):
+        return own if carnet == spec.carnet and own else reference_data_locations(carnet)
 
-    return _compile(spec, output_path, pages_of)
+    document = part_document(spec, part) if part is not None else spec
+    return _compile(document, output_path, locations_of, part)
 
 
 def workbook_data_pages(spec: WorkbookSpec) -> dict:
@@ -461,8 +481,23 @@ def workbook_data_pages(spec: WorkbookSpec) -> dict:
     return _compile(spec, io.BytesIO(), None)[1]
 
 
-def _compile(spec: WorkbookSpec, output_path, pages_of):
-    """Compiles the spec; returns (PDF bytes or None, {data_id: page}, number of pages)."""
+def workbook_data_locations(spec: WorkbookSpec) -> dict:
+    """
+    Where each data id of the spec is written, in the file the person fills: {data_id:
+    (part, page)}, the page that of the part's own file for a carnet in one file per part,
+    (None, page) otherwise.
+    """
+    if not spec.part_files:
+        return {data_id: (None, page) for data_id, page in workbook_data_pages(spec).items()}
+    return {data_id: (part, page) for part in part_numbers(spec)
+            for data_id, page in workbook_data_pages(part_document(spec, part)).items()}
+
+
+def _compile(spec: WorkbookSpec, output_path, locations_of, part=None):
+    """
+    Compiles the spec (the file of a `part`: its folio and eyebrows name it); returns (PDF
+    bytes or None, {data_id: page}, number of pages, page fills).
+    """
     # Gemini or the consultant may write emojis: ReportLab would drop them and leave gaps
     spec = _without_unsupported_glyphs(spec)
     data_pages = {}
@@ -470,7 +505,8 @@ def _compile(spec: WorkbookSpec, output_path, pages_of):
     short_title = plain_title(spec.chapter_title).rstrip(".!?… ")
     # A carnet of the bilan shows « carnet N/7 »; other workbooks their folio, or their title
     folio = spec.folio or ("" if spec.carnet is not None else short_title)
-    builder = DocumentBuilder(output_path=buffer or output_path, pastel=spec.pastel, folio=folio, carnet=spec.carnet)
+    builder = DocumentBuilder(output_path=buffer or output_path, pastel=spec.pastel, folio=folio, carnet=spec.carnet,
+                              part=part)
     builder.set_title(spec.pdf_title or f"{short_title} - {spec.subtitle}")
 
     # Helper factories to avoid late-binding closure issues in loops
@@ -765,7 +801,7 @@ def _compile(spec: WorkbookSpec, output_path, pages_of):
                 else:
                     b_data = block if isinstance(block, dict) else {}
                 layout.block_page = None
-                _add_block(layout, b_data, page_idx, b_idx, pages_of)
+                _add_block(layout, b_data, page_idx, b_idx, locations_of)
                 if b_data.get("data_id"):
                     data_pages.setdefault(b_data["data_id"], layout.block_page or c.getPageNumber())
             layout.render()
@@ -810,9 +846,12 @@ def _compile(spec: WorkbookSpec, output_path, pages_of):
     return pdf_bytes, data_pages, page_count, fills
 
 
-def build_reference_workbook(workbook_id, output_path):
-    """Compiles the reference workbook workbooks/<workbook_id>.json into output_path (a path or a BytesIO)."""
-    compile_workbook_from_spec(load_workbook(workbook_id), output_path)
+def build_reference_workbook(workbook_id, output_path, part=None):
+    """
+    Compiles the reference workbook workbooks/<workbook_id>.json into output_path (a path or
+    a BytesIO): the whole of it, or the file of one `part` (a carnet in one file per part).
+    """
+    compile_workbook_from_spec(load_workbook(workbook_id), output_path, part)
 
 
 @functools.lru_cache(maxsize=64)

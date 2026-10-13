@@ -16,7 +16,7 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 
 from .config import PDFStyle
-from .document_builder import carnet_eyebrow, document_pastel, document_style
+from .document_builder import carnet_eyebrow, document_pastel, document_style, part_eyebrow
 from .forms import create_input_field, create_checkbox, create_radio, reserve_field_name
 from .primitives import (
     content_frame,
@@ -337,7 +337,8 @@ def create_cover_page(c, title, number=None, eyebrow=None, tagline=None, promise
                  tracking=PDFStyle.TRACKING_TITLE_XL)
     if eyebrow is None:
         # In a carnet the row above already says « Carnet 3 sur 7 »
-        eyebrow = "Carnet de bord" if carnet not in (None, PDFStyle.CARNET_ROUTE) else carnet_eyebrow(c, number)
+        eyebrow = (part_eyebrow(c, "Carnet de bord") if carnet not in (None, PDFStyle.CARNET_ROUTE)
+                   else carnet_eyebrow(c, number))
     eyebrow_y = title_top + 0.45 * cm
     draw_eyebrow(c, x, eyebrow_y, eyebrow, max_width=width)
 

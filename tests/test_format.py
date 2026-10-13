@@ -8,7 +8,16 @@ from pydantic import ValidationError
 
 from workbook_generator import spec as spec_module
 from workbook_generator.compiler import compile_workbook_from_spec, workbook_data_pages
-from workbook_generator.spec import BlockSpec, PageSpec, WorkbookSpec, keep_fixed, tag_refs
+from workbook_generator.spec import (
+    BlockSpec,
+    PageSpec,
+    WorkbookSpec,
+    keep_fixed,
+    page_parts,
+    part_document,
+    part_file_name,
+    tag_refs,
+)
 
 
 def _flat_text(pdf):
@@ -91,6 +100,64 @@ def test_module_of_a_carnet_reports_the_pages_of_the_carnet(tmp_path, monkeypatc
     assert "CARNETDEROUTE·P.2" in _flat_text(compile_workbook_from_spec(module))
 
 
+# --- One file per part (carnet 7, carnet de route) ---------------------------------------
+
+def _two_files(carnet=7):
+    """A carnet in one file per part: each part has its cover, its pages and its back cover."""
+    return WorkbookSpec(carnet=carnet, parts=["Explorer vos pistes", "Tirer les leçons du terrain"], part_files=True,
+                        pages=[
+        PageSpec(template="cover", params={"cover_title": "Explorer *vos pistes.*"}, part=1),
+        _page("Vos fiches.", [_question("fiches", data_id="c7.fiches")], part=1),
+        PageSpec(template="closing", part=1),
+        PageSpec(template="cover", params={"cover_title": "Tirer les leçons *du terrain.*"}, part=2),
+        _page("Vos comptes rendus.", [_question("rendus")], part=2),
+        _page("Votre matrice.", [_question("matrice", data_id="c7.matrice")], part=2),
+        PageSpec(template="closing", part=2),
+    ])
+
+
+def test_a_part_compiles_as_a_file_of_its_own():
+    spec = _two_files()
+    pdf = compile_workbook_from_spec(spec, part=2)
+    doc = pymupdf.open(stream=pdf, filetype="pdf")
+    text = _flat_text(pdf)
+
+    assert doc.page_count == 4
+    assert doc.metadata["title"] == "Marge de Manœuvre · Carnet 7 · partie 2 · Tirer les leçons du terrain"
+    assert [w.field_name for page in doc for w in page.widgets()] == ["rendus", "matrice"]
+    assert "CARNETDEBORD·PARTIE2" in text  # the eyebrow of the cover
+    assert "CARNET7/7·PARTIE2·P.2" in text  # the folio
+    assert "fiches" not in text.lower()
+    with pytest.raises(ValueError):
+        compile_workbook_from_spec(WorkbookSpec(pages=[_page("Une.", [_question("a")], part=1)], parts=["Une"]), part=1)
+
+
+def test_a_page_that_lost_its_part_goes_with_the_page_before():
+    spec = _two_files().model_dump(exclude_unset=True)
+    del spec["pages"][0]["part"], spec["pages"][5]["part"]  # a retouch may drop it
+    spec = WorkbookSpec.model_validate(spec)
+
+    assert page_parts(spec) == [1, 1, 1, 2, 2, 2, 2]
+    assert [p.title for p in part_document(spec, 2).pages] == ["", "Vos comptes rendus.", "Votre matrice.", ""]
+
+
+def test_the_file_of_a_part_has_the_standard_name():
+    assert part_file_name(_two_files(), 1) == "Carnet_7_partie_1"
+    assert part_file_name(_two_files("route"), 2) == "Carnet_de_route_partie_2"
+
+
+def test_report_names_the_part_and_the_page_of_its_file(tmp_path, monkeypatch):
+    (tmp_path / "carnet-7.json").write_text(json.dumps(_two_files().model_dump(exclude_unset=True)), encoding="utf-8")
+    monkeypatch.setattr(spec_module, "WORKBOOKS_DIR", str(tmp_path))
+    route = WorkbookSpec(carnet="route", pages=[_page("Vos pistes.", [BlockSpec(type="report", items=[
+        ["Vos fiches", "c7.fiches", "r1"], ["Votre matrice", "c7.matrice", "r2"]])])])
+
+    text = _flat_text(compile_workbook_from_spec(route))
+
+    assert "CARNET7·PARTIE1·P.2" in text  # page 2 of the file of part 1
+    assert "CARNET7·PARTIE2·P.3" in text  # page 3 of the file of part 2, not 6 of the whole
+
+
 # --- Fixed and adaptable ------------------------------------------------------------------
 
 def _base():
@@ -139,14 +206,16 @@ def test_customization_keeps_what_is_fixed():
 
 
 def test_customization_keeps_the_parts():
-    base = tag_refs(WorkbookSpec(parts=["Les fondations"], pages=[_page("Un.", [_question("a")], part=1)]))
+    base = tag_refs(WorkbookSpec(parts=["Les fondations"], part_files=True,
+                                 pages=[_page("Un.", [_question("a")], part=1)]))
     out = json.loads(json.dumps(base))
     out["parts"] = ["Autre partie", "En plus"]
-    del out["pages"][0]["part"]
+    del out["pages"][0]["part"], out["part_files"]
 
     spec = WorkbookSpec.model_validate(keep_fixed(base, out))
 
     assert spec.parts == ["Les fondations"]
+    assert spec.part_files is True  # its files stay its files
     assert spec.pages[0].part == 1
 
 

@@ -8,42 +8,39 @@
     "Explorer vos pistes",
     "Tirer les leçons du terrain"
   ],
+  "part_files": true,
   "pages": [
     {
       "template": "cover",
       "params": {
-        "cover_title": "Explorer *le terrain.*",
+        "cover_title": "Explorer *vos pistes.*",
         "number": 7,
         "tagline": "Bilan de compétences",
-        "promise": "Trois pistes, vérifiées sur le terrain."
-      }
+        "promise": "Trois pistes face à vos critères, vos enquêtes lancées."
+      },
+      "part": 1
     },
     {
       "template": "summary",
       "title": "Aller voir *le terrain.*",
       "params": {
         "num": "7",
-        "intro_text": "Ce carnet prépare les séances 7 et 8, en deux parties. La première passe vos trois pistes au crible de vos critères et lance vos enquêtes. La seconde tire les leçons du terrain : ce qui confirme, ce qui contredit, et votre matrice de faisabilité.<br/><br/><b>Une enquête n'est pas une candidature : vous demandez un regard, pas un poste.</b>",
+        "intro_text": "Ce carnet prépare la séance 7. Il passe vos trois pistes au crible de vos critères et lance vos enquêtes. La partie 2, avant la séance 8, en tirera les leçons.<br/><br/><b>Une enquête n'est pas une candidature : vous demandez un regard, pas un poste.</b>",
         "points": [
-          "Partie 1 · Avant de commencer · Météo et récapitulatif · 10 min",
-          "Exercice 1 · Vos trois fiches · 1 h 10",
-          "Exercice 2 · Préparer vos enquêtes · 20 min",
-          "Fin de la partie 1 · 5 min",
-          "Partie 2 · Avant de reprendre · Météo et récapitulatif · 10 min",
-          "Exercice 3 · Vos comptes rendus · 45 min",
-          "Exercice 4 · Ce que le terrain vous a appris · 15 min",
-          "Exercice 5 · La matrice de faisabilité · 30 min",
-          "Exercice 6 · Ce que vous acceptez · 10 min",
-          "Fin de carnet · 10 min"
+          "Avant de commencer · Météo et récapitulatif · 10 min",
+          "Exercice 1 · Vos trois fiches · 1 h 10",
+          "Exercice 2 · Préparer vos enquêtes · 20 min",
+          "Fin de carnet · Vos trois fiches, vos enquêtes lancées · 5 min"
         ],
-        "duration": "1 h 45, puis 2 h",
-        "split": "Deux semaines par partie. Partie 1 : le récapitulatif et vos contacts d'abord (20 min), puis vos fiches, la grille et la fin (1 h 25). Partie 2 : le récapitulatif et vos comptes rendus (55 min), puis le terrain, la matrice et la fin (1 h 05)."
-      }
+        "duration": "1 h 45",
+        "split": "En deux fois : le récapitulatif et vos contacts d'abord (20 min), puis vos fiches, la grille et la fin (1 h 25)."
+      },
+      "part": 1
     },
     {
       "template": "composite",
       "title": "Avant de *commencer.*",
-      "part_title": "Partie 1 · Météo et récapitulatif · 10 min",
+      "part_title": "Météo et récapitulatif · 10 min",
       "blocks": [
         {
           "type": "energy",
@@ -661,7 +658,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Trois personnes à solliciter dans les dix jours, une par piste si possible : faites cette page dès le début de la partie 1, sans attendre vos fiches. Pensez d'abord à celles que vous connaissez : vos modèles (carnet 1, exercice 5), la personne de votre interview (carnet 2), celles repérées en fin de carnet 6. Le rendez-vous peut avoir lieu après la séance 7."
+            "Trois personnes à solliciter dans les dix jours, une par piste si possible : faites cette page dès le début de ce carnet, sans attendre vos fiches. Pensez d'abord à celles que vous connaissez : vos modèles (carnet 1, exercice 5), la personne de votre interview (carnet 2), celles repérées en fin de carnet 6. Le rendez-vous peut avoir lieu après la séance 7."
           ],
           "spacing_after_cm": 0.45,
           "fixed": true
@@ -783,13 +780,13 @@
     },
     {
       "template": "engagement",
-      "title": "Votre premier livrable.",
-      "part_title": "Fin de la partie 1 · 5 min",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 5 min",
       "params": {
         "lines": [
           "Je sollicite mes trois contacts dans les dix jours, sans attendre la séance 7.",
           "Une personne ne répond pas ? J'en sollicite une autre.",
-          "Je renvoie la partie 1 complétée avant la séance 7."
+          "Je renvoie ce carnet complété avant la séance 7."
         ],
         "field_prefix": "c7_partie_1",
         "livrable_title": "Vos trois fiches, vos enquêtes lancées",
@@ -803,9 +800,50 @@
       "part": 1
     },
     {
+      "template": "closing",
+      "params": {
+        "messages": [
+          "Vos pistes partent sur le terrain.",
+          "Prochaine étape : la séance 7. Renvoyez ce carnet complété d'ici là.",
+          "Ensuite, vos entretiens, puis la partie 2 : tirer les leçons du terrain."
+        ]
+      },
+      "fixed": true,
+      "part": 1
+    },
+    {
+      "template": "cover",
+      "params": {
+        "cover_title": "Tirer les leçons *du terrain.*",
+        "number": 7,
+        "tagline": "Bilan de compétences",
+        "promise": "Trois pistes, vérifiées sur le terrain."
+      },
+      "part": 2
+    },
+    {
+      "template": "summary",
+      "title": "Du terrain *à la matrice.*",
+      "params": {
+        "num": "7",
+        "intro_text": "Ce carnet prépare la séance 8. Il tire les leçons de vos enquêtes : ce qui confirme, ce qui contredit, et votre matrice de faisabilité. Gardez votre partie 1 à portée de main : vos fiches et vos contacts servent ici.<br/><br/><b>Le terrain ne décide pas à votre place : il vous donne de quoi choisir.</b>",
+        "points": [
+          "Avant de reprendre · Météo et récapitulatif · 10 min",
+          "Exercice 3 · Vos comptes rendus · 45 min",
+          "Exercice 4 · Ce que le terrain vous a appris · 15 min",
+          "Exercice 5 · La matrice de faisabilité · 30 min",
+          "Exercice 6 · Ce que vous acceptez · 10 min",
+          "Fin de carnet · Vos retours d'enquêtes et votre matrice · 10 min"
+        ],
+        "duration": "2 h",
+        "split": "En deux fois : le récapitulatif et vos comptes rendus (55 min), puis le terrain, la matrice et la fin (1 h 05)."
+      },
+      "part": 2
+    },
+    {
       "template": "composite",
       "title": "Avant de *reprendre.*",
-      "part_title": "Partie 2 · Météo et récapitulatif · 10 min",
+      "part_title": "Météo et récapitulatif · 10 min",
       "blocks": [
         {
           "type": "energy",
@@ -835,7 +873,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Vos comptes rendus et votre matrice suivent vos pistes d'aujourd'hui. Relisez vos contacts (exercice 2) : un rendez-vous manque encore ? Relancez dès le début, ou sollicitez une autre personne."
+            "Vos comptes rendus et votre matrice suivent vos pistes d'aujourd'hui. Relisez vos contacts (partie 1, exercice 2) : un rendez-vous manque encore ? Relancez dès le début, ou sollicitez une autre personne."
           ],
           "spacing_after_cm": 0.45
         },
@@ -1104,7 +1142,7 @@
         {
           "type": "paragraphs",
           "items": [
-            "Relisez vos fiches (exercice 1), écrites avant le terrain, puis vos comptes rendus. Pour chaque thème : ce que vous imaginiez, espoir ou crainte, puis ce que le terrain montre."
+            "Relisez vos fiches (partie 1, exercice 1), écrites avant le terrain, puis vos comptes rendus. Pour chaque thème : ce que vous imaginiez, espoir ou crainte, puis ce que le terrain montre."
           ],
           "spacing_after_cm": 0.45
         },
@@ -1382,7 +1420,7 @@
     },
     {
       "template": "engagement",
-      "title": "Votre second livrable.",
+      "title": "Votre livrable.",
       "part_title": "Fin de carnet · 10 min",
       "params": {
         "lines": [
@@ -1411,7 +1449,8 @@
           "Ensuite, le carnet de route : choisir, puis agir."
         ]
       },
-      "fixed": true
+      "fixed": true,
+      "part": 2
     }
   ],
   "title": "Explorer le terrain"

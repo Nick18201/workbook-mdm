@@ -1,5 +1,8 @@
 import importlib
 import io
+import os
+import runpy
+import sys
 
 import pymupdf
 import pytest
@@ -10,35 +13,48 @@ from workbook_generator.config import PDFStyle
 from workbook_generator.document_builder import DocumentBuilder
 from workbook_generator.primitives import draw_folio
 
-# (script module, generator function) of the CLI documents built from workbooks/
+# (script module, generator function, part) of the CLI documents built from workbooks/: carnet 7
+# and the carnet de route are one file per part
 DOCUMENTS = [
-    ("main_generate_carnet_0", "generate_workbook_carnet_0"),
-    ("main_generate_carnet_1", "generate_workbook_carnet_1"),
-    ("main_generate_carnet_2", "generate_workbook_carnet_2"),
-    ("main_generate_carnet_3", "generate_workbook_carnet_3"),
-    ("main_generate_carnet_4", "generate_workbook_carnet_4"),
-    ("main_generate_carnet_5", "generate_workbook_carnet_5"),
-    ("main_generate_carnet_6", "generate_workbook_carnet_6"),
-    ("main_generate_carnet_7", "generate_workbook_carnet_7"),
-    ("main_generate_carnet_de_route", "generate_workbook_carnet_de_route"),
-    ("main_generate_module_creation", "generate_workbook_module_creation"),
-    ("main_generate_module_reconversion", "generate_workbook_module_reconversion"),
-    ("main_generate_module_evolution_interne", "generate_workbook_module_evolution_interne"),
-    ("main_generate_business_plan", "generate_workbook_business_plan"),
-    ("main_generate_livret_competences", "generate_workbook_livret_competences"),
+    ("main_generate_carnet_0", "generate_workbook_carnet_0", None),
+    ("main_generate_carnet_1", "generate_workbook_carnet_1", None),
+    ("main_generate_carnet_2", "generate_workbook_carnet_2", None),
+    ("main_generate_carnet_3", "generate_workbook_carnet_3", None),
+    ("main_generate_carnet_4", "generate_workbook_carnet_4", None),
+    ("main_generate_carnet_5", "generate_workbook_carnet_5", None),
+    ("main_generate_carnet_6", "generate_workbook_carnet_6", None),
+    ("main_generate_carnet_7", "generate_workbook_carnet_7", 1),
+    ("main_generate_carnet_7", "generate_workbook_carnet_7", 2),
+    ("main_generate_carnet_de_route", "generate_workbook_carnet_de_route", 1),
+    ("main_generate_carnet_de_route", "generate_workbook_carnet_de_route", 2),
+    ("main_generate_module_creation", "generate_workbook_module_creation", None),
+    ("main_generate_module_reconversion", "generate_workbook_module_reconversion", None),
+    ("main_generate_module_evolution_interne", "generate_workbook_module_evolution_interne", None),
+    ("main_generate_business_plan", "generate_workbook_business_plan", None),
+    ("main_generate_livret_competences", "generate_workbook_livret_competences", None),
 ]
 
 
-@pytest.mark.parametrize("module, function", DOCUMENTS)
-def test_cli_document_stays_on_its_pages(module, function):
+@pytest.mark.parametrize("module, function, part", DOCUMENTS)
+def test_cli_document_stays_on_its_pages(module, function, part):
     buffer = io.BytesIO()
-    getattr(importlib.import_module(module), function)(buffer)
+    getattr(importlib.import_module(module), function)(buffer, **({"part": part} if part else {}))
     doc = pymupdf.open(stream=buffer.getvalue(), filetype="pdf")
 
     _assert_nothing_off_page(doc)
     # Every inner page carries the folio; the cover and the back cover do not
     for page in list(doc)[1:-1]:
         assert "MARGE DE MANŒUVRE" in page.get_text(), page.number
+
+
+@pytest.mark.parametrize("script, name", [("main_generate_carnet_7", "Carnet_7"),
+                                          ("main_generate_carnet_de_route", "Carnet_de_route")])
+def test_cli_writes_one_file_per_part(script, name, tmp_path, monkeypatch):
+    """The name of each file is the key of the app of the bilan: « Carnet_7_partie_1.pdf »."""
+    monkeypatch.setattr(sys, "argv", [script, "--output", str(tmp_path / f"{name}.pdf")])
+    runpy.run_path(os.path.join(PDFStyle.PROJECT_DIR, "Scripts", f"{script}.py"), run_name="__main__")
+
+    assert sorted(os.listdir(tmp_path)) == [f"{name}_partie_1.pdf", f"{name}_partie_2.pdf"]
 
 
 def test_programme_keeps_its_pages():
