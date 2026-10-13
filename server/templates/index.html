@@ -1458,8 +1458,11 @@ MA PROCHAINE ACTION :`;
       else if (spec.carnet === 'route') bits.push('Carnet de route');
       else if (spec.folio) bits.push(spec.folio);
       if (spec.beneficiary_name) bits.push(`pour ${spec.beneficiary_name}`);
-      bits.push(pdfPages ? `${pdfPages} pages dans le PDF` : `${spec.pages.length} pages`);
+      const files = partFiles(spec);
+      if (files.length) bits.push(`${files.length} fichiers, un par partie`);
+      bits.push(pdfPages ? `${pdfPages} pages ${files.length ? 'en tout' : 'dans le PDF'}` : `${spec.pages.length} pages`);
       document.getElementById('hd_meta').textContent = bits.join(' · ');
+      document.getElementById('btn_pdf_label').textContent = pdfButtonLabel(spec);
       document.title = `${plainTitle(spec.chapter_title) || 'Carnet'} · Marge de Manœuvre`;
       renderVersionsButton();
     }
@@ -2703,18 +2706,35 @@ MA PROCHAINE ACTION :`;
     // --- 9. Downloads, waits, messages -----------------------------------------------------------
     async function compileCurrentSpec() {
       if (!currentWorkbookSpec) return;
+      const spec = currentWorkbookSpec;
       const btn = document.getElementById('btn_pdf'), label = document.getElementById('btn_pdf_label');
+      // A carnet in one file per part (carnet 7, carnet de route) downloads as one PDF per part
+      const files = partFiles(spec);
       btn.disabled = true;
-      label.textContent = 'Préparation du PDF…';
+      label.textContent = files.length ? 'Préparation des PDF…' : 'Préparation du PDF…';
       try {
-        const res = await postJson('/api/compile', currentWorkbookSpec);
-        downloadBlob(await res.blob(), `${fileBaseName(currentWorkbookSpec)}.pdf`);
+        for (const part of files.length ? files : [null]) {
+          const res = await postJson(part ? `/api/compile?part=${part}` : '/api/compile', spec);
+          downloadBlob(await res.blob(), `${fileBaseName(spec, part)}.pdf`);
+        }
       } catch (err) {
         reportError(`Le PDF n'a pas pu être préparé : ${err.message}`);
       } finally {
         btn.disabled = false;
-        label.textContent = 'Télécharger le PDF';
+        label.textContent = pdfButtonLabel(spec);
       }
+    }
+
+    // The parts of a carnet sent in one file per part ('part_files'), or none
+    function partFiles(spec) {
+      if (!spec || !spec.part_files) return [];
+      if (spec.parts && spec.parts.length) return spec.parts.map((_, i) => i + 1);
+      return [...new Set(spec.pages.map(page => page.part).filter(Boolean))].sort((a, b) => a - b);
+    }
+
+    function pdfButtonLabel(spec) {
+      const files = partFiles(spec);
+      return files.length ? `Télécharger les ${files.length} PDF` : 'Télécharger le PDF';
     }
 
     function downloadBlob(blob, filename) {
@@ -2728,12 +2748,16 @@ MA PROCHAINE ACTION :`;
       a.remove();
     }
 
-    // Names of the downloads: « Carnet_7_Explorer_le_terrain », the title otherwise, then the beneficiary
-    function fileBaseName(spec) {
+    // Names of the downloads: « Carnet_7_Explorer_le_terrain », the title otherwise, then the beneficiary.
+    // The file of a part keeps the standard name the app of the bilan reads (spec.part_file_name):
+    // « Carnet_7_partie_2 », then the beneficiary
+    function fileBaseName(spec, part = null) {
       const slug = text => plainTitle(text || '').normalize('NFKD').replace(/[̀-ͯ]/g, '')
         .replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
-      const parts = [Number.isInteger(spec.carnet) ? `Carnet_${spec.carnet}` : '', slug(spec.chapter_title), slug(spec.beneficiary_name)]
-        .filter(Boolean);
+      const carnet = spec.carnet === 'route' ? 'Carnet_de_route' : spec.carnet != null ? `Carnet_${spec.carnet}` : 'Livret';
+      const head = part ? [`${carnet}_partie_${part}`]
+        : [Number.isInteger(spec.carnet) ? `Carnet_${spec.carnet}` : '', slug(spec.chapter_title)];
+      const parts = [...head, slug(spec.beneficiary_name)].filter(Boolean);
       return parts.length ? parts.join('_').slice(0, 120) : 'Carnet';
     }
 

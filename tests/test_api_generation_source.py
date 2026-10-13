@@ -279,6 +279,23 @@ def test_a_retouch_of_one_page_sends_it_alone_and_puts_it_back(client, monkeypat
     assert spec["pages"][2]["part"] == spec["pages"][3]["part"] == 2
 
 
+def test_a_retouch_of_a_whole_carnet_in_one_file_per_part_keeps_its_files(client, monkeypatch):
+    # Gemini may give the whole document back without its head: its files stay its files
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    base = dict(RETOUCH_BASE, part_files=True)
+    answer = {"spec": {"chapter_title": "Mes *enquêtes.*", "pages": [
+        dict(page, title=page.get("title", "") + " Retouchée") for page in RETOUCH_BASE["pages"]]}}
+    prompts = []
+    monkeypatch.setattr(gemini_service.genai, "Client", _recording_client(answer, prompts))
+
+    r = client.post("/api/iterate", json={"current_spec": base, "feedback": "Allège tout"})
+    spec = r.json()["spec"]
+
+    assert r.headers["X-MDM-Generation"] == "ai"
+    assert "un fichier par partie" in prompts[0]
+    assert spec["part_files"] is True and spec["parts"] == ["Avant", "Après"]
+
+
 def test_a_retouch_of_several_pages_must_give_them_back_one_for_one(client, monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", "test-key")
     answer = {"spec": {"pages": [{"template": "composite", "title": "Une et deux.", "blocks": []}]}}

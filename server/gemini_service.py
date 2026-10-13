@@ -717,7 +717,7 @@ def refine_spec_with_gemini(request: IterateRequest) -> GenerationResult:
     user_prompt = f"""Voici la spécification actuelle du livret pédagogique :
 ---
 {current_json}
----{notes_context}{_pages_scope(request.current_spec, numbers)}
+---{notes_context}{_pages_scope(request.current_spec, numbers)}{_files_scope(request.current_spec, numbers)}
 CONSIGNE D'AJUSTEMENT OU RETOUCHE :
 "{request.feedback}"
 
@@ -726,6 +726,9 @@ Génère la réponse JSON complète avec 'spec', 'changes_summary' et 'pedagogic
 
     def build(data: dict) -> IterateResponse:
         answer = data.get("spec", data)
+        if not numbers:
+            # A carnet in one file per part stays one: its parts are its files
+            answer.update({key: current[key] for key in ("parts", "part_files") if key in current})
         spec = WorkbookSpec(**(put_pages_back(current, numbers, answer) if numbers else answer))
         return IterateResponse(
             spec=spec if _from_reference(request.current_spec) else balance_breaks(spec),
@@ -759,6 +762,17 @@ def _pages_scope(spec: WorkbookSpec, numbers: list) -> str:
            " Sauf si la consigne le demande, ne change ni le nom ni la durée d'un exercice : l'ouverture du "
            "document, que tu ne reçois pas, les donne.")
         + "\n"
+    )
+
+
+def _files_scope(spec: WorkbookSpec, numbers: list) -> str:
+    """Tells Gemini a whole carnet in one file per part keeps its files (nothing otherwise)."""
+    if numbers or not spec.part_files:
+        return ""
+    return (
+        "\nFICHIERS : ce carnet est envoyé en un fichier par partie, chacun avant sa séance. Chaque page garde "
+        "sa partie ('part') ; chaque partie a sa couverture, son ouverture, sa fin de carnet et son dos, qui ne "
+        "parlent que d'elle.\n"
     )
 
 
@@ -818,6 +832,8 @@ def _part_scope(spec: WorkbookSpec, part: Optional[int]) -> str:
         f"Ce livret est long : tu n'en reçois que la partie {part} sur {max(len(titles), part)}{name}. "
         "Personnalise ces pages seulement et renvoie-les toutes, dans le même ordre : "
         "les autres parties sont personnalisées à part."
+        + (" Cette partie est un fichier à elle seule, envoyé avant sa séance : sa couverture, son ouverture et "
+           "sa fin de carnet ne parlent que d'elle." if spec.part_files else "")
         + (f" Les exemples des autres parties prennent déjà ces métiers : {', '.join(taken)} ; prends-en d'autres."
            if taken else "")
     )

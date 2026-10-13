@@ -29,6 +29,8 @@ Ce debrief fait le point sur tous les documents du bilan tels qu'ils sont livré
 
 Les pages sont celles du PDF interactif, pages de suite comprises. Les temps d'écriture sont ceux qu'annonce l'ouverture de chaque carnet.
 
+**Mise à jour du 13 octobre : un fichier par partie.** Le carnet 7 et le carnet de route sont désormais livrés en deux fichiers, chacun envoyé avant sa séance : « Carnet 7 · partie 1 · Explorer vos pistes » (14 pages) puis « partie 2 · Tirer les leçons du terrain » (12 pages) ; « Carnet de route · partie 1 · Prouver et préparer le choix » (12 pages) puis « partie 2 · Décider et agir » (17 pages). Chaque fichier a sa couverture, son ouverture, son livrable et son dos. Le reste de ce debrief ne change pas : le carnet 7 sert aux séances 7 et 8, le carnet de route aux séances 9 et 10, et le site peut continuer à parler de deux parties.
+
 **Le travail personnel.** Les carnets 1 à 7 et le carnet de route demandent 19 h 30 d'écriture, dans la fourchette « 10 à 20 h » du site. Un module ajoute 1 h 45 à 2 h : avec lui, le parcours passe à 21 h 15 ou 21 h 30, au-dessus des 20 h annoncées. Le programme PDF le dit désormais des trois modules : « Selon votre projet, un module de 1 h 45 à 2 h s'ajoute entre les séances 9 et 10. » (section 8).
 
 ## 3. Ce que tous les carnets ont en commun

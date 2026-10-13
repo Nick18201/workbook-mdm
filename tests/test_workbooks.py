@@ -2,6 +2,7 @@ import functools
 import io
 import json
 import os
+import re
 
 import pymupdf
 import pytest
@@ -11,7 +12,12 @@ from server.app import app
 from server.predefined_workbooks import CATALOGUE, get_predefined_spec
 from workbook_generator import components, forms
 from workbook_generator import spec as spec_module
-from workbook_generator.compiler import build_reference_workbook, compile_workbook_from_spec, reference_page_count
+from workbook_generator.compiler import (
+    build_reference_workbook,
+    compile_workbook_from_spec,
+    reference_data_locations,
+    reference_page_count,
+)
 from workbook_generator.spec import (
     ANSWERS,
     WORKBOOKS_DIR,
@@ -20,6 +26,9 @@ from workbook_generator.spec import (
     WorkbookSpec,
     data_carnet,
     load_workbook,
+    part_document,
+    part_numbers,
+    part_title,
 )
 
 WORKBOOK_IDS = sorted(name[:-5] for name in os.listdir(WORKBOOKS_DIR) if name.endswith(".json"))
@@ -250,6 +259,156 @@ def test_reports_point_to_declared_data():
                     source = data_carnet(item[1])
                     if source in declared:
                         assert item[1] in declared[source], (workbook_id, item[1])
+
+
+# --- Carnet 7 and the carnet de route: one file per part, one per session ------------------
+
+PART_FILE_IDS = [workbook_id for workbook_id, raw in _raw_workbooks() if raw.get("part_files")]
+
+
+def test_carnet_7_and_the_carnet_de_route_have_one_file_per_part():
+    """The app of the bilan sends one file per session: these two carnets cover two sessions each."""
+    assert PART_FILE_IDS == ["carnet-7", "carnet-de-route"]
+
+
+@functools.lru_cache(maxsize=None)
+def _part_pdf(workbook_id, part):
+    buffer = io.BytesIO()
+    build_reference_workbook(workbook_id, buffer, part)
+    return buffer.getvalue()
+
+
+def _flat(pdf_bytes):
+    """The text of a PDF without spaces: tracked capitals come out letter by letter."""
+    return "".join("".join(page.get_text().split()) for page in pymupdf.open(stream=pdf_bytes, filetype="pdf"))
+
+
+@pytest.mark.parametrize("workbook_id", PART_FILE_IDS)
+def test_each_part_reads_as_a_whole_carnet(workbook_id):
+    """
+    Its cover, its opener with only its exercises and its writing time, its exercises, its
+    deliverable and its back cover; its folio names the part, and no text speaks of a part
+    of the same file any more (« Fin de la partie 1 », « Je renvoie la partie 1 complétée »).
+    """
+    spec = load_workbook(workbook_id)
+    assert all(page.part for page in spec.pages)
+    for part in part_numbers(spec):
+        document = part_document(spec, part)
+        templates = [page.template for page in document.pages]
+        assert templates[:2] == ["cover", "summary"] and templates[-2:] == ["engagement", "closing"], part
+        assert templates.count("cover") == templates.count("summary") == 1, part
+
+        opener = document.pages[1].params
+        listed = {int(n) for n in re.findall(r"Exercice\s(\d+)", " ".join(opener["points"]))}
+        written = {int(n) for page in document.pages for n in re.findall(r"^Exercice\s(\d+)", page.part_title or "")}
+        assert listed == written and opener["duration"], part
+        texts = " ".join(str(v) for page in document.pages for v in _strings(page.model_dump())).replace("\xa0", " ")
+        assert not re.search(r"Fin de la partie|la partie \d complétée|\bPartie \d ·", texts), part
+
+        doc = pymupdf.open(stream=_part_pdf(workbook_id, part), filetype="pdf")
+        assert doc.metadata["title"] == f"Marge de Manœuvre · {part_title(spec, part)}"
+        assert f"·PARTIE{part}·P.2" in "".join(doc[1].get_text().split())  # the folio of the opener
+
+
+def _strings(value):
+    if isinstance(value, str):
+        return [value]
+    if isinstance(value, dict):
+        return [s for v in value.values() for s in _strings(v)]
+    if isinstance(value, list):
+        return [s for v in value for s in _strings(v)]
+    return []
+
+
+@pytest.mark.parametrize("workbook_id", PART_FILE_IDS)
+def test_each_part_keeps_the_field_ids_of_the_carnet(workbook_id):
+    """The app reads the answers by field: each field in one file only, with the id it had in the whole carnet."""
+    spec = load_workbook(workbook_id)
+    fields = [{w.field_name for page in pymupdf.open(stream=_part_pdf(workbook_id, part), filetype="pdf")
+               for w in page.widgets()} for part in part_numbers(spec)]
+    whole = {w.field_name for page in pymupdf.open(stream=_workbook_pdf(workbook_id), filetype="pdf")
+             for w in page.widgets()}
+
+    assert not set.intersection(*fields)
+    assert set.union(*fields) == whole
+
+
+@pytest.mark.parametrize("workbook_id", PART_FILE_IDS)
+def test_each_part_has_unique_field_ids(workbook_id, monkeypatch):
+    reserve = forms.reserve_field_name
+    repeated = []
+
+    def checking_reserve(form, name):
+        if str(name).replace(".", "_") in getattr(form, "_mdm_field_names", set()):
+            repeated.append(name)
+        return reserve(form, name)
+
+    monkeypatch.setattr(forms, "reserve_field_name", checking_reserve)
+    for part in part_numbers(load_workbook(workbook_id)):
+        build_reference_workbook(workbook_id, io.BytesIO(), part)
+    assert repeated == []
+
+
+def _field_ids(value):
+    """The field ids and prefixes a page or a block names, in its rows and items too."""
+    if isinstance(value, dict):
+        own = [value[k] for k in ("field_id", "field_prefix") if isinstance(value.get(k), str)]
+        return own + [i for v in value.values() for i in _field_ids(v)]
+    if isinstance(value, list):
+        # a fields_card field or a rating_grid line: [label, field_id, …]
+        own = [value[1]] if len(value) > 1 and isinstance(value[0], str) and isinstance(value[1], str) else []
+        return own + [i for v in value for i in _field_ids(v)]
+    return []
+
+
+def test_reports_name_the_part_and_the_page_of_its_file():
+    """« carnet 7 · partie 2 · p. 9 »: the page of the part's own file where the data is written."""
+    for workbook_id in PART_FILE_IDS:
+        raw = dict(_raw_workbooks())[workbook_id]
+        locations = reference_data_locations(raw["carnet"])
+        assert set(locations) == set(_declared_data_ids(raw))
+        for page in raw["pages"]:
+            for holder in [page] + (page.get("blocks") or []):
+                if "data_id" not in holder:
+                    continue
+                part, number = locations[holder["data_id"]]
+                assert part == page["part"], holder["data_id"]
+                pdf_page = pymupdf.open(stream=_part_pdf(workbook_id, part), filetype="pdf")[number - 1]
+                names = {w.field_name for w in pdf_page.widgets()}
+                assert any(name.startswith(i) for name in names for i in _field_ids(holder)), (holder["data_id"], number)
+
+    # Every document that reports such data prints its part and its page
+    for workbook_id, raw in _raw_workbooks():
+        reported = {item[1] for page in raw["pages"] for block in page.get("blocks") or []
+                    if block["type"] == "report" for item in block["items"]}
+        expected = set()
+        for data_id in reported:
+            carnet = data_carnet(data_id)
+            if carnet in (7, "route") and data_id in reference_data_locations(carnet):
+                part, number = reference_data_locations(carnet)[data_id]
+                expected.add(f"{'CARNETDEROUTE' if carnet == 'route' else 'CARNET7'}·PARTIE{part}·P.{number}")
+        spec = load_workbook(workbook_id)
+        pdfs = [_part_pdf(workbook_id, part) for part in part_numbers(spec)] if spec.part_files else [
+            _workbook_pdf(workbook_id)]
+        text = "".join(_flat(pdf) for pdf in pdfs)
+        assert all(origin in text for origin in expected), (workbook_id, expected)
+
+
+def test_app_downloads_a_part_under_its_standard_name():
+    """The app of the bilan recognizes the carnet and its part by the name: « Carnet_7_partie_2 », then the person."""
+    client = TestClient(app)
+    spec = client.get("/api/templates/carnet-7").json()
+
+    pdf = client.post("/api/compile?part=2", json=spec)
+    named = client.post("/api/compile?part=2", json=dict(spec, beneficiary_name="Camille Roux"))
+    whole = client.post("/api/compile?part=1", json=client.get("/api/templates/carnet-1").json())
+
+    assert pdf.status_code == 200
+    assert "filename=Carnet_7_partie_2.pdf" in pdf.headers["content-disposition"]
+    assert "filename=Carnet_7_partie_2_Camille_Roux.pdf" in named.headers["content-disposition"]
+    cli = pymupdf.open(stream=_part_pdf("carnet-7", 2), filetype="pdf")
+    assert [p.get_text() for p in pymupdf.open(stream=pdf.content, filetype="pdf")] == [p.get_text() for p in cli]
+    assert whole.status_code == 422  # carnet 1 is one file
 
 
 def test_answer_sizes_of_the_format_are_those_of_the_layout():

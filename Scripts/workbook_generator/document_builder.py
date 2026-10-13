@@ -13,6 +13,7 @@ class DocumentStyle:
     pastel: str = PDFStyle.DEFAULT_PASTEL
     folio: str = ""  # e.g. "carnet 3/7" or a short title; the page number is added after it
     carnet: object = None  # 0 to 7 or PDFStyle.CARNET_ROUTE for a carnet of the bilan, else None
+    part: int = None  # the part a file holds, for a carnet sent in one file per part (carnet 7, carnet de route)
     # Pages of PageLayout as (page number, share of the page height their content uses, True
     # on a « (suite) » page): a continuation that holds one small block is a layout to fix
     page_fills: list = field(default_factory=list)
@@ -29,29 +30,43 @@ def document_pastel(c):
     return PDFStyle.PASTELS.get(name, PDFStyle.PASTELS[PDFStyle.DEFAULT_PASTEL])
 
 
-def carnet_folio(carnet):
-    """Folio of a carnet of the bilan: « carnet 3/7 », « carnet de route » or « carnet 0 »."""
+def carnet_folio(carnet, part=None):
+    """
+    Folio of a carnet of the bilan: « carnet 3/7 », « carnet de route » or « carnet 0 »; the
+    file of one of its parts adds it: « carnet 7/7 · partie 2 ».
+    """
     if carnet == PDFStyle.CARNET_ROUTE:
-        return "carnet de route"
-    if carnet == PDFStyle.CARNET_OFFERED:
-        return f"carnet {carnet}"
-    return f"carnet {carnet}/{PDFStyle.CARNET_COUNT}"
+        folio = "carnet de route"
+    elif carnet == PDFStyle.CARNET_OFFERED:
+        folio = f"carnet {carnet}"
+    else:
+        folio = f"carnet {carnet}/{PDFStyle.CARNET_COUNT}"
+    return f"{folio} · partie {part}" if part else folio
 
 
 def carnet_eyebrow(c, number=None):
     """
     Eyebrow of a cover or an opener: « Carnet de route » for the carnet de route, « Avant le
     bilan · carnet 0 » for the carnet offered before it, « Carnet de bord · carnet N » for a
-    numbered document, « Carnet de bord » otherwise.
+    numbered document, « Carnet de bord » otherwise; the file of a part adds it (« Carnet de
+    route · partie 1 »).
     """
     carnet = document_style(c).carnet
     if carnet == PDFStyle.CARNET_ROUTE:
-        return "Carnet de route"
-    if carnet == PDFStyle.CARNET_OFFERED:
-        return f"Avant le bilan · carnet {carnet}"
-    if number in (None, "") and carnet is not None:
-        number = carnet
-    return f"Carnet de bord · carnet {number}" if number not in (None, "") else "Carnet de bord"
+        eyebrow = "Carnet de route"
+    elif carnet == PDFStyle.CARNET_OFFERED:
+        eyebrow = f"Avant le bilan · carnet {carnet}"
+    else:
+        if number in (None, "") and carnet is not None:
+            number = carnet
+        eyebrow = f"Carnet de bord · carnet {number}" if number not in (None, "") else "Carnet de bord"
+    return part_eyebrow(c, eyebrow)
+
+
+def part_eyebrow(c, eyebrow):
+    """An eyebrow of the cover or the opener, with the part a file holds: « Carnet de bord · partie 1 »."""
+    part = document_style(c).part
+    return f"{eyebrow} · partie {part}" if part else eyebrow
 
 
 class _PageCanvas(canvas.Canvas):
@@ -78,15 +93,16 @@ class DocumentBuilder:
     offered before it, which sets its pastel and the folio « carnet N/7 », « carnet de route »
     or « carnet 0 ». Otherwise pastel is a
     PDFStyle.PASTELS key (lilac by default) and folio what the page footer shows between
-    the brand and the page number (a short title).
+    the brand and the page number (a short title). part: the part of a carnet this file holds
+    (one file per part), shown in the folio and the eyebrows of the cover and the opener.
     """
-    def __init__(self, output_path, pastel=None, folio="", carnet=None):
+    def __init__(self, output_path, pastel=None, folio="", carnet=None, part=None):
         self.output_path = output_path
         if carnet not in PDFStyle.CARNET_PASTELS:
             carnet = None
         if carnet is not None:
             pastel = pastel or PDFStyle.CARNET_PASTELS[carnet]
-            folio = folio or carnet_folio(carnet)
+            folio = folio or carnet_folio(carnet, part)
 
         # Register fonts automatically
         register_fonts()
@@ -106,6 +122,7 @@ class DocumentBuilder:
             pastel=pastel if pastel in PDFStyle.PASTELS else PDFStyle.DEFAULT_PASTEL,
             folio=folio or "",
             carnet=carnet,
+            part=part,
         )
 
     def set_title(self, title):

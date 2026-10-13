@@ -233,3 +233,9 @@ def create_cli(description, default_output):
         help="Le nom du fichier PDF généré.",
     )
     return parser.parse_args()
+
+
+def part_output(output, part):
+    """The file of one part, beside the output asked for: « Carnet_7.pdf » -> « Carnet_7_partie_1.pdf »."""
+    root, ext = os.path.splitext(output)
+    return f"{root}_partie_{part}{ext or '.pdf'}"

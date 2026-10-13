@@ -7,45 +7,40 @@
     "Prouver et préparer le choix",
     "Décider et agir"
   ],
+  "part_files": true,
   "pages": [
     {
       "template": "cover",
+      "part": 1,
       "params": {
-        "cover_title": "Décider *et agir.*",
+        "cover_title": "Prouver et préparer *le choix.*",
         "number": "",
         "tagline": "Bilan de compétences",
-        "promise": "Vos preuves, deux pistes, un plan daté."
+        "promise": "Vos preuves, avant de choisir."
       }
     },
     {
       "template": "summary",
-      "title": "De vos preuves *à votre plan.*",
+      "title": "Rassembler *vos preuves.*",
+      "part": 1,
       "params": {
         "num": "",
-        "intro_text": "Ce carnet prépare les séances 9 et 10, en deux parties. La première rassemble vos preuves : votre profil, vos compétences, deux récits. La seconde fait de votre choix un plan : piste A, piste B, feuilles de route et premières actions.<br/><br/><b>Votre profil, vos compétences et vos récits peuvent se montrer en entretien. Vos seuils, vos garde-fous et le chemin parcouru restent à vous.</b>",
+        "intro_text": "Ce carnet prépare la séance 9. Il rassemble vos preuves : votre profil, vos compétences, deux récits. La partie 2, avant la séance 10, fera de votre choix un plan.<br/><br/><b>Votre profil, vos compétences et vos récits peuvent se montrer en entretien.</b>",
         "points": [
-          "Partie 1 · Avant de commencer · Météo et récapitulatif · 10 min",
+          "Avant de commencer · Météo et récapitulatif · 10 min",
           "Exercice 1 · Votre profil · 10 min",
           "Exercice 2 · Vos compétences prouvées · 35 min",
           "Exercice 3 · Deux récits d'action · 30 min",
-          "Fin de la partie 1 · 5 min",
-          "Partie 2 · Avant de reprendre · Météo et récapitulatif · 10 min",
-          "Exercice 4 · Piste A, piste B · 20 min",
-          "Exercice 5 · Vos feuilles de route · 25 min",
-          "Exercice 6 · Le module de votre projet · 5 min",
-          "Exercice 7 · Vos premières actions · 10 min",
-          "Exercice 8 · Garde-fous et soutiens · 10 min",
-          "Exercice 9 · Le chemin parcouru · 20 min",
-          "Fin de carnet · 5 min"
+          "Fin de carnet · Vos preuves · 5 min"
         ],
-        "duration": "1 h 30, puis 1 h 45",
-        "split": "Partie 1 : votre profil et vos compétences (55 min), puis vos récits et la fin (35 min). Partie 2 : vos pistes et vos feuilles de route (55 min), puis le reste (50 min). Le module de votre projet s'ajoute, si votre projet en demande un. Gardez vos carnets à portée de main : celui-ci en reprend beaucoup."
+        "duration": "1 h 30",
+        "split": "En deux fois : le récapitulatif, votre profil et vos compétences (55 min), puis vos récits et la fin (35 min). Gardez vos carnets à portée de main : celui-ci en reprend beaucoup."
       }
     },
     {
       "template": "composite",
       "title": "Avant de *commencer.*",
-      "part_title": "Partie 1 · Météo et récapitulatif · 10 min",
+      "part_title": "Météo et récapitulatif · 10 min",
       "part": 1,
       "blocks": [
         {
@@ -612,14 +607,14 @@
     },
     {
       "template": "engagement",
-      "title": "Votre premier livrable.",
-      "part_title": "Fin de la partie 1 · 5 min",
+      "title": "Votre livrable.",
+      "part_title": "Fin de carnet · 5 min",
       "part": 1,
       "params": {
         "lines": [
           "Je relis mes trois scénarios, mon tableau de compétences sous les yeux.",
           "Je laisse mûrir mon choix : il se fait en séance 9, pas avant.",
-          "Je renvoie la partie 1 complétée avant la séance 9, et je garde mon carnet 7 à portée de main."
+          "Je renvoie ce carnet complété avant la séance 9, et je garde mon carnet 7 à portée de main."
         ],
         "field_prefix": "route_partie_1",
         "livrable_title": "Vos preuves",
@@ -632,9 +627,52 @@
       }
     },
     {
+      "template": "closing",
+      "part": 1,
+      "fixed": true,
+      "params": {
+        "messages": [
+          "Vos preuves sont prêtes.",
+          "Prochaine étape : la séance 9. Renvoyez ce carnet complété d'ici là.",
+          "Ensuite, la partie 2 : décider et agir."
+        ]
+      }
+    },
+    {
+      "template": "cover",
+      "part": 2,
+      "params": {
+        "cover_title": "Décider *et agir.*",
+        "number": "",
+        "tagline": "Bilan de compétences",
+        "promise": "Deux pistes, un plan daté."
+      }
+    },
+    {
+      "template": "summary",
+      "title": "De vos preuves *à votre plan.*",
+      "part": 2,
+      "params": {
+        "num": "",
+        "intro_text": "Ce carnet prépare la séance 10. Il fait de votre choix un plan : piste A, piste B, feuilles de route et premières actions.<br/><br/><b>Vos seuils, vos garde-fous et le chemin parcouru restent à vous.</b>",
+        "points": [
+          "Avant de reprendre · Météo et récapitulatif · 10 min",
+          "Exercice 4 · Piste A, piste B · 20 min",
+          "Exercice 5 · Vos feuilles de route · 25 min",
+          "Exercice 6 · Le module de votre projet · 5 min",
+          "Exercice 7 · Vos premières actions · 10 min",
+          "Exercice 8 · Garde-fous et soutiens · 10 min",
+          "Exercice 9 · Le chemin parcouru · 20 min",
+          "Fin de carnet · Vos feuilles de route et vos premières actions · 5 min"
+        ],
+        "duration": "1 h 45",
+        "split": "En deux fois : vos pistes et vos feuilles de route (55 min), puis le reste (50 min). Le module de votre projet s'ajoute, si votre projet en demande un. Gardez votre partie 1 et votre carnet 7 à portée de main : celui-ci en reprend beaucoup."
+      }
+    },
+    {
       "template": "composite",
       "title": "Avant de *reprendre.*",
-      "part_title": "Partie 2 · Météo et récapitulatif · 10 min",
+      "part_title": "Météo et récapitulatif · 10 min",
       "part": 2,
       "blocks": [
         {
@@ -768,7 +806,7 @@
               }
             ],
             [
-              "Mes atouts pour y aller (exercices 2 et 3)",
+              "Mes atouts pour y aller (partie 1, exercices 2 et 3)",
               {
                 "field_id": "route_piste_a_atouts",
                 "placeholder": "Piste A : mes atouts pour y aller"
@@ -1648,6 +1686,7 @@
     },
     {
       "template": "closing",
+      "part": 2,
       "fixed": true,
       "params": {
         "messages": [

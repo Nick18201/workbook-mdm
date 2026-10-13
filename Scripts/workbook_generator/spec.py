@@ -323,6 +323,9 @@ class WorkbookSpec(BaseModel):
     parts: Optional[List[str]] = Field(
         None, max_length=MAX_PARTS, description="Titres des parties d'un long livret, que l'app personnalise une à une"
     )
+    part_files: Optional[bool] = Field(
+        None, description="Un fichier par partie : chacune a sa couverture, son ouverture, sa fin de carnet et son dos"
+    )
     pages: List[PageSpec] = Field(
         default_factory=list, max_length=MAX_PAGES, description="Liste ordonnée des pages du livret"
     )
@@ -347,7 +350,7 @@ class WorkbookSpec(BaseModel):
 # --- Customization: what is fixed stays fixed -------------------------------------
 
 REF_KEY = "_ref"  # position of a page (« p3 ») or a block (« p3.b2 ») in the spec sent to Gemini
-IDENTITY_KEYS = ("carnet", "folio", "pastel", "chapter_num", "parts")
+IDENTITY_KEYS = ("carnet", "folio", "pastel", "chapter_num", "parts", "part_files")
 
 
 def _page_is_fixed(page):
@@ -438,9 +441,10 @@ def keep_fixed(base: dict, out: dict) -> dict:
     The customization rule, enforced: Gemini only changes what is adaptable. In `out` (the
     customized spec, as a dict), every page marked 'fixed', every block marked 'fixed' or of
     FIXED_BLOCK_TYPES comes back as in `base` (from tag_refs), even if it was changed or
-    dropped. The identity of the document (carnet, folio, pastel, number, parts), the data
-    ids and the part of each page stay as in base. Raises ValueError when the output lost
-    both its references and its structure. Returns the merged spec without the '_ref' keys.
+    dropped. The identity of the document (carnet, folio, pastel, number, parts and whether
+    they are files), the data ids and the part of each page stay as in base. Raises
+    ValueError when the output lost both its references and its structure. Returns the merged
+    spec without the '_ref' keys.
     """
     out = dict(out)
     for key in IDENTITY_KEYS:
@@ -480,6 +484,70 @@ def put_part_back(base: dict, part: int, customized: dict) -> dict:
     if customized.get("beneficiary_name"):
         out["beneficiary_name"] = customized["beneficiary_name"]
     return out
+
+
+# --- A carnet sent in one file per part (part_files): carnet 7, the carnet de route ----------
+
+BRAND = "Marge de Manœuvre"
+
+
+def carnet_label(carnet) -> str:
+    """How a title names a carnet of the bilan: « Carnet 7 », « Carnet de route »."""
+    return "Carnet de route" if carnet == PDFStyle.CARNET_ROUTE else f"Carnet {carnet}"
+
+
+def page_parts(spec: WorkbookSpec) -> List[int]:
+    """
+    The part of each page of a workbook whose parts are files. A page that names none (a
+    retouch may drop it) goes with the page before it, or with the first part at the start.
+    """
+    current = next((page.part for page in spec.pages if page.part), 1)
+    parts = []
+    for page in spec.pages:
+        current = page.part or current
+        parts.append(current)
+    return parts
+
+
+def part_numbers(spec: WorkbookSpec) -> List[int]:
+    """The parts of a workbook whose parts are files, from 1: those its head names, or its pages."""
+    return list(range(1, len(spec.parts) + 1)) if spec.parts else sorted(set(page_parts(spec)))
+
+
+def part_title(spec: WorkbookSpec, part: int) -> str:
+    """The title of a part's file, as the person sees it: « Carnet 7 · partie 1 · Explorer vos pistes »."""
+    titles = spec.parts or []
+    head = carnet_label(spec.carnet) if spec.carnet is not None else spec.chapter_title
+    name = titles[part - 1] if part <= len(titles) else ""
+    return " · ".join(text for text in (head, f"partie {part}", name) if text)
+
+
+def part_file_name(spec: WorkbookSpec, part: int) -> str:
+    """
+    The name of a part's PDF, without its extension: « Carnet_7_partie_1 », « Carnet_de_route_partie_2 ».
+    The app of the bilan finds the file of workbooks/ (carnet-7.json) and the part from it.
+    """
+    head = carnet_label(spec.carnet) if spec.carnet is not None else "Livret"
+    return f"{head.replace(' ', '_')}_partie_{part}"
+
+
+def part_document(spec: WorkbookSpec, part: int) -> WorkbookSpec:
+    """
+    One part of a workbook whose parts are files (part_files), as a document of its own: the
+    pages of the part (its cover, opener, exercises, deliverable and back cover) under the
+    head of the carnet, titled after the part. Raises ValueError for a part with no page.
+    """
+    pages = [page for page, n in zip(spec.pages, page_parts(spec)) if n == part]
+    if not pages:
+        raise ValueError(f"partie {part} : aucune page")
+    data = spec.model_dump(exclude_unset=True)
+    for key in ("parts", "part_files", "pages"):
+        data.pop(key, None)
+    titles = spec.parts or []
+    name = titles[part - 1] if part <= len(titles) else spec.chapter_title
+    data.update(chapter_title=name, title=name, pdf_title=f"{BRAND} · {part_title(spec, part)}",
+                pages=[page.model_dump(exclude_unset=True) for page in pages])
+    return WorkbookSpec.model_validate(data)
 
 
 # --- A retouch of some pages only (/api/iterate with 'pages'): faster, and the rest cannot move ---

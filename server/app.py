@@ -9,7 +9,9 @@ import sys
 import logging
 import unicodedata
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, Request
+from typing import Optional
+
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse, Response
 
@@ -51,6 +53,7 @@ from server.models import (
 from workbook_generator.conformity import check_spec
 from workbook_generator.coverage import check_coverage
 from workbook_generator.primitives import plain_title
+from workbook_generator.spec import MAX_PARTS, part_file_name
 from server.gemini_service import (
     parse_notes_with_gemini,
     refine_spec_with_gemini,
@@ -140,11 +143,18 @@ def _slug(text):
     return re.sub(r"[^A-Za-z0-9]+", "_", text).strip("_")
 
 
-def _pdf_filename(spec: WorkbookSpec) -> str:
-    """The PDF's name: « Carnet_7_… » for a carnet of the bilan, its title otherwise, then the beneficiary."""
-    parts = [f"Carnet_{spec.carnet}" if isinstance(spec.carnet, int) else "",
-             _slug(spec.chapter_title), _slug(spec.beneficiary_name)]
-    return "_".join(part for part in parts if part)[:120] + ".pdf" if any(parts) else "Carnet.pdf"
+def _pdf_filename(spec: WorkbookSpec, part: Optional[int] = None) -> str:
+    """
+    The PDF's name: « Carnet_7_… » for a carnet of the bilan, its title otherwise, then the
+    beneficiary. The file of a part keeps the standard name, which the app of the bilan reads:
+    « Carnet_7_partie_2 », then the beneficiary.
+    """
+    if part is not None:
+        pieces = [part_file_name(spec, part), _slug(spec.beneficiary_name)]
+    else:
+        pieces = [f"Carnet_{spec.carnet}" if isinstance(spec.carnet, int) else "",
+                  _slug(spec.chapter_title), _slug(spec.beneficiary_name)]
+    return "_".join(piece for piece in pieces if piece)[:120] + ".pdf" if any(pieces) else "Carnet.pdf"
 
 
 def _generation_headers(fallback_reason):
@@ -276,13 +286,19 @@ def api_customize_workbook(request: CustomizeRequest, response: Response):
 
 
 @app.post("/api/compile")
-def api_compile_pdf(spec: WorkbookSpec):
+def api_compile_pdf(spec: WorkbookSpec, part: Optional[int] = Query(None, ge=1, le=MAX_PARTS)):
     """
-    Compiles a WorkbookSpec JSON into a PDF file stream.
+    Compiles a WorkbookSpec JSON into a PDF file stream: the whole document, or with `part`
+    the file of that part of a carnet sent in one file per part (carnet 7, carnet de route).
     """
+    if part is not None and (not spec.part_files or not any(page.part == part for page in spec.pages)):
+        raise HTTPException(
+            status_code=422,
+            detail=f"Requête invalide. Partie {part} : ce document n'a pas de fichier pour cette partie.",
+        )
     try:
-        pdf_bytes = compile_workbook_from_spec(spec)
-        filename = _pdf_filename(spec)
+        pdf_bytes = compile_workbook_from_spec(spec, part=part)
+        filename = _pdf_filename(spec, part)
         return StreamingResponse(
             io.BytesIO(pdf_bytes),
             media_type="application/pdf",

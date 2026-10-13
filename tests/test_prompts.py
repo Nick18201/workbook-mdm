@@ -88,6 +88,13 @@ def test_a_part_knows_the_trades_the_other_parts_took():
     assert gemini_service._part_scope(spec, None) == ""
 
 
+def test_a_part_that_is_a_file_knows_it_has_its_own_cover_and_opener():
+    assert "fichier à elle seule" in gemini_service._part_scope(load_workbook("carnet-7"), 1)
+    assert "fichier à elle seule" not in gemini_service._part_scope(load_workbook("business-plan"), 1)
+    assert "un fichier par partie" in gemini_service._files_scope(load_workbook("carnet-de-route"), [])
+    assert gemini_service._files_scope(load_workbook("carnet-de-route"), [3]) == ""
+
+
 def test_the_faithful_layout_keeps_the_support_and_suggests_apart():
     for rule in ("mot pour mot", "dans l'ordre du support", "N'ajoute rien", "ne fusionne pas deux questions",
                  "'suggestions'", "« Ajuster »", "jamais « présentiel »", "passé au vouvoiement",
